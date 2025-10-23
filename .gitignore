@@ -10,7 +10,6 @@
 
 # Exclude libri/ directories and their contents everywhere
 libri/
-**/libri/**
 
 # LaTeX auxiliary files (explicitly ignored even if they match patterns above)
 *.aux
@@ -26,10 +25,6 @@ libri/
 *.o
 *.zip
 *.docx
-*.txt
-*.c
-*.cpp
-*.h
 *.jpg
 *.jpeg
 *.png
