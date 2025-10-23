@@ -1,16 +1,16 @@
 # Ignore everything by default
 *
 
+# Allow directories (needed for Git to traverse the tree)
+!*/
+
 # But allow .tex and .pdf files
 !*.tex
 !*.pdf
 
-# Exclude libri/ directories and their contents
+# Exclude libri/ directories and their contents everywhere
 libri/
-**/libri/
-
-# Allow directories (needed for Git to traverse the tree)
-!*/
+**/libri/**
 
 # LaTeX auxiliary files (explicitly ignored even if they match patterns above)
 *.aux
