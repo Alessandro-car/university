@@ -1,0 +1,28 @@
+Traccia:
+Data un'espressione aritmetica, controllare se le parentesi sono scritte correttamente
+Analisi:
+	Dati di input:
+		-dimensione, numero di caratteri presenti nell'espressione aritmetica, naturale
+		-espressione, espressione aritmetica della quale controllare la correttezza delle parentesi, espressione aritmetica 			
+	Dati di output:
+		-corretto, valore booleano che ci indica se l'espressione è scritta correttamente o meno, booleano
+	Dati di lavoro:
+		-i, posizione dei simboli dell'espressione, naturale
+		-cp, contatore delle parentesi aperte (si incrementa di 1) e chiuse (si decrementa di uno), intero
+		
+Algoritmo:
+	i = 1
+	cp = 0
+		MENTRE (i <= dimensione) AND (cp >= 0)
+			SE(i-esimo simbolo di espressione = '(')
+				ALLORA cp = cp + 1
+			FINE
+			SE(i-esimo simbolo di espressione = ')')					
+				ALLORA cp = cp - 1
+			FINE
+			i = i + 1
+		FINE	
+	SE(cp = 0)
+		ALLORA corretto = true
+		ALTRIMENTI corretto = false
+	FINE

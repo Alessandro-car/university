@@ -1,0 +1,23 @@
+Analisi:
+	Dati di input:
+		-elenco, elenco del quale dobbiamo eliminarne i caratteri contigui ripetuti, sequenza di caratteri
+		-lunghezza, lunghezza della frase, numero naturale
+	Dati di output:
+		-nuova_sequenza, sequenza di caratteri con i caratteri contigui eliminati, sequenza di caratteri 
+	Dati di lavoro:
+		i, conta la posizione dei caratteri di elenco, numero naturale;
+		j, conta la posizione dei caratteri di nuova_sequenza, numero naturale.
+
+Algoritmo:
+i = 1
+j = 1
+MENTRE (i < lunghezza)
+	SE (i-esimo carattere di elenco = i+1-esimo carattere di elenco)
+		ALLORA
+			i-esimo carattere di elenco = ' ' 
+		ALTRIMENTI
+			j-esimo carattere di nuova_sequenza = i-esimo carattere di elenco
+			j = j + 1
+	FINE
+	i = i + 1
+FINE

@@ -1,0 +1,23 @@
+Analisi:
+Dati di input:
+ 	-n, lunghezza dell'elenco dei numeri interi casuali < 100, numero naturale > 0
+ 	-k, numero intero di cui gli elementi di A non devono essere multipli, numero naturale > 1
+Dati di output:
+ 	-A, elenco dei numeri interi casuali < 100 di lunghezza n, elenco di interi;
+Dati di lavoro:
+	-i, conta quante volte abbiamo generato i numeri random, numero naturale <= n
+	-nRandom, numero intero casuale generato, numero intero < 100 
+Pseudocodice:
+nRandom = 0
+i = 1
+MENTRE (i <= n)
+	nRandom = (i * k) + 1
+	MENTRE (nRandom >= 100)
+		nRandom = nRandom - 100
+		SE (nRandom = 0)
+			ALLORA nRandom = 1
+	FINE
+	i-esimo elemento di A = nRandom
+	i = i + 1
+FINE
+TODO: il numero da generare non deve avere un criterio, quindi non deve essere in funzione di k, e dopodichè controllare se è multiplo

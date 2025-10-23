@@ -1,0 +1,73 @@
+Traccia: Realizzare una funzione che riceve come parametri di input due numeri naturali in base 2 ed esegue la somma binaria dei due numeri.
+
+Analisi
+Dati di input:
+-num_1, primo numero del quale effettuare la somma, sequenza di numeri naturali compresi fra 0 e 1
+-len_num1, lunghezza di 'num_1', numero naturale > 0
+-num_2, secondo numero del quale effettuare la somma, sequenza di numeri naturali compresi fra 0 e 1
+-len_num2, lunghezza di 'num_2', numero naturale > 0
+
+Dati di output:
+-somma, somma binaria di num_1 e num_2, sequenza di numeri naturali compresi fra 0 e 1
+
+Dati di lavoro:
+-i, indica la posizione dei bit della sequenza di numeri num_1, naturale > 0
+-riporto, indica se nella somma tra due bit è stato generato un riporto, numero naturale 0 <= riporto <= 1
+-somma_temp, numero binario che indica la somma senza overflow, sequenza di numeri naturali compresi fra 0 e 1
+-j, contatore che serve per copiare i valori dalla variabile somma_temp alla variabile somma, numero naturale > 0
+-len_somma_temp, indica la lunghezza della sequenza di numeri 'somma_temp', numero naturale > 0
+-k, indica la posizione del bit della sequenza di numeri num_2, numero naturale > 0
+-len_maggiore, lunghezza del numero con più bit, numero naturale > 0
+-num_i, elemento nella posizione 'i' del numero 'num_1', numero naturale 0 <= num_i <= 1
+-num_k, elemento nella posizione 'k' del numero 'num_2', numero naturale 0 <= num_k <= 1
+
+Algoritmo:
+i = len_num1
+k = len_num2
+riporto = 0
+len_somma_temp = 0
+len_maggiore = 0
+num_i = 0
+num_k = 0
+SE (i > k)
+	ALLORA
+		len_maggiore = i
+	ALTRIMENTI
+		len_maggiore = k
+FINE
+MENTRE (len_maggiore >= 1)
+	num_i = elemento di num_1 in posizione i
+	num_k = elemento di num_2 in posizione k
+	SE (i < 1)
+		ALLORA
+			num_i = 0
+	FINE
+	SE (k < 1)
+		ALLORA
+			num_k = 0
+	FINE
+	elemento di somma_temp in posizione len_maggiore = riporto + num_i + num_k
+	SE (elemento di somma_temp in posizione len_maggiore = 3) OR (elemento di somma_tempo in posizione len_maggiore = 2)
+		ALLORA
+			riporto = 1
+		ALTRIMENTI
+			riporto = 0
+	FINE
+	SE (elemento di somma_temp in posizione len_maggiore > 1)
+		ALLORA
+			elemento di somma_temp in posizione len_maggiore = elemento di somma_temp in posizione len_maggiore - 2
+	FINE
+	i = i - 1
+	k = k - 1
+	len_somma_temp = len_somma_temp + 1
+	len_maggiore = len_maggiore - 1
+FINE
+
+SE (riporto = true)
+	elemento di somma in posizione 1 = 1
+	j = 1
+	MENTRE (j <= len_somma_temp)
+		elemento di somma in posizione j+1 = elemento di somma_temp in posizione j 
+		j = j + 1
+	FINE
+FINE

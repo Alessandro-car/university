@@ -1,0 +1,32 @@
+Quantum computers are the most powerful computers which can perform millions of task in a very short time.
+The first commercial quantum computer is IBM's System One. This technology is set to perform almost everything. The ability of quantum computing to process huge amounnt of data is already optimizing many field, especially medical and chimical fields. Quantum promises to supercharge artificial intelligence by traning better algorithms.
+
+Quantum calculations involves few increased costs, in fact the first adopters of quantum are asset-management firm. A spanish firm has run successuful projects with multinational clients that shows its quantum algorithms can double foreign-exchange trading profits and catch almoust four times as many production-line defects.
+
+Quantum algorithms are very different from the classical ones because you can train them faster, try more strategies and they are much better at getting the correlations that matter from a lot of data.
+
+Traditional compters rely on binary bits, quantun computer, instead, rely on quantum bits or qubits that are tiny subatomic particles that can exists in some percentage of both states at the same time. This boosts computing power, in fact problems that took years to be solved by supercomputers could potentially be solved in seconds.
+
+But any innovation comes with risk, in fact quantum computing could render cryptography obsolete and could jeopardize communications, financial transaction and military defence.
+
+Quantum is more in tune with nature, in fact molecules are atoms bound together by electrons and the way that electrons occupy two states at the same time is what quantum particles replicates. Quantum particles presents applications for natral and material sciences by predicting how drugs interact with the human body, or substances performs under corrosion.
+
+The industry leader in quantum is IBM that has more than 60 functioning quantum computers that are more than the rest of the world. IBM revealed its new 433-qubit Osprey chip, that is the most powerful quantum processor whose spped would far exceed the total number of atoms in the known universe.
+
+IBM has several goals. The industry wants to launch a 1,121-qubit processor and, by 2025, surpass 4000 qubits by creating modular quantum circuits.
+
+Quantum could be applied in so many fields. In fact, also BMW uses computer-aided styling to sketch an exterior that combines beauty with practicality. In addition, a scale model is carved in clay and placed in tunner to assess aerodynamics and after decisions on interior and engine performance the prototype is driven into that wall to test how it performs in a crash. This is where quantum can help by predicting how materials will perform under stress and quantum computing coild also help findint the new optimum between design, interior space and aerodynamics.
+
+Quantum has moved from a footnote to the top of global security agenda. 17 countries have quantum strategies and 21 are developing them. China has invested millions of dollars in quantum research.
+
+The White House published a National Security Memorandum that order all federal agencies to transition to postquantm security owing to significatnt risks to economic and national security.
+
+Some people says that everything connected to the internet is at risk and there could be a 1 trillion dollar cybersecurity upgrade. Today, all cybersecurity is based on RSA, an asymmetric cryptography algorithm used to transfer data and
+while a regular compters needs billions of years to crack RSA a quantum compuuters would take just hours. Quantum computers powerful enough to crack RSA are a few years away from being available and hackers are already seizing and storing sensitive data in the knowledge that they will be able to access it via quantum very soon.
+
+The war in Ukraine has served a wake-up call, in fact it is the first conflict to begin with cyberattacks, as Russia targeted vital infrastractures to lay the groundwork for its military assault.
+
+Modern warfare and national-security mechanisms are grounded in the spped and precion of decisionmaking, if youur computer is faster than the others, you win.
+
+But malign intensions are just one hazard. We trust classical computers because we can verify their computations with pen and paper. But quantum computers involve such complex physics and deal with such complex problems that traditional verification is tricky. Boeing has been working with IBM's quantum team on designing new materials for its next generation aircraft but given the colossal reputation, the firm is in no rush, in fact they say that the tools used to design their airplanes are strictly under control.
+Quantum is a new frontier of humanity.

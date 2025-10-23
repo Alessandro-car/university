@@ -1,0 +1,23 @@
+Intersezione
+Dati di input:
+-A, primo insieme da intersecare, insieme di interi
+-dim_A, cardinalità dell'insieme A, numero naturale
+-B, secondo insieme da intersecare, insieme di interi
+-dim_B, cardinalità di B, numero naturale
+
+Dati di output:
+-I, insieme intersezione di A e B, insieme di interi
+
+Dati di lavoro:
+
+Pseudocodice:
+pos_A = 1
+pos_I = 1
+MENTRE (pos_A <= dim_A)
+	SE (CercareElemento(B, dim_B, elemento di A in pos_A) = vero)
+		ALLORA
+			elemento di I in posizione pos_I = elemento di A in posizione i
+			pos_I = pos_I + 1
+	FINE
+	i = i + 1
+FINE

@@ -1,0 +1,62 @@
+Data una parola P di n lettere ottenere una parola C in cui ogni lettera sia sostituita dalla lettera x posti avanti nell'alfabeto.
+Considerare l'alfabeto come una struttura circolare.
+
+Analisi
+
+Dati di input:
+-P, parola della quale dobbiamo calcolare il cifrario di Cesare, sequenza di lettere dell'alfabeto
+-n, lunghezza della parola P, numero naturale > 0
+-x, numero di posti avanti della lettera da sostituire alla lettera della parola P , numero naturale > 0
+-Alfabeto, insieme delle lettere dell'alfabeto {A, B, C, D, ..., Z}, sequenza di lettere dell'alfabeto
+-alfabeto_min, insieme delle lettere minuscole dell'alfabeto {a, b, c, d, ..., z}, sequenza di lettere dell'alfabeto
+-lunghezza_alfabeto, cardinalià dell'insieme alfabeto, numero naturale costante = 26
+
+Dati di output:
+-C, parola ottenuta sostituendo le lettere della parola P x posti avanti nell'alfabeto, sequenza di lettere dell'alfabeto
+
+Dati di lavoro:
+-index_P, indice dei caratteri della parola P, numero naturale > 0
+-pos_alfabeto, posizione nell'alfabeto del carattere della parola P nella posizione index_P, numero naturale > 0
+-index_C, posizione nella quale inserire il carattere ottenuto dalla sostituzione, numero naturale > 0
+-sostituito, indica se il carattere della parola P nella posizione index_P è stato sostituito, dato booleno
+-posti, indica gli x posti avanti della lettera nell'alfabeto che deve essere inserita nella parola C, numero naturale > 0 e <= lunghezza_alfabeto
+
+Pseudocodice
+
+index_P = 1
+index_C = 1
+MENTRE(index_P <= n) 
+	pos_alfabeto = 1
+	sostituito = false
+	MENTRE (pos_alfabeto <= lunghezza_alfabeto) AND (sostituito = false)
+		SE (carattere di P nella posizione index_p = carattere di alfabeto nella posizione pos_alfabeto)
+			ALLORA
+				posti = pos_alfabeto + x
+				SE (posti > lunghezza_alfabeto)
+					ALLORA
+						posti = posti - lunghezza_alfabeto
+						carattere di C nella posizione index_C = carattere di alfabeto nella posizione posti
+					ALTRIMENTI
+						carattere di C nella posizione index_C = carattere di alfabeto nella posizione posti
+				FINE
+				index_C = index_C + 1
+				sostituito = true
+			ALTRIMENTI
+				SE (carattere di P nella posizione index_p = carattere di alfabeto_min nella posizione pos_alfabeto)
+					ALLORA	
+						posti = pos_alfabeto + x
+						SE (posti > lunghezza_alfabeto)
+							ALLORA
+								posti = posti - lunghezza_alfabeto
+								carattere di C nella posizione index_C = carattere di alfabeto_min nella posizione posti
+							ALTRIMENTI
+								carattere di C nella posizione index_C = carattere di alfabeto_min nella posizione posti
+						FINE
+						index_C = index_C + 1
+						sostituito = true		
+				FINE			
+		FINE
+		pos_alfabeto = pos_alfabeto + 1
+	FINE
+	index_P = index_P + 1
+FINE

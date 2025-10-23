@@ -1,0 +1,36 @@
+Traccia: Realizzare l'algoritmo di una funzione che valuti quanti caratteri iniziali sono in comune tra due parole date.
+
+Analisi
+Dati in input:
+-parola1, parola della quale dobbiamo controllare i caratteri iniziali uguali con la seconda parola, sequenza di lettere minuscole dell'alfabeto italiano
+-len_parola1, lunghezza di 'parola1', numero naturale > 0
+-parola2, seconda parola della quale dobbiamo controllare i caratteri iniziali uguali con la prima parola, sequenza di lettere minuscole dell'alfabeto italiano
+-len_parola2, lunghezza di 'parola2', numero naturale > 0
+
+Dati di output:
+-n_caratteri_uguali, variabile che indica quanti caratteri iniziali delle due parole sono uguali, numero naturale >= 0
+
+Dati di lavoro:
+-i, individua le posizioni dei caratteri delle parole, numero naturale > 0
+-len_minore, lunghezza della parola più corta e serve per non controllare caratteri in posizioni che non esistono, numero naturale > 0
+-diverso, indica se i due caratteri controllati nella posizione 'i' sono diversi, booleano
+
+Algoritmo:
+SE (len_parola1 > len_parola2)
+	ALLORA 
+		len_minore = len_parola2
+	ALTRIMENTI
+		len_minore = len_parola1
+FINE
+i = 1
+diverso = false
+n_caratteri_uguali = 0
+MENTRE (i <= len_minore) AND (diverso = false)
+	SE (carattere di parola1 in posizione 'i' = carattere di parola2 in posizione 'i')
+		ALLORA
+			n_caratteri_uguali = n_caratteri_uguali + 1
+		ALTRIMENTI
+			diverso = true
+	FINE
+	i = i + 1
+FINE

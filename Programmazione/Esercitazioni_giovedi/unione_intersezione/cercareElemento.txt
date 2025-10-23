@@ -1,0 +1,19 @@
+cercareElemento
+Dati di input:
+-I, insieme nel quale cercare un elemento, insieme di interi
+-dim_I, cardinalità dell'insieme I, naturale
+-elemento, elemento dell'insieme, intero
+
+Dati di output:
+-trovato, indica se elemento appartiene ad I, booleano
+Dati di lavoro:
+
+Pseudocodice:
+pos_I = 1
+trovato = falso
+MENTRE(pos_I <= dim_I) AND (trovato = falso)
+	SE(elemento di I in pos_I = elemento) 
+		ALLORA trovato = vero
+	FINE
+	pos_I = pos_I + 1
+FINE

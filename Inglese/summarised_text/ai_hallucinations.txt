@@ -1,0 +1,7 @@
+The World Health Organization's new chatbot launched with the best of intentions. SARAH, a new faced virtual avatar backed by GPT-3.5, dispenses health tips about how to eat well, quit smoking, de-stress and more. But SARAH, like any chatbot, can give wrong informations or answers. In fact, it was quickly found to give list of false names and addresses of nonexistent clinics in San Francisco.
+This tendency to make things up, known as hallucination, is one of the biggest reason why chatbots are not adopted in many areas.
+To understand why they hallucinate, we need to understand how they works. First of all, large language models, when they answer to our questions, they don't use a search engine and they don't search information on the web.
+The answers are produced by billions and billions of numbers used to calculate its responses from scratch.
+Large language models generate text by predicting the next word in a sequence.
+To guess a word, a large language model simply runs its numbers. It calculates a score for each word in its vocubulary that reflects how likely that word is to come next in the sequence in play.
+Large langues models don't hallucinate sometimes, it's all hallucination but they are so good at what they do that what they make up looks right most of the time. We can't trust large language models and we can't control what a large language model produces by hand. Some researchers believe that training them on even more text will reduce their error rate. The more accurate these models become, the more we will let our guard down.

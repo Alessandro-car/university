@@ -1,0 +1,40 @@
+Traccia: Trovare il massimo comune divisore tra due numeri
+Un'algoritmo possibile è l'algoritmo di Euclide che dice:
+	- Se A = B allora MCD = A oppure MCD = B
+	- Se A < B allora MCD = MCD(A - B, B)
+	- Se B > A allora MCD = MCD(A, B - A)
+Nell'analisi bisogna specificare che A e B devono essere > 0
+Pseudocodice:
+	SE (A = B)
+		ALLORA MCD = A
+	FINE
+	MENTRE (A != B)
+		SE (A > B)
+			ALLORA
+				A = A - B
+			ALTRIMENTI
+				B = B - A
+		FINE
+	FINE
+	MCD = A
+Seconda traccia: Fare la media di un elenco di numeri
+Algoritmo:
+	-Sommare tutti i valori
+	-Dividere la somma per il numero dei valori
+Analisi:
+	Dati di input:
+		-Elenco, elenco di numeri di cui calcolare la media, elenco di naturali
+		-Lunghezza, numero di elementi di elenco, naturale > 0
+	Dati di output:
+		-media, rappresenta la media dei valori presenti in elenco, reale >= 0
+	Dati di lavoro:
+		-i, conta quante volte è stata effettuata la somma, naturale <= lunghezza
+		-somma, rappresenta la somma dei valori di elenco,numero naturale
+Schizzo di pseudocodice:
+	i = 1
+	somma = 0
+	MENTRE (i <= lunghezza)
+		somma = somma + i-esimo elemento di valori
+		i = i + 1
+	FINE
+	media = somma / lunghezza

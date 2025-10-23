@@ -1,0 +1,31 @@
+Unione
+Dati di input:
+-A, primo insieme da unire, insieme di interi
+-dim_A, cardinalità dell'insieme A, numero naturale
+-B, secondo insieme da unire, insieme di interi
+-dim_B, cardinalità di B, numero naturale
+
+Dati di output:
+-U, insieme unione di A e B, insieme di interi
+
+Dati di lavoro:
+-i, contatore che conta quante volte abbiamo inserito gli elementi nell'insieme U, naturale > 0 
+-next_posU, prossima posizione nella quale inserire il prossimo elemento nell'insieme U, naturale > 0
+Pseudocodice:
+i = 1
+MENTRE (i <= dim_A)
+	elemento di U in posizione i = elemento di A in posizione i
+	i = i + 1
+FINE
+i = 1
+next_posU = dim_A + 1
+MENTRE (i <= n)
+	SE (cercareElemento(U, next_posU - 1, elemento di B in posizione i) = falso)
+		ALLORA
+			elemento di U in posizione next_posU = elemento di B in posizione i
+			next_posU = next_posU + 1
+	FINE
+	i = i + 1
+FINE
+
+//Nota: La cardinalità dell'insieme U è next_posU - 1, perchè next_posU corrisponde alla prima posizione vuota dopo aver copiato l'insieme A, quindi dim_A + 1, pertanto la cardinalià di U sarà next_posU - 1

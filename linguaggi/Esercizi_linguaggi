@@ -1,0 +1,77 @@
+Esercizio 3:
+L = {a^nb^{n+m}c^m | n > 0, m > 0}
+X = {a,b,c} V = {} S = {} P = {}
+n = 1 m = 1
+abbc
+n = 2 m = 1
+aabbbc
+n = 2 m = 2
+aabbbbcc
+-----------
+a^nb^nb^mc^m
+S -> AB
+A -> ab|aAb
+B -> bc|bBc
+Grammatica:
+X = {a,b,c} V = {S, A, B} S = {S} P = {S -> AB, A -> ab, A -> aAb, B -> bc, B -> bBc}
+
+Esercizio 4:
+L = {a^nb^{2k + 1} | n>=0, k>=0}
+n=0 k=0
+b
+n=1k=0
+ab
+n=1k=1
+abbb
+n=1k=2
+abbbbb
+
+A -> lambda|aA
+B -> b|bBb
+S -> AB
+Grammatica:
+X = {a, b} V = {S, A, B} S = {S} P = {S -> AB, B -> b, B -> bBb, A -> lambda, A -> aA}
+
+Esercizio 5:
+L = {a^ib^kc^j | i>0, j>0, k > i + j}
+a^ib^ib^z^b^jc^j
+A -> ab | aAb
+B -> b|bB
+C -> bc | bCc
+S -> ABC
+
+Grammatica:
+X = {a, b, c} V = {S, A, B, C} S = {S} P = {S -> ABC, A -> ab, A -> aAb, B -> b, B-> bB, C->bc, C-> bCc}
+
+Esercizio 6:
+L = {a^2b^na | n > 0}
+S -> aaBa
+B -> b|bB
+Grammatica:
+X = {a, b} V = {S, B} S = {S} P = {S -> aaBa, B -> b, B -> bB}
+
+Esercizio 7:
+L = {a^nb^m | n,m > 0, n > m}
+a^na^zb^m
+
+A -> a|aA
+B -> ab|aBb
+S->AB
+Grammatica:
+X = {a, b} V = {S, A, B} S = {S} P = {S -> AB, A -> a, A->aA, B->ab, B->aBb}
+
+Esercizio 8:
+L = {a^nb^mc^n | n>0, m > 0} 
+S -> aAc
+A -> aAc | B
+B -> b | bB
+
+S -> aBC|aSBC
+aB -> ab
+bB -> bb|bbB
+bC -> bc
+cC -> cc
+CB -> XB
+XB -> XC
+XC -> BC
+

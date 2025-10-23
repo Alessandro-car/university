@@ -1,0 +1,27 @@
+Traccia: Dati 4 insiemi determinare l'unione tra l'insieme ottenuto tramite l'unione del 1^ e del 3^ insieme e l'insieme ottenuto tramite l'unione del 2^ insieme con l'intersezione con il 4^ insieme e l'insieme ottenuto tramite l'intersezione tra il 1^ e il 2^ insieme. 
+Quindi: Dati A, B, C e D.
+A u C  u (B u (D interesecato (A intersecato B)))
+main
+Dati di input:
+-A, primo insieme con cui giocare, insieme di interi
+-B, secondo insieme con cui giocare, insieme di interi
+-C, terzo insieme con cui giocare, insieme di interi
+-D, quarto insieme con cui giocare, insieme di interi
+
+Dati di output:
+-E, insieme ottenuto con l'operazione data, insieme di interi 
+Dati di lavoro:
+-I1, insieme dato dall'unione tra A e C, insieme di interi
+-I2, insieme dato dall'intersezione tra A e B, insiemi di interi
+-I3, insieme dato dall'operazione D intersecato I2, insieme di interi
+-I4, insieme dato dall'operazione B u I3, insieme di interi
+
+//Nota: abbiamo cambiato la costruziona dell'insieme, il primo elemento corrisponde alla cardinalità, quindi bisogna adattare tutte le funzioni precedenti
+//TODO: adattare le funzioni scritte
+
+Pseudocodice: 
+I1 = unione(A, C)
+I2 = intersezione(A, B)
+I3 = intersezione(D, I2)
+I4 = Unione(B, I3)
+E = Unione(I1, I4)
