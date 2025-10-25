@@ -885,4 +885,72 @@ create table Docenza (
  	Un \textit{vincolo di integrita' referenziale} o \textit{foreign key} fra un insieme di attributi $X$ di una relazione $R_1$ e un'altra relazione $R_2$ e' soddisfatto se i valori di $X$ di ciascuna tupla dell'istanza di $R_1$ compaiono come valori della chiave dell'istanza di $R_2$. Questa definizione richiede particolare attenzione, nei casi in cui la relazione alla quale ci riferiamo e' composta da piu' attributi e nel caso in cui vi siano piu' chiavi. \\
  	Vedendo prima il caso in cui la chiave di $R_2$ e' unica e composta da un solo attributo $B$ allora il vincolo di integrita' referenziale fra l'attributo di $A$ di $R_1$ e la relazione $R_2$ e' soddisfatto se, per ogni tupla $t_1$ in $R_1$ per cui $t_1[A]$ non e' nullo, esiste una tupla $t_2$ in $R_2$ tale che $t_1[A] = t_2[B]$. Nel caso piu' generale, dobbiamo fare attenzione al fatto che ciascuno degli attributi $X$ deve corrispondere a un preciso attributo della chiave $K$ in $R_2$. E' necessario specificare un ordinamento sia nell'insieme $X$ sia di $K$. Indicando gli attributi $X = A_1A_2\dots A_n$ e $K = B_1B_2\dots B_n$ il vincolo e' soddisfatto se per ogni tupla $t_1$ in $R_1$ senza nulli su $X$ esiste una tupla $t_2$ in $R_2$ con $t_1[A_i]=t_2[B_i] \quad \forall i \in [1, p]$. \\
  	Una considerazione va fatta riguardo le relazioni con piu' chiavi. In questo caso, e' opportuno identificarne uno come chiave primaria e riferimenti vengono fatti attraverso essa. Pero', va notato che non tutti i sistemi di gestione di base di dati permettono di indicare esplicitamente la chiave primaria. In questi casi, il vincolo di integrita' referenziale deve indicare esplicitamente gli attributi che compongono la chiave cui si fa riferimento. 
+ 	\chapter{Algebra relazionale}
+ 	Come detto precedentemente, i linguaggi per basi di dati si suddividono in due categorie. 
+ 	\begin{itemize}
+ 		\item Operazioni sullo schema:
+ 		\begin{itemize}
+ 			\item \textbf{DDL: Data Definition Language};
+ 		\end{itemize}
+ 		\item Operazioni sui dati:
+ 		\begin{itemize}
+ 			\item \textbf{DML: Data Manipulation Language}
+ 		\end{itemize}
+ 	\end{itemize}
+ 	I linguaggi di interrogazione per basi di dati relazionali, invece, possono essere:
+ 	\begin{itemize}
+ 		\item \textbf{dichiarativi} che specificano le proprieta' del risultato quindi cosa si vuole ottenere;
+ 		\item \textbf{procedurali} che specificano le modalita' di generazione del risultato quindi come ottenere il risultato.
+ 	\end{itemize}
+ 	I linguaggi di interrogazione possono essere:
+ 	\begin{itemize}
+ 		\item \textbf{Algebra relazione} che e' di tipo procedurale;
+ 		\item \textbf{Calcolo relazionale} che e' dichiarativo e teorico;
+ 		\item \textbf{SQL (Structed Query Language)} che e' parzialmente dichiarativo (reale);
+ 		\item \textbf{QBE (Query By Example)} che e' di tipo dichiarativo (reale).
+ 	\end{itemize}
+ 	In questo capitolo analizzaremo l'algebra relazione che come abbiamo detto e' un linguaggio di tipo procedurale basato su concetti di tipo algebrico. Esso e' costituito da un insieme di operatori, definiti su relazioni e che producono ancora relazioni come risultati ed e' possibile anche formare espressioni che coinvolgono piu' operatori allo scopo di formulare anche interrogazioni piu' complesse. Gli operatori sono:
+ 	\begin{itemize}
+ 		\item operatori insiemistici tradizionali: \textit{unione, intersezione} e \textit{differenza} che possono essere anche definiti, con qualche differenza, sulle relazioni;
+ 		\item operatori di \textit{ridenominazione, selezione} e \textit{proiezione} che sono piu' specifici;
+ 		\item operatore di \textit{join} in varie forme: \textit{join naturale, prodotto cartesiano, semijoin} e \textit{theta-join};
+ 		\item operatore di \textit{divisione}, che e' ridondante perche' esprimibile per mezzo di altri operatori. 
+ 	\end{itemize}
+ 	\subsection{Unione, intersezione e differenza}
+ 	Notiamo che le relazioni sono insiemi e quindi ha senso definire su di esse gli operatori insiemistici tradizionali di unione, differenza e intersezione, quest'ultima e' esprimibile per mezzo della differenza in quanto $r \cap s = r - (r - s)$. Pero', dobbiamo prestare attenzione sul fatto che una relazione non e' genericamente un insieme di tuple, ma un insieme di tuple \textit{omogenee}, quindi pur potendo, il linea di principio, definire delle operazioni insiemistiche sulle relazioni, non ha senso, dal punto di vista del modello relazionale, definirli con riferimento a relazioni su attributi diversi. Pertanto, consideriamo ammissibili, nell'algebra relazionale, solo applicazioni degli operatori di unione, differenza e intersezione a coppie di operandi definite sugli stessi attributi. La seguente figura mostra degli esempi di applicazione dei tre operatori, che confermano le classiche definizioni ma ridefinite sul nostro contesto:
+ 	\begin{itemize}
+ 		\item l'\textit{unione} di due relazioni $r_1$ e $r_2$ definite sullo stesso insieme di attributi $X$ e' indicata con $r_1 \cup r_2$ ed e' una relazione su $X$ contenente le tuple che appartengono a $r_1$ oppure a $r_2$ o a entrambe;
+ 		\item l'\textit{intersezione} di $r_1(X)$ e $r_2(X)$ e' indicata con $r_1 \cap r_2$ ed e' una relazione su $X$ contente le tuple che appartengono sia a $r_1$ che a $r_2$;
+ 		\item la \textit{differnza} di $r_1$ e $r_2$ e' indicata con $r_1 - r_2$ ed e' una relazione su $X$ contenente le tuple che appartengono a $r_1$ e non appartengono a $r_2$.
+ 	\end{itemize}
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{unione_intersezione_diff}
+ 	\end{figure}
+ 	\subsection{Ridenominazione}
+ 	La limitazione imposta agli operatori insiemistici, anche se giustificata, risulta molto restrittiva. Consideriamo infatti le relazioni in figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{restrizioni_insiemistici}
+ 	\end{figure}
+ 	Sarebbe sensato eseguire su di esse una sorta di unione per avere tutte le coppie genitore-figlio ma questo non e' possibile, perche' gli attributi sono diversi, in una troviamo l'attributo \textit{Padre} e nell'altra troviamo l'attributo \textit{Madre}. \\
+ 	Per risolvere il problema utilizziamo un operatore che ha lo scopo di adeguare il nome degli attributi in base alle necessita'. Questo si chiama operatore di \textit{ridenominazione} che cambia il nome degli attributi lasciando invariato il contenuto delle relazioni. Consideriamo le relazioni in figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{ridenominazione}
+ 	\end{figure}
+ 	Come possiamo notare, la ridenominazione agisce solo sullo schema, cambiando il nome dell'attributo \textit{Padre} in \textit{Genitore} e si denota con:
+ 	\[
+ 	\rho_{Genitore \leftarrow Padre}
+ 	\]
+ 	Ora definiamo questo operatore in forma generale. Sia $r$ una relazione definita su un insieme di attributi $X$ e sia $Y$ un altro insieme di attributi con la stessa cardinalita'. Siano $A_1, A_2, \dots, A_k$ e $B_1, B_2, \dots, B_k$ rispettivamente un ordinamento per gli attributi in $X$ e un ordinamento per quelli in $Y$. Allora la ridenominazione:
+ 	\[
+ 	\rho_{B_1B_2\dots B_k \leftarrow A_1A_2\dots A_k}(r)
+ 	\] 
+ 	contiene una tupla $t'$ per ciascuna tupla $t$ in $r$, definita come segue: $t'$ e' una tupla su $Y$ e $t'[B_i] = t[A_i] \quad \forall i = 1, \dots, k$. La definizione conferma che cio' che cambia sono i nomi degli attributi, mentre i valori rimangono inalterati e vengono associati ai nuovi attributi. In pratica, nelle due liste $A_1A_2\dots A_k$ e $B_1B_2\dots B_k$ indicheremo solo gli attributi che vengono ridenominati, cioe' quelli per cui $A_i \neq B_i$. \\
+ 	Quindi ritornando alle relazioni precedenti, l'unione delle due relazioni e' la seguente:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{unione_ridenominazione}
+ 	\end{figure}
 \end{document}
