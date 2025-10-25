@@ -14,14 +14,92 @@
 \usepackage{xfrac}
 \usepackage{lipsum}
 \usepackage{bbm}
+\usepackage{hyperref}	
+\usepackage{amsthm}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage{cancel}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{calligra}
+\usepackage[toc,page]{appendix}
 \usepackage{tikz}
-\newtheorem{theorem}{Teorema}[section]
-\newtheorem{corollary}{Corollario}[theorem]
-\title{Appunti matematica discreta}
-\author{Alessandro Carella}
+\usepackage{yhmath}
+\usetikzlibrary{angles, quotes, patterns}
+\usepackage{circledsteps}
+\title{Matematica discreta}
+\date{}
+\definecolor{brickred}{RGB}{182, 50, 28}
+\definecolor{darkred}{RGB}{139, 0, 0}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{darkblue}{rgb}{0,0,0.6}
 \setcounter{chapter}{0}
 \setlist[enumerate]{label*=\arabic*.}
 \setlength{\parindent}{0pt}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=darkred,
+	filecolor=darkred,
+	urlcolor=darkred
+}
+
+
+\newcounter{theorem}
+\newcounter{lemma}
+\newcounter{corollary}
+\newcounter{definition}
+\newcounter{exercise}
+
+\labelformat{theorem}{teorema #1}
+\labelformat{lemma}{lemma #1}
+\labelformat{corollary}{corollario #1}
+\labelformat{definition}{definizione #1}
+\labelformat{note}{nota #1}
+\labelformat{example}{esempio #1}
+\labelformat{exercise}{esercizio #1}
+
+\newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
+{Teorema}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{th}
+
+\newtcbtheorem[number within=theorem,use counter=corollary]{corollary}%
+{Corollario}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{cor}
+
+\newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
+{Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
+
+\newtcbtheorem[number within=chapter,use counter=definition]{definition}%
+{Definizione}{arc=1mm,outer arc=1mm,colframe=green!55!black,fonttitle=\scshape,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{def}
+
+\newtcbtheorem[no counter]
+{note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
+
+\newtcbtheorem[no counter]
+{example}{Esempio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exa}
+
+\newtcbtheorem[number within=section,use counter=exercise]
+{exercise}{Esercizio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exe}
+
+\newtcbtheorem[no counter]
+{assignment}{Traccia}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{brickred!65},coltitle=black,fonttitle=\bfseries}{asg}
+\tcolorboxenvironment{proof}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black}}
+\newcommand{\namerefl}[1]{%
+	\bgroup
+	\let\nmu\MakeLowercase
+	\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
+
 \begin{document}	
 
 	{
@@ -31,10 +109,10 @@
 	}
 	\chapter{Insiemi}
 	\section{Definizione di un insieme e appartenenza a un insieme}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Insieme}{insieme}	
 		Un insieme è una famiglia di oggetti, detti elementi dell'insieme.
 		Per definire un insieme dobbiamo stabilire un criterio per dire se un elemento appartiene all'insieme o no.
-	\end{tcolorbox}
+	\end{definition}
 	Alcuni esempi di insieme sono:
 	\begin{itemize}
 		\item $\mathbbm{N}$: Insieme dei numeri naturali \{0, 1, 2, 3, 4, ...\};
@@ -47,12 +125,12 @@
 	\begin{description}
 		\item[Notazione:] \hfill \\ Per gli insiemi si usa la lettera MAIUSCOLA. \\Per gli elementi si usa la lettera MINUSCOLA. \\ Se un elemento appartiene all'insieme si usa il simbolo $\in$, ad esempio 3 $\in$ $\mathbbm{N}$.
 	\end{description}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme vuoto, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Insieme vuoto}{insieme_vuoto}	
 			L'insieme vuoto è l'unico insieme che non ha elementi. Il simbolo dell'insieme vuoto è:
 			\begin{center}
 				$\emptyset$
 			\end{center}
-	\end{tcolorbox}
+	\end{definition}
 	\begin{description}
 		\item Descrivere un insieme in 3 modi: \hfill
 		\begin{enumerate}
@@ -70,7 +148,7 @@
 		\end{enumerate}
 	\end{description}
 	\section{Inclusione, uguaglianza, intersezione e unione di un insieme}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di inclusione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Inclusione}{inclusione}	
 		Siano \textit{A} e \textit{B} due insiemi. Si dice che \textit{A} è incluso in \textit{B} se ogni elemento di \textit{A} è elemento di \textit{B}. L'inclusione si indica con il simbolo:
 		\begin{center}
 			$A \subseteq B$
@@ -79,7 +157,7 @@
 		\begin{center}
 			$A \not \subseteq B$
 		\end{center}	
-	\end{tcolorbox}
+	\end{definition}
 	\begin{description}
 		\item Alcuni esempi sono:
 		\begin{itemize}
@@ -89,8 +167,8 @@
 			\item $B \subseteq A$.
 		\end{itemize}
 	\end{description}
-	\textbf{Osservazione: }
-	\begin{center}
+	\begin{note}{}{}
+		\begin{center}
 		$\mathbbm{N} \subseteq \mathbbm{Z} \subseteq \mathbbm{Q} \subseteq \mathbbm{R}$
 	\end{center}
 	Si osservi che per ogni insieme \textit{A}, l'insieme vuoto ed \textit{A} stesso risultano essere sottoinsiemi di \textit{A}:
@@ -98,19 +176,26 @@
 		$\emptyset \subseteq A$
 		\\$A \subseteq A$
 	\end{center}
-	\textbf{Nota: } Il simbolo appartiene è per gli elementi, il simbolo dell'inclusione è per gli insiemi.
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di inclusione propria, fonttitle=\bfseries]	
+	
+	\end{note}
+	\begin{note}{}{}
+	Il simbolo appartiene è per gli elementi, il simbolo dell'inclusione è per gli insiemi.	
+	\end{note}
+	
+	\begin{definition}{\nmu Inclusione propria}{inclusione_propria}	
 		Sia $A \subseteq B$. Si esiste un elemento di \textit{B} che non è in \textit{A} allora si dice che \textit{A} è incluso propriamente o è sottoinsieme proprio di \textit{B}.
 		L'inclusione propria si indica con:
 		\[
 			A \subsetneq B
 		\]
-	\end{tcolorbox}
-	\noindent \textbf{Osservazione: }
+	\end{definition}
+	\begin{note}{}{}
 	\begin{center}
-		$\mathbbm{N} \subsetneq \mathbbm{Z} \subsetneq \mathbbm{Q} \subsetneq \mathbbm{R}$
-	\end{center}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insiemi uguali, fonttitle=\bfseries]	
+	$\mathbbm{N} \subsetneq \mathbbm{Z} \subsetneq \mathbbm{Q} \subsetneq \mathbbm{R}$
+\end{center}
+
+	\end{note}
+	\begin{definition}{\nmu Insiemi uguali}{insiemi_uguali}	
 		Sia \textit{A} e \textit{B} insiemi. \textit{A} e \textit{B} sono insiemi uguali se contengono gli stessi elementi, ovvero se:
 		\[
 		A \subseteq B 
@@ -125,7 +210,7 @@
 		\[
 			A \neq B
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\noindent
 	\\
 	\textbf{Ad esempio: }
@@ -148,13 +233,13 @@
 		\item \textbf{Elemento neutro}: $\exists!$ 0 $\in \mathbbm{N} \mid \forall a \in \mathbbm{N}$ allora a + 0 = 0 + a = a.
 	\end{itemize}
 	Le prime tre proprietà sono le stesse per la moltiplicazione, la proprietà dell'elemento neutro è sempre uguale ma vale per il numero 1.
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di intersezione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Intersezione}{intersezione}	
 		Sia \textit{A} e \textit{B} insiemi. L'insieme intersezione è costituito da tutti gli elementi che appartengono sia ad \textit{A} che a \textit{B} 
 		L'intersezione si indica con si indica con:
 		\[
 		A \cap B = {x \mid x \in A \hspace{0.2cm} e \hspace{0.2cm}x \in B} 
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\noindent
 	\textbf{Esempio: }
 	\begin{itemize}
@@ -162,22 +247,22 @@
 		\item \textit{D}: Insieme dei numeri dispari = $\{2n + 1 \mid n \in \mathbbm{Z}\}$;
 		\item $P \cap D = \emptyset$
 	\end{itemize}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insiemi disgiunti, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Insiemi disgiunti}{insiemi_disgiunti}	
 		Due insiemi \textit{A} e \textit{B} si dicono disgiunti se $A \cap B = \emptyset$
-	\end{tcolorbox}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di unione, fonttitle=\bfseries]	
+	\end{definition}
+	\begin{definition}{\nmu Unione}{unione}	
 		Siano \textit{A} e \textit{B} due insiemi. L'insieme unione di \textit{A} e \textit{B} è l'insieme costituito da tutti gli che sono in \textit{A} (inclusivo) o in \textit{B}.
 		L'unione di due insiemi si indica con:
 		\[
 			A \cup B = \{x \mid x \in A \hspace{0.2cm} o \hspace{0.2cm} x \in B\}
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\noindent
 	Presi gli insiemi \textit{P} e \textit{D} dell'esempio precedente, segue \textbf{l'esempio}:
 	\[P \cup D = \mathbbm{Z}\]
-	\[oppure\]
+	oppure
 	\[\mathbbm{N} \cup \mathbbm{Z} = \mathbbm{Z}\]
-	Siano \textit{A}, \textit{B}, \textit{C} insiemi. \textbf{Proprietà. Da rivederle:}
+	Siano \textit{A}, \textit{B}, \textit{C} insiemi. \textbf{Proprietà.}
 	\begin{enumerate}
 		\item $A \cup \emptyset = A$;
 		\item $A \cap \emptyset = \emptyset$;
@@ -198,13 +283,13 @@
 		\item $(A \cap B) \cup C = (A \cup C) \cap (B \cup C)$
 	\end{enumerate}
 	\section{Complementare, leggi di Demorgan, differenza, insiemi delle parti e prodotto cartesiano}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di complementare, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Complementare}{complementare}	
 		Siano \textit{A} e \textit{B} due insiemi e $B \subseteq A$. Il complementare di \textit{B} in \textit{A} è l'insieme costituito da tutti gli che sono in \textit{A} ma non sono in \textit{B}.
 		Il complementare di due insiemi si indica con:
 		\[
 		C_{A}(B) = \{x \mid x \in A \hspace{0.2cm} e \hspace{0.2cm} x \notin B\}
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Esempio: }
 	\[
 	C_{\mathbbm{Z}}(\mathbbm{N}) = \{x \in \mathbbm{Z} \mid x \notin \mathbbm{N}\} = \{x \in \mathbbm{Z} \mid x < 0\}
@@ -219,8 +304,7 @@
 		\item $C_{A}(B \cap C) = C_{A}(B) \cup C_{A}(C)$.
 	\end{enumerate}
 	\textbf{Nota: } Le proprietà 5, 6 prendono il nome di \textbf{leggi di Demorgan.}
-	\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=
-		 prima legge di Demorgan, fonttitle=\bfseries]	
+	\begin{proof}{Dimostrazione della prima legge di Demorgan: \[C_A(B \cup C) = C_A(B) \cap C_A(C)\]}	\quad \\
 		Per dimostrare la prima legge di Demorgan dobbiamo dimostrare due cose:
 		\begin{enumerate}
 			\item $C_{A}(B \cup C) \subseteq C_{A}(B) \cap C_{A}(C)$
@@ -238,8 +322,10 @@
 					\item Sia $x \in C_{A}(B \cup C)$ allora $x \in A, x \notin B, x \notin C$ allora $x \in C_{A}(B) \cap C_{A}(C)$
 				\end{enumerate}
 		\end{enumerate}
-	\end{tcolorbox}
-	\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM seconda legge di Demorgan, fonttitle=\bfseries]	
+	\end{proof}
+	\begin{proof}{Dimostrazione della seconda legge di Demorgan: \[
+			C_A(B \cap C) = C_A(B) \cup C_A(C)
+			\]}	 \quad \\
 		Per dimostrare la seconda legge di Demorgan dobbiamo dimostrare due cose:
 		\begin{enumerate}
 			\item $C_{A}(B \cap C) \subseteq C_{A}(B) \cup C_{A}(C)$
@@ -255,15 +341,15 @@
 				\end{enumerate}
 		\end{enumerate}
 	
-	\end{tcolorbox}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme differenza, fonttitle=\bfseries]	
+	\end{proof}
+	\begin{definition}{\nmu Insieme differenza}{insieme_differenza}	
 		Siano \textit{A} e \textit{B} due insiemi. L'insieme differenza tra \textit{A} e \textit{B} è l'insieme di tutti gli elementi che sono in \textit{A} e non sono in \textit{B}.
 		L'insieme differenza si indica con:
 		\[
 			A \backslash B \hspace{0.2cm} oppure \hspace{0.2cm} A - B
 		\]
 		Questa è una generalizzazione di complementare perché non è richiesto che $B \subseteq A$.
-	\end{tcolorbox}
+	\end{definition}
 	\newpage
 	\textbf{Osservazione: }
 	\[
@@ -272,25 +358,25 @@
 	\[
 		A \backslash B = C_{A}(A \cap B)
 	\]
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di prodotto cartesiano, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Prodotto cartesiano}{prod_cartesiano}	
 		Siano \textit{A} e \textit{B} due insiemi. Il prodotto cartesiano di \textit{A} per \textit{B} è l'insieme degli elementi costituito da tutte le coppie ordinate $(a, b)$ con $a$ appartenente ad \textit{A} e $b$ appartenente a \textit{B}.
 		Il prodotto cartesiano si indica con:
 		\[
 		A \times B = \{(a, b) \mid a \in A \ e \ b \in B\}
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Esempio: }
 	\[
 		\mathbbm{R} \times \mathbbm{R} = \{(x, y) \mid x \in \mathbbm{R} \ e \ y \in \mathbbm{R}\}
 	\]
 	Questo rappresenta le coordinate del diagramma cartesiano.
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme delle parti, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Insieme delle parti}{insieme_parti}	
 		Siano \textit{A} un insieme. L'insieme delle parti di \textit{A} è l'insieme dei sottoinsiemi di \textit{A}. Gli elementi dell'insieme delle parti di $A$ sono tutti e soli sottoinsiemi di $A$.
 		L'insieme delle parti si indica con:
 		\[
 		\wp(A) = \{x \ insieme \ \mid x \subseteq A\}
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Osservazioni: }
 	\begin{itemize}
 		\item Se $a \in A$ allora $\{a\} \subseteq A \ allora \ \{a\} \in \wp(A)$
@@ -310,14 +396,14 @@
 		\item Il cane è un mammifero. Questa proposizione è vera, quindi 1 o V o T.
 		\item X è un numero positivo. Questa non è una proposizione perché non si può stabilire se vera o falsa.
 	\end{itemize}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di negazione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Negazione}{negazione}	
 		Sia $P$ una proposizione. La negazione di $P$ è una proposizione che è vera se $P$ è falsa e falsa se $P$ è vera.
 		I simboli della negazione sono:
 		
 		\[
 		\overline P \ oppure \ ^\neg P
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Esempio: }
 	\begin{enumerate}
 		\item \textit{P: }Roma è una città del Lazio. V
@@ -348,13 +434,13 @@
 		F & V \\
 	\end{tabular}
 
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di congiunzione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Congiunzione}{congiunzione}	
 		Sia $P$ e $Q$ due proposizioni. La proposizione congiunzione di $P$ e $Q$, si legge "P e Q" è una proposizione che è vera solo quando entrambe sono vere ed è falsa solo quando entrambe sono false.
 		I simboli della congiunzione sono:
 		\[
 		P \wedge Q
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Tavola di verità}
 	\\
 	\\
@@ -376,14 +462,14 @@
 			\item $P \wedge Q: $ 6 è un numero pari ed è multiplo di 4 è falsa.
 		\end{itemize}
 	\end{enumerate}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di disgiunzione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Disgiunzione}{disgiunzione}	
 		Sia $P$ e $Q$ due proposizioni. La proposizione disgiunzione di $P$ e $Q$, che si legge "P o Q", è una proposizione che è falsa solo quando entrambe sono false, altrimenti è vera.
 		I simboli della disgiunzione sono:
 		\[
 		P \vee Q
 		\]
-	\end{tcolorbox}
-	\textbf{Tavola di verità: (Sostituire con tabella)}
+	\end{definition}
+	\textbf{Tavola di verità:}
 	\\
 	\\
 	\begin{tabular}{c|c|c}
@@ -425,13 +511,13 @@
 	\textbf{Nota: }
 	\\
 	Proposizione sempre vera si chiama TAUTOLOGIA.
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di implicazione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Implicazione}{implicazione}	
 		Sia $P$ e $Q$ due proposizioni. La proposizione implicazione di $P$ e $Q$, che si legge "se P allora Q", è una proposizione che è falsa solo se P è vera e Q è falsa ed è vera altrimenti.
 		I simboli dell'implicazione sono:
 		\[
 		P \to Q
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Tavola di verità:}
 	\\
 	\\
@@ -457,13 +543,13 @@
 	\\
 	IF...THEN di programmazione perchè se in programmazione la condizione dell'if fallisce il programma non esegue più il costrutto mentre in matematica la proposizione rimane comunque vera.
 	\newpage
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di doppia implicazione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Doppia implicazione}{doppia_implicazione}	
 		Sia $P$ e $Q$ due proposizioni. La doppia implicazione di $P$ e $Q$, che si legge "P se e solo se Q", è una proposizione che è vera quando P e Q sono entrambe vere o entrambe false.
 		I simboli dell'implicazione sono:
 		\[
 		P \leftrightarrow  Q
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Tavola di verità:}
 	\\
 	\\
@@ -603,7 +689,7 @@
 	$\overline S: \exists x \in \mathbbm{Z} \mid \forall t \in \mathbbm{N} \ e \ \forall y \in \mathbbm{N} x \not = t^2 + y$
 	\chapter{Funzioni}
 	\section{Definizione di funzione, funzioni che coincidono, immagine, controimmagine, grafico}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di funzione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Funzione}{funzione}	
 		Siano $A$ e $B$ due insiemi non vuoti. Una funzione dall'insieme $A$ all'insieme $B$ è una legge che associa ad ogni elemento di $A$ un unico elemento dell'insieme $B$.
 		\\
 		Simbolo della funzione:
@@ -613,7 +699,7 @@
 		$A$ è l'insieme di partenza detto anche \textit{dominio} di f.
 		\\
 		$B$ è l'insieme di arrivo di $f$.
-	\end{tcolorbox}
+	\end{definition}
 	$f: A \to B$
 	\\
 	$a \longmapsto f(a) \in B$
@@ -646,9 +732,9 @@
 			\end{itemize}
 	\end{enumerate}
 
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di funzione uguali, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Funzioni uguali}{funzioni_uguali}	
 		Due funzioni si dicono uguali se hanno stesso insieme di partenza, stesso insieme di arrivo e stessa legge.
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Esempio: }
 	\\
 	$f: \mathbbm{R} \to \mathbbm{R} \ \forall x \in \mathbbm{R} \ f(x) = 6x + 4$
@@ -675,7 +761,7 @@
 	\\
 	$\forall A \ insieme \ non \ vuoto \ \exists \ la \ funzione \ I_{d_{A}}: A \to A \ \forall a \in A \ I_{d_{A}}(a) = a$, cioè ogni elemento viene mandato in se stesso.
 	
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di immagine, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Immagine}{immagine}	
 		L'immagine di una funzione $f: A \to B$ si indica con $Im(f)$ o $f(A)$ ed è il sottoinsieme di $B$ costituito da tutte le immagini degli elementi di $A$, ovvero:
 		\\
 		$f(A) \subseteq B \ f(A) = \{b \in B \mid \exists a \in A \ con \ f(a) = b \}$
@@ -684,7 +770,7 @@
 		\[
 		f(A') = \{b \in B \mid \exists a \in A' \ con \ f(a) = b\} = \{f(a) \mid a \in A'\}
 		\]
-	\end{tcolorbox}
+	\end{definition}
 	
 	\textbf{Esempio: }
 	\\
@@ -703,7 +789,7 @@
 	\\
 	$f(\mathbbm{N}) = \mathbbm{N} \backslash \{0, 1, 2\}$
 	
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di controimmagine, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Controimmagine}{controimmagine}	
 		Siano $f: A \to B$ una funzione e $Y \subseteq B$. La controimmagine di $Y$ oppure immagine inversa di $Y$, è il sottoinsieme di $A$ costituito da tutti gli elementi la cui immagine è in $Y$.
 		\\
 		Simbolo della controimmagine:
@@ -713,7 +799,7 @@
 		$f^{-1}(Y) \subseteq A = \{a \in A \mid f(a) \in Y\}$
 		\\
 		In particolare $f^{-1}(B) = \{a \in A \mid f(a) \in B\} = A$
-	\end{tcolorbox}	
+	\end{definition}	
 	\textbf{Proprietà: }
 	\\
 	Siano $f: A \to B$ funzione. $X, X' \subseteq A \ e \ Y, Y' \subseteq B$. 
@@ -725,9 +811,9 @@
 		\item $f^{-1}(Y \cap Y') = f^{-1}(Y) \cap f^{-1}(Y')$
 		\item $f^{-1}(Y \cup Y') = f^{-1}(Y) \cup f^{-1}(Y')$
 	\end{enumerate}
-	\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di $f(X \cap X') \subseteq f(X) \cap f(X')$, fonttitle=\bfseries]
+	\begin{proof}{Dimostrazione di $f(X \cap X') \subseteq f(X) \cap f(X')$} \quad \\
 		Sia $b \in f(X \cap X') \subseteq B \\ \Rightarrow b = f(a) \ con \ a \in X \cap X' \\ \Rightarrow b = f(a) \ con \ a \in X \ e \ a \in X' \\ \Rightarrow b \in f(X) \ e \ b \in f(X') \\ \Rightarrow b \in f(X) \cap f(X')$
-	\end{tcolorbox}
+	\end{proof}
 	\textbf{Esempio: }
 	\\
 	$f(X) \cap f(X') \not \subseteq f(X \cap X')$
@@ -746,7 +832,7 @@
 	\\
 	$f(X) \cap f(X') = \{0, 4\} \not \subseteq f(X \cap X') = \{0\}$
 	
-	\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di $f(X \cup X') {=} f(X) \cup f(X')$, fonttitle=\bfseries]
+	\begin{proof}{Dimostrazion di $f(X \cup X') {=} f(X) \cup f(X')$} \quad \\
 		Dobbiamo dimostrare due cose:
 		\begin{enumerate}
 			\item $f(X \cup X') \subseteq f(X) \cup f(X')$
@@ -765,9 +851,9 @@
 					\end{itemize}
 				\end{itemize} 
 		\end{enumerate}
-	\end{tcolorbox}
+	\end{proof}
 	
-	\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di $f^{-1}(Y \cap Y') {=} f^{-1}(Y) \cap f^{-1}(Y')$, fonttitle=\bfseries]
+	\begin{proof}{Dimostrazione di $f^{-1}(Y \cap Y') {=} f^{-1}(Y) \cap f^{-1}(Y')$}
 		Dobbiamo dimostrare due cose:
 		\begin{enumerate}
 			\item $f^{-1}(Y \cap Y') \subseteq f^{-1}(Y) \cap f^{-1}(Y')$
@@ -785,9 +871,9 @@
 					\end{itemize}
 				\end{itemize}
 		\end{enumerate}
-	\end{tcolorbox}
+	\end{proof}
 	
-	\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di $f^{-1}(Y \cup Y') {=} f^{-1}(Y) \cup f^{-1}(Y')$, fonttitle=\bfseries]
+	\begin{proof}{Dimostrazione di $f^{-1}(Y \cup Y') {=} f^{-1}(Y) \cup f^{-1}(Y')$ } \quad \\
 		Dobbiamo dimostrare due cose:
 		\begin{enumerate}
 			\item $f^{-1}(Y \cup Y') \subseteq f^{-1}(Y) \cup f^{-1}(Y')$
@@ -805,21 +891,21 @@
 				\end{itemize}
 			\end{itemize}
 		\end{enumerate}
-	\end{tcolorbox}
+	\end{proof}
 	
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafico, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Grafico}{grafico}
 		Il grafico  di una funzione $f: A \to B$ è il sottoinsieme del prodotto cartesiano $A \times B$ costituito dalle coppie ordinate $(a, f(a))$, al variare di $a \in A$.
-	\end{tcolorbox}	
+	\end{definition}	
 	Prendendo l'esempio precedente il grafico è $\{(a, a^2) \in \mathbbm{R} \times \mathbbm{R} \mid a \in \mathbbm{R}\}$
 	\section{Funzione iniettiva, suriettiva, biunivoca}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di funzione iniettiva, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Funzione iniettiva}{func_iniettiva}	
 		Sia $f: A \to B$ una funzione $f$ è detta iniettiva se elementi distinti di A hanno immagini distinte in B.
 		
 		\[
 		\forall a, a' \in A \ se \ a' \neq a \Rightarrow f(a) \neq f(a')
 		\]
 		Questo equivale a dire che se $f(a) = f(a') \Rightarrow a = a'$  
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Osservazione: }
 	\\
 	$f$ non è iniettiva se $\exists a, a' \in A \ con \ a \neq a' \ e \ f(a) = f(a')$.
@@ -877,11 +963,11 @@
 	f è iniettiva.
 	\\
 	$b \in B \ f^{-1}(b)$ può contenere al massimo un elemento.
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di funzione suriettiva, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Funzione suriettiva}{func_suriettiva}	
 		Sia $f: A \to B$ una funzione $f$ è detta suriettiva se $f(A) = B$ cioè se l'immagine di f è tutto B.
 		$\forall b \in B \  \exists a \in A \mid b = f(a)$.
 		Questo ci dice che la controimmagine $f^{-1}(b)$ è sempre $f^{-1}(b) \neq \emptyset$.   
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Osservazione: }
 	\\
 	f non è suriettiva se $\exists b \in B \ \forall a \in A \ b \neq f(a)$.
@@ -944,10 +1030,15 @@
 	\\
 	h è suriettiva? 
 	\\ 
-	$\forall b \in \mathbbm{R} \ \exists a \in \mathbbm{R} \mid b = h(a)$ ?.
-	\\
-	$h(a) = b \\ \Rightarrow 5a^3 + 2 = b \\ \Rightarrow 5a^3 = b - 2 \\ \Rightarrow a^3 = \frac{b - 2}{5} \\ \Rightarrow a = \sqrt[3]{\frac{b - 2}{5}} \in \mathbbm{R} \ \forall b \in \mathbbm{R}$ ? Si quindi h è suriettiva. 
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di funzione biettiva, fonttitle=\bfseries]	
+	$\forall b \in \mathbbm{R} \ \exists a \in \mathbbm{R} \mid b = h(a)$ ?
+	\begin{align*}
+		h(a) &= b \\
+		\Rightarrow 5a^3 + 2 &= b \\
+		\Rightarrow 5a^3 &= b - 2 \\
+		\Rightarrow a^3 &= \frac{b - 2}{5} \\
+		\Rightarrow a &= \sqrt[3]{\frac{b-2}{5}} \in \mathbb{R} \ \forall b \in \mathbb{R}
+	\end{align*}
+	\begin{definition}{\nmu Funzione biettiva}{func_biettiva}	
 		Sia $f: A \to B$ una funzione. $f$ si dice biettiva se è iniettiva e suriettiva.
 		
 		\[
@@ -956,8 +1047,7 @@
 		$\exists$ perchè è suriettiva e deve essere unica, $!$ perchè è iniettiva.
 		\\
 		Questo ci dice che $\forall b \in B$ la controimmagine $f^{-1}(b)$ contiene un unico elemento.
-	\end{tcolorbox}
-	\newpage
+	\end{definition}
 	\textbf{Esempi: }
 	\\
 	$Id_A \ A \to A \ \forall a \in A \ Id_A(a) = a$ è biettiva
@@ -996,7 +1086,7 @@
 		\item \textbf{f è biettiva:} No perchè la funzione non è nè iniettiva nè suriettiva.
 	\end{enumerate}
 	\section{Composizione di funzioni}
-	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di composizione, fonttitle=\bfseries]	
+	\begin{definition}{\nmu Composizione di funzione}{comp_func}	
 		Siano $f: A \to B \ e \ g: B \to C$ due funzioni. La funzione composizione $g \ composto \ f$ oppure $g \ dopo \ f$ si indica con:
 		\[
 		g \circ f
@@ -1006,7 +1096,7 @@
 	\textbf{Attenzione: }
 	\\
 	$g \circ f \neq f \circ g$
-	\end{tcolorbox}
+	\end{definition}
 	\textbf{Esempio: }
 	\\
 	$f: \mathbbm{N} \to \mathbbm{N} \ \forall x \in \mathbbm{N} \ f(x) = x^2$
@@ -1044,17 +1134,17 @@
 		\item Siano $f: A \to B \ e \ g: B \to C$ funzioni.
 			\begin{itemize}
 				\item Se f e g sono iniettive allora $g \circ f$ è iniettiva ma non è vero il viceversa.
-				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di proprietà dell'iniettività, fonttitle=\bfseries]
+				\begin{proof}{Dimostrazione della proprietà dell'iniettività}
 					f e g sono iniettive $\Rightarrow \\$ f è iniettiva: $\forall a, a' \in A \ f(a) = f(a') \Rightarrow a = a' \\$ g è iniettiva: $\forall b, b' \in B \ g(b) = g(b') \Rightarrow b = b'$ \\ Queste due sono vere.
 					\\
 					$g \circ f: A \to C$ è iniettiva. \\ 
 					$\forall a, a' \in A \ (g \circ f)(a) = (g \circ f)(a') \Rightarrow a = a'$.
 					\\
 					$(g \circ f)(a) = (g \circ f)(a') \Rightarrow g(f(a)) = g(f(a')) \Rightarrow $ g è iniettiva, quindi $f(a) = f(a') \Rightarrow a = a'$.
-				\end{tcolorbox}
+				\end{proof}
 				\newpage
 				\item Se f e g sono suriettive allora $g \circ f$ è suriettiva ma non è vero il viceversa.
-				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di proprietà della suriettività, fonttitle=\bfseries]
+				\begin{proof}{Dimostrazione della proprietà della suriettivià}
 					f e g sono suriettive $\Rightarrow \\$ f è suriettiva: $\forall b \in B \ \exists a \in A \mid f(a) = b \\$ g è suriettiva: $\forall c \in C \ \exists b \in B \mid g(b) = c$ \\ Queste due sono vere.
 					\\
 					$g \circ f: A \to C$ è suriettiva. \\ 
@@ -1064,7 +1154,7 @@
 					Dato che f è suriettiva e quindi $f(a) = b$ e g è suriettiva quindi $g(b) = c$, questo equivale a dire:
 					\\
 					$g(f(a)) = c \Rightarrow g(b) = c$ e quindi $(g \circ f)(a)$ è suriettiva.
-				\end{tcolorbox}
+				\end{proof}
 				\item Se f e g sono biettiva allora $g \circ f$ è biettiva ma non è vero il viceversa.
 			\end{itemize}
 	\end{enumerate}
@@ -1095,7 +1185,7 @@
 			\end{itemize}
 	\end{enumerate}
 	\section{Funzione inversa}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di funzione inversa, fonttitle=\bfseries]
+		\begin{definition}{\nmu Funzione inversa}{func_inversa}
 			Sia $f: A \to B$ una funzione. \\
 			 La funzione $f$ si dice invertibile se: 
 			 \[\exists g: B \to A \mid f \circ g = Id_{B} \ e \ se \ g \circ f = Id_{A}
@@ -1107,10 +1197,10 @@
 				f^{-1}: B \to A
 			\]
 			Questa funzione la chiamiamo funzione \textbf{inversa}.
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+		\end{definition}
+		\begin{theorem}{}{}
 			Sia $f: A \to B$ una funzione. La funzione $f$ è invertibile $\iff$ $f$ è biettiva.
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Osservazione: }
 		\\
 		Se f non è biettiva allora non esiste la funzione inversa.
@@ -1167,15 +1257,15 @@
 		$A = \{x, a, b\}$ e $B = \{t, s, v, w\}$.
 		\\
 		$A$ contiene 3 elementi e $B$ ne contiene 4.
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di equipotenza, fonttitle=\bfseries]
-		Due insiemi A e B si dicono EQUIPOTENTI o hanno la stessa cardinalità se esiste una funzione biettiva tra loro. 
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di $J_n$, fonttitle=\bfseries]
+		\begin{definition}{\nmu Equipotenza}{equipotenza}
+		Due insiemi $A$ e $B$ si dicono \textit{equipotenti} o hanno la stessa cardinalità se esiste una funzione biettiva tra loro. 
+		\end{definition}
+		\begin{definition}{\nmu $J_n$}{j_N}
 			$\forall n \in \mathbbm{N}^* \ J_n = \{1, 2, ..., n\}. \\ J_1 = \{1\}, J_2 = \{1, 2\}$
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme finito, fonttitle=\bfseries]
-			Un insieme $A \neq \emptyset$ si dice finito se A è equipotente a $J_n$ per $n \in \mathbbm{N}^*$. \\ In tal caso diremo che A ha cardinalità $n$ e scriveremo $\mid A \mid = n$
-		\end{tcolorbox}
+		\end{definition}
+		\begin{definition}{\nmu Insieme finito}
+			Un insieme $A \neq \emptyset$ si dice finito se $A$ è equipotente a $J_n$ per $n \in \mathbbm{N}^*$. \\ In tal caso diremo che A ha cardinalità $n$ e scriveremo $\mid A \mid = n$
+		\end{definition}
 		\textbf{Osservazione: }
 		\\
 		Se $A = \emptyset$ si dice che è finito con zero elementi. $\mid \emptyset \mid = 0$
@@ -1185,9 +1275,9 @@
 			\item Se A è un insieme finito non esistono sottoinsieme propri con la stessa cardinalità;
 			\item Se A e B sono finiti $\mid A \mid = \mid B \mid$ allora $f: A \to B$ è iniettiva $\iff$ è suriettiva.
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme infinito, fonttitle=\bfseries]
+		\begin{definition}{\nmu Insieme infinito}{insieme_inf}
 			Un insieme $A \neq \emptyset$ è infinito se $A$ non è finito $\iff \exists $ un sottoinsieme proprio con stessa cardinalità $\iff \exists $ funzioni $A: \to A$ che sono iniettive ma non suriettive.  
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempio: }
 		\\
 		$f: \mathbbm{N} \to \mathbbm{N} \forall n \in \mathbbm{N} \ f(n) = 2n$
@@ -1211,9 +1301,9 @@
 			
 			\item $A = \{a, b, c\}$ allora $\wp(A) = \{\{\emptyset\}\ , \{a\}, \{b\}, \{a, b\}, \{c\}, \{a, c\}, \{b, c\}, \{a,b,c\}\}$;			
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA insieme delle parti, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Insieme delle parti}{insieme_parti}
 			Se $\mid A \mid = n$ allora $\mid \wp(A) \mid = 2^n \ \forall n \in \mathbbm{N}$.  
-		\end{tcolorbox}
+		\end{theorem}
 		Tuttavia, questo teorema è facile da dimostrare con valori di $n$ non troppo grandi, ma $\mathbbm{N}$ è infinito.
 		Per dimostrare questo $\forall n \in \mathbbm{N}$ applichiamo il \textbf{principio di induzione.}
 		Il principio di induzione ha \textbf{due forme}.
@@ -1279,7 +1369,7 @@
 			\end{itemize}
 			Per il principio di induzione $\forall n \in \mathbbm{N} \ P(n)$ è vera. 	
  		\end{enumerate}
- 		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA insieme delle parti, fonttitle=\bfseries]
+ 		\begin{proof}{Dimostrazione del teorema dell'\namerefl{th:insieme_parti}} \quad \\
  			Se $\mid A \mid = n$ allora $\mid \wp(A) \mid = 2^n \ \forall n \in \mathbbm{N}$.  \\
  			Dimostriamolo applicando il principio di induzione. 
  			\begin{itemize}
@@ -1297,14 +1387,14 @@
  				Allora in tutto ci sono $2^k + 2^k = 2*2^k = 2^{k + 1}$ sottoinsiemi $\Rightarrow \mid \wp(A) \mid \ = 2^{k + 1} \Rightarrow P(k + 1)$ è vera.
  			\end{itemize} 
  			Allora $P(n)$ è vera $\forall n \in \mathbbm{N}$.
- 		\end{tcolorbox}
+ 		\end{proof}
  		\chapter{Successioni}
  		Dato un insieme, ci ricordiamo che non importa l’ordine in cui sono disposti gli elementi. Abbiamo visto $\{a, b, c, d\} = \{b, c, a, d\}$.
  		Ora siamo interessati a risolvere un altro problema: vogliamo disporre gli elementi
  		ricordandoci l’ordine, (chi viene prima e chi viene dopo). Quindi etichettiamo gli oggetti
  		con i numeri naturali e questa etichetta ci ricorda l’ordine-la posizione.
  		\subsection{Definizione di successione, definizione di successione ricorsiva e di formula chiusa}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di successione, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Succesione}{successione}
  			Una successione in un insieme $A$ è una funzione $f: \mathbbm{N} \to A$ (più in generale $f$ da un sottoinsieme di $\mathbbm{Z}$ in $A$).
  			Notazione:
  			\[
@@ -1317,7 +1407,7 @@
  			\[
  			\{a_n\}_{n \in \mathbbm{N}}
  			\]
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $f: \mathbbm{N} \to \mathbbm{N} \hspace{0.5cm} \forall n \in \mathbbm{N} \hspace{0.5cm} f(n) = 2n$
@@ -1339,9 +1429,9 @@
  			$a_0 = 1 \\ a_1 = a_{1 - 1} + 3 = a_0 + 3 = 1 + 3 = 4 \\ a_2 = a_{2 - 1} + 3 = a_1 + 3 = 4 + 3 = 7$. \\ 
  			Questa è una successione definita per ricorsione.
  		\end{enumerate}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di successione ricorsiva, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Successione ricorsiva}{succ_ricorsiva}
  			Una successione si dice ricorsiva o definita per ricorrenza se si definiscono i valori iniziali e il termine n\_esimo è definito in funzione dei termini precedenti.
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $\{a_n\}_{n \in \mathbbm{N}} = \begin{cases}
@@ -1372,12 +1462,9 @@
  				a_n = a_{n - 1} \cdot n \hspace{0.7cm} n > 0
  			\end{cases}$		
  		\end{enumerate}
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di formula chiusa, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Formula chiusa}{formula_chiusa}
  			La formula chiusa di una successione ricorsiva è una formula che esprime il termine n\_esimo in funzione di n e non dei termini precedenti.
- 		\end{tcolorbox}
- 		 \begin{tcolorbox}[colframe=orange!75!black, colback=white!5!white, title=Osservazione formula chiusa, fonttitle=\bfseries]
- 			Noi non troviamo le formule chiuse ma le verifichiamo
- 		\end{tcolorbox}
+ 		\end{definition}
  	
  		Data $\{a_n\}_{n \in \mathbbm{N}}$ successione ricorsiva. \\
  		$\{b_n\}_{n \in \mathbbm{N}}$ è la formula chiusa se $\forall n \in \mathbbm{N} \ a_n = b_n$
@@ -1508,13 +1595,13 @@
  			$P(n)$ vera $\forall n \in \mathbbm{N}$
  		\end{itemize}
  		\section{Simbolo di sommatoria}
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=Simbolo di sommatoria, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Simbolo di sommatoria}{sommatoria}
  			Sia $\{a_n\}_{n \in \mathbbm{N}}$ una successione.
  			\[
  			\sum_{i=0}^{n}a_i = a_0 + a_1 + a_2 + ... + a_n
  			\]
  			Si legge sommatoria per $i$ che va da $0$ ad $n$ di $a_i$, cioè la somma di $a_i$ per $i = 0$ a $n$.
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Esempi:}
   		\begin{enumerate}
   			\item $\mathlarger{\sum_{i = 0}^{n}i} = 0 + 1 + 2 + ... + n$
@@ -1673,28 +1760,24 @@
   					\item $\mathlarger{\binom{n}{k} = \binom{n}{n - k} = \frac{n!}{(n - k!) \cdot (n - (n - k))!} = \frac{n!}{(n - k)! \cdot k!}}$
   					\item $\mathlarger{\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}}$.
   				\end{enumerate}
-  				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di $\mathlarger{\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}}$, fonttitle=\bfseries]	
+  				\begin{proof}{Dimostrazione di: \[\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}\]} \quad \\	
   					
 					$\mathlarger{\binom{n + 1}{k} = \frac{(n + 1)!}{k! \cdot (n + 1 - k)!}}$ \\
 					
 					$\\ \mathlarger{\binom{n}{k-1} = \frac{n!}{(k - 1)!  (n - k + 1)!}}= \mathlarger{\frac{n!}{(k - 1)! (n-k+1)(n-k)!}} \\$ \\ 
 					$\\ \mathlarger{\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!} = \frac{n!}{k(k - 1)! \cdot (n - k)!}} \\$ \\
 					$\\ \mathlarger{\binom{n}{k} + \binom{n}{k - 1} = \frac{n!(n-k+1) + n!k}{k(k - 1)!\cdot (n-k+1)(n-k)!}} = \\ \\ \mathlarger{\frac{n!(n + 1)}{k(k - 1)!\cdot (n-k+1)(n-k)!} = \frac{(n+1)!}{k!\cdot (n+1-k)!} = \binom{n + 1}{k}}$
-  				\end{tcolorbox}
+  				\end{proof}
   				Perchè si chiamano coefficienti binomiali?\\
   				Perchè esiste la \textbf{Formula di Newton} che dice: \\
-  				$\forall n \in \mathbbm{N} \hspace{0.5cm} (x + y)^n = \mathlarger{\sum_{k=0}^{n}\binom{n}{k}x^ky^{n - k}}$. \\
-  				\textbf{Vedere come extra i numeri di Tartaglia} \\
-  				\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA insieme delle parti, fonttitle=\bfseries]
-  					Se $|A|=n$ allora $|\wp(A)\}| = 2^n\ \ \forall\ n \geq 0$.
-  					\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+  				$\forall n \in \mathbbm{N} \hspace{0.5cm} (x + y)^n = \mathlarger{\sum_{k=0}^{n}\binom{n}{k}x^ky^{n - k}}$. 
+  					\begin{proof}{Dimostrazione del teorema dell'\namerefl{th:insieme_parti} con coefficiente binomiale} \quad \\
   						$\wp(A) = \{x \mid x \subseteq A\}$ \\
   						Se $|A| = n \quad x \subseteq A$ puoi avere $0,1,2 \dots n$ elementi \\
   						Se $|X| = k$ i sottoinsiemi sono $\mathlarger{\binom{n}{k}}$. \\
   						$|\wp(A)| = \mathlarger{\sum_{k=0}^{n}\binom{n}{k}=\sum_{k=0}^{n}\binom{n}{k}1^k\cdot1^{n-k}=(1+1)^n}$ \\
   						Questo corrisponde alla formula di Newton.
-  					\end{tcolorbox}
-  				\end{tcolorbox}
+  					\end{proof}
   				
   				\textbf{Esercizio:} \\
   				Ci sono 4 amici. In quanti modi possiamo:
@@ -1762,14 +1845,14 @@
   			\end{enumerate}
   		\end{enumerate}
   		\chapter{Relazione}
-  		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di relazione, fonttitle=\bfseries]	
+  		\begin{definition}{\nmu Relazione}{relazione}
   			Sia $A$ un insieme non vuoto. Una relazione (binaria) sull'insieme è un sottoinsieme del prodotto cartesiano $A \times A$. \\
   			Il simbolo di relazione è:
   			\[
   			\mathscr{R} \subseteq A \times A = \{(a,b) \mid a \in A, b \in B\}
   			\]
   			Se $(a,b) \in \mathscr{R}$ si scrive anche $a\mathscr{R}b$ e si legge "$a$ è in relazione con $b$"
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Esempio:} $A = \mathbbm{Q} \quad \mathscr{R} \subseteq \mathbbm{Q} \times \mathbbm{Q}$ \\
   		$\mathscr{R} = \{(a,b) \in \mathbbm{Q} \times \mathbbm{Q} \mid 2b-6a=4\}$ \\
   		Stessa cosa di dire: $\forall a,b \in \mathbbm{Q} \quad a\mathscr{R}b \iff 2b-6a=4$ \\
@@ -1787,14 +1870,14 @@
   		Se $\mathscr{R}=A \times A$ si parla di relazione totale, quindi tutti gli elementi sono in relazione tra loro. \\
   		Se $\mathscr{R} = \{(a,a) \mid a \in A\}$ si parla di relazione identica o identità, quindi un elemento è solo in relazione con se stesso. \\
   		\section{Relazioni di ordine parziale}
-  		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di relazione di ordine parziale, fonttitle=\bfseries]	
+  		 \begin{definition}{\nmu Relazione di ordine parziale}{rel_ordine_parziale}	
   			Una relazione $\mathscr{R}$ sull'insieme $A \neq \emptyset$ si dice \textit{relazione di ordine parziale o di ordine}, se verifica le seguenti proprietà:
   			\begin{enumerate}
   				\item Proprietà riflessiva: $\forall a \in A$ allora $a\mathscr{R}a$
   				\item Proprietà antisimmetrica: $\forall a,b \in A$ se $a\mathscr{R}b$ e $b\mathscr{R}a \Rightarrow a=b$
   				\item Proprietà transitiva: $\forall a,b,c \in A$ se $a\mathscr{R}b$ e $b\mathscr{R}c \Rightarrow a\mathscr{R}c$
   			\end{enumerate}
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Osservazioni:}
   		\begin{enumerate}
   			\item Per non essere riflessiva basta che $\exists a \in A \mid a \centernot{\mathscr{R}}a$
@@ -1836,18 +1919,18 @@
   			$\mathscr{R}$ è di ordine parziale.
   		\end{enumerate}
  
-  		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di relazione POSET, fonttitle=\bfseries]	
+  		 \begin{definition}{\nmu Relazione di POSET}{rel_poset}	
   			Un insieme $A \neq \emptyset$ si dice \textit{parzialmente ordinato} (POSET) se è definita su $A$ una relazione di ordine parziale. \\
   			Notazione:
   			\[
   			(A, \mathscr{R})
   			\]
   			Questo indica un insieme parzialmente ordinato.
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Esempio:} Nel caso di prima $(\mathbbm{N}, \mathscr{R} = \leq) = (\mathbbm{N}, \leq)$ insieme parzialmente ordinato.
-  		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di relazione totalmente ordinata, fonttitle=\bfseries]	
+  		\begin{definition}{\nmu Relazione totalmente ordinata}{rel_totalmente_ordinata}	
   		Un insieme $A$ si dice \textit{totalmente ordinato} se è parzialmente ordinato e se ogni coppia di elementi è confrontabile, ovvero se $\forall a, b \in A$ è vero che $a\mathscr{R}b$ oppure $b\mathscr{R}a$
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Esempio:} Nell'esercizio di prima $(\mathbbm{N}, \leq) \quad \forall a,b \in \mathbbm{N}$ o $\exists x \in \mathbbm{N} \mid b = a + x$ oppure $\exists y \in \mathbbm{N} \mid a = b + y$, quindi $(\mathbbm{N}, \leq)$ è totalmente ordinato. \\
   		\textbf{Esempio:} \\
   		Sia $A = \mathbbm{Z} \quad \mathscr{R} = \{(x, y) \in \mathbbm{Z} \times \mathbbm{Z} \mid x \cdot y \ dispari\}$ \\ 
@@ -1872,14 +1955,14 @@
   		\end{itemize}
 		La relazione non è di ordine parziale e di conseguenza non è di ordine totale.
 		\section{Relazioni di equivalenza}
-		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di relazione di equivalenza, fonttitle=\bfseries]	
+		 \begin{definition}{\nmu Relazioni di equivalenza}{rel_equivalenza}	
 			Un relazione $\mathscr{R}$ su un'insieme $A \neq \emptyset$ si dice relazione di equivalenza se valgono le seguenti proprietà:
 			\begin{enumerate}
 				\item $\mathscr{R}$ è riflessiva: $\forall a \in A \quad a \mathscr{R} a$
 				\item $\mathscr{R}$ è simmetrica: $\forall a,b \in A$ se $a \mathscr{R} b$ allora $b \mathscr{R} a$
 				\item $\mathscr{R}$ è transitiva: $\forall a,b,c \in A$ se $a \mathscr{R}$ e $b \mathscr{R} c$ allora $a \mathscr{R} c$
 			\end{enumerate}
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Osservazioni:}
 		\begin{enumerate}
 			\item Per non essere simmetrica: $\exists a,b \in A \mid a \mathscr{R} b$ e $b \centernot{\mathscr{R}} a$
@@ -1950,7 +2033,7 @@
 		\end{itemize}
 		$\mathscr{R}$ non è di ordine parziale e quindi non è di ordine totale. $\mathscr{R}$ è di equivalenza.
 		\section{Classe di equivalenza e insieme quoziente}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di classe di equivalenza, fonttitle=\bfseries]	
+		\begin{definition}{\nmu Classe di equivalenza}{classe_equivalenza}	
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$. \\
 			Si definisce classe di equivalenza modulo $\mathscr{R}$ di un elemento $a \in A$ l'insieme di tutti gli elementi di $A$ che sono in relazione con $a$. \\
 			Notazione:
@@ -1958,7 +2041,7 @@
 			[a]_\mathscr{R} \subseteq A
 			\]
 			$[a]_\mathscr{R} = \{b \in A \mid b \mathscr{R} a\} = \{b \in A \mid a \mathscr{R} b\}$ sono uguali perchè $\mathscr{R}$ è di equivalenza quindi $\mathscr{R}$ è simmetrica, questo è l'insieme di tutti gli elementi equivalenti ad $a$
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item Relazione totale, cioè $\mathscr{R} = A \times A$ su $A$, cioè ogni elemento è in relazione con ogni elemento, è di equivalenza \\
@@ -1981,15 +2064,15 @@
 			$y \in [a]_\mathscr{R} \Rightarrow y \mathscr{R} a$ visto che $\mathscr{R}$ è simmetrica $\Rightarrow a \mathscr{R} y$ quindi $\mathscr{R}$ è transitiva. \\
 			\textbf{Tutti gli elementi di una classe di equivalenza sono tutti in relazione fra loro}
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]	
+		\begin{theorem}{}{}
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$ Allora.
 			\begin{enumerate}
 				\item $\forall a \in A$ si ha che $a \in [a]_\mathscr{R}$
 				\item $\forall a,b \in A$ si ha che $a \mathscr{R} b \iff [a]_\mathscr{R} = [b]_\mathscr{R}$, cioè due elementi equivalenti tra loro hanno la stessa classe di equivalenza
 				\item $\forall a, b \in A$ si ha che $[a]_\mathscr{R} \neq [b]_\mathscr{R} \iff [a]_\mathscr{R} \cap [b]_\mathscr{R} \neq \emptyset$, cioè se due classi sono diverse, allora sono disgiunte, cioè non hanno elementi in comune
 			\end{enumerate}
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF partizione di un insieme, fonttitle=\bfseries]	
+		\end{theorem}
+		\begin{definition}{\nmu Partizione di un insieme}{partizione_insieme}	
 			Sia $A \neq \emptyset$. \\
 			Una partizione dell'insieme $A$ è una famiglia di sottoinsiemi $\{A_i\}$ tali che :
 			\begin{enumerate}
@@ -1997,11 +2080,11 @@
 				\item $\forall i \neq j \quad A_i \cup A_j = \emptyset$
 				\item $\cup A_i = A$
 			\end{enumerate}
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]	
+		\end{definition}
+		\begin{theorem}{}{}	
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$. \\
 			Le classi di equivalenza di $\mathscr{R}$ costituiscono una partizione di $A$ e viceversa: ogni partizione definisce una relazione di equivalenza
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Esempio:} Sia $A = \mathbbm{Z}$ \\
 		$\forall a, b \in \mathbbm{Z} \quad a \mathscr{R} b \iff \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k$ \\
 		$\mathscr{R}$ è riflessiva? simmetrica? antisimmetrica? transitiva? di ordine parziale e totale? di equivalenza? $[a]_\mathscr{R}$? 
@@ -2026,14 +2109,14 @@
 		\end{itemize}
 		$\mathscr{R}$ non è di ordine parziale e quindi non è di ordine totale ma è relazione di equivalenza. \\
 		$[a]_\mathscr{R} = \{b \in \mathbbm{Z} \mid a \mathscr{R} b\} = \{b \in \mathbbm{Z} \mid \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k\} = \\ = \{b \in \mathbbm{Z} \mid \exists k \in \mathbbm{Z} \mid b = \dfrac{11k - 3a}{8}\}$
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di insieme quoziente, fonttitle=\bfseries]	
+		\begin{definition}{\nmu Insieme quoziente}{insieme_quoziente}	
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$. \\
 			Si definisce l'insieme quoziente di $A$ rispetto ad $\mathscr{R}$ l'insieme delle classi di equivalenza. \\
 			Notazione:
 			\[
 			\sfrac{A}{\mathscr{R}} = \{\text{classi di equivalenza} \} = \{[a]_\mathscr{R} \mid a \in A\}
 			\]
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Osservazione:} Se $a\mathscr{R}b$ allora $[a]_\mathscr{R} = [b]_\mathscr{R}$ e quindi va considerata una unica volta in $\sfrac{A}{\mathscr{R}}$. Gli elementi equivalenti in $A$ danno lo stesso elemento nel quoziente. \\
 		\textbf{Esempio:} $A = \{1,3,4,5,6,7,8,9\}$ \\
 		$\forall a,b \in A \quad a\mathscr{R}b \iff a - b\ pari$. \\
@@ -2070,11 +2153,11 @@
 			Il nostro problema è capire l'insieme quoziente e questa è una cosa che affronteremo più tardi. \\
 		\end{enumerate}		
 		\chapter{Divisione in $\mathbbm{Z}$}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di divisione in $\mathbbm{Z}$, fonttitle=\bfseries]	
+		\begin{definition}{\nmu Divisione in $\mathbbm{Z}$}{divisione_z}	
 			Sia $a, b \in \mathbbm{Z}$. \\
 			Diremo che $a$ divide $b$ e scriveremo $a|b$ se esiste un numero intero $c \in \mathbbm{Z}$ tale che $b = a \cdot c$ \\
 			Se $a$ non divide $b$, scriveremo $a\centernot{|}b$
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempio}: $2|4$ ? $\exists c \in \mathbbm{Z} \mid 4 = 2 \cdot c$ ? Si, $\exists c = 2$ \\
 		\textbf{Osservazione:} Se $a|b$ si legge $a$ divide $b$ oppure si può dire $a$ è un divisore di $b$, oppure $b$ è divisibile per $a$, oppure che $b$ è un multiplo di $a$. \\
 		Se $a\centernot{|}b$, $b$ non è multiplo, $b$ non è divisibile, $a$ non è un divisore. \\
@@ -2099,17 +2182,19 @@
 			Quindi $c=h=1$ o $c=h=-1 \implies b = a \cdot c \implies b = a \cdot 1 = a$ oppure $b = a \cdot (-1) = -a \implies$ se $a|b$ e $b|a$ allora $a=\pm b$ si dice che $a$ e $b$ sono associati 
 			\item Se $a|b$ allora $\forall t \in \mathbbm{Z} \quad a \cdot t|b \cdot t$ 
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM teorema della combinazione lineare o T.C.L, fonttitle=\bfseries]	
-			Siano $a,b,c \in \mathbbm{Z}$. Se $c|a$ e $c|b$ allora $\forall x,y \in \mathbbm{Z}$ si ha che $c|ax + by$. \\
-			$ax + by$ si chiama combinazione lineare di $a$ e $b$. \\
-			\textbf{Esempio:} Se $2|a$ e $2|b$ allora $2|ax + by$ \\
-			\textbf{Dimostrazione} \\
+		\begin{theorem}{\nmu Combinazione lineare o T.C.L}{comb_lineare}
+				Siano $a,b,c \in \mathbbm{Z}$. Se $c|a$ e $c|b$ allora $\forall x,y \in \mathbbm{Z}$ si ha che $c|ax + by$. \\
+			$ax + by$ si chiama combinazione lineare di $a$ e $b$.
+		\end{theorem}
+		\textbf{Esempio:} Se $2|a$ e $2|b$ allora $2|ax + by$ 
+		
+		\begin{proof}{Dimostrazione del teorema della \namerefl{th:comb_lineare}} \quad \\		
 			$c|a$ e $c|b$ allora: \\
 			$c|a \implies \exists h \in \mathbbm{Z} \mid a = ch$ \\
 			$c|b \implies \exists t \in \mathbbm{Z} \mid b = ct$ \\
 			$\forall x, y \in \mathbbm{Z} \quad ax + by = chx + cty = c \cdot (hx + ty) \implies c | ax + by$ perchè $(hx + ty) \in \mathbbm{Z}$. \\
 			Questo è vero perchè $c|ax + by$ significa che $\exists k \in \mathbbm{Z} \mid ax + by = ck$ e $\exists k = (hx + ty) \in \mathbbm{Z}$. 
-		\end{tcolorbox}
+		\end{proof}
 		\textbf{Esercizio}: Dimostrare che $\forall n \in \mathbbm{N} \quad 3|4^n + 2$. \\
 		$P(n): 3|4^n + 2 \quad \forall n \in \mathbbm{N}$ dimostrare che è vera. \\
 		Applichiamo il principio d'induzione.
@@ -2130,11 +2215,11 @@
 			Con il T.C.L, $3|somma$ ovvero $3|3\cdot 4^k + 4^k + 2 = 4^{k + 1} + 2 \implies P(k + 1)$ vera. \\
 			$P(n)$ vera $\forall n \in \mathbbm{N}$  
 		\end{itemize}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA Divisione in $\mathbbm{Z}$, fonttitle=\bfseries]	
+		\begin{theorem}{\nmu Divisione in $\mathbbm{Z}$}{teorema_divisione_Z}	
 			Siano $a,b$ numeri interi in $\mathbbm{Z}$ con $b \neq 0$. \\
 			Allora esistono e sono univocamente determinati $q,r \in \mathbbm{Z}$ tali che: \[a = b \cdot q + r \qquad \qquad 0 \leq r \leq |b|\]
 			Dove $q$ = quoziente e $r$ = resto.
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Esempi: }$a \geq 0 \quad b > 0$.
 		\begin{enumerate}
 			\item Se $a = 0 \quad 0 = b \cdot 0 + 0$
@@ -2151,7 +2236,7 @@
 			$-97 = -16 \cdot 6 -1 + 6 - 6 = 6 \cdot (-16 - 1) -1 + 6 = -17 \cdot 6 + 5 \implies -97 = 17 \cdot (-6) + 5$
 		\end{enumerate}
 		\section{Massimo comune divisore}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di Massimo Comune Diviore, fonttitle=\bfseries]	
+		\begin{definition}{\nmu Massimo comune divisione}{mcm}	
 			Siano $a,b \in \mathbbm{Z}$ non entrambi nulli. Un massimo comun divisore tra $a$ e $b$ è un intero $d \in \mathbbm{Z}$ tale che:
 			\begin{enumerate}
 				\item $d|a$ e $d|b$ quindi divide entrambi
@@ -2161,7 +2246,7 @@
 			\[
 			MCD(a,b)
 			\]
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempio:} $a = 18$ e $b = 12$ \\
 		$3|18$ e $3|12$ 3 è il massimo? No. \\
 		$6|18$ e $6|12$ 6 soddisfa la prima e la seconda proprietà infatti $3|6$. \\
@@ -2178,12 +2263,12 @@
 			\item Se $b|a \quad MCD(a, b) = |b|$
 			\item Se $d = MCD(a,b)$ allora $MCD\Bigl(\dfrac{a}{d}, \dfrac{b}{d}\Bigl ) = 1$
 		\end{enumerate} 
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di numeri coprimi, fonttitle=\bfseries]	
+		\begin{definition}{\nmu Numeri coprimi}{numeri_coprimi}	
 			Siano $a,b \in \mathbbm{Z}$ non entrambi nulli. \\
 			$a$ e $b$ si dicono \textit{coprimi} se $MCD(a,b) = 1$, cioè sono primi fra loro 
-		\end{tcolorbox}
+		\end{definition}
 		\section{Minimo comune multiplo}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di Minimo Comune Multiplo, fonttitle=\bfseries]	
+		\begin{definition}{\nmu Minimo Comune Multiplo}{min_com_mul}	
 			Siano $a,b \in \mathbbm{Z}^*$.\\
 			Un minimo comune multiplo tra $a$ e $b$ è un numero intero $m \in \mathbbm{Z}$ tale che:
 			\begin{enumerate}
@@ -2194,7 +2279,7 @@
 			\[
 			mcm(a,b)
 			\]
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempio:} $a = 12 \quad b = 18$
 		$m = 180 \quad 18 | 180$ Si, $180 = 18 \cdot 10$ \\
 		$12 |180$ Si, $180 = 12 \cdot 15$ \\
@@ -2205,10 +2290,10 @@
 		\textbf{Come sono legati $MCD(a,b)$ e $mcm(a,b)$?} \\
 		\textbf{Formula:} \[a \cdot b = MCD(a, b) \cdot mcm(a,b)\] \\
 		\textbf{Esempio:} $a = 12 \quad b = 18 \quad MCD(12,18) = 6 \quad mcm(12,18) = 36$ quindi secondo la formula: $12 \cdot 18 = 6 \cdot 36$
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]	
+		\begin{theorem}{\nmu Idendità di Bézout}{Bézout}	
 			Per ogni coppia di interi $a,b \in \mathbbm{Z}$ non entrambi nulli esiste il $MCD(a,b)$ e può essere scritto come \textit{combinazione lineare di $a$ e $b$}, ovvero $\exists x,y \in \mathbbm{Z} \mid MCD(a,b) = ax + by$, questa equazione qua si chiama \textbf{\textit{identità di Bézout}}
-		\end{tcolorbox} 
-		\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM di identità di Bézout, fonttitle=\bfseries, breakable]
+		\end{theorem} 
+		\begin{proof}{Dimostrazione dell'\namerefl{th:Bézout}} \quad \\
 			Per dimostrare questa l'identità di Bézout utilizziamo \textit{l'algoritmo di Euclide.} \\
 			\textbf{Possibili casi:}
 			\begin{enumerate}
@@ -2259,7 +2344,7 @@
 			Questo lo dimostriamo utilizzando l'algoritmo percorrendolo nel senso corretto. \\
 			Passo 1: $r_1$ è la combinazione lineare di $a$ e $b$ e lo sostituisco nel passo 2. \\
 			Passo 2: $r_2$ è la combinazione lineare di $a$ e $b$ e sostituisco $r_n$ come combinazione lineare di $a$ e $b$.
-		\end{tcolorbox}		
+		\end{proof}		
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $a = 200$ e $b = 16$, trovare MCD e identità di Bézout. \\
@@ -2291,13 +2376,13 @@
 			$10 = -3110(11) - 580(-59) \quad x = 11$ e $y = -59$
 		\end{enumerate} 
 		\chapter{Equazioni diofantee}
-			\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di equazioni diofantee, fonttitle=\bfseries]	
+			\begin{definition}{\nmu Equazioni diofantee}{eq_diofantee}	
 				Una equazione diofantea è una equazione della forma: 
 				\[
 				ax + by = c \quad \quad a,b,c \in \mathbbm{Z}
 				\]
 				della quale cerchiamo soluzioni intere, cioè trovare $x_0, y_0  \in \mathbbm{Z}$ tale che $a \cdot x_0 + b \cdot y_0 = c$
-			\end{tcolorbox} 
+			\end{definition} 
 			\textbf{Esempi:}
 			\begin{enumerate}
 				\item $7x + 10y = 0$ \\
@@ -2310,13 +2395,13 @@
 				\item $2x + 4y = 3$ \\
 				Non ha soluzioni, perchè $2x + 4y$ è sempre pari e non potrà mai dare un numero dispari.
 			\end{enumerate}
-			\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA equazioni diofantea, fonttitle=\bfseries]	
-				L'equazione diofantea: 
+			\begin{theorem}{\nmu Equazioni diofantee}{teorema_eq_diofantee}
+							L'equazione diofantea: 
 				\[
 				ax + by = c \quad \quad a,b,c \in \mathbbm{Z}
 				\]
 				ammette soluzione se e solo se il $MCD(a,b) | c$
-				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]	
+				\begin{proof}{Dimostrazione del teorema sulle \namerefl{th:teorema_eq_diofantee}}\quad \\
 					($\Longrightarrow$) Supponiamo che $ax + by = c$ ammette soluzioni: \\
 					$\exists x_0, y_0 \in \mathbbm{Z} \mid ax_0 + by_0 = c$ \\
 					Il $MCD(a,b)$ è tale che $MCD(a,b) | a$ e $MCD(a,b) | b$ \\
@@ -2324,9 +2409,9 @@
 					($\Longleftarrow$) Se $MCD(a,b) | c \implies \exists k \in \mathbbm{Z} \mid c = MCD(a,b) \cdot k$ \\
 					L'identità di Bézout ci dice che $\Rightarrow \exists \alpha, \beta \in \mathbbm{Z} \mid a\cdot \alpha + b \cdot \beta = MCD(a,b)$\\
 					Moltiplichiamo per $k$ e otteniamo $a \cdot \alpha \cdot k + b \cdot \beta \cdot k = MCD(a,b) \cdot k = c$ quindi $a \cdot \alpha \cdot k$ e $b \cdot \beta \cdot k$ è soluzione.
-				\end{tcolorbox} 
-			\end{tcolorbox} 
-			\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA equazioni diofantea, fonttitle=\bfseries]	
+				\end{proof} 
+			\end{theorem} 
+			\begin{theorem}{}{}	
 				Sia: 
 				\[
 				ax + by = c \quad \quad a,b,c \in \mathbbm{Z}
@@ -2336,7 +2421,7 @@
 				(x,y) = \Bigl(x_0 - \dfrac{b}{MCD(a,b)} \cdot t, y_0 + \dfrac{a}{MCD(a,b)} \cdot t\Bigr) \quad \forall t \in \mathbbm{Z}
 				\]
 				\textbf{Osservazione:} Se esiste una soluzione allora esistono infinite soluzioni
-				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+				\begin{proof} \quad \\
 					Verifichiamo che quelle scritte precedentemente sono soluzioni. \\
 					$
 					ax + by = a\Bigl(x_0 + \dfrac{b}{MCD(a,b)} \cdot t\Bigr) + b\Bigl(y_0 + \dfrac{a}{MCD(a,b)} \cdot t\Bigr)
@@ -2348,8 +2433,8 @@
 					\[
 					(x,y) = \Bigl(x_0 + \dfrac{b}{MCD(a,b)} \cdot t, y_0 - \dfrac{a}{MCD(a,b)} \cdot t\Bigr) \quad \forall t \in \mathbbm{Z}
 					\]
-				\end{tcolorbox} 
-			\end{tcolorbox} 
+				\end{proof} 
+			\end{theorem} 
 			\textbf{Esempi:}
 			\begin{enumerate}
 				\item $7x + 10y = 0 \quad (x_0, y_0) = (0, 0) \quad MCD(7,10) = 1$ \\
@@ -2388,19 +2473,19 @@
 			$7 = 6 + 1 \Rightarrow 1 = 7 - 6 = a - 2b - 3b + a = 2a - 5b$, moltiplico per 2: $2 = 4a - 10b \Rightarrow (4, -10)$ è soluzione \\
 			$(x,y) = (4 - 13t, -10 + 33t) \quad \forall t \in \mathbbm{Z}$
 		\section{Numeri primi} 
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di numeri primi, fonttitle=\bfseries]
+		\begin{definition}{\nmu Numeri primi}{num_primi}
 			Un numero $p \in \mathbbm{Z}$ con $p \neq 0,1,-1$ si dice primo se è divisibile solo per $1, -1, -p, +p$ equivalentemente se $\forall a,b \in \mathbbm{Z}$ se $p|a \cdot b$ allora $p|a$ o $p|b$, cioè se $p$ divide un prodotto allora deve dividere uno dei due fattori.
-		\end{tcolorbox} 
+		\end{definition} 
 		\textbf{Esempi:} $3|36$ vero $3|4 \cdot 9 \Rightarrow 3|4$ o $3|9$ vero \\
 		
 		\textbf{Osservazione:} Se $p$ è primo e $p = a \cdot b \quad \forall a,b \in \mathbbm{Z}$ solo se $p = 1 \cdot p$ oppure $(-1) \cdot (-p)$ oppure $p \cdot 1$ oppure $(-p) \cdot (-1)$ quindi $a,b$ sono divisori di $p$.
 		\textbf{Osservazione:} Se $n$ non è primo allora $\exists a,b \in \mathbbm{Z}$ con $1 < |a| < n$ e $1 < |b| < n$ e $n = a \cdot b$ \\
 		\textbf{Esempio:} $n = 48 \Rightarrow 48 = 6 \cdot 8$ oppure $48 = 4 \cdot 12$ \\
 		Inoltre, si può dire di più, se $n$ non è primo ed è positivo $\exists a,b$ con $a \leq \sqrt{n}$ oppure $b \leq \sqrt{n}$ perchè se $a > \sqrt{n}$ e $b > \sqrt{n}$ otterremmo: $n= a \cdot b > \sqrt{n} \cdot \sqrt{n} > n$ \\
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA FONDAMENTALE DELL'ARITMETICA, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Teorema fondamentale dell'aritmetica}{fondamentale_aritmetica}
 			Ogni numero intero $n \in \mathbbm{Z}$ con $n \neq 0, 1, -1$ può essere scritto come prodotto di un numero finito di numeri primi, ovvero $n = P_1^{h_1} \cdot P_2^{h_2} \cdots P_s^{h_s}$ dove $h > 0$ e i $P_i$ sono tutti numeri primi distinti tra loro. \\
 			Inoltre questa scrittura è "unica". Questo è chiamato \textbf{fattorizzazione in potenze di primi distinti}
-			\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+			\begin{proof}{Dimostrazione del \namerefl{th:fondamentale_aritmetica}} \quad \\
 				Dimostrazione dell'esistenza della fattorizzazione. \\
 				Vogliamo dimostrare la proposizione: $P(n)$ $n$ ammette fattorizzazione in potenze di primi distinti $\forall n \geq 2$, per i numeri negativi cambiamo segno. \\
 				Applichiamo il principio d'induzione generalizzato.
@@ -2419,8 +2504,8 @@
 						Quindi $k + 1 = a \cdot b = P_1^{h_1} \cdots P_s^{h_s} \cdot q_1^{t_1} \cdots q_t^{k_t}$ mettendo insieme i primi uguali otteniamo la fattorizzazione di $k + 1 \implies P(k + 1)$ è vera $\implies P(n)$ vera $\forall n \geq 2$
 					\end{itemize}
 				\end{itemize}
-			\end{tcolorbox} 
-		\end{tcolorbox} 
+			\end{proof} 
+		\end{theorem} 
 		\textbf{Esempi:} 
 		\begin{itemize}
 			\item $n = 3600 = 36 \cdot 100$ \\
@@ -2448,15 +2533,16 @@
 				$MCD(4080, 225) = 3 \cdot 5$, cioè il prodotto dei primo che compaiono in entrambe le fattorizzazioni con l'esponente minore  
 			\end{enumerate}
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA: i numeri primi sono infiniti, fonttitle=\bfseries]
-			\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+		\begin{theorem}{}{}
+			I numeri primi sono infiniti
+			\begin{proof} \quad \\
 				Supponiamo, per assurdo, che esistano solo un numero finito di numeri primi che sono: $P_1, P_2, \dots, P_s$. \\
 				Consideriamo $n = P_1 \cdot P_2 \cdots P_s + 1$. \\
 				Questo numero $n$ non è divisibile per $P_i \forall i = 1, \dots, s$ \\
 				Infatti se $P_i | n$ dato che $P_i | P_1 \cdot P_2 \cdots P_s$ perchè è un suo multiplo avremmo che per il T.C.L $\implies P_i | n - P_1 \cdot P_2 \cdots P_s$ ovvero $P_i | 1 \implies Pi= \pm 1$ ed è assurdo perchè $P_i$ è primo $\implies$ nessuno $P_i$ divide $n$. \\
 				Per il teorema fondamentale dell'aritmetica, $n$ è primo o prodotto di numeri primi e quindi devono esistere numeri primi che non sono inclusi tra $P_1$ e $P_s$ e questo è assurdo.
-			\end{tcolorbox} 
-		\end{tcolorbox} 
+			\end{proof} 
+		\end{theorem} 
 		\textbf{Esempi:} $2$ e $3$ sono primi e $n = 2 \cdot 3 + 1 = 7$ ma 2 e 3 non dividono 7 in quanto 7 è un numero primo che non è nella lista $2,3$ \\
 		$3$ e $5$ sono primi e $n = 3 \cdot 5 + 1 = 16$ e 3 e 5 non dividono 16 in quanto $16 = 2^4 \implies \exists 2$ numero primo $\neq 3$ e $\neq 5$. \\
 		\section{Crivello di Eratostele}
@@ -2530,7 +2616,6 @@
 				$\Rightarrow [a]_n = \{x \in \mathbbm{Z} \mid x \equiv a \pmod{n}\} = \{ x \in \mathbbm{Z} \mid n | x-a\} = \{x \in \mathbbm{Z} \mid x\ e\ a\ $ hanno stesso resto nella divisione per $n \}$
 			\end{enumerate}
 		\end{itemize}
-		\textbf{Vedere dagli appunti della prof alcuni esempi e scriverli qui} \\
 		La \textbf{classe di equivalenza} $[a]_n = $ è detta anche classe di congruenza modulo $n$ o classe resto modulo $n$ \\
 		$[a]_n = \{x \in \mathbbm{Z} \mid x \equiv a \pmod{n}\} = \{x \in \mathbbm{Z} \mid n|x-a\} = \\ = \{\text{Tutti gli elementi che hanno lo stesso resto di $a$ nelle divisioni per $n$}\} = [r]_n$ dato che è $a \equiv r \pmod{n}$ \\
 		\textbf{Quali sono i resti possibili nella divisione per $n$?} \\
@@ -2547,7 +2632,7 @@
 			\item $n = 12 \quad \mathbbm{Z}_n = \{[0]_{12}, \dots, [11]_{12}\}$ \\
 			$[100]_{12} = [4]_{12}$ perchè $100 = 12 \cdot 8 + 4$ 
 		\end{enumerate} 
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA congruenza modulo $n$, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Congruenza modulo $n$}{congr_modulo_n}
 			La relazione di congruenza modulo $n$ è compatibile con la somma e il prodotto in $\mathbbm{Z}$: \\
 			Se, $\forall a,b,c,d \in \mathbbm{Z}$, $a \equiv b \pmod{n}$ e $c \equiv d \pmod{n}$ allora: 
 			\begin{itemize}
@@ -2555,7 +2640,7 @@
 				\item $a \cdot c \equiv b \cdot d \pmod{n}$
 			\end{itemize}
 			
-		\end{tcolorbox} 
+		\end{theorem} 
 		\textbf{Proprietà}: Sia $a \equiv b \pmod{n}$ allora:
 		\begin{enumerate}
 			\item $a^m \equiv b^m \pmod{n} \quad \forall m \geq 1$ \\
@@ -2567,21 +2652,21 @@
 			\item $\forall k \in \mathbbm{Z} \quad k \cdot n \equiv 0 \pmod{n}$ ed è vero anche il contrario, cioè $0 \equiv k \cdot n \pmod{n}$ e $a + k \cdot n \equiv b \pmod{n}$ e $a \equiv b + k \cdot n \pmod{n}$ \\
 			\textbf{Esempio:} $-32 \equiv ? \pmod{5}$ per capirlo, possiamo sommarlo ad un multiplo di 5, ad esempio: $-32 + 20 = -12 + 15 = 3 \implies -32 \equiv 3 \pmod{5}$ 
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA divisione nella congruenza, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Divisione nella congruenza}{div_congr}
 			Se $a \cdot c \equiv b \cdot c \pmod{n}$ allora $a \equiv b \pmod{\dfrac{n}{MCD(c, n)}}$ \\
 			In particolare se $MCD(c, n) = 1$ allora $a \equiv b \pmod{n}$
-		\end{tcolorbox} 
+		\end{theorem} 
 		\textbf{Esempi:} $14 \equiv 6 \pmod{8} \implies 7 \cdot 2 \equiv 3 \cdot 2 \pmod{8} \implies 7 \equiv 3 \pmod{\dfrac{8}{MCD(2, 8)}} \implies 7 \equiv 3 \pmod{4}$ \\
 		$6 \equiv 28 \pmod{11} \implies 3 \cdot 2 \equiv 14 \cdot 2 \pmod{\dfrac{11}{MCD(2, 11)}} \implies 3 \equiv 14 \pmod{11}$ perchè il MCD è 1 
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA piccolo teorema di Fermat, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Piccolo teorema di Fermat}{piccolo_fermat}
 			Se $a \in \mathbbm{Z}$ e $p$ è un numero primo allora $a^p \equiv a \pmod{p}$, cioè un numero elevato alla potenza $p$ è congruente a se stesso modulo $p$ \\
 			\textbf{Esempio:} $p = 23 \quad 100^{23} = 100 \pmod{23}$ \\
 			Si chiama \textit{piccolo} perchè esisto un altro teorema più famoso: l'equazione $x^n + y^n = z^n$ non ammette soluzioni intere non banali per $n \geq 3$, per curiosità informarsi meglio sulla storia.
-		\end{tcolorbox} 
+		\end{theorem} 
 		\textbf{Osservazione:} Se $MCD(a,p) = 1 \quad a^p \equiv a \pmod{p} \implies a^{p-1} \cdot a \equiv 1 \cdot a \pmod{p}$, ora dividiamo per $a$ e otteniamo $a^{p-1} \equiv 1 \pmod{\dfrac{p}{MCD(a,p)}} \implies a^{p-1} \equiv 1 \pmod{p}$ ad esempio: $100^{22} \equiv 1 \pmod{23}$
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF funzione di Eulero, fonttitle=\bfseries]
+		\begin{definition}{\nmu Funzione di Eulero}{func_eulero}
 			La funzione di Eulero è la funzione $\varphi: \mathbbm{N}^* \to \mathbbm{N}$ tale che $\varphi(n)$ è il numero degli interi positivi minori o uguali ad $n$ e coprimi con $n$, ovvero conta quanti sono gli elementi $a \in \mathbbm{N} \quad 1 \leq a \leq n$ e $MCD(a,n) = 1$
-		\end{tcolorbox}  
+		\end{definition}  
 		\textbf{Esempi:} $n = 1 \quad \varphi(1) \quad 1 \leq a \leq 1 \quad MCD(a, 1) = 1$, siccome è solo 1 elemento $\varphi(1) = 1$ \\
 		Se $n = 2 \quad \varphi(2)? \quad 1 \leq a \leq 2 \quad MCD(a, 2) = 1$, quindi solo l'elemento 1 e $\varphi(2) = 1$ \\
 		Se $n = 3$ abbiamo $1,2,3$ e quindi sono solo due elementi tali che $MCD(a, 3) = 1$ e quindi $\varphi(3) = 2$ \\ 
@@ -2604,10 +2689,10 @@
 		$\varphi(104) =\ ?$ \\
 		$104 = 52 \cdot 2 = 26 \cdot 2 \cdot 2 = 13 \cdot 2 \cdot 2 \cdot 2 = 13 \cdot 2^3$ \\
 		$\varphi(104) = \varphi(13 \cdot 2^3) = \varphi(13) \cdot \varphi(2^3) = (13 -1) \cdot (2^3 - 2^2) = 12 \cdot 4 = 48$
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA di Eulero Fermat, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Teorema di Eulero Fermat}{eulero_fermat}
 			Sia $a \in \mathbbm{Z}$ e $MCD(a, n) = 1$ allora $a^{\varphi(n)} \equiv 1 \pmod{n}$ \\
 			\textbf{Osservazione:} Se $n$ è primo $\varphi(p) = p - 1 \quad a^{p-1} \equiv 1 \pmod{p}$ e questo è uguale al piccolo teorema di fermat
-		\end{tcolorbox}  
+		\end{theorem}  
 		\textbf{Esempi/esercizi:} Stabilire se le seguenti congruenze sono vere:
 		\begin{itemize}
 			\item $11^{48} \equiv 1 \pmod{104} \quad n = 104 \quad a = 11 \quad \varphi(104) = 48$ \\
@@ -2657,14 +2742,14 @@
 			\item \textbf{Per 9:} lo stesso per 3, quindi numero divisibile per se la somma delle cifre è divisibile per 9
 		\end{itemize}
 		\subsection{Congruenze lineari}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di congruenza lineare, fonttitle=\bfseries]
+		\begin{definition}{\nmu Congruenza lineare}
 			Sia $a, b \in \mathbbm{Z}$ e $n \geq 2$. \\
 			Una congruenza lineare nell'incognita $x$ è un'espressione della forma: 
 			\[
 			ax \equiv b \pmod{n}
 			\] 
 			Una soluzione della congruenza lineare è intero $x_0 \in \mathbbm{Z}$ tale che \[ax_0 \equiv b \pmod{n}\]
-		\end{tcolorbox} 
+		\end{definition} 
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $7x \equiv 1 \pmod{3} \quad x_0 = 1$ è soluzione \\
@@ -2678,13 +2763,13 @@
 			\item \textbf{Capire se esistono soluzioni}
 			\item \textbf{Trovarle tutte}
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA esistenza, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Teorema di esistenza}{esistenza}
 			La congruenza lineare $ax \equiv b \pmod{n}$ ammette soluzione se e solo se $MCD(a,n) | b$
-			\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+			\begin{proof}\quad \\
 				$ax \equiv b \pmod{n} \iff n | ax - b \iff$
 				$\exists h \in \mathbbm{Z} \mid ax - b = nh \iff \exists h \in \mathbbm{Z} \mid ax - nh = b$, questa adesso è una equazione diofantea e ammette soluzione $\iff MCD(a,n) | b$
-			\end{tcolorbox} 
-		\end{tcolorbox} 
+			\end{proof} 
+		\end{theorem} 
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $7x \equiv 1 \pmod{3} \quad MCD(7,3) = 1 | 1 \implies \exists$ soluzione 
@@ -2695,7 +2780,7 @@
 			$600 = 6 \cdot 100 = 2 \cdot 3 \cdot 10 \cdot 10 = 2 \cdot 3 \cdot 2 \cdot 5 \cdot 2 \cdot 5 = 2^3 \cdot 3 \cdot 5^2$ \\
 			$MCD(104, 600) = 2^3 = 8 | 24 \implies \exists$ soluzione 
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA soluzioni, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Teorema sulle soluzioni}{soluzioni}
 			Se $x_0$ è soluzione della congruenza lineare $ax \equiv b \pmod{n}$, allora esistono infinite soluzioni e sono:
 			\[
 			x=x_0 + \dfrac{n}{MCD(a,n)} \cdot t \quad \forall t \in \mathbbm{Z}
@@ -2704,7 +2789,7 @@
 			Tra queste soluzioni: $x_0, x_0 + \dfrac{n}{d}, x_0 + 2 \cdot \dfrac{n}{d}, \dots, x_0 + (d - 1) \cdot \dfrac{n}{d}$, queste sono $d$ soluzioni non congruenti fra loro modulo $n$ e tutte le altre soluzioni sono congruenti a queste. \\
 			$ax \equiv b \pmod{n}$ ammette $d$ soluzioni distinte modulo $n$. \\
 			\textbf{Osservazione importante:} Se $d=MCD(a,n)=1$. Le soluzioni sono $x_0 + nt \quad \forall t \in \mathbbm{Z}$ esiste unica soluzione, $x_0$, modulo $n$ e tutte le altre soluzioni sono congruenti ad $x_0$ modulo $n$ ovvero $x \equiv x_0 \pmod{n}$
-		\end{tcolorbox} 
+		\end{theorem} 
 		\textbf{Esempi:} 
 		\begin{enumerate}
 			\item $7x \equiv 1 \pmod{3} \quad MCD(7,3) = 1 \quad x_0 = 1$ è soluzione. \\
@@ -2790,7 +2875,7 @@
 			\end{enumerate}
 		\end{enumerate}
 		\subsection{Sistemi di congruenze lineari}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di sistemi di congruenze lineari, fonttitle=\bfseries]
+		\begin{definition}{\nmu Sistemi di congruenze lineari}{sistemi_congr}
 			Un sistema di congruenze lineari è dato da: 
 			\[
 			\begin{cases}
@@ -2801,14 +2886,14 @@
 			\end{cases}
 			\]
 			Una soluzione di un sistema è $x_0 \in \mathbbm{Z}$ che risolve tutte le congruenze 
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Osservazione:} Ogni congruenze del sistema deve ammettere soluzione, altrimenti non esistono soluzioni del sistema. Inoltre, serve una compatibilità. Esempio: $\begin{cases}
 			x \equiv 1 \pmod{10}  \\
 			x \equiv 2 \pmod{8}
 		\end{cases}$ \\
 		Questo ci dice che nella prima congruenza la $x$ sarà dispari mentre nella seconda sarà pari e quindi non ci sono soluzioni perchè non c'è compatibilità.
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
-			Dato un sistema: 
+		\begin{theorem}{}{}
+						Dato un sistema: 
 			$\begin{cases}
 				a_1x \equiv b_1 \pmod{n_1} \\
 				a_2x \equiv b_2 \pmod{n_2} \\
@@ -2822,12 +2907,12 @@
 				x \equiv c_r \pmod{n'_r}
 			\end{cases}$ \\
 			Quindi sono spariti i coefficienti davanti alle $x$. 
-			\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+			\begin{proof} \quad \\
 				Ogni congruenza del sistema ammette soluzioni, $\forall i = 1, \dots, r \quad a_ix \equiv b_i \pmod{n_i} \quad MCD(a_i, n_i) | b_i$.\\
 				Sia $d_i = MCD(a_i, n_i)$. \\ 
 				Dividiamo per $d_i: \dfrac{a_i}{d_i}x \equiv \dfrac{b_i}{d_i} \pmod{\dfrac{n_i}{d_i}}$, adesso questa congruenza ammette una sola soluzione, $c_i$, modulo $\dfrac{n_i}{d_i}$, perchè l'MCD ora vale 1. 
-			\end{tcolorbox}
-		\end{tcolorbox} 
+			\end{proof}
+		\end{theorem} 
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $\begin{cases}
@@ -2849,7 +2934,7 @@
 				x \equiv 1 \pmod{3}
 			\end{cases}$
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA cinese dei resti, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Teorema cinese dei resti}{cinese_resti}
 			Sia: \\
 			$\begin{cases}
 				x \equiv c_1 \pmod{n_1} \\
@@ -2866,7 +2951,7 @@
 				$x_0 = N_1 \cdot x_1 + N_2 \cdot x_2 + N_i \cdot x_i + \cdots + N_r \cdot x_r \equiv N_i \cdot x_i \equiv c_i \pmod{n_i}$. \\ 
 				Tutte le soluzioni sono $x \equiv N_i \cdot x_1 + N_2 \cdot x_2 + \cdots + N_r \cdot x_r \pmod{N}$
 			\end{tcolorbox} 
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $\begin{cases}
@@ -2947,10 +3032,10 @@
  			\textbf{Risolverlo per casa}
  		\end{enumerate}
 		\chapter{Strutture algebriche}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di operazione o legge di composizione, fonttitle=\bfseries]
+		\begin{definition}{\nmu Operazione o legge di composizione}{operazione_composizione}
 			Sia $A$ un insieme non vuoto. Un'operazione su $A$ è una funzione \[*: A \times A \to A \quad \forall a,b \in A \quad *(a,b) = a*b \in A\]
 			La coppia $(A, *)$ è detta \textbf{struttura algebrica}. 
-		\end{tcolorbox} 
+		\end{definition} 
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $A = \mathbbm{N} \quad *=+ \quad *:\mathbbm{N} \times \mathbbm{N} \to \mathbbm{N}$ \\
@@ -2983,9 +3068,9 @@
 		\end{enumerate}
 		\section{Proprietà delle strutture algebriche}
 		\subsection{Associativa}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di associativa, fonttitle=\bfseries]
+		\begin{definition}{\nmu Struttura algebrica associativa}{struct_alg_associativa}
 			Sia $(A, *)$ una struttura algebrica. L'operazione $*: A \times A\to A$ è detta associativa se $\forall a,b,c \in A \quad (a * b) * c = a * (b * c)$
-		\end{tcolorbox} 
+		\end{definition} 
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $+ \quad (a+b) + c = a + (b + c)$ \\
@@ -3008,10 +3093,10 @@
 			Questi non sono uguali e quindi $*$ non è associativa. 
 		\end{enumerate}
 		\subsection{Commutativa}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di commutativa, fonttitle=\bfseries]
+		\begin{definition}{\nmu Struttura algebrica commutativa}{struct_alg_comm}
 			Sia $(A, *)$ una struttura algebrica. L'operazione $*: A \times A\to A$ è detta commutativa se $\forall a,b \in A \quad (a * b) = (b * a)$ \\
 			In tal caso $(A, *)$ è detta struttura algebrica commutativa
-		\end{tcolorbox} 
+		\end{definition} 
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $a+b = b +a$ \\
@@ -3054,14 +3139,14 @@
 			\end{itemize}		
 		\end{enumerate}
 		\subsection{Elemento neutro}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di elemento neutro, fonttitle=\bfseries]
+		\begin{definition}{\nmu Elemento neutro}{el_neutro}
 			Una struttura algebrica, $(A, *)$, ammette l'elemento neutro se $\exists e \in A$ tale che $\forall a \in A \quad a*e = e*a=a$
-		\end{tcolorbox}
+		\end{definition}
 		\section{Monoide}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di monoide, fonttitle=\bfseries]
+		\begin{definition}{\nmu Monoide}{monoide}
 		Sia $(A, *)$ una struttura algebrica associativa che ammette elemento neutro è detta monoide. \\
 		Se la struttura è commutativa si dice monoide commutativo,
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $\mathbbm{N} \quad *=+ \quad \exists e \in \mathbbm{N}$ tale che $\forall a \in \mathbbm{N} \quad a+e=e+a=a$? \\
@@ -3110,10 +3195,10 @@
 			$(A, *)$ è un monoide.  
 		\end{enumerate} 
 		\section{Elemento invertibile}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di elemento invertibile, fonttitle=\bfseries]
+		\begin{definition}{\nmu Elemento invertibile}{el_invertibile}
 			Sia $(A, *)$ una struttura algebrica con elemento neutro. \\
 			Un elemento neutro $a$ si dice invertibile se $\exists a' \in A \mid a*a'=a'*a=e$
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Osservazione:} Se non c'è elemento neutro non esistono elementi invertibili. 
 		\textbf{Esempi:} 
 		\begin{enumerate}
@@ -3123,10 +3208,10 @@
 		\end{enumerate}
 		\textbf{Osservazione:} L'elemento neutro è sempre invertibile perchè $e*e=e$ \\
 		\section{Elemento invertibile inverso di $a$}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA inverso di $a$, fonttitle=\bfseries]
+		\begin{theorem}{\nmu Elemento inverso di $a$}{el_inverso_a}
 			Sia $(A, *)$ un monoide, ovvero l'operazione è associativa ed esiste elemento neutro. \\
 			Se $a \in A$ è invertibile, ovvero $\exists a' \in A \mid a * a' = a'*a = e$, allora $a'$ è unico e si chiama INVERSO di $a$. \\
-			\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+			\begin{proof} \quad \\
 				Supponiamo che $a$ è invertibile ed esistono due elementi, $b,c \in A$, tali che $a * b = b * a = e$ e $a * c = c * a = e$. \\
 				Vogliamo dimostrare che $b=c$. Allora: \\
 				$b=b*e$ \\
@@ -3136,8 +3221,8 @@
 					\item Se $*=+ \quad e=0$ e l'elemento inverso di $a$ si chiama \textit{opposto} e si indica con $-a$
 					\item Se $*=\cdot \quad e=1$ e l'elemento inverso di $a$ si denota con $a^{-1}$.
 				\end{itemize}
-			\end{tcolorbox}
-		\end{tcolorbox}
+			\end{proof}
+		\end{theorem}
 		\textbf{Esempi:} 
 		\begin{enumerate}
 			\item $(\mathbbm{N}, +)$ unico elemento invertibile è $e=0$ 
@@ -3178,13 +3263,13 @@
 			$a*e=-ae+\dfrac{1}{2}a +\dfrac{1}{2}e=a \implies e\Bigl(-a + \dfrac{1}{2}\Bigl) = a - \dfrac{1}{2}a \implies e\Bigl(-a + \dfrac{1}{2}\Bigl) = \dfrac{1}{2}a \implies e = \Bigl(\dfrac{1}{2}a\Bigl)\backslash\Bigl(-a + \dfrac{1}{2}\Bigl)$ ed è impossibile perchè $e$ dipende da $a$ questo ci dice che non esiste elemento neutro, di conseguenza non esiste neanche l'elemento invertibile. 
 		\end{itemize}
 	\chapter{Gruppi}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF gruppo, fonttitle=\bfseries]
+		\begin{definition}{\nmu Gruppo}{gruppo}
 			Una struttura algebrica, $(A,*)$, si dice gruppo se è un monoide in cui ogni elemento è invertibile, ovvero è una struttura algebrica tale che è associativa, esiste elemento neutro ed ogni elemento è invertibile.
 			Notazione:
 			\[(G, *)\]
 			Usiamo la $G$ per indicare il gruppo. \\
 			Se $(G, *)$ è un gruppo e $*$ è commutativa allora si dice \textbf{gruppo commutativo} o \textbf{gruppo Abeliano} in onore del matematico Abel.
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $(\mathbbm{N}, +)$ non è un gruppo perchè solo lo zero è invertibile, mentre $(\mathbbm{Z}, +), (\mathbbm{Q}, +). (\mathbbm{R}, +)$ sono gruppi
@@ -3232,11 +3317,11 @@
 			Se $a \neq 0$ l'inverso di $(a, b)$ è $\Bigl(\dfrac{1}{9a}, -10 - b\Bigl)$. \\
 			Gli elementi invertibili sono le coppie $(a,b)$ con $a \neq 0$ e quindi questi ci dice che non è un gruppo.
 		\end{itemize}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di cardinalità o ordine, fonttitle=\bfseries]
+		\begin{definition}{\nmu Cardinalità o ordine}{card_ordine}
 			Sia $(G, *)$ un gruppo. Si dice cardinalità del gruppo $G$ o ordine del gruppo $G$, la cardinalità dell'insieme $G$ e la indichiamo $|G|$. \\
 			Il gruppo si dice infinito se $|G| = \infty$. \\
 			Il gruppo di dice finito di ordine o cardinalità $n$ se $|G|=n$
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $(Z, +), (Q, +), (R, +)$ sono gruppi abeliani infiniti.
@@ -3244,17 +3329,17 @@
 			\item $(A={f:B \to B |\text{biettiva}}, \circ)$ Se $B$ è finito e $|B| = n$, allora l'insieme delle funzioni biettiva $B \to B$ contiene $n!$ per la combinatoria. 
 		\end{enumerate}
 		\section{Operazioni compatibili con relazioni di equivalenza}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di relazione compatibile, fonttitle=\bfseries]
+		\begin{definition}{\nmu Relazione compatibile}{rel_compatibile}
 			Sia $(A, *)$ una struttura algebrica e supponiamo che $\mathscr{R}$ sia una relazione di equivalenza su $A$. \\
 			Allora $\mathscr{R}$ si dice compatibile con $*$ se $\forall a,b,c,d \in A$ se $a\mathscr{R}b$ e $c\mathscr{R}d$ allora $a*c\mathscr{R}b*d$
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+		\end{definition}
+		\begin{theorem}{}{}
 			Sia $(A, *)$ una struttura algebrica e $\mathscr{R}$ una relazione d'equivalenza compatibile. Allora sull'insieme $\sfrac{A}{\mathscr{R}} = \{[a]_\mathscr{R} \mid a \in A\}$ è ben definita l'operazione: \\
 			$*:\sfrac{A}{\mathscr{R}}  \times \sfrac{A}{\mathscr{R}} \to \sfrac{A}{\mathscr{R}}$ \\
 			$\forall [a]_\mathbb{R}, [b]_\mathscr{R} \in \sfrac{A}{\mathscr{R}} \quad [a]_\mathscr{R} * [b]_\mathscr{R} = [a * b]_\mathscr{R}$ \\
 			Se $(A, *)$ è un monoide con elemento neutro $e$ allora $(\sfrac{A}{\mathscr{R}}, *)$ è un monoide con elemento neutro $[e]_\mathscr{R}$ \\
 			Se $(A, *)$ è un gruppo commutativo allora $(\sfrac{A}{\mathscr{R}}, *)$ è un gruppo commutativo
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $(A, *) = (\mathbbm{Z}, +)$. Si verifica che $\mathscr{R}$ la relazione di congruenza modulo $n$ è compatibile con $+$ \\
@@ -3282,22 +3367,22 @@
 			$[a]_n \in \mathbbm{Z}_n$ è invertibile se $\exists [x]_n \in \mathbbm{Z}_n$ tale che $[a]_n \cdot [x]_n = [x]_n \cdot [a]_n = \textbf{elemento neutro} = [1]_n$ \\
 			Questa è commutativa quindi basta risolvere: \\
 			$[a]_n \cdot [x]_n = [a \cdot x]_n = [1]_n \implies ax \equiv 1 \pmod{n}$ e la soluzione esiste solo se $MCD(a,b) | 1$
-			\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+			\begin{theorem}{}{}
 				Un elemento $[a]_n$ in $(\mathbbm{Z}_n, \cdot)$ è invertibile se e solo se $MCD(a,n) = 1$
-				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+				\begin{proof} \quad \\
 					Un elemento $[a]_n$ in $(\mathbbm{Z}_n, \cdot)$ è invertibile se $\exists [x]_n \in \mathbbm{Z}_n$ tale che $[a]_n \cdot [x]_n = [x]_n \cdot [a]_n = \textbf{elemento neutro} = [1]_n$ \\
 					Visto che è commutativa basta studiare $[a]_n \cdot [x]_n = [1]_n$ \\
 					$[a \cdot x] = [1]_n \implies ax \equiv 1 \pmod{n} $ \\
 					La soluzione esiste se e solo se $MCD(a,n) = 1$
-				\end{tcolorbox}
-			\end{tcolorbox}
+				\end{proof}
+			\end{theorem}
 			\textbf{Esempio:} $(\mathbbm{Z}_4, \cdot) \quad [2]_4$ è invertibile? \\
 			$MCD(2,4) = 2 \implies$ non invertibile \\
 			$[3]_4$ è invertibile? $MCD(3,4) = 1 \implies$ è invertibile \\
 			$3x \equiv 1 \pmod{4}$ la soluzione è $x=3 \implies [3]_4$ è invertibile e l'inverso $[x]_4 = [3]_4$
 		\end{enumerate}
 		\section{Sottogruppi}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di sottogruppo, fonttitle=\bfseries]
+		\begin{definition}{\nmu Sottogruppo}{sottogruppo}
 			Un sottogruppo di un gruppo, $(G, *)$, è un sottoinsieme $H$ non vuoto che è un gruppo rispetto alla stessa operazione: 
 			\begin{itemize}
 				\item $\forall a,b \in H \quad a*b \in H$
@@ -3314,8 +3399,8 @@
 				\item $G \leq G$
 				\item $\{e\} \leq G$, cioè l'insieme costituito dal solo elemento neutro
 			\end{enumerate}
-		\end{tcolorbox}
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+		\end{definition}
+		\begin{theorem}{}{}
 			Sia $(G, *)$ un gruppo e sia $g \in G$ un elemento. \\
 			Allora il sottoinsieme $\langle g\rangle = \{g^t \mid t \in \mathbbm{Z}\}$ è sottogruppo di $G$ e si chiama \textbf{sottogruppo generato da $g$}. \\
 			$g^t$ sono le potenze di $g$:
@@ -3324,24 +3409,24 @@
 				\item $g^t$ è $g * g * g * \cdots * g \quad t$ volte se $t > 0$;
 				\item $g^{-n} = g^{-1} * g^{-1} * \cdots * g^{-1} \quad n$ volte dove $g^{-1}$ è l'inverso di $g$
 			\end{itemize} 
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $g = 2 \quad \langle2\rangle = \{2^t \mid t \in \mathbbm{Z}\} = \{2^0 = e, 2^1, 2^2, 2^{-1}, 2^{-2}, \dots \}$
 			\item $(G, *) \quad e$ elemento neutro $\langle e \rangle = \{e^t \mid t \in \mathbbm{Z}\} = \{e\}$
 		\end{enumerate}	  
 		\textbf{Osservazione:} In ogni gruppo $(G, *)$, il sottogruppo generato dall'elemento neutro, $e$, contiene solo $e$, quindi $\langle e \rangle = \{e\}$
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF ORDINE o PERIODO di un elemento, fonttitle=\bfseries]
+		\begin{definition}{\nmu Ordine o periodo di un elemento}{ordine_periodo_el}
 			Sia $(G, *)$ un gruppo e sia $g \in G$ un elemento. \\
 			L'ordine o periodo dell'elemento $g$ si indica con $o(g)$ ed è l'ordine del sottogruppo generato da $g$. \\
 			\[o(g) = |\langle g \rangle|\]
 			ed è l'ordine o cardinalità del sottogruppo generato da $g$. \\
 			Se l'ordine è uguale ad $n$ e diremo che l'ordine di $g$ è finito e uguale a $n$. \\
 			Se l'ordine è infinito diremo che $g$ ha ordine infinito.
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempio:} Nel caso di prima $\langle2\rangle = \{2^t \mid t \in \mathbbm{Z}\} \quad o(2) = \infty$ \\
 		$\langle e \rangle = \{e^t \mid t \in \mathbbm{Z}\} = \{e\} \quad o(e) = |\langle e \rangle| = 1$
-		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+		\begin{theorem}{}{}
 			Sia $(G, *)$ un gruppo e sia $g \in G$ un elemento. 
 			\begin{enumerate}
 				\item se $o(g)$ è infinito allora tutte le potenze di $g$ sono distinte tra loro: $g^t \neq g^s \quad t \neq s$
@@ -3353,7 +3438,7 @@
 				\end{itemize}
 				$\langle g \rangle = \{g^0 = e, g^1, g^2, \dots, g^{n-1}\}$ e contiene $n$ elementi.
 			\end{enumerate}
-		\end{tcolorbox}
+		\end{theorem}
 		\textbf{Esempio:}
 		\begin{enumerate}
 			\item $(\mathbbm{Z}^*_7, \cdot) \quad [2]_7 \quad \langle [2]_7 \rangle = \{[2]_7^t \mid t \in \mathbbm{Z}\}$ 
@@ -3379,18 +3464,17 @@
 			$o(3) = |\langle [3]_7 \rangle| = 6$
 		\end{enumerate}
 		\section{Gruppo ciclico}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di gruppo ciclico, fonttitle=\bfseries]
+		\begin{definition}{\nmu Gruppo ciclico}{gruppo_ciclico}
 			Un gruppo, $(G, *)$, si dice ciclico se $\exists g \in G \mid \langle g \rangle = G$, cioè il sottogruppo generato dall'elemento $g$ è tutto $G$. \\
 			In tal caso $g$ è detto generatore del gruppo. In particolare, è un gruppo abeliano.
-		\end{tcolorbox}
-		\textbf{STUDIARE UN ESEMPIO:}
+		\end{definition}
 		Sia $B$ un insieme con $n$ elementi possiamo scrivere: \\
 		$B = \{1, 2, 3, \dots, n\}$ \\
 		Studiare il gruppo $(A = \{f: B\to B \mid biettiva\}, \circ)$ 
 		\section{Gruppo simmetrico}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di gruppo simmetrico o gruppo di permutazione, fonttitle=\bfseries]
+		\begin{definition}{\nmu Gruppo simmetrico o di permutazione}{gruppo_simmetrico}
 			Il gruppo delle funzioni biettive su un insieme con $n$ elementi è detto \textit{gruppo simmetrico su $n$ elementi o gruppo di permutazioni di $n$ elementi} si indica con $S_n$ e $|S_n| = n!$
-		\end{tcolorbox}
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $n = 8 \quad S_8$ un elemento $f \in S_8$ è una funzione biettiva $\{1, \dots, 8\} \to \{1, \dots, 8\}$ \\
@@ -3444,7 +3528,7 @@
 				1 & 3 & 2
 			\end{pmatrix}$ 
 		\end{enumerate}
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di composizione, fonttitle=\bfseries]
+		\begin{definition}{\nmu Composizione di gruppi}{gruppo_composizione}
 			Siano $f,g \in S_n$. \\
 			$f \circ g: \{1, \dots, n\} \to \{1, \dots, n\}$ \\
 			$(f \circ g)(i) = f(g(i)) = \forall i = i, \dots, n$\\
@@ -3455,7 +3539,7 @@
 			1 & i & n \\
 			f(1) & f(i) & f(n)
 			\end{pmatrix}$
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempio:} \\
  		$n = 3 \quad f=\begin{pmatrix}
  			1 & 2 & 3 \\
@@ -3512,7 +3596,7 @@
  		1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  		4 & 3 & 1 & 8 & 5 & 7 & 6 & 2
  		\end{pmatrix} $
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di inverso, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Gruppo inverso}{gruppo_inverso}
  			Siano $f \in S_n$ allora $f^{-1} \in S_n$. \\
  			$f^{-1} = \begin{pmatrix}
  				f(1) & f(2) & \dots & f(n) \\
@@ -3522,7 +3606,7 @@
  				f^{-1}(1) & f^{-1}(2) & \dots & f^{-1}(n)
  			\end{pmatrix}$
  			Quindi riordino le colonne per avere $1 \dots n$
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempio:}  \\
  		$n = 3 \quad f = \begin{pmatrix}
  			1 & 2 & 3 \\
@@ -3544,7 +3628,7 @@
  		1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  		8 & 7 & 6 & 5 & 4 & 3 & 2 & 1
  		\end{pmatrix}$ 
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di ciclo, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Ciclo}{ciclo}
  		 	Consideriamo $S_n$ e $1 \leq k \leq n$
  			Un ciclo di lunghezza $f$ in $S_n$ si indica con: 
  			\[
@@ -3558,7 +3642,7 @@
  			f(b) = b \quad \forall b\ \text{non contenuto nel ciclo}
  			\]
  			i cicli di lunghezza 2 si chiamano \textbf{scambi o trasposizioni}
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempio:} $S_8 \quad k = 4 \quad (2\ 4\ 8\ 1)$ \\
  		$f(2) = 4 \quad f(4) = 8 \\ f(8) = 1 \quad f(1) = 2$ \\
  		$\begin{pmatrix}
@@ -3572,11 +3656,11 @@
  			\item $(a_1\ a_2\ \dots\ a_k)$ si può scrivere anche come: $(a_2\ a_3\ \dots\ a_k\ a_1)$, cioè posso riscriverli ciclicamente ma \textbf{senza cambiare l'ordine fra loro}, ad esempio: $(2\ 4\ 8\ 1)=(4\ 8\ 1\ 2)\neq(4\ 2\ 8\ 8\ 1)$
  			\item Ciclo di lunghezza 1 $(a)$ significa $a$ va in se stesso.
  		\end{enumerate}
- 		 \begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+ 		 \begin{theorem}{}{}
  		 	Ogni elemento di $S_n$ è un ciclo o può essere scritto come prodotto di cicli disgiunti. \\
  		 	Cicli disgiunti vuol dire che contengono elementi diversi e il prodotto tra cicli è uguale al prodotto delle permutazioni corrispondenti. \\
  		 	I cicli di lunghezza 1 si possono omettere.
- 		\end{tcolorbox}
+ 		\end{theorem}
  		\textbf{Esempi:} $f= \begin{pmatrix}
  			1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  			8 & 7 & 6 & 5 & 4 & 3 & 2 & 1
@@ -3585,12 +3669,12 @@
  			1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  			2 & 6 & 7 & 5 & 8 & 1 & 3 & 4
  		\end{pmatrix} = (1\ 2\ 6)(3\ 7)(4\ 5\ 8)$ 
- 		 \begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+ 		 \begin{theorem}{}{}
  			\begin{enumerate}
  				\item un ciclo di lunghezza $k$ ha ordine $k$;
  				\item l'ordine di una qualsiasi permutazione il minimo comune multiplo tra le lunghezze dei cicli disgiunti nella scrittura come prodotto di cicli
  			\end{enumerate}
- 		\end{tcolorbox}
+ 		\end{theorem}
  		\textbf{Esempi:} $g$ abbiamo detto essere $(1\ 2\ 6)(3\ 7)(4\ 5\ 8)$, cioè rispettivamente lunghezza 3,2,3 e quindi l'ordine di $g$ è $o(g) = mcm(3,2,3) = 6$ \\
  		\textbf{Osservazione:} $o(f) = 2 \quad f^2=Id \quad |\langle 2 \rangle|=o(f)=2$ \\
  		$\langle f \rangle =\{Id, f\} \quad f \circ f = Id$ \\
@@ -3655,13 +3739,13 @@
  		1 & 2 & 3 & 4 & 5 & 6 & 7 & 8
  		\end{pmatrix}$ \\
  		Quindi questa corrisponde a $Id$ quindi abbiamo verificato che è corretto. \\
- 		\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+ 		\begin{theorem}{}{}
  		Ogni ciclo di lunghezza $k > 1$ può essere scritto come prodotto di trasposizioni che sono cicli di lunghezza 2. \\
  		Formula:
  		\[
  		(a_1\ a_2\ \dots\ a_k) = (a_1\ a_k)(a_1\ a_{k-1})\dots(a_1\ a_3)(a_1\ a_2)
  		\]
- 		\end{tcolorbox}
+ 		\end{theorem}
  		\textbf{Esempio:} $(2\ 3\ 4\ 5\ 8\ 6\ 7) = (2\ 7)(2\ 6)(2\ 8)(2\ 5)(2\ 4)(2\ 3)$ ed è sbagliato scrivere $(2\ 3)(2\ 4)(2\ 5)(2\ 6)(2\ 7)$ \\
  		\textbf{Conseguenza:} Dato che ogni permutazione può essere scritta come prodotto di cicli e ogni ciclo come prodotto di trasposizioni, allora ogni permutazione può essere scritta come prodotto di trasposizioni e si dice \textbf{pari} se le trasposizioni sono in numero pari e \textbf{dispari} se le trasposizioni sono in numero dispari. \\
  		\textbf{Esempio:} $g =\begin{pmatrix}
@@ -3736,7 +3820,7 @@
 			\end{pmatrix}$
  		\end{itemize}
  		\chapter{Anelli}
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di anelli, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Anelli}{anelli}
  			Un anello $(A, +, \cdot)$ è un insieme $A \neq \emptyset$ dotato di due operazioni $+: A \times A \to A$ e $\cdot: A \times A \to A$ tale che:
  			\begin{itemize}
  				\item $(A, +)$ deve essere un gruppo abeliano, cioè $(+$ è commutativa, $+$ è associativa e $\exists 0$ elemento neutro e ogni elemento è invertibile$)$
@@ -3744,11 +3828,11 @@
  				\item Valgono le proprietà distributive: \[\forall a,b,c \in A \quad a(b+c) = ab + bc \quad (a+b)c = ac + bc\]
  			\end{itemize}
  			\textbf{Osservazione:} In un anello è importante l'ordine con cui scriviamo le operazioni 
- 		\end{tcolorbox}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di anello unitario, fonttitle=\bfseries]
+ 		\end{definition}
+ 		\begin{definition}{\nmu Anello unitario}{anello_unitario}
  			Un anello $(A, +, \cdot)$ si dice \textbf{unitario} se $\exists 1 \in A \mid \forall a \in A\ a \cdot 1 = 1 \cdot a = a$, quindi $\exists$ elemento neutro per $\cdot$ ovvero $(A, \cdot)$ è un monoide. \\
  			Inoltre si dice \textbf{commutativo unitario} se oltre ad $\exists 1$ l'operazione è commutativa $\forall a, b \in A \quad a \cdot b = b \cdot a$
- 		\end{tcolorbox}
+ 		\end{definition}
 
  		\textbf{Esempi:}
  		\begin{enumerate}
@@ -3758,10 +3842,10 @@
  			\item $(\mathbbm{Z}, \cdot, +)$, $(\mathbbm{Z}, \cdot)$ è un gruppo? No, perchè gli unici elementi invertibili sono $\pm 1$ quindi non è un gruppo.
  			\item $(\mathbbm{Z}_n, +, \cdot)$ questo è un anello commutativo unitario
  		\end{enumerate}
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF divisore dello 0, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Divisore dello zero}{divisore_zero}
  			In un anello, $(A, +, \cdot)$, un elemento $a \in A$ con $a \neq 0$ si dice divisore dello 0 se $\exists b \in A$ con $b \neq 0$ tale che $a \cdot b = b \cdot a = 0$. \\
  			In tale caso anche $b$ è divisore dello 0. 
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi}:
  		\begin{enumerate}
  			\item $(\mathbbm{Z}, +, \cdot)$ ci sono divisori dello 0? \\
@@ -3775,10 +3859,10 @@
  			Ogni volta che $n$ non è primo esistono divisori dello 0. \\
  			\item $(\mathbbm{Z}_p, +, \cdot)$ ci sono divisori dello 0?
  		\end{enumerate}
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF invertibile, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Elemento invertibile}{el_invertibile}
  			In un anello unitario $(A, +, \cdot)$ un elemento $a \neq 0$ si dice invertibile se $\exists a' \in A \quad a' \neq 0$ tale che $a \cdot a' = a' \cdot a = 1$ \\
  			Poichè l'operazione è associativa se $\exists$ l'inverso di $a$ è unico e lo denotiamo con $a^{-1}$ 
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $(\mathbbm{Z}, +, \cdot)$ gli unici elementi invertibili sono $a = \pm 1$
@@ -3787,9 +3871,9 @@
  			\item $(\mathbbm{Z}_p, +, \cdot) \quad (\mathbbm{Z}_p, \cdot)$ tutti gli elementi tranne lo 0 sono invertibili. 
  		\end{enumerate}
  		
- 		 \begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+ 		 \begin{theorem}
  			In un anello unitario, $(A, +, \cdot)$, se un elemento è invertibile allora non è un divisore dello 0.
- 			 \begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema, fonttitle=\bfseries]
+ 			 \begin{proof} \quad \\
  				Sia $a \in A$ invertibile $\implies a \neq 0$ ed $\exists a^{-1} \in A \mid a \cdot a^{-1} = a^{-1} \cdot a = 1$ \\
  				Vogliamo dimostrare che $a$ non è un divisore dello 0. \\
  				Supponiamo per assurdo che $a$ sia divisore dello 0: $\exists b \in A \quad b \neq 0 \mid a \cdot b = b \cdot a = 0$ \\
@@ -3799,8 +3883,8 @@
  				$(a^{-1} \cdot a) \cdot b = 1 \cdot b = b$ e questo dice che $b = 0$ ma è assurdo. \\
  				Quindi in $(\mathbbm{Z}_p, +, \cdot)$ dato che ogni elemento diverso da 0 è invertibile, non ci sono divisori dello 0. \\
  
- 			\end{tcolorbox} 
- 		\end{tcolorbox}
+ 			\end{proof} 
+ 		\end{theorem}
  		Viceversa del teorema non è sempre vero, cioè se non è divisore dello 0 è invertibile? \\
  		$3 \in (\mathbbm{Z}, +, \cdot)$ non è divisore ma non è neanche invertibile. \\
  		\textbf{Proprietà}: In un anello unitario finito, cioè $A$ contiene un numero finito di elementi, ogni elemento diverso da 0 o è invertibile o è un divisore dello 0, ma non entrambi. \\
@@ -3834,27 +3918,27 @@
  				$[9]_{10}$ è inverso di se stesso in quanto unico rimasto.
  			\end{itemize}
  		\end{enumerate}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di campo, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Campo}{campo}
  			Un anello commutativo unitario in cui ogni elemento non nullo è invertibile si chiama \textbf{campo}. \\
  			Notazione: 
  			\[
  			(\mathbbm{K}, +, \cdot) \quad \forall a \in \mathbbm{K} \quad a \neq 0\quad \exists a^{-1} \in \mathbbm{K} \mid a \cdot a^{-1} = a^{-1} \cdot a = 1
  	 			\] 
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $(\mathbbm{Z}, +, \cdot)$ è un campo? No perchè non tutti gli elementi diversi da 0 sono invertibili, mentre $(\mathbbm{Q}, +, \cdot)$ e $(\mathbbm{R}, +, \cdot)$ sono campi.
  			\item $(\mathbbm{Z}_p, +, \cdot)$ è un campo con un numero finito di elementi.
  		\end{enumerate} 
  		\chapter{Matrici}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrici, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Matrici}{matrici}
  			Una matrice a coefficienti in un campo $(\mathbbm{K}, +, \cdot)$ del tipo $m \times n$ è una tabella di $m \cdot n$ elementi di $\mathbbm{K}$ organizzati su $m$ righe ed $n$ colonne. \\
  			L'insieme delle matrici di tipo $m \times n$ a coefficienti in $\mathbbm{K}$ si indica con:
  			\[
  			M_{m \times n}(\mathbbm{K})
  			\]
  			Altri libri indicano con $(m,n)$ o $m \times n$, $M_{m \times n}(\mathbbm{K})$ viene indicato con  $M_{m, n}(\mathbbm{K})$ o $M(m, n,\mathbbm{K})$ ma l'importante è che ci siano prima le righe e poi le colonne.
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:} $\mathbbm{K} = \mathbbm{R}$ o $\mathbbm{Q}$ 
  		\begin{enumerate}
  			\item Scrivere una matrice $3 \times 3$ a coefficienti in $\mathbbm{R}$: \\
@@ -3886,15 +3970,15 @@
  			\end{pmatrix} \in M_{2 \times 3}(\mathbbm{R})$ \\
  			$a_{11} = 1 \quad a_{21} = 3 \quad a_{33} = $ non esiste.
  		\end{enumerate}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrici uguali, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Matrici uguali}{matrici_uguali}
  			$A, B \in M_{m \times n}(\mathbbm{K})$ sono uguali se $a_{ij} = b_{ij} \quad \forall i = 1\dots m \quad \forall j = 1 \dots n$
- 		\end{tcolorbox}
+ 		\end{definition}
  		\section{Operazioni sulle matrici}
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrice trasposta, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Matrice trasposta}
  			Se $A \in M_{m \times n}(\mathbbm{K})$. \\
- 			La matrice trasposta di $A$  si indica con $A^t$ ed è una matrice in $M_{n \times m}(\mathbbm{K})$ ottenuta scambiando le righe con le colonne. \\
+ 			La matrice trasposta di $A$  si indica con $A^t$ ed è una matrice in $M_{n \times m}(\mathbbm{K})$ ottenuta scambiando le righe con le colonne. 
  			
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $\begin{pmatrix}
@@ -3910,9 +3994,9 @@
  			 \end{pmatrix} \in M_{3 \times 3}(\mathbbm{R})$
  		\end{enumerate}
  		 		
- 		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrice quadrata, fonttitle=\bfseries]
+ 		\begin{definition}{\nmu Matrice quadrata}{matrice_quadrata}
  			Se $m = n$ allora la matrice di dice quadrata e al posto di $M_{m \times n}(\mathbbm{K})$ si usa $M_n(\mathbbm{K})$
- 		\end{tcolorbox}
+ 		\end{definition}
  		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di diagonale principale, fonttitle=\bfseries]
 			Se $A \in M_n(\mathbbm{K})$ la diagonale principale è costituita dagli elementi $a_{ii}$
  		\end{tcolorbox}
@@ -3922,9 +4006,9 @@
  			8 & 9 & 0 
  		\end{pmatrix}$ \\
  		La diagonale è $a_{11}, a_{22}, a_{33}$
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrice identità, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Matrice identità}{mat_identita}
  			In $M_n(\mathbbm{K})$ la matrice identità è la matrice tale che $a_{ii} = 1$ e $a_{ij} = 0 \quad \forall i \neq j$ quindi ha tutti 1 sulla diagonale principale e 0 altrimenti e si indica con $Id_n \in M_n(\mathbbm{K})$
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $Id_1 = (1) \in M_1(\mathbbm{K})$
@@ -3938,7 +4022,7 @@
  				0 & 0 & 1
  			\end{pmatrix} \in M_3(\mathbbm{K})$
  		\end{enumerate}
- 		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di somma, fonttitle=\bfseries]
+ 		 \begin{definition}{\nmu Somma di matrici}{matrici_somma}
  			Sull'insieme delle matrici $M_{m \times n}(\mathbbm{K})$ è possibile definire un'operazione di somma sommando le matrici termine a termine, ovvero:
  			\[
  			+: M_{m \times n}(\mathbbm{K}) \times M_{m \times n}(\mathbbm{K}) \to M_{m \times n}(\mathbbm{K})
@@ -3947,7 +4031,7 @@
  			\forall A = (a_{ij}), B=(b_{ij}) \in M_{m \times n}(\mathbbm{K}) \quad A + B = (a_{ij} + b_{ij}) \in M_{m \times n}(\mathbbm{K})
  			\]
  			Quindi sommiamo matrici dello stesso tipo e otteniamo una matrice dello stesso tipo.
- 		\end{tcolorbox}
+ 		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $A = \begin{pmatrix}
@@ -3993,9 +4077,9 @@
   			\end{pmatrix} \in M_{2 \times 4}(\mathbbm{R})$
   		\end{enumerate}
   		
-  		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di prodotto numero matrice, fonttitle=\bfseries]
+  		 \begin{definition}{\nmu Prodotto numero di matrice}{prod_numero_matrice}
   			Per ogni $\lambda \in \mathbbm{K}$ e $A = (a_{ij}) \in M_{m \times n}(\mathbbm{K})$ è definito il prodotto $\lambda \cdot A = (\lambda a_{ij}) \in M_{m \times n}(\mathbbm{K})$, ottenuto moltiplicando tutti i coefficienti della matrice per il numero $\lambda$.
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Esempi:}
   		\begin{enumerate}
   			\item $A = \begin{pmatrix}
@@ -4008,11 +4092,11 @@
   			\end{pmatrix} \in M_{2 \times 4}(\mathbbm{Q})$
   		\end{enumerate}
   		
-  		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di prodotto tra matrice, fonttitle=\bfseries]
+  		\begin{definition}{\nmu Prodotto tra matrici}{prod_matrici}
   			Due matrici, $A$ e $B$, sono moltiplicabili se e solo se il numero delle colonne di $A$ è uguale al numero di righe di $B$. \\
   			Quindi: $A \in  M_{m \times n}(\mathbbm{K})$ e $B \in M_{n \times s}(\mathbbm{K})$. \\
   			In tal caso il prodotto $A \cdot B$ è una matrice $A \cdot B \in M_{m \times s}(\mathbbm{K})$ ottenuta moltiplicando le righe di $A$ per le colonne di $B$, ovvero al posto di $(i,j)$ di $A \cdot B$ abbiamo \[\sum_{t =  1}^{n}a_{ij}b{tj} = a_{i1} + b_{1j} + a_{i2} + b_{2j} + \dots + a_{in} + b_{nj}\]
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Esempi:} 
   		\begin{enumerate}
   			\item $A = (2\ 3\ 4\ 5) \in M_{1 \times 4}(\mathbbm{R}) \quad B = \begin{pmatrix}
@@ -4084,20 +4168,20 @@
   		\end{enumerate}
   		Questo ci dice che $(M_n(\mathbbm{K}), +, \cdot)$ è un anello unitario non commutativo per $n > 1$
   		\section{Invertibilità di una matrice}
-  		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrice invertibile, fonttitle=\bfseries]
+  		\begin{definition}{\nmu Matrice invertibile}{mat_invertibile}
   			Una matrice $A \in M_{n}(\mathbbm{K})$ si dice invertibile se $\exists A' \in M_n(\mathbbm{K})$ tale che $A \cdot A' = A' \cdot A = $elemento neutro$=Id_n$ \\
   			Dato che il prodotto è associativo se $A$ è invertibile esiste una unica matrice $A'$. Si denota con $A^{-1}$ e si chiama inversa di $A$
-  		\end{tcolorbox}
+  		\end{definition}
   		\textbf{Problemi:}
   		\begin{enumerate}
   			\item Capire se $A$ è invertibile;
   			\item Determinare la matrice inversa
   		\end{enumerate}
   		\textbf{Capire se $A$ è invertibile}.
-  		 \begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA invertibilità di A, fonttitle=\bfseries]
+  		 \begin{theorem}{\nmu Invertibilità}{invertibilita}
   			Sia $A \in M_{n}(\mathbbm{K})$ quadrata. Allora $A$ è invertibile se e solo se il determinante di $A$ $det(A) \neq 0$ \\
   			$\exists A^{-1} \in M_n(K)$ se e solo se $det(A) \neq 0$
-  		\end{tcolorbox}
+  		\end{theorem}
   		\section{Determinante della matrice quadrata}
   		Sia $A \in M_n(\mathbbm{K})$:
   		\begin{enumerate}
@@ -4107,7 +4191,7 @@
 				a_{21} & a_{22}
 			\end{pmatrix} \quad det(A) = a_{11} \cdot a_{22} - a_{12} \cdot a_{21} \in \mathbbm{K}$ 
   		\end{enumerate}
-  		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di determinante, fonttitle=\bfseries]
+  		 \begin{definition}{\nmu Determinante}{determinanate}
   		 	\textbf{Formula regola di Laplace}. \\
   		 	Sia $A \in M_n(\mathbbm{K})$ una matrice quadrata con $n \geq 2$ il determinante di $A$ si indica con $det(A)$ è un elemento in $\mathbbm{K}$, dato dalla formula: 
   		 	\begin{enumerate}
@@ -4127,7 +4211,7 @@
   		 		Il determinante di A è la somma dei prodotti degli elementi di $a_{ij}$ della colonna $j$ moltiplicati per $(-1)^{i + j}$ per il determinante della matrice ottenuta da $A$ eliminando colonna $j$ e riga $i$.
   		 	\end{enumerate} 		 	
   		 	\textbf{Osservazione:}Si può dimostrare che non dipende dalla scelta dalla riga o della colonna 
-  		 \end{tcolorbox}
+  		 \end{definition}
   		 \textbf{Esempi:}
   		 \begin{enumerate}
   		 	\item $A = \begin{pmatrix}
@@ -4176,10 +4260,10 @@
   	 	\end{pmatrix} = 3 \cdot (4 \cdot (-1) - (1)(-1)) + (-1)(-3 - \dfrac{4}{3}) = -9+\dfrac{13}{3} = -\dfrac{14}{3}$
    		\end{enumerate}
    		\textbf{Per approfondimento guardare regola di Sarus per il determinante delle matrici $3 \times 3$} 
-   		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di complementi algebrici, fonttitle=\bfseries]
+   		 \begin{definition}{\nmu Complementi algebrici}{com_algebrici}
    			Sia $A \in M_n(\mathbbm{K})$ una matrice quadrata. \\
    			Il complemento algebrico dell'elemento $a_{ij}$ della matrice $A$ è il prodotto $(-1)^{i + j} \cdot det($ delle matrice ottenuta eliminando riga $i$ e colonna $j)$
-   		\end{tcolorbox}
+   		\end{definition}
    		\textbf{Esempi:}
    		\begin{enumerate}
    			\item $A = \begin{pmatrix}
@@ -4198,13 +4282,13 @@
    		\end{enumerate}
    		\textbf{Osservazione:} Il determinante è la somma su una qualsiasi riga o colonna del prodotto degli elementi della riga o della colonna per il loro complemento algebrico. \\
    		\section{Trovare la matrice inversa}
-   		 \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di matrice inversa, fonttitle=\bfseries]
+   		 \begin{definition}{\nmu Matrice inversa}{mat_inversa}
    			Sia $A \in M_n(\mathbbm{K})$ una matrice quadrata con $det(A) \neq 0$. \\
    			Allora la matrice inversa di $A$ è:
    			\[
    			A^{-1} = \dfrac{1}{det(A)} \cdot (\text{Matrice complementi algebrici})^t
    			\]
-   		\end{tcolorbox}
+   		\end{definition}
    		L'inversa di una matrice $A$ esiste solo se sono verificate due condizioni:
    		\begin{enumerate}
    			\item \textbf{La matrice $A$ è quadrata};
@@ -4332,7 +4416,7 @@
    			\end{itemize}
    		\end{enumerate}
    	\chapter{Grafi}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafo, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Grafo}{grafo}
    		Un grafo semplice, $G$, è una coppia $G=(V,L)$ dove:
    		\begin{itemize}
    			\item $V$ è un insieme non vuoto i cui elementi sono detti vertici del grafo $G$;
@@ -4340,7 +4424,7 @@
    			$l \in L \quad l = \{v, w\} \quad v,w \in W$
    		\end{itemize}
    		Gli elementi di $L$ si chiamano lati e se $l = \{v, w\}$ allora è un lato di estremi $v$ e $w$. I lati possono anche essere chiamati archi o edges, per questo, spesso, la $l$ viene sostituita con la lettera $e$.
-   	\end{tcolorbox}
+   	\end{definition}
    	\paragraph{Rappresentazione di un grafo}
    	Viene disegnato un punto per ogni vertice $v \in V$. \\
    	Di seguito, si congiunge $v$ e $w$ se il lato $l = \{v,w\}$ è un lato del grafo. 
@@ -4373,13 +4457,13 @@
    			}
    		\end{tikzpicture}
    	\end{enumerate}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di isomorfismo, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Isomorfismo}{isomorfismo}
    		Due grafi, $G=(V,L)$ e $G'=(V', L')$ sono isomorfi se $\exists f: V \to V'$ biettiva tale che:
    		\[
    		\forall v,w \in V \quad \{v,w\} \in L \iff \{f(v), f(w)\} \in L'
    		\]
    	Quindi esiste un lato in $G$ tra $v$ e $w$ se e solo se esiste un lato in $G'$ tra $f(v)$ e $f(w)$
-   	\end{tcolorbox}
+   	\end{definition}
    	\textbf{Esempi:}
    	\begin{enumerate}
    		\item Dati tre grafi: \\
@@ -4451,22 +4535,22 @@
    	\[
    	\binom{n}{2} = \dfrac{n!}{2!(n-2)!}
    	\]
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafo semplice, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Grafo semplice}{grafo_semplice}
    		Per definizione $l=\{v,w\}$ è un lato. Quindi:
    		\begin{enumerate}
    			\item $\{v,v\} = \{v\}$ e non ha 2 elementi, quindi non ci sono \textbf{cappi} o  \textbf{loops}
    			\item $\{v,w\} = \{w,v\}$ quindi non c'è direzione nei lati;
    			\item $L \subseteq \implies$ un lato $\{v,w\} \in L$ oppure no. Questo ci dice che non ci sono lati multipli.
    		\end{enumerate}
-   	\end{tcolorbox}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grado o valenza, fonttitle=\bfseries]
+   	\end{definition}
+   	\begin{definition}{\nmu Grado o valenza}{grado_valenza}
    		Sia $G=(V, L)$ un grafo. Un vertice $v \in V$ ha grado o valenza $n$ se appartiene ad $n$ lati. In tal caso scriveremo:
    		\[
    		d(v) = n
    		\]
    		dove $d$ sta per degree. Inoltre $v$ si dice \textbf{pari} se $d(v)$ è pari altrimenti si dice \textbf{dispari} e si dice \textbf{isolato} se $d(v)=0$ \\
    		\textbf{Osservazione:} Se $|V|=n$ il grado massimo di un suo vertice è $n-1$
-   	\end{tcolorbox} 
+   	\end{definition} 
    	\textbf{Esempio:}
    	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
@@ -4488,32 +4572,31 @@
    		}
    	\end{tikzpicture} \\
    	$d(v_1) = 3 \quad d(v_2) = 3 \quad d(v_3) = 3 \quad d(v_4) = 3$
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafo completo, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Grafo completo}{grafo_completo}
    		Un grafo si dice completo se per ogni coppia di vertici esiste un lato che li congiunge. \\
    		Quindi se $|V|=n \quad d(v) = n - 1\ \forall v$ vertice $|L| = \mathlarger{\binom{n}{2}} \quad n \geq 2$ \\
    		$\forall n \geq 1$ esiste un unico grado a meno di isomorfismo completo con $n$ vertici e si chiama $K_n$
-   	\end{tcolorbox} 
+   	\end{definition} 
    	Il grafo dell'esempio precedente è un grafo completo.
-   	\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA delle strette di mano, fonttitle=\bfseries]
+   	\begin{theorem}{\nmu Teorema delle strette di mano}{strette_di_mano}
    		Sia $G=(V, L)$ un grafo finito. Allora:
    		\[
    		2|L| = \sum_{v \in V}d(v)
    		\]
-   	\end{tcolorbox} 
+   	\end{theorem} 
    	\begin{corollary}
    		In ogni grafo finito, il numero di vertici dispari è pari.
-   		\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del corollario, fonttitle=\bfseries]
+   		\begin{proof} \quad \\
    			$2|L| = \mathlarger{\sum_{v \in V}}d(v) \implies$ somma dei gradi di tutti i vertici di un grafo è \textbf{pari}, quindi il numero dei vertici con $d(v)$ dispari deve essere \textbf{pari}.
-   		\end{tcolorbox}
+   		\end{proof}
    	\end{corollary}
-   	\textbf{Vedere dal quaderno gli esempi di grafi con stesso numero di vertici e di lati ma che non sono isomorfi}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di cammino, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Cammino}{cammino}
    		Sia $G=(V, L)$ un grafo finito. Un cammino di estremi $v$ e $w$ è una successione finita di lati a due a due distinti tra $v$ e $w$:
    		\[
    		l_1 = \{v_1, v_2\}, l_2 = \{v_2,v_3\}, \dots, l_n=\{v_n, w\}
    		\]
    		In tal caso diremo che il cammino ha lunghezza $n$.
-   	\end{tcolorbox}
+   	\end{definition}
    	\textbf{Esempio:} Dato il grafo: \\
    	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
@@ -4552,30 +4635,30 @@
    			\node[below] at (\x,\y) {\label};
    		}
    	\end{tikzpicture}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafo connesso, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Grafo connesso}{grafo_connesso}
    		Un grafo si dice connesso se per ogni coppie di vertici esiste un cammino.
-   	\end{tcolorbox}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di circuito, fonttitle=\bfseries]
+   	\end{definition}
+   	\begin{definition}{\nmu Circuito}{circuito}
    		Un circuito è un cammino di lunghezza $n > 0$ i cui estremi coincidono
-   	\end{tcolorbox}
+   	\end{definition}
    	Nel caso del cammino precedente se iniziassimo e finissimo sul vertice $v_1$ parleremo di circuito.
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di cammino euleriano e circuito euleriano, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Cammino o circuito euleriano}{cammino_euleriano}
    		Sia $G=(V, L)$ un grafo finito. Un cammino euleriano è un cammino che passa per tutti i lati del grafo. \\
    		Un circuito euleriano è un circuito che passa per tutti i lati del grafo. \\
    		\textbf{Osservazione}: Il cammino euleriano passa per tutti i lati del grafo una sola volta quindi riusciamo a disegnare il grafo senza staccare la penna dal foglio. \\
    		Il circuito euleriano passa per tutti i lati del grafo una sola volta quindi riusciamo a ridisegnare il grafo senza staccare la penna dal foglio e al tornare al punto di partenza.
-   	\end{tcolorbox}
-   	\begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA di Eulero per i grafi, fonttitle=\bfseries]
+   	\end{definition}
+   	\begin{theorem}{\nmu Teorema di Eulero per i grafi}{eulero_grafi}
    		In un grafo connesso con almeno 2 vertici:
    		\begin{itemize}
    			\item $\exists$ circuito euleriano $\iff$ tutti i vertici sono \textbf{pari};
    			\item $\exists$ cammino euleriano $\iff$ esistono al più 2 vertici dispari: se non ci sono esiste al circuito, se ci sono sono necessariamente gli estremi del cammino.
       	\end{itemize}
-   	\end{tcolorbox}
+   	\end{theorem}
    	\textbf{Fare esempi}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di cammino hamiltoniano, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Cammino hamiltoniano}{cammino_hamiltoniano}
    		Sia $G=(V, L)$ un grafo. Un cammino hamiltoniano è un unico cammino che passa per tutti i vertici del grafo una sola volta.
-   	\end{tcolorbox}
+   	\end{definition}
    	\textbf{Esempio:} \\
    	   	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
@@ -4614,12 +4697,12 @@
    			\node[below] at (\x,\y) {\label};
    		}
    	\end{tikzpicture}
-   	\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafo bipartito, fonttitle=\bfseries]
+   	\begin{definition}{\nmu Grafo bipartito}{grafo_bipartito}
    		Un grafo, $G$, si dice \textit{bipartito} se esiste una partizione $V_1$ e $V_2$ dell'insieme $V$ tale che ogni lato del grafo ha un estremo in $V_1$ e l'altro in $V_2$. \\
    		\[
    		V_1\ \cup V_2\ = V \quad V_1\ \cap V_2\ = \emptyset \quad V_1 \neq \emptyset \quad V_2 \neq \emptyset
    		\]
-   	\end{tcolorbox}
+   	\end{definition}
    	\textbf{Esempi:}
    	\begin{itemize}
    		\item Grafo bipartito:  \\
@@ -4642,9 +4725,9 @@
    		\end{tikzpicture} \\
    		$V_1 = \{v_1, v_2\} \\ V_2 = \{w_1, w_2\}$
    	\end{itemize}
-   	 \begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA, fonttitle=\bfseries]
+   	 \begin{theorem}
    	 	Un grafo è bipartito se non ammette circuiti di lunghezza dispari.
-   	\end{tcolorbox}
+   	\end{theorem}
    	\textbf{Esempi:}
    	\begin{itemize}
     	\item $\forall n,m \geq 1 \quad \exists$ il grafo completo bipartito $k_{n,m}$ tale che ha $n + m$ vertici $|V_1|=n \quad |V_2|=m$ e $\exists$ un lato tra ogni vertice di $V_1$ e ogni vertice di $V_2$
@@ -4724,10 +4807,9 @@
     		\end{tikzpicture}
     	\end{itemize}  
     \end{itemize}
-    \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di grafo planare, fonttitle=\bfseries]
+    \begin{definition}{\nmu Grafo planare}
     	Un grafo si dice planare se può essere disegnato su un piano "senza incroci", ovvero i lati si incontrano solo nei vertici.
-    \end{tcolorbox}
-    \textbf{Vedere gli esempi dal quaderno}
+    \end{definition}
     \begin{itemize}
     	\item $k_5$: \\
     	\begin{tikzpicture}
@@ -4780,14 +4862,14 @@
     	\end{tikzpicture}
     \end{itemize}
     \textbf{Questi due grafi non sono planari}
-    \begin{tcolorbox}[colframe=red!75!black, colback=white!5!white, title=TEOREMA di Kuratowski, fonttitle=\bfseries]
+    \begin{theorem}{\nmu Teorema di Kuratowski}{kuratowski}
     	Un grafo, $G = (V, L)$ finito è planare se non è $k_5$ o $k_{3,3}$ e se non è ottenuto a partire da $k_5$ o $k_{3,3}$ aggiungendo lati, vertici o vertici su un lato, quindi se non contiene $k_5$ o $k_{3, 3}$ come sottograf o come una loro espansione. \\
     	$k_5$ ha 5 vertici di grado 4. \\
     	$k_{3,3}$ ha 6 vertici di grado 3. \\
     	Se il grafo contenesse $k_5$ o $k_{3,3}$ dovrebbe avere almeno o 5 vertici di grado 4 o 6 vertici di grado 3.
-    \end{tcolorbox}
+    \end{theorem}
     
-    \begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=DEF di albero, fonttitle=\bfseries]
+    \begin{definition}{\nmu Albero}{albero}
     	Un albero è un grafo connesso privo di circuiti. \\
     	Equivalentemente:
     	\begin{itemize}
@@ -4795,7 +4877,7 @@
     		\item $G$ è privo di circuiti ed ha $|L| = |V| - 1$ lati;
     		\item $G$ è connesso ed ha $|L| = |V| - 1$ lati.
     	\end{itemize}
-    \end{tcolorbox}
+    \end{definition}
     \textbf{Problema:} 
     \begin{itemize}
     	\item $\exists$ un albero con $n$ vertici di grado $d_1, d_2, \dots, d_n$ ?    	\item $\exists$ un grafo?
