@@ -1,4 +1,4 @@
-\documentclass[12pt, letterpaper]{report}
+\documentclass[12pt]{report}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath}	
@@ -27,17 +27,43 @@
 \newtheorem{proof}{Dimostrazione}[section]
 \newtheorem{proposition}{Proposizione}[section]
 \newtheorem{lemma}{Lemma}[section]
-\title{Appunti linguaggi di programmazione}
-\author{Alessandro Carella}
+\title{Linguaggi di programmazione}
+\date{}
 \setcounter{chapter}{0}
 \setlist[enumerate]{label*=\arabic*.}
 \setlength{\parindent}{0pt}
 \lstset{autogobble=true}
+\definecolor{brickred}{RGB}{182, 50, 28}
+\definecolor{darkred}{RGB}{139, 0, 0}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{darkblue}{rgb}{0,0,0.6}
 \hypersetup{
 	colorlinks=true,
-	linkcolor=blue,
-	filecolor=magenta,
-	urlcolor=cyan
+	linkcolor=darkred,
+	filecolor=darkred,
+	urlcolor=darkred
+}
+\lstdefinestyle{pascalstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	language=Pascal
 }
 
 \begin{document}	
@@ -70,7 +96,7 @@
 	Vediamo il ciclo di esecuzione di un generico interprete:
 	\begin{figure}[H]
 		\centering
-		\includegraphics{ciclo_esecuzione_interprete}
+		\includegraphics[width=1.0\textwidth]{ciclo_esecuzione_interprete}
 		\caption{Ciclo di esecuzione di un generico interprete}
 	\end{figure}
 	\subsection{Realizzazione di una macchina astratta}
@@ -103,16 +129,16 @@
 	è una corrispondenza tra elementi dell'insieme \textit{A} e quelli dell'insieme \textit{B} tale che , per ogni elemento di \textit{A} esiste uno ed uno solo elemento di \textit{B} che gli corrisponde e che chiamiamo $f(a)$. \\
 	Una funzione \textit{parziale} è ancora una corrispondenza tra i due insiemi \textit{A} e \textit{B}. ma può essere indefinita in corrispondenza di qualche elemento del dominio \textit{A}. \\
 	La nozione di funzione parziale è fondamentale per noi in quanto i programmi definiscono in modo naturale funzioni parziali, ad esempio:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 read(x);
 if x==1 then print(x) else
 	while (x <> 1) do skip;
 	\end{lstlisting}
 	calcola la funzione parziale: 
 	$f(x) = \begin{cases}
-		1 \quad x=1 \\
-		\text{indefinita} \quad \text{altrimenti}
-	\end{cases}$
+		1 & x=1 \\
+		\text{indefinita} & \text{altrimenti}
+	\end{cases}$ \\
 	In generale un programma scritto in $\mathcal{L}$ si può vedere come una funzione parziale:
 	\[
 	\mathcal{P^L}: \mathcal{D} \to \mathcal{D} \mid \mathcal{P^L}(Input) = Output
@@ -165,7 +191,7 @@ if x==1 then print(x) else
 	Quindi il quesito che ci siamo posti precedentemente riguardo l'esistenza di problemi per i quali non esiste un programma che li risolva riguarda, ora, l'esistenza di funzioni \textbf{non calcolabili}.  \\
 	Allora, vogliamo stabilire se un programma termina su un dato input. \\
 	Definiamo quindi con $\mathcal{H}$, un programma di debugging, che riceve in ingresso due input: un generico programma $\mathcal{P}$ scritto nel linguaggio $\mathcal{L}$ e un generico input $x$ per tale programma: \\
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 Boolean H(P, x):
 	boolean term;
 	if (P(x) termina)
@@ -178,7 +204,7 @@ Boolean H(P, x):
 	Sottolineiamo come $H$ deve terminare sempre e deve funzionare per ogni programma $\mathcal{P^L}$ e ogni input $x$. \\
 	Adesso vogliamo dimostrare che non esista alcun programma $\mathcal{H}$ con il comportamento descritto precedentemente. Dimostreremo questo per assurdo, quindi supponendo di avere a disposizione $\mathcal{H}$ e di ricavarne una contraddizione. \\
 	Sfruttando $\mathcal{H}$ possiamo scrivere un altro programma $K$, con un solo input che si tratta di un generico programma $\mathcal{P}$:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 	if (H(P, P) = false) then print("LOOP");
 		else while (true) do print("TERMINA");
 	\end{lstlisting}
@@ -186,15 +212,13 @@ Boolean H(P, x):
 	Eseguiamo ora $K$ sul suo stesso testo, ovvero $K(K)$, il comportamento che si ottiene è il seguente:
 	\[
 	K(K) = \begin{cases}
-		TERMINA \quad K(K) \ \text{non termina} \\
-		LOOP \quad K(K) \ \text{termina}
+		TERMINA & K(K) \ \text{non termina} \\
+		LOOP & K(K) \ \text{termina}
 	\end{cases}
 	\]
 	Ma questo è assurdo perchè $K(K)$ termina se $K(K)$ non termina; e che non termina, quando $K(K)$ termina. \\
 	L'assurdo dipende, non da $K$ in se, che è un semplice programma che sfrutta $H$, ma l'assurdo discende dall'aver supposto che esistesse un programma con le caratteristiche di $H$. Quindi $H$ non esiste. \\
 	Il problema della fermata è \textbf{indecidibile}, cioè non possiamo costruire un algoritmo che lo risolva, quindi, per rispondere al quesito riguardante l'esistenza di funzioni non calcolabili, la risposta è si e il problema della fermata è un esempio di queste e questo risultato non dipende dal linguaggio $\mathcal{L}$ utilizzato.
-	\section{Macchine di Turing}
-	Vedere dalle slide
 	\section{Introduzione alla teoria dei linguaggi formali}
 	Un linguaggio di programmazione è un formalismo artificiale nel quale poter esprimere algoritmi. Il suo studio può far tesoro di alcuni concetti e strumenti sviluppati nell'ultimo secolo dalla linguistica. 
 	\subsection{Livelli di descrizione}
@@ -428,8 +452,8 @@ Boolean H(P, x):
 	Inoltre, si ha:
 	\[
 	X^h = \begin{cases}
-		\{\lambda\} \quad \quad \quad h=0 \\
-		XX^{h-1} \quad \text{altrimenti}
+		\{\lambda\} &  h=0 \\
+		XX^{h-1} & \text{altrimenti}
 	\end{cases}
 	\]
 	{
@@ -625,7 +649,7 @@ Boolean H(P, x):
 	\draw[->, thick] (0.7,-2) -- (9,0) node[midway, above] {};
 	\node at (9.5,0.3) {$L(G'')$};	
 	
-	\end{tikzpicture}
+	\end{tikzpicture} \quad \\
 	\textbf{Esempio:} Sia $G = (X, V, S, P)$ ove:
 	\[
 	X = \{a, b\} \quad V = \{S\} \quad P = \{S \overset{(1)}{\to} aSb, S \overset{(2)}{\to} ab\}
@@ -1829,7 +1853,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 			\delta^*(p, wx) = \mathlarger{\bigcup_{q \in \delta^*(p, w)}}
 		\end{cases} \quad \forall p \in 2^Q\ (p \subset Q), x \in X, w \in X^*$ 
 		}
-	}
+	} \\
 	Analogamente a quanto fatto per gli FSA, si dovrebbero riformulare le definizioni di parola accettata e di linguaggio accettato da un NDA. \\
 	La complicazione, rinveniente dalla computazione non deterministica dello stato successivo in cui un NDA transita, comporta che una stessa parola può indurre cammini multipli attraverso un NDA, alcuni che terminano in stati di accettazione, altri che terminano in stati di non accettazione.
 	{
@@ -1840,7 +1864,6 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	\]
 	}
 	}
-	Vedere gli esempi dalle slide. \\
 	{
 	\definition[Linguaggio accettato da un NDA]{
 	Sia $M = (Q, \delta, q_0, F)$ un NDA con alfabeto di ingresso $X$. Il \textbf{linguaggio accettato} o \textbf{riconosciuto} da $M$ è l'insieme della parole su $X$ accettate da $M$:
@@ -1855,7 +1878,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	T(M_1) = T(M_2)
 	\]
 	}
-	\definition[Classe dei linguaggi riconosciuti da automi a stati finiti non deterministici]{
+	\definition[Classe di linguaggi riconosciuti da un NDA]{
 	Di seguito la definizione della \textbf{classe dei linguaggi riconosciuti da automi a stati finiti non deterministici: 
 	\[
 	\mathcal{L}_{NDL} = \{L \in 2^{X^*} \mid \exists M, M \text{è un NDA}: L = T(M)\}
@@ -1865,7 +1888,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	}
 	\section{Equivalenza delle classi di linguaggi accettati da automi a stati finiti deterministici e non deterministici}
 	{
-	\theorem[Equivalenza delle classi di linguaggi accettati da automi a stati finiti deterministici e non deterministici]{
+	\theorem[Equivalenza delle classi di linguaggi accettati da FSA e NDA]{
 	\begin{itemize}
 		\item Le classi di linguaggi $\mathcal{L}_{FSL}$ e $\mathcal{L}_{NDL}$ sono equivalenti ($1^a$ formulazione).
 		\item Sia $L$ un linguaggio su $X$. $L$ è un linguaggio a stati finiti se e solo se $L = T(M)$ per qualche NDA $M$ ($2^a$ formulazione)
@@ -2312,7 +2335,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\end{itemize}
 	\end{itemize}
 	Ad esempio: \\
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		var A: integer;
 		...
 		if A then ... ERRORE
@@ -2325,7 +2348,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\item Allocazione dei registri: poichè l'accesso ai registri è più rapido dell'accesso alle locazioni di memori,a, i valori cui si accede più spesso andrebbero mantenuti nei registri.
 	\end{itemize}
 	Ad esempio:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		x1 := a + bb * 12;
 		x2 := a / 2 + bb * 12;
 	\end{lstlisting}
@@ -2334,7 +2357,8 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	Segue poi la vera e propria generazione del codice. \\
 	Ad esempio: \\
 	(+, A, B, T1) \\ (+, C, D, T2) \\ (*, T1, T2, T3) \\
-	Si possono produrre quindi le seguenti istruzioni assembler:
+	Si possono produrre quindi le seguenti istruzioni assembler: 
+	\begin{center}
 	\begin{tabular}{c c}
 		LOADA & A \\
 		LOADB & B \\
@@ -2347,13 +2371,15 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		MULT & \\
 		STOREA & T3
 	\end{tabular}
+		
+	\end{center} \newpage
 	\textbf{Nota}:
 	\begin{itemize}
 		\item (S), 1(S), 2(S), ecc.: accede al contenuto del top dello stack, ad una posizione successiva, due posizioni successive, ecc. 
 		\item @A: accede alla locazione il cui valore è puntato da A, ovvero non prende il contenuto della cella A ma ne prende l'indirizzo (indirizzamento indiretto)
 	\end{itemize}
 	Ad esempio:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		x1 := a + bb * 12;
 		x2 := a / 2 + bb * 12;
 	\end{lstlisting}
@@ -2432,7 +2458,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\item I token possono essere descritti in diversi modi. Spesso si utilizzano le \textbf{grammatiche regolari}.
 	\end{itemize}
 	Ad esempio, una grammatica per generare una grammatica regolare è la seguente:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		< uint > ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 
 					 0 < uint > | 
 					 1 < uint > |
@@ -2467,128 +2493,127 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	La spiegazione dell'automa in maniera dettagliata è descritta nelle slide. \\
 	\textbf{Algoritmo:}
 	\begin{enumerate}
-		\item \begin{lstlisting}
+		\item \begin{lstlisting}[style=pascalstyle]
 				[ Initialize. ]
 				POS <- 0
 			\end{lstlisting}
-		\item \begin{lstlisting}
+		\item \begin{lstlisting}[style=pascalstyle]
 			[ Get first character ]
 			if not LOOKAHEAD
 			then CHAR <- GET_CHAR(PROGRAM) 
 			LOOKAHEAD <- false
 		\end{lstlisting}
-		\item\begin{lstlisting}
+		\item\begin{lstlisting}[style=pascalstyle]
 				[ Loop until a token is found ]
 				Repeat step 4 while true
 			\end{lstlisting}
 		\item
-		\begin{lstlisting}
-			[ Case statement to determine next token ]
-			Select by (CHAR)
-			Case '':
-				CHAR <- GET_CHAR(PROGRAM)
-			Case '/':
-				CHAR <- GET_CHAR(PROGRAM)
-				if CHAR = '*'
-				then Repeat while true
-					CHAR <- GET_CHAR(PROGRAM)
-					if CHAR = '*'
-					then Repeat while CHAR = '*'
-							CHAR <- GET_CHAR(PROGRAM)
-						if CHAR = '/'
-						then CHAR <- GET_CHAR(PROGRAM)
-							Exit loop
-					else LOOKAHEAD <- true
-						TOKEN <- DIVISION
-						Return
-			Case '<':
-				CHAR <- GET_CHAR(PROGRAM)
-				if CHAR = '='
-				then TOKEN <- LEQ
-				else if CHAR = '>'
-					then TOKEN <- NEQ
-					else LOOKAHEAD <- true
-				TOKEN <- LTN
-				Return
-			Case '>':
-				CHAR <- GET_CHAR(PROGRAM)
-				if CHAR = '='
-				then TOKEN <- GEQ
-				else LOOKAHEAD <- true
-				TOKEN <- GTN
-				Return
-			Case '=':
-				TOKEN <- EQ
-				Return
-			Case '(':
-				TOKEN <- LEFT
-				Return
-			Case ')':
-				TOKEN <- RIGHT
-				Return
-			Case '+':
-				TOKEN <- ADDITION
-				Return
-			Case '-':
-				TOKEN <- SUBTRACTION
-				Return
-			CASE '*':
-				TOKEN <- MULTIPLICATION
-				Return
-			CASE ':':
-				CHAR <- GET_CHAR(PROGRAM)
-				if CHAR = '='	
-				then TOKEN <- ASSIGNMENT
-					Return 
-				else 
-					CHAR <- GET_CHAR(PROGRAM)
-					Write('Unknown token <<:>>', CHAR, 'IN SOURCE STRING')
-			Case ';':
-				TOKEN <- SEMICOLON
-				Return
-			Case '''':
-				STRING <- ''
-				Repeat while true
-					CHAR <- GET_CHAR(PROGRAM)
-					if CHAR = ''''
-					then CHAR <- GET_CHAR(PROGRAM)
-						if CHAR != ''''
-						then LOOKAHEAD <- true
-							POS <- INSERT(STRING, LITERAL)
-							TOKEN <- LITERAL
-							Return
-					STRING <- STRING * CHAR
-			Default:
-				if CHAR >= 'A' and CHAR <= 'Z'
-				then STRING <- CHAR
-					CHAR <- GET_CHAR(PROGRAM)
-					Repeat while (CHAR >= 'A' AND CHAR <= 'Z')
-					or (CHAR >= '0' AND CHAR <= '9')
-						STRING <- STRING * CHAR
-						CHAR <- GET_CHAR(PROGRAM)
-					LOOKAHEAD <- true
-				if KEYWORD(STRING) > 0
-				then TOKEN <- KEYWORD(STRING)
-					Return
-				POS <- INSERT(STRING, IDENTIFIER)
-				TOKEN <- IDENTIFIER
-				Return
-				if CHAR >= '0' and CHAR <= '9'
-				then STRING <- CHAR
-					CHAR <- GET_CHAR(PROGRAM)
-					Repeat CHAR >= '0' and CHAR <= '9'
-						STRING <- STRING * CHAR
-						CHAR <- GET_CHAR(PROGRAM)
-					LOOKAHEAD <- true
-					POS <- INSERT(STRING, COSTANT)
-					TOKEN <- CONSTANT
-					Return
-				Write('ERROR UNKWOWN CHARACTER', CHAR, 'IN SOURCE STRING')
-				CHAR <- GET_CHAR(PROGRAM)
+		\begin{lstlisting}[style=pascalstyle]
+[ Case statement to determine next token ]
+Select by (CHAR)
+Case '':
+CHAR <- GET_CHAR(PROGRAM)
+Case '/':
+CHAR <- GET_CHAR(PROGRAM)
+if CHAR = '*'
+then Repeat while true
+	CHAR <- GET_CHAR(PROGRAM)
+	if CHAR = '*'
+	then Repeat while CHAR = '*'
+			CHAR <- GET_CHAR(PROGRAM)
+		if CHAR = '/'
+		then CHAR <- GET_CHAR(PROGRAM)
+			Exit loop
+	else LOOKAHEAD <- true
+		TOKEN <- DIVISION
+		Return
+Case '<':
+CHAR <- GET_CHAR(PROGRAM)
+if CHAR = '='
+then TOKEN <- LEQ
+else if CHAR = '>'
+	then TOKEN <- NEQ
+	else LOOKAHEAD <- true
+TOKEN <- LTN
+Return
+Case '>':
+CHAR <- GET_CHAR(PROGRAM)
+if CHAR = '='
+then TOKEN <- GEQ
+else LOOKAHEAD <- true
+TOKEN <- GTN
+Return
+Case '=':
+TOKEN <- EQ
+Return
+Case '(':
+TOKEN <- LEFT
+Return
+Case ')':
+TOKEN <- RIGHT
+Return
+Case '+':
+TOKEN <- ADDITION
+Return
+Case '-':
+TOKEN <- SUBTRACTION
+Return
+CASE '*':
+TOKEN <- MULTIPLICATION
+Return
+CASE ':':
+CHAR <- GET_CHAR(PROGRAM)
+if CHAR = '='	
+then TOKEN <- ASSIGNMENT
+	Return 
+else 
+	CHAR <- GET_CHAR(PROGRAM)
+	Write('Unknown token <<:>>', CHAR, 'IN SOURCE STRING')
+Case ';':
+TOKEN <- SEMICOLON
+Return
+Case '''':
+STRING <- ''
+Repeat while true
+	CHAR <- GET_CHAR(PROGRAM)
+	if CHAR = ''''
+	then CHAR <- GET_CHAR(PROGRAM)
+		if CHAR != ''''
+		then LOOKAHEAD <- true
+			POS <- INSERT(STRING, LITERAL)
+			TOKEN <- LITERAL
+			Return
+	STRING <- STRING * CHAR
+Default:
+if CHAR >= 'A' and CHAR <= 'Z'
+then STRING <- CHAR
+	CHAR <- GET_CHAR(PROGRAM)
+	Repeat while (CHAR >= 'A' AND CHAR <= 'Z')
+	or (CHAR >= '0' AND CHAR <= '9')
+		STRING <- STRING * CHAR
+		CHAR <- GET_CHAR(PROGRAM)
+	LOOKAHEAD <- true
+if KEYWORD(STRING) > 0
+then TOKEN <- KEYWORD(STRING)
+	Return
+POS <- INSERT(STRING, IDENTIFIER)
+TOKEN <- IDENTIFIER
+Return
+if CHAR >= '0' and CHAR <= '9'
+then STRING <- CHAR
+	CHAR <- GET_CHAR(PROGRAM)
+	Repeat CHAR >= '0' and CHAR <= '9'
+		STRING <- STRING * CHAR
+		CHAR <- GET_CHAR(PROGRAM)
+	LOOKAHEAD <- true
+	POS <- INSERT(STRING, COSTANT)
+	TOKEN <- CONSTANT
+	Return
+Write('ERROR UNKWOWN CHARACTER', CHAR, 'IN SOURCE STRING')
+CHAR <- GET_CHAR(PROGRAM)
 		\end{lstlisting}
 	\end{enumerate}
 	\textbf{Osservazione:} In alcuni linguaggi non è possibile determinare sempre cos'è un token nel momento in cui è stato letto completamente. \\
-	(Vedere esempio di Fortran dalle slide). \\
 	\section{Linguaggi regolari e scanner}
 	I linguaggi regolari vengono riconosciuti in modo efficiente attraverso automi a stati finiti. Tuttavia, sono linguaggi abbastanza limitati e con le loro grammatiche non si possono descrivere anche semplici costrutti dei linguaggi di programmazione. \\
 	L'utilizzo dei linguaggi regolari e delle grammatiche lineari destre è perciò limitato alla costruzione ( e riconoscimento ) dei simboli base usati in un programma (quello che si indica generalmente come lessico), ad esempio gli identificatori. \\
@@ -2647,7 +2672,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	Gli attributi dipendono dal linguaggio di programmazione che si compila, ad esempio se non ha i tipi non comparirà tale attributo. \\
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\textwidth]{TS_esempio}
+		\includegraphics[width=0.8\textwidth]{TS_esempio}
 	\end{figure}
 	Si possono considerare i seguenti attributi:
 	\begin{enumerate}
@@ -2698,7 +2723,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	Poichè ciò è inefficiente, questa organizzazione dovrebbe essere adottata solo la dimensione della TS è piccola, altrimenti si deve ricorrere ad altre organizzazioni.
 	\paragraph{Rappresentazione in Pascal} \quad \\
 	In memoria centrale, realizzata attraverso \textbf{array}.
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		const N = 100;
 		type  key = packed array[1..10] of char;
 			  elem = record
@@ -2717,20 +2742,20 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	È necessario porre un limite massimo alla dimensione della tavola, al massimo N elementi. \\
 	Lo spazio di memoria occupato è fisso, indipendente dal numero di elementi della tavola. \\
 	La ricerca è sequenziale ed esaustiva, il caso peggiore sono N confronti.
-	\begin{lstlisting}
-		procedure ricerca(var T: Tavola; k: key; var el: elem; var trovato: boolean);
-		var i: 1..N;
-		begin
-			i := 1;
-			trovato := false;
-			while (i <= N) and (not trovato) do
-				if T[i].chiave = k
-				then begin
-					 trovato := true;
-					 el: T[i]
-					 end
-				else i := i + 1
-		end;
+	\begin{lstlisting}[style=pascalstyle]
+procedure ricerca(var T: Tavola; k: key; var el: elem; var found: boolean);
+var i: 1..N;
+begin
+	i := 1;
+	found := false;
+	while (i <= N) and (not found) do
+		if T[i].chiave = k
+		then begin
+	 found := true;
+	 el: T[i]
+	 end
+		else i := i + 1
+end;
 	\end{lstlisting}
 	\subsection{TS ordinate}
 	La posizione dell'elemento nella TS è determinata dal nome della variabile, ordinamento lessicale. \\
@@ -2738,10 +2763,10 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	L'inserimento può inoltre richiedere uno spostamento di altri elementi già inseriti nella tabella e questa è la maggiore fonte di inefficienza. \\
 	L'\textbf{ottimizzazione della ricerca} si ottiene se gli elementi sono memorizzati in modo ordinato nella tavola. \\
 	Deve esistere un ordinamento sul campo Chiave. Questo induce un ordinamento sugli elementi della Tavola come segue:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		el1 = < k1, Attr1 >
 		el2 = < k2, Attr2 >
-				el1 < el2		se e solo se k1 < k2 
+		el1 < el2		se e solo se k1 < k2 
 	\end{lstlisting}
 	La ricerca può arrestarsi appena si incontra un elemento con chiave maggiore di quella cercata, il caso medio è di $\frac{N}{2}$ confronti, nel caso peggiore sono $N$ confronti. \\
 	Si complica l'operazione di inserimento di un nuovo elemento nella tavola ma occorre mantenerla ordinata. \\
@@ -2754,32 +2779,32 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\includegraphics[width=0.5\textwidth]{ricerca_TS}
 	\end{figure}
 	Il procedimento si arresta quando: $i=j$
-	\begin{lstlisting}
-		procedura ricerca_bin(var T: Tavola; k: key; i,j:
-		index; var el: elem; var trovato: boolean);
-		var medio: 1..N;
+	\begin{lstlisting}[style=pascalstyle]
+procedura ricerca_bin(var T: Tavola; k: key; i,j):
+index; var el: elem; var trovato: boolean);
+var medio: 1..N;
+begin
+	trovato := false;
+	if (j > i) and ( not trovato ) then
 		begin
-			trovato := false;
-			if (j > i) and ( not trovato ) then
-				begin
-				medio := (i + j) div 2;
-				if T[medio].chiave = k
-				then trovato := true
-				else 
-					if T[medio].chiave > k
-					then
-					ricerca_bin(T, k, i, pred(medio), el, trovato)
-					else
-					ricerca_bin(T, k, succ(medio), j, el , trovato)
-				end
-			else if T[i].chiave = k then trovato := true
-		end;
+		medio := (i + j) div 2;
+		if T[medio].chiave = k
+		then trovato := true
+		else 
+			if T[medio].chiave > k
+			then
+			ricerca_bin(T, k, i, pred(medio), el, trovato)
+			else
+			ricerca_bin(T, k, succ(medio), j, el , trovato)
+		end
+	else if T[i].chiave = k then trovato := true
+end;
 	\end{lstlisting}
 	Ad ogni passo si eliminano dalla ricerca metà degli elementi della tavola corrente. Nel caso peggiore si eseguono $\log_2{N}$ confronti.
 	\subsection{Tavole: rappresentazione collegata e ad albero}
 	Il tempo per inserire un elemento in una TS ordinata si può ridurre utilizzando una struttura collegata o ad albero. \\
 	Nel caso di \textbf{rappresentazione collegata} di una tavola, si utilizza una lista semplice:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		const N = 100;
 		type  key = packed array[1..10] of char;
 			  ptr_tavola=^elem;
@@ -2815,7 +2840,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\includegraphics[width=0.4\textwidth]{TS_bin_tree}
 	\end{figure}
 	Ogni record \textbf{(nodo)} ha tre campi: uno per l'informazione associata al nodo, uno per il puntatore al sottoalbero sinistro ed uno per il puntatore al sottoalbero destro. \\
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		type tree = ^node;
 			 node = record
 			 			value: Element_type;
@@ -2836,7 +2861,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	\end{figure}
 	\paragraph{Preordine o ordine anticipato} \quad \\
 	Analizza radice, albero sinistro, albero destro.
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		visita in preordine(T):
 			se test-vuoto(T) = false
 			allora esegui
@@ -2848,7 +2873,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	A B D E C F
 	\paragraph{Postordine o ordine ritardato} \quad \\
 	Analizza albero sinistro, albero destro radice.
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		visita in postordine(T):
 			se test-vuoto(T) = false
 			allora esegui
@@ -2860,7 +2885,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	D E B F C A
 	\paragraph{Simmetrica} \quad \\
 	Analizza albero sinistro, radice, albero destro. 
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		visita simmetrica(T):
 			se test-vuoto(T)=false
 			allora esegui
@@ -2882,7 +2907,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\includegraphics[width=0.6\textwidth]{btree_ricerca}
 	\end{figure}
 	\paragraph{Ricerca binaria in un albero binario di ricerca} \quad \\
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		function alb_ric (e: Element_type; t: tree): boolean;
 		begin 
 		if empty(t)
@@ -2913,7 +2938,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 		\includegraphics[width=0.4\textwidth]{hash}
 	\end{figure}
 	Ad esempio:
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		< key > ::= < lettera > { < lettera > }^2
 	\end{lstlisting}
 	Quindi esistono 26 chiavi di lunghezza 1, $26^2$ chiavi di lunghezza 2 e $26^3$ chiavi di lunghezza 3. Le possibili chiavi sono: $26 + 676 + 17576 = 18278$ \\
@@ -2939,7 +2964,7 @@ Dunque anche $(2^{X^*}, \cdot)$ è un monoide:
 	\textbf{Esempio:} \\
 	Chiave: stringa di 3 lettere al massimo. Ogni chiave è associata ad un numero intero. Un intero può essere associato a più chiavi. \\
 	Le chiavi sono partizionate in \textbf{classi di equivalenza}. \\
-	\begin{lstlisting}
+	\begin{lstlisting}[style=pascalstyle]
 		type key: string[3];
 		function hash (k: key): integer;
 		var first: char;
