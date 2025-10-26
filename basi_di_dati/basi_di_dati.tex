@@ -953,4 +953,196 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.7\textwidth]{unione_ridenominazione}
  	\end{figure}
+ 	\section{Selezione}
+ 	Esaminiamo, ora, gli operatori più tipici dell'algebra relazionale, che permettono di manipolare le relazioni. Si tratta di tre operatori: selezione, proiezione e join con diverse varianti. \\
+ 	È bene precisare che la selezione e la proiezione svolgono funzioni ``complementari'', sono entrambe definire su un operando e producono come risultato una porzione dell'operando. Più precisamente la selezione produce un sottinsieme delle tuple, su tutti gli attributi, mentre la proiezione dà un risultato cui contribuiscono tutte le tuple, ma su un sottoinsieme degli attributi. Quindi, possiamo dire che la selezione genera ``decomposizioni orizzontali'' e la proiezione ``decomposizioni verticali''. La situazione descritta è mostrata nella seguente figura: 
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{selezione_proiezione}
+ 	\end{figure}
+ 	La selezione è denotata dal simbolo $\sigma$ a pedice del quale viene indicata la ``condizione di selezione'' opportune. Il risultato contiene le tuple dell'operando che soddisfano la condizione di selezione. Le condizioni di selezione possono prevedere confronti tra attributi e confronti tra attributi e costanti e possono essere ottenuta combinando condizioni semplici con i connettivi logici: $\vee$ (or), $\wedge$ (and) e $\neg$ (not). \\
+ 	In termini più precisi data una relazione $r(X)$, una \textit{formula proposizionale F} su $X$ è una formula ottenuta combinando, con i connetivi $\vee, \wedge$ e $\neg$, condizioni atomiche del tipo $A\Theta B$ o $A\Theta c$, dove:
+ 	\begin{itemize}
+ 		\item $\Theta$ è un oepratore di confronto $(=, \neq, <, >, \leq, \geq)$;
+ 		\item $A$ e $B$ sono attributi in $X$ sui cui valori il confronto $\Theta$ abbia senso;
+ 		\item $c$ è una costante con il dominio di $A$.
+ 	\end{itemize} 
+ 	Seguono due esempi di selezione:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{selezione_1}
+ 	\end{figure}
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{selezione_2}
+ 	\end{figure}
+ 	Date una formula $F$ e una tupla $t$, è definito un avlore di verità per $F$ su $t$:
+ 	\begin{itemize}
+ 		\item $A\Theta B$ è vera su $t$ se $t[A]$ è in relazione $\Theta$ con $t[B]$, altrimenti è falsa;
+ 		\item $A\Theta c$ è vera su $t$ se $t[A]$ è in relazione $\Theta$ con $c$, altrimenti è falsa;
+ 		\item $F_1 \vee F_2, F_1 \wedge F_2, \neg F_1$ hanno l'usuale significato.
+ 	\end{itemize}
+ 	Possiamo quindi completare la definizione di selezione: $\Theta_F(r)$, in cui $r$ è una relazione e $F$ è una formula proposizionale, produce una relazione sugli stessi attributi di $r$ che contiene le tuple di $r$ su cui $F$ è vera. \\
+ 	Seguono le proprietà dell'operatore di selezione:
+ 	\begin{itemize}
+ 	\item \textit{Cardinalità:} $|\Theta_F(r)| \leq |r|$
+ 	\item \textit{Grado}: grado$(\Theta_F(r))=$grado$(r)$
+ 	\item \textit{Proprietà commutativa}: $\Theta_{F_1}(\Theta_{F_2}(r)) = \Theta_{F_2}(\Theta_{F_1}(r))$
+ 	\item \textit{Idempotenza}: $\Theta_{F_1}(\Theta_{F_2}(r)) = \Theta_{F_1 \wedge F_2}(r)$
+ 	\end{itemize}
+ 	\section{Proiezione}
+ 	L'opertore di proiezione presenta una definizione ancora più semplice di quella di selezione: dati una relazione $r(X)$ e un sottoinsieme $Y$ di $X$, la \textit{proiezione} di $r$ su $Y$ è l'insieme di tuple su $Y$ ottenute dalle tuple di $r$ considerando solo i valori su $Y$:
+ 	\[
+ 	\pi_Y(r) = \{t[Y] \mid t \in r\}
+ 	\]
+ 	Seguono due esempi di proiezione:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{proiezione_1}
+ 	\end{figure}
+ 	In questo esempio viene illustrato chiaramento il concetto citato. 
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{proiezione_2}
+ 	\end{figure}
+ 	In questo esempio, invece, troviamo un numero di tuple inferiore a quelle dell'operando, perchè alcune tuple, avendo valori uguali sugli attributi della proiezione, danno lo stesso contributo alla proiezione. Essendo le relazioni definite come insiemi, non possono apparire più tuple uguali fra loro. Esiste, quindi, un legame fra i vincoli di chiave e le proiezioni relativamente a questo problema: $\pi_Y(r)$ contiene lo stesso numero di tuple di $r$ se e solo se $Y$ è superchiave per $r$. Infatti:
+ 	\begin{itemize}
+ 		\item se $Y$ è superchiave, allora $r$ non contiene tuple uguali su $Y$, quindi ogni tupla da un contributo diverso alla proiezione;
+ 		\item se la proiezione ha tante tuple quante l'operando, allora ciascuna tupla contribuisce alla proiezione con valori diversi, quindi $r$ non contiene coppie di tuple uguali su $Y$ e questa è la definizione di superchiave. 
+ 	\end{itemize} 
+ 	\section{Join}
+ 	Esaminiamo l'operatore più caratteristico dell'algebra relazionale, l'operatore di join, che permette di correlare dati contenuti in relazioni diverse, confrontando i valori contenuti in esse e utilizzando la caratteristica fondamentale del modello, cioè quella di essere basato su valori. Esistono due versioni dell'operatore: il \textit{join naturale} utile per riflessioni astratte e il \textit{theta-join} che è più rilevante dal punto di vista pratico.
+ 	\subsection{Join naturale}
+ 	Il \textit{join naturale} è un operatore che correla dati in relazioni diverse, sulla bae di valori uguali in attributi con lo stesso nome. L'operatore è denotato con il simbolo $\bowtie$. Il risultato del join è costituito da una relazione sull'unione degli insiemi di attributi degli operandi e le sue tuple sono ottenute combinando le tuple degli operandi con valori uguali sugli attributi comuni. Un esempio di join è mostrato nella seguente figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{join_naturale}
+ 	\end{figure}
+ 	In generale, il join naturale $r_1 \bowtie r_2$ di $r_1(X_1)$ e $r_2(X_2)$ è una relazione definita su $X_1X_2$ come segue: 
+ 	\[
+ 	r_1 \bowtie r_2 = \{t \text{ su } X_1X_2 \mid \text{esistono } t_1 \in r_1 \text{ e } t_2 \in r_2 \text{ con } t[X_1] = t_1 \text{ e } t[X_2] = t_2\}
+ 	\]
+ 	Più sinteticamente, possiamo scrivere:
+ 	\[
+ 	r_1 \bowtie r_2 = \{t \text{ su } X_1X_2 \mid t[X_1] \in r_1 \text{ e } t[X_2] \in r_2\}
+ 	\]
+ 	La definizione conferma che le tuple del risultato sono ottenute combinando tuple degli operandi con valori uguali su attributi comuni. Il grado della relazione ottenuta come risultato di un join è minore o uguale della somma dei gradi dei due operandi, perchè gli attributi omonimi degli opernadi compaiono una sola volta nel risultato. \\
+ 	Molto frequentemente, si eseguono join sulla base di valori di una chiave delle relazioni coinvolte, esplicitando i riferimenti fra tuple. In molti di questi casi, è anche definito, fra gli attributi coinvolti, un vincolo di integrità referenziale. Consideriamo la relazione in figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{join_chiave}
+ 	\end{figure}
+ 	Notiamo che ciascuna delle tuple di \textit{Infrazioni} è stata combinata con una e una sola delle tuple di \textit{Auto}: una sola perchè \textbf{Prov} e \textbf{Numero} formano una chiave di \textit{Auto}, almeno una perchè è definito il vincolo di integrità referenziale fra \textbf{Prov} e \textbf{Numero} in \textit{Infrazioni} e \textit{Auto}. Il join, quindi, ha esattamente tante tuple quante la relazione \textit{Infrazioni}. 
+ 	\subsection{Join completi e incompleti} 
+ 	Analizziamo diversi esempi di join, in modo da effettuare delle valutazioni sulla dimensione del risultato e al contributo a esso portato dalle tuple degli operandi. Nel primo esempio di join mostrato, ciasuna tupla di ciasuno degli operandi contribuisce ad almeno una tupla del risultato, quindi ci troviamo in un caso di \textit{join completo}: per ogni tupla $t_1$ di $r_1$, esiste una tupla $t$ in $r_1 \bowtie r_2$  tale che $t[X_1] = t$, analogamente per $r_2$. Questa proprietà non è sempre verificata, perchè richeide una corrispondenza fra le tuple delle due relazioni. \\
+ 	Consideriamo la relazione in figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{tuple_dangling}
+		\caption{Un join con tuple \textit{dangling}} 	
+		\label{fig:dangling}
+ 	\end{figure}
+ 	La figura mostra un join in cui alcune tuple degli operandi non contribuiscono al risultato, perchè l'altra relazione non contiene tuple con gli stessi valori sull'attributo comune. Queste tuple vengono chiamate \textit{dangling}. Inoltre, è possibile che nessuna tupla degli operandi sia combinabile, e allora il risultato del join è la relazione vuota.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{join_vuoto}
+ 		\caption{Un join vuoto}
+ 	\end{figure}
+ 	All'estremo opposto, è possibile che ciascuna delle tuple di ciascuno degli operandi sia combinabile con tutte le tuple dell'altro. In tal caso, il risultato contiene un numero di tuple pari al prodotto della cardinalità degli operandi e cioè $|r_1| \times |r_2|$.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{join_completo}
+ 		\caption{Un join con $|r_1| \times |r_2|$ tuple}
+ 	\end{figure}
+ 	Quindi il join di $r_1$ e $r_2$ contiene un numero di tuple compreso fra 0 e $|r_1| \times |r_2|$. Inoltre:
+ 	\begin{itemize}
+ 		\item se il join di $r_1$ e $r_2$ è completo, allora contiene almeno un numero di tuple pari al massimo fra $|r_1|$ e $|r_2|$;
+ 		\item se $X_1 \cap X_2$ contiene una chiave per $r_2$, allora il join di $r_1(X_1)$ e $r_2(X_2)$ contiene al più $|r_1|$ tuple;
+ 		\item se $X_1 \cap X_2$ coincide con una chiave per $r_2$ e sussite il vincolo referenziale fra $X_1 \cap X_2$ in $r_1$ e la chiave di $r_2$, allora il join di $r_1(X_1)$ e $r_2(X_2)$ contiene esattamente $|r_1|$ tuple.
+ 	\end{itemize}
+ 	\subsection{Join esterni} 
+ 	La caratteristica dell'operatore di join di ``tralasciare'' le tuple di una relazione che non hanno controparte nell'altra è utile in molti casi ma pericolosa in altri in quanto potrebbe omettere informazioni utili. Consideriamo la figura~\ref{fig:dangling}, supponendo di essere interessati a tutti gli impiegati, con l'indicazione del capo, se noto. Per questo, è stata proposta una variante dell'operatore di join chiamta \textit{join esterno} o \textit{outer join}, che prevede che tutte le tuple diano un contributo al risultato, eventualmente estese con valori nulli ove non vi siano controparti opportune. Esistono tre varianti dell'opearatore di join esterno:
+ 	\begin{enumerate}
+ 		\item il join esterno \textit{sinistro}, che estende solo le tuple del primo operando;
+ 		\item il join esterno \textit{destro}, che estende solo le tuple del secondo operando;
+ 		\item il join esterno \textit{completo}, che le estende tutte.
+ 	\end{enumerate}
+ 	La seguente figura mostra degli esempi di join esterno.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.50\textwidth]{join_esterni}
+ 		\caption{Join esterni}
+ 		\label{fig:join_esterni}
+ 	\end{figure}
+ 	\subsection{Semijoin}
+ 	Un operatore derivato da quello di join è il \textit{semijoin}, che restituisce le tuple di una relazione che partecipano al join naturale di tale relazione con un'altra. La definizione formale dell'operatore, che viene indicano con il simbolo $\ltimes$, è la seguente: 
+ 	\begin{center}
+ 		date due relazioni di $r_1(X_1)$ e $r_2(X_2)$ il semijoin $r_1 \ltimes r_2$ è una relazione definita su $X_1$ come segue:
+ 		\[
+ 		r_1 \ltimes r_2 = \{t \mid t \in r_1 \text{ ed esiste } t_2 \in r_2 \text{ con } t[X_1 \cap X_2] = t_2[X_1 \cap X_2]\}
+ 		\]
+ 	\end{center}
+ 	Sulla base della definizione, è facile osservare che l'operatore può essere espresso per mezzo del join e della proiezione:
+ 	\[
+ 	r_1 \ltimes r_2 = \pi_{X_1}(r_1 \bowtie r_2)
+ 	\]
+ 	Un esempio di semijoin è mostrato nella seguente figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{semijoin}
+ 		\caption{Semijoin}
+ 		\label{fig:semijoin}
+ 	\end{figure}
+ 	\subsection{Join n-ario, intersezione e prodotto cartesiano}
+ 	Vediamo alcune proprietà dell'operatore di join naturale. In primo luogo, osserviamo che l'operatore di join è commutativo e associativo. Pertanto, possiamo scrivere, ove necessario, sequenza di join senza parentesi:
+ 	\[
+ 	r_1 \bowtie r_2 \bowtie \dots \bowtie r_n \text{ oppure } \bowtie_{i=1}^{n}r_i
+ 	\]
+ 	Se gli insiemi degli attributi, $X_1$ e $X_2$, sono uguali o disgiunti si applica la definizione generale vistasopra, ma in particolare, se $X_1 = X_2$ allora il join coincide con l'intersezione:
+ 	\[
+ 	r_1(X_2) \bowtie r_2(X_2) = r_1(X_1) \cap r_2(X_2) \quad \iff X_1 = X_2
+ 	\]
+ 	Il caso in cui gli insiemi degli attributi sono disgiunti merita ancora maggiore attenzione. Il risultato è sempre definito sull'unione $X_1X_2$, e ciascuna tupla deriva sempre da due tuple, una per ciascuno degli operandi, ma dato che le tuple non hanno attributi comuni, non viene richiesta a esse nessuna condizione per partecipare insieme al join. Quindi, il risultato del join contiene le tuple ottenute comninando, in tutti i modi possibili, le tuple degli operandi. In questo caso allora il join diventa un \textit{prodotto cartesiano}. 
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{prodotto_cartesiano}
+ 		\caption{Un prodotto cartesiano}
+ 		\label{fig:prod_cartesiano}
+ 	\end{figure}
+ 	\subsection{Theta-join ed equi-join}
+ 	Osservando la figura~\ref{fig:prod_cartesiano} possiamo notare che un prodotto cartesiano di solito ha poca utilità, in quanto concatena tuple non correlate dal punto di vista semantico. Spesso, il prodotto cartesiano viene seguito da una selezioen, che c'entra l'attenzione su tuple correlate secondo le esigenze. Per esempio, sulle relazioni \texttt{Impiegati} e \texttt{Progetti} ha senso definire un prodotto cartesiano seguito dalla selezione che mantiene solo le tuple con valori uguali sull'attributo \textbf{Progetto} di \texttt{Impiegati} e su \textbf{Codice} di \texttt{Progetti}, come mostrato nella seguente figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{prod_cartesiano_selezione}
+ 		\caption{Un prodotto cartesiano seguito da una selezione}
+ 		\label{fig:prod_cartesiano_selezione}
+ 	\end{figure}
+ 	Per questo viene definito un operatore derivato, il \textit{theta-join}, come prodotto cartesiano seguito da una selezione, nel modo seguente:
+ 	\[
+ 	r_1 \underset{F}{\bowtie} r_2 = \sigma_F(r_1 \bowtie r_2)
+ 	\]
+ 	ove $F$ è una formula proposizionale.
+ 	La relazione nella figura~\ref{fig:prod_cartesiano_selezione} può essere ottenuta per mezzo del theta-join:
+ 	\[
+ 	\texttt{Impiegati} \bowtie_{\textbf{Progetto=Codice}}\texttt{Progetti}
+ 	\]
+ 	Un theta-join in cui la condizione è una congiunzione di atomi di uguaglianza viene chiamato \textit{equi-join}. \\
+ 	Il theta-join, in particolare l'equi-join, hanno un importante risvolto pratico, in quanto la maggior parte dei sistemi di basi di dati non utilizzano i nomi di attributi per correlare relazioni e quindi non utilizzano il join naturale ma il theta-join e l'equi-join. Il join naturale può essere simulato per mezzo della ridenominazione, dell'equi-join e della proiezione. 
+ 	\begin{example}{\nmu Simulazione join naturale}{sim_join_nat}
+ 		Date due relazioni $r_1(ABC)$ e $r_2(BCD)$, il join naturale di $r_1$ e $r_2$ può essere espresso per mezzo degli altri operatori, in tre passi:
+ 		\begin{itemize}
+ 			\item ridenominando gli attributi in modo di ottenere relazioni su schemi disgiunti:
+ 			\[
+ 			\rho_{B'C' \leftarrow BC}(r_2) 
+ 			\]
+ 			\item effettuando l'equi-join, con condizioni di uguaglianza sugli attributi corrispondenti:
+ 			\[
+ 			r_1 \underset{B=B'\wedge C = C'}{\bowtie} \rho_{B'C' \leftarrow BC}(r_2)
+ 			\]
+ 			\item concludendo con una proiezione che elimina gli attributi ``doppioni'', che presentano valori identici a quelli di altri attributi:
+ 			\[
+ 			\pi_{ABCD}(r_1 \underset{B=B'\wedge C = C'}{\bowtie} \rho_{B'C' \leftarrow BC}(r_2))
+ 			\]
+ 		\end{itemize}
+ 	\end{example}
 \end{document}
