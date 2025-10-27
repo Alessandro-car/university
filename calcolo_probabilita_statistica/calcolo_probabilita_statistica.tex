@@ -1,4 +1,7 @@
 \documentclass[12pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertinus}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath}
@@ -34,7 +37,7 @@
 \usepackage{circledsteps}
 \date{}
 \author{Alessandro Carella}
-\title{Calcolo delle probabilita' e statistica}
+\title{Calcolo delle probabilità e statistica}
 \setcounter{chapter}{0}
 \setlist[enumerate]{label*=\arabic*.}
 \setlength{\parindent}{0pt}
@@ -98,32 +101,32 @@
 		\maketitle
 		\tableofcontents
 	}
-	\chapter{Spazio di probabilita'}
-	\begin{definition}{\nmu Spazio di probabilita'}{spazio_prob}
-		Lo spazio di probabilita' e' una terna $(\Omega, \mathcal{F}, P)$.
+	\chapter{Spazio di probabilità}
+	\begin{definition}{\nmu Spazio di probabilità}{spazio_prob}
+		Lo spazio di probabilità è una terna $(\Omega, \mathcal{F}, P)$.
 		\begin{enumerate}
-			\item $\Omega$ e' un insieme non vuoto, lo spazio campionario, i cui elementi $\omega \in \Omega$ rappresentano i singoli esiti dell'esperimento aleatorio;
+			\item $\Omega$ è un insieme non vuoto, lo spazio campionario, i cui elementi $\omega \in \Omega$ rappresentano i singoli esiti dell'esperimento aleatorio;
 			\begin{example}{}{}
 				Esperimento di lancio di una moneta: \\
 				$\Omega = \{T,\ C\}$ \\
 				Lancio di un dado: \\
 				$\Omega = \{1, 2, 3, 4, 5, 6\}$
 			\end{example}
-			\item $\mathcal{F} \subset \mathcal{P}(\Omega) \quad (|\mathcal{P}(\Omega)| = 2^{|\Omega|})$ e' una collezione di sottoinsiemi di $\Omega$, chiamati \textbf{eventi}, tali che:
+			\item $\mathcal{F} \subset \mathcal{P}(\Omega) \quad (|\mathcal{P}(\Omega)| = 2^{|\Omega|})$ è una collezione di sottoinsiemi di $\Omega$, chiamati \textbf{eventi}, tali che:
 			\begin{enumerate}
-				\item $\emptyset, \Omega \in \mathcal{F}$ ove $\emptyset$ e' l'evento impossibile e $\Omega$ e' l'evento certo;
+				\item $\emptyset, \Omega \in \mathcal{F}$ ove $\emptyset$ è l'evento impossibile e $\Omega$ è l'evento certo;
 				\item $E \in \mathcal{F} \iff E^C = \Omega \backslash E \in \mathcal{F}$
-				\item Se $\{E_n\}_{n \in \mathbbm{N}} \subset \mathcal{F}$ e' una successione di eventi $\Rightarrow \mathlarger{\bigcup^{\infty}_{n=1}}E_n \in \mathcal{F}$ \\
+				\item Se $\{E_n\}_{n \in \mathbbm{N}} \subset \mathcal{F}$ è una successione di eventi $\Rightarrow \mathlarger{\bigcup^{\infty}_{n=1}}E_n \in \mathcal{F}$ \\
 				Ad esempio: \\
 				$E_1, E_2 \in \mathcal{F} \Rightarrow E_1 \cup E_2 \in \mathcal{F}$ \\ \\
-				Ne consegue la seguente proprieta':
+				Ne consegue la seguente proprietà:
 				\item $E_1, E_2 \in \mathcal{F} \Rightarrow E_1 \cap E_2 \in \mathcal{F}$ \\
 				Infatti, dalle legge di De Morgan ne consegue che: \\
 				$(E_1 \cap E_2)^C = E_1^C\ \cup E_2^C \in \mathcal{F}$ \\
 				Piu' in generale, se $\{E_n\ : n \in \mathbbm{N}\} \subset \mathcal{F} \Rightarrow \mathlarger{\bigcap^\infty_{n=1}}E_n \in \mathcal{F}$
  			\end{enumerate}
- 			\textbf{$\mathcal{F}$ e' una $\sigma$-algebra se rispecchia le proprieta' elencate}.
- 			\item $P$ e' una funzione di probabilita', cioe':
+ 			\textbf{$\mathcal{F}$ è una $\sigma$-algebra se rispecchia le proprietà elencate}.
+ 			\item $P$ è una funzione di probabilità, cioè:
  			\[
  			P: \mathcal{F} \to [0, 1]
  			\]
@@ -138,11 +141,11 @@
  				Di conseguenza:
  				\begin{itemize}
  					\item $\mathcal{P}(E^C) = 1 - \mathcal{P}(E)$\\
- 					Questo perche': \[\Omega = E\ \cup E^C \Rightarrow \mathcal{P}(\Omega) = \mathcal{P}(E\ \cup E^C) \Rightarrow 1 = \mathcal{P}(E) + \mathcal{P}(E^C)\]
+ 					Questo perchè: \[\Omega = E\ \cup E^C \Rightarrow \mathcal{P}(\Omega) = \mathcal{P}(E\ \cup E^C) \Rightarrow 1 = \mathcal{P}(E) + \mathcal{P}(E^C)\]
  					\item Sia $E_2 \subset E_1$ \\ $\mathcal{P}(E_1 \backslash E_2) = \mathcal{P}(E_1) - \mathcal{P}(E_2) \geq 0 \iff \mathcal{P}(E_1) \geq \mathcal{P}(E_2)$ \\
- 					Questa e' la \textbf{monotonia}: \[E \subseteq F \in \mathcal{F} \Rightarrow \mathcal{P}(E) \leq \mathcal{P}(F)\]
+ 					Questa è la \textbf{monotonia}: \[E \subseteq F \in \mathcal{F} \Rightarrow \mathcal{P}(E) \leq \mathcal{P}(F)\]
  					\item $\mathcal{P}(E_1 \cup E_2) = \mathcal{P}(E_1) + \mathcal{P}(E_2) - \mathcal{P}(E_1 \cap E_2)$ \\
- 					Questo perche':
+ 					Questo perchè:
  					\[
  					E_1 \cup E_2 = E_1 \cup (E_2 \backslash E_1) \Rightarrow \mathcal{P}(E_1 \cup E_2) = \mathcal{P}(E_1) + \mathcal{P}(E_2 \backslash E_1)
  					\]
@@ -157,10 +160,10 @@
  			\end{enumerate}
 		\end{enumerate}
 	\end{definition}
-	\section{Esempi di spazi di probabilita'}
+	\section{Esempi di spazi di probabilità}
 	\subsection{Spazi finiti}
-	Negli spazi di probabilita' finiti $\Omega$ e' un insieme finito, ovvero: $|\Omega| < \infty$.
-	Una distribuzione di probabilita' finita su $\Omega$ e' una probabilita' $P$ tale che $\mathcal{P}(\{\omega\}) = p$, dove $\omega \in \Omega$ e $p$ e' un numero che non dipende da $\omega$. Dalla relazione:
+	Negli spazi di probabilità finiti $\Omega$ è un insieme finito, ovvero: $|\Omega| < \infty$.
+	Una distribuzione di probabilità finita su $\Omega$ è una probabilità $P$ tale che $\mathcal{P}(\{\omega\}) = p$, dove $\omega \in \Omega$ e $p$ è un numero che non dipende da $\omega$. Dalla relazione:
 	\[
 	1 = \mathcal{P}(\Omega) = \sum_{w \in \Omega}\mathcal{P}(\{w\}) = \sum_{p = \mathcal{P}(\{w\})}p
 	\]
@@ -180,35 +183,35 @@
 	\]
 	ove $|E|$ sono i casi favorevoli e $|\Omega|$ i casi possibili.
 	\subsection{Spazi discreti}
-	Negli spazi di probabilita' discreti $\Omega$ e' un infinito numerabile, ovvero: $\Omega = \{\omega_1, \omega_2, \dots, \omega_n, \dots\}$. \\
-	Una distribuzione di probabilita' discreta su $\Omega$ e' una probabilita' $P$ tale che $\mathcal{P}(\{w_i\}) = p_i \quad \forall i \in \mathbbm{N}$ ove $0 < p_i < 1$ con $\mathlarger{\sum_{i=1}^{\infty}p_i = 1}$. \\
+	Negli spazi di probabilità discreti $\Omega$ è un infinito numerabile, ovvero: $\Omega = \{\omega_1, \omega_2, \dots, \omega_n, \dots\}$. \\
+	Una distribuzione di probabilità discreta su $\Omega$ è una probabilità $P$ tale che $\mathcal{P}(\{w_i\}) = p_i \quad \forall i \in \mathbbm{N}$ ove $0 < p_i < 1$ con $\mathlarger{\sum_{i=1}^{\infty}p_i = 1}$. \\
 	Un esperimento puo' consistere nel scegliere "a caso" un numero tra 0 e 1, quindi:\\
 	$\Omega = [0, 1]$ \\
 	Considerando un intervallo $I = [a, b] \subset [0, 1] \in \mathcal{F}$ e $\mathcal{P}(I) = b - a$. \\
-	E' bene notare che la collezione di tutti gli intervalli contenuti in $[0, 1]$ non e' una $\sigma$-algebra perche' non soddisfano la proprieta' del complementare in quanto il complementare di un intervallo e' sconnesso e quindi non e' un intervallo.
+	è bene notare che la collezione di tutti gli intervalli contenuti in $[0, 1]$ non è una $\sigma$-algebra perchè non soddisfano la proprietà del complementare in quanto il complementare di un intervallo è sconnesso e quindi non è un intervallo.
 	\\
 	Ad esempio in un intervallo $I = [0, 1]$ e sia $A = [0.5, 0.7] \subset I \Rightarrow A^C = [0, 0.5[\ \cup\ ]0.7, 1]$ \\
 	$\mathcal{F}=\beta \centernot{\subseteq} \mathcal{P}(\Omega)$ ove $\beta=\sigma$-algebra dei boreliani.\\
 	$E = \mathbbm{Q} \cap [0, 1]$ e $\mathcal{P}(E) = 0$.
 	\chapter{Calcolo combinatorio}
-	Il calcolo combinatorio e' la branca della matematica che studia i modi secondo i quali possiamo raggruppare o ordinare elementi di un insieme finito di oggetti. \\
+	Il calcolo combinatorio è la branca della matematica che studia i modi secondo i quali possiamo raggruppare o ordinare elementi di un insieme finito di oggetti. \\
 	Quindi dato un insieme $A$ di $n$ oggetti si vogliono contare le le configurazioni che possono assumere $k$ oggetti tratti da questo insieme e bisogna precisare due aspetti:
 	\begin{enumerate}
-		\item se l'ordinamento e' importante;
+		\item se l'ordinamento è importante;
 		\item se si possono avere piu' ripetizioni di uno stesso oggetto.
 	\end{enumerate}
 	\section{Permutazioni}
-	Una permutazione di un insieme di oggetti e' una presentazione ordinata dei suoi elementi.
+	Una permutazione di un insieme di oggetti è una presentazione ordinata dei suoi elementi.
 	\subsection{Permutazioni senza ripetizioni}
 	Nel caso di permutazioni senza ripetizioni un elemento puo' apparire una sola volta nella sequenza ordinata. Per contare quante sono le permutazioni di un insieme di $n$ elementi, si osservi che il primo elemento in $n$ modi diversi, il secondo in $n - 1$ modi diversi e cosi via. Dunque il numero di permutazioni corrisponde esattamente al \textbf{fattoriale} di $n$, ovvero $n!$.
-	Il fattoriale e' una funzione definita ricorsivamente in questo modo:
+	Il fattoriale è una funzione definita ricorsivamente in questo modo:
 	\[
 	n! = n \cdot (n - 1)!
 	\]
 	\[
 	n! = 1 \cdot 2 \cdots (n - 1) \cdot (n)
 	\]
-	Nella teoria delle probabilita' serve per calcolare la probabilita' di eventi con ordine.
+	Nella teoria delle probabilità serve per calcolare la probabilità di eventi con ordine.
 	\begin{example}{}{}
 		In quanti modi si puo' anagrammare la parola "MONTE", contando anche le parole prive di significato? \\
 		La parole MONTE ha 5 lettere quindi $n=5$ e le possibili permutazioni sono $5! = 120$
@@ -233,12 +236,12 @@
 		\]
 	\end{example}
 	\section{Coefficiente binomiale}
-	Dato un numero $n \in \mathbbm{N}$ e un numero $k \in [0, n]$ il coefficiente binomiale e' cosi definito:
+	Dato un numero $n \in \mathbbm{N}$ e un numero $k \in [0, n]$ il coefficiente binomiale è cosi definito:
 	\[
 	\binom{n}{k} = \frac{n!}{k!(n - k)!}
 	\]
 	Il coefficiente binomiale conta il numero di sottoinsiemi di $k$ elementi in un insieme di $n$ elementi.
-	E' bene considerare che:
+	è bene considerare che:
 	\begin{itemize}
 		\item $\mathlarger{\binom{n}{0}} = 1$ ovvero l'insieme vuoto;
 		\item $\mathlarger{\binom{n}{n}} = 1$ ovvero l'insieme con tutti gli elementi;
@@ -253,7 +256,7 @@
 	2^n = \sum_{k=0}^{n}\binom{n}{k}
 	\]
 	che corrisponde al numero degli elementi dell'insieme delle parti di un insieme.
-	\section{Esercizi di combinatoria e probabilita' elementari}
+	\section{Esercizi di combinatoria e probabilità elementari}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
 			Ho un'associazione con 50 soci. \\
@@ -267,66 +270,66 @@
 		\begin{assignment}{}{}
 			Quanti numeri di 5 cifre posso scrivere usando solo 1, 3, 5, 7, 9 senza ripetizioni? E con ripetizioni?
 		\end{assignment}
-		Alla prima domanda si risponde facendo $5! = 120$ perche' sono delle permutazioni senza ripetizioni. \\
-		Alla seconda domanda si risponde $5^5 = 3125$ perche' ho 5 possibilita' per tutte e 5 le posizioni.
+		Alla prima domanda si risponde facendo $5! = 120$ perchè sono delle permutazioni senza ripetizioni. \\
+		Alla seconda domanda si risponde $5^5 = 3125$ perchè ho 5 possibilità per tutte e 5 le posizioni.
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
 			Ho a disposizione 2 paia di scarpe, 3 paia di pantaloni e 5 magliette. \\
 			In quanti modi posso vestirmi?
 		\end{assignment}
-		La risposta e' data da $2 \cdot 3 \cdot 5 = 30$
+		La risposta è data da $2 \cdot 3 \cdot 5 = 30$
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
 			Quanti sono i numeri di 6 cifre che non contengono 0, che hanno la cifra 1 due volte e che hanno la cifra 2 due volte?
 		\end{assignment}
-		La risposta e' data dal calcolo: \\
+		La risposta è data dal calcolo: \\
 		$\mathlarger{\binom{6}{2}} \cdot \mathlarger{\binom{4}{2}} \cdot 7^2 = $ \\
-		Perche' ho preso un sottoinsieme di 2 elementi dalle 6 posizioni possibili, un sottoinsieme di 2 elementi dalla restanti 4 posizioni possibili e ho 7 possibilita' per le restanti due ultime posizioni possibili.
+		Perchè ho preso un sottoinsieme di 2 elementi dalle 6 posizioni possibili, un sottoinsieme di 2 elementi dalla restanti 4 posizioni possibili e ho 7 possibilità per le restanti due ultime posizioni possibili.
 	\end{exercise}
 	\begin{exercise}{\nmu Esercizio della scarpiera}{}
 		\begin{assignment}{}{}
 			Una scarpiera contiene 8 paia di scarpe. \\
-			Si prendono 4 scarpe a caso, qual'e'la probabilita' di non formare nessun paio di scarpe, di formarne esattamente uno e di formarne esattamente 2?
+			Si prendono 4 scarpe a caso, qual'èla probabilità di non formare nessun paio di scarpe, di formarne esattamente uno e di formarne esattamente 2?
 		\end{assignment}
 		Questo si risolve con $\mathcal{P}(E) = \dfrac{|E|}{|\Omega|}$ ove $|\Omega| = \mathlarger{\binom{16}{4}} = 1820$
 		\begin{enumerate}
 			\item $|E| = \dfrac{16 \cdot 14 \cdot 12 \cdot 10}{4 \cdot 3 \cdot 2} = 1120$. \\
 			Quindi $\mathcal{P}(E) = \dfrac{1120}{1820}$ \\
-			Questo perche' alla prima scelta si hanno 16 possibilita' per scegliere una scarpa, successivamente abbiamo 14 possibilita' in quanto non possiamo selezionare il paio abbinato alla scarpa scelta precedentemente e cosi via.
+			Questo perchè alla prima scelta si hanno 16 possibilità per scegliere una scarpa, successivamente abbiamo 14 possibilità in quanto non possiamo selezionare il paio abbinato alla scarpa scelta precedentemente e cosi via.
 			\item $|E| = \dfrac{8 \cdot 14 \cdot 12}{2} = 672$ \\
 			Quindi $\mathcal{P}(E) = \dfrac{672}{1820}$ \\
-			Questo perche' scegliamo il primo paio dove abbiamo 8 possibilita', quindi abbiamo 14 scarpe disponibili per scegliere la terza scarpa e altre 12 per scegeliere la quarta scarpa. Dividiamo per 2 perche' non dobbiamo tenere conto dell'ordine della terza e quarta scarpa.
+			Questo perchè scegliamo il primo paio dove abbiamo 8 possibilità, quindi abbiamo 14 scarpe disponibili per scegliere la terza scarpa e altre 12 per scegeliere la quarta scarpa. Dividiamo per 2 perchè non dobbiamo tenere conto dell'ordine della terza e quarta scarpa.
 			\item $|E| = \dfrac{8 \cdot 7}{2} = 28$ \\
 			Quindi $\mathcal{P}(E) = \dfrac{28}{1820}$ \\
-			Questo perche' dove aver scelto il primo paio di scarpe con 8 possibilita ne avremo 7. Dividiamo per 2 perche' non dobbiamo tenere conto dell'ordine.
+			Questo perchè dove aver scelto il primo paio di scarpe con 8 possibilita ne avremo 7. Dividiamo per 2 perchè non dobbiamo tenere conto dell'ordine.
 		\end{enumerate}
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			In un paese ci sono 5 alberghi. Se 3 persone devono scegliere a caso dove pernottare, qual'e' la probabilita' che finiscano in 3 alberghi diversi?
+			In un paese ci sono 5 alberghi. Se 3 persone devono scegliere a caso dove pernottare, qual'è la probabilità che finiscano in 3 alberghi diversi?
 		\end{assignment}
 		Vogliamo usare la formula $\mathcal{P}(E) = \dfrac{|E|}{|\Omega|}$ \\
-		Ogni persona ha 5 possibilita' quindi $|\Omega| = 5^3 = 125$ \\
+		Ogni persona ha 5 possibilità quindi $|\Omega| = 5^3 = 125$ \\
 		$|E| = 5 \cdot 4 \cdot 3 = 60$ \\
 		Quindi $\mathcal{P}(E) = \dfrac{60}{125}$.
 	\end{exercise}
-	\chapter{Proprieta' della funzione di probabilita'}
-	Se abbiamo una successione di eventi $\{E_n\}_{n \in \mathbbm{N}} \subset \mathcal{F}$ allora e' vero che:
+	\chapter{Proprietà della funzione di probabilità}
+	Se abbiamo una successione di eventi $\{E_n\}_{n \in \mathbbm{N}} \subset \mathcal{F}$ allora è vero che:
 		\[
 		\mathcal{P}\Bigg(\bigcup_{n=1}^{\infty}E_n\Bigg) \leq \sum_{n=1}^{\infty}\mathcal{P}(E_n)
 		\]
 	In particolare se $\mathcal{P}(E_n) = 0 \Rightarrow \mathcal{P}(\bigcup_{n=1}^{\infty}E_n) = 0$ \\
-	\section{Proprieta' di continuita'}
-	\begin{theorem}{\nmu Continuita' successione di eventi crescente}{continuita_unione}
-		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilita' e $\{E_n\}_{n\in\mathbbm{N}} \subset \mathcal{F}$ una successione di eventi tali che $E_n \subset E_{n+1} \quad \forall n \in \mathbbm{N}$ allora:
+	\section{Proprietà di continuità}
+	\begin{theorem}{\nmu Continuità successione di eventi crescente}{continuita_unione}
+		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilità e $\{E_n\}_{n\in\mathbbm{N}} \subset \mathcal{F}$ una successione di eventi tali che $E_n \subset E_{n+1} \quad \forall n \in \mathbbm{N}$ allora:
 		\[
 		\lim_{n \to \infty}\mathcal{P}(E_n) = \mathcal{P}\Bigg(\bigcup_{n=1}^{\infty}E_n\Bigg)
 		\]
 	\end{theorem}
-	\begin{theorem}{\nmu Continuita' successione di eventi decrescente}{continuita_intersezione}
-		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilita' e $\{E_n\}_{n \in \mathbbm{N}} \subset \mathcal{F}$ una successione di eventi tali che $E_{n+1} \subseteq E_n \quad \forall n \in \mathbbm{N}$ allora:
+	\begin{theorem}{\nmu Continuità successione di eventi decrescente}{continuita_intersezione}
+		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilità e $\{E_n\}_{n \in \mathbbm{N}} \subset \mathcal{F}$ una successione di eventi tali che $E_{n+1} \subseteq E_n \quad \forall n \in \mathbbm{N}$ allora:
 		\[
 		\lim_{n \to \infty}\mathcal{P}(E_n) = \mathcal{P}\Bigg(\bigcap_{n=1}^{\infty}E_n\Bigg)
 		\]
@@ -334,7 +337,7 @@
 	\begin{corollary}{}{}
 		Nella ipotesi della \namerefl{th:continuita_intersezione}, se $\mathlarger{\bigcap_{n=1}^{\infty}E_n = \emptyset} \Rightarrow \mathcal{P}(E_n) \to 0$
 	\end{corollary}
-	\begin{proof}{Dimostrazione della proprieta' \namerefl{th:continuita_unione}}
+	\begin{proof}{Dimostrazione della proprietà \namerefl{th:continuita_unione}}
 		Sia $F_1 = E_1$, $F_2 = E_2 \backslash E_1,\ \dots,\ F_n = E_n \backslash E_{n-1}$ \\
 		Inoltre $F_n \cap F_m = \emptyset$ e vale $E = \mathlarger{\bigcup_{n=1}^{\infty}}F_n$ \\
 		\[\mathcal{P}(E) = \sum_{n=1}^{+\infty}\mathcal{P}(F_n) = \lim_{n \to \infty}\sum_{k=1}^{n}\mathcal{P}(F_k)
@@ -345,20 +348,20 @@
 			&= \mathcal{P}(E_n)
 		\end{align*}
 	\end{proof}
-	\section{Proprieta' della $\sigma$-addivita'}
+	\section{Proprietà della $\sigma$-addività}
 	$\mathcal{P}(E \cup F) = \mathcal{P}(E) + \mathcal{P}(F) - \mathcal{P}(E \cap F) \leq \mathcal{P}(E) + \mathcal{P}(F)$ \\
-	Per induzione e' facile verificare che:
+	Per induzione è facile verificare che:
 	\[
 	\mathcal{P}\Bigg(\bigcup_{i=1}^{n}E_i\Bigg) \leq \sum_{i=1}^{n}\mathcal{P}(E_i)
 	\]
-	\begin{theorem}{\nmu $\sigma$-additivita'}{add_sigma}
-		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilita', allora $\mathcal{P}$ e' $\sigma$-additiva, cioe':
+	\begin{theorem}{\nmu $\sigma$-additività}{add_sigma}
+		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilità, allora $\mathcal{P}$ è $\sigma$-additiva, cioè:
 		\[
 		\mathcal{P}\Bigg(\bigcup_{i=1}^{\infty}E_i\Bigg) \leq \sum_{i=1}^{\infty}\mathcal{P}(E_i)
 		\]
 		$\forall \{E_n : n \in \mathbbm{N}\} \subset \mathcal{F}$
 	\end{theorem} 
-	\begin{proof}{Dimostrazione della $\sigma-$additivita'} \quad \\
+	\begin{proof}{Dimostrazione della $\sigma-$additività} \quad \\
 		Sia: $F_1 = E_1$, $F_2 = E_2 \cup E_1$, $\dots,\ F_n = \mathlarger{\bigcup_{i=1}^{n}}E_i$ \\
 		Inoltre, $F_n \subseteq F_{n+1}$ e $\mathlarger{\lim_{n \to \infty}}\mathcal{P}(F_n) = 	\mathcal{P}\Bigg(\mathlarger{\bigcup_{n=1}^{\infty}}F_n\Bigg)$
 		\[\mathcal{P}\Bigg(\bigcup_{n=1}^{\infty}F_n\Bigg) = \mathcal{P}\Bigg(\bigcup_{n=1}^{\infty}E_n\Bigg) = \lim_{n \to \infty}\mathcal{P}(E_n) \leq \lim_{n \to \infty}\sum_{i=1}^{n}\mathcal{P}(E_i) = \sum_{n=1}^{\infty}\mathcal{P}(E_n)\]
@@ -380,15 +383,15 @@
 		\[
 		\mathcal{P}(E \mid H) = \frac{\mathcal{P}(E \cap H)}{\mathcal{P}(H)}
 		\]
-		e si chiama la \textbf{probabilita' condizionata di $E$ dato $H$}
+		e si chiama la \textbf{probabilità condizionata di $E$ dato $H$}
 	\end{definition}
 	\begin{note}{}{}
-		La funzione $E \in \mathcal{F} \mapsto \mathcal{P}(E \mid H)$ e' una funzione di probabilita'. \\
+		La funzione $E \in \mathcal{F} \mapsto \mathcal{P}(E \mid H)$ è una funzione di probabilità. \\
 		Infatti: 
 		\[
 		\mathcal{P}(\Omega \mid H) = \frac{\mathcal{P}(\Omega \cap H)}{\mathcal{P}(H)} = \frac{\mathcal{P}(H)}{\mathcal{P}(H)} = 1
 		\]
-		e inoltre rispecchia la proprieta' di $\sigma$-additivita', infatti:
+		e inoltre rispecchia la proprietà di $\sigma$-additività, infatti:
 		\[
 		\{E_n\}_{n \in \mathbbm{N}} \subset F \quad E_n \cap E_m = \emptyset \quad \forall n \neq m 
 		\]
@@ -420,7 +423,7 @@
 		\]
 	\end{proof}
 	\begin{note}{\nmu Evento indipendente da se stesso}{}
-		Un evento $E$ e' indipendente da se stessso $\iff$ \[\mathcal{P}(E) = \mathcal{P}(E \cap E) = \mathcal{P}(E)^2 \iff \mathcal{P}(E) = 0 \wedge \mathcal{P}(E) = 1\]
+		Un evento $E$ è indipendente da se stessso $\iff$ \[\mathcal{P}(E) = \mathcal{P}(E \cap E) = \mathcal{P}(E)^2 \iff \mathcal{P}(E) = 0 \wedge \mathcal{P}(E) = 1\]
 	\end{note}
 	\begin{note}{\nmu Indipendenza del complementare degli eventi}{indipendenza_complementare}
 		Se $E_1, E_2$ sono indipendenti, allora:
@@ -456,7 +459,7 @@
 		\end{align*}
 	\end{definition}
 	\begin{note}{}{}
-		Non e' vero che una famiglia di eventi sono indipendenti se sono a 2 a 2 indipendenti. \\
+		Non è vero che una famiglia di eventi sono indipendenti se sono a 2 a 2 indipendenti. \\
 		Ad esempio se $\Omega = \{1, 2, 3, 4\}$ e:
 		\[
 		A_1 = \{1, 4\} \quad A_2 = \{2, 4\} \quad A_3 = \{3, 4\}
@@ -466,13 +469,13 @@
 		\mathcal{P}(A_1 \cap A_2 \cap A_3) = \mathcal{P}(\{4\}) = \frac{1}{4} \neq \frac{1}{8} = \mathcal{P}(A_1)\mathcal{P}(A_2)\mathcal{P}(A_3)
 		\]
 	\end{note}
-	\section{Partizione di uno spazio di probabilita'}
-	\begin{definition}{\nmu Partizione di uno spazio di probabilita'}{partizione_spazio_prob}
-		Una partizione di uno spazio di probabilita' e' una collezione di eventi $\{H_1, H_2, \dots, H_n\} \subset \mathcal{F}$ tali che $H_i \cap H_j = \emptyset \quad \forall i \neq j$ e $\mathlarger{\bigcup_{i=1}^{\infty}}H_i = \Omega$ \\
+	\section{Partizione di uno spazio di probabilità}
+	\begin{definition}{\nmu Partizione di uno spazio di probabilità}{partizione_spazio_prob}
+		Una partizione di uno spazio di probabilità è una collezione di eventi $\{H_1, H_2, \dots, H_n\} \subset \mathcal{F}$ tali che $H_i \cap H_j = \emptyset \quad \forall i \neq j$ e $\mathlarger{\bigcup_{i=1}^{\infty}}H_i = \Omega$ \\
 		Le $H$ stanno per hypothesis.
 	\end{definition}
-	\begin{definition}{\nmu Formula della probabilita' totale}{prob_totale}
-		Sia $E \in \mathcal{F}$, l'obiettivo e' esprimere $\mathcal{P}(E)$ se conosco $\mathcal{P}(H_i)$ e $\mathcal{P}(E \mid H_i)$ \\
+	\begin{definition}{\nmu Formula della probabilità totale}{prob_totale}
+		Sia $E \in \mathcal{F}$, l'obiettivo è esprimere $\mathcal{P}(E)$ se conosco $\mathcal{P}(H_i)$ e $\mathcal{P}(E \mid H_i)$ \\
 		Allora: 
 		\[
 		\mathcal{P}(E) = \sum_{i = 1}^{n}\mathcal{P}(E \mid H_i)\mathcal{P}(H_i)
@@ -486,8 +489,8 @@
 	\end{proof}
 	\begin{exercise}{\nmu Esercizio partizione di spazio probabilita}{esercizio_spazio}
 		\begin{assignment}{}{}
-			Un'urna contiene 10 monete, di cui sono 4 truccate e fanno uscire testa con probabilita' $\frac{1}{3}$. \\
-			Si pesca a caso una moneta e la si lancia una volta. Qual e' la probabilita' che esca testa? Qual e' la probabilita' che la moneta sia equa se e' uscita testa?
+			Un'urna contiene 10 monete, di cui sono 4 truccate e fanno uscire testa con probabilità $\frac{1}{3}$. \\
+			Si pesca a caso una moneta e la si lancia una volta. Qual è la probabilità che esca testa? Qual è la probabilità che la moneta sia equa se è uscita testa?
 		\end{assignment}
 		\begin{itemize}
 			\item $H_1$ = "Scelgo una moneta equa" \\
@@ -506,7 +509,7 @@
 			\end{align*}
 		\end{itemize}
 	
-		Risolviamo il secondo punto. Questa e' la probabilita' di $H_1$ dato $E$, quindi:
+		Risolviamo il secondo punto. Questa è la probabilità di $H_1$ dato $E$, quindi:
 		\[
 		\mathcal{P}(H_1 \mid E) =\ ?
 		\]
@@ -542,7 +545,7 @@
 		$\mathcal{P}(E_1 \cap E_2 \mid H_2) = \dfrac{1}{3} \cdot \dfrac{1}{3} = \dfrac{1}{9}$ \\ \quad \\
 		$\mathcal{P}(E_1 \cap E_2) = \dfrac{1}{4} \cdot \dfrac{3}{5} + \dfrac{1}{9} \cdot \dfrac{2}{5} \neq (\dfrac{13}{30})^2$ \\ \quad \\
 		Quindi $E_1$ e $E_2$ sono eventi dipendenti. \\
-		Aggiungiamo un'ulteriore domanda, qual e' la probabilita' che la moneta sia equa se entrambi i lanci hanno dato testa? \\
+		Aggiungiamo un'ulteriore domanda, qual è la probabilità che la moneta sia equa se entrambi i lanci hanno dato testa? \\
 		Ovvero ci sta chiedendo $\mathcal{P}(H_1 \mid E_1 \cap H_2)$ che si calcola con la \namerefl{def:formula_bayes}, quindi:
 		\[
 		\mathcal{P}(H_1 \mid E_1 \cap E_2) = \frac{\mathcal{P}(E_1 \cap E_2 \mid H_1)\mathcal{P}(H_1)}{\mathcal{P}(E_1 \cap E_2)} = \frac{\frac{1}{4} \cdot \frac{3}{5}}{\frac{3}{20} + \frac{2}{45}} = 0,77
@@ -552,7 +555,7 @@
 	\begin{definition}{\nmu Spazio prodotto}{spazio_prodotto}
 		Siano $(\Omega_1, \mathcal{F}_1, \mathcal{P}_1)$ e $(\Omega_2, \mathcal{F}_2, \mathcal{P}_2)$ \\
 		$\Omega = \Omega_1 \times \Omega_2 = \{(\omega_1, \omega_2) : \omega_1 \in \Omega_1, \omega_2 \in \Omega_2\}$ \\
-		$\mathcal{F} = $ la $\sigma$-algebra degli eventi = $E_1 \times E_2$ = rettangoli. Quindi $\mathcal{F}$ e' la $\sigma$-algebra generata dai rettangoli, ovvero la piu' piccola $\sigma$-algebra che contiene tutti i rettangoli. \\
+		$\mathcal{F} = $ la $\sigma$-algebra degli eventi = $E_1 \times E_2$ = rettangoli. Quindi $\mathcal{F}$ è la $\sigma$-algebra generata dai rettangoli, ovvero la piu' piccola $\sigma$-algebra che contiene tutti i rettangoli. \\
 		$\mathcal{P}(E_1 \times E_2) =P_1(E_1)P_2(E_2)$ \\
 		Quindi otteniamo $(\Omega, \mathcal{F}, \mathcal{P})$ che si chiama \textit{spazio prodotto}.
 	\end{definition}
@@ -561,17 +564,17 @@
 			\mathcal{P}((E_1 \times \Omega_2) \cap (\Omega_1 \times E_2)) &= \mathcal{P}(E_1 \times E_2) \\ &= P_1(E_1)P_2(E_2) \\ &= \mathcal{P}(E_1 \times \Omega_2)\mathcal{P}(\Omega_1 \times E_2)
 		\end{align*}
 	\end{proof}
-	\section{Esercizi su combinatoria e spazi di proabilita'}
+	\section{Esercizi su combinatoria e spazi di proabilità}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Dato un insieme di $n$ persone, qual e' la probabilita' che almeno 2 persone facciano il compleanno lo stesso giorno?
+			Dato un insieme di $n$ persone, qual è la probabilità che almeno 2 persone facciano il compleanno lo stesso giorno?
 		\end{assignment}
-		Affinche' questo evento sia possibile $n$ deve essere maggiore o uguale a 2. \\
-		Inoltre, per il princio della piccionaia se $n > 365$ allora c'e' almeno un caso possibile, quindi $2 \leq n \leq 365$. \\
+		Affinchè questo evento sia possibile $n$ deve essere maggiore o uguale a 2. \\
+		Inoltre, per il princio della piccionaia se $n > 365$ allora c'è almeno un caso possibile, quindi $2 \leq n \leq 365$. \\
 		Assumiamo, inoltre, che i giorni sono equiprobabili. \\
 		$E =$ "Almeno 2 persone fanno il compleanno lo stesso giorno" \\
 		$\mathcal{P}(E) = 1 \iff n > 365$ \\
-		$|\Omega| = 365^n$ perche' per ogni persona possiamo segnare 1 tra i 365 giorni disponibili. \\
+		$|\Omega| = 365^n$ perchè per ogni persona possiamo segnare 1 tra i 365 giorni disponibili. \\
 		$\mathcal{P}(E) = 1 - \mathcal{P}(E^C)$ e $\mathcal{P}(E^C) = \frac{|E^C|}{365^n} = \frac{365 \cdot 364 \cdots (365 - n + 1)}{365^n}$ \\
 		Quindi:
 		\[
@@ -580,39 +583,39 @@
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Hai chiesto a un vicino di innaffiare una piantina mentre sei in vacanza. Senza acqua la piantina muore con $p = 0.8$, innaffiandola la probabilita' che muoia diventa $p = 0.15$. Il vicino la annaffia con $p = 0.9$. \\
-			Qual e' la probabilita' che la piantina sia viva al tuo ritorno? Se fosse morta, qual e' la probabilita' che il vicino si e' dimenticato di innaffiarla? 
+			Hai chiesto a un vicino di innaffiare una piantina mentre sei in vacanza. Senza acqua la piantina muore con $p = 0.8$, innaffiandola la probabilità che muoia diventa $p = 0.15$. Il vicino la annaffia con $p = 0.9$. \\
+			Qual è la probabilità che la piantina sia viva al tuo ritorno? Se fosse morta, qual è la probabilità che il vicino si è dimenticato di innaffiarla? 
 		\end{assignment}
 		\begin{itemize}
 			\item $H_1$ = "Il vicino si ricorda di innaffiare la piantina" \\
 			$\mathcal{P}(H_1) = 0.9$
 			\item $H_2$ =  "Il vicino si dimentica di innaffiare la piantina" \\
 			$\mathcal{P}(H_2) = 0.1$ 
-			\item $E = $ "La piantina e' morta" 
+			\item $E = $ "La piantina è morta" 
 		\end{itemize}
 		$\mathcal{P}(E \mid H_1) = 0.15$ \\
 		$\mathcal{P}(E \mid H_2) = 0.8$ \\
 		$\mathcal{P}(E) = \mathcal{P}(E \mid H_1)\mathcal{P}(H_1) + \mathcal{P}(E \mid H_2)\mathcal{P}(H_2) = 0.15 \cdot 0.9 + 0.8 \cdot 0.1 = 0.21$ \\
-		$\mathcal{P}(E^C) = 1 - 0.21 = 0.79$ e questa e' la probabilita' che la piantina sia ancora viva. \\
-		$\mathcal{P}(H_2 \mid E) = \dfrac{\mathcal{P}(E \mid H_2)\mathcal{P}(H_2)}{\mathcal{P}(E)} = \dfrac{0.8 \cdot 0.1}{0.21} = 0.38$ e questa e' la probabilita' che il vicino si e' dimenticato di innaffiare la pianta se quest'ultima e' morta.
+		$\mathcal{P}(E^C) = 1 - 0.21 = 0.79$ e questa è la probabilità che la piantina sia ancora viva. \\
+		$\mathcal{P}(H_2 \mid E) = \dfrac{\mathcal{P}(E \mid H_2)\mathcal{P}(H_2)}{\mathcal{P}(E)} = \dfrac{0.8 \cdot 0.1}{0.21} = 0.38$ e questa è la probabilità che il vicino si è dimenticato di innaffiare la pianta se quest'ultima è morta.
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Un'urna contiene 2 palline rosse e 4 palline nere. Due giocatori, A e B, giocano nel modo seguente. Le palline vengono estratte ad una ad una, vince A se l'ultima pallina estratta e' rossa, altrimenti vince B.
+			Un'urna contiene 2 palline rosse e 4 palline nere. Due giocatori, A e B, giocano nel modo seguente. Le palline vengono estratte ad una ad una, vince A se l'ultima pallina estratta è rossa, altrimenti vince B.
 			\begin{enumerate}
-				\item Qual e' la probabilita' che A vinca?
-				\item Qual e' la probabilita' che A vinca se la prima pallina estratta e' rossa?
+				\item Qual è la probabilità che A vinca?
+				\item Qual è la probabilità che A vinca se la prima pallina estratta è rossa?
 			\end{enumerate}
 		\end{assignment}
 		Calcoliamo $|\Omega| = \dfrac{6!}{2! \cdot 4!} = 15$
 		\begin{enumerate}
 			\item $A = $ "A vince" \\
-			A e' l'insieme degli anagrammi che terminano per R, che e' lo stesso calcolo per $\Omega$ ma ora abbiamo 5 palline tra le quali 4 sono ripetute, quindi: \\
+			A è l'insieme degli anagrammi che terminano per R, che è lo stesso calcolo per $\Omega$ ma ora abbiamo 5 palline tra le quali 4 sono ripetute, quindi: \\
 			$|A| = \dfrac{5!}{4!} = 5$ \\
 			$\mathcal{P}(A) = \dfrac{5}{15} = \dfrac{1}{3}$
-			\item $R_1 =$ "La prima pallina estratta e' rossa" \\
+			\item $R_1 =$ "La prima pallina estratta è rossa" \\
 			$\mathcal{P}(A \mid R_1) = \dfrac{\mathcal{P}(A \cap R_1)}{\mathcal{P}(R_1)}$ \\
-			$\mathcal{P}(R_1) = \dfrac{1}{3}$ e $\mathcal{P}(A \cap R_1) = \dfrac{1}{15}$ perche' e' solo una la configurazione vincente avendo la prima pallina rossa. \\
+			$\mathcal{P}(R_1) = \dfrac{1}{3}$ e $\mathcal{P}(A \cap R_1) = \dfrac{1}{15}$ perchè è solo una la configurazione vincente avendo la prima pallina rossa. \\
 			$\mathcal{P}(A \mid R_1) = \dfrac{\frac{1}{15}}{\frac{1}{3}} = \dfrac{1}{5}$  
 		\end{enumerate}
 		$A$ e $R_1$ nno sono indipdenti $\mathcal{P}(A \cap R_1) = \frac{1}{15} \neq \mathcal{P}(A)\mathcal{P}(R_1)$
@@ -621,29 +624,29 @@
 		\begin{assignment}{}{}
 			3 urne numerate, 1, 2, 3, sono inizialmente vuote sono inizialmente vuote. Esse vengono riempite con $n$ palline, che vengono inserite una dopo l'altra in una delle 3 urne, scelte a caso ogni volta.
 			\begin{enumerate}
-				\item Costruire lo spazio di probabilita' che descrive questa situazione.
-				\item Qual e' la probabilita' che l'urna 1 resti vuota?
-				\item Qual e' la probabilita' che restino vuote le urne 1 e 2?
-				\item Qual e' la probabilita' che \textbf{solo} una delle tre urne resti vuota?
-				\item Qual e' la probabilita' che l'urna 1 e' vuota se so che e' vuota l'urna 2?
+				\item Costruire lo spazio di probabilità che descrive questa situazione.
+				\item Qual è la probabilità che l'urna 1 resti vuota?
+				\item Qual è la probabilità che restino vuote le urne 1 e 2?
+				\item Qual è la probabilità che \textbf{solo} una delle tre urne resti vuota?
+				\item Qual è la probabilità che l'urna 1 è vuota se so che è vuota l'urna 2?
 			\end{enumerate}
 		\end{assignment}
 		\begin{enumerate}
-			\item Un esito e' un $\omega = (\omega_1, \omega_2, \dots, \omega_n) \quad \omega_i \in \{1, 2, 3\}$ \\
+			\item Un esito è un $\omega = (\omega_1, \omega_2, \dots, \omega_n) \quad \omega_i \in \{1, 2, 3\}$ \\
 			$\Omega = \{\omega = (\omega_1, \omega_2, \dots, \omega_n)\ : \ \omega_i \in \{1, 2, 3\} = \{1, 2, 3\}^n\}$ \\
 			$|\Omega| = 3^n$ \\
 			$\mathcal{F} = \mathcal{P}(\Omega) \quad \mathcal{P}(E) = \dfrac{|E|}{3^n} \quad \forall E \subset \Omega$
 			\item $E_1$ = "Urna 1 rimane vuota" \\
 			$E_1 = \{\omega \in \Omega \mid \omega_i \in {2, 3}\}$ e $|E_1| = 2^n$ \\
 			$\mathcal{P}(E_1) = \dfrac{2^n}{3^n}$ 
-			\item $E_2$ = "Urna 2 e' vuota" \\
+			\item $E_2$ = "Urna 2 è vuota" \\
 			$\mathcal{P}(E_1 \cap E_2) = \dfrac{|E_1 \cap E_2|}{3^n}$ \\
 			$E_1 \cap E_2 = \{(3, \dots, 3)\}$ quindi $|E_1 \cap E_2| = 1^n$ \\
 			$\mathcal{P}(E_1 \cap E_2) = \dfrac{1^n}{3^n}$ 
 			\item $F_i$ = "Solo l'urna i resta vuota" ove $i = 1, 2, 3$ \\
-			$F(F_1 \cup F_2 \cup F_3) = \mathcal{P}(F_1) + \mathcal{P}(F_2) + \mathcal{P}(F_3) = 3\mathcal{P}(F_1)$ perche' gli eventi $F_i \cap F_j = \emptyset \quad \forall i \neq j$ \\
+			$F(F_1 \cup F_2 \cup F_3) = \mathcal{P}(F_1) + \mathcal{P}(F_2) + \mathcal{P}(F_3) = 3\mathcal{P}(F_1)$ perchè gli eventi $F_i \cap F_j = \emptyset \quad \forall i \neq j$ \\
 			Notiamo che $F_1 \subset E_1$ e $|F_1| = |E_1| - |E_1 \backslash F_1|$ \\
-			$E_1 \backslash F_1$ e'  urna 1 e 2 vuota oppure urna 1 e 3 vuote \\
+			$E_1 \backslash F_1$ è  urna 1 e 2 vuota oppure urna 1 e 3 vuote \\
 			$E_1 \backslash F_1 = \{(3, 3, \dots, 3), (2, 2, \dots, 2)\}$ quindi $|E_1 \backslash F_1| = 2$ \\
 			$|F_1| = 2^n - 2$ \\
 			$\mathcal{P}(F_1) = \dfrac{2^n - 2}{3^{n-1}}$
@@ -652,9 +655,9 @@
 		\end{enumerate}
 	\end{exercise}
 	\begin{exercise}{}{} 
-			(Inserire nella dimostrazione dell'uniformita' dello spazio prodotto) \\
+			(Inserire nella dimostrazione dell'uniformità dello spazio prodotto) \\
 			Supponiamo di avere $(\Omega_1, \mathcal{F}_1, \mathcal{P}_1)$ e $(\Omega_2, \mathcal{F}_2, \mathcal{P}_2)$ ove $|\Omega_1| = n$ e $|\Omega_2| = m$. \\
-			Allora $(\Omega, \mathcal{P}(\Omega_1 \times \Omega_2), \mathcal{P})$ e' uniforme. \\
+			Allora $(\Omega, \mathcal{P}(\Omega_1 \times \Omega_2), \mathcal{P})$ è uniforme. \\
 			$\mathcal{P}(E_1 \times E_2) = \mathcal{P}_1(E_1)\mathcal{P}_2(E_2)$, infatti:
 			\[
 			\mathcal{P}(\{(\omega_1, \omega_2)\}) = \mathcal{P}_1(\{\omega_1\})\mathcal{P}_2(\{\omega_2\}) = \frac{1}{n} \cdot \frac{1}{m} = \frac{1}{n\cdot m}
@@ -663,23 +666,23 @@
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Quattro amici insieme ad altri 8 ragazzi partecipano ad una partita di calcio a 6 (con squadre di 6 giocatori ciascuna). Le squadre vengono sorteggiate a caso, qual e' la probabilita' che i 4 amici finiscano nella stessa squadra?   
+			Quattro amici insieme ad altri 8 ragazzi partecipano ad una partita di calcio a 6 (con squadre di 6 giocatori ciascuna). Le squadre vengono sorteggiate a caso, qual è la probabilità che i 4 amici finiscano nella stessa squadra?   
 		\end{assignment}
-		12 e' il numero di persone totali. \\
+		12 è il numero di persone totali. \\
 		$\binom{12}{6} = \frac{12!}{6!6!} = 924$ \\
 		Per avere la squadra con i 4 amici insieme, devo prendere un sottinsieme di altre 2 persone tra le 8 restanti, quindi: \\
 		$|E| = \binom{8}{2} = \frac{8!}{2!6!} = 28 \Rightarrow \mathcal{P}(E) = \frac{28}{924}$
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Una scatola contiene 3 palline bianche e 2 nere. Marco estrae una pallina e la rimette nella scatola aggiungendo una pallina dello stesso colore. Estrae nuovamente una pallina, qual e' la probabilita' che sia bianca? Se la seconda pallina estratta e' bianca, qual e' la probabilita' che la prima pallina estratta e' bianca?
+			Una scatola contiene 3 palline bianche e 2 nere. Marco estrae una pallina e la rimette nella scatola aggiungendo una pallina dello stesso colore. Estrae nuovamente una pallina, qual è la probabilità che sia bianca? Se la seconda pallina estratta è bianca, qual è la probabilità che la prima pallina estratta è bianca?
 		\end{assignment}
 		\begin{itemize}
-			\item $H_1$ = "La prima pallina estratta e' bianca" \\
+			\item $H_1$ = "La prima pallina estratta è bianca" \\
 			$\mathcal{P}(H_1) = \frac{3}{5}$
-			\item $H_2$ = "La prima pallina estratta e' nera" \\
+			\item $H_2$ = "La prima pallina estratta è nera" \\
 			$\mathcal{P}(H_2) = \frac{2}{5}$
-			\item $E$ = "La seconda pallina estratta e' bianca" \\
+			\item $E$ = "La seconda pallina estratta è bianca" \\
 			$\mathcal{P}(E) = \mathcal{P}(E \mid H_1)\mathcal{P}(H_1) + \mathcal{P}(E \mid H_2)\mathcal{P}(H_2)$ \\
 			$\mathcal{P}(E \mid H_1) = \frac{4}{6} = \frac{2}{3}$ \\
 			$\mathcal{P}(E \mid H_2) = \frac{3}{6} = \frac{1}{2}$ \\
@@ -689,11 +692,11 @@
 	\end{exercise}
 	\chapter{Variabili aleatorie}
 	\begin{definition}{\nmu Variabile aleatoria}{var_aleatoria}
-		Dato uno spazio di probabilita', $(\Omega, \mathcal{F}, \mathcal{P})$, una variabile aleatoria, v.a., di uno spazio di probabilita', e' una funzione:
+		Dato uno spazio di probabilità, $(\Omega, \mathcal{F}, \mathcal{P})$, una variabile aleatoria, v.a., di uno spazio di probabilità, è una funzione:
 		\[
 		X: \Omega \to \mathbbm{R}
 		\]
-		ove $\Omega \ni \omega \to X(\omega) \in \mathbbm{R}$ tale che $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega) < \alpha\} \in \mathcal{F}$. Questa condizione e' automaticamente soddisfatta se $\mathcal{F} = \mathcal{P}(\Omega)$
+		ove $\Omega \ni \omega \to X(\omega) \in \mathbbm{R}$ tale che $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega) < \alpha\} \in \mathcal{F}$. Questa condizione è automaticamente soddisfatta se $\mathcal{F} = \mathcal{P}(\Omega)$
  	\end{definition}
  	Se $X: \Omega \to \mathbbm{R}$, le seguenti condizioni sono soddisfatte:
  	\begin{enumerate}
@@ -704,13 +707,13 @@
  	\end{enumerate}
  	Inoltre,  se $X, Y$ sono v.a di $(\Omega, \mathcal{F}, \mathcal{P})$, allora:
  	\begin{enumerate}
- 		\item $\alpha X + \beta Y$ e' una v.a $\forall \alpha, \beta \in \mathbbm{R}$
- 		\item $X \cdot Y$ e' una v.a
+ 		\item $\alpha X + \beta Y$ è una v.a $\forall \alpha, \beta \in \mathbbm{R}$
+ 		\item $X \cdot Y$ è una v.a
  	\end{enumerate}
  	\begin{proof}{Dimostrazione somma e prodotto di due v.a} \quad \\
  		Dividiamo la dimostrazione in due passi:
  		\begin{enumerate}
- 			\item X e' una v.a. quindi $\forall \alpha \in \mathbbm{R} \Rightarrow \alpha X$ e' una v.a. \\
+ 			\item X è una v.a. quindi $\forall \alpha \in \mathbbm{R} \Rightarrow \alpha X$ è una v.a. \\
  			\begin{itemize}
  				\item Se $\alpha = 0 \Rightarrow 0 \cdot X = 0$
  				\item Se $\alpha \neq 0$ allora vale che:
@@ -718,7 +721,7 @@
  				\{\omega \in \Omega \mid \alpha X(\omega) < c\} = \Bigg\{\omega \in \Omega \mid X(\omega) < \frac{c}{\alpha}\Bigg\} \in \mathcal{F} \quad \forall c \in \mathbbm{R}
  				\] 
  			\end{itemize}
- 			\item X e' una v.a. $\Rightarrow X^2$ e' una v.a.
+ 			\item X è una v.a. $\Rightarrow X^2$ è una v.a.
  			\begin{itemize}
  				\item $\{\omega \in \Omega \mid X^2(\omega) < \alpha\} = \emptyset \iff \alpha < 0$
  				\item Se $\alpha \geq 0$ allora vale che:
@@ -732,60 +735,60 @@
  		\[
  		(X + Y)^2 = X^2 + Y^2 + 2XY \Rightarrow XY = \frac{1}{2}\Bigl[\bigl(X+Y\bigr)^2 - X^2 - Y^2\Bigr]
  		\]
- 		e' una v.a. se $X + Y$ e' una v.a. \\
+ 		è una v.a. se $X + Y$ è una v.a. \\
  		Dalla definizione di v.a. notiamo che:
  		\begin{align*}
  		\{\omega \in \Omega \mid X(\omega) + Y(\omega) > \alpha\} &= \\ \bigcup_{q \in \mathbbm{Q}}\{\omega \in \Omega \mid X(\omega) > q \ e \ Y(\omega) > \alpha - q\} &= \\ \bigcup_{q \in \mathbbm{Q}} \{\omega \in \Omega \mid X(\omega) < q\} \cap \{\omega \in \Omega \mid Y(\omega) > \alpha - q\} 
  		\end{align*}
  		Sia:
  		\[F = \bigcup_{q\in \mathbbm{Q}}\{\omega \mid X(\omega) < q \ e \ Y(\omega) > \alpha - q\}\]
- 		L'inclusione $F \subseteq E$ e' ovvia in quanto: \[X > q \ e \ Y > \alpha - q \Rightarrow X+ Y > q + \alpha - q = \alpha\]
+ 		L'inclusione $F \subseteq E$ è ovvia in quanto: \[X > q \ e \ Y > \alpha - q \Rightarrow X+ Y > q + \alpha - q = \alpha\]
  		Verifichiamo $E \subset F$:
  		\[x + y > \alpha \Rightarrow x > \alpha - y \Rightarrow \exists q \in \mathbbm{Q} \mid \alpha - y < q < x
  		\]
  	\end{proof}
  	\section{Variabili aleatorie semplici}
- 	Consideriamo della v.a. $X$ per le quali supporremo che prendano al piu' una infinita' numerabile di valori $\{\lambda_1, \lambda_2, \dots, \lambda_n, \dots\}$. \\
- 	\begin{definition}{\nmu Densita' discreta}{densita_discreta}
+ 	Consideriamo della v.a. $X$ per le quali supporremo che prendano al piu' una infinità numerabile di valori $\{\lambda_1, \lambda_2, \dots, \lambda_n, \dots\}$. \\
+ 	\begin{definition}{\nmu Densità discreta}{densita_discreta}
  		Data una v.a. semplice $X$ consideriamo la funzione $p: \mathbbm{R} \to \mathbbm{R}^+$ definita da $p(x\lambda) = P(\{X = \lambda\})$. \\
- 		$p$ gode delle seguenti properita':
+ 		$p$ gode delle seguenti properità:
  		\begin{itemize}
  			\item $p(x) = 0$ tranne per i valori assunti da $X$
  			\item \[
  				\sum_{\lambda \in \mathbbm{R}}p(\lambda) = 1
  			\]
  		\end{itemize}
- 		La funzione $p$ indica la probabilita' che $X$ assuma un certo valore $\lambda$
+ 		La funzione $p$ indica la probabilità che $X$ assuma un certo valore $\lambda$
   	\end{definition}
  	\begin{example}{\nmu Variabile aleatoria indicatrice}{va_indicatrice}
  		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ e $E \in \mathcal{F}$. \\
- 	 	Indichiamo con $1_E$ la \textit{funzione indicatrice} di $E$, cioe' la funzione che assume il valore 1 su $E$ e 0 su $E^C$:
+ 	 	Indichiamo con $1_E$ la \textit{funzione indicatrice} di $E$, cioè la funzione che assume il valore 1 su $E$ e 0 su $E^C$:
  		\[1_E(\omega) = \begin{cases}
  			1 \quad \omega \in E \\
  			0 \quad \omega \notin E
  		\end{cases}\]
- 		La sua densita' $p$ e' data da:
+ 		La sua densità $p$ è data da:
  		\begin{itemize}
  			\item $p(1) = P\{1_E = 1\} = P(E)$
  			\item $p(0) = P\{1_E = 0\} = 1 - P(E)$
  		\end{itemize} 
  	\end{example}
- 	Una v.a. semplice e' del tipo:
+ 	Una v.a. semplice è del tipo:
  	\[
  	X = \sum_{i=1}^{n}\lambda_i 1_{E_i}
  	\]
  	ove $\lambda_i \in \mathbbm{R}$ e sono i valori che $X$ puo' assumere e $\{E_1, E_2, \dots, E_n\}$ sono partizioni di $E$ e $ E_i \cap E_j = \emptyset \quad \forall i \neq j$ e $\mathlarger{\bigcup_{i=1}^{n}}E_i = \Omega$ \\
  	\section{Media e varianza}
  	\subsection{Media, valore atteso, aspettazione o speranza matematica}
- 	Sia $X$ una v.a. semplice che prenda i valori $\lambda_1, \lambda_2, \dots$ e indichiamo con $p$ la densita' con la quale un certo valore venga assunto.
+ 	Sia $X$ una v.a. semplice che prenda i valori $\lambda_1, \lambda_2, \dots$ e indichiamo con $p$ la densità con la quale un certo valore venga assunto.
  	\begin{definition}{\nmu Valore atteso di X}{valore_atteso}
- 		Definiamo con valore atteso di $X$ o speranza matematica di $X$ la quantita':
+ 		Definiamo con valore atteso di $X$ o speranza matematica di $X$ la quantità:
  		\[
  		E[X] = \sum_{i=1}^{n}\lambda_ip(\lambda_i) = \sum_{i=1}^{n}\lambda_iP(\{X = \lambda_i\})
  		\]
  	\end{definition}
- 	Osservando la formula notiamo che i termini che intervengono non sono altro che i possbili valori di $X$ moltiplicati per la probabilita' con cui essi vengono assunti.
- 	\paragraph{Proprieta' dell valore atteso} \quad \\
+ 	Osservando la formula notiamo che i termini che intervengono non sono altro che i possbili valori di $X$ moltiplicati per la probabilità con cui essi vengono assunti.
+ 	\paragraph{Proprietà dell valore atteso} \quad \\
  	Se $X, Y$ sono v.a. allora:
  	\begin{itemize}
  		\item $E[\alpha X + \beta Y] = \alpha E[X] + \beta E[Y]$
@@ -800,7 +803,7 @@
  	\end{example}
  	\subsection{Varianza di una variabile aleatoria}
  	\begin{definition}{\nmu Varanza di una variabile aleatoria}{varianza_va}
- 		Sia $X$ una v.a. e definiamo varanza di una variabile aleatoria la \textit{dispersione} di $X$ attorno alla sua media, infatti la varanza e' cosi definita:
+ 		Sia $X$ una v.a. e definiamo varanza di una variabile aleatoria la \textit{dispersione} di $X$ attorno alla sua media, infatti la varanza è cosi definita:
  		\[
  		Var[X] = E[(X - \mu)^2]
  		\]
@@ -813,7 +816,7 @@
  			Var[X] = E\bigl[(X - p)^2\bigr] &= \\ E\bigl[X^2 + p^2 - 2pX\bigr]  &= \\  E\bigl[X^2\bigr] + p^2 - 2pX &=  \\ E\bigl[X^2\bigr] - p^2 &= \\ p - p^2 = p(1-p)
  		\end{align*}
  	\end{example}
- 	\paragraph{Proprieta' della varianza} 
+ 	\paragraph{Proprietà della varianza} 
  	\begin{itemize}
  		\item $Var[\alpha X] = \alpha^2Var[X]$
  		\item $Var[X] = E[X^2] - E[X]^2$
@@ -885,7 +888,7 @@
   		E[X] = \sum_{i=1}^{n}E[X_i] = np \quad \quad Var[X] = \sum_{i=1}^{n}Var(X_i)=np(1-p)
   		\]
   		in quanto $X_i$ sono indipendenti e ci possiamo risparmiare i calcoli della distribuzione binomiale.
-  		\item $X$ prende i valori $\{0, 1, 2, \dots, n\}$ e la distribuzione di probabilita' e' data dalla formula:
+  		\item $X$ prende i valori $\{0, 1, 2, \dots, n\}$ e la distribuzione di probabilità è data dalla formula:
   		\[
   		P(\{X = k\}) = \binom{n}{k}p^k(1-p)^{n-k}
   		\]
@@ -897,16 +900,16 @@
   		\[
   			Var[X] = E[X^2] - n^2p^2 = \sum_{k=0}^{n}k^2\binom{n}{k}p^k(1-p)^{n-k} - n^2p^2
   		\]
-  		Si possono calcolare queste somme ma il calcolo e' complesso e il risultato e' sempre lo stesso.
+  		Si possono calcolare queste somme ma il calcolo è complesso e il risultato è sempre lo stesso.
   	\end{enumerate}
   	\section{Esercizi su variabili aleatorie}
   	\begin{exercise}{}{}
   		\begin{assignment}{}{}
-  			Un calcolatore e' collegato a una rete e permette l'acceso a un massimo di 20 persone. Collegati a questa rete ci sono 24 operatori e a un dato istante la probabilita' che l'operatore richieda l'accesso e' $p = 0.6$ e le richieste di accesso sono indipendenti. \\
-  			Qual e' la probabilita' che a un certo istante di tempo la rete sia satura?
+  			Un calcolatore è collegato a una rete e permette l'acceso a un massimo di 20 persone. Collegati a questa rete ci sono 24 operatori e a un dato istante la probabilità che l'operatore richieda l'accesso è $p = 0.6$ e le richieste di accesso sono indipendenti. \\
+  			Qual è la probabilità che a un certo istante di tempo la rete sia satura?
   		\end{assignment}
   		Sia $X$ la variabile aleatoria che conta il numero di richieste in un certo istante di tempo. \\
-  		$X$ e' binomiale con $p = 0.6$ e $n = 24$, quindi:
+  		$X$ è binomiale con $p = 0.6$ e $n = 24$, quindi:
   		\[
   		P[X = k] = \binom{n}{k}p^k(1-p)^{n-k}
   		\]
@@ -916,14 +919,14 @@
   	\begin{exercise}{}{}
   		\begin{assignment}{}{}
   			Una fabbrica produce componenti elettronici. Questi escono da due linee di produzione $A$ e $B$ nelle percentuali $30$\% e 70\%. La linea $A$ ha una percentuale di pezzi difettosi pari al 10\% contro il 17\% di $B$. \\
-  			Qual e' la probabilita' che un pezzo pescato a caso sia difettoso? \\
-  			I pezzi vengono venduti in confenzione da 10, tutti appartententi alla stessa linea di produzione. Una di queste confenzioni viene ispezionata e viene trovato esattamente un pezzo difettoso, qual e' la probabilita' che questa confenzione provenga da $A$?
+  			Qual è la probabilità che un pezzo pescato a caso sia difettoso? \\
+  			I pezzi vengono venduti in confenzione da 10, tutti appartententi alla stessa linea di produzione. Una di queste confenzioni viene ispezionata e viene trovato esattamente un pezzo difettoso, qual è la probabilità che questa confenzione provenga da $A$?
   		\end{assignment}
   		Rispondiamo alla prima domanda:
   		\begin{itemize}
   			\item $A =$ "il pezzo proviene dalla linea A" e $P(A) = 0.3$
   			\item $B =$ "il pezzo proviene dalla linea B" e $P(B) = 0.7$
-  			\item $E =$ "il pezzo e' difettoso":
+  			\item $E =$ "il pezzo è difettoso":
   			\begin{itemize}
   				\item $P(E \mid A) = 0.1$
   				\item $P(E \mid B) = 0.17$
@@ -932,31 +935,31 @@
   		\end{itemize}
   		Rispondiamo alla seconda domanda:
   		\begin{itemize}
-  			\item $F = $ "1 pezzo e' difettoso" \\
+  			\item $F = $ "1 pezzo è difettoso" \\
   			$P(F) = P(F \mid A)P(A) + P(F \mid B)P(B)$ \\ 
   			$P(F \mid A) = \binom{10}{1}p^k(1-p)^{n-k} = \binom{10}{1}\frac{1}{10}(\frac{9}{10})^9 = 0.38$ \\
   			$P(F \mid B) = \binom{10}{1}\frac{17}{10}(\frac{83}{10})^9 = 0.31$ \\
   			$P(F) = 0.38 \cdot 0.3 + 0.31 \cdot 0.7 = 0.331$ \\
   			$P(A \mid F) = \frac{P(F\mid A)P(A)}{P(F)} = 0.344 \approx 35\%$
   		\end{itemize}
-  		Applichiamo la distribuzione binomiale perche' i pezzi sono indipendenti l'uno dall'altro e gli esperimenti sono gli stessi ripetuti tante volte.
+  		Applichiamo la distribuzione binomiale perchè i pezzi sono indipendenti l'uno dall'altro e gli esperimenti sono gli stessi ripetuti tante volte.
   	\end{exercise}
   	\section{Variabile aleatoria discreta}
-  	$X$ e' una variabile aleatoria discreta se:
+  	$X$ è una variabile aleatoria discreta se:
   	\[
   	X = \sum_{n=1}^{\infty}\lambda_n1_{E_n}(\omega)
   	\]
   	con $\{E_n: n \in \mathbbm{N}\} \subset \mathcal{F}$ 
   	\subsection{Variabile aleatoria di Poisson}
-  	Una variabile di Poisson e' una v.a. $X$ che prende i valori $\{0, 1, 2, \dots, \} = \mathbbm{N}$ e vale la legge:
+  	Una variabile di Poisson è una v.a. $X$ che prende i valori $\{0, 1, 2, \dots, \} = \mathbbm{N}$ e vale la legge:
   	\[
   	P[X = k] = e^{-\lambda}\cdot \frac{\lambda^k}{k!}
   	\]
   	con $\lambda > 0$. \\ 
   	$\lambda$ si presta ad una doppia interpretazione in quanto $E[X] = \lambda$ oppure $Var[X] = \lambda$ \\
-  	Questa variabile si chiama anche \textit{variabile degli eventi rari} e si presta a contare la probabilita' di $k$ eventi considerati rari.
+  	Questa variabile si chiama anche \textit{variabile degli eventi rari} e si presta a contare la probabilità di $k$ eventi considerati rari.
   	\begin{theorem}{\nmu Formula di Poisson}{formula_poisson}
-  	Se $\{X_n\}$ e' una successione di binomiali con parametri $n$ e $p = \frac{\lambda}{n}$, allora:
+  	Se $\{X_n\}$ è una successione di binomiali con parametri $n$ e $p = \frac{\lambda}{n}$, allora:
   	\[
   	\lim_{n \to \infty}P[X_n = k] = \frac{e^{-\lambda}\lambda^k}{k!}
   	\]
@@ -980,23 +983,23 @@
   	 	\Bigg(1-\frac{\lambda}{n}\Bigg)^{-k} \to 1
   	 	\]
   	 \end{proof}
-  	 \paragraph{Proprieta'} \quad \\
+  	 \paragraph{Proprietà} \quad \\
   	 Se $X$ e $Y$ sono v.a. di Poisson indipendenti, allora:
   	 \begin{itemize}
-  	 	\item $X + Y$ e' di Poisson e il parametro di $X + Y$ e' $\mu + \lambda$ ove $\mu$ e' il parametro di $X$ e $\lambda$ di $Y$. \\
-  	 	Questa probabilita' si chiama \textbf{riproducibilita'} di Poisson.
+  	 	\item $X + Y$ è di Poisson e il parametro di $X + Y$ è $\mu + \lambda$ ove $\mu$ è il parametro di $X$ e $\lambda$ di $Y$. \\
+  	 	Questa probabilità si chiama \textbf{riproducibilità} di Poisson.
   	 	\item $E[X] = Var[X] = \lambda$
   	 \end{itemize}
   	 \begin{exercise}{}{}
   	 	\begin{assignment}{}{}
-  	 		Due centralini, tra di loro indipendenti, ricevono nell'unita' di tempo un numero di telefonate, $X$ e $Y$, v.a. di Poisson rispettivamente di parametro $\lambda$ e $\mu$. \\
+  	 		Due centralini, tra di loro indipendenti, ricevono nell'unità di tempo un numero di telefonate, $X$ e $Y$, v.a. di Poisson rispettivamente di parametro $\lambda$ e $\mu$. \\
   	 		\begin{enumerate}
-  	 			\item Qual e' la probaiblita' che nell'unita' di tempo i due centralini ricevano insieme piu' di 3 telefonate se $\lambda = 2$ e $\mu = 4$
-  	 			\item Qual e' la probabilita' la legge condizionata di $X$ sapendo che $X+Y=n$?
+  	 			\item Qual è la probaiblità che nell'unità di tempo i due centralini ricevano insieme piu' di 3 telefonate se $\lambda = 2$ e $\mu = 4$
+  	 			\item Qual è la probabilità la legge condizionata di $X$ sapendo che $X+Y=n$?
   	 		\end{enumerate}
   	 	\end{assignment}
   	 		\begin{enumerate}
-  	 			\item $X + Y$ e' la v.a. che conta quante chiamate ricevono i centralini complessivamente di parametro $\lambda + \mu = 2 + 4 = 6$ \\
+  	 			\item $X + Y$ è la v.a. che conta quante chiamate ricevono i centralini complessivamente di parametro $\lambda + \mu = 2 + 4 = 6$ \\
   	 			$P[X + Y > 3] = 1 - P[X + Y \leq 3] = 1 - P[X + Y = 0] - P[X + Y = 1] - P[X + Y] = 2 + P[X + Y = 3]$ \\ \quad \\
   	 			$P[X+Y = k] = e^{-6}\dfrac{6^k}{k!}$ \\ \quad \\
   	 			$P[X+Y = 0] = e^{-6}\dfrac{6^0}{0!} = e^{-6}$\\ \quad \\
@@ -1005,7 +1008,7 @@
   	 			$P[X+Y = 0] = e^{-6}\dfrac{6^3}{3!} = e^{-6} \cdot 36$ \\ \quad \\
   	 			$P[X+Y>3] = 1 - e^{-6}(1 + 6 + 18 + 36) = 0.85$
   	 			\item $P[X=k \mid X+Y=n] = \dfrac{P[X=k\  \cap \ X+Y=n]}{P[X+Y=n]}$ \\ \quad \\
-  	 			Questa e' 0 quando $k > n$, quindi l'analizziamo per $k = 1, 2, \dots, n$
+  	 			Questa è 0 quando $k > n$, quindi l'analizziamo per $k = 1, 2, \dots, n$
   	 			\begin{align*}
   	 			P[X=k\mid X+Y=n] &= \frac{P=[X=k\ \cap Y=n-k]}{P[X+Y=n]} = \frac{P[X=k]P[Y=n-k]}{P[X+Y=n]} = \\
   	 			&= \frac{e^{-\lambda}\frac{\lambda^k}{k!}e^{-\mu}\frac{\lambda^{n-k}}{(n-k)!}}{e^{(-\lambda + \mu)}\frac{(\lambda+\mu)^n}{n!}} = \frac{\lambda^k}{k!}\frac{\mu^{n-k}}{(n-k)!}\frac{n!}{(\lambda + \mu)^n} = \\
@@ -1016,7 +1019,7 @@
   	 		\end{enumerate}
   	 	\end{exercise}
   	 		\paragraph{Speranza matematica per la variabile di Poisson} \quad \\
-  	 		La speranza matematica della variabile di Poisson e' :
+  	 		La speranza matematica della variabile di Poisson è :
   	 		\[
   	 		E[X] = \sum_{k=0}^{\infty}ke^{-\lambda}\frac{\lambda^k}{k!}  = e^{-\lambda}\sum_{k=0}^{\infty}\frac{k \cdot \lambda^k}{k!}
   	 		\]
@@ -1037,7 +1040,7 @@
   	 		E[X] =e^{-\lambda}\sum_{k=0}^{\infty}\frac{k \cdot \lambda^k}{k!} = e^{-\lambda} \cdot \lambda \cdot e^\lambda = \lambda
   	 		\]
   	 	\paragraph{Varianza della variabile di Poisson} \quad \\
-  	 	La varianza della variabile di Poisson e':
+  	 	La varianza della variabile di Poisson è:
   	 	\[
   	 	Var[X] = E[X^2] - E[X]^2
   	 	\]
@@ -1065,7 +1068,7 @@
   	 	\[
   	 	Var[X] = E[X^2] - E[X]^2 = \lambda^2+\lambda - \lambda^2 = \lambda
   	 	\]
-  	 	\paragraph{Riproducibilita' di Poisson} \quad \\
+  	 	\paragraph{Riproducibilità di Poisson} \quad \\
   	 	Sia $X \sim Poisson(\lambda)$ e $X \sim Poisson(\mu)$ e vogliamo verificare che:
   	 	\[
   	 	P[X+Y=k] = e^{-(\lambda + \mu)}\frac{(\lambda + \mu)^k}{k!}
@@ -1086,14 +1089,14 @@
   		\frac{1}{l!(k-l)!} = \binom{k}{l}\frac{1}{k!}
   	 	\]
   	 	\subsection{Distribuzione geometrica}
-  	 	La distribuzione geometrica e' la variabile aleatoria che conta il numero di tentativi necessari per ottenere primo successo nell'esperimento. \\
-  	 	L'esperimento e' la ripetizione infinita dello stesso esperimento a due esiti, 0 e 1. Consideriamo la variabile aleatoria $X$ che conta il numero di tentativi necessari ad avere il primo successo. I valori che puo' assumere $X$ sono $\{1, 2, 3, \dots\}$. 
+  	 	La distribuzione geometrica è la variabile aleatoria che conta il numero di tentativi necessari per ottenere primo successo nell'esperimento. \\
+  	 	L'esperimento è la ripetizione infinita dello stesso esperimento a due esiti, 0 e 1. Consideriamo la variabile aleatoria $X$ che conta il numero di tentativi necessari ad avere il primo successo. I valori che puo' assumere $X$ sono $\{1, 2, 3, \dots\}$. 
   	 	\[
   	 	\mathcal{P}[X = n] = pq^{n-1}
   	 	\]
-  	 	ove $q = 1-p$ e $p$ e' la probabilita' di successo in un singolo lancio. Questa si chiama distribuzione geometrica in quanto nella legge appare una successione geometrica di ragione $q$. 
+  	 	ove $q = 1-p$ e $p$ è la probabilità di successo in un singolo lancio. Questa si chiama distribuzione geometrica in quanto nella legge appare una successione geometrica di ragione $q$. 
   	 	\begin{theorem}{\nmu Attesa e varianza di una v.a. geometrica}{att_var_geo}
-  	 		Se $X$ e' una variabile aleatoria geometrica di parametro $p$, allora:
+  	 		Se $X$ è una variabile aleatoria geometrica di parametro $p$, allora:
   	 		\[
   	 		E[X] = \frac{1}{p}
   	 		\]
@@ -1150,7 +1153,7 @@
   	 	1+q+q^2+\dots+q^k-q-q^2-\dots-q^k-q^{k+1}=\\ &= 0
   	 	\end{align*}
   	 	\paragraph{Assenza di memoria della distribuzione geometrica} \quad \\
-  	 	La proprieta' di \textit{assenza di memoria} e' una proprieta' classica della distribuzione geometrica: se $k \geq 0$, allora vale che:
+  	 	La proprietà di \textit{assenza di memoria} è una proprietà classica della distribuzione geometrica: se $k \geq 0$, allora vale che:
   	 	\[
   	 	P[X>n+k\mid X>n] = P[X>k]
   	 	\]
@@ -1159,9 +1162,9 @@
   	 		P[X>n+k\mid X>n] &= \frac{P[X>n+k\ \cap\ X>n]}{P[X>n]} = \\ &= \frac{P[X>n+k]}{P[X>n]} = \\ &= \frac{q^{n+k}}{q^n} = q^k = \\ &= P[X>k]
   	 		\end{align*}
   	 	\end{proof}
-  	 	Dunque la probabilita' di dover attenderee per il primo successo ancora $k$ prova e' la stessa che si avrebbe se le prime $n$ prove senza successi non avrebbero avuto luogo. Questa proprieta' e' ovvia se si pensa che in uno schema a prove ripetute indipendenti i risultati delle prime prove non influiscono sulle successive; quindi se le prime $n$ prove non hanno avuto successo la probabilita' di avere successo nelle prove successive non e' influenzata.
+  	 	Dunque la probabilità di dover attenderee per il primo successo ancora $k$ prova è la stessa che si avrebbe se le prime $n$ prove senza successi non avrebbero avuto luogo. Questa proprietà è ovvia se si pensa che in uno schema a prove ripetute indipendenti i risultati delle prime prove non influiscono sulle successive; quindi se le prime $n$ prove non hanno avuto successo la probabilità di avere successo nelle prove successive non è influenzata.
   	 	\begin{theorem}{}{}
-  	 		Se $X$ e' una v.a. a valori in $\{1, 2, 3, \dots\}$ e $X$ gode di assenza di memoria allora $X$ e' una v.a. geometrica per qualche parametro $p$, cioe':
+  	 		Se $X$ è una v.a. a valori in $\{1, 2, 3, \dots\}$ e $X$ gode di assenza di memoria allora $X$ è una v.a. geometrica per qualche parametro $p$, cioè:
   	 		\[
   	 		P[X=n] = p(1-p)^{n-1} \quad 0 < p < 1
   	 		\]
@@ -1170,7 +1173,7 @@
   				\[
   				g(n) = P[X>n]
   				\]
-  				Per la prorieta' di assenza di memoria:
+  				Per la prorietà di assenza di memoria:
   				\begin{align*}
   				P[X>n+k \mid X>k] &= P[X>k] = g(k) = \\ &= \frac{g(n+k)}{g(n)} \Rightarrow \\ &\Rightarrow g(n+k)=g(k)g(n)
   				\end{align*}
@@ -1200,11 +1203,11 @@
   	 	\[
   	 	F_X: \mathbbm{R} \to [0,1]
   	 	\]
-  	 	e' cosi definita:
+  	 	è cosi definita:
   	 	\[
   	 	F_X(t) = P[X \leq t]
   	 	\]
-  	 	La funzione di ripartizione e' definita per ogni variabile aleatoria, discreta o no.
+  	 	La funzione di ripartizione è definita per ogni variabile aleatoria, discreta o no.
   	 	\begin{example}{\nmu Funzione di ripartizione per v.a. di Bernoulli}{fun_par_bernoulli}
   	 		\[
   	 		X(\omega) = 1_E(\omega) = \begin{cases}
@@ -1220,13 +1223,13 @@
   	 		P[1_E\leq \omega] \iff 0 < \omega < 1
   	 		\]
   	 	\end{example}
-  	 	\begin{theorem}{\nmu Proprieta' della funzione di ripartizione}{fun_par_prop}
-  	 		Se $X$ e' una v.a., allora $F_X$ ha le seguenti proprieta':
+  	 	\begin{theorem}{\nmu Proprietà della funzione di ripartizione}{fun_par_prop}
+  	 		Se $X$ è una v.a., allora $F_X$ ha le seguenti proprietà:
   	 		\begin{enumerate}
   	 			\item $F_X(t) \in [0, 1] \quad  \forall t \in \mathbbm{R}$
-  	 			\item $F_X$ e' una funzione monotona non decrescente. \\ Quindi se $s \leq t \Rightarrow F_X(s) \leq F_X(t)$
+  	 			\item $F_X$ è una funzione monotona non decrescente. \\ Quindi se $s \leq t \Rightarrow F_X(s) \leq F_X(t)$
   	 			\item $\mathlarger{\lim_{t \to -\infty}} F_X(t)=0$ e $\mathlarger{\lim_{t \to +\infty}}F_X(t) = 1$
-  	 			\item $F_X$ e' continua da destra:
+  	 			\item $F_X$ è continua da destra:
   	 			\[
   	 			\lim_{t \to t_0^+}F_X(t) = F_X(t) \quad \forall t_0 \in \mathbbm{R} 
   	 			\]
@@ -1248,9 +1251,9 @@
   	 			\[
   	 			\lim_{t \to -\infty}F_x(t) = 0
   	 			\]
-  	 			Questo e' vero se $\forall \{t_n\}_{n \in \mathbbm{N}}$ con $t_{n+1} \leq t_n$ e $t_n \downarrow -\infty$ si ha: \[F_X(t_n) \underset{n\to\ \infty}{\to} 0 \]
+  	 			Questo è vero se $\forall \{t_n\}_{n \in \mathbbm{N}}$ con $t_{n+1} \leq t_n$ e $t_n \downarrow -\infty$ si ha: \[F_X(t_n) \underset{n\to\ \infty}{\to} 0 \]
   	 			Consideriamo $E_n = [X \leq t_n]$ allora $E_{n+1}\subseteq E_n$ e \[\lim_{n \to \infty}P(E_n) = P\Bigg(\bigcap_{n=1}^{\infty}E_n\Bigg) = P[X = -\infty] = 0\]
-  	 			questo perche' $E_n$ e' una qualsiasi successione $t_n$ descrescente a $-\infty$.
+  	 			questo perchè $E_n$ è una qualsiasi successione $t_n$ descrescente a $-\infty$.
   	 			\item \begin{itemize}
   	 				\item Verifichiamo:
   	 				\[
@@ -1277,7 +1280,7 @@
   	 				\[
   	 				F_X(t_0^-) := \lim_{t \to t_0^-}F_x(t) = P[X < t_0]
   	 				\]
-  	 				  Questo perche':
+  	 				  Questo perchè:
   	 				\[
   	 				\bigcup_{n=1}^{\infty} E_n \subset [X < t_0] \Rightarrow \exists n_0 \mid X(\omega) \leq t_{n_0} < t_0
   	 				\]
@@ -1308,8 +1311,8 @@
   	 		\begin{assignment}{}{}
   	 			Due dadi equilibrati vengono lanciati separatamente piu' volte. Indichiamo con $X$ il numero di lanci necessari a ottenere 1 con il primo dado, e con $Y$ il numero di lanci a ottenere 5 o 6 con il secondo. 
   	 			\begin{enumerate}
-  	 				\item Qual e' la legge di $X$ e $Y$?
-  	 				\item Consideriamo $Z = max(X, Y)$, qual e' la legge di $Z$?
+  	 				\item Qual è la legge di $X$ e $Y$?
+  	 				\item Consideriamo $Z = max(X, Y)$, qual è la legge di $Z$?
   	 				\item Calcolare $P[X \geq Y]$
   	 			\end{enumerate}
   	 		\end{assignment}
@@ -1338,7 +1341,7 @@
   	 			\end{enumerate}
 
   	 		\end{assignment}
-  	 		  Dato che $N$ e' una v.a. di Poisson, allora:
+  	 		  Dato che $N$ è una v.a. di Poisson, allora:
   	 		\[
   	 		P[N = n] = e^{-\lambda}\frac{\lambda^n}{n!}
   	 		\]
@@ -1369,8 +1372,8 @@
   	 			in modo di aggiungere all'urna tre palline supplementari con i numeri 1, 2, 3
   	 			quindi ora vi sono nell'urna. 93 palline).
   	 			\begin{enumerate}
-  	 				\item Qual e' la probabilita' che il trucco venga scoperto?
-  	 				\item Di quanto e' aumentata la sua probabilita' di fare terno?
+  	 				\item Qual è la probabilità che il trucco venga scoperto?
+  	 				\item Di quanto è aumentata la sua probabilità di fare terno?
   	 			\end{enumerate} 
   	 		\end{assignment}
   	 		\begin{enumerate}
@@ -1385,7 +1388,7 @@
   	 	\end{exercise}
   	 	\section{Variabili aleatorie continue}
   	 	\begin{definition}{\nmu Variabile aleatoria continua}{va_continua}
-  	 		Una v.a. $X$ si dice continua se $F_X$ e' continua in $\mathbbm{R}$
+  	 		Una v.a. $X$ si dice continua se $F_X$ è continua in $\mathbbm{R}$
   	 	\end{definition}
   	 	In generale:
   	 	\[
@@ -1395,26 +1398,26 @@
   	 	\[
   	 	P[a \leq X \leq b] = P[a < X \leq b]
   	 	\]
-  	 	Se $F_X$ e' derivabile con derivata $f_X = F_X'$ continua allora:
+  	 	Se $F_X$ è derivabile con derivata $f_X = F_X'$ continua allora:
   	 	\[
   	 	F_X(b) - F_X(a) = \int_{a}^{b}f_X(t)dt
   	 	\]
-  	 	e $f_X$ e' la \textit{densita' di probabilita' di X}.
+  	 	e $f_X$ è la \textit{densità di probabilità di X}.
   	 	\begin{definition}{\nmu Variabile aleatoria assolutamente continua}{va_ass_continua}
   	 		Una variabile aleatoria $X$ continua si dice \textit{assolutamente continua} se:
   	 		\[
   	 		\exists f: \mathbbm{R} \to \mathbbm{R}
   	 		\]
-  	 		con $f(x) \geq 0 \quad \forall x \in \mathbbm{R}$, $f$ e' integrabile e $\mathlarger{\int_{-\infty}^{+\infty}}f(t)dt = 1$ e vale che:
+  	 		con $f(x) \geq 0 \quad \forall x \in \mathbbm{R}$, $f$ è integrabile e $\mathlarger{\int_{-\infty}^{+\infty}}f(t)dt = 1$ e vale che:
   	 		\[
   	 		\int_{a}^{b}f(t)dt = F(b) - F(a) = P[a \leq X \leq b]
   	 		\] 
   	 	\end{definition}
   	 	\begin{note}{}{}
   	 		Se $F_X \subset C' \Rightarrow f = F_X'$ \\
-  	 		$C'$ indica che e' derivabile una volta e $F_X'$ e' continua.
+  	 		$C'$ indica che è derivabile una volta e $F_X'$ è continua.
   	 	\end{note}
-  	 	\begin{example}{\nmu Densita' uniforme}{densita_uniforme}
+  	 	\begin{example}{\nmu Densità uniforme}{densita_uniforme}
   	 		Sia $X$ una v.a. che prende tutti i valori in $[a, b]$ in modo uniforme.
   	 		\begin{figure}[H]
   	 			\centering
@@ -1422,8 +1425,8 @@
   	 		\end{figure}
   	 		\[
   	 		f(x) = \begin{cases}
-  	 			\frac{1}{b-a} \quad x \in [a, b] \\
-  	 			0 \quad x \notin [a, b]
+  	 			\frac{1}{b-a} & x \in [a, b] \\
+  	 			0 & x \notin [a, b]
   	 		\end{cases}
   	 		\]
   	 		e la funzione di ripartizione:
@@ -1433,19 +1436,19 @@
   	 		allora:
   	 		\[
   	 		F_X(t) = \begin{cases}
-  	 			0 \quad t < a \\ \quad \\
-  	 			\dfrac{t-a}{b-a} \quad a \leq t < b \\ \quad \\
-  	 			1 \quad t \geq b
+  	 			0 & t < a \\ \quad \\
+  	 			\dfrac{t-a}{b-a} & a \leq t < b \\ \quad \\
+  	 			1 & t \geq b
   	 		\end{cases}
   	 		\]
-  	 		Poiche' $X$ assume valori in $[a,b]$ se $t < a$ l'evento $\{X\leq t\}$ e' impossibile, nel caso in cui $a \leq t \leq b$ e' l'integrale svolto precedentemente, se $t > b$ allora:
+  	 		Poichè $X$ assume valori in $[a,b]$ se $t < a$ l'evento $\{X\leq t\}$ è impossibile, nel caso in cui $a \leq t \leq b$ è l'integrale svolto precedentemente, se $t > b$ allora:
   	 		\[
   	 		F_X(t) = \int_{a}^{b}\frac{1}{b-a}dx = \frac{b-a}{b-a}= 1
   	 		\]
    	 	\end{example}
   	 	\subsection{Attesa e varianza di una variabile aleatoria continua}
   	 	\paragraph{Attesa di una v.a. continua} \quad \\
-  	 	L'attesa di una variabile aleatoria continua e' data da:
+  	 	L'attesa di una variabile aleatoria continua è data da:
   	 	\[
   	 	E[X] = \int_{-\infty}^{+\infty}xf(x)dx
   	 	\]
@@ -1454,11 +1457,11 @@
   	 	\int_{-\infty}^{+\infty}|x|f(x)dx < \infty
   	 	\]
   	 	\paragraph{Varianza di una v.a. continua} \quad \\
-  	 	La varianza di una variabile aleatoria continua e' data da:
+  	 	La varianza di una variabile aleatoria continua è data da:
   	 	\[
   	 	Var[X] = \int_{-\infty}^{+\infty}(x - \mu)^2f(x)dx
   	 	\]
-  	 	ove $\mu = E[X]$ ed e' ancora vero che:
+  	 	ove $\mu = E[X]$ ed è ancora vero che:
   	 	\[
   	 	Var[X] = E[X^2] - E[X]^2
   	 	\]

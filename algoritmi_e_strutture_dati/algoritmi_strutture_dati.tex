@@ -1,4 +1,7 @@
 \documentclass[12pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertinus}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath}	
@@ -85,6 +88,25 @@
 	language=Pascal
 }
 
+\lstdefinestyle{normalstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+}
+
 
 \newcounter{theorem}
 \newcounter{lemma}
@@ -139,39 +161,39 @@
 	}
 	\chapter{Algoritmi e programmi}
 	\section{Ciclo di sviluppo del software}
-	Il ciclo di sbiluppo del software, generalmente, e' composto dalle seguenti attivita'.
+	Il ciclo di sbiluppo del software, generalmente, è composto dalle seguenti attività.
 	\begin{itemize}
-		\item \textbf{Studio di fattibilita'}. Questa fase ha lo scopo di valutare costi e benefici del sistema da costruire, quindi, vengono analizzati tempi e modi di attuazione, vengono valutate alternative possibili per lo sviluppo del sistema e delle risorse necessarie.
+		\item \textbf{Studio di fattibilità}. Questa fase ha lo scopo di valutare costi e benefici del sistema da costruire, quindi, vengono analizzati tempi e modi di attuazione, vengono valutate alternative possibili per lo sviluppo del sistema e delle risorse necessarie.
 		\item \textbf{Raccolta e analisi dei requisiti}. In questa fase viene definito il problema e si specifica l'ambiente di sviluppo sia hardware che software. Alla fine viene prodotto un \textit{documento di analisi} dove viene specificato l'hardware e il software scelto, la struttura concettuale dei dati da elaborare e le caratteristiche generali delle operazioni da fare.
 		\item \textbf{Progettazione}. Nella fase di progettazione viene individuata la soluzione informatica del problema, si definisce l'architettura del programma specificandone la struttura, le funzioni delle componenti individuate. Inoltre, si sceglie le strutture di rappresentazione degli oggetti e si scrive il programma secondo il linguaggio e l'ambiente operativo scelto ottendo il \textbf{codice}.
 		\item \textbf{Verifica}. In questa fase si analizza sia la documentazione prodotta che il programma realizzato, vengono, quindi, eseguite prove di correttezza sintattiche e logiche.
 		\item \textbf{Manutenzione}. Durante il periodo di esercizio, si verifica che il programma produca i risultati attesi e se necessario, aggiornare il programma.
 	\end{itemize}
-	La fase di progettazione deve fornire un'analisi delle qualita' che il programma deve possedere:
+	La fase di progettazione deve fornire un'analisi delle qualità che il programma deve possedere:
 	\begin{itemize}
 		\item \textbf{Esterne}. Si riferiscono a caratteristiche evidenziabili dal solo funzionamento del programma durante la fase di esercizio.
 		\item \textbf{Interne}. Si riferiscono alle caratteristiche analizzabili e valutabili da esperti, attraverso uno studio delle scelte tecniche adottate.
 	\end{itemize}
-	\subsection{Qualita' esterne}
-	Le qualita' esterne del programma sono:
+	\subsection{Qualità esterne}
+	Le qualità esterne del programma sono:
 	\begin{itemize}
-		\item \textbf{Correttezza}. La correttezza e' la capacita' di eseguire precisamente i compiti individuati durante l'analisi dei requisiti.
-		\item \textbf{Efficienza}. L'efficienza e' la capacita' di usare in modo razionale ed economico le risorse di calcolo.
-		\item \textbf{Robustezza}. La robustezza e' la capacita' di funzionare in modo soddisfacente in condizioni limite o anomale rispetto a quelle previste in fase di analisi dei requisiti.
-		\item \textbf{Usabilita'}. L'usabilita' e' la capacita' di consentire un'interazione semplice, naturale ed efficace con l'utente finale.
+		\item \textbf{Correttezza}. La correttezza è la capacità di eseguire precisamente i compiti individuati durante l'analisi dei requisiti.
+		\item \textbf{Efficienza}. L'efficienza è la capacità di usare in modo razionale ed economico le risorse di calcolo.
+		\item \textbf{Robustezza}. La robustezza è la capacità di funzionare in modo soddisfacente in condizioni limite o anomale rispetto a quelle previste in fase di analisi dei requisiti.
+		\item \textbf{Usabilità}. L'usabilità è la capacità di consentire un'interazione semplice, naturale ed efficace con l'utente finale.
 	\end{itemize}
-	\subsection{Qualita' interne}
-	Le qualita' interne del programma sono:
+	\subsection{Qualità interne}
+	Le qualità interne del programma sono:
 	\begin{itemize}
-		\item \textbf{Riusabilita'}. La riusabilita' e' la capacita di essere riutilizzato, in tutto o in parte, per applicazioni diverse rispetto a quella per la quale e' stato prodotto.
-		\item \textbf{Modularita'}. La modularita' e' il grado di organizzazione interna del programma, quindi la strutturazione delle singole parti, della funzionalita' e del modo in cui cooperano per l'obiettivo generale.
-		\item \textbf{Estensibilita'}. L'estensibilita' e' la capacita' di adattarsi facilmente a modifiche nei requisiti.
-		\item \textbf{Portabilita' e compatibilita'}. Essa e' la facilita' di trasferire il software prodotto in ambiti diversi.
-		\item \textbf{Leggibilita'}. Essa e' la capacita' del codice di essere autoesplicante.
-		\item \textbf{Bonta' della documentazione}. Essa e' la completezza ed efficacia dei documenti annessi.
+		\item \textbf{Riusabilità}. La riusabilità è la capacita di essere riutilizzato, in tutto o in parte, per applicazioni diverse rispetto a quella per la quale è stato prodotto.
+		\item \textbf{Modularità}. La modularità è il grado di organizzazione interna del programma, quindi la strutturazione delle singole parti, della funzionalità e del modo in cui cooperano per l'obiettivo generale.
+		\item \textbf{Estensibilità}. L'estensibilità è la capacità di adattarsi facilmente a modifiche nei requisiti.
+		\item \textbf{Portabilità e compatibilità}. Essa è la facilità di trasferire il software prodotto in ambiti diversi.
+		\item \textbf{Leggibilità}. Essa è la capacità del codice di essere autoesplicante.
+		\item \textbf{Bontà della documentazione}. Essa è la completezza ed efficacia dei documenti annessi.
 	\end{itemize}
 	\section{Astrazione nei sistemi software}
-	Una descrizione specifica di un sistema pone enfasi su alcuni dettagli o proprieta' e ne elimina altri. Il processo di astrazione prevede il decidere:
+	Una descrizione specifica di un sistema pone enfasi su alcuni dettagli o proprietà e ne elimina altri. Il processo di astrazione prevede il decidere:
 	\begin{itemize}
 		\item quali caratteristiche sono rilevanti;
 		\item quali parametri andrebbero inclusi;
@@ -180,14 +202,14 @@
 	\end{itemize}
 	Come in altri campi, ci sono gerarchie di modelli e i livelli piu' bassi forniscono descrizioni piu' esaustive rispetto ai livelli superiori. \\
 	In programmazione ci si riferisce alla descrizione astratta fornita da un modello come alla specifica e al livello piu' bassi nella gerarichi di modelli come alla realizzazione. \\
-	Le astrazioni usate per il software tendono ad evidenziare gli aspetti funzionali, quindi cosa e' calcolato piuttosto che come e' condotto il procedimento di calcolo. \\
+	Le astrazioni usate per il software tendono ad evidenziare gli aspetti funzionali, quindi cosa è calcolato piuttosto che come è condotto il procedimento di calcolo. \\
 	L'astrazione fornisce una distinzione tra il livello di \textit{concettualizzazione} e quello di \textit{realizzazione}. Nella fase di \textit{concettualizzazione} viene individuata la soluzione al problema, vegono specificati gli oggetti da trattare e vengono ideate le scelte algoritmiche. \\
 	La fase di \textit{realizzazione} si riferisce a quel processo che, partendo dallo schema concettuale, permette di ottenere uno specifico programma che realizza gli elementi dello schema e  questo impone la scelta dei moduli software e della loro realizzazione. \\
-	L'astrazione viene usata per decomporre, rappresentare e generalizzare. La scomposizione di un problema in sottoproblemi e' un metodo semplice per affrontare problemi complessi e l'astrazione e' usata per cogliere gli aspetti essenzziali di una situazione del mondo reale in modo da definire le opportune strutture di rappresentazione che ne evidenziano alcuni aspetti e ne trascurino altri.\\ 
+	L'astrazione viene usata per decomporre, rappresentare e generalizzare. La scomposizione di un problema in sottoproblemi è un metodo semplice per affrontare problemi complessi e l'astrazione è usata per cogliere gli aspetti essenzziali di una situazione del mondo reale in modo da definire le opportune strutture di rappresentazione che ne evidenziano alcuni aspetti e ne trascurino altri.\\ 
 	Ci sono due tipi di astrazione:
 	\begin{itemize}
 		\item \textbf{Astrazione sui dati}. Consente di far riferimento a strtture algebrico-matematiche, caratterizzate da valori e da operazioni su tali valori. Si prescinde dal modo in cui queste strutture sono organizzate e realizzata mediante i costrutti di un linguaggio di programmazione.
-		\item \textbf{Astrazione sulle funzioni}. Consetne di concentrare l'attenzione su cosa fa una particolare operazione piuttosto che sul come e' fatta. Si astrae dalle modalita' di realizzazione, ci si concentra sul compito o sulle funzionalita' di un segmento di programma.
+		\item \textbf{Astrazione sulle funzioni}. Consetne di concentrare l'attenzione su cosa fa una particolare operazione piuttosto che sul come è fatta. Si astrae dalle modalità di realizzazione, ci si concentra sul compito o sulle funzionalità di un segmento di programma.
 	\end{itemize}sui dati e sulle funzioni.
 	\section{Tecniche di progettazione}
 	Le tecniche di specifiche consentono di esprimere gli elementi essenziali dello schema concettuale mediante formalismi grafici o un linguaggio basato sulla logica e sull'algebra per descrivere gli aspetti concettuali dei tipi astratti di dato. \\
@@ -197,7 +219,7 @@
 		\item programmazione orientata agli oggetti;
 		\item programmazione logica e funzionale.
 	\end{itemize} 
-	La \textit{modularizzazione} consente di razionalizzare lo sviluppo del software costruendo programmi costituiti da parti indipendenti e interagenti. Un modulo e' caratterizzato da una struttura interna, e' definito con un determinato scopo, offre all'esterno un insieme di funzionalita' utilizzabili da altri moduli e ha precise relazioni con altri moduli. La modularizzazione facilita il processo di sviluppo e le attivita' di analisi e di verificae f avorisce la riusabilita'. La qualita' della modularizzazione aumenta:
+	La \textit{modularizzazione} consente di razionalizzare lo sviluppo del software costruendo programmi costituiti da parti indipendenti e interagenti. Un modulo è caratterizzato da una struttura interna, è definito con un determinato scopo, offre all'esterno un insieme di funzionalità utilizzabili da altri moduli e ha precise relazioni con altri moduli. La modularizzazione facilita il processo di sviluppo e le attività di analisi e di verificae f avorisce la riusabilità. La qualità della modularizzazione aumenta:
 	\begin{itemize}
 		\item all'aumentare della \textbf{coesione} di un modulo in quanto incapsula un insieme di caratteristiche omogenee, indipendenti da altri moduli;
 		\item all'aumentare dell'uso di\textbf{information hiding}, i dettagli interni al modulo non devono giocare alcun ruolo nell'utilizzo del modulo da parte di moduli esterni;
@@ -207,10 +229,10 @@
 	Le \textit{tecniche di progettazione di algoritmi e strutture dati} riguardano la definizione degli algoritmi e la individuazione delle strutture dati piu' appropriate per un determinato problema, come tecniche enumerative, backtracking, divide et impera, ecc. \\
 	\section{Classificazione dei  linguaggi di programmazione}
 	\begin{itemize}
-		\item \textbf{Linguaggi imperativi}. Il programma e' un insieme di istruzioni che corrispondono a precisi comando impartiti ad una macchina che li esegue sequenzialmente.
-		\item \textbf{Linguaggi di programmazione funzionale}. Il programma e' la specifica di una funzione che, in base a un insieme di dati di ingresso, calcola il risultato secondo una legge specificabile in modo matematico.
-		\item \textbf{Linguaggi di programmazione logica}. Il programma e' la specifica di una relazione che sussiste tra un insieme di dati e la specifica e' costruita mediante un sistema formale basato sulla logica.
-		\item \textbf{Linguaggi di programmazione O.O.} Il programma e' la specifica di un insieme di oggetti che rappresentano gli elementi della situazione in gioco in un certo problema, e ciascun oggetto e' specificato in termini di una struttura e di un insieme di operazioni tramite le quali si ottiene il comportamento voluto per risolvere il problema.
+		\item \textbf{Linguaggi imperativi}. Il programma è un insieme di istruzioni che corrispondono a precisi comando impartiti ad una macchina che li esegue sequenzialmente.
+		\item \textbf{Linguaggi di programmazione funzionale}. Il programma è la specifica di una funzione che, in base a un insieme di dati di ingresso, calcola il risultato secondo una legge specificabile in modo matematico.
+		\item \textbf{Linguaggi di programmazione logica}. Il programma è la specifica di una relazione che sussiste tra un insieme di dati e la specifica è costruita mediante un sistema formale basato sulla logica.
+		\item \textbf{Linguaggi di programmazione O.O.} Il programma è la specifica di un insieme di oggetti che rappresentano gli elementi della situazione in gioco in un certo problema, e ciascun oggetto è specificato in termini di una struttura e di un insieme di operazioni tramite le quali si ottiene il comportamento voluto per risolvere il problema.
 	\end{itemize}
 	\chapter{Algebre di dati}
 	\section{Astrazione funzionale}
@@ -220,10 +242,10 @@
 		\item $A$ corrisponde all'implementazione del programma;
 		\item $R$ corrisponde ai risultati ottenuti dal programma.
 	\end{itemize}
-	Si puo' dire che, poiche' trasforma i dati iniziali in risultati, definisce un nuovo \textit{operatore} sui dati e il repertorio di operatori disponibili sui dati puo' essere ampliato scrivendo programmi. \\
-	L'\textit{astrazione funzionale} e' la tecnica che permette di potenziare il linguaggio disponibile introducendo nuovi operatori:
+	Si puo' dire che, poichè trasforma i dati iniziali in risultati, definisce un nuovo \textit{operatore} sui dati e il repertorio di operatori disponibili sui dati puo' essere ampliato scrivendo programmi. \\
+	L'\textit{astrazione funzionale} è la tecnica che permette di potenziare il linguaggio disponibile introducendo nuovi operatori:
 	\begin{itemize}
-		\item questi sono definiti attraverso sotto-programmi in cui si fa degli operatori di base gia' disponibili;
+		\item questi sono definiti attraverso sotto-programmi in cui si fa degli operatori di base già disponibili;
 		\item l'intestazione del sotto-programma introduce il nome e gli argomenti dell'operatore, mentre il corpo ne descrive le regole di comportamento.
 	\end{itemize}
 	\begin{example}{\nmu Funzione per il calcolo del coefficiente binomiale}{astrazione_funz}
@@ -232,48 +254,48 @@
 		\binom{n}{k} = \frac{n!}{k!(n-k)!}
 		\]
 		che fornisce il numero di possibili combinazioni di $n$ oggetti presi a gruppi di $k$. \\
-		Il calcolo e' immediato se si suppone di avere un operatore $fatt(i)$ che calcola il fattoriale di un valore $i$.
-		\begin{lstlisting}
+		Il calcolo è immediato se si suppone di avere un operatore $fatt(i)$ che calcola il fattoriale di un valore $i$.
+		\begin{lstlisting}[style=pascalstyle]
 int binomial(int n, int k)
 	return fatt(n) / fatt(k) * fatt(n-k);
-		\end{lstlisting}
-		Se $fatt(i)$ non e' disponibile e' necessario scrivere un sotto-programma per ampliare il repertorio degli operatori e l'astrazione funzionale ci consente questo.
+\end{lstlisting}
+		Se $fatt(i)$ non è disponibile è necessario scrivere un sotto-programma per ampliare il repertorio degli operatori e l'astrazione funzionale ci consente questo.
 	\end{example} 
-	I linguaggi di programmazione ad alto livello permettono l'uso di astrazione funzionale, cioe' consentono di:
+	I linguaggi di programmazione ad alto livello permettono l'uso di astrazione funzionale, cioè consentono di:
 	\begin{itemize}
-		\item creare delle unita' di programma dando un nome ad un gruppo di istruzioni e stabiliscono le modalita' di comunicazione tra l'unita' di programma creata ed il resto del programma in cui essa si inserisce;
-		\item al momento della attivazione (su chiamata) della unita' del programma viene sopsesa l'esecuzione del programma chiamante: il controllo passa all'unita' attivata e, all'atto del completamento della sua esecuzione, l'attivazione termina e il controllo torna al programma chiamante.
+		\item creare delle unità di programma dando un nome ad un gruppo di istruzioni e stabiliscono le modalità di comunicazione tra l'unità di programma creata ed il resto del programma in cui essa si inserisce;
+		\item al momento della attivazione (su chiamata) della unità del programma viene sopsesa l'esecuzione del programma chiamante: il controllo passa all'unità attivata e, all'atto del completamento della sua esecuzione, l'attivazione termina e il controllo torna al programma chiamante.
 	\end{itemize}
 	I costrutti linguistici per realizzare l'astrazione funzionale consentono di definire una specifica e una realizzazione:
 	\begin{itemize}
-		\item la specifica definisce "cosa" ci si aspetta dalla funzione, cioe' definira' la relazione che caratterizza il legame tra dati di ingresso e risultati. \\
-		Nel caso del fattoriale la specifica dira' che l'intestazione e' "int fatt(int k)"; l'argomento $k$ e' una variabile di tipo intero e il risultato e' ancora di tipo intero. La funzione da calcolare e' definita come: fatt(k) = k(k-1)$\cdots 2 \cdot 1$
+		\item la specifica definisce "cosa" ci si aspetta dalla funzione, cioè definirà la relazione che caratterizza il legame tra dati di ingresso e risultati. \\
+		Nel caso del fattoriale la specifica dirà che l'intestazione è "int fatt(int k)"; l'argomento $k$ è una variabile di tipo intero e il risultato è ancora di tipo intero. La funzione da calcolare è definita come: fatt(k) = k(k-1)$\cdots 2 \cdot 1$
 		\item La realizzazione definisce come il risultato viene ottenuto. Alla stessa specifica potranno corrispondere scelte di realizzazione diverse. La funzione "fatt" potrebbe essere realizzata con un programma iterativo:
-		\begin{lstlisting}
+		\begin{lstlisting}[style=pascalstyle]
 fatt(int k)
 	f = 1
 	for i = 2 to k do
 		f = f * i
 	return f
-		\end{lstlisting}
+\end{lstlisting}
 		ma anche come un programma ricorsivo:
-		\begin{lstlisting}
+		\begin{lstlisting}[style=pascalstyle]
 fatt(int k)
 	if k = 1 then f = 1
 	else f = k * fatt(k - 1)
 	return f
-		\end{lstlisting}
+\end{lstlisting}
 	\end{itemize}
 	\section{Astrazione di dati}
 	La astrazione di dati ricalca ed estende il concetto di astrazione funzionale. Cosi' come l'astrazione funzionale permette di ampliare l'insieme di modi di operare sui dati, la astrazione di dati permette di ampliare i tipi di dati disponibili attraverso l'introduzione sia di nuovi tipi di dati che di nuovi operatori. \\
 	L'astrazione funzioanle stimola gli sforzi per evidenziare operazioni ricorrenti o ben caratterizzate all'interno della soluzione di un problema.  \\
 	L'astrazione di dati sollecita ad individuare le organizzazioni dei dati piu' adatte alla soluzione del problema. \\
-	Un'astrazione di dati consente una estensione dell'algebra dei dati disponibile in un linguaggio di programmazione. Un'\textit{algebra} e' un sistema matematico costituito da un dominio e da un insieme di funzioni applicabili su tali valori: il numero, il tipo e le proprieta' delle funzioni sono gli elementi essenziali di un algebra. \\
+	Un'astrazione di dati consente una estensione dell'algebra dei dati disponibile in un linguaggio di programmazione. Un'\textit{algebra} è un sistema matematico costituito da un dominio e da un insieme di funzioni applicabili su tali valori: il numero, il tipo e le proprietà delle funzioni sono gli elementi essenziali di un algebra. \\
 	La corrispondenza tra tipo astratto e algebra si basa sul parallelo tra gli insiemi di valori di un algebra e i domini di definizione di un tipo astratto, e tra le funzioni di un'algebra e le operazioni associate a un tipo astratto. \\
 	Molti linguaggi di programmazione forniscono i mezzi per definire e creare nuovi tipi di dati, ma non tutti consentono di fare astrazione dati o crare tipi di dati astratti. Un tipo di dati si dice astratto se le operazioni applicabili sugli oggetti che li rappresentano sono isolate dai dettagli usati per realizzare il tipo. \\
 	Un'algebra di dati puo' essere definita come costituita da:
 	\begin{enumerate}[label=- \Alph*)]
-		\item una famiglia di insiemi, cioe' l'insieme dei dati;
+		\item una famiglia di insiemi, cioè l'insieme dei dati;
 		\item una famiglia di operatori sui dati;
 		\item un repertorio di simboli o nomi per indicare l'insieme dei dati;
 		\item un repertorio di simboli o nomi per indicare gli operatori;
@@ -306,45 +328,45 @@ fatt(int k)
 		\end{enumerate}
 	\end{example}
 	Gli operatori possono essere combinati per ottenere delle espressioni. Le caratteristiche di un'algebra dipendono dalla famiglia di insiemi e dalla famiglia di operatori. \\
-	Nei linguaggi di programmazione il binomio "dati-operatori" e' inscindibile. Dunque, e' necessario definire un tipo di dati come un insieme di dati piu' gli operatori che ad esso si riferiscono, nel contesto di una definita algebra. \\
-	Anche un'astrazione di dati e' costituita da:
+	Nei linguaggi di programmazione il binomio "dati-operatori" è inscindibile. Dunque, è necessario definire un tipo di dati come un insieme di dati piu' gli operatori che ad esso si riferiscono, nel contesto di una definita algebra. \\
+	Anche un'astrazione di dati è costituita da:
 	\begin{itemize}
 		\item una \textbf{specifica}: ha il compito di descrivere sintenticamente il tipo dei dati e gli operatori che li caratterizzano;
-		\item una \textbf{realizzazione}: stabilisce come i dati e gli operatori vengono ricondotti ai tipi di dati e agli operatori gia' disponibili.
+		\item una \textbf{realizzazione}: stabilisce come i dati e gli operatori vengono ricondotti ai tipi di dati e agli operatori già disponibili.
 	\end{itemize}
-	La scelta delle strutture dati e' il primo passo per un buon risultato nell'attivita' di programmazione.
+	La scelta delle strutture dati è il primo passo per un buon risultato nell'attività di programmazione.
 	\begin{example}{\nmu Un esempio di astrazione dati}{astrazione_dati}
 		Supponiamo di voler effettuare un'astrazione di dati aggiungendo ai tipi di dati stnadard i numeri complessi. \\
 		I numeri complessi hanno forma: $r_1 + i \cdot r_2$ ove $r_1$ e $r_2$ sono numeri reali e $i = \sqrt{-1}$. \\
-		Per denotarli matematicamente basta la coppia $(r_1, r_2)$ dove $r_1$ e' il coefficiente della parte reale e $r_2$ quello della parte immaginaria. \\
-		E' necessario definire operatori di selezione e costruzione che operano su complessi e su reali, operatori di somma e prodotto che operano esclusivamente sui complessi. \\
-		Il calcolo di somma e prodotto su numeri complessi non e' difficile se ricordiamo che:
+		Per denotarli matematicamente basta la coppia $(r_1, r_2)$ dove $r_1$ è il coefficiente della parte reale e $r_2$ quello della parte immaginaria. \\
+		è necessario definire operatori di selezione e costruzione che operano su complessi e su reali, operatori di somma e prodotto che operano esclusivamente sui complessi. \\
+		Il calcolo di somma e prodotto su numeri complessi non è difficile se ricordiamo che:
 		\begin{itemize}
-			\item la somma di due numeri complessi $c_1$ e $c_2$ da' luogo ad un nuovo numero complesso $c_3$ la cui parte reale e' la somma delle parti reali e la cui parte immaginria e' somma delle parti immaginiarie:
+			\item la somma di due numeri complessi $c_1$ e $c_2$ dà luogo ad un nuovo numero complesso $c_3$ la cui parte reale è la somma delle parti reali e la cui parte immaginria è somma delle parti immaginiarie:
 			\begin{itemize}
 				\item parteReale($c3$) = parteReale($c_1$) + parteReale($c_2$)
 				\item parteImmg($c_3$) = parteImmg($c_1$) + parteImmg($c_2$)
 			\end{itemize}
-			\item il prodtto di due numeri complessi $c_1$ e $c_2$ da' luogo ad un nuovo numero complesso $c_3$, la cui parte reale e' la differenza tra il prodotto della parte reale del primo numero per la parte reale del secondo numero e il prodotto della parte immaginaria del primo numero per la parte immaginaria del secondo numero:
+			\item il prodtto di due numeri complessi $c_1$ e $c_2$ dà luogo ad un nuovo numero complesso $c_3$, la cui parte reale è la differenza tra il prodotto della parte reale del primo numero per la parte reale del secondo numero e il prodotto della parte immaginaria del primo numero per la parte immaginaria del secondo numero:
 			\begin{itemize}
 				\item parteReale($c_3$) = parteReale($c_1$) * parteReale($c_2$) - parteImmg($c_1$) * parteReale($c_2$)
 			\end{itemize}
-			e la cui parte immaginaria e' somma del prodtto della parte reale del primo numero per la parte immaginaria del secondo numero con il prodotto della parte immaginaria del primo numero con la parte reale del secondo numero:
+			e la cui parte immaginaria è somma del prodtto della parte reale del primo numero per la parte immaginaria del secondo numero con il prodotto della parte immaginaria del primo numero con la parte reale del secondo numero:
 			\begin{itemize}
 				\item parteImmg($c_3$) = parteReale($c_1$) * parteImmg($c_2$) + parteReale($c_2$) * parteImmg($c_1$)
 			\end{itemize}
 		\end{itemize}
 		Passando agli operatori necessari, abbiamo bisogno di definire, attraverso procedure e funzioni:
 		\begin{itemize}
-			\item cxsum(c1, c2) = c3 cioe' la somma di complessi;
-			\item cxprod(c1, c2) = c3 cioe' il prodotto di complessi;
+			\item cxsum(c1, c2) = c3 cioè la somma di complessi;
+			\item cxprod(c1, c2) = c3 cioè il prodotto di complessi;
 			\item realpart(c) = r che seleziona la parte reale del complesso $c$;
 			\item immgpart(c) = i che seleziona la parte immaginaria del complesso $c$;
-			\item conscx(r1, r2) = c che e' la combinazione di due reali, il primo come parte reale, il secondo come immaginaria del complesso $c$.
+			\item conscx(r1, r2) = c che è la combinazione di due reali, il primo come parte reale, il secondo come immaginaria del complesso $c$.
 		\end{itemize}
 		Per poter fare astrazione dati, bisogna disporre di un lingaggio di programmazione a tipizzazione forte come il pascal o il C. \\
 		In Pascal, infatti, si puo' dichiarare:
-		\begin{lstlisting}
+		\begin{lstlisting}[style=pascalstyle]
 TYPE
 	COMPLEX = ARRAY[2] OF REAL;
 	VAR
@@ -352,34 +374,34 @@ TYPE
 	PROCEDURE SOMMACOMPLESSI(
 		C1, C2: COMPLEX;
 		VAR C3: COMPLEX);
-		\end{lstlisting}
+\end{lstlisting}
 		oppure:
-		\begin{lstlisting}
+		\begin{lstlisting}[style=pascalstyle]
 TYPE
 	COMPLEX = RECORD OF
 		PARTEREALE: REAL;
 		PARTEIMMAGINARIA: REAL
 	END;
-		\end{lstlisting}
+\end{lstlisting}
 	\end{example}
 	Disponendo di un linguaggio con tipi, possiamo utilizzare dati che definiamo e dichiaramo direttamente come complessi, prescindendo dalla effettiva realizzazione, e fare in modo che alle procedure costruite per i nostri dati abbiano accesso esclusivamente a quei dati. \\
 	Queste caratteristiche necessarie a una buona astrazione di dati sono note come \textit{i requisiti dell'astrazione di dati}.
 	\subsection{Requisiti dell'astrazione di dati}
 	\begin{itemize}
-		\item Il \textbf{requisito di astrazione} e' verificato quando i programmi che usano un'astrazione possono essere scritti in modo da non dipendere dalle scelte di realizzazione. \\
-		La mancanza del requisito di astrazione si manifesta con l'impossibilita' di dichiarare direttamente variabili con il nuovo tipo definito, quando non posso fare riferimento ai nuovi dati creati prescindendo dalla rapparesentazione usata e dalla realizzazione;
-		\item Il \textbf{requisito di protezione} e' verificato se sui nuovi dati si puo' lavorare esclusivamente con gli operatori definiti all'atto della specifica. \\
-		La mancanza del requisito di protezione si manifesta con la possibilita' di lavorare con gli operatori definiti per i nuovi dati anche su dati con rappresentazioni simili, ma non omogenei per tipo.
+		\item Il \textbf{requisito di astrazione} è verificato quando i programmi che usano un'astrazione possono essere scritti in modo da non dipendere dalle scelte di realizzazione. \\
+		La mancanza del requisito di astrazione si manifesta con l'impossibilità di dichiarare direttamente variabili con il nuovo tipo definito, quando non posso fare riferimento ai nuovi dati creati prescindendo dalla rapparesentazione usata e dalla realizzazione;
+		\item Il \textbf{requisito di protezione} è verificato se sui nuovi dati si puo' lavorare esclusivamente con gli operatori definiti all'atto della specifica. \\
+		La mancanza del requisito di protezione si manifesta con la possibilità di lavorare con gli operatori definiti per i nuovi dati anche su dati con rappresentazioni simili, ma non omogenei per tipo.
 	\end{itemize}
-	Il requisito di astrazione, in accordo con i principi dell'astrazione di dati, impone che i programmi siano sensibili solo a variazioni della specifica dei nuovi tipi. Il requisito di protezione e' particolarmente importante, se vogliamo che l'esecutore del linguaggio assicuri i controlli di consistenza tra i tipi di dati e gli operatori, non solo ai dati primitivi, ma anche ai dati ottenuti per astrazione.
+	Il requisito di astrazione, in accordo con i principi dell'astrazione di dati, impone che i programmi siano sensibili solo a variazioni della specifica dei nuovi tipi. Il requisito di protezione è particolarmente importante, se vogliamo che l'esecutore del linguaggio assicuri i controlli di consistenza tra i tipi di dati e gli operatori, non solo ai dati primitivi, ma anche ai dati ottenuti per astrazione.
 	\subsection{Specifica e realizzazione}
-	Si e' detto che un'astrazione di dati e' costituita da una \textbf{specifica} e una \textbf{realizzazione}. \\
+	Si è detto che un'astrazione di dati è costituita da una \textbf{specifica} e una \textbf{realizzazione}. \\
 	Una specifica, che ha il compito di descrivere sinteticamente il tipo dei dati e gli operatori che li caratterizzano, si distingue in:
 	\begin{itemize}
 		\item \textbf{specifica sintattica} che fornisce:
 		\begin{itemize}
 			\item l'elenco dei nomi dei tipi di dato utilizzati per definire la struttura, delle operazioni specifiche della struttura e delle costanti;
-			\item i domini di partenza e di arrivo, cioe' i tipi degli operandi e del risultato per ogni nome di operatore.
+			\item i domini di partenza e di arrivo, cioè i tipi degli operandi e del risultato per ogni nome di operatore.
 		\end{itemize}
 		\item \textbf{specifica sementica} che definisce il significato dei nomi introdotti con la specifica sintattica. Associa:
 		\begin{itemize}
@@ -387,60 +409,60 @@ TYPE
 			\item un valore ad ogni costante;
 			\item una funzione ad ogni nome di operatore esplicitando le seguenti condizioni sui domini di partenza e di arrivo:
 			\begin{itemize}
-				\item \textbf{precondizione} che definisce quando l'operatore e' applicabile;
+				\item \textbf{precondizione} che definisce quando l'operatore è applicabile;
 				\item \textbf{postcondizione} che stabilisce come il risultato sia vincolato agli argomenti dell'operatore.
 			\end{itemize}
 		\end{itemize}
 	\end{itemize}	
-	La realizzazione sfrutta al meglio le possibilita' offerte dall'ambiente di programmazione. La definizione di un formalismo per le specifiche sintattiche non pone particolari problemi. L'individuazione di formalismi per le specifiche semantiche e' piu' complicato, in genere le specifiche semantiche sono date con frasi estratte dal linguaggio naturale o da quello matematico. Vedere dalle slide l'esempio di specifica. \\
-	La realizzazione riconduece la specifica ai tipi di dato primitivi e agli operatori gia' disponibili, in particolare gli operatori sono simulati con sottoprogrammi. \\
+	La realizzazione sfrutta al meglio le possibilità offerte dall'ambiente di programmazione. La definizione di un formalismo per le specifiche sintattiche non pone particolari problemi. L'individuazione di formalismi per le specifiche semantiche è piu' complicato, in genere le specifiche semantiche sono date con frasi estratte dal linguaggio naturale o da quello matematico. Vedere dalle slide l'esempio di specifica. \\
+	La realizzazione riconduece la specifica ai tipi di dato primitivi e agli operatori già disponibili, in particolare gli operatori sono simulati con sottoprogrammi. \\
 	Alla stessa specifica possono corrispondere diverse realizzazioni piu' o meno efficienti. Nel valutare l'efficienza di sottoprogrammi che utilizzano tipi di dato primitivi, si precinde dalla caratteristiche della macchina, assumendo di far riferimento ad una organizzazione molto semplice. Si fa riferimento a:
 	\begin{itemize}
 		\item dati contenuti in memoria;
 		\item memoria organizzata in celle (parola);
 		\item celle accessibili tramite indirizzo;
 		\item indirizzi che sono interi consecutivi;
-		\item dati elementari che non decidono la capacita' di una cella;
+		\item dati elementari che non decidono la capacità di una cella;
 		\item variabili contenute in celle di indirizzo noto il cui accesso richiede tempo costante.
 	\end{itemize}
-	Un costrutto di programmazione propriamente adatto alla realizzazione dati dovra':
+	Un costrutto di programmazione propriamente adatto alla realizzazione dati dovrà:
 	\begin{itemize}
 		\item dichiarare esplicitamente quali sono i nuovi tipi di dati e quali sono i nuovi operatori;
 		\item definire la rappresentazione dei nuovi dati in termini di dati pre-esistenti;
 		\item contenere un insieme di sottoprogrammi che realizzino gli operatori definiti sui nuovi dati.
 	\end{itemize}
 	\section{Struttura di dati}
-	Il tipo di dato e' un modello matematico che consiste nella definizione di una collezione di valori sui quali sono ammesse certe operazioni. \\
-	Una struttura du datu e' un particolare tipo di dato, caratterizzato piu' dalla organizzazione imposta agli elementi che la compongono che dal tipo degli elementi componenti. \\
+	Il tipo di dato è un modello matematico che consiste nella definizione di una collezione di valori sui quali sono ammesse certe operazioni. \\
+	Una struttura du datu è un particolare tipo di dato, caratterizzato piu' dalla organizzazione imposta agli elementi che la compongono che dal tipo degli elementi componenti. \\
 	Le strutture solitamente disponibili nei linguaggi di programmazione sono le tabelle monodimensionali, come vettori o array, i cui elementi sono contenuti in memoria centrale in locazioni contigue. In generale, distinguiamo strutture:
 	\begin{itemize}
 		\item \textbf{lineari}: dati disposti in sequenza;
-		\item \textbf{non lineari}: in cui non e' individuata una sequenza;
+		\item \textbf{non lineari}: in cui non è individuata una sequenza;
 		\item \textbf{a dimensione fissa (statiche)}: in cui il numero di elementi non puo' variare nel tempo;
 		\item \textbf{a dimensione variabile (dinamiche)}: in cui il numero di elementi puo' variare nel tempo;
 		\item \textbf{omogenee}: dati dello stesso tipo;
 		\item \textbf{non omogenee}: dati non dello stesso tipo.
 	\end{itemize}
 	\begin{example}{\nmu Esempio di struttura dati}{struttura_dati}
-		La classica struttura vettore (array) e' a dimensione fissa. E' una tabella monodimensionale di elementi omogenei, su cui possono effettuarsi operazioni di:
+		La classica struttura vettore (array) è a dimensione fissa. è una tabella monodimensionale di elementi omogenei, su cui possono effettuarsi operazioni di:
 		\begin{itemize}
 			\item lettura o selezione: reperimento del valore di un elemento;
 			\item scrittura o sostituzione di un valore di un elemento con un nuovo valore.
 		\end{itemize}
-		Un vettore di $n$ componenti e' inteso come sequena di ogetti in realazione d'ordine tra loro e l'organizzazione in memoria consente l'accesso diretto al singolo componente attraverso l'indice. \\
+		Un vettore di $n$ componenti è inteso come sequena di ogetti in realazione d'ordine tra loro e l'organizzazione in memoria consente l'accesso diretto al singolo componente attraverso l'indice. \\
 		Se volessimo definire le specifich edi un vettore:
 		\begin{itemize}
 			\item Specifica sintattica:
-			\begin{lstlisting}
+			\begin{lstlisting}[style=normalstyle]
 Tipi:
 	vettore, intero, tipoelem
 Operatori:
 	creavettore: () -> vettore
 	leggivettore: (vettore, intero) -> tipoelem
 	scrivivettore: (vettore, intero, tipoelem) -> vettore
-			\end{lstlisting}
+\end{lstlisting}
 			\item Specifica semantica:
-			\begin{lstlisting}
+			\begin{lstlisting}[style=normalstyle]
 Tipi:
 	intero: l'insieme dei numeri interi
 	vettore: l'insieme delle sequenza di n elementi di tipo 
@@ -457,9 +479,9 @@ Operatori:
 		pre: 1 <= i <= n
 		post: v'(i) = e, v'(j) = v(j) 
 		per ogni j tale che 1 <= j <= n e j != i
-			\end{lstlisting}
+\end{lstlisting}
 			\item Realizzazione: \\
-			In molti linguaggi il vettore e' il tipo di dato primitivo:
+			In molti linguaggi il vettore è il tipo di dato primitivo:
 			\begin{itemize}
 				\item in Fortran creavettore corrisponde a dimension v(n), leggivettore(v, i) corrisponde a v(i) e scrivivettore(v, i, e) corrisponde a v(i) = e 
 				\item in Pascal corrisponde all'array, creavettore corrisponde a var v: array[1..n] of type tipoelem, leggivettore(v, i) corrisponde a v[i] e scrivivettore(v, i, e) corrisponde a v[i] := e
@@ -479,10 +501,10 @@ Operatori:
 	Possiamo definire formalmente una specifica di un tipo di dato astratto come una tripla (D, F, A):
 	\begin{itemize}
 		\item D: l'insieme di tutti i domini per la definizione del dato. \\
-		Il tipo di dato che stiamo defininendo, indicato con il simbolo $d$, e' chiamato \textbf{domionio designato}; tutti gli altri domini che fanno parte del dato sono detti \textbf{domini ausiliari}. \\
+		Il tipo di dato che stiamo defininendo, indicato con il simbolo $d$, è chiamato \textbf{domionio designato}; tutti gli altri domini che fanno parte del dato sono detti \textbf{domini ausiliari}. \\
 		Nel caso dello Stack, D potrebbe essere {Stack, ItemType, Boolean} ove $d=$Stack e i domini ausiliari sono {ItemType, Boolean}
-		\item F e' l'insieme degli operatori;
-		\item A e' l'insieme degli assiomi o regole che descrivono la semantica degli operatori, nel caso dello Stack dovrebbero definire la proprieta' LIFO dello stack.
+		\item F è l'insieme degli operatori;
+		\item A è l'insieme degli assiomi o regole che descrivono la semantica degli operatori, nel caso dello Stack dovrebbero definire la proprietà LIFO dello stack.
 	\end{itemize}
 	\paragraph{Tipi di operatori} \quad \\
 	Gli operatori si suddividono in:
@@ -510,9 +532,9 @@ Operatori:
 		d = Stack(di ItemType) \\
 		D = {Stack, ItemType, Boolean} \\
 		F = {Create, Push, Pop, Top, IsEmpty} \\
-		L'interfaccia elenca le funzioni, il tipo dei parametri e tipi per i risultati. Non c'e' nessuna indicazione su cosa faccia ogni funzione, la semantica degli operatori viene dato con gli assiomi. \\
+		L'interfaccia elenca le funzioni, il tipo dei parametri e tipi per i risultati. Non c'è nessuna indicazione su cosa faccia ogni funzione, la semantica degli operatori viene dato con gli assiomi. \\
 		Ogni istanza del dato astratto Stack puo' essere denotata come una sequenza di applicazioni di operatori detta \textbf{espressione}, ad esempio: Push(Push(Push(Create, 1), 2), 3) \\
-		Gli operatori observer non fanno parte di una espressione, in quanto vengono applicati ad una espressione perche' non modificano la struttura. \\
+		Gli operatori observer non fanno parte di una espressione, in quanto vengono applicati ad una espressione perchè non modificano la struttura. \\
 		Gli assiomi costituiscono la terza componente della nostra tripla:
 		\begin{enumerate}
 			\item Gli assiomi per gli observer sono scritti in termini dei costruttori;
@@ -543,38 +565,38 @@ Operatori:
 			\end{tabular}
 		\end{tabular}
 		d = Stack(di ItemType), l'insieme di tutte le istanze di Stack. \\
-		ItemType e' l'insieme di tutti gli item che possonoe essere presenti in uno stack. \\
-		Boolean e' l'insieme dei valori di verita' true e false. \\
+		ItemType è l'insieme di tutti gli item che possonoe essere presenti in uno stack. \\
+		Boolean è l'insieme dei valori di verità true e false. \\
 		\textbf{Specifica semantica}: \\
-		In questo approccio diamo la semantica di ogni operatore associando ad ognuno una precondiziona e una postcondizione. La precondizione e' un'asserzione logica che specifica le caratteristiche richieste dei valori dei parametri, la postcondizione e' un'asserzione lgoica che specifica le caratteristiche del risultato rispetto agli argomenti.
+		In questo approccio diamo la semantica di ogni operatore associando ad ognuno una precondiziona e una postcondizione. La precondizione è un'asserzione logica che specifica le caratteristiche richieste dei valori dei parametri, la postcondizione è un'asserzione lgoica che specifica le caratteristiche del risultato rispetto agli argomenti.
 		\begin{itemize}
 			\item Push(S, I) $\to$ S':
 			\begin{itemize}
 				\item PRE: -
-				\item POST: S' e' lo stack S con I al top	
+				\item POST: S' è lo stack S con I al top	
 			\end{itemize}
 			\item Pop(S) $\to$ S':
 			\begin{itemize}
 				\item PRE: not empty(S)
-				\item POST: S' e' lo stack S con l'elemento top eliminato
+				\item POST: S' è lo stack S con l'elemento top eliminato
 			\end{itemize}
 			\item Top(S) $\to$ I:
 			\begin{itemize}
 				\item PRE: not empty(S)
-				\item POST: I e' l'elemento al top dello stack S	
+				\item POST: I è l'elemento al top dello stack S	
 			\end{itemize}
 		\end{itemize}
 	\end{example}
 	\chapter{Introduzione alla programmazione object oriented}
-	Nella programmazione imperativa e' possibile accedere alle variabili globali da qualsiasi parte del programma ma nei programmi molto grandi questa tecnica diventa ingestibile. \\
-	Pertando e' stato pensato di incapsulare ogni variabile globale in un modulo insieme ad un gruppo di operatori che possono accedere a tali variabilie e gli altri moduli possono accedere indirettamente alle variabili solo per mezzo di questi operatori. \\
-	La programmazione Object-Oriented e' una disciplina che si basa su oggetti per imporre una struttura modulare sui programmi. 
+	Nella programmazione imperativa è possibile accedere alle variabili globali da qualsiasi parte del programma ma nei programmi molto grandi questa tecnica diventa ingestibile. \\
+	Pertando è stato pensato di incapsulare ogni variabile globale in un modulo insieme ad un gruppo di operatori che possono accedere a tali variabilie e gli altri moduli possono accedere indirettamente alle variabili solo per mezzo di questi operatori. \\
+	La programmazione Object-Oriented è una disciplina che si basa su oggetti per imporre una struttura modulare sui programmi. 
 	\section{Oggetti e classi}
-	Un oggetto e' definito come un gruppo di procedure che condividono uno stato. Quindi un oggetto e' una collezione di dati che rappresetano gli \textit{stati dell'oggetto} e procedure in grado di alterare lo stato, il \textit{comportamento}. \\
+	Un oggetto è definito come un gruppo di procedure che condividono uno stato. Quindi un oggetto è una collezione di dati che rappresetano gli \textit{stati dell'oggetto} e procedure in grado di alterare lo stato, il \textit{comportamento}. \\
 	Agli oggetti sono associati operazioni e valori.
 	\begin{example}{\nmu Coda}{coda_oo}
-		La Coda e' la classe di tutti gli oggetti coda, $q$ e' un oggetto della classe Coda e sono definite le seguenti operazioni: creaCoda, aggiungi(q, i), primo(q), rimuovi(q) e CodaVuota(q). \\
-		Nei linguaggi orientati agli oggetti, creaCoda e' detto \textbf{costruttore} e crea l'oggetto $q$. Anche il \textbf{distruttore}, che distrugge un oggetto, fa parte delle operazioni applicabili su un oggetto.
+		La Coda è la classe di tutti gli oggetti coda, $q$ è un oggetto della classe Coda e sono definite le seguenti operazioni: creaCoda, aggiungi(q, i), primo(q), rimuovi(q) e CodaVuota(q). \\
+		Nei linguaggi orientati agli oggetti, creaCoda è detto \textbf{costruttore} e crea l'oggetto $q$. Anche il \textbf{distruttore}, che distrugge un oggetto, fa parte delle operazioni applicabili su un oggetto.
 	\end{example}
 	\section{Linguaggi Object Oriented}
 	Un linguaggio object-based supporta:
@@ -583,36 +605,36 @@ Operatori:
 		\item \textbf{Data abstraction};
 		\item \textbf{Message passing (polymorphism)}.
 	\end{itemize}
-	Un linguaggio object-oriented implementa anche l'\textbf{ereditarieta'}, incluso il dynamic binding, dove gli oggetti vengono organizzati secondo una gerarchia di classi e un oggetto puo' ereditare le proprieta' della sua classe genitore. \\
-	Un oggetto e' un'entita' dinamica che potrebbe cambiare ma resta sempre lo stesso oggetto. Un programmatore object oriented affronta un problema dividendolo in oggetti che fanno qualcosa ed interagiscono fra loro. \\
+	Un linguaggio object-oriented implementa anche l'\textbf{ereditarietà}, incluso il dynamic binding, dove gli oggetti vengono organizzati secondo una gerarchia di classi e un oggetto puo' ereditare le proprietà della sua classe genitore. \\
+	Un oggetto è un'entità dinamica che potrebbe cambiare ma resta sempre lo stesso oggetto. Un programmatore object oriented affronta un problema dividendolo in oggetti che fanno qualcosa ed interagiscono fra loro. \\
 	Gli oggetti sono costituiti da dati privati e da operazioni permesse su tali dati e gli oggetti comunicano fra loro con il passaggio di messaggi che non sono altro che chiamate a delle procedure, dette \textit{metodi}, che appartiene all'oggetto e potrebbe essere nascosta all'utente. \\
-	Una classe e' una descrizione di oggetti da istanziare e nei linguaggi object oriented una classe e' una collezione di oggetti, in cui ogni oggetto della classe include gli stessi metodi e le stesse variabili ma puo' includere diversi valori per i dati.
-	\subsection{Ereditarieta'}
-	I linguaggi object-oriented, come detto precedentemente, supportano l'\textbf{ereditarieta'} ovvero gli oggetti vengono organizzati secondo una gerarchi di classi e un oggetto puo' ereditare le proprieta' della classe genitore. Gli attributi di una classe ereditata possono essere:
+	Una classe è una descrizione di oggetti da istanziare e nei linguaggi object oriented una classe è una collezione di oggetti, in cui ogni oggetto della classe include gli stessi metodi e le stesse variabili ma puo' includere diversi valori per i dati.
+	\subsection{Ereditarietà}
+	I linguaggi object-oriented, come detto precedentemente, supportano l'\textbf{ereditarietà} ovvero gli oggetti vengono organizzati secondo una gerarchi di classi e un oggetto puo' ereditare le proprietà della classe genitore. Gli attributi di una classe ereditata possono essere:
 	\begin{itemize}
-		\item \textbf{ridefiniti}: un attributo che ha lo stesso nome come in un superclasse, ma e' definito in una sottoclasse;
+		\item \textbf{ridefiniti}: un attributo che ha lo stesso nome come in un superclasse, ma è definito in una sottoclasse;
 		\item \textbf{specifici}: un attributi definito solo in una sottoclasse;
 		\item \textbf{ereditati}: un oggetto ha un attributo definito solo in una delle sue superclassi.
 	\end{itemize}
-	Alcuni oggetti potrebbero ereditare piu' classi e un problema che si potrebbe verificare e' il \textbf{name clashes} fra i metodi, ovvero se c'e' un metodo con lo stesso nome nelle classi ereditate. In questo caso, in alcuni linguaggi object-oriented come il C++, ci sono operatori di scopre resolution, :: in C++, per decidere quale metodo utilizzare.
+	Alcuni oggetti potrebbero ereditare piu' classi e un problema che si potrebbe verificare è il \textbf{name clashes} fra i metodi, ovvero se c'è un metodo con lo stesso nome nelle classi ereditate. In questo caso, in alcuni linguaggi object-oriented come il C++, ci sono operatori di scopre resolution, :: in C++, per decidere quale metodo utilizzare.
 	\chapter{Liste}
 	\section{Strutture lineari}
-	Consideriamo strutture di dati che si sviluppano in una dimensione possono essere considerate come sequenze di oggetti, cioe' \textit{strutture lineari di dati}. In esse e' importante l'esistenza di una relazione d'ordine tra gli oggetti che ci aiuta a individuarli e a selezionarli. Per distinguere le diverse strutture, bisogna considerare:
+	Consideriamo strutture di dati che si sviluppano in una dimensione possono essere considerate come sequenze di oggetti, cioè \textit{strutture lineari di dati}. In esse è importante l'esistenza di una relazione d'ordine tra gli oggetti che ci aiuta a individuarli e a selezionarli. Per distinguere le diverse strutture, bisogna considerare:
 	\begin{itemize}
-		\item le modalita' di accesso ai dati;
+		\item le modalità di accesso ai dati;
 		\item i modi di agire nella posizione individuata.
 	\end{itemize}
-	\subsection{Modalita' di accesso}
-	Le modalita' di accesso ai dati all'interno di una struttura possono essere di diverso tipo.
+	\subsection{Modalità di accesso}
+	Le modalità di accesso ai dati all'interno di una struttura possono essere di diverso tipo.
 	\begin{itemize}
 		\item Accesso diretto.
 		\item Accesso per scansione.
 		\item Accesso agli estremi.
 	\end{itemize}
-	Il vettore, l'array, e' tipico esempio di accesso diretto in quanto consente di accedere al singolo componentne mediante il nome e il meccanismo dell'indice. \\
-	La lista e' un esempio di accesso per scansione in quanto consente l'accesso all'elemento generico solo dopo aver scandito gli elementi che lo precedono. \\
+	Il vettore, l'array, è tipico esempio di accesso diretto in quanto consente di accedere al singolo componentne mediante il nome e il meccanismo dell'indice. \\
+	La lista è un esempio di accesso per scansione in quanto consente l'accesso all'elemento generico solo dopo aver scandito gli elementi che lo precedono. \\
 	La pila e la coda sono esempi di accesso agli estremi dove la pila ha una filosofia LIFO e la coda ha una filosofia FIFO.
-	\subsection{Modalita' di agire}
+	\subsection{Modalità di agire}
 	Relativamente ai modi di agire nelle posizioni individuate possiamo elencare i seguenti tipi di operazione.
 	\begin{itemize}
 		\item Lettura del valore di un componente, detto \textit{ispezione};
@@ -620,20 +642,20 @@ Operatori:
 		\item Inserimento di un nuovo componente, dettto \textit{scrittura};
 		\item Rimozione di un componente, detto \textit{cancellazione}.
 	\end{itemize}
-	Sono possibili diverse combinazioni tra i modi di accedere e i modi d'operare, l'unico problema riguarda la combinazione tra accesso diretto a tutta la struttura e possibilita' di scrittura e cancellazione di componenti. \\
-	Generalmente queste operazioni alternano la numerazione dei componenti e questo e' in contrasto col principio che i componenti siano individuati dal numero d'ordine della loro posizione. \\
+	Sono possibili diverse combinazioni tra i modi di accedere e i modi d'operare, l'unico problema riguarda la combinazione tra accesso diretto a tutta la struttura e possibilità di scrittura e cancellazione di componenti. \\
+	Generalmente queste operazioni alternano la numerazione dei componenti e questo è in contrasto col principio che i componenti siano individuati dal numero d'ordine della loro posizione. \\
 	Tutte le strutture dati lineari, escluso il vettore, sono dotate di operatori di inserimento e rimozione di componenti.
 	\section{Lista}
-	Una lista e' una sequenza finita, anche vuota, di elementi dello stesso tipo in cui e' possibile aggiungere o togliere elementi. Per fare questo, occorre specificare la posizione relativa all'interno della sequenza nella quale il nuovo elemento va aggiunto o dalla quale il vecchio elemento va tolto. La lista e' una \textit{struttura dati dinamica}, cioe' a dimensione variabile e su puo' accedere direttamente solo ad un ristretto sottoinsieme di elementi, di solito il primo e per accedere ad un generico elemento occore scandire sequenzialmente gli elementi della lista. \\
-	E' bene notare che in una lista, a differenza di un insieme, uno stesso elemento puo' apparire piu' volte e gli elementi della lista, ai quali sono associati delle informazioni, sono definiti \textit{atomi} o \textit{nodi}. \\
+	Una lista è una sequenza finita, anche vuota, di elementi dello stesso tipo in cui è possibile aggiungere o togliere elementi. Per fare questo, occorre specificare la posizione relativa all'interno della sequenza nella quale il nuovo elemento va aggiunto o dalla quale il vecchio elemento va tolto. La lista è una \textit{struttura dati dinamica}, cioè a dimensione variabile e su puo' accedere direttamente solo ad un ristretto sottoinsieme di elementi, di solito il primo e per accedere ad un generico elemento occore scandire sequenzialmente gli elementi della lista. \\
+	è bene notare che in una lista, a differenza di un insieme, uno stesso elemento puo' apparire piu' volte e gli elementi della lista, ai quali sono associati delle informazioni, sono definiti \textit{atomi} o \textit{nodi}. \\
 	Indichiamo la lista con la notazione:
 	\[
 	l =\ < a_1, a_2, \dots, a_n > \quad n \geq 0
 	\]
-	La lunghezza di una lista e' il numero dei suoi elementi. Se il numero di elementi e' zero la lista si dice vuota. Inoltre, la lunghezza conta le posizioni, non i simboli distinti, cosi un simbolo che compare $k$ volte contribuisce con $k$ unita' alla lunghezza della lista. \\
-	Se $l =\ <a_1, a_2, \dots, a_n>$ e' una lista allora $\forall i, j \mid 1 \leq i \leq j \leq n$ anche $<a_i, \dots, a_j>$ e' una sottolista di $l$, ottenuta partendo dalla posizione $i$ e prendendo tutti gli elementi fino alla posizione $j$. Inoltre, la lista vuota $<>$ e' sottolista di qualsiasi lista.
+	La lunghezza di una lista è il numero dei suoi elementi. Se il numero di elementi è zero la lista si dice vuota. Inoltre, la lunghezza conta le posizioni, non i simboli distinti, cosi un simbolo che compare $k$ volte contribuisce con $k$ unità alla lunghezza della lista. \\
+	Se $l =\ <a_1, a_2, \dots, a_n>$ è una lista allora $\forall i, j \mid 1 \leq i \leq j \leq n$ anche $<a_i, \dots, a_j>$ è una sottolista di $l$, ottenuta partendo dalla posizione $i$ e prendendo tutti gli elementi fino alla posizione $j$. Inoltre, la lista vuota $<>$ è sottolista di qualsiasi lista.
 	\subsection{Specifica sintattica}
-	La specifica sintattica per il tipo di dato lista e' la seguente.
+	La specifica sintattica per il tipo di dato lista è la seguente.
 	\begin{itemize}
 		\item Tipi: lista, posizione, boolean, tipoelem
 		\item Operatori:
@@ -651,12 +673,12 @@ Operatori:
 		\end{itemize}
 	\end{itemize}
 	\subsection{Specifica semantica}
-	La specifica semantica per la struttura dati lista e' la seguente.
+	La specifica semantica per la struttura dati lista è la seguente.
 	\begin{itemize}
 		\item Tipi:
 		\begin{itemize}
 			\item Lista: insieme delle sequenza $l=\ <a_1, a_2, \dots, a_n>$ con $n \geq 0$, di elementi di tipoelem dove l'elemento i-esimo ha valore a(i) e posizione pos(i);
-			\item boolean: insieme dei valori di verita'.
+			\item boolean: insieme dei valori di verità.
 		\end{itemize}
 		\item Operatori:
 		\begin{itemize}
@@ -667,8 +689,8 @@ Operatori:
 			\item \texttt{listavuota(l)} = $b$
 			\begin{itemize}
 				\item POST: $\begin{cases}
-					b = true \quad  l =\ <> \\
-					b = false \quad l \neq\ <>
+					b = true &  l =\ <> \\
+					b = false & l \neq\ <>
 				\end{cases}$ 
 			\end{itemize}
 			\item \texttt{leggilista(p, l)} = $a$
@@ -689,8 +711,8 @@ Operatori:
 			\begin{itemize}
 				\item PRE: $p = pos(i) \quad 1 \leq i \leq n + 1$
 				\item POST: $\begin{cases}
-					b = true \quad p = pos(n + 1) \\
-					b = false \quad altrimenti
+					b = true & p = pos(n + 1) \\
+					b = false & altrimenti
 				\end{cases}$
 			\end{itemize}
 			\item \texttt{succlista(p, l)} = $q$
@@ -719,14 +741,14 @@ Operatori:
 			\end{itemize}
 		\end{itemize}
 	\end{itemize}
-	Dalla specifica semantica emerge che per accedere a un elemento occorre conoscerne la posizione. Queseto nelle liste e' possibile solo per il primo elemento, L'unico operatore che da; per risultato la posizione e' \texttt{primolista}. Per gli altri la posizione si ottiene conoscendo a priori la posizione dell'elemento precedente o seguente e applicando l'operatore \texttt{predlista} o \texttt{succlista}. \\
+	Dalla specifica semantica emerge che per accedere a un elemento occorre conoscerne la posizione. Queseto nelle liste è possibile solo per il primo elemento, L'unico operatore che da; per risultato la posizione è \texttt{primolista}. Per gli altri la posizione si ottiene conoscendo a priori la posizione dell'elemento precedente o seguente e applicando l'operatore \texttt{predlista} o \texttt{succlista}. \\
 	Dunque per accedere ad un generico elemento occorre scandire la lista a partire dal primo elemento. \\
-	L'operatore \texttt{listavuota} e' ridondante visto che puo' essere sostituito da \texttt{finelista(primolista(l), l)}. \\
+	L'operatore \texttt{listavuota} è ridondante visto che puo' essere sostituito da: \[\texttt{finelista(primolista(l), l)}\]
 	Talvolta, l'operatore \texttt{primolista(l)} puo' avere implementazioni differenti, a volte ritorna l'elemento primo e non la posizione. 
 	\begin{example}{\nmu Eliminazione di duplicati}{}
-		Questo e' un esempio di come sia possibile, avendo a disposizione gli operatori definiti nell'algebra per il trattamento di una lista, risolvere un generico problema, senza sapere come la lista sia stata implementata. \\
+		Questo è un esempio di come sia possibile, avendo a disposizione gli operatori definiti nell'algebra per il trattamento di una lista, risolvere un generico problema, senza sapere come la lista sia stata implementata. \\
 		Utilizziamo come linguaggio di programmazione il pascal e supponiamo di avere a disposizione degli operatori sul tipo lista. \\
-		Quello che vogliamo fare e' eliminare gli elementi duplicati in una lista. \\
+		Quello che vogliamo fare è eliminare gli elementi duplicati in una lista. \\
 		\begin{lstlisting}[style=pascalstyle]
 elimina_duplicati(lista l)
 	p = primolista(l)
@@ -747,8 +769,8 @@ elimina_duplicati(lista l)
 		\item rappresentazione collegata.
 	\end{enumerate}
 	\subsubsection{Raprpesentazione sequenziale}
-	Una lista puo' essere rappresentata usando un vettore e visto che il numero di elementi che compongono la lista puo' variare si utilizza una variabile \textit{primo} per il valore dell'indice della componente del vettore in cui e' memorizzato il primo elemento della lista. \\
-	Inoltre, si utilizza un'altra variabile \textit{lunghezza} per indicare il numero di elementi di cui e' composta la lista rappresentata. \\
+	Una lista puo' essere rappresentata usando un vettore e visto che il numero di elementi che compongono la lista puo' variare si utilizza una variabile \textit{primo} per il valore dell'indice della componente del vettore in cui è memorizzato il primo elemento della lista. \\
+	Inoltre, si utilizza un'altra variabile \textit{lunghezza} per indicare il numero di elementi di cui è composta la lista rappresentata. \\
 	Ad esempio data, una lista $l$:
 	\[
 	l =\ <4, 5, 1, 21, 45>
@@ -756,7 +778,7 @@ elimina_duplicati(lista l)
 	la variabile \textit{primo} ha valore 1 e la variabile \textit{lunghezza} ha valore 5. \\
 	Questa rappresentazione consente di realizzare molto semplicemente alcune delle operazioni definite per la lista ma crea problemi per l'inserzione e la rimozione di componenti, infatti se vogliamo aggiungere l'elemento 11 nella posizione 4, $l =\ <4, 5, 1, 11, 21, 45>$, dovremmo spostare verso il basso il quarto e il quinto elemento.
 	\subsubsection{Rappresentazione collegata}
-	L'idea fondamentale della rappresentazione collegata di una lista e' quella di memorizzare i suoi elementi associando ad ognuno di essi una particolare informazione, il \textit{riferimento}, che permetta di individuare la locazione in cui e' memorizzato l'elemento successivo. Per visualizzare tale rappresentazione si usa una notazione grafica in cui:
+	L'idea fondamentale della rappresentazione collegata di una lista è quella di memorizzare i suoi elementi associando ad ognuno di essi una particolare informazione, il \textit{riferimento}, che permetta di individuare la locazione in cui è memorizzato l'elemento successivo. Per visualizzare tale rappresentazione si usa una notazione grafica in cui:
 	\begin{itemize}
 		\item gli elementi sono rappresentati mediante nodi;
 		\item i riferimenti mediante archi che collegano nodi.
