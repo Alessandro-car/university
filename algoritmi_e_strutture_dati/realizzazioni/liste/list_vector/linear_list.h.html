@@ -1,0 +1,97 @@
+
+<html>
+<head>
+<title>linear_list.h</title>
+<meta name="generator" content="c2html 0.9.6">
+<meta name="date" content="2010-11-17T15:02:55+00:00">
+</head>
+
+<body bgcolor="#FFFFFF">
+<pre width="200"><a name="line1">  1: </a><font color="#B22222">/***************************************************************************</font>
+<a name="line2">  2: </a><font color="#B22222"> *   Copyright (C) 2010 by Nicola Di Mauro                                 *</font>
+<a name="line3">  3: </a><font color="#B22222"> *   ndm@di.uniba.it                                                       *</font>
+<a name="line4">  4: </a><font color="#B22222"> *                                                                         *</font>
+<a name="line5">  5: </a><font color="#B22222"> *   This program is free software; you can redistribute it and/or modify  *</font>
+<a name="line6">  6: </a><font color="#B22222"> *   it under the terms of the GNU General Public License as published by  *</font>
+<a name="line7">  7: </a><font color="#B22222"> *   the Free Software Foundation; either version 2 of the License, or     *</font>
+<a name="line8">  8: </a><font color="#B22222"> *   (at your option) any later version.                                   *</font>
+<a name="line9">  9: </a><font color="#B22222"> *                                                                         *</font>
+<a name="line10"> 10: </a><font color="#B22222"> *   This program is distributed in the hope that it will be useful,       *</font>
+<a name="line11"> 11: </a><font color="#B22222"> *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *</font>
+<a name="line12"> 12: </a><font color="#B22222"> *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *</font>
+<a name="line13"> 13: </a><font color="#B22222"> *   GNU General Public License for more details.                          *</font>
+<a name="line14"> 14: </a><font color="#B22222"> *                                                                         *</font>
+<a name="line15"> 15: </a><font color="#B22222"> *   You should have received a copy of the GNU General Public License     *</font>
+<a name="line16"> 16: </a><font color="#B22222"> *   along with this program; if not, write to the                         *</font>
+<a name="line17"> 17: </a><font color="#B22222"> *   Free Software Foundation, Inc.,                                       *</font>
+<a name="line18"> 18: </a><font color="#B22222"> *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *</font>
+<a name="line19"> 19: </a><font color="#B22222"> ***************************************************************************/</font>
+
+<a name="line21"> 21: </a><font color="#A020F0">#ifndef _LISTALIN_H</font>
+<a name="line22"> 22: </a><strong><font color="#228B22">#define _LISTALIN_H</font></strong>
+
+<a name="line24"> 24: </a><font color="#A020F0">#include &lt;iostream&gt;</font>
+
+<a name="line26"> 26: </a>using std::cout;
+<a name="line27"> 27: </a>using std::endl;
+<a name="line28"> 28: </a>using std::ostream;
+
+<a name="line30"> 30: </a>// classe astratta listaLinare
+<a name="line31"> 31: </a>template&lt; class T, class P &gt;
+<a name="line32"> 32: </a>class Linear_list{
+<a name="line33"> 33: </a><strong><font color="#FF0000"> public:</font></strong>
+<a name="line34"> 34: </a>        <font color="#4169E1">typedef</font> T value_type;   // the type of object, T, stored in the list
+<a name="line35"> 35: </a>        <font color="#4169E1">typedef</font> P position;
+<a name="line36"> 36: </a>        
+<a name="line37"> 37: </a>        // operators
+<a name="line38"> 38: </a>        virtual void create() = 0;
+<a name="line39"> 39: </a>        virtual bool empty() const = 0; // true <font color="#4169E1">if</font> the list's size is 0
+<a name="line40"> 40: </a>        virtual value_type read(position) const = 0;
+<a name="line41"> 41: </a>        virtual void write(const value_type &amp; x, position p) = 0; // write x at position p
+<a name="line42"> 42: </a>        virtual position begin() const = 0;  // returns a position pointing to the beginning of the list
+<a name="line43"> 43: </a>        virtual bool end(position) const = 0; // returns a position pointing to the end of the list
+<a name="line44"> 44: </a>        virtual position next(position) const = 0; // returns the next position
+<a name="line45"> 45: </a>        virtual position previous(position) const = 0; // <font color="#4169E1">return</font> the previous position
+<a name="line46"> 46: </a>        virtual void insert(const value_type &amp;, position) = 0; // insert an element 
+<a name="line47"> 47: </a>        virtual void erase(position pos) = 0; // ersaes the element at position pos
+<a name="line48"> 48: </a>        
+<a name="line49"> 49: </a>        // funzioni di servizio
+<a name="line50"> 50: </a>        //friend ostream&amp; operator&lt;&lt; &lt;T,P&gt;(ostream&amp;, const Linear_list&lt;T,P&gt;&amp;);
+
+<a name="line52"> 52: </a>        <font color="#B22222">/* Altre funzioni di servizio implementabili */</font>
+<a name="line53"> 53: </a>        <font color="#B22222">/*</font>
+<a name="line54"> 54: </a><font color="#B22222">                virtual int size() const;  // returns the size of the list</font>
+<a name="line55"> 55: </a><font color="#B22222">                virtual void push_front(const value_type &amp;); // insert a new element at the beginning</font>
+<a name="line56"> 56: </a><font color="#B22222">                virtual void push_back(const value_type &amp;); // insert a new element at the end</font>
+<a name="line57"> 57: </a><font color="#B22222">                virtual void pop_front(); // removes the first element</font>
+<a name="line58"> 58: </a><font color="#B22222">                virtual void pop_back(); // removes the last element</font>
+<a name="line59"> 59: </a><font color="#B22222">                virtual void clear(); // erases all the elements</font>
+<a name="line60"> 60: </a><font color="#B22222">        */</font>
+
+<a name="line62"> 62: </a>};
+
+<a name="line64"> 64: </a><font color="#B22222">/* sovraccarica &lt;&lt;. Attenzione se il tipo restituito da read non &Atilde;¨ primitivo, allora</font>
+<a name="line65"> 65: </a><font color="#B22222"> * anche per questo tipo bisogna sovraccaricare l'operatore &lt;&lt; </font>
+<a name="line66"> 66: </a><font color="#B22222"> */</font>
+<a name="line67"> 67: </a>template&lt; class T, class P &gt;
+<a name="line68"> 68: </a>ostream&amp; operator&lt;&lt;(ostream&amp; os, const Linear_list&lt;T,P&gt; &amp;l){
+<a name="line69"> 69: </a>        typename Linear_list&lt;T,P&gt;::position p;
+<a name="line70"> 70: </a>        p = l.begin();
+<a name="line71"> 71: </a>        cout &lt;&lt; <font color="#666666">"["</font>;
+<a name="line72"> 72: </a>        <font color="#4169E1">while</font> (!l.end(p)){
+<a name="line73"> 73: </a>                <font color="#4169E1">if</font> (p != l.begin())
+<a name="line74"> 74: </a>                        cout &lt;&lt; <font color="#666666">", "</font> &lt;&lt; l.read(p);
+<a name="line75"> 75: </a>                <font color="#4169E1">else</font>
+<a name="line76"> 76: </a>                        cout &lt;&lt; l.read(p);
+<a name="line77"> 77: </a>                p = l.next(p);
+<a name="line78"> 78: </a>        }
+<a name="line79"> 79: </a>        cout &lt;&lt; <font color="#666666">"]"</font> &lt;&lt; endl;
+<a name="line80"> 80: </a>        <font color="#4169E1">return</font> os;
+<a name="line81"> 81: </a>}
+
+<a name="line83"> 83: </a><font color="#A020F0">#endif // _LISTALIN_H</font>
+
+</pre>
+</body>
+
+</html>

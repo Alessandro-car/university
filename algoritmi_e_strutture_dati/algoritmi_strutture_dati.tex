@@ -772,7 +772,7 @@ elimina_duplicati(lista l)
 		\item rappresentazione sequenziale;
 		\item rappresentazione collegata.
 	\end{enumerate}
-	\subsubsection{Raprpesentazione sequenziale}
+	\subsubsection{Rappresentazione sequenziale}
 	Una lista puo' essere rappresentata usando un vettore e visto che il numero di elementi che compongono la lista puo' variare si utilizza una variabile \textit{primo} per il valore dell'indice della componente del vettore in cui è memorizzato il primo elemento della lista. \\
 	Inoltre, si utilizza un'altra variabile \textit{lunghezza} per indicare il numero di elementi di cui è composta la lista rappresentata. \\
 	Ad esempio data, una lista $l$:
@@ -792,4 +792,158 @@ elimina_duplicati(lista l)
 		\includegraphics[width=0.5\textwidth]{rappresentazione_collegata_lista}
 	\end{figure}
 	Si puo' notare che si usa un riferimento al primo elemento della lista, detto \textit{riferimento iniziale} e un simbolo speciale $\emptyset$ come riferimento associato all'ultimo nodo, nel caso in cui la lista sia vuota, tale simbolo compare direttamente al riferimento iniziale. 
+	\subsection{Realizzazione con cursori}
+	Nei linguaggi che non hanno i puntatori come tipi di dato primitivi è possibile simulare i puntatori con i cursori, cioè con variabili intere il cui valore è interpretato come un indice di vettore. Per fare questo si definisce un vettore spazio che:
+	\begin{itemize}
+		\item contiene tutte le liste, ognuna individuata da un proprio cursore iniziale;
+		\item contiene tutte le celle libere, organizzate anch'esse in una lista, detta \textit{lista libera}. 
+	\end{itemize}
+	Tramite la realizzazione con cursori, si riesce a risolvere il problema dell'aggiornamento attraverso i riferimenti. 
+	\begin{example}{\nmu Lista tramite cursori}{lista_cursori}
+		Consideriamo tre liste:
+		\[
+		l = <7, 2> \quad m = <4, 9, 13> \quad s = <13, 4, 9, 13>
+		\]
+		e possiamo utilizzare un vettore spazio per rappresentare le tre liste. La componente di spazio ha due campi:
+		\begin{enumerate}
+			\item il campo \textit{elemento} dove è memorizzato il contenuto del nodo;
+			\item il campo \textit{successivo} che contiene il riferimento al nodo successivo.
+		\end{enumerate}
+		La sequenza degli elementi che formano la lista è ricostruibile iniziando dalla componente dell'array corrispondente al valore di inzio, nel cui campo \textit{elemento} è memorizzato il valore del primo elemento. Seguendo i cursori si trovano gli elementi successivi della lista. Infatti, si può definire la posizione $pos(i)$ dell'i-esimo elemento della lista $l$ uguale al valore del cursore alla cella del vettore spazio che contiene l'elemento $(i-1)-$esimo, se $2 \leq i \leq n + 1$ uguale a 0 se $i = 1$.\\
+		Analogamente si definisce $pos(n+1)$ uguale al cursore alla cella di spazio che contiene l'elemento $n-$esimo se $n \geq 1$ o uguale a 0 altrimenti. La lista vuota si indica con $l = \emptyset$.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\textwidth]{lista_cursori}
+			\caption{Rappresentazione di una lista mediante cursori}
+			\label{fig:lista_cursori}
+		\end{figure}
+		Per poter aggiornare una lista così realizzata sorge il problema di individuare la posizione di una componente libera nell'array. Per questo si usa la \textit{listalibera} memorizzata sempre nel vettore spazio per raccogliere in modo collegato le componenti libere nell'array.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\textwidth]{lista_libera}
+			\caption{Realizzazione della lista libera}
+			\label{fig:lista_libera}
+		\end{figure}
+		Quando si deve inserire un nuovo elemento nella lista, si preleva una nuova componente nella \textit{listalibera} e la si utilizza per memorizzare il nuovo elemento, collegandolo in modo opportuno agli altri elementi della lista. \\
+		La \textit{listalibera} rappresenta un serbatoio da cui prelevare componenti libere dell'array e in cui riversare le componenti dell'array che non sono più utilizzate per la lista.  \\
+	\end{example}
+	Una possibile dichiarativa è la seguente:
+	\begin{itemize}
+		\item definizione di costanti:
+		\begin{itemize}
+			\item maxlung = $\dots$ /* costante intera positiva */
+		\end{itemize}
+		\item definizione di tipi:
+		\begin{itemize}
+			\item posizione intero in $0\dots$maxlung
+			\item lista di tipo posizione
+			\item tipoeleme di tipo intero
+			\item componente tipo strutturato con componenti:
+			\begin{itemize}
+				\item elemento di tipoelem;
+				\item successivo di tipo posizione.
+			\end{itemize}
+		\end{itemize}
+		\item definizione di variabili:
+		\begin{itemize}
+			\item listalibera: variabile di tipo lista;
+			\item spazio: array di maxlung elementi di tipo componente.
+		\end{itemize}
+	\end{itemize}
+	
+	Le operazioni eseguibili sulla lista libera sono:
+	\begin{itemize}
+		\item inizializzazione che serve a collagare le varia componenti dell'array che inizialmente fanno parte di listalibera;
+		\item il prelievo di una componente della listalibera se esiste;
+		\item la restituzione di una componente alla listalibera.
+	\end{itemize}
+	\begin{lstlisting}[style=normalstyle]
+		inizializza_lista_libera()
+			listalibera = 1
+			for i = 1 to maxlung - 1 do
+				spazio[i].successivo = i + 1
+				spazio[maxlung].successivo = 0
+\end{lstlisting}
+	È immediato verificare, prima di definire le operazioni di \texttt{inslista} e \texttt{canclista}, che con questa rappresentazione l'inserimento e la cancellazione di un elemento non richiedono lo spostamento di altri elementi nella lista grazie alla \textit{listalibera} ma rimangono i problemi connessi all'uso dell'array cioè all'esigenza di definirne una dimensione. \\
+	Quindi, rispetto alla rappresentazione sequenziale l'aggiormaneto della lista non richiede lo spostamento di altri elementi, la complicazione della gestione della \textit{listalibera} è compensata dal fatto che l'aggiornamento della lista richiede un'operazione limitato di operazioni e rispetto alla rappresentazione sequenziale c'è un'altra occupazione di memoria vista la necessità di memorizzare i riferimenti. 
+	\paragraph{Spostamento} È fondamentale disporre della procedura \texttt{sposta(h, k)} che trasferisce la cella puntata da $h$ spostandola prima della cella puntata da $k$. La procedura aggiorna il cursore $h$ in modo che punti alla cella che seguiva quella spostata e il cursore $k$ in modo che punti alla cella spostata.
+	\begin{lstlisting}[style=normalstyle]
+		sposta(riferimento h, riferimento k)
+			temp = k
+			k = h
+			h = spazio[h].successivo
+			spazio[k].successivo = temp
+	\end{lstlisting}
+	\paragraph{Inserimento} \quad \\
+	\begin{lstlisting}[style=normalstyle]
+		inslista(tipoelem a, posizione p, lista l)
+			if listalibera = 0 then error
+			elseif p = 1 then
+				sposta(listalibera, l)
+				spazio[l].elemento = a
+			else 
+				sposta(listalibera, spazio[p].successivo)
+				spazio[spazio[p].successivo].elemento = a
+	\end{lstlisting}	
+	\paragraph{Eliminazione} \quad \\
+	\begin{lstlisting}[style=normalstyle]
+		canclista(posizione p, lista l)
+			if p = 1 then
+				sposta(l, listalibera)
+			else 
+				sposta(spazio[p].successivo, listalibera)
+	\end{lstlisting}
+	È evidente che la realizzazione con cursori è implementabile in tutti i linguaggi che dispongono di vettori e consentono l'astrazione funzionale mediante procedure o funzioni.
+	\subsection{Realizzazione con puntatori}
+	Un ulterioro modo per realizzare una lista è quella mediante l'uso congiunto del tipo puntatore e del tipo record e questa è la più efficace realizzazione della rappresentazione collegata. Una possibile realizzazione è quella di una lista monodirezionale semplificata. Vi èuna struttura di $n$ elementi o celle, tale che l'$i$-esima cella contiene l'$i$-esimo elemento della lista e l'indirizzo della cella che contiene l'elemento successivo.
+	\begin{itemize}
+		\item La prima cella è indirizzata da una variabile $l$ di tipo puntatore;
+		\item l'ultima cella punta ad un valore convenzionale nil;
+		\item gli indirizzi sono noti alla macchina ma non al programmatore;
+		\item la posizione $pos(i)$ è uguale al valore del puntatore che contiene l'$i$-esimo elemento ove $1 \leq i \leq n$
+	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{lista_puntatori}
+		\caption{Realizzazione di una lista mediante puntatori}
+		\label{fig:lista_puntatori}
+	\end{figure}
+	Per $n > 1$, $pos(i)$ è il puntatore alla cella contente l'$i$-esimo elemento, per $n=0$ allora $L = NULL$. Una possibile dichiariazione per lista realizzata mediante puntatori è la seguente:
+	\begin{lstlisting}[style=normalstyle]
+		posizione: tipo puntatore a cella
+		cella: tipo strutturato con componenti
+			elemento di tipo tipoelem
+			successivo di tipo posizione
+		lista: alias per il tipo posizione
+	\end{lstlisting}
+	\paragraph{Aggiornamento dei puntatori} \quad \\
+	Vediamo la rappresentazione quando c'è un inserimento, ovvero quando \texttt{inslista} in $P = pos(i)$ con $i > 1$:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{instlista_puntatori_centrale}
+	\end{figure}
+	In $P = pos(1)$, invece:
+	\begin{figure}[H]
+		\centering
+			\includegraphics[width=0.5\textwidth]{instlista_puntatori_inizio}
+	\end{figure}
+	Per \texttt{Canclista} in  $P = pos(i)$:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{canclista_puntatori_centrale}
+	\end{figure}
+	Da queste figure notiamo una limitazione, non è possibile sapere la cella che precede la cella $i$-esima, per questo c'è un'altra realizzazione, cioè quella a \textit{doppi puntatori} o \textit{simmetrica}
+	\subsection{Realizzazione a doppi puntatori}
+	In questa realizzazione ogni elemento contiene, oltre al riferimento al nodo successivo, anche il riferimento al precedente. Eventualmente, la lista può essere espansa con una cella in più per ottenere una lista circolare:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{lista_doppi_puntatori_circolare}
+		\caption{Realizzazione di una lista a doppi puntatori circolare}
+	\end{figure}
+	Con questa rappresentazione si ha il vantaggio di:
+	\begin{itemize}
+		\item poter scandire la lista in entrambe le direzioni;
+		\item poter individuare facilmente l'elemento che precede;
+		\item poter realizzare le operazioni di inserimento senza dover usare variabili aggiuntive.
+	\end{itemize}
 \end{document}

@@ -1,0 +1,44 @@
+
+<html>
+<head>
+<title>exceptions.h</title>
+<meta name="generator" content="java2html 0.9.2">
+<meta name="date" content="2012-11-06T09:51:39+00:00">
+</head>
+
+<body bgcolor="#FFFFFF">
+<pre width="80"><font color="#A020F0">#ifndef EXCEPTIONS_H</font>
+<strong><font color="#228B22">#define EXCEPTIONS_H</font></strong>
+<font color="#A020F0">#include &lt;stdexcept&gt;</font>
+
+<font color="#4169E1">struct NullNode</font> : public std::invalid_argument {
+    NullNode() : invalid_argument(
+        <font color="#666666">"Parametro nodo nullo."</font>) {};
+};
+
+<font color="#4169E1">struct FullSize</font> : public std::invalid_argument {
+    FullSize() : invalid_argument(
+        <font color="#666666">"Dimensione massima raggiunta."</font>) {};
+};
+
+<font color="#4169E1">struct RootExists</font> : public std::domain_error {
+    RootExists() : domain_error(
+        <font color="#666666">"Radice gi&Atilde;  presente."</font>) {};
+};
+
+<font color="#4169E1">struct EmptyTree</font> : public std::domain_error {
+    EmptyTree() : domain_error(
+        <font color="#666666">"Albero vuoto."</font>) {};
+};
+
+<font color="#4169E1">struct NodeExists</font> : public std::domain_error {
+    NodeExists() : domain_error(
+        <font color="#666666">"Nodo gi&Atilde;  presente."</font>) {};
+};
+
+
+<font color="#A020F0">#endif</font>
+</pre>
+</body>
+
+</html>

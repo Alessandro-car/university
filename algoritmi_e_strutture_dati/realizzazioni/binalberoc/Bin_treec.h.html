@@ -1,0 +1,283 @@
+
+<html>
+<head>
+<title>Bin_treec.h</title>
+<meta name="generator" content="java2html 0.9.2">
+<meta name="date" content="2012-11-06T11:19:46+00:00">
+</head>
+
+<body bgcolor="#FFFFFF">
+<pre width="80"><font color="#B22222">/***************************************************************************
+ *   Copyright (C) 2005 by Nicola Di Mauro                                 *
+ *   ndm@di.uniba.it                                                       *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/</font>
+
+<font color="#A020F0">#ifndef _Bin_treecC_H_</font>
+<strong><font color="#228B22">#define _Bin_treecC_H_</font></strong>
+
+<font color="#A020F0">#include </font><font color="#666666">"Bin_tree.h"</font><font color="#A020F0"></font>
+<font color="#A020F0">#include </font><font color="#666666">"exceptions.h"</font><font color="#A020F0"></font>
+
+template &lt;class T&gt;
+<strong><font color="#4169E1"><a name="Bin_treec"></a>class Bin_treec </font></strong>: public Bin_tree&lt;T, int&gt;{
+    static const int NIL = -1;
+
+<strong><font color="#FF0000">  public:</font></strong>
+
+	<font color="#4169E1">typedef</font> typename Bin_tree&lt;T, int&gt;::value_type value_type;
+	<font color="#4169E1">typedef</font> typename Bin_tree&lt;T, int&gt;::Nodo Nodo;
+
+    <font color="#4169E1">struct _cella</font>{
+        Nodo genitore;
+        Nodo sinistro;
+        Nodo destro;
+        value_type valore;
+      };
+
+    <font color="#4169E1">typedef</font> <font color="#4169E1">struct _cella</font> Cella;
+
+    <font color="#B22222">// costruttori e distruttori</font>
+    Bin_treec();
+    Bin_treec(int);
+    ~Bin_treec();
+
+    <font color="#B22222">// operatori</font>
+    void create();
+    bool empty() const;
+
+    Nodo root() const;
+    Nodo parent(Nodo) const;
+    Nodo sx(Nodo) const;
+    Nodo dx(Nodo) const;
+    bool sx_empty(Nodo) const;
+    bool dx_empty(Nodo) const;
+
+    <font color="#B22222">//void costr(Bin_treec&lt;T&gt;);</font>
+    void erase(Nodo);
+
+    T read(Nodo) const;
+    void write(Nodo , value_type );
+
+    void ins_root(Nodo);
+    void ins_sx(Nodo);
+    void ins_dx(Nodo);
+
+<strong><font color="#FF0000">  private:</font></strong>
+    int MAXLUNG;
+    Cella *spazio;
+    int nNodi;
+    Nodo inizio;
+    Nodo libera;
+};
+
+template &lt;class T&gt;
+Bin_treec&lt;T&gt;::Bin_treec()
+{
+  MAXLUNG = 100;
+  spazio = new Cella[MAXLUNG];
+  create();
+}
+
+template &lt;class T&gt;
+Bin_treec&lt;T&gt;::Bin_treec(int nNodi): MAXLUNG(nNodi)
+{
+  spazio = new Cella[nNodi];
+  create();
+}
+
+
+template &lt;class T&gt;
+Bin_treec&lt;T&gt;::~Bin_treec()
+{
+  erase(inizio);
+  delete[] spazio;
+}
+
+template &lt;class T&gt;
+void Bin_treec&lt;T&gt;::create()
+{
+  inizio = NIL;
+  <font color="#4169E1">for</font> (int i = 0; i &lt; MAXLUNG; i++)
+    {
+      spazio[i].sinistro = (i+1) % MAXLUNG;
+    }
+
+  libera = 0;
+  nNodi = 0;
+}
+
+template &lt;class T&gt;
+bool Bin_treec&lt;T&gt;::empty() const
+{
+  <font color="#4169E1">return</font>(nNodi == 0);
+}
+
+template &lt;class T&gt;
+typename Bin_treec&lt;T&gt;::Nodo Bin_treec&lt;T&gt;::root() const 
+{
+  <font color="#4169E1">return</font>(inizio);
+}
+
+template &lt;class T&gt;
+typename     Bin_treec&lt;T&gt;::Nodo Bin_treec&lt;T&gt;::parent(Nodo n) const
+{
+  <font color="#4169E1">if</font> (n != inizio)
+    <font color="#4169E1">return</font> (spazio[n].genitore);
+  <font color="#4169E1">else</font>
+    <font color="#4169E1">return</font>(n);
+}
+
+template &lt;class T&gt;
+typename     Bin_treec&lt;T&gt;::Nodo Bin_treec&lt;T&gt;::sx(Nodo n) const
+{
+  <font color="#4169E1">if</font> (!sx_empty(n))
+    <font color="#4169E1">return</font> (spazio[n].sinistro);
+  <font color="#4169E1">else</font>
+    <font color="#4169E1">return</font>(n);
+};
+
+template &lt;class T&gt;
+typename     Bin_treec&lt;T&gt;::Nodo Bin_treec&lt;T&gt;::dx(Nodo n) const
+{
+  <font color="#4169E1">if</font> (!dx_empty(n))
+    <font color="#4169E1">return</font> (spazio[n].destro);
+  <font color="#4169E1">else</font>
+    <font color="#4169E1">return</font>(n);
+}
+
+template &lt;class T&gt;
+bool Bin_treec&lt;T&gt;::sx_empty(Bin_treec&lt;T&gt;::Nodo n) const
+{
+  <font color="#4169E1">return</font> (spazio[n].sinistro == NIL);
+}
+
+template &lt;class T&gt;
+bool Bin_treec&lt;T&gt;::dx_empty(Bin_treec&lt;T&gt;::Nodo n) const
+{
+  <font color="#4169E1">return</font> (spazio[n].destro == NIL);
+}
+
+template &lt;class T&gt;
+void Bin_treec&lt;T&gt;::ins_root(Bin_treec&lt;T&gt;::Nodo n)
+{
+  <font color="#4169E1">if</font> (inizio == NIL)
+    {
+      inizio = libera;
+      libera = spazio[libera].sinistro;
+      spazio[inizio].sinistro = NIL;
+      spazio[inizio].destro = NIL;
+      nNodi++;
+    }
+	<font color="#4169E1">else</font>
+		<font color="#4169E1">throw</font> RootExists();
+}
+
+
+template &lt;class T&gt;
+void Bin_treec&lt;T&gt;::ins_sx(Nodo n)
+{
+	<font color="#4169E1">if</font> (inizio == NIL)
+		<font color="#4169E1">throw</font> EmptyTree();
+	<font color="#4169E1">if</font> (n == NIL)
+		<font color="#4169E1">throw</font> NullNode();
+	<font color="#4169E1">if</font> (spazio[n].sinistro != NIL)
+		<font color="#4169E1">throw</font> NodeExists();
+	<font color="#4169E1">if</font> (nNodi &gt;= MAXLUNG)
+		<font color="#4169E1">throw</font> FullSize();
+  <font color="#4169E1">else</font>
+    {
+      Nodo q = libera;
+      libera = spazio[libera].sinistro;
+      spazio[n].sinistro = q;
+      spazio[q].sinistro = NIL;
+      spazio[q].genitore = n;
+      spazio[q].destro = NIL;
+      nNodi++;
+    }
+}
+
+template &lt;class T&gt;
+void Bin_treec&lt;T&gt;::ins_dx(Nodo n)
+{
+	<font color="#4169E1">if</font> (inizio == NIL)
+		<font color="#4169E1">throw</font> EmptyTree();
+	<font color="#4169E1">if</font> (n == NIL)
+		<font color="#4169E1">throw</font> NullNode();
+	<font color="#4169E1">if</font> (spazio[n].destro != NIL)
+		<font color="#4169E1">throw</font> NodeExists();
+	<font color="#4169E1">if</font> (nNodi &gt;= MAXLUNG)
+		<font color="#4169E1">throw</font> FullSize();
+	<font color="#4169E1">else</font>
+    {
+      Nodo q = libera;
+      libera = spazio[libera].sinistro;
+      spazio[n].destro = q;
+      spazio[q].genitore = n;
+      spazio[q].sinistro = NIL;
+      spazio[q].destro = NIL;
+      nNodi++;
+    }
+}
+
+template &lt;class T&gt;
+void Bin_treec&lt;T&gt;::erase(Nodo n)
+{
+  <font color="#4169E1">if</font> (n != NIL) {
+      <font color="#4169E1">if</font> (!sx_empty(n))
+        erase(spazio[n].sinistro);
+      <font color="#4169E1">if</font> (!dx_empty(n))
+        erase(spazio[n].destro);
+      <font color="#4169E1">if</font> (n != inizio) {
+          Nodo p = parent(n);
+          <font color="#4169E1">if</font> (spazio[p].sinistro == n)
+            spazio[p].sinistro = NIL;
+          <font color="#4169E1">else</font>
+            spazio[p].destro = NIL;
+        }
+      <font color="#4169E1">else</font>
+        inizio = NIL;
+      nNodi--;
+      spazio[n].sinistro = libera;
+      libera = n;
+    }
+	<font color="#4169E1">else</font>
+		<font color="#4169E1">throw</font> NullNode();
+}
+
+template &lt;class T&gt;
+T Bin_treec&lt;T&gt;::read(Nodo n) const
+{
+  <font color="#4169E1">if</font> (n != NIL)
+    <font color="#4169E1">return</font> (spazio[n].valore);
+	<font color="#4169E1">else</font>
+		<font color="#4169E1">throw</font> NullNode();
+}
+
+template &lt;class T&gt;
+void Bin_treec&lt;T&gt;::write(Nodo n, value_type a)
+{
+  <font color="#4169E1">if</font> (n != NIL)
+    spazio[n].valore = a;
+	<font color="#4169E1">else</font>
+		<font color="#4169E1">throw</font> NullNode();
+}
+<font color="#A020F0">#endif </font><font color="#B22222">/* _Bin_treecC_H_ */</font><font color="#A020F0"></font>
+</pre>
+</body>
+
+</html>
