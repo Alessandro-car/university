@@ -64,17 +64,8 @@
 \labelformat{example}{esempio #1}
 \labelformat{exercise}{esercizio #1}
 
-\newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
-{Teorema}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{th}
-
-\newtcbtheorem[number within=theorem,use counter=corollary]{corollary}%
-{Corollario}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{cor}
-
 \newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
 {Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
-
-\newtcbtheorem[number within=chapter,use counter=definition]{definition}%
-{Definizione}{breakable, enhanced, arc=1mm,outer arc=1mm,colframe=green!55!black,fonttitle=\scshape,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{def}
 
 \newtcbtheorem[no counter]
 {note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
@@ -87,6 +78,18 @@
 
 \newtcbtheorem[no counter]
 {assignment}{Traccia}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{brickred!65},coltitle=black,fonttitle=\bfseries}{asg}
+
+\newtcbtheorem[number within=chapter,use counter=corollary]{corollary}%
+{Corollario}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries}{cor}
+
+\newtcbtheorem[number within=chapter,use counter=definition]{definition}%
+{Definizione}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,
+borderline west={2.5mm}{0pt}{green!55!black},coltitle=black,
+fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
+
+\newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
+{Teorema}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries, separator sign={:\hspace{0.5em}}}{th}
+
 \tcolorboxenvironment{proof}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black}}
 \newcommand{\namerefl}[1]{%
 	\bgroup
