@@ -1747,4 +1747,134 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 P[a \leq X \leq b] = P\Bigg[\frac{a - \mu}{\sigma} \leq \frac{X - \mu}{\sigma} \leq \frac{b - \mu}{\sigma}\Bigg] = \Phi\Bigg(\frac{b - \mu}{\sigma}\Bigg) - \Phi\Bigg(\frac{a - \mu}{\sigma}\Bigg)
 	 \]
 	 e il valore di $\Phi$ è tabulata.
+	 \section{Esercizi sulle variabili aleatorie continue}
+	 \begin{exercise}{}{}
+	 	\begin{assignment}{}{}
+	 		Per $r, s > 0$ consideriamo la funzione:
+	 		\[
+	 		f(x) = \begin{cases}
+	 			cx^-(s + 1) & x > r \\
+	 			0 & x \leq r
+	 		\end{cases}
+	 		\]
+	 		\begin{enumerate}
+	 			\item Determinare $c$ affinchè $f$ sia una densità
+	 			\item Per quali valori di $s$ $E[X] < \infty$, $Var[X] < \infty$
+	 			\item Qual è la legge di $Y$ ove $Y = \ln(\dfrac{x}{r})$
+	 		\end{enumerate}
+	 	\end{assignment}
+	 	Risolvo:
+	 	\begin{enumerate}
+	 		\item Affinchè $f$ sia una densità $f(x) \geq 0 \quad \forall x \in \mathbbm{R} \iff c > 0$ e inoltre, $\mathlarger{\int_{-\infty}^{\infty}}f(x)dx = 1$ 
+	 		\begin{align*}
+	 			c\int_{r}^{\infty}x^{(-s + 1)}dx &= 1 \\
+	 			c\dfrac{x^{-s}}{-s} \Big|^{\infty}_{r} &= \\
+	 			c \dfrac{1}{sr^s} &= \\
+	 			c = sr^s
+	 		\end{align*}
+	 		\item Calcoliamo il valore atteso:
+	 		\begin{align*}
+	 			E[X] &= \int_{-\infty}^{\infty}xf(x)dx \\
+	 			&= \int_{r}^{\infty}sr^sxx^{-s-1}dx \\
+	 			&= sr^s\int_{r}^{\infty}x^{-s}dx < \infty \iff s > 1
+	 		\end{align*}
+	 		Calcoliamo la varianza:
+	 		\begin{align*}
+	 			E[X^2] &= sr^s\int_{r}^{\infty}x^2x^{-s-1}dx \\
+	 			&= sr^s\int_{r}^{\infty}\dfrac{1}{x^{s-1}}dx < \infty \iff s - 1 > 1 \Rightarrow s>2
+	 		\end{align*}
+	 		\item Calcoliamo la funzione di ripartizione:
+	 		\begin{align*}
+	 			F_Y(t) &= P[Y \leq t] \\
+	 			&= P[\ln(\dfrac{x}{r}) \leq t] \\
+	 			&= P[\dfrac{x}{r} \leq e^t] \\
+	 			&= P[x \leq re^t]
+	 		\end{align*}
+	 		Nel caso $t < 0$ allora $P[x \leq re^t] = P[x \leq r] = 0$ in quanto $x > r$ \\
+	 		Verifichiamo il caso $t \geq 0$:
+	 		\begin{align*}
+	 			P[x \leq re^t] &= \int_{r}^{re^t}sr^sx^{-s-1}dx
+	 		\end{align*}
+	 		Per la densità dobbiamo calcolare la derivata:
+	 		\begin{align*}
+	 			f_Y(t) &= F_Y'(t) \\
+	 			&= sr^s(re^t)^{-s-1}re^t \\
+	 			&=sr^sr^{-s-1}e^{-st-t}re^t \\
+	 			&=se^{-st}
+	 		\end{align*}
+			quindi $Y$ è una v.a. esponenziale di parametro $s$.
+	 	\end{enumerate}
+	 \end{exercise}
+	 \begin{exercise}{}{}
+	 	\begin{assignment}{}{}
+	 		Sia $X$ una v.a. uniformemente distribuita tra $(\frac{-\pi}{2}, \frac{\pi}{2})$ e $Y = \tan X$. 
+	 		\begin{enumerate}
+	 			\item Qual è la legge di $Y$?
+	 			\item $Y$ ha aspettazione finita?
+	 		\end{enumerate}
+	 	\end{assignment}
+	 	Risolvo:
+	 	\begin{enumerate}
+	 		\item Calcoliamo la funzione di ripartizione di $Y$:
+	 		\begin{align*}
+	 			F_Y(t) &= P[Y \leq t] \\
+	 			&= P[\tan X \leq t] \\
+	 			&= P[X \leq \arctan t] \\
+	 			&= \int_{-\frac{\pi}{2}}^{\arctan t}\frac{dx}{\pi} \\
+	 			&= \frac{1}{\pi}(\arctan t + \frac{\pi}{2})
+	 		\end{align*}
+	 		La densità:
+	 		\[
+	 		f_Y(t) = F_Y'(t) = \frac{1}{\pi}\frac{1}{1 + t^2}
+	 		\]
+	 		\item Calcoliamo il valore atteso:
+	 		\begin{align*}
+	 			E[Y] &= \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{t}{1+t^2}dt  
+	 		\end{align*}
+	 		ma l'integrale non converge quindi $E[Y]$ non è finito.
+	 	\end{enumerate}
+	 \end{exercise}
+	 \begin{exercise}{}{}
+	 	\begin{assignment}{}{}
+	 		La durata di un componente ha distribuzione esponziale di parametro $\lambda$ se il pezzo proviene dalla prima linea e di parametro $\mu$ se il pezzo proviene dalla seconda linea. \\
+	 		In media i prezzi prodotti dalla prima linea sono migliori di quelli prodotti dalla seconda linea.\\
+	 		Se $T$ è la durata di un pezzo scelto a caso, qual è la legge di $T$? Sapendo che il pezzo è ancora in funzione al tempo $s$, qual è la probabilità che provenda dalla prima linea di produzione? Qual è il limite di questa probabilità quando $s \to \infty$?
+	 	\end{assignment}
+	 	Consideriamo $H_1$ = Il pezzo proviene dalla prima linea e $H_2 = H_1^C$ \\
+	 	$P(H_1) = p$ e $P(H_2) = q$ \\
+	 	Inoltre, ci dice che:
+	 	\[
+	 	E[H_1] > E[H_2] \Rightarrow \lambda < \mu
+	 	\]
+	 	\begin{itemize}
+	 		\item Troviamo la funzione di ripartizione di $T$:
+	 		\begin{align*}
+	 			F_T(t) &= P[T \leq t] \\
+	 			&= P[T \leq t \mid H_1] P(H_1) + P[T \leq t \mid H_2]P(H_2) \\
+	 			&= p(1 - e^{-\lambda t}) + q(1 - e^{-\mu t})
+	 		\end{align*}
+	 		\item $P(H_1 \mid T \geq s) = \dfrac{P(T \geq s  \mid H_1)P(H_1)}{P[T \geq s]} = \dfrac{pe^{-\lambda}s}{pe^{-\lambda s} + qe^{-\mu s}}$ \\
+	 		Calcoliamo ora:
+	 		\begin{align*}
+	 			\lim_{s \to \infty}\dfrac{pe^{-\lambda}s}{pe^{-\lambda s} + qe^{-\mu s}} &= \\
+	 			\lim_{s\to\infty}\dfrac{pe^{-\lambda}s}{pe^{-\lambda s}(1 + \frac{q}{p}e^{-(\mu -\lambda)s})} &=\\
+	 			\lim_{s\to\infty}\frac{1}{1 + \frac{q}{p}e^{-(\lambda-\mu)s}} \\
+	 			&= 1
+	 		\end{align*}
+	 	\end{itemize}
+	 \end{exercise}
+	 \begin{exercise}{}{}
+	 	\begin{assignment}{}{}
+	 		X è la v.a. punteggio ove $X \sim N(\mu, \sigma)$ e $\mu = 100$ e $\sigma = 14.2$ \\
+	 		Determina $p$ in modo che $P[X \geq p_0] = 0.01$
+	 	\end{assignment}
+	 	Risolvo:
+	 	\[
+	 	P\Big[\frac{X - \mu}{\sigma} \geq \frac{p_0 -\mu}{\sigma}\Big] = P\Big[N \geq \frac{p_0 - 100}{14.2}\Big] = 0.01 
+	 	\]
+	 	e questo corrisponde a:
+	 	\[
+	 	\Phi\Bigg(\frac{p_0 - 100}{14.2}\Bigg) = 0.99 \Rightarrow \frac{p_0 - 100}{14.2} = 2.33 \Rightarrow p_0 = 134
+	 	\]
+	 \end{exercise}
 \end{document}
