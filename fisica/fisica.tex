@@ -1402,4 +1402,87 @@
 	\begin{center}
 		\textit{una forza centripeta accelera un corpo cambiando la direzione del vettore velocità senza cambiarne il modulo}
 	\end{center}
+	\chapter{Energia cinetica e lavoro}
+	Finora abbiamo studiato la meccanica utilizzando concetti come \textit{posizione}, \textit{velocità}, \textit{accelerazione} tutti dipendenti dal tempo: $\vec{r}(t)$, $\vec{v}(t)$ e $\vec{a}(t)$. \\
+	È possibile una trattazione alternativa, svincolata dal tempo, utilizzando concetti come \textbf{lavoro} ed \textbf{energia}. La scelta di uno o l'altro dipende dal particolare problema in esame. 
+	\section{Lavoro}
+	La definizione di lavoro dipende da:
+	\begin{itemize}
+		\item quando la forza è costante, e distinguiamo due casi:
+		\begin{enumerate}
+			\item tra la forza e lo spostamento c'è un angolo;
+			\item la forza agisce nella direzione del moto, quindi l'angolo è pari a 0.
+		\end{enumerate}
+		\item quando la forza non è costante.
+	\end{itemize}
+	\subsection{Lavoro quando la forza è costante}
+	Se $\vec{F}_1$ è una forza costante che agisce su un corpo durante uno spostamento $\vec{s}$, definiamo il lavoro $L_1$ compiuto dalla forza $\vec{F}_1$ lungo lo spostamento $\vec{s}$ come il \textit{prodotto scalare}:
+	\[
+	L_1 = \vec{F}_1 \cdot \vec{s} = F_1s\cos\theta
+	\]
+	In  una certa misura, il lavoro quantifica l'effetto di una forza applicata ad un certo corpo, lungo uno spostamento del corpo sotto l'azione della forza. \\	
+	Il lavoro viene misurato in \textit{Joule} e \[
+	1J = 1N \cdot 1m
+	\]
+	\begin{example}{}{}
+		Consideriamo tre forze con lo stesso modulo ma diversa direzione. Il lavoro di $\vec{F}_1$ è superiore a quello di $\vec{F}_2$ e $\vec{F}_3$, dato che, anche se i moduli delle forze sono uguali, l'angolo $\theta$ è inferiore e $\cos\theta$ è maggiore.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\textwidth]{lavoro}
+		\end{figure}
+		\[
+		L_1 = \vec{F}_1 \cdot \vec{s} = F_1s\cos0^\circ = F_1s
+		\]	
+		\[
+		L_3 = \vec{F}_3 \cdot \vec{s} = F_3s\cos90^\circ = 0
+		\]
+		$L_3$ quindi, non ha alcun effetto sul treno.
+	\end{example}
+	\paragraph{Direzione della forza uguale a quella del moto} Quando la forza è costante e  agisce nella stessa direzione del moto, il lavoro compiuto da $\vec{F}$ è pari a:
+	\[
+	L = F \cdot s
+	\]
+	dove gli operandi nell'equazione sono tutti scalari.
+	\paragraph{Direzione della forza diversa a quella del moto} Quando la forza è costante e non agisce nella stessa direzione del moto, allora il lavoro compiuto da $\vec{F}$ è pari a:
+	\[
+	L = \vec{F} \cdot \vec{s} = F \cdot s\cos\theta
+	\]
+	\subsection{Lavoro quando la forza non è costante} Quando la forza non è costante, si calcola il lavoro per spostare un punto materiale da una posizione A ad una posizione B, come in figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{lavoro_forza_var}
+	\end{figure}
+	Si suddivide, quindi, il percorso infinitesimi $d\vec{s}$ tali che $\vec{F}$ possa considerarsi approssimativamente costante lungo ds. \\
+	Quindi, il lavoro infinetismo relativo allo spostamento $d\vec{s}$ è:
+	\[
+	dL = \vec{F} \cdot d\vec{s}  = Fds\cos\theta
+	\]
+	Il lavoro totale lungo l'intero percorso $\gamma$ da $A$ a $B$ è:
+	\begin{align*}
+	L &= \int_{A\gamma}^{B}dL \\
+	&= \int_{A\gamma}^{B}\vec{F} \cdot d\vec{s} \\
+	&= \int_{A\gamma}^{B}Fds\cos\theta \\
+	&= \int_{A\gamma}^{B}(F_xdx + F_ydy + F_zdz) 
+	\end{align*}
+	In generale il lavoro L dipende dalla traiettoria $\gamma$ e non solo dalle posizioni A e B.
+	\section{Interpretazione geometrica del lavoro}
+	Consideriamo, per semplicità, un caso unidimensionale. Il seguente grafico mostra l'intensità della forza $F_x$ lungo lo spostamento x:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{lavoro_geometrico}
+	\end{figure}
+	ove $\Delta L_i$ è l'area del rettangolo di base $\Delta x_i$ e altezza $F_{x, i}$, approsimabile all'area sotto la curva in $\Delta x_i$;
+	\[
+	\Delta L_i = \Delta x_i F_{x, i}
+	\]
+	Il lavoro totale è l'area compresa sotto la curva, lungo l'intero spostamento del punto materiale:
+	\[
+	L = \int_{A\gamma}^{B}dL = \int_{A\gamma}^{B}\vec{F} \cdot d\vec{s}
+	\]
+	Calcoliamo $L \simeq \sum_i\Delta L_i = \sum_i(F_{x, i} \cdot \Delta x_i)$:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{integrale_lavoro}
+	\end{figure}
+	e riducendo la larghezza degli spostamenti $\Delta x_i$ otteniamo un'approsimazione sempre migliore.
 \end{document}
