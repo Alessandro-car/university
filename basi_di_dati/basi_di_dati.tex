@@ -1152,4 +1152,91 @@ create table Docenza (
  			\]
  		\end{itemize}
  	\end{example}
+ 	\chapter{Il modello Entità-Relazione}
+ 	Il modello Entità-Relazione, il modello E-R, è un modello \textit{concettuale} di dati e fornisce una serie di struttire, dette \textit{costrutti}, atte a descrivere la realtà di interesse in maniera facile da comprendere e che prescinde dall'organizzazione dei dati nei calcolatori. \\
+ 	Questi costrutti sono usati per definire \textit{schemi} che descrivono l'organizzazione e la struttura delle \textit{occorrenze} dei dati, ovvero i valori assunti dai dati al variare del tempo. 
+ 	\section{I costrutti principali del modello}
+ 	Analizziamo i costrutti principali di questo modello: 
+ 	\begin{itemize}
+ 		\item le entità;
+ 		\item le relazioni;
+ 		\item gli attributi.
+ 	\end{itemize}
+ 	\subsection{Entità} Le entità rappresentano classi di oggetti che hanno proprietà comuni ed esistenza ``autonoma'' ai fini dell'applicazione di interesse: \texttt{Città}, \texttt{Dipartimento}, \texttt{Impiegato} sono esempi di entità di un'applicazione aziendale. Una occorrenza di un'entità è un oggetto della classe che l'entità rappresenta, come Roma per l'entità \texttt{Città}. Un'occorrenza di entità non è un valore che identifica un oggetto ma è l'oggetto stesso. Una conseguenza di questo è che un'occorrenza di entità ha un'identità indipendente dalle proprietà ad esso associate. \\
+ 	In questo il modello E-R presenta una grande differenza rispetto al modello relazionale nel quale non possiamo rappresentare un oggetto senza conoscere alcune sue proprietà. \\
+ 	In uno schema, ogni entità ha un nome che la identifica univocamente e viene rappresentata graficamente mediante un rettangolo con il nome dell'entità all'interno.
+ 	\subsection{Relazioni o associazioni} Le relazioni o associazioni rappresentano legami logici, significativi per l'applicazione di interesse, tra due o più entità. \texttt{Residenza} è un esempio di relazione che può sussistere tra le entità \texttt{Città} e \texttt{Impiegato}. Un'occorenza di relazione è un'ennupla costuita da occorrenze di entità, una per ciascuna delle entità coinvolte. Segue un esempio di occorrenze della relazione \texttt{Esame}:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{relazione_esame}
+ 	\end{figure}
+ 	In uno schema E-R, ogni relazione ha un nome che la identifica univocamente e viene rappresentata graficamente mediante un rombo con il nome della relazione all'interno, e da linee che connettono la relazione con ciascuna delle sue componenti.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{esempi_relazioni}
+ 		\caption{Esempi di relazioni tra entità nel modello E-R}
+ 	\end{figure}
+ 	Dalla figura notiamo che possono esistere relazioni diverse che coinvolgono le stesse entità. Nella scelta dei nomi di relazione è preferibile utilizzare sostantivi invece che verbi in modo da non ``assegnare'' un verso alla relazione. \\
+ 	L'insieme di occorrenza di una relazione del modello E-R è, a tutti gli effetti, una relazione matematica tra le occorrenze delle entità coinvolte, quindi, un sottoinsieme del loro prodotto cartesiano. Di conseguenza, non ci possono essere ennuple ripetute. \\
+ 	Inoltre, è anche possibile avere relazioni \textit{ricorsive}, ovvero relazioni tra un'entità e se stessa, come mostrato nella seguente figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{relazione_ricorsiva}
+ 	\end{figure}
+ 	Per esempio la relazione \texttt{Collega} sull'entità \texttt{Impiegato} connette coppie di impiegati che lavorano insieme, mentre la relazione \texttt{Successione} sull'entità \texttt{Sovrano} associa a ogni sovrano di una dinastia il suo successore. In quest'ultimo esempio, però, è necessario stabilire i due \textit{ruoli} che l'entità coinvolta gioca nella relazione. \\
+ 	Infine, è possibile avere relazioni n-arie, ovvero relazioni che coinvolgono più di due entità, come mostrato nella seguente figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{relazioni_narie}
+ 		\caption{Esempio di relazione che coinvolge tre entità}
+ 	\end{figure}
+ 	\subsection{Attributi}
+ 	Gli attributi descrivono le proprietà elementari di entità o relazioni che sono di interesse ai fini dell'applicazione, ad esempio \textbf{Cognome, Stipendio} ed \textbf{Età} sono possibili attributi dell'entità \texttt{Impiegato}. Un attributo associa a ciascuna occorrenza di entità un valore appartenente a un insieme, detto \textit{dominio}, che contiene i valori ammissibili per l'attributo. La seguente figura mostra come vengono rappresentati graficamente gli attributi:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{attributi_ER}
+ 	\end{figure}
+ 	Di solito, i domini non vengono riportati nello schema, ma sono descritti nella documentazione associata. \\
+ 	A volte, può risultare comodo raggruppare attributi di una stessa entità che presentano affinità nel loro significato: l'insieme di attributi che si ottiene si chiama \textit{attributo composto}. Un esempio di attributo composto viene mostrato nella seguente figura: \\
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{attributo_composto}
+ 	\end{figure}
+ 	Tuttavia, per ridurre la complessità degli schemi, gli attributi composti vengono usati raramente utilizzando, preferibilemente, degli attributi atomici.
+ 	\subsection{Costruzione di schemi con i costrutti di base}
+ 	I tre costrutti descritti ci consentono già di costruire schemi per descrivere realtà di una certa complessità. Consideriamo, ad esempio, il seguente schema E-R:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1.0\textwidth]{esempio_schemaER}
+ 	\end{figure}
+ 	Si comprende facilemente che questo schema rappresenta informazioni organizzative relative a un'azienza con diverse sedi. Partendo dall'entità \texttt{Sede} si può vedere che una sede dell'azienza è dislocata in una certa città con un certo indirizzo. Ogni sede è organizzata in dipartimenti con un nome e un telefono. A questi dipartimenti afferiscono, a partire da una certa data, gli impiegati dell'azienda e ci sono impiegati che dirigono i dipartimenti. Gli impiegati sono rappresentati tramite codice, cognome, stipendio ed età. Gli impiegati lavorano su progetti a partire da una certa data e ogni progetto ha un nome, un budget e una data di consegna. 
+ 	\section{Altri costrutti del modello}
+ 	Esaminiamo altri costrutti del modello E-R:
+ 	\begin{itemize}
+ 		\item le cardinalità delle relazioni e degli attributi;
+ 		\item gli identificatori delle entità;
+ 		\item le generalizzazioni.
+ 	\end{itemize}
+ 	Le generalizzazioni è un costrutto \textit{nuovo}, gli altri, invece, costituiscono dei \textit{vincoli di integrità} sui costrutti visti.
+ 	\subsection{Cardinalità delle relazioni} Le cardinalità delle relazioni vengono specificate per ciascuna partecipazione di entità a una relazione e descrivono il numero minimo e massimo di occorrenze di relazione a cui una occorrenza dell'entità può partecipare. Quindi, dicono quante volte, in una relazione tra entità, un'occorrenza di queste entità può essere legata a occorrenze delle altre entità coinvolte.  \\
+ 	Consideriamo il seguente esempio:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{cardinalita_relazioni}
+ 		\caption{Cardinalità di una relazione del modello E-R}
+ 		\label{fig:cardinalita_relazione}
+ 	\end{figure}
+ 	In questo esempio, stiamo dicendo che un impiegato deve essere assegnato almeno un incarico ma non più di 5. Per quanto riguarda l'incarico, invece, l'incarico può non essere assegnato a nessun impiegato oppure può essere assegnato a un numero di impiegati $\leq 50$. \\
+ 	È possibile assegnare un qualunque intero non negativo a una cardinalità di una relazione, con l'unico vincolo che la cardinalità minima deve essere minore o uguale della cardinalità massima. Nella maggior parte dei casi si utilizzano solo tre valori: 0, 1 e il simbolo N.
+ 	\begin{itemize}
+ 		\item per la cardinalità minima, 0 o 1; se 0 si dice che la partecipazione alla relazione è \textit{opzionale}, se 1 si dice che la partecipazione è \textit{obbligatoria};
+ 		\item per la cardinalità massima, 1 o N; se 1 si dice che la partecipazione alla relazione può essere vista come una funzione che associa a un'occorrenza dell'entità una sola occorrenza dell'altra entità che partecipa alla relazione. Se N c'è un'associazione con un numero arbitrario di occorrenza dell'altra entità.
+ 	\end{itemize}
+ 	Osservando le cardinalità massime è possibile classificare le relazioni binarie in base al tipo di corrispondenza che viene stabilita tra le occorrenza delle entità coinvolte. Le relazioni aventi cardinalità massima pari a 1 per entrambe le entità coinvolte, definiscono una corrispodenza uno a uno tra le occorrenze di tali entità e quindi vengono chiamate \textit{relazioni uno a uno}. Analogamente, le relazioni aventi un'entità con cardinalità massima pari a 1 e l'altra con cardinalità massima pari a N sono denominate \textit{relazioni uno a molti}. Infine, le relazioni aventi cardinalità massima pari a N per entrambe le entità coinvolte sono denominate \textit{relazinoi molti a molti}. \\
+ 	Per quanto riguarda le cardinalità minime, va detto il caso di partecipazione obbligatoria è abbastanza raro, perchè quando si aggiunge una nuova occorrenza di entità molto spesso non sono note le corrispondenti occorrenze delle entità a esse collegate. \\
+ 	Nelle relazioni n-arie le entità coinvolte partecipano quasi sempre con cardinalità massima pari a N. Nel caso in cui un'entità partecipa a una relazione n-aria con cardinalità massima pari a 1, significa che ogni sua occorrenza può essere legata a una sola occorrenza della realzione, e quindi ad un'unica eenupla di occorenze delle altre entità coinvolte nella relazione. Questo significa che è possibile eliminare la relazione n-aria e legare direttamente tale entità con le altre entità mediante delle relazioni binarie di tipo uno a molti.
+ 	\subsection{Cardinalità degli attributi}
+ 	\subsection{Identificatori delle entità}
+ 	\subsection{Generalizzazioni}
+ 	
 \end{document}
