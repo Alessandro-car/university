@@ -172,9 +172,9 @@ bool vector_list<T>::operator==(const vector_list<T>& l) const {
 template <class T>
 void vector_list<T>::change_dimension(int new_dim) {
 	vector_list<T> new_list(new_dim);
+	new_list.m_length = m_length;
 	for (int i = 0; i < m_dim; i++) {
 		new_list.m_elements[i] = m_elements[i];
-		new_list.m_length++;
 	}
 	*this = new_list;
 }
