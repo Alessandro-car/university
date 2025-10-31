@@ -1235,7 +1235,18 @@ create table Docenza (
  	Osservando le cardinalità massime è possibile classificare le relazioni binarie in base al tipo di corrispondenza che viene stabilita tra le occorrenza delle entità coinvolte. Le relazioni aventi cardinalità massima pari a 1 per entrambe le entità coinvolte, definiscono una corrispodenza uno a uno tra le occorrenze di tali entità e quindi vengono chiamate \textit{relazioni uno a uno}. Analogamente, le relazioni aventi un'entità con cardinalità massima pari a 1 e l'altra con cardinalità massima pari a N sono denominate \textit{relazioni uno a molti}. Infine, le relazioni aventi cardinalità massima pari a N per entrambe le entità coinvolte sono denominate \textit{relazinoi molti a molti}. \\
  	Per quanto riguarda le cardinalità minime, va detto il caso di partecipazione obbligatoria è abbastanza raro, perchè quando si aggiunge una nuova occorrenza di entità molto spesso non sono note le corrispondenti occorrenze delle entità a esse collegate. \\
  	Nelle relazioni n-arie le entità coinvolte partecipano quasi sempre con cardinalità massima pari a N. Nel caso in cui un'entità partecipa a una relazione n-aria con cardinalità massima pari a 1, significa che ogni sua occorrenza può essere legata a una sola occorrenza della realzione, e quindi ad un'unica eenupla di occorenze delle altre entità coinvolte nella relazione. Questo significa che è possibile eliminare la relazione n-aria e legare direttamente tale entità con le altre entità mediante delle relazioni binarie di tipo uno a molti.
- 	\subsection{Cardinalità degli attributi}
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.65\textwidth]{esempio_card_relazioni}
+ 		\caption{Esempio di relazioni con cardinalità}
+ 	\end{figure}
+ 	\subsection{Cardinalità degli attributi} Le cardinalità sugli attributi possono essere specificate per gli attributi di entità o realzioni e descrivono il numero minimo e massimo di valori dell'attributo associati a ogni occorrenza di entità o relazione. Nella maggiore parte dei casi la cardinalità è (1, 1) e viene omessa. Il valore per un certo attributo può essere però nullo, oppure possono esistere diversi valori di un certo attributo per un'occorrenza di entità. Queste situazioni si possono rappresentare assocaindo all'attributo una cardinalità minima pari a 0 nel primo caso, e una cardinalità massima pari a molti N, nel secondo. \\
+ 	Come per le relazioni, un attributo con cardinalità minima pari a 0 è \textit{opzionale} per la relativa entità o relazione, mentre è \textit{obbligatorio} se la sua cardinalità minima è pari a 1. Un attributo si dice \textit{multivalore} se la sua cardinalità massima è pari a N. 
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{cardinalita_attributi}
+ 		\caption{Esempio di attributi con cardinalità}
+ 	\end{figure}
  	\subsection{Identificatori delle entità}
  	\subsection{Generalizzazioni}
  	
