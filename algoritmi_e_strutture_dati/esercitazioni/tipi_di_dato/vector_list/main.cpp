@@ -19,7 +19,7 @@ int main() {
 	print_list(list, 5);
 	list.insert(10, 2);
 	print_list(list, 6);
-	list.erase(2);
+	list.erase(3);
 	print_list(list, 5);
 	return 0;
 }
@@ -28,7 +28,7 @@ template <class T>
 void print_list(const vector_list<T>& l, int dim) {
 	try {
 		for (int i = 0; i < dim; i++) {
-			cout << "[" << l.read(i + 1) << "]";
+			cout << l.read(i + 1) << " ";
 		}
 		cout << endl;
 	} catch (const std::out_of_range& exception) {

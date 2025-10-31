@@ -7,7 +7,7 @@
 template <class T>
 class vector_list {
 	public:
-		typedef int position;
+		typedef size_t position;
 		typedef T type_value;
 
 		vector_list();
@@ -30,7 +30,7 @@ class vector_list {
 		bool operator==(const vector_list<T>&) const;
 
 	private:
-		void m_change_dimension(int, int);
+		void change_dimension(int);
 		type_value* m_elements;
 		int m_dim;
 		int m_length;
@@ -39,22 +39,22 @@ class vector_list {
 template <class T>
 vector_list<T>::vector_list() {
 	m_dim = STD_DIM;
-	this->create();
+	create();
 }
 
 template <class T>
 vector_list<T>::vector_list(int dim) {
 	m_dim = dim;
-	this->create();
+	create();
 }
 
 template <class T>
 vector_list<T>::vector_list(const vector_list<T>& l) {
-	this->m_dim = l.m_dim;
-	this->m_length = l.m_length;
-	this->m_elements = new type_value[m_dim];
+	m_dim = l.m_dim;
+	m_length = l.m_length;
+	m_elements = new type_value[m_dim];
 	for (int i = 0; i < l.m_dim; i++) {
-		this->m_elements[i] = l.m_elements[i];
+		m_elements[i] = l.m_elements[i];
 	}
 }
 
@@ -75,14 +75,14 @@ bool vector_list<T>::empty() const {
 }
 
 template <class T>
-typename vector_list<T>::type_value vector_list<T>::read(position p) const {
+typename vector_list<T>::type_value vector_list<T>::read(size_t p) const {
 	if (p >= 1 && p <= m_length)
 		return m_elements[p - 1];
 	throw std::out_of_range("Position out of bounds");
 }
 
 template <class T>
-void vector_list<T>::write(vector_list<T>::type_value elem, vector_list<T>::position p) {
+void vector_list<T>::write(T elem, size_t p) {
 	if (p >= 1 && p <= m_length) {
 		m_elements[p - 1] = elem;
 	}
@@ -94,7 +94,7 @@ typename vector_list<T>::position vector_list<T>::begin() const {
 }
 
 template <class T>
-bool vector_list<T>::end(position p) const {
+bool vector_list<T>::end(size_t p) const {
 	if (p >= 1 && p <= m_length + 1) {
 		return p == m_length + 1;
 	}
@@ -102,7 +102,7 @@ bool vector_list<T>::end(position p) const {
 }
 
 template <class T>
-typename vector_list<T>::position vector_list<T>::next(vector_list<T>::position p) const {
+typename vector_list<T>::position vector_list<T>::next(size_t p) const {
 	if (p >= 1 && p < m_length) {
 		return p + 1;
 	}
@@ -110,7 +110,7 @@ typename vector_list<T>::position vector_list<T>::next(vector_list<T>::position 
 }
 
 template <class T>
-typename vector_list<T>::position vector_list<T>::previous(vector_list<T>::position p) const {
+typename vector_list<T>::position vector_list<T>::previous(size_t p) const {
 	if (p > 1 && p <= m_length) {
 		return p - 1;
 	}
@@ -118,9 +118,9 @@ typename vector_list<T>::position vector_list<T>::previous(vector_list<T>::posit
 }
 
 template <class T>
-void vector_list<T>::insert(vector_list<T>::type_value elem, vector_list<T>::position p) {
+void vector_list<T>::insert(T elem, size_t p) {
 	if (m_length == m_dim) {
-		this->m_change_dimension(m_dim, m_dim * 2);
+		change_dimension(m_dim * 2);
 	}
 
 	if (p >= 1 && p <= m_length + 1) {
@@ -133,7 +133,7 @@ void vector_list<T>::insert(vector_list<T>::type_value elem, vector_list<T>::pos
 }
 
 template <class T>
-void vector_list<T>::erase(vector_list<T>::position p) {
+void vector_list<T>::erase(size_t p) {
 	if (p >= 1 && p <= m_length) {
 		if (!empty()) {
 			for (int i = p - 1; i < m_length - 1; i++) {
@@ -147,12 +147,12 @@ void vector_list<T>::erase(vector_list<T>::position p) {
 template<class T>
 vector_list<T>& vector_list<T>::operator=(const vector_list<T>& l) {
 	if (this != &l) {
-		this->m_dim = l.m_dim;
-		this->m_length = l.m_length;
-		delete this->m_elements;
-		this->m_elements = new type_value[m_dim];
+		m_dim = l.m_dim;
+		m_length = l.m_length;
+		delete[] m_elements;
+		m_elements = new type_value[m_dim];
 		for (int i = 0; i < l.m_dim; i++) {
-			this->m_elements[i] = l.m_elements[i];
+			m_elements[i] = l.m_elements[i];
 		}
 	}
 	return *this;
@@ -160,22 +160,22 @@ vector_list<T>& vector_list<T>::operator=(const vector_list<T>& l) {
 
 template <class T>
 bool vector_list<T>::operator==(const vector_list<T>& l) const {
-	if (this->m_length != l.m_length)
+	if (m_length != l.m_length)
 		return false;
-	for (int i = 0; i < this->m_dim; i++) {
-		if (this->m_elements[i] != l.m_elements[i])
+	for (int i = 0; i < m_dim; i++) {
+		if (m_elements[i] != l.m_elements[i])
 			return false;
 	}
 	return true;
 }
 
 template <class T>
-void vector_list<T>::m_change_dimension(int old_dim, int new_dim) {
+void vector_list<T>::change_dimension(int new_dim) {
 	vector_list<T> new_list(new_dim);
 	for (int i = 0; i < m_dim; i++) {
 		new_list.m_elements[i] = m_elements[i];
+		new_list.m_length++;
 	}
-	delete[] m_elements;
 	*this = new_list;
 }
 
