@@ -1877,4 +1877,244 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\Phi\Bigg(\frac{p_0 - 100}{14.2}\Bigg) = 0.99 \Rightarrow \frac{p_0 - 100}{14.2} = 2.33 \Rightarrow p_0 = 134
 	 	\]
 	 \end{exercise}
+	 \chapter{Convergenza e approssimazione}
+	 In questo capitolo vedremo come definire la convergenza di una successione $\{X_n\}_{n\in\mathbbm{N}}$ di v.a. e questo è un concetto molto importante in quanto spesso è complicato descrivere la legge di una v.a. $X_n$, mentre, se $X_n \longrightarrow X$ e $n$ è grande, può essere facile approssimarla con la legge del limite $X$. 
+	 \section{Disuguaglianza di Markov}
+	 \begin{theorem}{\nmu Disuguaglianza di Markov}{markov}
+	 	Sia $X$ una v.a. su $(\Omega, \mathcal{F}, \mathcal{P})$ con $E[X] < \infty$ e con $X \geq 0$. \\
+	 	Allora:
+	 	\[
+	 	P[X \geq k] \leq \dfrac{E[X]}{k}
+	 	\]
+	 \end{theorem}
+	 La disuguaglianza di Markov permette di stabilire un limite superiore alla probabilità che una variabile aleatoria non negativa superi un certo valore.
+	 \begin{proof}{Dimostrazione della \namerefl{th:markov}} \quad \\
+	 	Supponiamo che $X$ sia una v.a. discreta, allora:
+	 	\[
+	 	E[X] = \sum_{n=1}^{\infty}\lambda_nP[X = \lambda_n]
+	 	\]
+	 	Per ipotesi $\lambda_n \geq 0$.
+	 	Allora:
+	 	\[
+	 	E[X] \geq \sum_{n, \lambda_n \geq k}\lambda_nP[X=\lambda_n] \geq k\sum_{n, \lambda_n \geq k} P[X = \lambda_n] \geq kP[X \geq k]
+	 	\]
+	 	Di conseguenza:
+	 	\[
+	 	E[X] \geq P[X \geq k] \Rightarrow P[X \geq k] \leq \dfrac{E[X]}{k}
+	 	\]
+	 \end{proof}
+	 \begin{corollary}{}{}
+	 	Sia $X$ una v.a. su $(\Omega, \mathcal{F}, \mathcal{P})$ con $E[|X|] < \infty$, allora:
+	 	\[
+	 	P[|X|\geq k] \leq \dfrac{E[|X|]}{k}
+	 	\]
+	 \end{corollary}
+	 \begin{definition}{\nmu Momento di una variabile aleatoria}{momento_va}
+	 	Sia $X$ una v.a. Diremo che $X$ ha momento di ordine $n$ se la v.a. $X^n$ ha speranza matematica finita, ovvero se:
+	 	\[
+	 	m_n = E[X^n] \quad \text{ purchè } E[|X|^n] < \infty
+	 	\]
+	 \end{definition}
+	 \paragraph{Conseguenze della disuguaglianza di Markov} \quad \\
+	 \begin{itemize}
+	 	\item  $P[|X| \geq k] = P[|X|^n \geq k^n] \leq \dfrac{E[|X|^n]}{k^n} = \dfrac{m_n}{k^n}$ \\
+	 	Questo è vero purchè $m_n < \infty$
+	 	\begin{example}{}{}
+	 		Sia $X \sim N(0, 1)$, allora:
+	 		\[
+	 		E[X^{2n+ 1}] = 0
+	 		\]
+	 		e
+	 		\[
+	 		E[X^{2n}] = (2n-1)!! = (2n - 1)(2n - 3)(2n-5)\cdots
+	 		\]
+	 	\end{example}
+	 \end{itemize}
+	 \begin{example}{}{}
+	 	Sia $X$ una v.a. che misura la statura di una certa popolazione. \\
+	 	Sapendo che $E[X] = 175cm$, qual è la probabilità che $X > 190$, allora per la \namerefl{th:markov}:
+	 	\[
+	 	P[X > 190cm] \leq \dfrac{175}{190}
+	 	\]
+	 	Supponendo che $Var[X] = 100cm^2$, allora:
+	 	\[
+	 	Var[X] = E[X^2] - 175^2 
+	 	\]
+	 	e
+	 	\[
+	 	E[X^2] =100 + 175^2
+	 	\]
+	 	allora per il \namerefl{def:momento_va}:
+	 	\[
+	 	P[X \geq 190] = P[X^2 \geq 190^2] \leq \dfrac{100 + 175^2}{190^2}
+	 	\]
+	 \end{example}
+	 \section{Disuguaglianza di Chebyshev}
+	 \begin{theorem}{\nmu Disuguaglianza di Chebyshev}{chebyshev}
+	 	Sia $X$ una v.a. su $(\Omega, \mathcal{F}, \mathcal{P})$ con $Var[X] < \infty$. \\
+	 	Allora:
+	 	\[
+	 	P[(X - \mu) \geq k\sigma] \leq \dfrac{1}{k^2}
+	 	\]
+	 	o, un altro modo per descrivere la disuguaglianza è:
+	 	\[
+	 	P[(X -\mu) \geq k] \leq \dfrac{\sigma^2}{k^2} = \dfrac{Var[X]}{k^2}
+	 	\]
+	 	dove $\mu = E[X]$ e $\sigma = \sqrt{Var[X]} = \sqrt{\sigma^2}$
+	 \end{theorem}
+	 \begin{proof}{Dimostrazione della \namerefl{th:chebyshev}}\quad \\
+	 	\begin{align*}
+	 		P[(X - \mu) \geq k\sigma] &= P[(X - \mu)^2 \geq k^2\sigma^2] \\
+	 		&\leq \dfrac{1}{k^2\sigma^2}E[(X - \mu)^2] \\
+	 		&= \dfrac{\sigma^2}{\sigma^2k^2} \\
+	 		&= \dfrac{1}{k^2}
+	 	\end{align*}
+	 	in quanto:
+	 	\begin{align*}
+	 	Var[X] &= E[(X - \mu)^2] \\
+	 	&= E[X^2 - 2\mu X + \mu^2] \\
+	 	&= E[X^2] - 2\mu E[X] + \mu^2 \\
+	 	&= E[X^2] - 2E[X]^2 + E[X]^2 \\
+	 	&= E[X^2] - E[X]^2
+	 	\end{align*}
+	 \end{proof}
+	 La disuguaglianza di Chebychev quantifica l'interpretazione intuitiva della varianza come misura della dispersione: più $Var[X]$ è piccola, più è piccola a probabilità che $X$ prenda valori lontani dalla sua media.
+	 
+	 \section{Convergenza di variabili aleatorie}
+	 \begin{definition}{\nmu Convergenza quasi certa di variabili aleatorie}{convergenza_va}
+	 	Sia $(\Omega, \mathcal{F}, \mathcal{P})$ e sia una successione di variabili aleatorie $\{X_n : n\in \mathbbm{N}\}$ e $X$ una v.a. \\
+	 	Allora:
+	 	\[
+	 	\lim_{n\to\infty}X_n = X
+	 	\]
+	 	Diremo che $X_n$ converge a $X$ quasi certamente se:
+	 	\[
+	 	P\Big(\{\omega \in \Omega \mid \lim_{n \to \infty}X_n(\omega) = X(\omega)\}\Big) = 1
+	 	\]
+	 \end{definition}
+	 \begin{definition}{\nmu Convergenza di probabilità}{convergenza_prob}
+	 	Sia $(\Omega, \mathcal{F}, \mathcal{P})$ e sia una successione di variabili aleatorie $\{X_n : n\in\mathbbm{N}\}$ e $X$ una v.a. \\
+	 	Diremo che $X_n$ converge a $X$ in probabilità, ovvero:
+	 	\[
+	 	\lim_{n\to\infty}X_n \overset{P}{=} X
+	 	\]
+	 	se $\forall \delta > 0$ si ha:
+	 	\[
+	 	P\Big(\{\omega \in \Omega \mid \Big|X_n(\omega) - X(\omega)\Big| > \delta\}\Big)\underset{n \to \infty}{\longrightarrow} 0
+	 	\]
+	 \end{definition}
+	 	Si può dimostrare che la convergenza quasi certa implica quella in probabilità, cioè se:
+	 	\[
+	 	X_n \underset{n\to\infty}{\longrightarrow} X \text{ quasi certamente allora } X_n \overset{P}{\longrightarrow} X
+	 	\]
+	 	questo significa che la convergenza in probabilità è più debole della convergenza quasi certa.
+	 \begin{proof}{Dimostrazione della \namerefl{def:convergenza_prob}} \quad \\
+	 	Sia $\delta > 0$ fissato e $E_n = \Big\{ \omega \in \Omega \mid \Big |X_n(\omega) - X(\omega)\Big| > \delta\Big\}$ \\
+	 	Definiamo:
+	 	\[
+	 	F_n = \bigcup_{k=n}^{\infty}E_k 
+	 	\]
+	 	Questo è l'insieme degli eventi dove almeno un $X_n$ dista da $X$ più di $\delta$ e vale che $E_n \subset F_n$ e $F_{n+1} \subseteq F_n$, allora:
+	 	\[
+	 	\lim_{n \to \infty}P(F_n) = P\Bigg(\bigcap_{n=1}^{\infty}F_n\Bigg)
+	 	\]
+	 	ove $\mathlarger{\bigcap_{n=1}^{\infty}}F_n = \mathlarger{\bigcap_{n=1}^{\infty}\bigcup_{k=n}^{\infty}}E_k$. \\
+	 	Questo è l'insieme degli $\omega$ tali che $\forall n\ \exists k \geq n$ tale che $\Big|X_n(\omega) - X(\omega)\Big| > \delta$. \\
+	 	Quindi, è l'insieme degli $\omega$ per cui accade spesso che $X_n(\omega)$ dista da $X(\omega)$ più di $\delta$ e quindi $X_n(\omega)$ non si avvicina mai a $X(\omega)$ allora:
+	 	
+	 	\[\lim_{n \to \infty} P(F_n) = P\Bigg(\bigcap_{n=1}^{\infty}F_n\Bigg) = 0\] 
+	 	perchè $\mathlarger{\bigcap_{n=1}^{\infty}}F_n \subset \{\omega\mid X_n(\omega) \text{ non converge a } X\}$. \\
+	 	Allora:
+	 	\[
+	 	P(E_n) \leq P(F_n) \underset{n \to \infty}{\longrightarrow} 0
+	 	\]
+	 \end{proof}
+	 \section{Legge debole dei grandi numeri}
+	 \begin{theorem}{\nmu Legge debole dei grandi numeri}{legge_debole_grandi_numeri}
+	 	Se $\{X_n : n \in \mathbbm{N}\}$ è una successione di v.a. indipendenti con media $\mu = E[X]$ e $\sigma^2 = Var[X]$ finite $\forall n$. Allora posto:
+	 	\[
+	 	\bar{X_n} = \dfrac{X_1 + X_2 + \dots + X_n}{n}
+	 	\]
+	 	si ha:
+	 	\[
+	 	\bar{X_n} \overset{P}{\longrightarrow} \mu
+	 	\]
+	 \end{theorem}
+	 \begin{example}{}{}
+	 	Sia $X_n$ di Bernoulli di parametro $p$, allora:
+	 	\[
+	 	E[X_n] = p 
+	 	\]
+	 	e
+	 	\[
+	 	Var[X_n] = p(1 - p)
+	 	\]
+	 	Allora:
+	 	\[
+	 	\dfrac{X_1 + X_2 + \dots X_n}{n} \underset{n \to \infty}{\overset{P}{\longrightarrow}} p
+	 	\]
+	 \end{example}
+	 \begin{proof}{\nmu Dimostrazione della \namerefl{th:legge_debole_grandi_numeri}} \quad \\
+	 	Sia \[Y_n = \dfrac{1}{n}\sum_{n=1}^{n}X_i\] allora:
+	 	\[
+	 	E[Y_n] = E\Bigg[\frac{1}{n}\sum_{n=1}^{n}X_i\Bigg] = \frac{1}{n}\sum_{n=1}^{n}E[X_i] = \frac{1}{n}n\mu = \mu
+	 	\]
+	 	e la varianza è pari a:
+	 	\[
+	 	 Var[Y_n] = Var\Bigg[\frac{1}{n} \sum_{n=1}^{n}X_i\Bigg] = \frac{1}{n^2}Var\Bigg[\sum_{n=1}^{n}X_i\Bigg] 
+	 	\]
+	 	e per indipendenza:
+	 	\[
+	 	\frac{1}{n^2}Var\Bigg[\sum_{n=1}^{n}X_i\Bigg] = \frac{1}{n^2}\sum_{n=1}^{n}Var[X_i] = \frac{1}{n^2}n\sigma^2 = \frac{\sigma^2}{n}
+	 	\]
+	 	Ora, dato $\delta > 0$ e applicando la \namerefl{th:chebyshev}:
+	 	\[
+	 	P[(Y_n - \mu) > \delta] \leq \frac{1}{\delta^2}Var[Y_n] = \frac{\sigma^2}{\delta^2n} \underset{n \to \infty}{\longrightarrow} 0
+	 	\]
+	 	cioè $Y_n \underset{n \to \infty}{\overset{P}{\longrightarrow}} \mu$
+	 \end{proof}
+	 \section{Convergenza in legge}
+	 \begin{theorem}{\nmu Convergenza in legge}{convergenza_legge}
+	 	Sia $\{X_n\}_{n \in \mathbbm{N}}$ una successione di v.a. e non necessariamente definite sullo stesso spazio di probabilità e $X$ una v.a. Allora diciamo che $X_n$ converge a $X$ in legge:
+	 	\[
+	 	X_n \underset{n \to \infty}{\overset{L}{\longrightarrow}} X
+	 	\] 
+	 	se $\forall x \in \mathbbm{R}$, dove $F_X$ è continua, si ha che:
+	 	\[
+	 	\lim_{n \to \infty}F_{X_n}(x) = F_X(x)
+	 	\]
+	 	con $F_X(x) = P[X \leq x]$ e $F_{X_n}(x) = P[X_n \leq x]$
+	 \end{theorem}
+	 Inoltre, vale che se $X_n \underset{n \to \infty}{\overset{P}{\to}} X$, ovvero $X_n$ converge a $X$ in probabilità, allora:
+	 \[
+	 X_n \underset{n \to \infty}{\overset{L}{\to}} X
+	 \]
+	 ovvero la convergenza in legge è più debole della convergenza in probabilità.
+	 \section{Il Teorema Limite Centrale}
+	 \begin{theorem}{\nmu Teorema del limite centrale (Lindberg-Lévy)}{teorema_limite_centrale}
+	 	Se $\{X_n\}_{n \in \mathbbm{N}}$ è una successione di v.a. indipendenti identicamente distribuite con media $\mu = E[X]$ e $\sigma^2=Var[X]$, allora:
+	 	\[
+	 	\dfrac{X_1 + X_2 \dots + X_n - n\mu}{\sqrt{n}\sigma} \underset{n \to \infty}{\overset{L}{\longrightarrow}} N(0, 1)
+	 	\]
+	 	cioè:
+	 	\[
+	 	P\Bigg[\dfrac{X_1 + X_2 + \dots + X_n - n\mu}{\sqrt{n}\sigma} \leq t\Bigg] \underset{n \to \infty}{\to} \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{t}e^{-\dfrac{u^2}{2}}du
+	 	\]
+	 \end{theorem}
+	 \begin{exercise}{}{}
+	 	\begin{assignment}{}{}
+	 		Si lanciano $n=10^4$ volte una moneta equa. Qual è la probabilità di ottenere più di 5600 teste? 
+	 	\end{assignment}
+	 	Risolviamolo sfruttando il teorema del limite centrale. \\
+	 	Se $X$ è la v.a. che conta le teste allora:
+	 	\[
+	 	X = \sum_{i=1}^{n}X_i
+	 	\]
+	 	con $X_i$ bernoulli indipendenti di parametro $p = \frac{1}{2}$ allora $\mu = \frac{1}{2}$, $n\mu = 5 \cdot 10^3$ e $\sigma^2 = p(1 - p) = \frac{1}{4}$ di conseguenza $\sigma = \frac{1}{2}$ e $Var[X] = \sqrt{10^4} \cdot \sigma = 50$. Allora:
+	 	\begin{align*}
+	 	P[X > 5600] &= P\Bigg[\frac{X - 5 \cdot 10^3}{50} > \frac{5600 - 5000}{50}\Bigg] \\
+	 	&= P\Bigg[N > \frac{600}{50}\Bigg] = 0
+	 	\end{align*}
+		ove $N \sim N(0, 1)$
+	 \end{exercise}
 \end{document}
