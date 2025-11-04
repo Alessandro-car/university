@@ -1484,5 +1484,267 @@
 		\centering
 		\includegraphics[width=0.7\textwidth]{integrale_lavoro}
 	\end{figure}
-	e riducendo la larghezza degli spostamenti $\Delta x_i$ otteniamo un'approsimazione sempre migliore.
+	e riducendo la larghezza degli spostamenti $\Delta x_i$ otteniamo un'approsimazione sempre migliore. \\
+	Se sul punto agiscono $\vec{F}_1$ e $\vec{F}_2$ e quindi $\vec{F}_{tot}$ è la risultante, il lavoro è dato da:
+	\begin{align*}
+	L &= \int_{A\gamma}^{B}\vec{F} \cdot d\vec{s} \\
+	&= \int_{A\gamma}^{B} \vec{F}_1 \cdot d\vec{s} + \int_{A\gamma}^{B}\vec{F}_2 \cdot d\vec{s}
+	\end{align*}
+	\section{Potenza}
+	La rapidità con la quale un lavoro è compiuto da una forza è detta \textit{potenza} dovuta alla forza. Se una forza compie un lavoro \textit{L} in un intervallo di tempo $\Delta t$, la \textit{potenza media} dovuta alla forza durante quell'intervallo di tempo è data da:
+	\[
+	P_m = \dfrac{L}{\Delta t}
+	\]
+	La \textit{potenza istantanea} o semplicemente \textit{potenza} è la rapidità istantanea con la quale viene compiuto un lavoro, che possiamo scrivere come:
+	\[
+	P = \dfrac{dL}{dt} = \vec{F} \cdot \dfrac{d\vec{s}}{dt} = \vec{F} \cdot \vec{v}
+	\]
+	Quindi la potenza è il lavoro erogato per unità di tempo e l'unità di misura della potenza è il Joule/secondo = \textit{Watt (W)}.
+	\section{Energia}
+	Il termine \textit{energia} si riferisce a un ambito molto ampio che è difficile dare una definizione chiara. Da un punto di vista tecnico l'energia è una grandezza fisica scalare associata allo stato o alla condizione di uno o più corpi. 
+	\subsection{Energia cinetica}
+	L'\textit{energia cinetica} è l'energia associata allo stato di moto di un oggetto. Quanto più veloce l'oggetto si muove, tanto maggiore è la sua energia cinetica, quindi, quando è fermo la sua energia cinetica è pari a 0. \\
+	Sia $\vec{F}$ la forza agente sul corpo scomponibile nelle due componenti $\vec{F}_t$ parallela allo spostamento e $\vec{F}_n$ perpendicolare ad esso: $\vec{F} = \vec{F}_t + \vec{F}_n$. \\ 
+	Supponiamo che la forza parallela sia costante e quindi produca un'accelerazione costante e quindi $\vec{F}_t = m\vec{a}_t$. \\
+	Utilizziamo la relazione tra accelerazione e velocità ricavata nel moto uniformemente accelerato:
+	\[
+	2a_t\Delta s = v^2-v_0^2 \Rightarrow ma_t\Delta s = \dfrac{1}{2}(mv^2 - mv_0^2)
+	\]
+	Allora:
+	\[
+	F_t\Delta s = \dfrac{1}{2}(mv^2 - mv_0^2) \Rightarrow L = E_k - E_{k0}
+	\]
+	Supponiamo, come prima $\vec{F}$ la forza agente sul corpo scomponibile nelle due componenti $\vec{F}_t$ parallela allo spostamento e $\vec{F}_n$ perpendicolare ad esso: $\vec{F} = \vec{F}_t  + \vec{F}_n$. \\
+	Allora il lavoro è dato da:
+	\[
+	dL= \vec{F} \cdot d\vec{s} = \vec{F}_t \cdot d\vec{s} + \vec{F}_n \cdot d\vec{s}
+	\]
+	ove $\vec{F}_n \perp d\vec{s} = 0$ e $\vec{F}_t \parallel d\vec{s} = ma_tds$, allora possiamo scrivere il lavoro come:
+	\[
+	dL = \vec{F}_tds = ma_tds=m\dfrac{dv}{ds} = mdv\dfrac{ds}{dt} = mvdv
+	\] 
+ 	\begin{theorem}{\nmu Teorema delle forze vive}{forza_vive_cinetica}
+		Il teorema delle forza vive mette in relazione il lavoro $L$ con la variazione dell'energia cinetica $E_k$.
+		\[
+		L = \int_{v_A}^{v_B}mvdv = \dfrac{1}{2}mv_B^2 - \dfrac{1}{2}mv_A^2 = E_{KB} - E_{KA}
+		\] 
+		e questo è valido per tutte le forze agenti sul corpo.
+	\end{theorem}
+	L'energia cinetica $E_K$ posseduta dal corpo dotato di velocità è data da:
+	\[
+	E_K = \dfrac{1}{2}mv^2
+	\] 
+	Dal \namerefl{th:forza_vive_cinetica} notiamo che il lavoro effettuato da una forza su un corpo ha l'effetto di variare la sua quantità di energia cinetica. Quantitativamente, l'energia cinetica di corpo di massa $m$ che si muove a velocità \textit{v}, è il \textit{lavoro necessario per portare tale corpo dalla velcocità nulla alla velocità v}.
+	\begin{note}{}{}
+		In presenza di \textit{più forze} agenti sul punto materiale, il teorema dell'energia cinetica diviene:
+		\[
+		L_{tot} = L_1 + L_2 + \dots + L_n = \Delta E_K
+		\]
+	\end{note}
+	Un corpo in possesso di una certa energia cinetica è in grado di utilizzarla per effettuare lavoro su un altro corpo. Ad esempio, un martello che colpisce un chiodo perde la sua energia cinetica, quindi si ferma, per compiere un lavoro sul chiodo. L'energia cinetica, quindi, è la capacità di compiere un lavoro.
+	\section{Lavoro compiuto dalla forza peso}
+	Calcoliamo il lavoro compiuto dalla forza peso su di un corpo di massa \textit{m} che si sposta verticalmente da \textit{A} a \textbf{B} come in figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{lavoro_verticale_peso}
+	\end{figure}
+	Allora:
+	\[
+	L_{AB} = \vec{F} \cdot \Delta\vec{s} = mg(h_2 - h_1)
+	\]
+	Se la traiettoria non è più verticale come in figura, allora:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{lavoro_non_verticale_peso}
+	\end{figure}
+	Allora:
+	\begin{align*}
+		L_{AB} &= L_{AC} + L_{BC} \\
+		&= mg(A C\cos \theta) + mg(BC\cos 90^\circ) \\
+		&= mg(h_2 - h_1) + 0 \\
+		&= mg(h_2 - h_1)  
+	\end{align*}
+	In entrambi i casi, quindi, il lavoro compiuto dalla forza peso sul punto materiale non cambia. \\
+	Osserviamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{dim_lavoro_peso}
+	\end{figure}
+	Abbiamo definito:
+	\[
+	dL = \vec{F} \cdot d\vec{s} = m\vec{g} \cdot d\vec{s}
+	\]
+	Allora il lavoro è dato da:
+	\begin{align*}
+		L &= \int_{h_2}^{h_1} m\vec{g} \cdot d\vec{s} \\
+		&= -\int_{h_2}^{h_1}mg\vec{j}\cdot d\vec{s} \\
+		&= -\int_{h_2}^{h_1}mgdy \\
+		&= -mg(h_1 - h_2) \\
+		&= mg(h_2 - h_1) \\
+		&= E_P(A) - E_P(B)
+	\end{align*}
+	ove $E_P(P) = mgy_P$ è la funzione della coordinata $y$ del punto. \\
+	Inoltre, si può dimostrare che l'espressione del lavoro rimane la stessa anche nel caso di una generica traiettoria curvilinea. 
+	\begin{note}{}{}
+		Il lavoro compiuto dalla forza peso sul corpo di massa \textit{m} \textbf{non} dipende dalla traiettoria, ma solo dalla posizione iniziale e dalla posizione finale, più precisamente, dalla differenza di quota tra i due punti \textit{A} e \textit{B}. \\
+		Questo vale per qualunque corpo e traiettoria.
+	\end{note}
+	\section{Lavoro compiuto dalla forza elastica}
+	Esaminiamo il lavoro compituo su un oggetto puntiforme da un particolare tipo di \textit{forza variabile}, cioè dalla \textbf{forza elastica}. \\
+	Ricordando la formula della forza elastica, ovvero:
+	\[
+	\vec{F}_s = -k\vec{x} 
+	\]
+	ove \textit{k} è la \textbf{costante elastica} e $\vec{x}$ è lo spostamento della molla. La formula possiamo riscriverla, in componenti vettoriali, come:
+	\[
+	\vec{F} = -kx\vec{i}
+	\] 
+	e possiamo scrivere la derivata dle lavoro come:
+	\[
+	dL = -kx\vec{i} \cdot d\vec{s} = -kxdx
+	\]
+	e quindi il lavoro è dato da:
+	\begin{align*}
+		L &= -\int_{x_A}^{x_B}kxdx \\
+		&= \Bigg[-\frac{1}{2}kx^2\Bigg]_{x_A}^{x_B} \\
+		&= \frac{1}{2}kx_A^2 - \frac{1}{2}kx_B^2 \\
+		&= E_P(A) - E_P(B)
+	\end{align*}
+	ove $E_P(x) = \dfrac{1}{2}kx^2$. \\
+	Il lavoro compiuto dalla molla può essere positivo o negativo, a seconda che il trasferimento \textit{totale} di energia sia verso il blocco o dal blocco mentre questo si muove da $x_A$ a $x_B$.
+	\section{Campi di forza conservativi}
+	Una regione dello spazio è sede di un \textbf{campo di forza} se in ogni punto della regione un elemento di prova, come un punto materiale, una carica elettrica, o altro, risente lazione di una forza. \\
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{forza_conservativa}
+		\caption{Traiettoria chiusa}
+		\label{fig:forza_conservativa}
+	\end{figure}
+	Definiamo con $\vec{F}$ la forza del campo agente su un punto materiale, $\gamma_1$ e $\gamma_2$, in figura, rappresentano le traiettorie da \textit{A} a \textit{B}. \\
+	Il lavoro è dato da:
+	\[
+	L_{AB} = \int_{A\gamma_1}^{B}\vec{F} \cdot d\vec{s} = \int_{A\gamma_2}^{B}F \cdot d\vec{s} = \int_{A}^{B}\vec{F} \cdot d\vec{s}
+	\]
+	Notiamo, quindi, che la forza agisce in ogni punto della traiettoria quindi $\vec{F}$ è una forza conservativa. \\
+	$L_{AB}$ è indipendente dal percorso, dipende solo da \textit{A} e \textit{B} e possiamo definire con $E_p$ l'\textbf{energia potenziale}, che è funzione delle coordinate di un punto tale che:
+	\[
+	L_{AB} = \int_{A}^{B}\vec{F} \cdot d\vec{s} = E_P(A) - E_P(B)
+	\]
+	Nella figura~\ref{fig:forza_conservativa} possiamo analizzare il lavoro lungo una traiettoria chiusa $\gamma$:
+	\begin{align*}
+		\oint_\gamma\vec{F} \cdot d\vec{s} &= \int_{A\gamma_1}^{B}\vec{F} \cdot d\vec{s} + \int_{B\gamma_2}^{A}\vec{F} \cdot d\vec{s} \\
+		&= \int_{A\gamma_1}^{B}\vec{F} \cdot d\vec{s} - \int_{A\gamma_2}^{B}\vec{F} \cdot d\vec{s} \\
+		&= 0
+	\end{align*}
+	\section{Conservazione dell'energia meccanica}
+	Quindi, come abbiamo detto una forza $\vec{F}$ è conservativa se:
+	\[
+	L_{AB} = E_P(A) - E_P(B)
+	\]
+	e per il \namerefl{th:forza_vive_cinetica}:
+	\[
+	L_{AB} = E_K(B) - E_K(A)
+	\]
+	quindi otteniamo due relazioni:
+	\[
+	E_P(A) - E_P(B) = E_K(B) - E_K(A)
+	\]
+	e
+	\[
+	E_P(A) + E_K(A) = E_P(B) + E_K(B)
+	\]
+	Da queste possiamo definire l'energia meccanica $E_M$ come:
+	\[
+	E_M = E_K + E_P
+	\]
+	la quale è costante durante il moto in un campo di forze conservative.
+	\begin{example}{}{}
+		Consideriamo la seguente figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{exa_forze_conservative}
+		\end{figure}
+		Consideriamo quattro momenti distinti:
+		\begin{enumerate}
+			\item il corpo è in equilibrio;
+			\item si applica $\vec{F}$ per sollevare il corpo;
+			\item il corpo viene portato all'altezza \textit{h} e fermato;
+			\item $\vec{F}$ viene eliminata e il corpo cade.
+		\end{enumerate}
+		Quando il corpo è in equilibrio (1), la sua velocità è pari a 0 e quindi $E_K$ che dipende dalla velocità del corpo è nulla. Quando viene applicata $\vec{F}$ essa aumenta e diminisce $\vec{F}_n$ (2). Quando il corpo viene portato ad altezza \textit{h} la forza sarà pari a $\vec{F} = -m\vec{g}$ e, essendo fermo, \textit{v = 0} quindi $E_K = 0$ (3). \\
+		Quindi il corpo è fermo sia all'inizio che alla fine del moto quindi:
+		\[
+		E_{KF}  - E_{KI} = 0 \Rightarrow L_{TOT} = 0 \Rightarrow L_F + L_{peso} = 0
+		\]
+		Quindi:
+		\[
+		L_{peso} = -mgh = -L_F
+		\]
+		Quando il corpo cade (4), dal moto di caduta libera, la velocità di impatto con il suolo è:
+		\[
+		v = \sqrt{2gh}
+		\]
+		e l'energia cinetica all'istante dell'impatto è:
+		\[
+		E_K = \frac{1}{2}mv^2 = mgh
+		\]
+		$L_F = mgh$ è il lavoro compiuto da $\vec{F}$ per sollevare il corpo ad altezza \textit{h}. \\
+		L'energia potenziale $E_P = mgh$ è l'energia potenziale gravitazionale cioè l'energia posseduta dal corpo in virtù della sua posizione nel campo di forze conservative. Durante la caduta l'energia potenziale si trasforma in energia cinetica, mettendo il corpo in moto, come mostrato nella seguente figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{relazione_potenziale_cinetica}
+		\end{figure}
+	\end{example}
+	Sintetizzando, se agiscono solo forze conservative, il lavoro di tali forze causa un aumento dell'energia cinetica, ottenuto a spese della diminuizione di energia potenziale, o viceversa, in modo tale che la \textit{somma delle due energie resti costante}.
+	\section{Lavoro compito dalla forza di attrito radente}
+	Supponiamo che un punto materiale si muove da \textit{i} verso \textit{f}, su una superficie orizzontale, in presenza di attrito, seguendo due percorsi rettilinei, come mostrato nella seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{lavoro_forza_attrito}
+	\end{figure}
+	In entrambi i casi il punto materiale di massa \textit{m} parte da \textit{i} e arriva in \textit{f}, seguendo due percorsi diversi. \\
+	Per un corpo che si muove su un piano, la forza di attrito vale:
+	\[
+	\vec{f}_d = \mu_d\vec{F}_n = \mu_dm\vec{g}
+	\]
+	nella stessa direzione del piano e in verso opposto al moto, quindi l'angolo tra la forza e lo spostamento è pari a $180^\circ$. \\
+	Calcoliamo il lavoro compiuto dalla forza di attrito dinamico nei due casi:
+	\[
+	L_A = f_dd\cos180^\circ = -\mu_dmgd
+	\]
+	e
+	\begin{align*}
+	L_B &= f_d(d+h)\cos180^\circ + f_dh\cos180^\circ \\
+	&= -\mu d mg(d + h) - \mu_d mgh \\
+	&= \mu_dmg(d + 2h) \neq L_A
+	\end{align*}
+	Nel caso della forza d'attrito il lavoro compito \textbf{dipende dal percorso}, a parità di posizione iniziale e finale. \\ 
+	In generale:
+	\[
+	\vec{F}_A = \mu_DF_n \vec{u}_v
+	\]
+	è la froza agente su un punto materiale che si sposta da \textit{A} a \textit{B} e $\vec{u}_v$ è il versore della direzione della velocità. Il lavoro è dato da:
+	\begin{align*}
+	L_{AB} &= \int_{A}^{B}\vec{F}_A \cdot d\vec{s} \\
+	&= \int_{A}^{B}-\mu_dF_n\vec{u}_v \cdot d\vec{s} \\
+	&= -\mu_dF_n \int_{A}^{B}d\vec{s}
+	\end{align*}
+	ove $\mathlarger{\int_{A}^{B}d\vec{s}}$ è la lunghezza dell'arco di traiettoria e $L_{AB}$ dipende dal percorso seguito. \\
+	$\vec{F}_A$ quindi è una forza \textbf{dissipativa} o \textbf{non conservativa}. \\
+	Se su un punto materiale agiscono forze conservative e dissipative, allora per il \namerefl{th:forza_viva_cinetiva}:
+	\[
+	E_{KB} - E_{KA} = L_{CONS} + L_{DISS}
+	\]
+	ove, come detto prima, $L_{CONS} = E_{PA} - E_{PB}$, quindi:
+	\[
+	E_{KB} - E_{KA} = E_{PA} - E_{PB} + L_{DISS}
+	\]
+	Da questa equazione possiamo ricavare $L_{DISS}$:
+	\[
+	L_{DISS} = (E_{KB} + E_{PB}) - (E_{KA} + E_{PA}) = \Delta E_M
+	\]
+	\section{Forze conservative e non}
+		Concludendo, quindi, ci sono forze come la \textbf{forza peso} o la \textbf{forza elastica}, il cui lavoro \textbf{non dipende dal percorso} ma solo dal punto iniziale e finale. Per altre forze, invece, come la \textbf{forza di attrito}, il lavoro compiuto \textbf{dipende anche dal percorso}, anche a parità di punto iniziale e finale.
+	Una \textbf{forza è conservativa} se il lavoro compiuto da essa è indipendente dalla traiettoria seguita, ma dipende solo dalla posizione iniziale e finale. Una forza invece si dice \textbf{dissipativa} o \textbf{non conservativa} se, anche a partià di punto iniziale e finale, il lavoro compiuto dipende dl percorso compiuto.
 \end{document}
