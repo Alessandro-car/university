@@ -58,10 +58,10 @@ linked_list<T>::linked_list(const linked_list& l) {
 	m_head = new list_node<T>;
 	m_head->m_next = m_head;
 	m_head->m_prev = m_head;
-	m_length = l.size();
-	if(!empty()) {
+	m_length = 0;
+	if(!l.empty()) {
 		position p = l.last();
-		while(!end(p)) {
+		for (size_t i = 0; i < l.size(); i++) {
 			insert(l.read(p), begin());
 			p = l.prev(p);
 		}
@@ -93,23 +93,14 @@ typename linked_list<T>::position linked_list<T>::last() const {
 
 template <class T>
 typename linked_list<T>::position linked_list<T>::next(const position& p) const {
-	if (!empty())
-	{
-		if (!end(p))
-			return p->m_next;
-		throw std::out_of_range("Already at the last");
-	}
-	throw std::out_of_range("The list is empty");
+	return p->m_next;
 }
 
 template <class T>
 typename linked_list<T>::position linked_list<T>::prev(const position& p) const {
-	if (!empty()) {
-		if (p != begin())
-			return p->m_next;
-		throw std::out_of_range("Already at the head");
-	}
-	throw std::out_of_range("The list is empty");
+	if (!end(p))
+		return p->m_prev;
+	throw std::out_of_range("Already at the head");
 }
 
 template <class T>
@@ -119,19 +110,16 @@ bool linked_list<T>::end(const position& p) const {
 
 template <class T>
 typename linked_list<T>::value_type linked_list<T>::read(const position& p) const {
-	if (!empty())
+	if (!end(p))
 		return p->m_value;
-	throw std::out_of_range("The list is empty");
+	throw std::out_of_range("Index out of bounds");
 }
 
 template <class T>
 void linked_list<T>::write(value_type e, position& p) {
-	if (!empty()) {
-		if (!end(p))
-				p->m_value = e;
-		throw std::out_of_range("Index out of bounds");
+	if (!empty() && !end(p)) {
+		p->m_value = e;
 	}
-	throw std::out_of_range("The list is empty!");
 }
 
 template <class T>
@@ -147,16 +135,12 @@ void linked_list<T>::insert(value_type e, position p)  {
 
 template <class T>
 void linked_list<T>::erase(position p) {
-	if (!empty()) {
-		if (!end(p)) {
-			p->m_prev->m_next = p->m_next;
-			p->m_next->m_prev = p->m_prev;
-			delete p;
-			m_length--;
-		}
-		throw std::out_of_range("Index out of bounds!");
+	if (!empty() && !end(p)) {
+		p->m_prev->m_next = p->m_next;
+		p->m_next->m_prev = p->m_prev;
+		delete p;
+		m_length--;
 	}
-	throw std::out_of_range("The list is empty");
 }
 
 template <class T>
@@ -176,6 +160,7 @@ bool linked_list<T>::operator==(const linked_list<T>& l) const {
 		p = next(p);
 		pl = l.next(pl);
 	}
+	return true;
 }
 
 template <class T>

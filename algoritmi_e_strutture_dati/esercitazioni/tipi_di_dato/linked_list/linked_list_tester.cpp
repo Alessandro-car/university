@@ -5,20 +5,20 @@
 
 using std::cout;
 using std::cin;
+using std::endl;
 
 int main() {
 	linked_list<int> l;
 	l.insert(1, l.begin());
 	l.insert(2, l.begin());
-	l.insert(3, l.begin());
-	l.insert(4, l.last());
 	try {
 		list_node<int>* p = l.begin();
-		while (!l.end(p)) {
-			cout << l.read(p) << std::endl;
+		for (size_t i = 0; i < l.size(); i++) {
+			cout << l.read(p) << endl;
 			p = l.next(p);
 		}
+
 	} catch (const std::out_of_range& e) {
-		std::cerr << "Exception caught: " << e.what() << std::endl;
+		std::cerr << "Exception caught: " << e.what() << endl;
 	}
 }

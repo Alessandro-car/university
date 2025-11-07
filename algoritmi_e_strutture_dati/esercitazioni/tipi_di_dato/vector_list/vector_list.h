@@ -103,7 +103,7 @@ bool vector_list<T>::end(size_t p) const {
 
 template <class T>
 typename vector_list<T>::position vector_list<T>::next(size_t p) const {
-	if (p >= 1 && p < m_length) {
+	if (p >= 1 && p <= m_length) {
 		return p + 1;
 	}
 	return p;
