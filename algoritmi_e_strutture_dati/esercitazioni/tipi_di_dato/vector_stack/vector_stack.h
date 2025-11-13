@@ -20,7 +20,7 @@ class vector_stack {
 		size_t size() const;
 
 		bool operator==(const vector_stack<T>&) const;
-		vector_stack<T> operator=(const vector_stack<T>&);
+		vector_stack<T>& operator=(const vector_stack<T>&);
 	private:
 		void change_dimension(size_t);
 		T* m_elems;
@@ -103,7 +103,7 @@ bool vector_stack<T>::operator==(const vector_stack<T>& s) const {
 }
 
 template <class T>
-vector_stack<T> vector_stack<T>::operator=(const vector_stack<T>& s) {
+vector_stack<T>& vector_stack<T>::operator=(const vector_stack<T>& s) {
 	if (this != &s) {
 		m_dim = s.m_dim;
 		m_length = s.size();
