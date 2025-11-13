@@ -946,4 +946,165 @@ elimina_duplicati(lista l)
 		\item poter individuare facilmente l'elemento che precede;
 		\item poter realizzare le operazioni di inserimento senza dover usare variabili aggiuntive.
 	\end{itemize}
+	\chapter{Pile}
+	Uno stack o pila è una sequenza di elementi di un certo tipo in cui è possibile aggiungere o togliere elementi soltanto da un estremo, la testa, della sequenza. Può essere vista come un caso speciale di lista in cui l'ultimo elemento inserito è anche il primo ad essere rimosso e non è possibile accedere ad alcun elemento che non sia quello in testa. Questo meccanismo di accesso è detto \textbf{LIFO}, Last In First Out.
+	\section{Specifiche}
+	Le operazioni per il tipo di dato stack comprendono l'operazione di creazione, \texttt{CREAPILA}, per inizializzare la pila alla sequenza vuota, quella di interrogazione \texttt{PILAVUOTA}, per verificare che la pila sia vuota oppure no, quella di lettura \texttt{LEGGIPILA}, per leggere il valore dell'elemento in testa alla pila, e quelle di modifica \texttt{FUORIPILA}, per eliminare l'elemento che si trova in testa alla pila, e \texttt{INPILA}, per aggiungere un elemento in testa alla pila. La specifica sintattica del tipo di dato è la seguente:
+	\begin{align*}
+		\text{CREAPILA:} &\quad () \to \text{pila} \\
+		\text{PILAVUOTA:} &\quad (\text{pila}) \to \text{booleano} \\
+		\text{LEGGIPILA:} &\quad (\text{pila}) \to \text{tipoelem} \\
+		\text{FUORIPILA:} &\quad (\text{pila}) \to \text{pila} \\
+		\text{INPILA:} &\quad (\text{tipoelem}, \text{pila}) \to \text{pila}
+	\end{align*}
+	Indicando col nome \textit{pila} l'insieme delle sequenze di elementi di tipo \textit{tipoelem} e con \textit{P} una generica sequenza $a_1, a_2, \dots, a_n$, la semantica della pila può essere specificata formalmente nel seguente modo:
+	\begin{itemize}
+		\item \texttt{CREAPILA() = } \textit{P'} \\
+		\quad \textit{Post}: P' = $\Lambda$, la sequenza vuota
+		\item \texttt{PILAVUOTA(P) = b} \\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & P = \Lambda \\
+			b = falso & altrimenti 
+		\end{cases}$
+		\item \texttt{LEGGIPILA(P) = a} \\
+		\quad \textit{Pre: P = } $a_1, a_2, \dots, a_n$ e $n \geq 1$ \\
+		\quad \textit{Post:} $a = a_1$
+		\item \texttt{FUORIPILA(P) = P'} \\
+		\quad \textit{Pre:} $P = a_1, a_2, \dots, a_n$ e $n \geq 1$ \\
+		\quad \textit{Post:} $\begin{cases}
+			P' = a_2, \dots, a_n & n > 1 \\
+			P = \Lambda & n = 1
+		\end{cases}$
+		\item \texttt{INPILA(a, P) = P'} \\
+		\quad \textit{Pre:} $P = a_1, a_2, \dots, a_n$ e $n \geq 0$ \\
+		\quad \textit{Post:} $\begin{cases}
+			P'= a, a_1, a_2, \dots, a_n & n > 0 \\
+			P'= a & n = 0
+		\end{cases}$
+	\end{itemize}
+	Poichè la pila è un caso particolare di lista, ogni realizzazione descritta per le liste funziona anche per le pile e per le code. Ad esempio, le operazioni per le pile possono essere simulate con quelle delle liste:
+	\begin{align*}
+		&\texttt{CREAPILA} = \texttt{CREALISTA} \\
+		&\texttt{PILAVUOTA(P)} = \texttt{LISTAVUOTA(P)} \\
+		&\texttt{LEGGIPILA(P)} = \texttt{LEGGILISTA(PRIMOLISTA(P), P)} \\
+		&\texttt{FUORILISTA(P)} = \texttt{CANCLISTA(PRIMOLISTA(P), P)} \\
+		&\texttt{INPILA(a, P)} = \texttt{INSLISTA(a, PRIMOLISTA(P), P)}		
+	\end{align*}
+	\section{Realizzazione con vettore}
+	Una realizzazione dello stack con il tipo di dato pila consiste nel memorizzare gli \textit{n} elementi della pila, in ordine inverso, nelle prime \textit{n} posizioni di un vettore di \textit{maxlung} elementi, mantenendo un curosre alla testa della pila. La pila vuota viene individuata dal valore 0 contenuto nel cursore, mentra la pila satura, è individuata dal valore \textit{maxlung}. \texttt{FUORIPILA} viene realizzata decrementando il valore del cursore, mentre \texttt{INPILA} è realizzata incrementando il valore del cursore ed inserendo il nuovo elemento nella posizione del vettore individuata dal cursore. La realizzazione dettagliata con procedure Pascal è la seguente:
+	\begin{lstlisting}[style=pascalstyle]
+type
+	pila = record
+		testa: 0..maxlung;
+		elementi: array[1..maxlung] of tipoelem;
+	end;
+	
+procedure CREAPILA(var P: pila);
+	begin
+		P.testa := 0
+	end;
+
+function PILAVUOTA(var P: pila): boolean;
+	begin
+		PILAVUOTA := (P.testa = 0)
+	end;
+
+function LEGGIPILA(var P: pila): tipoelem;
+	begin
+		if not PILAVUOTA(P) then
+			LEGGIPILA := P.elementi[P.testa]
+	end;
+
+procedure FUORIPILA(var P: pila);
+	begin
+		if not PILAVUOTA(P) then
+			P.testa := P.testa - 1
+	end;
+
+procedure INPILA(a: tipoelem, var P: pila);
+	begin
+		if P.testa = maxlung then
+			{ messaggio di errore: pila satura }
+		else begin
+			P.testa := P.testa + 1;
+			P.elementi[P.testa] := a
+		end
+	end;
+	\end{lstlisting}
+	\section{Pila e procedure ricorsive}
+	Una applicazione importante delle pile consiste nella gestione dell'esecuzione di procedure ricorsive. Infatti, l'esecuzione di una procedura ricorsiva prevede il ``salvataggio'' dei dato sui quali lavora la procedure al momento di una nuova chiamata ricorsiva interna. Tali dati sono successivamente riesumati quando la computazione interna termina e viene ripresa la computazione che era stata sopspesa. \\
+	Grazie alle pile è sempre possibile, dato un programma ricorsivo, trasformarlo in uno iterativo. I programmi ricorsivi corrispondono a metodi solutivi particolarmente adatti a problemi per i quali:
+	\begin{itemize}
+		\item la soluzione del problema di rango \textit{n} è definibile in termini della soluzione del problema di rango inferiore a \textit{n};
+		\item è definibile una soluzione per assioma sul problema di rango minimo (1 o 0). 
+	\end{itemize}
+	Ad esempio, la successione di fibonacci è definita come una successione il cui $k-$esimo elemento è uguale alla somma dei due che lo precedono:
+	\begin{align*}
+		&fib(1) = 1 \quad fib(2) = 1 \quad \text{livello assiomatico} \\
+		&fib(k) = fib(k - 1) + fib(k - 2) \quad k > 2			
+	\end{align*}
+	La ricorsione può essere usata per formalizzare un'ampia classe di strutture dati che mostrano caratteristiche ricorsive nella struttura.  \\
+	Vedere l'esempio delle torre di Hanoi.
+	\chapter{Code}
+	Una coda è una sequenza di elementi di un certo tipo, in cui è possibile aggiungere elementi ad un estremo, il fondo, e togliere elementi dall'altro estremo, la testa. Può essere considerata come una particolare lista in cui il primo elemento inserito è anche il primo ad essere rimosso e non è possibile accedere ad alcun elemento che non sia quello in testa o quello in fondo. Tale meccanismo di accesso è detto \textbf{FIFO}, First In First Out.
+	\section{Specifiche}
+	Le operazioni per il tipo di dato stack comprendono l'operazione di creazione, \texttt{CREACODA}, \texttt{CODAVUOTA}, \texttt{LEGGICODA}, \texttt{FUORICODA}, con la stessa specifica delle rispettiva operazioni della pila, e \texttt{INCODA}, per aggiungere un elemento in fondo alla coda. La specifica semantica di \texttt{INCODA} è ovviamente diversa da quella di \texttt{INPILA}.
+	\begin{align*}
+		&\texttt{INCODA(a, Q) = Q'} \\
+		&\quad Pre: Q = a_1, a_2, \dots, a_n \quad n \geq 0 \\
+		&\quad Post: \begin{cases}
+			Q' = a_1, a_2, \dots, a_n, a & n > 0 \\
+			Q'= a & n = 0
+		\end{cases}
+	\end{align*}
+	Per simulare \texttt{INCODA} con operazioni delle liste, bisogna distinguere il caso di inserzione in una coda vuota da quello di inserzione in una coda non vuota. Nel primo caso la simulazione è identica a quella di \texttt{INPILA}, mentre nel secondo caso occorre inserire l'elemento nella posizione che segue quella dell'ultimo elemento della lista:
+	\[
+	\texttt{INCODA(a, Q) = INSLISTA(a, SUCCLISTA(ULTIMOLISTA(Q), Q), Q)}
+	\]
+	\section{Realizzazione di una coda con vettore circolare}
+	Supponiamo di avere un array di \textit{maxlung} elementi, indicati da 0 a \textit{maxlung - 1}, in cui l'elemento di indice 0 è considerato come successore di quello di indice \textit{maxlung - 1}. La coda è contenuta in \textit{n} posizioni consecutive del vettore e i suoi elementi sono individuati da due cursori. Per cancellare o inserire un elemento, viene incrementato di uno (modulo \textit{maxlung}) il rispettivo cursore di testa o di fondo. In questo modo la coda ``migra'' lungo il vettore circolare e, ad ogni istante, si trova da qualche parte nel vettore, sempre in posizioni consecutive secondo il verso orario. Per non utilizzare due cursori, per individuare la coda è sufficiente conoscere l'indice del primo elemento e la lunghezza della coda stessa. Infatti, se \textit{i} è la posizione dell'elemento in testa alla coda, allora quello dell'ultimo elemento della coda è $(i + n - 1) \mod{maxlung}$.
+	\begin{lstlisting}[style=pascalstyle]
+type
+	coda = record
+		elementi: array[0..maxlung - 1] of tipoelem;
+		testa: 0..maxlung - 1;
+		lung: 0..maxlung;
+	end;
+
+procedure CREACODA(var Q: coda);
+	begin
+		Q.testa := 0;
+		Q.lung := 0
+	end;
+
+function CODAVUOTA(var Q: coda): boolean;
+	begin
+		CODAVUOTA := (Q.lung = 0)
+	end;
+
+function LEGGICODA(var Q: coda): tipoelem;
+	begin
+		if not CODAVUOTA(Q) then
+			LEGGICODA := Q.elementi[Q.testa]
+	end;
+
+procedure FUORICODA(var Q: coda);
+	begin
+		if not CODAVUOTA(Q) then begin
+			Q.testa := (Q.testa + 1) mod maxlung;
+			Q.lung := Q.lung - 1
+		end
+	end;
+
+procedure INCODA(a: tipoelem, var Q: coda);	
+	begin
+		if Q.lung = maxlung then
+			{ messaggio di errore: coda satura }
+		else begin
+		 	Q.elementi[(Q.testa + Q.lung) mod maxlung] := a;
+		 	Q.lung := Q.lung + 1
+	end;	
+\end{lstlisting}
+\section{Realizzazione con puntatori}
+Nella realizzazione con puntatori la coda è realizzata con \textit{n} celle, la prima delle quali è indirizzata da un puntatore ``testa'' e l'ultima da un puntatore ``fondo''. La coda vuota è individuata dal valore nullo del puntatore di testa.
 \end{document}
