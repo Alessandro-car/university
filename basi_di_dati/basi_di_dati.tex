@@ -1152,6 +1152,65 @@ create table Docenza (
  			\]
  		\end{itemize}
  	\end{example}
+ 	\section{Divisione}
+ 	L'operatore di divisione, da un certo punto di vista, può essere visto come l'inverso del prodotto cartesiano. Dati due insiemi di attributi disgiunti $X_1, X_2$, una relazione \textit{r} su $X_1X_2$ e una relazione $r_2$ su $X_2$, la divisione $r \div r_2$ è una relazione su $X_1$ che contiene le tuple ottenute come ``proiezione'' di tuple di $r$ che si combinano con tutte le tuple di $r_2$ per formare tuple di $r$:
+ 	\[
+ 	r \div r_2 = \{t_1\ su\ X_1 \mid \forall t_2 \in r_2\ \exists t \in r\ con\ t[X_1] = t_1\ e\ t[X_2]  = t_2\}
+ 	\]
+ 	Un esempip di divisione è mostrato nella seguente figura:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=.8\textwidth]{divisione_relazioni}
+ 	\end{figure}
+ 	L'operatore di divisione non è essenziale perchè può essere espresso in termini di altri operatori nel modo seguente:
+ 	\[
+ 	r\div r_2 = \pi_{X_1}(r) - \pi_{X_1}((\pi_{X_1}(r) \times r_2) - r)
+ 	\]
+ 	$\pi_{X_1}(r) \times r_2$ contiene le tuple di $\pi_{X_1}(r)$ estese con tutti i possibili valori di $r_2$: quindi la differenza $(\pi_{X_1}(r) \times r_2) - r$ contiene le estensioni di $\pi_{X_1}(r)$ che non compaiono in \textit{r} e infine, la proiezione $\pi_{X_1}((\pi_{X_1}(r) \times r_2) - r)$ contiene le tuple di $\pi_{X_1}(r)$ per le quali un qualche completamento con $r_2$ non compare in $r$. Togliendo a queste $\pi_{X_1}(r)$ otteniamo le tuple di $\pi_{X_1}(r)$ che si combinano con tutte quelle di $r_2$. \\
+ 	L'operatore di divisione è il suo rapporto con il prodotto cartesiano, è facile verificare che, se applichiamo la divisione al risultato di un prodotto cartesiano, riotteniamo le relazioni originarie. Specificatamente date due relazioni $r_1$ e $r_2$, su insiemi di attributi disgiunti, abbiamo che $(r_1 \times r_2) \div r_2 = r_1$. \\
+ 	La seguente figura mostra i risultati della divisione ottenuta con l'operatore di proiezione e differenza:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1\textwidth]{dimostrazione_divisione}
+ 	\end{figure}
+ 	\section{Interrogazioni in algebra relazionale}
+ 	Un'interrogazione può essere definita come una funzione che, applicata a istanze di base di dati, produce relazioni. Più precisamente, dato uno schema \textbf{R} di base di dati, un'interrogazione è una funzione che, per ogni istanza di \textbf{r} di \textbf{R}, produce una relazione su un dato insieme di attributi \textit{X}.  Le espressioni dei vari linguaggi di interrogazione, come l'algebra relazionale, rappresentano delle interrogazioni: ogni espressione definisce una funzione. Indichiamo con $E(\mathbf{r})$ il risultato dell'applicazione dell'espressione \textit{E} alla base di dati \textbf{r}. \\
+ 	In algebra relazionale, le interrogazioni su uno schema di basi di dati \textbf{R} vengono formulate con espressioni i cui atomi sono relazioni in \textbf{R}. \\
+ 	Di seguito, sono mostrate alcune interrogazioni di crescente complessità, che fanno riferimento allo schema contenente le due relazioni:
+ 	\[
+ 	\texttt{Impiegati(\textbf{\underline{Matr}, Nome, Età, Stipendio})}
+ 	\]
+ 	\[
+ 	\texttt{Superivisione(\textbf{Capo, \underline{Impiegato}})} 	
+ 	\]
+ 	La prima interrogazione chiede di trovare matricola, nome ed età degli impiegati che guadagnano più di 40000 mila euro:
+ 	\[
+ 	\pi_{Matr, Nome, Età}(\sigma_{Stipendio\ >\ 40}(\texttt{Impiegati}))
+ 	\]
+ 	La seconda interrogazione coinvolge entrambe le relazioni, in modo molto naturale: trovare le matricole dei capi degli impiegati che guadagnano più di 40mila euro:
+ 	\[
+ 	\pi_{Capo}(\texttt{Supervisione} \underset{Impiegato = Matr}{\bowtie} \sigma_{Stipendio\ >\ 40}(\texttt{Impiegati}))
+ 	\]
+ 	La terza interrogazione chiede di trovare nome e stipendio dei capi degli impiegati che guadagnano più di 40mila euro. In questo caso, possiamo far uso dell'espressione precedente, ma dobbiamo poi produrre, per ciascuna tupla del risultato, le informazioni richieste sul capo che vanno estratte dalla relazione \texttt{Impiegati}. Ogni tupla del risultato è costruita a partire da tre tuple: la prima di \texttt{Impiegati}, relativa a un impiegato che guadagna più di 30mila euro, la seconda di \texttt{Supervisione}, che indica la matricola del capo dell'impiegato in questione, e la terza di \texttt{Impiegati}, con le informazioni relative al capo.  
+ 	\[
+ 	\pi_{NomeC, StipC} \left(
+ 	\begin{aligned}
+ 		& \rho_{MatrC, NomeC, StipC, EtaC \leftarrow Matr, Nome, Stip, Eta}(\text{Impiegati}) \\
+ 		& \bowtie_{MatrC = Capo} \text{Supervisione} \\
+ 		& \bowtie_{Imp = Matr} \sigma_{Stip > 40}(\text{Impiegati})
+ 	\end{aligned}
+ 	\right)
+ 	\]
+ 	La quarta interrogazione è una variante del precedente, in quanto richiede il confronto di due valori dello stesso attributo, di tuple diverse: trovare gli impiegati che guadagnano più del rispettivo capo, mostrando matricola, nome e stipendio di ciascuno di essi e del capo.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{quarta_interrogazione}
+ 	\end{figure}
+ 	L'ultimo esempio richiede più attenzione: trovare matricola e nome dei capi i cui impiegati guadagnano tutti più di 40mila euro.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{quinta_interrogazione}
+ 	\end{figure} 
  	\chapter{Il modello Entità-Relazione}
  	Il modello Entità-Relazione, il modello E-R, è un modello \textit{concettuale} di dati e fornisce una serie di struttire, dette \textit{costrutti}, atte a descrivere la realtà di interesse in maniera facile da comprendere e che prescinde dall'organizzazione dei dati nei calcolatori. \\
  	Questi costrutti sono usati per definire \textit{schemi} che descrivono l'organizzazione e la struttura delle \textit{occorrenze} dei dati, ovvero i valori assunti dai dati al variare del tempo. 
@@ -1248,6 +1307,52 @@ create table Docenza (
  		\caption{Esempio di attributi con cardinalità}
  	\end{figure}
  	\subsection{Identificatori delle entità}
+ 	Gli identificatori delle entità vengono specificati per ciascuna entità di uno schema e descrivono i concetti dello schema che permettono di identificare in maniera univoca ciascuna occorrenza delle entità. In molti casi, uno o più attributi di un'entità sono sufficienti ad individuare un identificatore e prende il nome di identificatore \textit{interno}. \\
+ 	Alcune volte, però, gli attributi di un entità non sono sufficienti a identificare univocamente le sue occorrenze. In questo caso, per identificare univocamente un'occorrenza di un'entità si fa riferimento a uno o più attributi di un'altra entità. Un'entità \textit{E} può essere identificata da altre entità solo se tali entità sono coinvolte in una relazione a cui \textit{E} partecipa con cardinalità (1, 1).  Nei casi in cui l'identificazione di un'entità è ottenuta utilizzando altre entità si parla di identificatore \textit{esterno}. Seguono degli esempi di rappresentazione di identificatore interno ed esterno:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.75\textwidth]{identificatore_interno}
+ 	\end{figure}
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.75\textwidth]{identificatore_esterno}
+ 	\end{figure}  
+ 	Facciamo alcune considerazioni:
+ 	\begin{itemize}
+ 		\item un identificatore può coinvolgere uno o più attributi, ognugno dei quali deve avere cardinalità (1, 1).
+ 		\item un'identificazione esterna può coinvolgere una o più entità, ognuna delle quali deve essere membro di una relazione alla quale l'entità da inteficare partecipa con cardinalità (1, 1).
+ 		\item un'identificazione esterna può coinvolgere un'entità che è a sua volta identificata esternamente, purchè non vengano generati cicli di identificazioni esterne.
+ 		\item ogni entità deve avere almeno un identificatore, ma ne può avere in generale più di uno; nel caso di più identificatori, le restrizioni sopra descritte sono più concessive in quanto gli attributi e le entità coinvolte in alcune identificazioni, tranne una, possono essere opzionali.
+ 	\end{itemize}
+ 	Segue un esempio di schema con rappresentazione di identificatori interni ed esterni:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1\textwidth]{schema_identificatori}
+ 	\end{figure}
  	\subsection{Generalizzazioni}
- 	
+ 	Le generalizzazioni riguardano legami logici tra un'entità \textit{E}, detta entità genitore, e una o più entità $E_1, \dots, E_n$ dette entità \textit{figlie}, di cui \textit{E} è generale, nel senso che le comprende come caso particolare. Si dice in questo caso che \textit{E} è generalizzazione di $E_1, \dots, E_n$ e che le entità $E_1, \dots, E_n$ sono \textit{specializzazioni} dell'entità \textit{E}. Per esempio, l'entità \texttt{Persona} è una generalizzazione delle entità \texttt{Uomo} e \texttt{Donna}. Di conseguenze, esse sono delle specializzazioni dell'entità \texttt{Persona}. \\
+ 	Tra le entità coinvolte in una generalizzazione valgono le seguenti proprietà. 
+ 	\begin{itemize}
+ 		\item Ogni occorrenza di un'entità figlia è anche occorrenza dell'entità genitore. 
+ 		\item Ogni proprietà dell'entità genitore, come attributi, identificatori, relazioni e altre generalizzazioni, è anche proprietà delle entità figlie. Questa proprietà è nota sotto il nome di \textit{ereditarietà}. 
+ 	\end{itemize}
+ 	Le generalizzazioni vengono rappresentate graficamente mediante delle frecce che congiungono le entità figlie con l'entità genitore. Per le entità figlie, le proprietà ereditate non vanno rappresentate esplicitamente. \\
+ 	Le generalizzazioni possono essere classificate sulla base di due proprietà tra loro ortogonali. 
+ 	\begin{itemize}
+ 		\item Una generalizzazione è \textit{totale} se ogni occorrenza dell'entità genitore è un'occorrenza di almeno una delle entità figlie, altrimenti è \textit{parziale};
+ 		\item Una generalizzazione è \textit{esclusiva} se ogni occorrenza dell'entità genitore è al più un'occorenza di una delle delle entità figlie, altrimenti è \textit{sovrapposta}.
+ 	\end{itemize}
+ 	Ad esempio, la generalizzazione tra \texttt{Persona, Uomo e Donna} è totale perchè gli uomini e le donne costituiscono tutte le persone, ed è anche esclusiva perchè una persone è uomo o donna. Una generalizzazione tra l'entità \texttt{Professionista} e le entità \texttt{Ingegnere e Dottore} è invece parziale ed esclusiva. Tra l'entità \texttt{Persona} e le entità \texttt{Studente} e \texttt{Lavoratore} esiste una generalizzazione parziale e sovrapposta, perchè esistono studenti che sono anche lavoratori. \\
+ 	Seguono degli esempi di generalizzazioni tra entità:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1.0\textwidth]{generalizzazioni}
+ 	\end{figure}
+ 	Le generalizzazioni sovrapposte possono essere facilmente trasformate in generalizzazioni esclusive aggiungendo una o più entità figlie per rappresentare i concetti che costituiscono le ``intersezioni'' delle entità che si sovrappongono. Nel caso degli studenti e dei lavoratori è sufficiente aggiungere l'entità \texttt{StudenteLavoratore}. \\
+ 	Una stessa entità può essere coinvolta in più generalizzazioni diverse. Possono anche esserci generalizzazioni su più livelli, in questo caso si parla di \textit{gerarchia} di generalizzazioni. Infine, una generalizzazione può avere una sola entità figlia: si parla in questo caso di \textit{sottoinsieme}. \\
+ 	Le proprietà di esclusività e sovrapposta e di generalizzazione totale e parziale venegono rappresentate nel seguente modo:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.25\textwidth]{rappresentazione_generalizzazione}
+ 	\end{figure}
 \end{document}
