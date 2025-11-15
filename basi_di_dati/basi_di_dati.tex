@@ -923,6 +923,7 @@ create table Docenza (
  		\item operatore di \textit{join} in varie forme: \textit{join naturale, prodotto cartesiano, semijoin} e \textit{theta-join};
  		\item operatore di \textit{divisione}, che è ridondante perchè esprimibile per mezzo di altri operatori. 
  	\end{itemize}
+ 	\section{Algebra relazionale}
  	\subsection{Unione, intersezione e differenza}
  	Notiamo che le relazioni sono insiemi e quindi ha senso definire su di esse gli operatori insiemistici tradizionali di unione, differenza e intersezione, quest'ultima è esprimibile per mezzo della differenza in quanto $r \cap s = r - (r - s)$. Pero', dobbiamo prestare attenzione sul fatto che una relazione non è genericamente un insieme di tuple, ma un insieme di tuple \textit{omogenee}, quindi pur potendo, il linea di principio, definire delle operazioni insiemistiche sulle relazioni, non ha senso, dal punto di vista del modello relazionale, definirli con riferimento a relazioni su attributi diversi. Pertanto, consideriamo ammissibili, nell'algebra relazionale, solo applicazioni degli operatori di unione, differenza e intersezione a coppie di operandi definite sugli stessi attributi. La seguente figura mostra degli esempi di applicazione dei tre operatori, che confermano le classiche definizioni ma ridefinite sul nostro contesto:
  	\begin{itemize}
@@ -960,7 +961,7 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.7\textwidth]{unione_ridenominazione}
  	\end{figure}
- 	\section{Selezione}
+ 	\subsection{Selezione}
  	Esaminiamo, ora, gli operatori più tipici dell'algebra relazionale, che permettono di manipolare le relazioni. Si tratta di tre operatori: selezione, proiezione e join con diverse varianti. \\
  	È bene precisare che la selezione e la proiezione svolgono funzioni ``complementari'', sono entrambe definire su un operando e producono come risultato una porzione dell'operando. Più precisamente la selezione produce un sottinsieme delle tuple, su tutti gli attributi, mentre la proiezione dà un risultato cui contribuiscono tutte le tuple, ma su un sottoinsieme degli attributi. Quindi, possiamo dire che la selezione genera ``decomposizioni orizzontali'' e la proiezione ``decomposizioni verticali''. La situazione descritta è mostrata nella seguente figura: 
  	\begin{figure}[H]
@@ -997,7 +998,7 @@ create table Docenza (
  	\item \textit{Proprietà commutativa}: $\Theta_{F_1}(\Theta_{F_2}(r)) = \Theta_{F_2}(\Theta_{F_1}(r))$
  	\item \textit{Idempotenza}: $\Theta_{F_1}(\Theta_{F_2}(r)) = \Theta_{F_1 \wedge F_2}(r)$
  	\end{itemize}
- 	\section{Proiezione}
+ 	\subsection{Proiezione}
  	L'opertore di proiezione presenta una definizione ancora più semplice di quella di selezione: dati una relazione $r(X)$ e un sottoinsieme $Y$ di $X$, la \textit{proiezione} di $r$ su $Y$ è l'insieme di tuple su $Y$ ottenute dalle tuple di $r$ considerando solo i valori su $Y$:
  	\[
  	\pi_Y(r) = \{t[Y] \mid t \in r\}
@@ -1017,9 +1018,9 @@ create table Docenza (
  		\item se $Y$ è superchiave, allora $r$ non contiene tuple uguali su $Y$, quindi ogni tupla da un contributo diverso alla proiezione;
  		\item se la proiezione ha tante tuple quante l'operando, allora ciascuna tupla contribuisce alla proiezione con valori diversi, quindi $r$ non contiene coppie di tuple uguali su $Y$ e questa è la definizione di superchiave. 
  	\end{itemize} 
- 	\section{Join}
+ 	\subsection{Join}
  	Esaminiamo l'operatore più caratteristico dell'algebra relazionale, l'operatore di join, che permette di correlare dati contenuti in relazioni diverse, confrontando i valori contenuti in esse e utilizzando la caratteristica fondamentale del modello, cioè quella di essere basato su valori. Esistono due versioni dell'operatore: il \textit{join naturale} utile per riflessioni astratte e il \textit{theta-join} che è più rilevante dal punto di vista pratico.
- 	\subsection{Join naturale}
+ 	\subsubsection{Join naturale}
  	Il \textit{join naturale} è un operatore che correla dati in relazioni diverse, sulla bae di valori uguali in attributi con lo stesso nome. L'operatore è denotato con il simbolo $\bowtie$. Il risultato del join è costituito da una relazione sull'unione degli insiemi di attributi degli operandi e le sue tuple sono ottenute combinando le tuple degli operandi con valori uguali sugli attributi comuni. Un esempio di join è mostrato nella seguente figura:
  	\begin{figure}[H]
  		\centering
@@ -1040,7 +1041,7 @@ create table Docenza (
  		\includegraphics[width=0.5\textwidth]{join_chiave}
  	\end{figure}
  	Notiamo che ciascuna delle tuple di \textit{Infrazioni} è stata combinata con una e una sola delle tuple di \textit{Auto}: una sola perchè \textbf{Prov} e \textbf{Numero} formano una chiave di \textit{Auto}, almeno una perchè è definito il vincolo di integrità referenziale fra \textbf{Prov} e \textbf{Numero} in \textit{Infrazioni} e \textit{Auto}. Il join, quindi, ha esattamente tante tuple quante la relazione \textit{Infrazioni}. 
- 	\subsection{Join completi e incompleti} 
+ 	\subsubsection{Join completi e incompleti} 
  	Analizziamo diversi esempi di join, in modo da effettuare delle valutazioni sulla dimensione del risultato e al contributo a esso portato dalle tuple degli operandi. Nel primo esempio di join mostrato, ciasuna tupla di ciasuno degli operandi contribuisce ad almeno una tupla del risultato, quindi ci troviamo in un caso di \textit{join completo}: per ogni tupla $t_1$ di $r_1$, esiste una tupla $t$ in $r_1 \bowtie r_2$  tale che $t[X_1] = t$, analogamente per $r_2$. Questa proprietà non è sempre verificata, perchè richeide una corrispondenza fra le tuple delle due relazioni. \\
  	Consideriamo la relazione in figura:
  	\begin{figure}[H]
@@ -1067,7 +1068,7 @@ create table Docenza (
  		\item se $X_1 \cap X_2$ contiene una chiave per $r_2$, allora il join di $r_1(X_1)$ e $r_2(X_2)$ contiene al più $|r_1|$ tuple;
  		\item se $X_1 \cap X_2$ coincide con una chiave per $r_2$ e sussite il vincolo referenziale fra $X_1 \cap X_2$ in $r_1$ e la chiave di $r_2$, allora il join di $r_1(X_1)$ e $r_2(X_2)$ contiene esattamente $|r_1|$ tuple.
  	\end{itemize}
- 	\subsection{Join esterni} 
+ 	\subsubsection{Join esterni} 
  	La caratteristica dell'operatore di join di ``tralasciarè' le tuple di una relazione che non hanno controparte nell'altra è utile in molti casi ma pericolosa in altri in quanto potrebbe omettere informazioni utili. Consideriamo la figura~\ref{fig:dangling}, supponendo di essere interessati a tutti gli impiegati, con l'indicazione del capo, se noto. Per questo, è stata proposta una variante dell'operatore di join chiamta \textit{join esterno} o \textit{outer join}, che prevede che tutte le tuple diano un contributo al risultato, eventualmente estese con valori nulli ove non vi siano controparti opportune. Esistono tre varianti dell'opearatore di join esterno:
  	\begin{enumerate}
  		\item il join esterno \textit{sinistro}, che estende solo le tuple del primo operando;
@@ -1081,7 +1082,7 @@ create table Docenza (
  		\caption{Join esterni}
  		\label{fig:join_esterni}
  	\end{figure}
- 	\subsection{Semijoin}
+ 	\subsubsection{Semijoin}
  	Un operatore derivato da quello di join è il \textit{semijoin}, che restituisce le tuple di una relazione che partecipano al join naturale di tale relazione con un'altra. La definizione formale dell'operatore, che viene indicano con il simbolo $\ltimes$, è la seguente: 
  	\begin{center}
  		date due relazioni di $r_1(X_1)$ e $r_2(X_2)$ il semijoin $r_1 \ltimes r_2$ è una relazione definita su $X_1$ come segue:
@@ -1100,7 +1101,7 @@ create table Docenza (
  		\caption{Semijoin}
  		\label{fig:semijoin}
  	\end{figure}
- 	\subsection{Join n-ario, intersezione e prodotto cartesiano}
+ 	\subsubsection{Join n-ario, intersezione e prodotto cartesiano}
  	Vediamo alcune proprietà dell'operatore di join naturale. In primo luogo, osserviamo che l'operatore di join è commutativo e associativo. Pertanto, possiamo scrivere, ove necessario, sequenza di join senza parentesi:
  	\[
  	r_1 \bowtie r_2 \bowtie \dots \bowtie r_n \text{ oppure } \bowtie_{i=1}^{n}r_i
@@ -1116,7 +1117,7 @@ create table Docenza (
  		\caption{Un prodotto cartesiano}
  		\label{fig:prod_cartesiano}
  	\end{figure}
- 	\subsection{Theta-join ed equi-join}
+ 	\subsubsection{Theta-join ed equi-join}
  	Osservando la figura~\ref{fig:prod_cartesiano} possiamo notare che un prodotto cartesiano di solito ha poca utilità, in quanto concatena tuple non correlate dal punto di vista semantico. Spesso, il prodotto cartesiano viene seguito da una selezioen, che c'entra l'attenzione su tuple correlate secondo le esigenze. Per esempio, sulle relazioni \texttt{Impiegati} e \texttt{Progetti} ha senso definire un prodotto cartesiano seguito dalla selezione che mantiene solo le tuple con valori uguali sull'attributo \textbf{Progetto} di \texttt{Impiegati} e su \textbf{Codice} di \texttt{Progetti}, come mostrato nella seguente figura:
  	\begin{figure}[H]
  		\centering
@@ -1152,7 +1153,7 @@ create table Docenza (
  			\]
  		\end{itemize}
  	\end{example}
- 	\section{Divisione}
+ 	\subsection{Divisione}
  	L'operatore di divisione, da un certo punto di vista, può essere visto come l'inverso del prodotto cartesiano. Dati due insiemi di attributi disgiunti $X_1, X_2$, una relazione \textit{r} su $X_1X_2$ e una relazione $r_2$ su $X_2$, la divisione $r \div r_2$ è una relazione su $X_1$ che contiene le tuple ottenute come ``proiezione'' di tuple di $r$ che si combinano con tutte le tuple di $r_2$ per formare tuple di $r$:
  	\[
  	r \div r_2 = \{t_1\ su\ X_1 \mid \forall t_2 \in r_2\ \exists t \in r\ con\ t[X_1] = t_1\ e\ t[X_2]  = t_2\}
@@ -1173,7 +1174,7 @@ create table Docenza (
  		\centering
  		\includegraphics[width=1\textwidth]{dimostrazione_divisione}
  	\end{figure}
- 	\section{Interrogazioni in algebra relazionale}
+ 	\subsection{Interrogazioni in algebra relazionale}
  	Un'interrogazione può essere definita come una funzione che, applicata a istanze di base di dati, produce relazioni. Più precisamente, dato uno schema \textbf{R} di base di dati, un'interrogazione è una funzione che, per ogni istanza di \textbf{r} di \textbf{R}, produce una relazione su un dato insieme di attributi \textit{X}.  Le espressioni dei vari linguaggi di interrogazione, come l'algebra relazionale, rappresentano delle interrogazioni: ogni espressione definisce una funzione. Indichiamo con $E(\mathbf{r})$ il risultato dell'applicazione dell'espressione \textit{E} alla base di dati \textbf{r}. \\
  	In algebra relazionale, le interrogazioni su uno schema di basi di dati \textbf{R} vengono formulate con espressioni i cui atomi sono relazioni in \textbf{R}. \\
  	Di seguito, sono mostrate alcune interrogazioni di crescente complessità, che fanno riferimento allo schema contenente le due relazioni:
@@ -1211,6 +1212,447 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.7\textwidth]{quinta_interrogazione}
  	\end{figure} 
+ 	A volte, può essere conveniente utilizzare per l'algebra relazionale, una notazione grafica, in cui un'espressione è rappresentata per mezzo di un albero le cui foglie sono operandi e gli altri nodi corrispondono a degli operatori. Ogni nodo che non sia una foglia ha un numero di figli pari al numero di operandi dell'operatore, quindi i nodi con proiezione, selezioni e ridenominazioni hanno un solo figlio, mentre quelli relativi agli altri operatori ne hanno due. Di seguito viene mostrato un esempio di questa notazione:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.95\textwidth]{albero_interrogazioni}
+ 	\end{figure}
+ 	\subsection{Equivalenza di espressioni algebriche}
+ 	L'algebra relazionale permette di formulare espressioni fra loro \textit{equivalenti}, cioè che producono lo stesso risultato. Ad esempio vale la seguente equivalenza:
+ 	\[
+	x \times (y + z) \equiv x \times y + x \times z
+ 	\]
+ 	Nell'algebra relazionale possiamo dare una definizione analoga, ma dobbiamo fare attenzione al fatto che l'equivalenza dipende dallo schema, oppure essere assoluta:
+ 	\begin{itemize}
+ 		\item $E_1 \equiv_\mathbf{R} E_2 \iff E_1(\mathbf{r}) = E_2(\mathbf{r})$ per ogni istanza di \textbf{r} in \textbf{R}.
+ 		\item $E_1 \equiv E_2 \iff E_1 \equiv_\mathbf{R} E_2$ per ogni schema \textbf{R}.
+ 	\end{itemize}
+ 	La distinzione è dovuta al fatto che gli schemi degli operandi non vengono esplicitati nelle espressioni e il comportamento può variare a seconda degli attributi nei vari schemi di relazione. Un esempio di equivalenza assoluta è:
+ 	\[
+ 	\pi_{AB}(\sigma_{A > 0}(R)) \equiv \sigma_{A > 0}(\pi_{AB}(R))
+ 	\]
+ 	mentre la seguente equivalenza:
+ 	\[
+ 	\pi_{AB}(R_1) \bowtie \pi{AC}(R_2) \equiv_{\mathbf{R}} \pi_{ABC}(R_1 \bowtie R_2)
+ 	\]
+ 	sussite se e solo se nello schema \textbf{R} l'intersezione fra gli insiemi di attributi $R_1$ e $R_2$ è pari ad \textit{A}. Infatti, se ci fossero anche altri attributi, il join operebbe solo su \textit{A} nella prima espressione e su \textit{A} e gli altri attributi nella seconda, con risultati diversi. \\
+ 	L'equivalenza di espressioni dell'algebra risulta molto importante dal punto di vista applicativo, infatti, le interrogazioni specificate in linguaggio SQL vengono tradotte in algebra relazionale e viene valutato il costo in termini di risultati intermedi. In presenza di alternative equivalenti, viene scelta quella con costo minore. Vengono, quindi, utilizzate \textit{trasformazioni di equivalenza} cioè operazioni che sostituiscono un'espressione con un'altra a essa equivalente. In particolare, risultano interessanti le trasformazioni che riducono le dimensioni dei risultati intermedi e quelle che preparano un'espressione all'applicazione di una trasformazione che riduce le dimensioni dei risultati intermedi. Vediamo alcune trasformazioni interessanti.
+ 	\begin{enumerate}
+ 		\item \textbf{Atomizzazione delle selezioni}: una selezione congiuntiva può essere sostituita da una cascata di selezioni atomiche:
+ 		\[
+ 		\sigma_{F_1 \wedge F_2}(E) \equiv \sigma_{F_1}(\sigma_{F_2}(E))
+ 		\]
+ 		dove \textit{E} è una qualunque espressione. Questa trasformazione permette di applicare successive trasformazioni che operano su selezioni con condizioni atomiche.
+ 		\item \textbf{Idempotenza delle proiezioni}: una proiezione può essere trasformata in una cascata di proiezioni che ``eliminano'' i vari attributi in fasi successive:
+ 		\[
+ 		\pi_{X}(E) \equiv \pi_{X}(\pi_{XY}(E))
+ 		\] 
+ 		Anche questa è una trasformazione preliminare rispetto ad altre.
+ 		\item \textbf{Anticipazione della selezione rispetto al join}, detta anche \textit{pushing selections down}, con riferimento al fatto che, nella rappresentazione di espressioni sotto forma di alberi, la selezione viene spostata verso il basso:
+ 		\[
+ 		\sigma_{F}(E_1 \bowtie E_2) \equiv E_1 \bowtie \sigma_F(E_2) 
+ 		\]
+ 		se la condizione $F$ fa riferimento solo ad attributi nella sottoespressione $E_2$.
+ 		\item \textbf{Anticipazione della proiezione rispetto al join}, detta anche \textit{pushing projections down}: siano $E_!$  e $E_2$ definite rispettivamente su $X_1$ e $X_2$: se $Y_2 \subseteq X_2$ e $Y_2 \supseteq (X_1 \cap X_2)$, cioè gli attributi $X_2 - Y_2$ non sono coinvolti nel join, allora vale l'equivalenza:
+ 		\[
+ 		\pi_{X_1, Y_2}(E_1 \bowtie E_2) \equiv E_1 \bowtie \pi_{Y_2}(E_2)
+ 		\]
+ 		Combinando questa regola con quella dell'idempotenza, possiamo ottenere la seguente equivalenza:
+ 		\[
+ 		\pi_Y(E_1 \underset{F}{\bowtie} E_2) \equiv \pi_Y(\pi_{Y_1}(E_1) \underset{F}{\bowtie} \pi_{Y_2}(E_2))
+ 		\]
+ 		dove indicando con $X_1$ ed $X_2$ gli attributi di $E_1$ ed $E_2$ rispettivamente e con $J_1$ ed $J_2$ i rispettivi sottoinsiemi coinvolti nella condizione $F$ di join:
+ 		\[
+ 		Y_1 = (X_1 \cap Y) \cup J_1 
+ 		\]
+ 		\[
+ 		Y_2 = (X_2 \cap Y) \cup J_2
+ 		\]
+ 		In sostanza, possiamo eliminare da ciascuna relazione gli attributi che non compaiono nel risultato finale e non sono coinvolti nel join. 
+ 		\item \textbf{Inglobamento di una selezione in un prodotto cartesiano a formare un join}:
+ 		\[
+ 		\sigma_F(E_1 \bowtie E_2) \equiv E_1 \underset{F}{\bowtie} E_2
+ 		\]
+ 		con $X_1 \cap X_2  = \emptyset$, indicando con $X_1$ ed $X_2$ rispettivamente gli attributi di $E_1$ ed $E_2$
+ 	\end{enumerate}
+ 	Data la seguente base di dati:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1.0\textwidth]{esempio_Bdd_espressioni}
+ 		\caption{Esempio di una base di dati per le espressioni}
+ 		\label{fig:esempio_bdd_espressioni} 
+ 	\end{figure}
+ 	Supponiamo di voler trovare i numeri di matricola dei capi di impiegati con meno di trent'anni.
+ 	\[
+ 	\pi_{Capo}(\sigma_{Matr = Imp \wedge Eta < 30}(\texttt{Impiegati} \bowtie \texttt{Supervisione}))
+ 	\]
+ 	La qualità di quest'espressione è molto bassa, perchè per calcolare pochi valori effettua un prodotto cartesiano. Utilizzando le regole precedenti possiamo migliorarla significativamente. Con la regola 1. spezziamo la selezione:
+ 	\[
+ 	\pi_{Capo}(\sigma_{Matr = Imp}(\sigma_{Eta < 30}(\texttt{Impiegati} \bowtie \texttt{Supervisione})))
+ 	\]
+ 	Possiamo poi fondere la prima selezione con il prodotto cartesiano e formare un join, la regola 5., e anticipare la seconda selezione rispetto al join, la regola 3.:
+ 	\[
+ 	\pi_{Capo}(\sigma_{Eta < 30}(\texttt{Impiegati}) \underset{Matr = Imp}{\bowtie} \texttt{Supervisione})
+ 	\]
+ 	Infine, possiamo eliminare dal primo argomenti del join gli attributi non necessari, utilizzando la regola 4.:
+ 	\[
+ 	\pi_{Capo}(\pi_{Matr}(\sigma_{Eta < 30}(\texttt{Impiegati})) \underset{Matr = Imp}{\bowtie} \texttt{Supervisione})
+ 	\]
+ 	Vediamo ora altre trasformazioni interessanti:
+ 	\begin{enumerate}
+ 		\setcounter{enumi}{5}
+ 		\item \textbf{Distributività della selezione rispetto all'unione}:
+ 		\[
+ 		\sigma_F(E_1 \cup E_2) \equiv \sigma_F(E_1) \cup \sigma_F(E_2)
+ 		\]
+ 		\item \textbf{Distributività della selezione rispetto alla differenza}:
+ 		\[
+ 		\sigma_F(E_1 - E_2) \equiv \sigma_F(E_1) - \sigma_F(E_2)
+ 		\]
+ 		\item \textbf{Distributività della selezione rispetto all'unione}:
+ 		\[
+ 		\pi_F(E_1 \cup E_2) \equiv \pi_F(E_1) \cup \pi_F(E_2)
+ 		\]	
+ 	\end{enumerate}
+ 	Vale la pena notare che la proiezione non è distributiva rispetto alla differenza, come si può verificare applicando le espressioni:
+ 	\[
+ 	\pi_A(R_1 - R_2) \text{ e } \pi_A(R_1) - \pi_A(R_2)
+ 	\]
+ 	a due relazioni su $AB$ che contengano tuple uguali su $A$ e diverse su $B$. \\
+ 	Un altro gruppo di trasformazioni contiene quelle che si basano sull'intersezione fra gli operatori insiemistici e le selezioni complesse:
+ 	\begin{enumerate}
+ 		\setcounter{enumi}{8}
+ 		\item $\sigma_{F_1 \vee F_2}(R) \equiv \sigma_{F_1}(R) \cup \sigma_{F_2}(R)$
+ 		\item $\sigma_{F_1 \wedge F_2}(R) \equiv \sigma_{F_1}(R) \cap \sigma_{F_2}(R) \equiv \sigma_{F_1}(R) \bowtie \sigma_{F_2}{R}$
+ 		\item $\sigma_{F_1 \wedge \neg(F_2)}(R) \equiv \sigma_{F_1}(R) - \sigma_{F_2}(R)$
+ 	\end{enumerate}
+ 	Abbiamo poi la proprietà commutativa e associativa di tutti gli operatori binari, esclusa la differenza, e la proprietà distributiva del join rispetto all'unione:
+ 	\begin{enumerate}
+ 		\setcounter{enumi}{11}
+ 		\item $E \bowtie (E_1 \cup E_2) \equiv (E \bowtie E_1) \cup (E \bowtie E_2)$
+ 	\end{enumerate}
+ 	Vale la pena notare che la presenza di risultati intermedi vuoti permette di semplificare le espressioni in modo abbastanza naturale. Notiamo che un join in cui uno degli operandi sia la relazione vuota produce un risultato vuoto, perchè non è possibile concatenare con alcuna tupla le tuple dell'altra relazione.
+ 	\subsection{Algebra con valori nulli}
+ 	Finora abbiamo supposto che le espressioni dell'algebra venissero applicate a relazioni prive di valori nulli, ma abbiamo studiato l'importanza dei valori nulli nelle applicazioni reali e quindi dobbiamo studiare l'impatto che essi hanno nei linguaggi trattati. \\
+ 	Consideriamo la seguente relazione:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.5\textwidth]{algebra_valori_nulli}
+ 		\caption{Una relazione con valori nulli}
+ 	\end{figure}
+ 	Consideriamo la seguente selezione:
+ 	\[
+ 	\sigma_{Eta > 30}(\texttt{Persone})
+ 	\]
+ 	Sappiamo che la prima tupla fa parte del risultato e la seconda no. Ma per quanto riguarda il terzo? A proposito di queste interrogazioni è stato proposto di utilizzare una logica a tre valori, in cui un predicato può essere vero oppure falso oppure assumere un terzo, nuovo valore di verità che chiameremo \textit{unknown} e rappresentiamo il simbolo con \textit{U}. Quindi ritornando al nostro esempio, la prima tupla appartiene al risultato quindi è vera, la seconda non appartiene quindi è falsa e la terza forse appartiene e forse no. Le tabelle dei connettivi logici \textit{not, or} e \textit{and} si estendono nel modo seguente:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.7\textwidth]{porte_logiche_3in}
+ 	\end{figure}
+ 	Una selezione su relazioni con valori nulli produce come risultato le tuple per cui il risultato predicato risulta vero. Il valore \textit{unknown} rappresenta un valore di verità intermedio tra vero e falso, e il significato dei tre connettivi in questo caso diventa: il \textit{not} è vero solo se il valore di partenza è falso, l'\textit{and} è vero solo se tutti i termini sono veri e l'\textit{or} è vero se almeno uno dei termini è vero. \\
+ 	La logica a tre valori risulta significativa nel caso di espressioni complesse, in cui il risultato presenta proprietà poco soddisfacenti. Per esempio, consideriamo la seguente espressione:
+ 	\[
+ 	\sigma_{Eta > 30}(\texttt{Persone}) \cup \sigma_{Eta \leq 30}(\texttt{Persone})
+ 	\]
+ 	Questa, a livello logico, dovrebbe restituire la relazione \texttt{Persone}, ma se le due sottoepressioni sono valutate seperatamente, la terza tupla ha un'appartenenza sconosciuta a ciascuna sottoespressione e quindi all'unione. \\
+ 	Il modo migliore per superare gli incovenienti appena discussi consiste nel trattare i valori nulli da un punto di vista meramente sintattico, tralasciando cosa essi potrebbero rappresentare. Allo scopo, si introducono due nuove forme di condizioni atomiche di selezione, che valutano se un valore è specificato oppure nullo:
+ 	\begin{itemize}
+ 		\item \textit{A is null} assume valore vero se una tupla \textit{t} se il valore di \textit{t} su \textit{A} è nullo e falso se esso è specificato;
+ 		\item \textit{A is not null} assume valore vero su una tupla \textit{t} se il valore di \textit{t}  su \textit{A} è specificato e falso se il valore è nullo.
+ 	\end{itemize}
+ 	Quindi, l'espressione:
+ 	\[
+ 	\sigma_{Eta > 30}(\texttt{Persone})
+ 	\]
+ 	restituisce le persone la cui età è nota e maggiore di 30, mentre per ottenere quelle che hanno o potrebbero avere più di trent'anni possiamo utilizzare l'espressione:
+ 	\[
+ 	\sigma_{Eta > 30 \vee \textit{Eta is null}}(\texttt{Persone})
+ 	\]
+ 	\subsection{Viste}
+ 	A volte può risultare mettere a disposizione degli utenti rappresentazioni diverse per gli stessi dati. Nel modello relazionale la tecnica prevista a questo scopo è quella delle \textit{relazioni derivate}, relazioni il cui contenuto è funzione del contenuto di altre relazioni. In una base di dati relazionale, quindi, possono esistere le relazioni \textit{di base}, il cui contenuto è autonomo, e relazioni derivate, il cui contenuto è funzione di quello di altre relazioni. È possibile che una relazione derivata sia funzione di altre relazioni derivate, a condizione che esista un ordinamento fra le relazioni derivate tale che ogni relazione sia definita solo in termini di relazioni di base e di relazioni derivate che la precedono nell'ordinamento. \\
+ 	Possono esistere due tipi di relazioni derivate:
+ 	\begin{itemize}
+ 		\item \textit{viste materializzate}: relazioni effettivamente memorizzate nella base di dati;
+ 		\item \textit{relazioni virtuali}: esse sono anche chiamate \textit{viste} e sono relazioni definite per mezzo di funzioni, non memorizzate nella base di dati, ma utilizzabili nelle interrogazioni come se le fossero. 
+ 	\end{itemize}
+ 	Le viste materializzate hanno il vantaggio di essere immediatamente disponibili per le interrogazioni, ma spesso è oneroso mantenere il loro contenuto allineato con quello delle relazioni da cui derivano. Le relazioni virtuali devono essere calcolate per ogni interrogazione ma non presentano problemi di allienamento. Le viste materializzate sono convenienti quando gli aggiormamenti sono rari rispetto alle interrogazioni e il calcolo della vista è complesso. In generale, non esistono tecniche per mantenere l'allineamento e per questo, i sistemi atttuali forniscono solo meccanismi per la gestione di relazioni virtuali che chiameremo \textit{viste}. \\
+ 	Le viste vengono definite nei sistemi relazioni per mezzo di espressioni del linguaggio di interrogazione. Eventuali interrogazioni che si riferiscono alle viste vengonor risolte sostituendo alla vista la sua definizione. Di solito, i sistemi relazionali stabiliscono la strategia di esecuzione delle interrogazioni dopo aver sostituito alla vista la sua definizione. Per esempio, supponiamo di avere una base di dati sulle seguenti relazioni:
+ 	\[
+ 	R_1(ABC) \quad R_2(DEF) \quad R_3(GH)
+ 	\]
+ 	con una vista definita per mezzo di un prodotto cartesiano seguito da una selezione:
+ 	\[
+ 	R = \sigma_{A > D}(R_1 \bowtie R_2)
+ 	\]
+ 	Su questo schema, l'interrogazione:
+ 	\[
+ 	\sigma_{B = G}(R \bowtie R_3)
+ 	\]
+ 	viene eseguita sostituendo a $R$ la sua definizione:
+ 	\[
+ 	\sigma_{B=G}(\sigma_{A>D}(R_1 \bowtie R_2) \bowtie R_3)
+ 	\]
+ 	L'uso delle viste può essere vantaggioso per diversi motivi:
+ 	\begin{itemize}
+ 		\item Un utente interessato solo a una porzione della base di dati può evitare di considerare le componenti irrilevanti. 
+ 		\item Espressioni molto complesse possono essere definite tramite viste, con vantaggi rilevanti soprattutto se ci sono sottoespressioni ripetute.
+ 		\item Attraverso la definzione di autorizzazioni di accesso rispetto alla viste, è possibile introdurre meccanismi di protezione della privatezza.
+ 		\item In occasione di ristrutturazione di una base di dati, può risultare conveniente definire viste che corrispondano a relazioni sostituite da altre e perciò non più presenti dopo la ristrutturazione, ma ricavabili dalle nuove relazioni. Ad esempio, se uno schema $R(ABC)$ viene sostituito dagli schemi $R_1(AB)$ e $R_2(BC)$ è possibile definire una vista $R = R_1 \bowtie R_2$ e mantenere inalterate le applicazioni che fanno riferimento a $R$.
+ 	\end{itemize}
+ 	Per quanto riguarda le interrogazioni le viste possono essere trattate come le relazioni di base, ma non si può dire lo stesso per le operazioni di aggiormento. Infatti, in molti casi non è possibile definire una semantica degli aggiornamenti sulle viste: dato un aggiormento su una vista, in generale non esiste uno e un solo aggiornamento delle relazioni di base che porti a un'istanza della base di dati cui corrisponda un'istanza della vista che sia il risultato effettivo dell'aggiornamento specificato sulla vista. Per questo, molti sistemi pongono forti limitazioni riguardo alla possibilità di specificare aggiornamenti sulle viste. 
+ 	\section{Calcolo relazionale}
+ 	Il \textit{calcolo relazionale} fa riferimento a una famiglia di linguaggi di interrogazione, basati sul calcolo dei predicati del primo ordine, che hanno la caratteristica di essere \textit{dichiarativi}, cioè di specificare le proprietà del risultato delle interrogazioni, anziché la procedura seguita per generarlo. In contrasto, l'algebra relazionale è un linguaggio \textit{procedurale}, in quanto le sue espressioni specificano passo passo la costruzione del risultato. \\
+ 	Esistono diverse versioni del calcolo relazionale:
+ 	\begin{itemize}
+ 		\item il \textbf{calcolo relazionale sui domini} che presenta in modo naturale tutte le caratteristiche originale di questi linguaggi;
+ 		\item il \textbf{calcolo su tuple con dichiarazioni di range}, che costituisce la base per molti dei costrutti disponibili per le interrogazioni nel linguaggio SQL.
+ 	\end{itemize} 
+ 	Rispetto alla definzione dei calcoli del predicato del primo ordine, nel calcolo relazionale ci sono alcune semplificazioni. Mentre nel calcolo dei predicati abbiamo simboli di predicato e di funzione, nel calcolo relazionale i simboli di predicato corrispondono alle relazioni nelle base di dati e non compaiono simboli di funzione perchè non sono necessari. \\
+ 	Inoltre, nel calcolo dei predicati interessano sia formule aperte, cioè con variabili libere, sia formule chiuse, con tutte variabili legate. Nel calcolo relazionale interessano le formule aperte: un'interrogazione è definita per mezzo di una formula del calcolo e il risultato è costituito dalle tuple di valori che rendono vera la formula stessa.
+ 	\subsection{Calcolo relazione su domini}
+ 	Le espressioni del calcolo relazionale su domini hanno la forma:
+ 	\[
+ 	\{A_1: x_1, \dots, A_k: x_k \mid f\}
+ 	\]
+ 	ove:
+ 	\begin{itemize}
+ 		\item $A_1, \dots, A_k$ sono attributi distinti, che possono anche non comparire nello schema della base di dati rispetto a cui viene formulata l'interrogazione;
+ 		\item $x_1, \dots, x_k$ sono \textit{variabili} che per comodità le consideriamo distinte ma non necessariamente sono distinte;
+ 		\item $f$ è una formula, secondo le seguenti regole:
+ 		\begin{itemize}
+ 			\item Vi sono formule \textit{atomiche} di due tipi:
+ 			\begin{itemize}
+ 				\item $R(A_1: x_1, \dots, A_p: x_p)$, dove $R(A_1\ \dots\ A_p)$ è uno schema di relazione e $x_1, \dots, x_p$ sono varaibili;
+ 				\item $x\theta y$ o $x\theta c$ con $x$ e $y$ variabili, $c$ costante e $\theta$ operatore di confronto $(= , \neq, \leq, \geq, <, >)$
+ 			\end{itemize}
+ 			\item Se $f_1$ e $f_2$ sono formule, allora $f_1 \vee f_2$, $f_1 \wedge f_2$ e $\neg f_1$ sono formule;
+ 			\item Se $f$ è una formula e $x$ una variabile allora $\exists x(f)$ e $\forall x(f)$ sono formule. 
+ 		\end{itemize}
+ 	\end{itemize}
+ 	La lista di coppie $A_1: x_1, \dots A_k: x_k$ viene chiamata \textit{target list} in quanto definisce la struttura del risultato, che è costituito dalla relazione su $A_1, \dots, A_k$ che contiene le tuple i cui valori, sostituiti a $x_1, \dots, x_k$, rendono vera la formula rispetto a un'istanza di base di dati a cui l'espressione viene applicata. \\
+ 	Definiamo il concetto di \textit{valore di verità} informalmente seguento la struttura sintattica delle regole, ove per valore intendiamo ``elemento del dominio'':
+ 	\begin{itemize}
+ 		\item una formula atomica $R(A_1: x_1, \dots, A_p: x_p)$ è vera sui valori di $x_1, \dots, x_p$ che formano una tupla della relazione $r$ sullo schema $R$ nell'istanza di base di dati a cui l'espressione viene applicata;
+ 		\item una formula atomica $x\theta y$ è vera sui valori $a_1$ e $a_2$ se il confronto $a_1 \theta a_2$ è soddisfatto, analogamente per $x \theta c$;
+ 		\item per congiunzione, disgiunzione e negazione valgono le usuali definizioni;
+ 		\item per le formule con i quantificatori:
+ 		\begin{itemize}
+ 			\item $\exists x(f)$ è vera se esiste almeno un valore $a$ che sostituito alla variabile $x$ rende vera $f$;
+ 			\item $\forall x(f)$ è vera se, per ogni possibile valore $a$ per la variabile $x$, la formula $f$ risulta vera.
+ 		\end{itemize}
+ 	\end{itemize}
+ 	Con riferimento allo schema di base di dati sulle relazioni:
+ 	\[
+ 	\texttt{Impiegati}(\text{\underline{Matr}}, \text{Nome, Età, Stipendio})
+ 	\]
+ 	\[
+ 	\texttt{Supervisione}(\text{Capo, \underline{Impiegato}})
+ 	\]
+ 	La prima interrogazione chiede di trovare matricola, nome, età e stipendio degli impiegati che guadagnano più di 40 mila euro:
+ 	\[
+ 	\sigma_{Stipendio > 40}(\texttt{Impiegati})
+ 	\]
+ 	Nel calcolo relazionale questa interrogazione si formula con la seguente espressione:
+ 	\begin{align*}
+ 		& \hspace{2.3cm}\{\text{\textbf{Matr}: }m, \textbf{Nome: } n, \textbf{Età: } e, \textbf{Stipendio: } s \mid  \\
+ 		&\texttt{Impiegati}(\textbf{Matr}: m, \textbf{Nome: } n, \textbf{Età: }e, \textbf{Stipendio: }s) \wedge s > 40\}
+ 	\end{align*}
+ 	Notiamo la presenza di due condizioni nella formula:
+ 	\begin{itemize}
+ 		\item la prima, $\texttt{Impiegati}(\textbf{Matr}: m, \textbf{Nome: } n, \textbf{Età: }e, \textbf{Stipendio: }s)$, richiede che i valori rispettivamente sostituiti alle variabili $m, n, e, s$ costituiscano una tupla della relazione \texttt{Impiegati};
+ 		\item la seconda richiede che il valore della variabile \textit{s} sia maggiore di 40;
+ 	\end{itemize}
+ 	Un'altra interrogazione, appena più complessa richiede di trovare matricola, nome ed età degli impiegati che guadagnano più di 40 mila euro, che in algebra relazione si esprime con:
+ 	\[
+ 	\pi_{Matr, Nome, Eta}(\sigma_{Stipendio > 40}(\texttt{Impiegati}))
+ 	\]
+ 	Nel calcolo relazionale questa può essere formulata in vari modi. Il più diretto, ma non il più semplice, è basato sul fatto che ciò che ci interessa sono i valori di matricola, nome ed età che partecipano a tuple per le quali lo stipendio è maggiore di 40. Possiamo usare un quantificatore esistenziale:
+ 	\begin{align*}
+ 		&\hspace{3.3cm}\{
+		\textbf{Matr: }m, \textbf{Nome: }n, \textbf{Età: }e \mid \\
+		&\exists s(\texttt{Impiegati}(\textbf{Matr}: m, \textbf{Nome: } n, \textbf{Età: }e, \textbf{Stipendio: }s) \wedge s > 40)
+ 		\}
+ 	\end{align*} 
+ 	L'uso del quantificatore, in realtà, non è necessario, perchè scrivendo semplicemente:
+ 	\begin{align*}
+ 		& \hspace{3cm}\{\text{\textbf{Matr}: }m, \textbf{Nome: } n, \textbf{Età: } e \mid  \\
+ 		&\texttt{Impiegati}(\textbf{Matr}: m, \textbf{Nome: } n, \textbf{Età: }e, \textbf{Stipendio: }s) \wedge s > 40\}
+ 	\end{align*}
+ 	otteniamo lo stesso risultato. \\
+ 	La stessa struttura si estende a interrogazioni più complesse. Ad esempio, l'interrogazione che vuole trovare le matricole dei capi degli impiegati che guadagnano più di 40mila euro, formulata in algebra relazionale come:
+ 	\[
+ 	\pi_{Capo}(\texttt{Supervisione} \bowtie_{Impiegato = Matr} \sigma_{Stipendio > 40}(\texttt{Impiegati}))
+ 	\]
+ 	può essere formulata nel calcolo relazionale con:
+ 	\begin{align*}
+ 		\{\text{\textbf{Capo}: }c &\mid \texttt{Impiegati}(\textbf{Matr}: m, \textbf{Nome: }n, \textbf{Età:} e, \textbf{Stipendio: }s) \wedge \\
+ 		&\texttt{Supervisione}(\textbf{Impiegato}: m, \textbf{Capo: } c) \wedge s > 40\}
+ 	\end{align*}
+ 	dove la variabile \textit{m}, comune alle due condizioni atomiche, realizza la stessa correlazione fra tuple specificata nel join. \\
+ 	L'interrogazione che vuole trovare nome e stipendio dei capi degli impiegati che guadagnano più di 40 mila euro, scritta in algebra relazionale come:
+ 	\[
+ 	\pi_{NomeC, StipC}(\rho_{MatrC, NomeC, StipC, EtaC \leftarrow Matr, Nome, Stip, Eta}(\texttt{Impiegati})
+ 	\]
+ 	\[
+ 	\bowtie_{MatrC=Capo}
+ 	\]
+ 	\[
+ 	\texttt{Supervisione} \bowtie_{Impiegato=Matr} \sigma_{Stipendio > 40}(\texttt{Impiegati}))
+ 	\]
+ 	viene formulata nel calcolo, per ciascuna tupla del risultato, l'esistenza di tre tuple: una relativa a un impiegato che guadagna più di 40 mila euro, una seconda che indica chi è il suo capo e l'ultima che fornisce le informazioni di dettaglio sul capo:
+ 	\[
+ 	\{\textbf{NomeC: } nc, \textbf{StipC: }sc \mid
+ 	\]
+ 	\[
+	\texttt{Impiegati}(\textbf{Matr: } m, \textbf{Nome: } n, \textbf{Età: } e, \textbf{Stipendio: }s) \wedge s > 40
+ 	\]
+ 	\[
+ 	\texttt{Supervisione}(\textbf{Impiegato: }m, \textbf{Capo: }c) \wedge
+ 	\]
+ 	\[
+ 	\texttt{Impiegati}(\textbf{Matr: } c, \textbf{Nome: } nc, \textbf{Età: } ec, \textbf{Stipendio: }sc)\}
+ 	\]
+ 	L'ultimo esempio richiede una soluzione più complessa. Dobbiamo trovare matricola e nome dei capi i cui impiegati guadagnano tutti più di 40 mila euro. In algebra abbiamo utilizzato una differenza:
+ 	\[
+ 	\pi_{Matr, Nome}(\texttt{Impiegati} \bowtie_{Matr=Capo}
+ 	\]
+ 	\[
+ 	(\pi_{Capo}(\texttt{Supervisione}) - 
+ 	\]
+ 	\[
+ 	\pi_{Capo}(\texttt{Supervisione} \bowtie_{Imp=Matr} \sigma_{Stip \leq 40}(\texttt{Impiegati}))))
+ 	\]
+ 	Nel calcolo dobbiamo utilizzare un quantificatore. Seguendo la stessa logica dell'espressione in algebra relazionale possiamo utilizzare un quantificatore esistenziale negato, ognuno per ogni variabile coinvolta, trovando i capi per quali non esiste un impiegato che guadagna non più di 40 mila euro:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1\textwidth]{quantificatore_esistenziale}
+ 	\end{figure}
+ 	In alternativa, possiamo utilizzare quantificatori universali:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1\textwidth]{quantificatore_universale}
+ 	\end{figure}
+ 	Questa espressione seleziona un capo $c$ se, per ogni quadrupla di valori $m', n', e'$ e $s'$ relativi a impiegati di $c$, si ha che $s'$ è maggiore di 40. La struttura $\neg f \vee g$ corrisponde alla condizione ``se \textit{f} allora \textit{g}'' in quanto è vera in tutti i casi escluso in cui $f$ è vera e $g$ è falsa. Notiamo le leggi di De Morgan che valgono per gli operatori dell'algebra di Boole:
+ 	\[
+ 	\neg(f \wedge g) = \neg(f) \vee \neg(g)
+ 	\]
+ 	\[
+ 	\neg(f \vee g) = \neg(f) \wedge \neg(g)
+ 	\]
+ 	valgon allo stesso modo anche per i quantificatori:
+ 	\[
+ 	\exists x(f) = \neg(\forall x(\neg(f)))
+ 	\]
+ 	\[
+ 	\forall x(f) = \neg(\exists x(\neg(f)))
+ 	\]
+ 	\subsection{Pregi e difetti del calcolo su domini}
+ 	Il calcolo relazionale presenta aspetti interessanti, soprattutto per la dichiaratività, ma anche alcuni difetti e limitazioni. Innanzitutto, notiamo che il calcolo ammette espressioni che hanno veramente poco senso. Ad esempio l'espressione:
+ 	\[
+ 	\{A_1: x_1, A_2: x_2 \mid R(A_1: x_1) \wedge x_2 = x_2\}
+ 	\]
+ 	produce come risultato una relazione su $A_1$ e $A_2$ costituita da tuple il cui valore su $A_1$ compare nella relazione $R$ e il valore su $A_2$ è un qualunque valore del dominio. In particolare, se cambia il dominio, cambia anche la risposta all'interrogazione. Se il dominio è infinito, anche la risposta è infinita, il che è indesiderabile. \\
+ 	Pertanto, può essere utile introdurre un concetto: un'espressione di un linguaggio di interrogazione è \textit{indipendente dal dominio} se il suo risultato, su ciascuna istanza di base di dati, non varia al variare del dominio rispetto al quale l'espressione è valutata.  Un linguaggio è indipendente dal dominio se tutte le sue espressioni sono indipendenti dal dominio. Il requisito di indipendenza dal dominio è fondamentale per i linguaggi reali, perchè la maggior parte delle volte le espressioni dipendenti dal dominio non hanno utilità pratica e possono produrre risultati di grandi dimensioni. \\
+ 	Il calcolo relazionale, dagli esempi visti prima non è indipendente dal dominio, mentre, l'algebra relazionale lo è, perchè costruisce i risultati a partire dalle relazioni nella base di dati, senza far riferimento ai domini degli attributi. \\
+ 	Inoltre, l'algebra relazione il calcolo non sono equivalenti, perchè non hanno espressioni equivalenti, infatti, il calcolo relazione ammette espressioni dipendenti dal dominio.  \\
+ 	Se limitiamo la nostra attenzione al sottoinsieme del calcolo relazionale costituito dalle sole espressioni indipendenti dal dominio, otteniamo un linguaggio equivalente all'algebra relazionale. Infatti:
+ 	\begin{itemize}
+ 		\item per ogni espressione del calcolo relazionae che sia indipendente dal dominio esiste un'espressione dell'algebra relazione equivalente a essa;
+ 		\item per ogni espressione dell'algebra relazione esiste un'espressione del calcolo relazionale equivalente a essa.
+ 	\end{itemize} 
+ 	Oltre al problema della dipendenza dal dominio, un altro svantaggio è quello di richiedere numerose variabili. Quando poi sno necessarie quantificazioni, anche i quantificatori si moltiplicano. \\
+ 	Per superare i limiti sul calcolo dei domini, è stata proposta un'altra versione del calcolo relazione in cui le variabili, anzichè denotare singoli valori, denotano tuple. Molto spesso il numero di variabili si riduce di tanto, perchè si ha una variabile per ciascuna relazione coinvolta. Diventa poi necessario associare una struttura a ciascuna variabile e realizzare opportunamente le operazioni di confronto. Potremmo definire un \textit{calcolo relazione su tuple} perfettamente corrispondente al calcolo su domini, ma preferiamo passare a un linguaggio che, recependo le caratteristiche del calcolo su tuple, superi le dipendenza dal dominio, attraverso l'associazione delle variabili alle relazioni della base di dati.
+ 	\subsection{Calcolo su tuple con dichiarazioni di range}
+ 	Le espressioni del \textit{calcolo su tuple con dichiarazioni di range} hanno la forma:
+ 	\[
+ 	\{T \mid L \mid f\}
+ 	\]
+ 	ove:
+ 	\begin{itemize}
+ 		\item $T$ è la \textit{target list}, con elementi del tipo $Y: x.Z$ (o semplicemente $x.Z$, abbreviazione per $Z: x.Z$) con $x$ variabile e $Y$ e $Z$ sequenze di attributi; gli attributi in $Z$ devono comparire nello schema della relazione che costituisce il \textit{range} di $x$; si può anche scrivere $x.*$, come abbreviazione di $X: x.X$, dove il range della variabile $x$ è una relazione sull'insieme di attributi $X$;
+ 		\item $L$ è la \textit{range list}, che elenca le variabili libere della formula \textit{f} con i relativi range: infatti, $L$ è una lista di elementi del tipo $x(R)$, con $x$ variabile e $R$ nome di relazione;
+ 		\item $f$ è una formula con:
+ 		\begin{itemize}
+ 			\item atomi del tipo $x.A\theta c$ o $x_1A_1\theta x_2A_2$, che confrontano, rispettivametne, il valore di $x$ sull'attributo $A$ con la costante $c$ e il valore di $x_1$ su $A_1$ con quello di $x_2$ su $A_2$;
+ 			\item connettivi come nel calcolo su domini;
+ 			\item quantificatori che associano i range alle relativi variabili:
+ 			\[
+ 			\exists x(R)(f) \quad \forall x(R)(f)
+ 			\]
+ 			$\exists x(R)(f)$ significa ``esiste nella relazione $R$ una tupla $x$ che soddisfa la formula $f$''. \\
+ 		\end{itemize}
+ 	\end{itemize}
+ 	Le dichiarazioni di range specificano che la variabili possono assumere come valore solo tuple nella relazione rispettivamente associata e garantiscono così l'indipendenza dal dominio. Di conseguenza, quest linguaggio non ha bisogno di condizioni atomiche come quelle viste nel calcolo su domini, che specificano l'appartenenza di una tupla a una relazione. \\
+ 	Vediamo come possono espresse in questo linguaggio le varie interrogazioni già formulate in algebra e in calcolo su domini. \\
+ 	La prima interrogazione chiede matricola, nome, età e stipendio degli impiegati che guadagnano più di 40 mila euro:
+ 	\[
+ 	\{i.* \mid i(\texttt{Impiegati}) \mid i.\textbf{Stipendio} > 40\}
+ 	\]
+ 	Per produrre solo alcuni degli attributi, matricola, nome ed età degli impiegati che guadagnano più di 40 mila euro, è sufficiente modificare la target list:
+ 	\[
+ 	\{i.(\textbf{Matr, Nome, Età}) \mid i(\texttt{Impiegati}) \mid i.\textbf{Stipendio} > 40\}
+  	\]
+  	Per interrogazioni che coinvolgono più relazioni sono necessarie più variabili, con specifica delle condizioni di correlazione sugli attributi. L'interrogazione che vuole trovare la matricole dei capi degli impiegati che guadagnano più di 40 mila euro, può essere formulata con:
+  	\begin{align*}
+  		&\{s.\textbf{Capo} \mid i(\texttt{Impiegati}), s(\texttt{Supervisione}) \mid \\
+  		& i.\textbf{Matr} = s.\textbf{Impiegato} \wedge i.\textbf{Stipendio} > 40\} 
+  	\end{align*}
+  	Nel caso delle espressioni corrispondenti al join di una relazione con se stessa, abbiamo più variabili aventi la stessa relazione come range. L'interrogazione: trovare nome e stipendio dei capi degli impiegati che guadagnano più di 40 mila euro può essere realizzata con l'espressione:
+  	\[
+  	\{\textbf{NomeC}, \textbf{StipC} : i'.(\textbf{Nome, Stip}) \mid
+  	\]
+  	\[
+  	i'(\texttt{Impiegati}), s(\texttt{Supervisione}), i(\texttt{Impiegati}) \mid 
+  	\]
+  	\[
+  	i'.\textbf{Matr} = s.\textbf{Capo} \wedge s.\textbf{Impiegato} = i.\textbf{Matr} \wedge i.\textbf{Stipendio} > 40\}
+  	\]
+  	Le interrogazioni con i quantificatori mostrano appieno la sinteticità e praticità del calcolo su tuple con dichiarazioni di range. L'interrogazione che richiede di trovare matricola e nome dei capi i cui impiegati guadagnano tutti più di 40 mila euro si può esprimere in diversi modi in base all'uso dei quantificatori e della negazione. Con quantificatori universali:
+  	\[
+  	\{i.(\textbf{Matr, Nome}) \mid i(\texttt{Impiegati}), s(\texttt{Supervisione}) \mid 
+  	\]
+  	\[
+  	i.\textbf{Matr} = s.\textbf{Capo} \wedge \forall i'(\texttt{Impiegati})(\forall s'(\texttt{Supervisione})
+  	\]
+  	\[
+  	(\neg(s.\textbf{Capo} = s'.\textbf{Capo} \wedge s'.\textbf{Impiegato} = i'.\textbf{Matr}) \vee i'.\textbf{Stipendio} > 40))\}
+  	\]
+  	Con quantificatori esistenziali negati:
+  	\[
+  	\{i.(\textbf{Matr, Nome}) \mid i(\texttt{Impiegati}), s(\texttt{Supervisione}) \mid
+  	\]
+  	\[
+  	i.\textbf{Matr} = s.\textbf{Capo} \wedge \neg(\exists i'(\texttt{Impiegati})(\exists s'(\texttt{Supervisione})
+  	\]
+  	\[
+  	(s.\textbf{Capo} = s'.\textbf{Capo} \wedge s'.\textbf{Impiegato} = i'.\textbf{Matr} \wedge i'.\textbf{Stipendio} \leq 40)))\}
+  	\]
+  	Il calcolo su tuple con dichiarazioni di range non permette di esprimere tutte le interrogazioni che possono essere formulate in algebra relazionale. In particolare, le interrogazioni i cui risultati possono provenire indifferentemente da due o più relazioni, che in algebra realizziamo con l'operatore di unione, non possono essere espresse con questa versione del calcolo: infatti, i risultati sono costruiti a partire dalle variabili libere, i cui range sono definiti nella target list, e ogni variabile ha come range una sola relazione. \\
+  	Consideriamo l'unione di due relazioni sugli stessi attributi: date $R_1(AB)$ e $R_2(AB)$, vogliamo formulare l'interrogazione che in algebra esprimeremmo con l'unione di $R_1$ e $R_2$. Se l'aspressione avesse due variabili libere, allora ogni tupla del risultato dovrebbe corrispondere a una tupla di ciascuna delle relazioni, il che non è necessario perchè l'unione richiede alle tuple di comparire in almeno uno degli operandi.  \\
+  	Se potessimo associare a una variabile un range costituito da più relazioni, risolveremmo il problema dell'unione ma non riusciremmo a formulare unioni complesse i cui operandi siano sottoespressioni non direttamente corrispondenti a schemi di relazione. Ad esempio, date due relazioni $R_1(ABC)$ e $R_2(BCD)$, l'unione delle loro proiezioni su $BC$:
+  	\[
+  	\pi_{BC}(R_1) \cup \pi_{BC}(R_2)
+  	\] 
+  	non potrebbe essere espressa, perchè le due relazioni hanno schemi diversi e una variabile non può essere associata ad entrambe. \\
+  	Per quanto riguarda gli operatori di interesezione e differenza questi sono esprimibili. 
+  	\begin{itemize}
+  		\item L'interesezione richiede che le tuple del risultato appartengano a entrambi gli opernadi, quindi si può costruire il risultato a partire da una relazione, richiedendo l'esistenza di una tupla uguale nell'altra relazione. Ad esempio:
+  		\[
+  		\pi_{BC}(R_1) \cap \pi_{BC}(R_2)
+  		\]
+  		può essere espressa con:
+  		\[
+  		\{x_1.BC \mid x_1(R_1) \mid \exists x_2(R_2)(x_1.B = x_2.B \wedge x_1.C = x_2.C)\}
+  		\]
+  		\item La differenza produce le tuple di un operando non contenute nell'altro. Ad esempio:
+  		\[
+  		\pi_{BC}(R_1) - \pi_{BC}(R_2)
+   		\]
+   		può essere espressa con:
+   		\[
+   		\{x_1.BC \mid x_1(R_1) \mid \neg\exists x_2(R_2)(x_1.B = x_2.B \wedge x_1.C = x_2.C)\}
+   		\]
+  	\end{itemize}
  	\chapter{Il modello Entità-Relazione}
  	Il modello Entità-Relazione, il modello E-R, è un modello \textit{concettuale} di dati e fornisce una serie di struttire, dette \textit{costrutti}, atte a descrivere la realtà di interesse in maniera facile da comprendere e che prescinde dall'organizzazione dei dati nei calcolatori. \\
  	Questi costrutti sono usati per definire \textit{schemi} che descrivono l'organizzazione e la struttura delle \textit{occorrenze} dei dati, ovvero i valori assunti dai dati al variare del tempo. 
