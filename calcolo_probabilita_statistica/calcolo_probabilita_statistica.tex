@@ -30,6 +30,7 @@
 \usepackage{xcolor}
 \usepackage{pgfplots}
 \usepackage{calligra}
+\usepackage{subdepth}
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usepackage{yhmath}
@@ -2117,4 +2118,185 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\end{align*}
 		ove $N \sim N(0, 1)$
 	 \end{exercise}
+	\chapter{Variabili aleatorie multidimensionali}
+	\begin{definition}{\nmu Variabili aleatorie multidimensionali}{val_al_multidim}
+		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ uno spazio di probabilità. \\
+		Una variabile $n$-dimensionale $X$ è una funzione:
+		\[
+		X: \Omega \to \mathbbm{R}^n
+		\]
+		ove $X =(X_1, X_2, \dots, X_n)$ tale che $X_i$ è misurabile $\forall i = 1, 2, \dots, n$ cioè che $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X_i(\omega) < \alpha\} \in \mathcal{F}$
+	\end{definition}
+	D'ora in avanti per $n = 2$, definiremo $Z = (X, Y)$. \\
+	\section{Funzione di ripartizione congiunta}
+	\begin{definition}{\nmu Funzione di ripartizione congiunta}{fun_rip_cong}
+		Una funzione di ripartizione congiunta è così definita:
+		\[
+		F_Z: \mathbbm{R}^2 \to \mathbbm{R}
+		\]
+		ove $F_Z(t, s) = P[X \leq t \wedge Y \leq s]$
+	\end{definition}
+	Se $Z = (X, Y)$ è una v.a. bidimensionale e $F_Z: \mathbbm{R}^2 \to \mathbbm{R}$ la funzione di ripartizione congiunta, allora:
+	\[
+	F_X(t) = \lim\limits_{s \to \infty}F_Z(t, s)
+	\]
+	analogamente, per $Y$:
+	\[
+	F_Y(s) = \lim\limits_{t \to \infty}F_Z(t, s)
+	\]
+	\begin{note}{}{}
+		Se $X$ e $Y$ sono stocasticamente indipendenti, allora:
+		\[
+		F_Z(t, s) = F_X(t)F_Y(s)
+		\]
+		Infatti:
+		\begin{align*}
+		F_Z(t, s) &= P[X \leq t \cap Y \leq s] \\
+		&= P[X \leq t]P[Y \leq s] \\
+		&= F_X(t)F_Y(s)
+		\end{align*}
+		Inoltre, vale anche l'inverso, cioè se è vero che $F_Z(t, s) = F_X(t)F_Y(s)$ allora le componenti $X$ e $Y$ sono indipendenti.
+	\end{note}
+	\begin{definition}{\nmu Variabile aleatoria bidimensionale assolutamente continua}{val_al_bid_ass_con}
+		Una variabile aleatoria bidimensionale $Z = (X, Y)$, la chiamiamo \textit{assolutamente continua} se ha una densità congiunta, ovvero se esiste $f_Z: \mathbbm{R}^2 \to \mathbbm{R}$ tale che $f_Z(x, y) \geq 0$, integrabile e soprattutto vale che:
+		\[
+		F_Z(t, s) = \int_{-\infty}^{t}dx\int_{-\infty}^{\infty}f_Z(x, y)dy
+		\]
+	\end{definition}
+	Se la v.a. $Z = (X, Y)$ è assolutamente continua, allora $X$ e $Y$ sono separatamente assolutamente continue e:
+	\[
+	f_X(x) = \int_{-\infty}^{\infty}f_Z(x, y)dy
+	\]
+	analogamente per $Y$:
+	\[
+	f_Y(y) = \int_{-\infty}^{\infty}f_Z(x, y)dx
+	\]
+	\begin{proof}{}{}
+		\begin{align*}
+			F_X(t) &= \lim\limits_{s\to\infty}F_Z(t, s) \\
+			&= \lim\limits_{s\to\infty}\int_{-\infty}^{t}dx\int_{-\infty}^{s}f_Z(x, y)dy \\
+			&= \int_{-\infty}^{t}dx\int_{-\infty}^{\infty}f_Z(x, y)dy
+		\end{align*}
+	\end{proof}
+	\begin{note}{}{}
+		Se le componenti $X$ ed $Y$ sono indipendenti, allora:
+		\[
+		f_Z(x, y) = f_X(x)f_Y(y)
+		\]
+		Inoltre, è vero anche il viceversa, cioè se è vero che $f_Z(x, y) = f_X(x)f_Y(y)$ allora le componenti $X$ ed $Y$ sono indipendenti.
+	\end{note}
+	\begin{definition}{\nmu Densità condizionale}{densita_condizionale}
+		La densità condizionale è data da:
+		\[
+		f_{X \mathlarger{\mid} Y=y}(x, y) = \begin{cases}
+			\dfrac{f_Z(x, y)}{f_Y(y)} & f_Y(y) \neq 0\\
+			0 & f_Y(y) = 0
+		\end{cases}
+		\]
+		analogamente per $Y$:
+		\[
+		f_{Y \mathlarger{\mid} X=x}(x, y) = \begin{cases}
+			\dfrac{f_Z(x, y)}{f_X(x)} & f_X(x) \neq 0\\
+			0 & f_X(x) = 0
+		\end{cases}
+		\]
+		
+	\end{definition}
+	\begin{note}{}{}
+		$X$ e $Y$ sono indipendenti $\iff f_{X \mathlarger{\mid} Y=y} = f_X$ e $f_{Y \mathlarger{\mid} X=x} = f_Y$ 
+	\end{note}
+	\begin{exercise}{}{}
+		\begin{assignment}{}{}
+			$Y$ tempo di vita di un componente elettronico che dipende dalla concentrazione di silicio ove $Y \sim \exp(\lambda)$ \\
+			$\Lambda$ concentrazione di silicio ove $\Lambda \sim N(0, 1)$ \\
+			Calcolare la legge di $Y$.
+		\end{assignment}
+		$Z = (Y, \Lambda)$ e sappiamo che $\Lambda$ è distribuita uniformemente su 0, 1. Allora:
+		\[
+		f_\Lambda(\lambda) = \mathbbm{1}_{[0,1]}(\lambda) = \begin{cases}
+		1 & 0 \leq \lambda \leq 1 \\
+		0 & \text{altrimenti}
+		\end{cases}
+		\]
+		$f_{Y \mathlarger{\mid} \Lambda=\lambda}(y, \lambda) = \begin{cases}
+			\lambda e^{-\lambda y} & y \geq 0 \\
+			0 & y < 0
+		\end{cases}$ \\
+		La densità congiunta, invece:
+		\[
+		f_Z(y, \lambda) = \begin{cases}
+			\lambda e^{-\lambda y} & 0 \leq \lambda \leq 1 \wedge y \geq 0 \\
+			0 & \text{altrimenti}
+		\end{cases}
+		\]
+		Per trovare la legge di $Y$ dobbiamo trovare la densità marginale:
+		\begin{align*}
+		f_Y(y) &= \int_{-\infty}^{\infty}f_Z(y, \lambda)d\lambda \\
+		&= \int_{0}^{1}\lambda e^{-\lambda y}d\lambda \\
+		&= \lambda \dfrac{e^{-\lambda y}}{-y} {\Big|}^{\lambda=1}_{\lambda=0} - \int_{0}^{1}\dfrac{e^{-\lambda y}}{-y}d\lambda \\
+		&= \dfrac{e^{-y}}{-y}  + \dfrac{1}{y} - \int_{0}^{1}e^{-\lambda y}d\lambda \\
+		&= \dfrac{e^{-y}}{-y}  + \dfrac{1}{y}\Bigg[\dfrac{e^{-\lambda y}}{-y} {\Big|}^{\lambda=1}_{\lambda=0}\Bigg] \\
+		&= -\dfrac{e^{-y}}{y} + \dfrac{1}{y}\Bigg(\dfrac{e^{-y}}{-y} + \dfrac{1}{y}\Bigg) \\ 
+		&= \dfrac{1}{y^2}(1 - e^{-y} - ye^{-y}) \quad y \geq 0
+		\end{align*}
+	\end{exercise}
+	Supponiamo di avere $X$ ed $Y$ v.a. indipendenti con densità $f$ e $g$ rispettivamente. Qual è la legge di $X + Y$? Notiamo che $X + Y$ è assolutamente continua e la sua densità è data:
+	\[
+	(f * g)(x) = \int_{\mathbbm{R}}f(y)g(x-y)dy
+	\]
+	questa prende il nome di \textbf{convoluzione}.
+	\begin{proof}{\nmu Dimostrazione della convoluzione} \quad \\
+		Per trovare la densità di $X + Y$ dobbiamo trovare prima la funzione di ripartizione:
+		\begin{align*}
+			P[X + Y \leq t] &= P[(X, Y) \in H_t] \\
+			&= \int_{-\infty}^{\infty}dx\int_{-\infty}^{t-x}f_Z(x, y)dy \\
+			&= \int_{-\infty}^{\infty}dx\int_{-\infty}^{t - x}f(x)g(y)dy \\
+			&\underset{y' = y + x}{=}\int_{-\infty}^{\infty}\int_{-\infty}^{t}f(x)g(y' - x)dy' \\
+			&= \int_{-\infty}^{t}dy'\int_{-\infty}^{\infty}f(x)g(y' - x)dx 
+		\end{align*}
+		ove abbiamo definito il \textbf{punto aleatorio} come:
+		\[
+		H_t = \{(X, Y) \in \mathbbm{R}^2 \mid x+y \leq t\}
+		\]
+		Allora abbiamo ottenuto che:
+		\[
+		P[X + Y \leq t] = \int_{-\infty}^{t}dy\int_{-\infty}^{\infty}f(x)g(y-x)dx
+		\]
+		Quindi, la densità di $X + Y$ è la derivata di:
+		\[
+		F_{X+Y}'(t) = \int_{-\infty}^{\infty}f(x)g(t - x)dx
+		\]
+	\end{proof}
+	\begin{theorem}{\nmu Riproducibilità della distribuzione normale}{normale_riproducibile}
+		Se $X_1, X_2, \dots, X_n$ sono variabili normali indipendenti, allora $X = X_1 + X_2 + \dots + X_n$ è normale e $X_i \sim N(\mu, \sigma^2) \quad \forall i = 1, 2, \dots, n$, allora:
+		\[
+		X \sim N(\mu_1 + \mu_2 + \dots + \mu_n, \sigma_1^2 + \sigma_2^2 + \dots \sigma_n^2)
+		\]
+	\end{theorem}
+	\begin{proof}{\nmu Dimostrazione della \namerefl{th:normale_riproducibile}} \quad \\
+		Non è restrittivo supporre che $n = 2$, cioè ho solo 2 v.a, $X$ ed $Y$. Inoltre, non è restrittivo supporre che $E[X] = E[Y] = 0$. \\
+		Inoltre, posso assumere che $X \sim N(0, 1)$ e $Y \sim N(0, \sigma^2)$. \\
+		Sappiamo che:
+		\[
+		g(x) = \dfrac{1}{\sqrt{2\pi}}e^{-\dfrac{x^2}{2}}
+		\]
+		e 
+		\[
+		f(y)= \dfrac{1}{\sqrt{2\pi}\sigma}e^{-\dfrac{y^2}{2\sigma^2}}
+		\]
+		\begin{align*}
+			(f*g)(x)&= \int_{\mathbbm{R}}\dfrac{1}{\sqrt{2\pi}\sigma}e^{-\dfrac{y^2}{2\sigma^2}}\cdot \dfrac{1}{\sqrt{2\pi}}e^{-\dfrac{(x-y)^2}{2}}dy\\
+			&= \dfrac{1}{2\pi\sigma}\int_{\mathbbm{R}}e^{-\dfrac{y^2}{2\sigma^2}}\cdot e^{-\dfrac{x^2 - 2xy + y^2}{2}}dy \\
+			&= \dfrac{1}{2\pi\sigma}e^{-\dfrac{x^2}{2}}\int_{\mathbbm{R}}e^{-\dfrac{y^2}{2\sigma^2}} \cdot e^{\mathlarger{xy}}\cdot e^{-\dfrac{y^2}{2}}dy \\
+			&= \dfrac{1}{2\pi\sigma}e^{-\dfrac{x^2}{2}}\int_{\mathbbm{R}}e^{-\Bigg(\dfrac{1 + \sigma^2}{2\sigma^2}\mathlarger{y^2 - xy}\Bigg)}dy \\
+			&= \dfrac{1}{2\pi\sigma}e^{-\dfrac{x^2}{2}}\int_{\mathbbm{R}}e^{-\Bigg(\sqrt{\dfrac{1+ \sigma^2}{2\sigma^2}}\mathlarger{y} - \dfrac{x}{2}\sqrt{\dfrac{2\sigma^2}{\sigma^2}}\Bigg)^2} e^{\dfrac{x^2}{4}\dfrac{2\sigma^2}{\sigma^2 + 1}}dy \\
+			&= \dfrac{1}{2\pi\sigma}e^{-\dfrac{x^2}{2}}e^{\dfrac{x^2\sigma^2}{2(\sigma^2 + 1)}}\int_{\mathbbm{R}}e^{-\Bigg(\sqrt{\dfrac{1+ \sigma^2}{2\sigma^2}}\mathlarger{y} - \dfrac{x}{2}\sqrt{\dfrac{2\sigma^2}{\sigma^2}}\Bigg)\mathlarger{^2}}dy
+		\end{align*}
+		Ponendo $u = \sqrt{\dfrac{1 + \sigma^2}{2\sigma^2}}y - \dfrac{x}{2}\sqrt{\dfrac{2\sigma^2}{\sigma^2 + 1}}$
+		\begin{align*}
+			&= \dfrac{1}{2\pi\sigma}e^{-\dfrac{x^2}{2}}e^{\dfrac{x^2\sigma^2}{2(\sigma^2 + 1)}} \int_{\mathbbm{R}}e^{-u^2}\sqrt{\dfrac{2\sigma^2}{1 + \sigma^2}}du \\
+			&= \dfrac{1}{2\pi\sigma}e^{-\dfrac{x^2}{2}}e^{\dfrac{x^2\sigma^2}{2(\sigma^2 + 1)}}\sqrt{\dfrac{2\sigma^2}{1 + \sigma^2}}\sqrt{\pi} \\
+			&= \dfrac{1}{\sqrt{2\pi(1 + \sigma^2)}}e^{-\dfrac{x^2}{2(\sigma^2 + 1)}}
+		\end{align*}
+	\end{proof}
 \end{document}
