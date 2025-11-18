@@ -28,12 +28,12 @@ namespace myvec {
 			explicit vector(size_t);
 			vector(size_t, const_reference);
 			template <class InputIt> vector(InputIt, InputIt);
-			vector(vector&&) noexcept;
+			vector(vector<T>&&) noexcept;
 			vector(std::initializer_list<T>);
-			vector(const vector&);
+			vector(const vector<T>&);
 			~vector();
-			vector<T>& operator=(vector&&) noexcept;
-			vector<T>& operator=(const vector&);
+			vector<T>& operator=(vector<T>&&) noexcept;
+			vector<T>& operator=(const vector<T>&);
 			vector<T>& operator=(std::initializer_list<T>);
 			void assign(size_t, const_reference);
 			template <class InputIt> void assign(InputIt, InputIt);
@@ -153,7 +153,7 @@ namespace myvec {
 	}
 
 	template <class T>
-	vector<T>::vector(const vector& v) {
+	vector<T>::vector(const vector<T>& v) {
 		m_dim = v.m_dim;
 		m_arr = new T[m_dim];
 		for (size_t i = 0; i < v.size(); i++) {
@@ -167,7 +167,7 @@ namespace myvec {
 	}
 
 	template <class T>
-	vector<T>& vector<T>::operator=(vector&& v) noexcept {
+	vector<T>& vector<T>::operator=(vector<T>&& v) noexcept {
 		if (this != &v) {
 			m_dim = v.m_dim;
 			delete[] m_arr;
@@ -181,7 +181,7 @@ namespace myvec {
 	}
 
 	template <class T>
-	vector<T>& vector<T>::operator=(const vector& v) {
+	vector<T>& vector<T>::operator=(const vector<T>& v) {
 		if (this != &v) {
 			m_dim = v.m_dim;
 			delete[] m_arr;
@@ -478,50 +478,54 @@ namespace myvec {
 
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(iterator pos) {
-		iterator it = &m_arr[pos - begin()];
+		size_t delete_index = pos - begin();
 		size_t n_shift = m_len - (pos - begin()) - 1;
-		(*it).~T();
-		memmove(it, it + 1,	n_shift * sizeof(T));
+		for (size_t i = delete_index; i < m_len - 1; i++) {
+			m_arr[i] = m_arr[i + 1];
+		}
 		m_len--;
-		return it;
+		return &m_arr[delete_index];
 
 	}
 
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(const_iterator pos) {
-		iterator it = &m_arr[pos - begin()];
+		size_t delete_index = pos - begin();
 		size_t n_shift = m_len - (pos - begin()) - 1;
-		(*it).~T();
-		memmove(it, it + 1,	n_shift * sizeof(T));
+		for (size_t i = delete_index; i < m_len - 1; i++) {
+			m_arr[i] = m_arr[i + 1];
+		}
 		m_len--;
-		return it;
-	}
+		return &m_arr[delete_index];	}
 
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(iterator first, iterator last) {
-		iterator it = &m_arr[first - begin()];
+		size_t start_index = first - begin();
+		size_t last_index = last - begin();
 		if (first == last)
-			return it;
-		size_t n_shift  = m_len - (last - first);
-		for (; first != last; ++first)
-			(*first).~T();
-		memmove(it, last, n_shift * sizeof(T));
-		m_len = n_shift;
-		return it;
+			return &m_arr[start_index];
+
+		for (size_t i = start_index; i < start_index + (m_len - last_index); i++) {
+			m_arr[i] = m_arr[i + (last_index - start_index)];
+		}
+
+		m_len -= last - first;
+		return &m_arr[start_index];
 	}
 
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(const_iterator first, const_iterator last) {
-		iterator it = &m_arr[first - begin()];
+		size_t start_index = first - begin();
+		size_t last_index = last - begin();
 		if (first == last)
-				return it;
-		size_t n_shift  = m_len - (last - first);
-		for (; first != last; ++first)
-			(*first).~T();
-		memmove(it, last, n_shift * sizeof(T));
-		m_len = n_shift;
+			return &m_arr[start_index];
 
-		return it;
+		for (size_t i = start_index; i < start_index + (m_len - last_index); i++) {
+			m_arr[i] = m_arr[i + (last_index - start_index)];
+		}
+
+		m_len -= last - first;
+		return &m_arr[start_index];
 	}
 
 	template <class T>
@@ -572,7 +576,7 @@ namespace myvec {
 	}
 
 	template <class T>
-	void vector<T>::swap(vector& v) noexcept {
+	void vector<T>::swap(vector<T>& v) noexcept {
 		T* tmp_arr = m_arr;
 		size_t tmp_len = m_len;
 		size_t tmp_dim = m_dim;
