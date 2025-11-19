@@ -2299,4 +2299,76 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			&= \dfrac{1}{\sqrt{2\pi(1 + \sigma^2)}}e^{-\dfrac{x^2}{2(\sigma^2 + 1)}}
 		\end{align*}
 	\end{proof}
+	\chapter{Statistica matematica}
+	\section{Spazio di probabilità parametrico}
+	\begin{definition}{\nmu Spazio di probabilità parametrico}{spazio_prob_parametrico}
+		Lo spazio di probabilità parametrico è una formula di spazio di probabilità, $(\Omega, \mathcal{F}, (\mathcal{P}_{\theta})_{\theta \in \Theta})$, ove:
+		\begin{itemize}
+			\item $\Theta$ è lo spazio del parametro e tipicamente $\Theta \subseteq \mathbbm{R}$, cioè il parametro è unidimensionale.
+		\end{itemize}
+	\end{definition}
+	\begin{example}{\nmu Esempio di spazio probabilità parametrico}{}
+		Supponiamo di lanciare una moneta. \\
+		Allora $\Omega \in \{0, 1\}$ e $\mathcal{F} = \mathcal{P}(\Omega)$. Lo spazio del parametro allora è $\Theta = [0, 1]$ e $\forall p \in [0, 1] \quad \mathcal{P}_p(1) = p$. \\
+		Se l'esperimento fosse lancio $n$ volte una moneta, allora:
+		\[
+		\Omega = \{(\omega_1, \omega_2, \dots, \omega_n) : \omega_i \in \{0, 1\}\} \quad |\Omega| = 2^n
+		\]
+		\[
+		\mathcal{F} = \mathcal{P}(\Omega)
+		\]
+		\[
+		\mathcal{P}_p(\{\omega_1, \omega_2, \dots, \omega_n\}) = p^{\omega_1 + \omega_2 + \dots + \omega_n}(1-p)^{n - (\omega_1 + \omega_2 + \dots + \omega_n)}
+		\]
+		Invece, se lancio la moneta infinite volte, allora:
+		\[
+		\Omega = \{(\omega_1, \omega_2, \dots, \omega_n, \dots) : \omega_i \in \{0, 1\}\}
+		\]
+		\[
+		\mathcal{F} = \mathcal{P}(\Omega)
+ 		\]
+ 		La $\sigma-$algebra degli eventi è quella generata dai ``cilindri'':
+ 		\[
+ 		C^{l_1, l_2, \dots, l_k}_{i_1, i_2, \dots, i_k} = \{\omega \in \Omega \mid \omega_{i_1} = l_1, \omega_{i_2} = l_2, \dots, \omega_{i_k} = l_k\}
+ 		\]
+ 		ove $k \in \mathbbm{N}$ e $l_1, l_2, \dots, l_n$ mi dicono quanti lanci sto considerando e $l_1, l_2, \dots, l_k \in \{0,1\}$, allora:
+ 		\[
+ 		P_p(C^{l_1, l_2, \dots, l_k}_{i_1, i_2, \dots, i_k}) = p^{l_1 + l_2 + \dots + l_k}(1-p)^{k - (l_1 + l_2 + \dots + l_k)}
+ 		\]
+	\end{example}
+	Un'osservazione in $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$ è un insieme finito di $X_1, X_2, \dots, X_n$ di v.a su $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$. Avrà la sua densità congiunta $h(x_1, x_2, \dots, x_n, \theta)$.
+	\begin{definition}{\nmu Campione}{campione}
+		Un campione è un'osservazione $(X_1, X_2, \dots, X_n)$ tale che le $X_i$ sono indipendenti tra di loro e hanno pure la stessa distribuzione, o per abbreviare i. i. d (indipendenti identicamente distribuite).
+		\[
+		h(x_1, x_2, \dots, x_n, \theta) = f(x_1,\theta)f(x_2,\theta)\cdots f(x_n,\theta)
+		\]
+		ove $n$ prende il nome di \textit{rango del campione}. 
+	\end{definition}
+	\begin{example}{}{}
+		Sia $(\Omega, \mathcal{F}, (\mathcal{P}_p)_{p \in [0, 1]})$. \\
+		$\Omega = \{(\omega_1, \omega_2, \dots, \omega_n) : \omega_i \in \{0, 1\}\}$ ove $X_1 = \omega_1$, $X_2 = \omega_2, \dots, X_n = \omega_n$. \\
+		Quindi, $(X_1, X_2, \dots, X_n)$ è un campione bernoulliano. 
+	\end{example}
+	\begin{definition}{\nmu Statistica}{statistica}
+		Una \textit{statistica} è una v.a. su $(\Omega, \mathcal{F}, (\mathcal{P}_\theta)_{\theta\in\Theta})$, $T$, del tipo:
+		\[
+		T = t(X_1, X_2, \dots, X_n)
+		\] 
+		ove $(X_1, X_2, \dots, X_n)$ è un'osservazione campione e $t: \mathbbm{R}^n \to \mathbbm{R}$ una funzione misurabile.
+	\end{definition}
+	Ad esempio, $T = X_1 + X_2 + \dots + X_n$ e $S = \dfrac{X_1 + X_2 + \dots + X_n}{n} - p$ \textbf{non} è una statistica perchè appare esplicitamente il parametro $p$.
+	\begin{definition}{\nmu Stimatore corretto}{stimatore_corretto}
+		Dato $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$, uno \textit{stimatore corretto} di $\psi(\theta) \in \mathbbm{R}$ è una statistica  $T = t(X_1, X_2, \dots, X_n)$ tale che $E_\theta(T) = \psi(\theta) \quad \forall \theta \in \Theta$. 
+	\end{definition}
+	\begin{example}{}{}
+		Se $(X_1, X_2, \dots, X_n)$ è un campione e consideriamo:
+		\[
+		\overline{X_n} =  \dfrac{1}{n}(X_1 + X_2 + \dots + X_n)
+		\]
+		Questo è uno stimatore corretto in quanto:
+		\[
+		E[\overline{X_n}] = \dfrac{1}{n}\sum_{i=1}^{n}E[X_i] = \mu(\theta)
+		\]
+		con $\mu$ la media della $X_i$
+	\end{example}
 \end{document}
