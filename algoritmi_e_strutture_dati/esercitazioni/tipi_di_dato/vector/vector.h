@@ -479,7 +479,6 @@ namespace myvec {
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(iterator pos) {
 		size_t delete_index = pos - begin();
-		size_t n_shift = m_len - (pos - begin()) - 1;
 		for (size_t i = delete_index; i < m_len - 1; i++) {
 			m_arr[i] = m_arr[i + 1];
 		}
@@ -491,7 +490,6 @@ namespace myvec {
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(const_iterator pos) {
 		size_t delete_index = pos - begin();
-		size_t n_shift = m_len - (pos - begin()) - 1;
 		for (size_t i = delete_index; i < m_len - 1; i++) {
 			m_arr[i] = m_arr[i + 1];
 		}

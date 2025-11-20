@@ -6,8 +6,8 @@
 template <class T>
 class queue {
 	public:
-		queue();
-		queue(size_t);
+		queue() noexcept;
+		explicit queue(size_t);
 		queue(const queue<T>&);
 		bool empty() const;
 		size_t size() const;
@@ -26,7 +26,7 @@ class queue {
 };
 
 template <class T>
-queue<T>::queue() : m_elems(STD_DIM) {}
+queue<T>::queue() noexcept : m_elems(STD_DIM) {}
 
 template <class T>
 queue<T>::queue(size_t dim) : m_elems(dim) {}
