@@ -1971,4 +1971,109 @@
 		m_1 > m_2 \Rightarrow |\vec{v}_1| < |\vec{v}_2| \text{ mentre } \vec{p}_{1f} = -\vec{p}_{2f}
 		\]
 	\end{example}
+	\chapter{Termodinamica}
+	Prima di spiegare cos'è la termodinamica, introduciamo prima tre concetti: i concetti di \textit{sistema termodinamico}, di \textit{sistema chiuso/aperto} e di \textit{sistema isolato}.
+	\begin{itemize}
+		\item  Il \textit{sistema termodinamico (ST)} è un insieme di uno o più oggetti;
+		\item il \textit{sistema chiuso/aperto} è un sistema in cui nessuna massa entra o esce o in cui può entrare o uscire massa, ma ci può essere scambio di energia;
+		\item il \textit{sistema isolato} è un sistema in cui non avviene nè scambio di materia nè scambio di energia con l'esterno, è quindi un sistema chiuso in cui non si scambia energia con l'esterno in alcuna forma.
+	\end{itemize}
+	\section{Temperatura}
+	\subsection{Equilibrio termico}
+	\begin{definition}{\nmu Sistemi isolati}{sistemi_isolati}
+		Due sistemi, $A$ e $B$, sono \textit{isolati} dall'ambiente circostnate se si trovano in pareti \textit{adiabatiche}, cioè che non possono essere attraversate, o equivalentemente sono isolanti.
+	\end{definition}
+	\begin{definition}{\nmu Sistemi a contatto}{sistemi_contatto}
+		Due sistemi, $A$ e $B$, sono \textit{a contatto} se si trovano in pareti \textit{diatermiche} ovvero che sono attraversate dal calore e raggiungono l'\textit{equilibro termico}, cioè le proprietà macroscopiche inizialmente variano in maniera piuttosto rapida e poi si avvicinano ad un valore che rimane costante. 
+	\end{definition}
+	\subsection{Principio zero della termodinamica}
+	Per provare se due sistemi lontani sono in equilibrio termico è conveniente usare un terzo sistema $C$. Ponendo $C$ prima a contatto con $A$ e poi con $B$, si può determinare se $A$ e $B$ sono in equilibrio termico senza porli direttamente a contatto, in quanto vale la seguente relazione:
+	\begin{center}
+		Se due sistemi, $A$ e $B$, sono ciascuno in equilibrio termico con un terzo sistema $C$, allora $A$ e $B$ sono anche in equilibrio termico tra loro.
+	\end{center}
+	\subsection{Temperatura}
+	La temperatura è una delle sette grandezze fondamentali del SI. I fisici misurano la temperatura con la \textbf{scala Kelvin}, che è indicata in unità chiamate \textit{kelvin}. \\
+	\begin{note}{\nmu Significato del principio zero}{significato_principio_zero}
+		
+		Quando due sistemi sono in equilibrio termico si dice che hanno la stessa temperatura, che nell'uso pratico del principio zero, si identifica il sistema $C$ come un termometro.
+	\end{note} 
+	Per definire l'unità di misura e una scala per la temperatura scegliamo una sostanza, la \textit{sostanza termometrica}, che abbia una proprietà fisica, la \textit{proprietà termometrica}, che varia con la tempertura e misuriamo tale proprietà. \\
+	\paragraph{Misura della temperatura} Per fissare una scala standard delle temperature bisogna scegliere dei fenomeni fisici riproducibili. \\
+	Si sceglie il cosidetto punto triplo dell'acqua, cioè lo stato in cui coesistono le tre fasi, (solida, liquida e gassosa) dell'$H_2O$ (ghiaccio, acqua e vapore) e gli si assegna la temperatura di:
+	\[
+	T_3 = 273.16 \text{ Kelvin }
+	\] 
+	Finora abbiamo discusso soltanto la scala Kelvin, usata in ambito scientifico. In quasi tutti i paesi del mondo la scala Celsius, comunemente chiamata come scala centrigrada, è la scala scelta per l'uso comuno e commerciale e per molti lavori scientifici. Le temperature Celsius sono misurate in gradi e il grado Celsius ha la stessa ampiezza del kelvin. Lo zero della scala Celsius è spostato a un valore più conveniente dello zero assoluto. Se $T_C$ rappresenta una data temperatura Celsius e $T$ una temperatura Kelvin, allora:
+	\[
+	T_C = T - 273,15^\circ
+	\]
+	La scala Fahrenheit, usata negli Stati Uniti e in alcuni paesi anglosassoni, fa uso di un grado più piccolo di quello usato nella scala Celsius e uno zero diverso della temperatura. La relazione tra le scale Celsius e Fahreneit è:
+	\[
+	T_F = \frac{9}{5}T_C + 32^\circ
+	\]
+	o, analogamente:
+	\[
+	T_F = 1.8 * T_C + 32^\circ
+	\]
+	ove $T_F$ è la temperatura Farheneit.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{temperature_corrispondenti}
+		\caption{Alcune temperature corrispondenti}
+	\end{figure} 
+	\subsection{Dilatazione termica}
+	Spesso è possibile allentare un coperchio metallico stretto di un barattolo tenendolo sotto un getto di acqua calda. Sia il metallo del coperchio sia il vetro del barattolo si dilatano quando l'acqua calda aumenta l'energia dei loro atomi. Tuttavia, poichè nei metalli gli atomi si allontanano l'uno dall'altro più di quanto facciano gli atomi nel vetro, il coperchio si espande più del barattolo e quindi si allenta. \\
+	Tale \textbf{dilatazione termica} dei materiali all'aumentare della temperatura deve essere prevista in molte situazioni comuni. Ad esempio, quando un ponte è soggetto a grandi variazioni stagionali delle temperatura, le sezioni del ponte vengono separate dai \textit{giunti di dilatazione}, in modo che le sezioni abbiano spazio per dilatarsi nei giorni caldi senza che il ponte si fletta. \\
+	\paragraph{Dilatazione lineare} Se la temperatura di una barra metallica di lunghezza \textit{L} viene aumentata di $\Delta T$, la lunghezza della barra aumenta di un tratto:
+	\[
+	\Delta L = L \alpha \Delta T
+	\]
+	dove $\alpha$ è una costante  chiamata \textbf{coefficiente di dilatazione lineare}. Il valore di $\alpha$ dipende dalla sostanza e ha come unità di misura il $K^{-1}$ o il $^\circ C^{-1}$ e, sebbene vari con la temperatura, per comodità a temperature ordinarie può essere considerato costante. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=0.5\textheight]{coeff_dilatazione_lineare}
+		\caption{Alcuni coefficienti di dilatazione lineare}
+	\end{figure}
+	Segue un esempio di dilatazione lineare:
+	\begin{example}{}{}
+		\begin{assignment}{}{}
+			I binari delle ferrovie sono lunghi 12 metri. Dato il coefficiente di dilatazione termica $\alpha_{\text{Ferro}} = 11.7 \cdot 10^{-6}\ ^\circ C^{-1}$, determinare lo spazio necessario tra un binario ed il successivo in modo che possa accomodare questa espansione tra le temperature $0 ^\circ C$ e $42 ^\circ C$.	
+		\end{assignment}
+		Dobbiamo calcolare il valore della dilatazione $\Delta L$ nell'intervallo considerato $\Delta T$:
+		\[
+		\Delta L = L\alpha \Delta T = 12 \cdot 11.7 \cdot 10^{-6} \cdot 42 = 0.59 cm
+		\]
+	\end{example}
+	\paragraph{Dilatazione volumica} Se tutte le dimensioni di un solido si dilatano con la temperatura, anche il volume di quel solido deve aumentare. Per i liquidi la dilatazione volumica è l'unico parametro di dilatazione significativo. Se la temperatura di un solido o di un liquidi il cui volume è $V$ subisce un incremento $\Delta T$, l'aumento del volume che si ottiene è:
+	\[
+	\Delta V = V \beta \Delta T
+	\]
+	ove $\beta$ è il \textbf{coefficiente di dilatazione volumica} del solido o del liquido. I coefficienti di dilatazione volumica e lineare di un solido sono legati dalla relazione:
+	\[
+	\beta = 3\alpha
+	\]
+	\section{Calorimetria}
+	\subsection{Calore}
+	Se si prende una lattina fredda dal frigorifero e la si lascia sul tavolo della cucina, la sua temperatura aumenterà all'inizio rapidamente, ma poi sempre più lentamente, fino a che la temperatura della cola non eguaglia quella della stanza, la bevanda e la stanza sono allora all'equilibrio termico. \\
+	Generalizzando questa situazione, descriviamo la lattina come un sistema a temperatura $T_S$ e le parti rilevanti della cucina come l'ambiente a temperatura $T_A$ in cui il sistema è immerso. Notiamo che se $T_S$ non è uguale a $T_A$, allora $T_S$ cambierà fino a che le due temperature non sono uguali e quindi fino a che non si raggiunge l'equilibrio termico. \\
+	Un tale cambiamento di temperatura è dovuto a una variazione dell'energia termica del sistema a causa di un trasferimento di energia tra il sistema e l'ambiente circostante. \\
+	L'energia trasferita è chiamata \textbf{calore} ed è indicata con il simbolo $Q$. Il calore è \textit{positivo} quando l'energia è trasferita dall'ambiente all'energia termica di un sistema ed è \textit{negativo} quando l'energia è trasferita dall'energia termica di un sistema all'ambiente.
+	Si giunge, quindi, a questa definizione di calore:
+	\begin{definition}{\nmu Calore}{calore}
+		Il calore è l'energia trasferita tra un sistema e l'ambiente in cui esso si trova a causa di una differenza di temperatura che esiste tra di essi.
+	\end{definition}
+	\begin{note}{\nmu Trasferimento di energia}{trasferimento_energia}
+		L'energia, oltre ad essere trasferita sotto forma di calore, può essere trasferita anche come \textbf{lavoro}, tramite forze, compressione, agitazione e correnti elettriche.
+	\end{note}
+	\paragraph{Unità di misura} Prima che gli scienziati si rendessero conto che il calore è energia trasferita, il calore veniva misurato in funzione della sua capacità di aumentare la temperatura dell'acqua. Così la \textbf{caloria} (cal) era definita come la quantità di calore in grado di aumentare la temperatura di 1 g di acqua da $14,5 ^\circ C$ a $15,5 ^\circ C$. Dopodichè, poichè si è visto che il calore è energia trasferita, l'unità del SI per il calore deve essere la stessa dell'energia, ovvero il \textbf{joule}. Quindi, esiste una relazione tra le varie unità del calore:
+	\[
+	1\ \text{cal} = 4,1868 J
+	\] 
+	\subsection{Assorbimneto del calore}
+	\paragraph{Capacità termica}
+	La \textbf{capacità termica}, $C$, di un oggetto è la costante di proporzionalità tra il calore $Q$ che l'oggetto assorbe o cede e la risultante di variazione di temperatura $\Delta T$ dell'oggetto, ovvero:
+	\[
+	Q = C\Delta T = C(T_f - T_i)
+	\]
+	ove $T_f$ e $T_i$ sono la temperatura iniziale e quella finale dell'oggetto. 
 \end{document}

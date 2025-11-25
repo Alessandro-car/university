@@ -31,9 +31,10 @@
 \usepackage{pgfplots}
 \usepackage{calligra}
 \usepackage{subdepth}
-\usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usepackage{yhmath}
+\usepackage{accents}
+\usepackage{nicefrac}
 \usetikzlibrary{angles, quotes, patterns}
 \usepackage{circledsteps}
 \date{}
@@ -98,6 +99,9 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\nameref{#1}\egroup}
 
 \newcommand{\nmu}{}
+\newcommand{\wbar}[1]{%
+	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
+}
 
 \begin{document}
 	{
@@ -2333,7 +2337,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		\]
  		ove $k \in \mathbbm{N}$ e $l_1, l_2, \dots, l_n$ mi dicono quanti lanci sto considerando e $l_1, l_2, \dots, l_k \in \{0,1\}$, allora:
  		\[
- 		P_p(C^{l_1, l_2, \dots, l_k}_{i_1, i_2, \dots, i_k}) = p^{l_1 + l_2 + \dots + l_k}(1-p)^{k - (l_1 + l_2 + \dots + l_k)}
+ 		P_p\Big(C^{l_1, l_2, \dots, l_k}_{i_1, i_2, \dots, i_k}\Big) = p^{l_1 + l_2 + \dots + l_k}(1-p)^{k - (l_1 + l_2 + \dots + l_k)}
  		\]
 	\end{example}
 	Un'osservazione in $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$ è un insieme finito di $X_1, X_2, \dots, X_n$ di v.a su $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$. Avrà la sua densità congiunta $h(x_1, x_2, \dots, x_n, \theta)$.
@@ -2350,25 +2354,390 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		Quindi, $(X_1, X_2, \dots, X_n)$ è un campione bernoulliano. 
 	\end{example}
 	\begin{definition}{\nmu Statistica}{statistica}
-		Una \textit{statistica} è una v.a. su $(\Omega, \mathcal{F}, (\mathcal{P}_\theta)_{\theta\in\Theta})$, $T$, del tipo:
+		Dato uno spazio parametrico, $(\Omega, \mathcal{F}, (\mathcal{P}_\theta)_{\theta\in\Theta})$, una \textit{statistica} è una v.a., $T$, del tipo:
 		\[
 		T = t(X_1, X_2, \dots, X_n)
 		\] 
 		ove $(X_1, X_2, \dots, X_n)$ è un'osservazione campione e $t: \mathbbm{R}^n \to \mathbbm{R}$ una funzione misurabile.
 	\end{definition}
-	Ad esempio, $T = X_1 + X_2 + \dots + X_n$ e $S = \dfrac{X_1 + X_2 + \dots + X_n}{n} - p$ \textbf{non} è una statistica perchè appare esplicitamente il parametro $p$.
+	Ad esempio, $S = \dfrac{X_1 + X_2 + \dots + X_n}{n} - p$ \textbf{non} è una statistica perchè appare esplicitamente il parametro $p$.
 	\begin{definition}{\nmu Stimatore corretto}{stimatore_corretto}
-		Dato $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$, uno \textit{stimatore corretto} di $\psi(\theta) \in \mathbbm{R}$ è una statistica  $T = t(X_1, X_2, \dots, X_n)$ tale che $E_\theta(T) = \psi(\theta) \quad \forall \theta \in \Theta$. 
+		Dato uno spazio parametrico $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$, uno \textit{stimatore corretto} di $\psi(\theta) \in \mathbbm{R}$ è una statistica  $T = t(X_1, X_2, \dots, X_n)$ tale che $E_\theta(T) = \psi(\theta) \quad \forall \theta \in \Theta$. 
 	\end{definition}
 	\begin{example}{}{}
 		Se $(X_1, X_2, \dots, X_n)$ è un campione e consideriamo:
 		\[
-		\overline{X_n} =  \dfrac{1}{n}(X_1 + X_2 + \dots + X_n)
+		\wbar{X}_n =  \dfrac{1}{n}(X_1 + X_2 + \dots + X_n)
 		\]
 		Questo è uno stimatore corretto in quanto:
 		\[
-		E[\overline{X_n}] = \dfrac{1}{n}\sum_{i=1}^{n}E[X_i] = \mu(\theta)
+		E[\wbar{X}_n] = \dfrac{1}{n}\sum_{i=1}^{n}E[X_i] = \mu(\theta)
 		\]
 		con $\mu$ la media della $X_i$
 	\end{example}
+	\begin{definition}{\nmu Distorsione dello stimatore}{distorsione_stimatore}
+		Una distorsione dello stimatore, $\text{b}_\theta(T)$, è definito nel seguente modo:
+		\[
+		\text{b}_\theta(T) = E_\theta[T] - \psi(\theta)
+		\]
+	\end{definition}
+	\begin{definition}{\nmu Rischio quadratico medio}{rischio_quadratico_medio}
+		Un rischio quadratico medio, $r_{\theta}(T)$, è così definito:
+		\[
+		r_{\theta}(T) = E_\theta[(T - \psi(\theta))^2]
+		\]
+	\end{definition}
+	Inoltre, vale che il rischio quadratico medio è pari a:
+	\[
+	r_{\theta}(T) = Var_\theta[T] + \text{b}_\theta^2(T)
+	\]
+	In particolare, $T$ è corretto se e solo se la varianza e il rischio quadratico medio coincidono.
+	\begin{align*}
+		r_\theta(T) &= E_\theta[(T - \psi(\theta))^2] \\
+		&= E_\theta[(T - E_\theta(T) + E_\theta(T) + \psi(\theta))^2] \\
+		&= E_\theta[(T - E_\theta(T))^2] + \text{b}_\theta^2 + 2(E_\theta[T] - \psi(\theta))E_\theta[T - E_\theta(T)] \\
+		&= E[(T - E_\theta(T))^2] + \text{b}_\theta^2 \\
+		&= Var_\theta[T] + \text{b}_\theta^2(T)
+	\end{align*}
+	$2(E_\theta(T) - \psi(\theta))E_\theta[T - E_\theta(T)]$ vale 0 in quanto $E_\theta[T - E_\theta(T)]$ è la media centrata rispetto alla media che fa 0. \\
+	\begin{definition}{\nmu Media campionaria}{media_campionaria}
+		Dato un campione $(X_1, \dots, X_n)$, si definisce la \textit{media campionaria} come:
+		\[
+		\wbar{X}_n = \dfrac{1}{n}\sum_{i=1}^{n}X_i
+		\]
+		e vale che $E_\theta[\wbar{X}_n] = \mu(\theta) \quad \forall\theta \in \Theta$
+	\end{definition}
+	\begin{definition}{\nmu Varianza campionaria}{varianza_campionaria}
+		La \textit{varianza campionaria} è così definita:
+		\[
+		S_n^2= \dfrac{1}{n-1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2
+		\]
+	\end{definition}
+	\begin{theorem}{\nmu La varianza campionaria è uno stimatore corretto}{var_camp_stim_corr}
+		
+		Inoltre, vale che $S_n$ è uno stimatore corretto della varianza, $\sigma^2$, cioè:
+		\[
+		E_\theta[S_n^2] = \sigma^2(\theta)
+		\]
+	\end{theorem}
+	\begin{proof}[Dimostrazione della \namerefl{th:var_camp_stim_corr}] \quad \\
+		Sappiamo che:
+		\[
+		S_n^2= \dfrac{1}{n-1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2
+		\]
+		allora:
+		\begin{align*}
+			(n-1)S_n^2 &= \sum_{i=1}^{n}(X_i - \wbar{X}_n)^2 \\
+			(n-1)E[S_n^2]&= E\Bigg[\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2\Bigg] \\
+			&= \sum_{i=1}^{n}E\Big[(X_i - \wbar{X}_n)^2\Big]\\
+			&= \sum_{i=1}^{n}E\big[X_i^2 + \wbar{X}_n^2 - 2X_i\wbar{X}_n\big] \\
+			&= \sum_{i=1}^{n}\bigg(E\big[X_i^2\big] + E\big[X_n^2\big] + 2E\big[X_i\wbar{X}_n\big]\bigg) \\
+		\end{align*}
+		Ricordiamo che: $E[Y^2] = Var[Y] + E[Y]^2$ \\
+		Allora definiamo:
+		\[
+		E[X_i] = \mu(\theta) = \mu
+		\]
+		\[
+		Var[X_i]=\sigma^2(\theta)=\sigma^2
+		\]
+		Sostituendo queste all'espressione precedente:
+		\begin{align*}
+			&= \sum_{i=1}^{n}E\big[X_i^2\big] + nE\big[\wbar{X}_n^2\big] - 2E\Bigg[\Bigg(\sum_{i=1}^{n}X_i\Bigg)\wbar{X}_n\Bigg] \\
+			&= \sum_{i=1}^{n}\big(\mu^2 + \sigma^2\big) + n\Bigg(\mu^2 + \dfrac{\sigma^2}{n}\Bigg) - 2E\big[n\wbar{X}_n^2\big] \\
+			&= 2n\mu^2 + n\sigma^2 + \sigma^2 - 2n\Bigg(\mu^2 + \dfrac{\sigma^2}{n}\Bigg) \\
+			&= (n-1)\sigma^2
+		\end{align*}
+	\end{proof}
+	\begin{definition}{\nmu Stimatore preferibile}{stimatore_preferibile}
+		Siano $T_1$ e $T_2$ due stimatori corretti di $\psi(\theta)$. \\
+		Diciamo che $T_1$ è preferibile a $T_2$ se:
+		\[
+		r_\theta(T_1) \leq r_\theta(T_2)
+		\]
+		Analogamente, diciamo che $T_2$ non è ammissibile in quanto:
+		\[
+		\exists\ T_1 \text{ stimatore corretto di }\psi(\theta) \text{ con } r_\theta(T_1) \leq r_\theta(T_2)
+		\]
+	\end{definition}
+	\begin{example}{}{}
+		Dato un campione $(X_1, \dots, X_n)$, definiamo:
+		\[
+		T_1 = \wbar{X_n} = \dfrac{1}{n}\sum_{i=1}^{n}X_i
+		\]
+		e 
+		\[
+		T_2 = X_i
+		\]
+		allora:
+		\[
+		E_\theta[T_1] = E_\theta[T_2] = \mu
+		\]
+		e il rischio quadratico medio è pari a:
+		\[
+		r_\theta[T_2] = \sigma^2
+		\]
+		e per $T_1$:
+		\[
+		r_\theta[T_1] = \dfrac{\sigma^2}{n}
+		\]
+		allora $T_1$ è uno stimatore preferibile di $T_2$
+	\end{example}
+	\begin{definition}{\nmu Stimatore efficiente}{stimatore_efficiente}
+		Uno stimatore $T=t(X_1, \dots, X_n)$ corretto di $\psi(\theta)$ è efficiente se:
+		\[
+		r_\theta(T) \leq r_\theta\big(T '\big) \quad \forall \theta \in \Theta
+		\]
+		questo vale $\forall\ T'=t'(X_1, \dots, X_n)$ corretto.
+	\end{definition}
+	\begin{theorem}{\nmu Efficienza della media campionaria per il campione bernoulliano}{efficienza_bernoulli}
+		Se $(X_1, \dots, X_n)$ è un campione di Bernoulli di parametro $p$ allora:
+		\[
+		\wbar{X}_n \text{ è uno stimatore efficiente }
+		\]
+		Allora vale che:
+		\[r_p(\wbar{X}_n) = Var_p[\wbar{X}_n] = \dfrac{p(p-1)}{n}\]
+		
+		Quindi, se $T_n$ è uno stimatore corretto di $p$, allora:
+		\[
+		r_p(T_n) \geq \dfrac{p(p-1)}{n}
+		\]
+	\end{theorem}
+	\begin{definition}{\nmu Corettezza asintotica}{correttezza_asintotica}
+		Una successione $\{T_n=t_n(X_1, X_2, \dots, X_n)\}_{n \in \mathbbm{N}}$ di stimatori è \textit{asintoticamente corretta}  se:
+		\[
+		\lim\limits_{n \to \infty}E_\theta[T_n] = \psi(\theta)
+		\]
+	\end{definition}
+	\begin{example}{}{}
+		Sia:
+		\[
+		T_n = \dfrac{1}{n}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2
+		\]
+		e
+		\[
+		S_n^2 = \dfrac{1}{n-1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2
+		\]
+		allora vale che:
+		\[
+		T_n = \dfrac{n-1}{n}S_n^2
+		\] 
+		Calcoliamo l'attesa di $T_n$:
+		\begin{align*}
+		E_\theta[T_n] &= \dfrac{n-1}{n}E_\theta\big[S_n^2\big] \\
+		&= \dfrac{n-1}{n}\sigma^2 \neq \sigma^2
+		\end{align*}
+		ma:
+		\[
+		\lim\limits_{n \to \infty}E_\theta[T_n] = \sigma^2
+		\]
+	\end{example}
+	\begin{definition}{\nmu Successione di stimatori consistente}{succ_stimatori_consistente}
+		Una successione $\{T_n=t_n(X_1, X_2, \dots, X_n)\}_{n \in \mathbbm{N}}$ di stimatori corretti di $\psi(\theta)$ si dice \textit{consistente} se $\forall \theta \in \Theta$:
+		\[
+		T_n \underset{n \to \infty}{\overset{P_\theta}{\longrightarrow}} \psi(\theta)
+		\]
+		cioè $\forall \delta > 0$:
+		\[
+		P_\theta\bigg[\Big|T_n - \psi(\theta) > \delta\Big|\bigg] = 0
+		\]
+	\end{definition}
+	\begin{example}{}{}
+		La successione $\{\wbar{X}_n : n \in \mathbbm{N}\}$ è uno stimatore consistente di $\mu = \mu(\theta)$
+	\end{example}
+	\section{Stimatori di massima verosomiglianza}
+	\begin{definition}{\nmu Verosomiglianza}{verosomiglianza}
+		
+		Dato un campione $(X_1, \dots, X_n)$, consideriamo la distribuzione congiunta, $f$, allora:
+		\[
+		h(X_1, X_2, \dots, X_n, \theta) = f(X_1, \theta) \cdots f(X_n, \theta)
+		\]
+		La \textit{verosomiglianza} è la funzione che $\Theta \ni \theta \longrightarrow h(X_1, X_2, \dots, X_n, \theta) \in \mathbbm{R}$
+	\end{definition}
+	\begin{definition}{\nmu Stima di massima verosomiglianza}{stima_massima_verosomiglianza}
+		La stima di massima verosomiglianza $t=t(X_1, X_2, \dots, X_n)$ è quella che massimizza la funzione verosomiglianza.
+	\end{definition}
+	Supponiamo di avere un campione bernoulliano di parametro $p$, $(X_1, X_2, \dots, X_n)$, e supponiamo di voler calcolare lo stimatore di massima verosomiglianza. 
+	\[
+	P[X_i = k] = p^k(1-p)^{1-k} \quad k \in \{0, 1\}
+	\]
+	Allora:
+	$h(k_1, k_2, \dots, k_n, \theta) = p^{(k_1 + k_2 + \dots + k_n)}(1-p)^{n - (k_1 + k_2 + \dots + k_n)}$ \\
+	Poniamo $k = k_1 + k_2 + \dots + k_n$. \\
+	La funzione verosomiglianza è:
+	\[
+	g(p) = p^k(1-p)^{n-k} \quad p \in [0, 1]
+	\]
+	Consideriamo il logaritmo di questa funzione:
+	\[
+	\ln g(p) = k\ln(p) + (n-k)\ln(p)
+	\]
+	Calcoliamo la derivata rispetto a $p$:
+	\[
+	\dfrac{d}{dp} = \ln g(p) = \dfrac{k}{p} + \dfrac{(n-k)}{1-p} = \dfrac{k - np}{p(1-p)}
+	\]
+	La funzione è positiva se:
+	$k - np \geq 0 \Rightarrow p \leq \dfrac{k}{n}$
+	Quindi, lo stimatore di massima verosomiglianza è:
+	\[
+	p = \dfrac{k}{n} \Rightarrow \widehat{p} = \wbar{X}_n
+	\]
+	\begin{definition}{\nmu Funzione Gamma}{func_gamma}
+		Dato $\alpha > 0$, definiamo la funzione Gamma come:
+		\[
+		\Gamma(\alpha) = \int_{0}^{+\infty}x^{\alpha - 1}e^{-x}dx
+		\]
+		e vale anche: $\Gamma(n) = (n - 1)!$
+	\end{definition}
+	\begin{proof}[Dimostrazione della \namerefl{def:func_gamma}] \quad \\
+		Calcoliamo $\Gamma(1)$:
+		\[
+		\Gamma(1) = \int_{0}^{+\infty}e^{-x}dx = 1 
+		\]
+		Calcoliamo $\Gamma(n + 1)$ integrando per parti, ponendo $g = x^n$ e $f' = e^{-x}$:
+		\begin{align*}
+		\Gamma(n + 1) &= \int_{0}^{+\infty}x^ne^{-x}dx  \\
+		&= -x^ne^{-x} \bigg|^{x=+\infty}_{x=0} + n\int_{0}^{+\infty}e^{-x}x^{n-1}dx \\
+		&= n\Gamma(n)
+		\end{align*}
+		Allora:
+		\[
+		\Gamma(n) = (n -1)!
+		\]
+		Un altro valore fondamentale è:
+		\[
+		\Gamma\bigg(\dfrac{1}{2}\bigg) = \int_{0}^{+\infty}\dfrac{1}{\sqrt{x}}e^{-x}dx
+		\]
+		Ponendo $\sqrt{x} = t, x = t^2, dx = 2tdt$, otteniamo:
+		\begin{align*}
+			\Gamma\bigg(\dfrac{1}{2}\bigg) &= \int_{0}^{+\infty}\dfrac{1}{\sqrt{x}}e^{-x}dx \\
+			&= \int_{0}^{+\infty}\dfrac{1}{t}e^{-t^2}2tdt \\
+			&= 2\int_{0}^{+\infty}e^{-t^2}dt \\
+			&= 2 \cdot \dfrac{\sqrt{\pi}}{2} \\
+			&= \sqrt{\pi}
+		\end{align*}
+	\end{proof}
+	La legge $\Gamma(\alpha, \lambda)$ ha densità:
+	\[
+	f(x) = \begin{cases}
+		\dfrac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha - 1}e^{-\lambda x} & x \geq 0 \\
+		0 & x < 0
+	\end{cases}
+	\]
+	$f$ è una densità, allora $f(x) \geq 0 \quad \forall x \in \mathbbm{R}$ e $\int_{-\infty}^{\infty}f(x)dx = 1$. Infatti:
+	\begin{align*}
+		\dfrac{\lambda^\alpha}{\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha - 1}e^{-\lambda x}dx \overset{?}{=} 1
+	\end{align*} 
+	Calcoliamo $\mathlarger{\int_{0}^{\infty}}x^{\alpha-1}e^{-\lambda x}dx$, ponendo $\lambda x = u, x = \dfrac{u}{\lambda}$ e $dx = \dfrac{du}{\lambda}$:
+	\begin{align*}
+		\int_{0}^{\infty}x^{\alpha-1}e^{-\lambda x}dx &= \int_{0}^{+\infty}\dfrac{u^{\alpha - 1}}{\lambda^{\alpha - 1}}e^{-u}\dfrac{du}{\lambda} \\
+		&= \dfrac{1}{\lambda^\alpha}\int_{0}^{\infty}u^{\alpha - 1}e^{-u}du \\
+		&= \dfrac{\Gamma(\alpha)}{\lambda^{\alpha}}
+	\end{align*}
+	Risulta così dimostrato che:
+	\[
+	\dfrac{\lambda^n}{\Gamma(\alpha)}\int_{0}^{+\infty}x^{\alpha - 1}e^{-\lambda x}dx = 1
+	\]
+	\begin{note}{}{}
+		Quando $\alpha = 1$, allora:
+		\[
+		\Gamma(\alpha = 1, \lambda) = \exp(\lambda)
+		\]
+	\end{note}
+	\begin{theorem}{\nmu Riproducibilità della legge $\Gamma$}{riproducibilita_gamma}
+		La legge $\Gamma$ è riproducibile. Siano $X_i \sim \Gamma(\alpha_i, \lambda)$ indipendenti, allora:
+		\[
+		X_1 + X_2 + \dots + X_n \sim \Gamma(\alpha_1 + \alpha_2 + \dots + \alpha_n, \lambda)
+		\]
+	\end{theorem}
+	Il valore atteso della legge $\Gamma$ è pari a:
+	\begin{align*}
+	E[X] &= \int_{0}^{\infty}x\dfrac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha - 1}e^{-\lambda x}dx \\
+ 	&= \dfrac{\lambda^\alpha}{\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha}e^{-\lambda x}dx \\
+ 	& \text{Ponendo } \lambda x= u,\ \lambda dx = du, \text{ otteniamo: } \\
+ 	&= \dfrac{\lambda^\alpha}{\Gamma(\alpha)}\int_{0}^{\infty}\dfrac{u^\alpha}{\lambda^\alpha}e^{-u}\dfrac{du}{\lambda} \\
+ 	&=\dfrac{1}{\lambda\Gamma(\alpha)}\Gamma(\alpha + 1) \\
+ 	&= \dfrac{\Gamma(\alpha + 1)}{2\Gamma(\alpha)} \\ 
+ 	&= \dfrac{\alpha}{\lambda}
+	\end{align*}
+	\begin{note}{}{}
+		Supponiamo di avere $X \sim N(0,1)$, allora il suo quadrato è una $\Gamma$:
+		\[
+		X^2 \sim \Gamma\Bigg(\dfrac{1}{2}, \dfrac{1}{2}\Bigg)
+		\]	
+		Infatti: 
+		\[
+		F_{X^2}(t) = \begin{cases}
+			P\big[X^2 \leq t\big] & t \geq 0 \\
+			0 & t < 0
+		\end{cases}
+		\]
+		\begin{align*}
+			P\big[X^2 \leq t\big] &= P\big[-\sqrt{t} \leq X \leq \sqrt{t}\big] \\
+			&= 2P\big[0 \leq X \leq \sqrt{t}\big] \\
+			&= 2\phi(\sqrt{t}) \\
+			&= \dfrac{2}{\sqrt{\pi}}\int_{0}^{\sqrt{t}}e^{-\nicefrac{u^2}{2}}du
+		\end{align*}
+		Calcoliamone la derivata:
+		\begin{align*}
+		F'_{X^2}(t) &= \frac{2}{\sqrt{2\pi}}e^{-\nicefrac{t}{2}}\frac{1}{2\sqrt{t}} \\
+		&= \frac{1}{\sqrt{2\pi}}e^{-\nicefrac{t}{2}}\frac{1}{\sqrt{t}} \\
+		&= \frac{1}{\sqrt{2}\Gamma\Big(\frac{1}{2}\Big)}t^{-\nicefrac{1}{2}}e^{-\nicefrac{t}{2}} \\
+		&= \dfrac{\Big(\frac{1}{2}\Big)^{\nicefrac{1}{2}}}{\Gamma\Big(\frac{1}{2}\Big)}t^{1 - \nicefrac{1}{2}}e^{-\nicefrac{t}{2}}
+		\end{align*}
+	\end{note}
+	\begin{definition}{\nmu Legge del $\chi^2$}{legge_chi_quadro}
+		La legge del $\chi^2$ è così definita:
+		\[
+		\Gamma\Bigg(\dfrac{n}{2}, \dfrac{1}{2}\Bigg) = \chi^2(n)
+		\]
+		e si chiama legge del $\chi^2$ con $n$ gradi di libertà.
+	\end{definition}
+	\begin{note}{}{}
+		Se $X_i \sim N(0, 1)$ indipendenti con $i= 1, 2, \dots, n$ allora \[X_1^2 + X_2^2 + \dots + X_n^2 \sim \chi^2(n)\]
+	\end{note}
+	La densità di $\chi^2(n)$ è:
+	\begin{align*}
+		f(x) &= \dfrac{\Big(\frac{1}{2}\Big)^{\nicefrac{n}{2}}}{\Gamma\Big(\frac{n}{2}\Big)}x^{\nicefrac{n}{2} - 1}e^{-\nicefrac{x}{2}}\mathbbm{1}_{[0, +\infty]}(x) \\
+		&= \dfrac{1}{2^{\nicefrac{n}{2}}\Gamma\Big(\frac{n}{2}\Big)}x^{\nicefrac{n}{2} - 1}e^{-\nicefrac{x}{2}}
+	\end{align*}
+	
+	\begin{proof}[Dimostrazione della \namerefl{th:riproducibilita_gamma}] \quad \\
+		Definiamo due funzioni, $f$ e $g$, nel seguente modo:
+		\[
+		f(x) = \dfrac{\lambda^{\alpha_1}}{\Gamma(\alpha_1)}x^{\alpha_1 - 1}e^{-\lambda x} \mathbbm{1}_{[0, +\infty)}(x)
+		\]
+		\[
+		g(x) = \dfrac{\lambda^{\alpha_2}}{\Gamma(\alpha_2)}x^{\alpha_2 - 1}e^{-\lambda x}\mathbbm{1}_{[0, +\infty)}(x)
+		\]
+		Calcoliamo la convoluzione di $f$ e $g$:
+		\begin{align*}
+			(f * g)(x) &= \int_{-\infty}^{\infty}f(y)g(x-y)dy \\
+			&= \int_{0}^{+\infty}\dfrac{\lambda^{\alpha_1}}{\Gamma(\alpha_1)}y^{\alpha_1 - 1}e^{-\lambda y}\dfrac{\lambda^{\alpha_2}}{\Gamma(\alpha_2)}(x-y)^{\alpha_2 - 1}e^{-\lambda(x-y)}\mathbbm{1}_{[0, +\infty)}(x-y)dy \\
+			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}e^{-\lambda x}\int_{0}^{x}y^{\alpha_1 - 1}(x-y)^{\alpha_2 - 1}dy\\
+			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}e^{-\lambda x}\int_{0}^{x}y^{\alpha_1 - 1}x^{\alpha_2 - 1}\bigg[1 - \frac{y}{x}\bigg]^{\alpha_2 - 1}dy \\
+			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}e^{-\lambda x}x^{\alpha_2 - 1}\int_{0}^{x}y^{\alpha_1 - 1}\bigg(1 - \dfrac{y}{x}\bigg)^{\alpha_2 - 1}dy
+		\end{align*}
+		Risolviamo $\mathlarger{\int_{0}^{x}}y^{\alpha_1 - 1}\bigg(1 - \frac{y}{x}\bigg)^{\alpha_2 - 1}dy$ ponendo $y = ux$, $\dfrac{y}{x} = u$ e $dy = xdu$ e otteniamo:
+		\begin{align*}
+		\int_{0}^{x}y^{\alpha_1 - 1}\Bigg(1 - \dfrac{y}{x}\Bigg)^{\alpha_2 - 1}dy &= \int_{0}^{1}u^{\alpha_1 - 1}x^{\alpha_1 - 1}(1-u)^{\alpha_2 - 1}xdu \\
+		&= x^{\alpha_1}I(\alpha_1, \alpha_2)
+		\end{align*}
+		ove:
+		\begin{align*}
+		I(\alpha_1, \alpha_2) &\overset{def}{=} \int_{0}^{1}u^{\alpha_1 - 1}(1-u)^{\alpha_2 - 1}du \\
+		&= \dfrac{\Gamma(\alpha_1)\Gamma(\alpha_2)}{\Gamma(\alpha_1+ \alpha_2)}
+		\end{align*}
+		
+		Allora, ritornando alla dimostrazione principale:
+		\begin{align*}
+			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}e^{-\lambda x}x^{\alpha_2 - 1}\int_{0}^{x}y^{\alpha_1 - 1}\bigg(1 - \dfrac{y}{x}\bigg)^{\alpha_2 - 1}dy \\
+			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}e^{-\lambda x}x^{\alpha_2 - 1}x^{\alpha_1}I(\alpha_1, \alpha_2) \\
+			&= I(\alpha_1, \alpha_2)\dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}x^{\alpha_1 + \alpha_2 - 1}e^{-\lambda x} \\
+			&= \dfrac{\Gamma(\alpha_1)\Gamma(\alpha_2)}{\Gamma(\alpha_1 + \alpha_2)}\dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}x^{\alpha_1 + \alpha_2 - 1}e^{-\lambda x} \\
+			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1 + \alpha_2)}x^{\alpha_1 + \alpha_2 - 1}e^{-\lambda x}
+		\end{align*}
+		ovvero la funzione di densità di $\Gamma(\alpha_1 + \alpha_2)$ e risulta così dimostrata la riproducibilità della funzione $\Gamma$.
+	\end{proof}
+
 \end{document}
