@@ -2159,7 +2159,7 @@
 	Per quantificare il lavoro, consideriamo come sistema fisico termodinamico un gas, contenuto in un recipiente cilindrico dotato di un pistone mobile. Supponiamo che il gas si espanda nel cilindro, sollevando il pistone di un'altezza $\Delta x$. \\
 	Supponiamo che la forza esercitata dal gas sul pistone sia costante e sia $A$ la sezione del cilindro, ovvero l'area del pistone. Il lavoro svolto dal gas è dunque:
 	\[
-	L = F\Delta x = pA\delta x = p\Delta V
+	L = F\Delta x = pA\Delta x = p\Delta V
 	\]
 	con $\Delta V$ la variazione di volume del gas.
 	\begin{align*}
@@ -2196,7 +2196,7 @@
 		L = \sum_{i}p_i\Delta V_i = 0
 		\]
 		se non c'è variazione di volume il lavoro è nullo.
-		\item \textbf{isoterma}, a temperatura importante. \\
+		\item \textbf{isoterma}, a temperatura costante. \\
 		Per il lavoro, così come per il calore, è possibile trovare un'espressione analitca semplice per particolari sistemi termodinamici.
 		\item \textbf{adiabatica}, senza scambio di calore, ovvero $Q = 0$.
 	\end{enumerate}
@@ -2233,6 +2233,18 @@
 		\]
 		Quindi se il sistema assorbe calore, cioè se $Q > 0$, allora l'energia interna del sistema aumenta. Viceversa, se il sistema cede durante il processo, cioè se $Q < 0$, allora l'energia interna del sistema deve diminuire.
 	\end{enumerate}
+	\subsection{Cicli termodinamici}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\textwidth]{ciclo_termodinamico}
+		\caption{Un ciclo termodinamico}
+	\end{figure}
+	La figura soprastante mostra un \textit{ciclo termodinamico} nel quale il sistema viene portato da un certo stato iniziale $i$ ad un altro stato finale $f$ e quindi di nuovo allo stato iniziale $i$. Il lavoro totale compiuto dal sistema durante il ciclo è la somma del lavoro \textit{positivo} compiuto durante l'espansione del lavoro \textit{negativo} compiuto durante la compressione. Nella figura il lavoro totale è positivo, perchè l'area sottesa dalla curva di espansione, da $i$ ad $f$, è maggiore di quella sottoesa dalla curva di compressione, da $f$ ad $i$.
+	Inoltre, se lo stato iniziale coincide con quello finale, allora:
+	\[
+	\Delta E_{int} = 0 \Rightarrow Q = L
+ 	\]
+ 	Queste sono le cosidette \textbf{trasformazioni cicliche}.
 	\section{Gas perfetti}
 	Il gas perfetto presenta diverse proprietà:
 	\begin{enumerate}
@@ -2308,6 +2320,97 @@
 	\[
 	nc_V\Delta T = \frac{3}{2}R\Delta T \Rightarrow c_V = \frac{3}{2}R
 	\]
+	\begin{note}{\nmu Energia interna di un gas perfetto in una trasformazione comunque}{en_int_trasformazione}
+		Abbiamo detto che l'energia interna di un gas perfetto è pari a:
+		\[
+		E_{int} = \frac{3}{2}nRT
+		\]
+		Sostituendo a $\frac{3}{2}R$ con $c_V$, otteniamo:
+		\[
+		E_{int} = nc_VT
+		\]
+		e questa equazione non si applica solo a un gas perfetto monoatomico, ma anche ai gas perfetti bioatomici e poliatomici. \\
+		Inoltre, quando un gas perfetto subisce una variazione di temperatura $\Delta T$, allora la variazione della sua energia interna è pari a:
+		\[
+		\Delta E_{int} = nc_v\Delta T
+		\]
+		e questa equazione è \textbf{valida per qualsiasi trasformazione}. \\
+		Questa equazione dice che una variazione di energia interna $E_{int}$ di un gas perfetto confinato dipende soltanto dalla variazione della temperatura e non da quale tipo di trasformazione genera tale variazione.
+	\end{note}
 	\paragraph{Capacità termica a pressione costante per gas monoatomici}
-	
+	Durante una trasformazione termodinamica, se la pressione $p$ del gas monoatomico è mantenuta costante, il lavoro compiuto da un gas perfetto durante un processo termodinamico è pari a:
+	\[
+	L = p\Delta V = nR\Delta T
+	\]
+	Allora, dal primo principio della termodinamica otteniamo:
+	\begin{align*}
+		\Delta E_{int} &= Q_{p, cost} - L \\
+		&= Q_{p, const} - nR\Delta T \\
+		&= nc_P\Delta T - nR\Delta T
+	\end{align*}
+	Sostituendo $\Delta E_{int} = nc_V\Delta T$, otteniamo:
+	\begin{align*}
+		&nc_V\Delta T = nc_P\Delta T - nR\Delta T  \\
+		&c_V = c_P - R
+	\end{align*}
+	questa prende il nome di \textbf{Relazione di Mayer}.
+	\paragraph{Lavoro compiuto da un gas perfetto in una trasformazione isoterma}
+	In una trasformazione isoterma la temperatura, $T$, è mantenuta costante. \\
+	Per trovare il lavoro compiuto da un gas perfetto durante un'espansione isoterma, partiamo dall'equazione:
+	\[
+	L = \int_{V_i}^{V_f}pd V
+	\]
+	Possiamo applicare la legge dei gas perfetti, $pV = nRT$, e sostuendo il valore di $p$ da questa equazione otteniamo:
+	\begin{align*}
+	L &= \int_{V_i}^{V_f}\frac{nRT}{V}d V
+	\end{align*}
+	Inoltre, dato che la trasformazione è isoterma e, quindi, la temperatura è costante possiamo portare $T$ fuori dall'integrale e scrivere:
+	\begin{align*}
+		L &= nRT\int_{V_i}^{V_f}\frac{dV}{V} \\
+		&= nRT[\ln V] \bigg|^{V = V_f}_{V = V_i}\\
+		&= nRT\ln\Big(\frac{V_f}{V_i}\Big)
+	\end{align*}
+	Per un'espansione $V_f$ è maggiore di $V_i$ quindi $\frac{V_f}{V_i} > 1$, quindi il lavoro compiuto da un gas perfetto durante un'espansione isoterma è positivo. Per una compressione, l'inverso dell'espansione, il rapporto è minore di 1 e quindi il lavoro compiuto è negativo.
+	\paragraph{Lavoro compiuto da un gas perfetto in una trasformazione adiabatica}
+	In una trasformazione adiabatica non si verificano scambi di energia sotto forma di calore, ovvero $Q = 0$ e quindi $\Delta E_{int} = -L$, ove $\Delta E_{int} = nc_V\Delta T$. Di conseguenza il lavoro compiuto da un gas perfetto in una trasformazione adiabatica è pari a:
+	\[
+	L = -nc_V\Delta T
+	\]
+	\section{Secondo principio della dinamica}
+	\subsection{Macchine termiche}
+	Una \textbf{macchina termica}, detta anche \textit{motore termico}, è un dispositivo che estrea energia dall'ambiente sotto forma di calore e compie lavoro utile. Al cuore di ogni macchina termica c'è un \textit{fluido di lavoro}, ad esempio in una macchina a vapore il fluido di lavoro è l'acqua. \\
+	Se una macchina termica deve compiere lavoro in modo continuativo, il fluido di lavoro deve passare attraverso una serie chiusa di trasformazioni termodinamiche, chiamate \textit{tempi}, tornando periodicamente a ciascuno stato di tale ciclo. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\textwidth]{macchina_termica}
+		\caption{Uno schema concettuale di una macchina termica}
+		\label{fig:mac_term}
+	\end{figure}
+	La definizione più precisa di una macchina termica è la seguente:
+	\begin{definition}{\nmu Macchina termica}{macchina_termica}
+		Una macchina termica è un sistema che compiendo un ciclo chiuso di trasformazioni, converte energia termica in energia meccanica.
+	\end{definition}
+	\subsection{Secondo principio della dinamica}
+	Il secondo principio della dinamica presenta 2 enunciati equivalenti:
+	\paragraph{Enunciato di Kelvin-Planck} L'enunciato di Kelvin-Planck afferma che:
+	\begin{center}
+		È impossibile realizzare una macchina termica che, lavorando ciclicamente, trasformi in lavoro meccanico il calore scambiato con un'unica sorgente.
+	\end{center}
+	Questo enunciato dice che la conversione integrale di calore in energia meccanica è possibile in un processo non ciclico, ossia in una trasformazione in cui lo stato iniziale e quello finale non coincidano.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{enunciato_kelvin_planck}
+	\end{figure}
+	Se l'enunciato di Kelvin-Planck non fosse vero, sarebbe possibile, ad esempio, far muovere una nave attingendo all'enorme riserva termica del mare.
+	\paragraph{Enunciato di Clausius} Una macchina termica che funziona secondo lo schema di una macchina termica (Figura~\ref{fig:mac_term}) è una \textit{macchina refrigerante} o \textit{frigorifero}: ad ogni ciclo la macchina sottrae la quantità di calore $Q_2$ ad un ambiente a temperatura inferiore $T_2$, la cella frigorifera, e lo trasferisce, insieme con l'equivalente del lavoro $W$ immesso dall'esterno, a un ambiente di temperatura più elevata $T_1$. In valore assoluto la quantità di calore ceduta all'ambiente a temperatura $T_1$ è pari a: $|Q_1| = W + Q_2$. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.4\textwidth]{frigorifero}
+		\caption{Macchina refrigerante}
+	\end{figure}
+	Questo non è possibile, se il lavoro $W$ è pari a 0 e tale impossibilità esprime il secondo principio della termodinamica nella forma note come il \textit{principio di Clausius}:
+	\begin{center}
+		È impossibile realizzare una macchina termica che, lavorando ciclicamente, dia come unico risultato il trasferimento di calore da un corpo a temperatura inferiore ad un altro a temperatura più elevata.
+	\end{center}
+	Questa formulazione nega che l'energia termica possa fluire spontaneamente da un corpo più freddo a uno più caldo; il calore può essere trasferito da un corpo a temperatura più bassa ad uno a temperatura più alta solo a spese di energia immessa dall'esterno. Se l'enunciato di Clausius non fosse vero, si potrebbero costruire frigoriferi capaci di raffreddare un ambiente senza spesa di energia elettrica o di altra natura.
 \end{document}
