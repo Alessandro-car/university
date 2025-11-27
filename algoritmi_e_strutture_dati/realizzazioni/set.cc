@@ -11,14 +11,14 @@ public:
     void insert(T k){
         if (!member(k)){
             S[s] = k;
-            s++;        
+            s++;
         }
     }
     void remove(T k){
         int i;
         for (i=0; i<s; i++)
             if (S[i] == k)
-                break;                                        
+                break;
         for (int j=i; j<s-1; j++)
             S[j]=S[j+1];
         s--;
@@ -84,7 +84,7 @@ set {
   {
     for each v in B insert(v);
   }
-  
+
  private:
   OrderedList<T> e;
   int size;
@@ -116,7 +116,7 @@ set {
       size--;
     }
   }
-  
+
  private:
   T *e;
   int size;
