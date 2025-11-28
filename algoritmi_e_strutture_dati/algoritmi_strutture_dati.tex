@@ -1107,4 +1107,151 @@ procedure INCODA(a: tipoelem, var Q: coda);
 \end{lstlisting}
 \section{Realizzazione con puntatori}
 Nella realizzazione con puntatori la coda è realizzata con \textit{n} celle, la prima delle quali è indirizzata da un puntatore ``testa'' e l'ultima da un puntatore ``fondo''. La coda vuota è individuata dal valore nullo del puntatore di testa.
+\chapter{Insiemi}
+Un insieme è una collezione di elementi distinti, detti anche componenti o membri, dello stesso tipo. L'insieme è la struttura matematica fondamentale, e può essere descritto elencandone tutti gli elementi o stabilendo una proprietà che ne caratterizzi gli elementi. A differenza delle liste, gli elementi non sono caratterizzati da una posizione, nè sono ammesse più copie dello stesso elemento nel medesimo insieme. \\
+Il numero di elementi che compongono un insieme $A$ è detto cardinalità di $A$ e si indica con $|A|$ oppure con $\# A$. Se tale numero è finito, allora l'insieme ha cardinalità finita, altrimenti ha cardinalità infinita. Un insieme che non contiene alcun elemento è detto vuoto, e si indica con $\emptyset$. \\
+La relazione fondamentale per gli insiemi è l'appartenenza di un elemento $x$ ad un insieme $A$, indicata formalmente con $x \in A$. Da questa si deriva l'inclusione tra due insiemi $A$ e $B$, indicata con $A \subseteq B$, significa che ogni elemento $x$ appartiene sia ad $A$ che a $B$.\\
+Se $A \subseteq B$ e $B \subseteq A$ allora $A = B$. \\
+Le operazioni principali tra due insiemi sono l'unione, l'intersezione e la differenza:
+\begin{itemize}
+	\item L'unione tra due insiemi, $A \cup B$, denota l'insieme contenente tutti gli elementi di $A$ e tutti gli elementi di $B$;
+	\item L'intersezione tra due insiemi,  $A \cap B$, denota l'insieme contente tutti gli elementi che appartengono sia ad $A$ che a $B$, quindi gli elementi in comune tra i due insiemi;
+	\item La differenza tra due insiemi, $A - B$, contiene gli elementi che appartengono ad $A$ ma non appartengono a $B$.
+\end{itemize}
+\section{Specifica}
+Una specifica per il tipo di dato insieme è la seguente:
+\begin{align*}
+	\text{CREAINSIEME:} &\quad () \to \text{insieme} \\
+	\text{INSIEMEVUOTO:} &\quad (\text{insieme}) \to \text{booleano} \\
+	\text{APPARTIENE:} &\quad (\text{tipoelem}, \text{insieme}) \to \text{booleano} \\
+	\text{INSERISCI:} &\quad (\text{tipoelem}, \text{insieme}) \to \text{insieme} \\
+	\text{CANCELLA:} &\quad (\text{tipoelem}, \text{insieme}) \to \text{insieme} \\
+	\text{UNIONE:} &\quad (\text{insieme}, \text{insieme}) \to \text{insieme}  \\
+	\text{INTERSEZIONE:} &\quad (\text{insieme}, \text{insieme}) \to \text{insieme}  \\
+	\text{DIFFERENZA:} &\quad (\text{insieme}, \text{insieme}) \to \text{insieme}  \\
+\end{align*}
+\subsection{Specifica semantica}
+	\begin{itemize}
+		\item \texttt{CREAINSIEME() = } $A$ \\
+		\quad \textit{Post}: $A = \emptyset$
+		\item \texttt{INSIEMEVUOTO($A$) = b} \\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & A = \empty \\
+			b = falso & altrimenti 
+		\end{cases}$
+		\item \texttt{APPARTIENE($x, A$) = b} \\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & x \in A \\
+			b = falso & altrimenti 
+		\end{cases}$
+		\item \texttt{INSERISCI($x, A$) = $A'$} \\
+		\quad \textit{Post:} $A'= A \cup \{x\}$ 
+		\item \texttt{CANCELLA($x, A$) = $A'$} \\
+		\quad \textit{Post:} $A'= A - \{x\}$
+		\item \texttt{UNIONE($A, B$) = $C$} \\
+		\quad \textit{Post:} $C = A \cup B$
+		\item \texttt{INTERSEZIONE($A, B$) = $C$} \\
+		\quad \textit{Post:} $C = A \cap B$
+		\item \texttt{DIFFERENZA($A, B$) = $C$} \\
+		\quad \textit{Post:} $C = A - B$
+		
+	\end{itemize}
+	Gli operatori \texttt{INSERISCI} e \texttt{CANCELLA}, pur essendo rindondanti, in quanto ottenibili con gli operatori di \texttt{UNIONE} e \texttt{DIFFERENZA}, sono molto utilizzati e di solito compaiono in tutte le specifiche degli insiemi.
+	\section{Realizzazione con vettore booleano}
+	Si supponga di voler realizzare un insieme i cui elementi possono essere interi compresi tra 1 e $N$. Un insieme $A$ può essere rappresentato con un vettore booleano di $N$ bit, in cui il $k$-esimo bit è vero se $k \in A$ ed è falso se $k \notin A$. In questo modo è semplice verificare se un elemento $k$ appartiene all'insieme, oppure inserire o cancellare un elemento di $k$: basta accedere direttamente al $k$-esimo bit del vettore. Anche le operazioni di unione, intersezione e differenza di due insiemi si realizzano facilmente con operazioni logiche. Per l'unione basta porre a vero tutti i valori che sono veri in almeno uno dei due vettori, per l'intersezione tutti quelli veri in entrami i vettori e per la differenza tutti quelli veri nel primo vettore e falsi nel secondo.
+	\begin{lstlisting}[style=pascalstyle]
+		const N = ... { valore opportuno };
+		type tipoelem = 1..N;
+			insieme = packed array[1..N] of boolean;
+		
+		procedure CREAINSIEME(var A: insieme);
+			var i: integer;
+			begin
+				for i := 1 to N do A[i] := false
+			end;
+			
+		function INSIEMEVUOTO(var A: insieme): boolean;
+			var i: integer;
+			begin
+				i := 1;
+				while (i < N) and not A[i] do i := i + 1;
+				INSIEMEVUOTO = not A[i];
+			end;
+		
+		function APPARTIENE(i: tipoelem, var A: insieme): boolean;
+			begin
+				APPARTIENE := A[i]
+			end;	
+		
+		procedure INSERISCI(i: tipoelem, var A: insieme);
+			begin 
+				A[i] := true;
+			end;
+		
+		procedure CANCELLA(i: tipoelem, var A: insieme);
+			begin
+				A[i] := false;
+			end;
+		
+		procedure UNIONE(var A, B, C: insieme);
+			var i: integer;
+			begin
+				for i := 1 to N do C[i] := A[i] or B[i]
+			end;
+	
+		procedure INTERSEZIONE(var A, B, C: insieme);
+			var i: integer;
+			begin
+				for i := 1 to N do C[i] := A[i] and B[i]
+			end;
+			
+		procedure DIFFERENZA(var A, B, C: insieme);
+			var i: integer;
+			begin
+				for i := 1 to N do C[i] := A[i] and not B[i]
+			end;
+	\end{lstlisting}
+	Questa realizzazione, pur essendo estremamente semplice, presenta molti svantaggi. Innanzitutto vi è un notevole spreco di memoria, perchè ogni insieme richiede sempre $O(N)$ spazio per la sua memorizzazione, indipendentemente dal numero di elementi presenti nell'insieme. Inoltre, alcune operazioni sono troppo lente perchè richiedono $O(N)$ tempo, anche per insiemi con pochi elementi. Inoltre, la cardinalità non può superare la costante $N$.
+	\section{Realizzazione con liste non ordinate}
+	Si può rappresentare un insieme con una lista i cui elementi sono quelli dell'insieme. In questo modo, l'insieme non deve necessariemente essere composto da interi da 1 ad $N$. Inoltre, l'occupazione della memoria cresce linearmente col numero degli elementi effettivamente presenti nell'insieme. \\
+	Quindi, le operazioni di inserimento, cancellazione, presenza di un elemento all'interno della lista si riducono alle funzioni della lista già descritte in precedenza.  \\
+	Le funzioni di $\texttt{UNIONE, INTERSEZIONE}$  e $\texttt{DIFFERENZA}$ sono abbastanza simili tra loro. Occorrono tre variabili di tipo posizione per scandire le liste che rappresentano i tre insiemi $A, B$ e $C$. Per l'unione si inseriscono dapprima tutti gli elementi di $B$ in $C$, mentre per l íntersezione e la differenza si parte con $C$ vuoto. Successivamente, per ogni elemento di $A$, si verifica tramite la $\texttt{APPARTIENE}$ se tale elemento compare anche in $B$ oppure no e lo si inserisce in $C$ nel primo caso (INTERSEZIONE) oppure no (UNIONE e DIFFERENZA). \\
+	Di seguito l'implementazione della procedura \texttt{DIFFERENZA}:
+	\begin{lstlisting}[style=pascalstyle]
+		procedure DIFFERENZA(var A, B, C: insieme);
+			var p, q, r: posizione;
+			begin
+				CREAINSIEME(C);
+				p := PRIMOLISTA(A); q := PRIMOLISTA(B); r := PRIMOLISTA(C);
+				while not FINELISTA(p, A) do begin
+					if not APPARTIENE(LEGGILISTA(p, A), B)
+						then INSLISTA(LEGGILISTA(p, A), r, C);
+					p := SUCCLISTA(p, A);
+				end;
+			end;
+	\end{lstlisting}
+	\section{Realizzazioni con liste ordinate}
+	Se sugli elementi dell'insieme è definita una relazione ``$\leq$'' di ordinamento totale, l'insieme stesso può essere rappresentato con una lista ordinata per valori crescenti degli elementi. \\
+	Ad esempio, l'operatore di intersezione può essere scritto nel modo seguente. Si utilizzando ancora tre variabili di tipo posizione per scandire $A, B$ e $C$ ma grazie all'ordinamento si può evitare l'utilizzo di appartiene. Infatti, considerando il primo elemento di $A$ e il primo di $B$, se sono uguali si inserisce in $C$ uno dei due, altrimenti se sono diversi si inserisce in $C$ il minore e ci si posizione sull'elemento successivo solo nella lista del minore. Il procedimento continua finchè non viene esaurita almeno una delle due liste. Per mantenere $C$ ordinata, l'inserimento in $C$ va sempre effettuata in fondo.
+	\begin{lstlisting}[style=pascalstyle]
+		procedure INTERSEZIONE(var A, B, C: insieme);
+			var p, q, r: posizione;
+			begin
+				CREAINSIEME(C);
+				p := PRIMOLISTA(A); q := PRIMOLISTA(B); r := PRIMOLISTA(C);
+				while not FINELISTA(p, A) and not FINELISTA(q, B) do
+					if LEGGILISTA(p, A) = LEGGILISTA(q, B) then
+						begin
+							INSLISTA(LEGGILISTA(p, A), r, C);
+							p := SUCCLISTA(p, A);
+							q := SUCCLISTA(q, B);
+							r := SUCCLISTA(r, C);
+						end
+					else 
+						if LEGGILISTA(p, A) < LEGGILISTA(q, B)
+							then p := SUCCLISTA(p, A)
+						else
+							q := SUCCLISTA(q, B)
+			end;
+	\end{lstlisting}
 \end{document}
