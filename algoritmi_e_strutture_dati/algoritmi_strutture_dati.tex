@@ -1307,9 +1307,8 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\quad \textit{Pre:} $\exists <k', v'> \in D \mid k'=k$
 		\quad \textit{Post:} $v = v'$
 	\end{itemize}
-	\section{Rappresentazioni}
 	Oltre alle realizzazioni viste per l'insieme, che si rifanno alla rappresentazione con vettore booleano e alla rappresentazione mediante una lista, ci sono realizzazioni più efficienti mediante vettori ordinati e tabelle hash.
-	\subsection{Rappresentazione con vettore ordinato}
+	\section{Rappresentazione con vettore ordinato}
 	Nella rappresentazione con vettore ordinato si utilizza un vettore con un cursore all'ultima posizione occupata. Avendo definito una relazione di ordinamento totale $\leq$ sulle chiavi, queste si memorizzano nel vettore in posizioni continue e in ordine crescente a partire dalla prima posizione. Per verificare l'appartenenza di un elemento o chiave $k$, si utilizza la ricerca binaria (dicotomica, logaritmica) ove si confronta il valore da ricercare $k$ con il valore $v$ che occupa la posizione centrale del vettore e si stabilisce in quale metà continuare la ricerca.
 	\subsection{Ricerca binaria}
 	Definiamo i seguenti tipi:
@@ -1337,7 +1336,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 					else 
 						ricbin = ricbin(V, k, m + 1, j)
 	\end{lstlisting}
-	\subsection{Rappresentazione con tabella hash}
+	\section{Rappresentazione con tabella hash}
 	Esiste una tecnica denominata ``hash'', che si appoggia su di una struttura di dati tabellare, che si presta ad essere usata per realizzare dizionari. Con questa struttura, le operazioni di ricerca e di modifica di un dizionario possono operare in tempi costanti e indipendenti sia dalla dimensione del dizionario che dall'insieme dei valori che verranno gestiti. \\
 	Nella rappresentazione con tabella hash, l'idea di basi è ricavare la posizione che la chiave occupa in un vettore dal valore della chiave. Esistono diverse varianti che si possono far risalire ad una forma statica e ad una forma dinamica o estensibile. \\
 	La prima fa uso di strutture o tabelle di dimensione prefissata, mentre l'hash dinamico è in grado di modificare dinamicamente le dimensioni della tabella hash sulla base del numero di elementi che vengono via via inseriti o eliminati. \\
@@ -1353,4 +1352,115 @@ Una specifica per il tipo di dato insieme è la seguente:
 	In entrambi i casi viene usata una funzione aritmetica allo scopo di calcolare, partendo dalla chiave, la posizione in tabella delle informazioni contenute nell'attributo collegato alla chiave. Questa è un'alternativa efficace all'indirizzamento diretto in un vettore perchè la dimensione è proporzionale al numero di chiavi attese. \\
 	Se $k$ è l'insieme di tutte le possibili chiavi distinte e $v$ è il vettore di dimensione $m$ in cui si memorizza il dizionario, la soluzione ideale è la funzione di accesso $h: K \to \{1, \dots, m\}$ che permette di ricavare la posizione $h(k)$ della chiave $k$ nel vettore $v$ così che, se $k_1 \in K$ e $k_2 \in K$ con $k_1 \neq k_2$ si ha $h(k_1) \neq h(k_2)$. \\
 	Utilizzando $m = |K|$ si ha garanzia di biunivocità e di poter accedere direttamente alla posizione contenente la chiave. Se $|K|$ è grande, si ha un enorme spreco di memoria e la dimensione, $m$, del vettore delle chiavi va scelta in base al numero delle chiavi attese.
+	\subsection{Collisioni} Consideriamo un esempio di hash chiuso:\\
+	\noindent
+	\begin{minipage}[c]{0.25\textwidth}
+		\raggedright
+		\texttt{albinoni}\\[0.5em]
+		\texttt{offenbach}\\[0.5em]
+		\texttt{palestrina}\\[0.5em]
+		\texttt{puccini}\\[0.5em]
+		\texttt{prokofev}\\[0.5em]
+		\texttt{rossini}
+	\end{minipage}\hspace{1cm}%
+	\begin{minipage}[c]{0.35\textwidth}
+		\raggedright
+		\texttt{h(albinoni) = 1}\\[0.5em]
+		\texttt{h(offenbach) = 15}\\[0.5em]
+		\texttt{h(palestrina) = 16}\\[0.5em]
+		\texttt{h(puccini) = 16}\\[0.5em]
+		\texttt{h(prokofev) = 16}\\[0.5em]
+		\texttt{h(rossini) = 18}
+	\end{minipage}\hspace{1cm}%
+	\raisebox{-3em}{%
+		\begin{tabular}{|l|r|}
+			\hline
+			\textbf{ALBINONI} & \textbf{1} \\
+			\hline
+			\textbf{...} & \\
+			\hline
+			\textbf{OFFENBACH} & \textbf{15} \\
+			\hline
+			\textbf{PALESTRINA} & \textbf{16} \\
+			\hline
+			\textbf{PUCCINI} & \textbf{17} \\
+			\hline
+			\textbf{PROKOFEV} & \textbf{18} \\
+			\hline
+			\textbf{ROSSINI} & \textbf{19} \\
+			\hline
+			\textbf{...} & \\
+			\hline
+			& \textbf{26} \\
+			\hline
+	\end{tabular}} \quad \\
+	
+	Ci sono collisioni per i cognomi che iniziano con la stessa lettera. \\
+	Una collisione si verifica quando chiavi diverse producono lo stesso risultato della funzione. Esistono funzioni hash più o meno buone anche se le collisioni non si protranno mai evitare del tutto. \\
+	Nell'esempio visto si è adottata una semplice strategia per la risoluzione delle collisioni, chiamata \textbf{scansione lineare}: ovvero se $h(k)$ per qualunque chiave $k$ indica una posizione già occupata, si ispeziona la posizione successiva nel vettore. Se la posizione è piena si prova con la seguente e così via fino a trovare una posizione libera o trovare che la tabella è completamente piena. \\
+	Una posizione libera può venire facilmente segnalata in fase di realizzazione da una chiave fittiza, chiamata \textit{libero}. Per la cancellazione è più semplice sostituire l'oggetto cancellato con una chiave fittizia \textit{cancellato} che dovrebbe essere facilmente distinguibile dalle altre chiavi reali e dall'altra chiave fittizia \textit{libero}. \\
+	La strategia lineare può produrre nel tempo il casuale addensamento di informazioni in certi tratti della tabella, i cossidetti \textbf{agglomerati}, piuttosto che la loro dispersione. \\
+	Indipendentemente dalla funzione hash adottata, deve essere prevista una strategia per gestire il problema degli agglomerati e delle collisioni. In definitiva:
+	\begin{itemize}
+		\item occorre una funzione hash, calcolabile velocemente e che distribuisca le chiavi uniformemente in \textit{v}, in modo da ridurre le collisioni;
+		\item occorre un metodo di scansione per la soluzione delle collisioni utile a reperire chiavi che hanno trovato la posizione occupata e che non provochi la formazione di agglomerati di chiavi;
+		\item la dimensione \textit{m} del vettore \textit{v} deve essere una sovrastima del numero delle chiavi attese, per evitare di riempire \textit{v} completamente.
+	\end{itemize}
+	Per definire funzioni hash, è conveniente considerare la rappresentazione binaria $bin(k)$ della chiave \textit{k}. Nel caso di chiavi non numeriche si può considerare la rappresentazione binaria dei caratteri e $bin(k)$ è data dalla loro concatenazione. \\
+	Di seguito sono elencati 4 buoni metodi di generazione hash. Denotiamo con $int(b)$ il numero intero rappresentato da una stringa binaria $b$ e indichiamo da 0 a $ m - 1$ gli elementi di $v$. I primi tre pressunpono $m = 2^p$, per qualche $p$, mentre per il quarto si presuppone $m$ dispari (meglio se primo).
+	\begin{enumerate}
+		\item $h(k) = int(b)$, dove $b$ è un sottoinsieme di $p$ bit di $bin(k)$, solitamente estratti nelle posizioni centrali;
+		\item $h(k) = int(b)$, dove $b$ è data dalla somma modulo 3, effettuata bit a bit, di diversi sottoinsiemi di $p$ bit di $bin(k)$;
+		\item $h(k) = int(b)$, dove $b$ è un sottoinsieme di $p$ bit estratti dalle posizioni centrali di $bin(int(bin(k))2)$;
+		\item $h(k)$ è uguale al resto della divisione $\sfrac{int(bin(k))}{m}$. Se $m = 2^p$, due numeri con gli stessi $p$ bit finali darebbero sempre luogo ad una collisione.
+	\end{enumerate}
+	L'ultima funzione hash definita è la migliore dal punto di vista probabilistico e fornisce un'eccellente distribuzione degli indirizzi $h(k)$ nell'intervallo $[0, m-1]$.
+	\begin{example}{\nmu Funzione hash}{funzione_hash}
+		Si supponga che le chiavi siano di 6 caratteri alfanumerici, le chiavi più lunghe vengono troncate mentre quelle più corte sono espanse a destra con spazi. Si assuma $ord(A) = 1, ord(B) = 2, \dots, ord(Z) = 26$ e $ord(\underline{b}) = 32$, dove $b$ indica lo spazio, con rappresentazione di ogni ordinale su 6 bit. \\
+		Per le chiavi \textit{weber} e \textit{webern} si ottiene:
+		\begin{itemize}
+			\item $bin(weberb) = 010111\ 000101\ 000010\ 000101\ 010010\ 100000\ 0000$
+			\item $bin(webern) = 010111\ 000101\ 000010\ 000101\ 010010\ 001110\ 0000$
+		\end{itemize}
+		dove si sono evidenziati per chiarezza i gruppi di 6 bit che rappresentano ciascun carattere. Calcoliamo gli indirizzi hash ottenuti con le funzioni definite in precendeza, la 1, la 2 e la 4:
+		\begin{itemize}
+			\item sia $m = 256 = 2^8$. Estraendo gli 8 bit dalla posizione 15 alla 22 di $bin(k), h(weber) = h(webern) = int(00100001) = 33$, le due chiavi danno luogo ad una collisione;
+			\item sia ancora $m = 256 = 2^8$ e si calcoli $b$ raggruppando $bin(k)$ in cinque gruppi di 8 bit. $h(weber) = int(11000011) = 195$, poichè:
+			\[
+			11000011 = 01011100 \oplus 01010000 \oplus 10000101 \oplus 01001010 \oplus 00000000
+			\]
+			dove + indicala somma bit a bit modulo 2. Analogamente, $h(webern) = int(00100001) = 33$, poichè:
+			\[
+			00100001 = 01011100 \oplus 01010000 \oplus 10000101 \oplus 01001000 \oplus 11100000
+			\]
+			La collisione è stata, quindi, eliminata.
+			\item Sia  $m = 383$, utilizzando 6 bit, $int(bin(k))$ è un numero in base $2^6 = 64$. \\
+			$int(bin(webern)) = 23 * 645 + 5 * 644 + 2 * 643 + 5 * 642 + 18 * 641 + 14 * 640 = 64(64(64(64(23 * 64) + 5) + 2) + 5) + 18) + 14$ \\
+			$h(webern)$ e $h(weber)$ sono ottenuti prendendo il resto della divisione $int(bin(\dots)) / 383$.
+		\end{itemize}
+		\end{example}
+		\paragraph{Hash aperto} Una tecnica che evita la formazione di agglomerati è quella dell'hash aperto che richiede che la tabella hash mantenga la lista degli elementi la cui chiavi producono lo stesso valore di funzione (trasformata). La tabella hash viene realizzata definendo un array di liste di bucket, le \textbf{liste di trabocco}. \\
+		La funzione hash viene utilizzata per determinare quale lista potrebbe contenere l'elemento che possiede una determinata chiave in modo da poter attivare una successiva operazione di ricerca nella lista corrispondente e da restituire la posizione del bucket che contiene la chiave.  \\
+		Con le liste di trabocco, il vettore \textit{v} contiene in ogni posizione un puntatore ad una lista:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\textwidth]{liste_trabocco}
+			\caption{Lista di trabocco}
+		\end{figure} 
+		\subsection{Metodi di scansione} Nella realizzazione con hash e liste di trabocco si è usato un metodo di scansione esterno contrapposto alla scansione lineare che è un metodo di scansione interno. \\
+		Altri metodi interni, o chiusi, sono:
+		\begin{itemize}
+			\item scansione quadratica;
+			\item scansione pseudocasuale;
+			\item hashing doppio.
+		\end{itemize}	
+		\paragraph{Scansione interna} Sia fi la funzione che viene utilizzata l'i-esima volta che si trova occupata una posizione del vettore \textit{v}, $i \geq 0$. Per $i = 0, f0 = h$. fi va scelta in modo da toccare, una sola volta, tutte le posizioni di \textit{v}.
+		\paragraph{Scansione lineare} Nella scansione lineare la funzione fi è definita come $fi = (h(k) + h \cdot i) \mod{m}$ ove $h$ è un intero positivo primo con \textit{m} e \textit{h} rappresenta la distanza tra due posizioni successive esaminate nella scansione. Dato che \textit{m} e \textit{h} sono primi tra loro, vengono esaminate tutte le posizioni di \textit{v} prima di riconsiderare le posizioni già esaminate. Lo \textbf{svantaggio} è che non riduce la formazione di agglomerati. 
+		\paragraph{Scansione quadratica} Nella scansione quadratica la funzione fi è definita come $fi = (h(k) + h \cdot i + i(i -1)/2) \mod{m}$ ove $m$ è primo. La distanza tra due posizioni successive nella sequenza è variabile, quindi la possibilità di agglomerati è ridotta. Lo \textbf{svantaggio} è che la sequenza di scansione non include tutte le posizioni di \textit{v}, che è un vantaggio trascurabile per $m$ non troppo piccolo.
+		\paragraph{Scansione pseudocasuale} Nella scansione pseudocasuale la funzione fi è definita come $fi = (h(k) + pi) \mod{m}$ ove pi è l'i-esimo numero generato da un generatore di numeri pseudocasuali, che genera gli interi tra $1$  e $m$ una sola volta in un ordine qualunque.
+		\paragraph{Hashing doppio} Nell'hashing doppio la funzione fi è definita come $fi = (h(k) + i \cdot f(k)) \mod{m}$ ove $m$ è un'altra funzione hash diversa da $h$. \\
+		\quad \\ \quad \\
+		Usando metodi di scansione interna e potendo cancellare chiavi, non si è mai sicuri che, raggiunta una posizione vuota nella ricerca di $k$, tale chiave non si trovi in un'altra posizione di $v$, poichè la posizione ora vuota era occupata quando $k$ è stata inserita. \\
+		Bisogna dunque scandire anche le posizioni in cui si è cancellato e fermarsi o sulla posizione mai riempita o essere tornati su una posizione già scandita e questo determina un aumento del tempo di ricerca. \\
+		Se sono previste molte cancellazioni è bene utilizzare il metodo di scansione esterna. 
 \end{document}
