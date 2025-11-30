@@ -33,6 +33,7 @@
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usepackage{yhmath}
+
 \usetikzlibrary{angles, quotes, patterns}
 \usepackage{circledsteps}
 \date{}
@@ -43,6 +44,11 @@
 \setlength{\parindent}{0pt}
 \definecolor{brickred}{RGB}{182, 50, 28}
 \definecolor{darkred}{RGB}{139, 0, 0}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{darkblue}{rgb}{0,0,0.6}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=darkred,
@@ -98,6 +104,25 @@
 	\nameref{#1}\egroup}
 
 \newcommand{\nmu}{}
+
+\lstdefinestyle{normalstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+}
 
 \begin{document}
 	{
@@ -1797,4 +1822,164 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.25\textwidth]{rappresentazione_generalizzazione}
  	\end{figure}
+ 	\chapter{Progettazione concettuale}
+ 	La progettazione concettuale di una base di dati consiste nella costruzione di uno schema Entità-Relazione in grado di descrivere al meglio le specifiche sui dati di un'applicazione. Anche nel caso di applicazioni non particolarmente complesse, lo schema che si ottiene può contenere molti concetti correlati in una maniera piuttosto complicata. La costruzione finale dello schema è un processo graduale: lo schema concettuale viene progressivamente raffinato e arricchito attraverso una serie di trasformazioni ed eventuali correzioni. 
+ 	\section{La raccolta e l'analisi dei requisiti}
+ 	Il reperimento e l'analisi dei requisiti di un'applicazione sono attività difficilmente standardizzabili perchè dipendono molto dall'applicazione con cui si ha a che fare. \\
+ 	Per \textit{raccolta dei requisiti} si intende la completa individuazione dei problemi che l'applicazione da realizzare deve risolvere e le caratteristiche che tale applicazione dovrà avere. \\
+ 	Per caratteristiche del sistema si intendono sia gli aspetti statistici, i dati, sia gli aspetti dinamici, le operazioni sui dati. I requisiti vengono inizialmente raccoolti in specifiche espresse generalmente in linguaggio naturale e, per questo motivo, spesso ambigue e disorganizzate. \\
+ 	L'\textit{analisi dei requisiti} consiste nel chiarimento e nell'organizzazione delle specifiche dei requisiti. Queste sono attività fortmente interconnesse: l'attività di analisi inizia con i i primi requisiti ottenuti per poi procedere di pari passo con l'attività di raccolta. \\
+ 	I requisiti di un'applicazione provengono, nella maggior parte dei casi, da fonti diverse. Le principali fonti di informazione sono, in genere, le seguenti.
+ 	\begin{itemize}
+ 		\item Gli \textit{utenti dell'applicazione}. In questo caso le informazioni si acquisicono mediante opportune interviste, anche ripetute, oppure attraverso una documentazione scritta che gli utenti possono aver predisposto appositamente per questo scopo. 
+ 		\item Tutta la \textit{documentazione esistente} che ha qualche attinenza con il problema allo studio come moduli, regolamenti interni, procedure aziendali e normative. È richiesta, in questo caso, un'attività di raccolta e selezione che viene assistita dagli utenti, ma è a carico del progettista.
+ 		\item \textit{Realizzazioni preesistenti}, ovvero applicazioni che si devono rimpiazzare o che devono interagire in qualche maniera con il software da realizzare. La conoscenza delle caratteristiche di questi pacchetti software può fornirci importanti informazioni anche in relazione ai problemi esistenti che è necessario risolvere. 
+ 	\end{itemize}
+ 	Nella fase di acquisizione delle specifiche, gioca un importante ruolo l'interazione con gli utenti del sistema informativo. Durante questa interazione può avvenire che utenti diversi forniscano informazioni diverse, spesso complementari ma contraddittorie. Quindi, nel corso delle interviste, è opportuno effettuare con l'utente verifiche di comprensione e consistenza sulle informazioni che si stanno raccogliendo, attraverso esempi oppure richiedendo definizioni e classificazioni precise. \\
+ 	Inoltre, in questa fase, è importante individuare gli aspetti essenziali rispetto a quelli marginali e procedere per raffinamenti successivi. \\
+ 	La specifica dei requisiti avviene spesso, facendo uso di descrizioni in linguaggio naturale e, data la sua ambiguità, è bene effettuare una profonda analisi del testo che descrive le specifiche per filtrare eventuali inesattezze e i termini ambigui presenti. 
+ 	Ad esempio, supponiamo di dover progettare una base di dati per una società di formazione e di aver raccolto, sulla base di alcune interviste fatte al personale di questa società, le specifiche dei dati espresse in linguaggio naturale.
+ 	\begin{example}{\nmu Società di formazione}{societa_formazione}
+ 			\centering
+ 			\begin{tabular}{|>{\raggedright\arraybackslash}p{0.8cm}|>{\raggedright\arraybackslash}p{13cm}|}
+ 				\hline
+ 				\multicolumn{2}{|c|}{\textbf{Società di formazione}} \\
+ 				\hline
+ 				1 & \textit{Si vuole realizzare una base di dati per una società che eroga corsi, di} \\
+ 				2 & \textit{cui vogliamo rappresentare i dati dei partecipanti ai corsi e dei docenti.} \\
+ 				3 & \textit{Per i partecipanti (circa 5000), identificati da un codice, si vuole me-} \\
+ 				4 & \textit{morizzare il codice fiscale, il cognome, l'età, il sesso, il luogo di nascita,} \\
+ 				5 & \textit{il nome dei loro attuali datori di lavoro, i posti dove hanno lavorato} \\
+ 				6 & \textit{in precedenza insieme al periodo, l'indirizzo e il numero di telefono, i} \\
+ 				7 & \textit{corsi che hanno frequentato (i corsi sono in tutto circa 200) e il giudizio} \\
+ 				8 & \textit{finale. Rappresentiamo anche i seminari che stanno attualmente fre-} \\
+ 				9 & \textit{quentando e, per ogni giorno, i luoghi e le ore dove sono tenute le lezioni.} \\
+ 				10 & \textit{I corsi hanno un codice, un titolo e possono avere varie edizioni con} \\
+ 				11 & \textit{date di inizio e fine e numero di partecipanti. Se gli studenti sono liberi} \\
+ 				12 & \textit{professionisti, vogliamo conoscere l'area di interesse e, se lo possiedono,} \\
+ 				13 & \textit{il titolo. Per quelli che lavorano alle dipendenze di altri, vogliamo co-} \\
+ 				14 & \textit{noscere invece il loro livello e la posizione ricoperta. Per gli insegnanti} \\
+ 				15 & \textit{(circa 300), rappresentiamo il cognome, l'età, il posto dove sono nati, il} \\
+ 				16 & \textit{nome del corso che insegnano, quelli che hanno insegnato nel passato e} \\
+ 				17 & \textit{quelli che possono insegnare. Rappresentiamo anche tutti i loro recapiti} \\
+ 				18 & \textit{telefonici. I docenti possono essere dipendenti interni della società o} \\
+ 				19 & \textit{collaboratori esterni.} \\
+ 				\hline
+ 			\end{tabular}
+ 	\end{example}
+ 	È facile rendersi conto che tale testo presenta un certo problema di ambiguità e imprecisioni. Ad esempio, si utilizzano i termini \textit{partecipante} e \textit{studente} per indicare lo stesso concetto. La stessa cosa accade per i termini \textit{docente} e \textit{professore} e per i termini \textit{corso} e \textit{seminario}. \\
+ 	Proviamo a fissare alcune regole generali per ottenere una specifica dei requisiti più precisa e senza ambiguità.
+ 	\begin{itemize}
+ 		\item \textbf{Scegliere il corretto livello di astrazione}. È bene evitare di utilizzare termini troppo generici o troppo specifici che rendono poco chiaro un concetto. Nell'esempio della \namerefl{exa:societa_formazione} sono stati utilizzati i termini \textit{titolo}, alla riga 13, con riferimento ai partecipanti che sono liberi professionisti (che viene usato per indicare un concetto diverso alla riga 10) e \textit{giudizio}, alla riga 7, con riferimento alla valutazione dei corsi, che andrebbero specificati meglio come \textit{titolo professionale} o \textit{votazione in decimi}.
+ 		\item \textbf{Standardizzare la struttura delle frasi}. Nella specifica di requisiti è preferibile utilizzare sempre lo stesso stile sintattico. Per esempio, per ``per <dato> rappresentiamo <insieme di proprietà>''.
+ 		\item \textbf{Evitare frasi contorte}. Le definizioni devono essere semplici e chiare. Per esempio, \textit{lavoratori dipendenti}, o più semplicemente dipendenti, è da preferire a \textit{quelli che lavorano alle dipendenze di altri} alla riga 13.
+ 		\item \textbf{Individuare sinonimi/omonimi e unificare i termini}. I \textit{sinonimi} indicano termini diversi con lo stesso significato, per esempio \textit{docente} alla riga 2 e \textit{insegnante} alla riga 14, oppure \textit{partecipante} alla riga 2 e \textit{studente} alla riga 11; gli \textit{omonimi} indicano termini uguali ma con diversi significati, ad esempio \textit{posto}, riferito a ``impiego'' alla riga 5, \textit{città} alla riga 15 e \textit{luogo} riferito a ``città'' e ad ``aula'' alla riga 4. \\
+ 		Queste situazioni possono generare ambiguità e vanno chiarite: nel caso di sinonimi unificando i termini, nel caso di omonimi utlizzando termini diversi o specificandoli meglio. 
+ 		\item \textbf{Rendere esplicito il riferimento tra termini}. Può succedere che l'assenza di un contesto di riferimento renda alcuni concetti ambigui: in questi casi bisogna esplicitare il riferimento tra termini. Per esempio, nella riga 6, non è chiaro se i termini \textit{indirizzo} e \textit{numero di telefono} sono relativi ai partecipanti o ai loro datori di lavoro; nella riga 13, nella frase \textit{per quelli che lavorano...} si deve chiarire esplicitamente a chi ci stiamo riferendo, se ai partecipanti o ai docenti, per evitare confusione.
+ 		\item \textbf{Costruire un glossario dei termini}. È molto utile, per la comprensione e la precisazione dei termini usati, definire un glossario che, per ogni termine, contenga: una breve descrizione, possibile sinonimi e altri termini contenuti nel glossario con i quali esiste un legame logico. Un glossario per la \namerefl{exa:societa_formazione} può essere il seguente.
+ 		
+ 	\end{itemize}
+ 	\begin{example}{\nmu Glossario della \namerefl{exa:societa_formazione}}{glossario_societa_formazione}
+ 		\centering
+ 		\begin{tabular}{|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}p{3cm}|}
+ 			\hline
+ 			\textbf{Termine} & \textbf{Descrizione} & \textbf{Sinonimi} & \textbf{Collegamenti} \\
+ 			\hline
+ 			Partecipante & Partecipante ai corsi. Può essere un dipendente o un professionista & Studente & Corso, Datore \\
+ 			\hline
+ 			Docente & Docente dei corsi. Possono essere collaboratori esterni & Insegnante & Corso \\
+ 			\hline
+ 			Corso & Corsi offerti. Possono avere varie edizioni & Seminario & Docente, Partecipante \\
+ 			\hline
+ 			Datore & Datori di lavoro attuali e passati dei partecipanti ai corsi & Posto & Partecipante \\
+ 			\hline
+ 		\end{tabular}
+ 	\end{example}
+ 	Dopo aver individuato le varie ambiguità e le imprecisioni, esse vanno eliminate sostituendo i termini non corretti con i termini più adeguati. In caso di dubbio, è necessario intervistare nuovamente colui che ha fornito il dato o consultare la documentazione relativa. \\
+ 	Nell'esempio della \namerefl{exa:societa_formazione} si possono apportare diverse modifiche. Il \textit{luogo} di nascita dei partecipanti, alla riga 4, è un omonimo del luogo in cui si tengono le lezioni e va sostituito da \textit{città} di nascita, cosi come \textit{posto} alla riga 5 che va sostituito con \textit{datore di lavoro}. Va poi chiarito che a riga 6 l'\textit{indirizzo} e il \textit{numero di telefono} fanno riferimento ai datori di lavoro dei partecipanti. Il  \textit{giudizio} alla riga 7 deve essere interpretato come \textit{votazione in decimi}, mentre \textit{periodo} alla riga 6 va interpretato come \textit{dato di inizio e fine rapporto}. Bisogna inoltre specificare che i partecipanti frequentano o hanno frequentato specifiche \textit{edizioni} di corsi. Per quanto riguarda gli altri termini che fanno riferimento ai corsi: \textit{seminario} alla riga 8 è un sinonimo e va sostituito con \textit{edizione di corso}; \textit{giorno} alla riga 9, riferito alle lezioni, è troppo astratto e va utilizzato \textit{giorno della settimana}; \textit{luogo} alla riga 9 è un omonimo, che va sostituito da \textit{aula}. Il termine \textit{studente} alla riga 11, va sostituito con \textit{partecipante}. Per \textit{titolo}, alla riga 13, di un partecipante che è libero professionista si intende il suo \textit{titolo professionale}. Per quello che riguarda i docenti abbiamo che \textit{insegnante}, alla riga 14, è sinonimo di \textit{docente}, \textit{posto} indica la \textit{città} di nascta, il \textit{nome} del corso che insegnano, alla riga 16, è un sinonimo di \textit{titolo} del corso e il \textit{recapito telefonico}, alle righe 17-18, è sinonimo di \textit{numero di telefono}. \\
+ 	A questo punto possiamo riscrivere le nostre specifiche apportando le modifiche proposte. È utile, in questa fase, decomporre il testo in gruppi di frasi omogenee, relative cioè agli stessi concetti. Otteniamo così la strutturazione delle specifiche sui dati.
+ 	\begin{example}{\nmu Strutturazione delle specifiche della società di formazione}{strutturazione_spec_societa_info}
+ 		\noindent
+ 		\begin{tabular}{|p{14cm}|}
+ 			\hline
+ 			\multicolumn{1}{|c|}{\textbf{Frasi di carattere generale}} \\
+ 			\hline
+ 			\textit{Si vuole realizzare una base di dati per una società che eroga corsi, di cui vogliamo rappresentare i dati dei partecipanti ai corsi e dei docenti.} \\
+ 			\hline
+ 		\end{tabular}
+ 		
+ 		\vspace{0.3cm}
+ 		
+ 		% Frasi relative ai partecipanti
+ 		\noindent
+ 		\begin{tabular}{|p{14cm}|}
+ 			\hline
+ 			\multicolumn{1}{|c|}{\textbf{Frasi relative ai partecipanti}} \\
+ 			\hline
+ 			\textit{Per i} partecipanti \textit{(circa 5000), identificati da un codice, rappresentiamo il codice fiscale, il cognome, l'età, il sesso, la città di nascita, i nomi dei loro attuali datori di lavoro e di quelli precedenti (insieme alle date di inizio e fine rapporto), le edizioni dei corsi che stanno attualmente frequentando e quelli che hanno frequentato in passato, con la relativa votazione finale in decimi.} \\
+ 			\hline
+ 		\end{tabular}
+ 		
+ 		\vspace{0.3cm}
+ 		
+ 		% Frasi relative ai datori di lavoro
+ 		\noindent
+ 		\begin{tabular}{|p{14cm}|}
+ 			\hline
+ 			\multicolumn{1}{|c|}{\textbf{Frasi relative ai datori di lavoro}} \\
+ 			\hline
+ 			\textit{Relativamente ai} datori di lavoro \textit{presenti e passati dei partecipanti, rappresentiamo il nome, l'indirizzo e il numero di telefono.} \\
+ 			\hline
+ 		\end{tabular}
+ 		
+ 		\vspace{0.3cm}
+ 		
+ 		% Frasi relative ai corsi
+ 		\noindent
+ 		\begin{tabular}{|p{14cm}|}
+ 			\hline
+ 			\multicolumn{1}{|c|}{\textbf{Frasi relative ai corsi}} \\
+ 			\hline
+ 			\textit{Per i} corsi \textit{(circa 180), rappresentiamo il titolo e il codice, le varie edizioni con date di inizio e fine e, per ogni edizione, rappresentiamo il numero di partecipanti e il giorno della settimana, le aule e le ore dove si sono tenute le lezioni.} \\
+ 			\hline
+ 		\end{tabular}
+ 		
+ 		\vspace{0.3cm}
+ 		
+ 		% Frasi relative a tipi specifici di partecipanti
+ 		\noindent
+ 		\begin{tabular}{|p{14cm}|}
+ 			\hline
+ 			\multicolumn{1}{|c|}{\textbf{Frasi relative a tipi specifici di partecipanti}} \\
+ 			\hline
+ 			\textit{Per i} partecipanti \textit{che sono liberi professionisti, rappresentiamo l'area di interesse e, se lo possiedono, il titolo professionale. Per i partecipanti che sono dipendenti, rappresentiamo invece il loro livello e la posizione ricoperta.} \\
+ 			\hline
+ 		\end{tabular}
+ 		
+ 		\vspace{0.3cm}
+ 		
+ 		% Frasi relative ai docenti
+ 		\noindent
+ 		\begin{tabular}{|p{14cm}|}
+ 			\hline
+ 			\multicolumn{1}{|c|}{\textbf{Frasi relative ai docenti}} \\
+ 			\hline
+ 			\textit{Per i} docenti \textit{(circa 300), rappresentiamo il cognome, l'età, la città di nascita, tutti i numeri di telefono, il titolo del corso che insegnano, di quelli che hanno insegnato in passato e di quelli che possono insegnare. I docenti possono essere dipendenti interni della società di formazione o collaboratori esterni.} \\
+ 			\hline
+ 		\end{tabular}
+ 	\end{example}
+ 	Inoltre, accanto alle specifiche sui dati vanno raccolte le specifiche sulle operazioni da effettuare su questi dati. Bisgona cercare di impiegare la stessa terminologia usata per i dati e informarci anche sulla frequenza con la quale le varie operazinoi vengono eseguite. Nell'esempio della \namerefl{exa:societa_formazione}, le operazioni sui dati potrebbero essere le seguenti:
+ 	\begin{example}{\nmu Operazioni sui dati nella \namerefl{exa:societa_formazione}}{operazioni_dati_societa_info}
+ 		\begin{itemize}
+ 			\item \textbf{Operazione 1}: inserisci un nuovo partecipante indicando tutti i suoi dati (operazione da effettuare in media 40 volte al giorno).
+ 			\item \textbf{Operazione 2}: assegna un partecipante a un'edizione di corso (circa 50 volte al giorno);
+ 			\item \textbf{Operazione 3}: inserisci un nuovo docente indicando tutti i suoi dati e i corsi che può insegnare (2 volte al giorno).
+ 			\item \textbf{Operazione 4}: assegna un docente abilitato a un'edizione di corso (15 volte al giorno).
+ 			\item \textbf{Operazione 5}: stampa tutte le informazioni sulle edizioni passate di un corso con titolo, orari lezioni e numero partecipanti (10 volte al giorno).
+ 			\item \textbf{Operazione 6}: stampa tutti i corsi offerti, con informazioni sui docenti che possono insegnarli (20 volte al giorno).
+ 			\item \textbf{Operazione 7}: per ogni docente, trova i partecipanti a tutti i corsi da lui/lei insegnati (5 volte a settimana).
+ 			\item \textbf{Operazione 8}: effettua una statistica su tutti i partecipanti a un corso con tutte le informazioni su di essi, sull'edizione alla quale hanno partecipato e sulla rispettiva votazione (10 volte al mese).
+ 		\end{itemize}
+ 	\end{example}
+ 	Dopo questa strutturazione dei requisiti si avvia la prima fase della progettazione che consiste nella costruzione di uno schema concettuale in grado di descrivere in maniera adeguata tutte le specifiche dei dati raccolte.
 \end{document}
