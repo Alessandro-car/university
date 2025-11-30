@@ -1254,4 +1254,103 @@ Una specifica per il tipo di dato insieme è la seguente:
 							q := SUCCLISTA(q, B)
 			end;
 	\end{lstlisting}
+	\chapter{Dizionari}
+	Esistono delle applicazioni che, pur richiedendo una struttura dati del tipo insieme, non richiedono tutte le operazioni definite sull'insieme. Questi sottotipi del tipo insieme sono i \textit{dizionari}. \\
+	Gli elementi sono generalmente tipi strutturati ai quali si accede per mezzo di un riferimento a un campo chiave. Gli elementi assumono la forma di una coppia costituita da (chiave, valore). \\
+	La caratteristica della chiave è legata all'applicazione, ad esempio nei dizionari degli elaboratori di testi la chiave individua una parola mentre in un dizionario di magazzino la chiave può un essere un codice pezzo. \\
+	Il valore associato, invece, rappresenta l'informazione associata per scopi di gestione o manutenzione. Ad esempio nelle tabelle di simboli, utili ai compilatori e ai linker, la chiave viene usata per l'identificatore, mentre nel valore vengono memorizzate le informazioni di gestione, come indirizzo della locazione, dimensione, posizioni nelle quali l'identificatore è usato nel programma ecc. 
+	\section{Operazioni}
+	Le operazioni applicate ad un dizionario devono consentire la verifica dell'esistenza di una definita chiave e deve essere possibile l'inserimento di nuove coppie (chiave, valore), come pure la cancellazione. \\
+	Può essere utile anche il recupero delle informazioni presenti nell'attributo oppure la loro eventuale modifica. \\
+	Dato che i dizionari sono casi particolari di insieme, la specifica per i dizionari è identica a quella del tipo di dato insieme. Le operazioni ammesse sono quelle di creazione, appartenenza, inserimento e cancellazione. \\
+	In alcuni casi troviamo anche operazioni come quello di recupero e aggiornamento.
+	\section{Specifica sintattica} 
+	I tipi di dati, nella specifica sintattica, sono:
+	\begin{itemize}
+		\item dizionario, boolean, chiave, valore
+	\end{itemize}
+	Gli operatori sono:
+	\begin{align*}
+		\text{creadizionario:} &\quad () \to \text{dizionario} \\
+		\text{dizionariovuoto:} &\quad (\text{dizionario}) \to \text{booleano} \\
+		\text{appartiene:} &\quad (\text{chiave}, \text{dizionario}) \to \text{booleano} \\
+		\text{inserisci:} &\quad (\text{<chiave, valore>}, \text{dizionario}) \to \text{dizionario} \\
+		\text{cancella:} &\quad (\text{chiave}, \text{dizionario}) \to \text{dizionario} \\
+		\text{recupera:} &\quad (\text{chiave}, \text{dizionario}) \to \text{valore}  
+	\end{align*}
+	\section{Specifica semantica}
+	I tipi di dati, nella specifica semantica, sono:
+	\begin{itemize}
+		\item dizionario = famiglia di dizionari costituita da coppie di tipo <chiave, valore>
+		\item boolean= insieme di valori di verità
+	\end{itemize}
+	Gli operatori sono:
+	\begin{itemize}
+		\item \texttt{creadizionario() = } $D$ \\
+		\quad \textit{Post}: $D = \{\}$
+		\item \texttt{dizionariovuoto($D$) = b} \\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & D = \{\} \\
+			b = falso & altrimenti 
+		\end{cases}$
+		\item \texttt{appartiene($k, D$) = b} \\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & \exists <k', v> \in D \mid k'=k \\
+			b = falso & altrimenti 
+		\end{cases}$
+		\item \texttt{inserisci($<k, v>, D$) = $D'$} \\
+		\quad \textit{Post:} $D'= D \cup \{<k, v>\} \iff \centernot{\exists} <k', v> \mid k'=k$ 
+		\item \texttt{cancella($k, D$) = $D'$} \\
+		\quad \textit{Pre:} $\exists <k', v> \in D \mid k'= k$
+		\quad \textit{Post:} $D' = D - \{<k', v>\}$
+		\item \texttt{recupara($k, D$) = $v$} \\
+		\quad \textit{Pre:} $\exists <k', v'> \in D \mid k'=k$
+		\quad \textit{Post:} $v = v'$
+	\end{itemize}
+	\section{Rappresentazioni}
+	Oltre alle realizzazioni viste per l'insieme, che si rifanno alla rappresentazione con vettore booleano e alla rappresentazione mediante una lista, ci sono realizzazioni più efficienti mediante vettori ordinati e tabelle hash.
+	\subsection{Rappresentazione con vettore ordinato}
+	Nella rappresentazione con vettore ordinato si utilizza un vettore con un cursore all'ultima posizione occupata. Avendo definito una relazione di ordinamento totale $\leq$ sulle chiavi, queste si memorizzano nel vettore in posizioni continue e in ordine crescente a partire dalla prima posizione. Per verificare l'appartenenza di un elemento o chiave $k$, si utilizza la ricerca binaria (dicotomica, logaritmica) ove si confronta il valore da ricercare $k$ con il valore $v$ che occupa la posizione centrale del vettore e si stabilisce in quale metà continuare la ricerca.
+	\subsection{Ricerca binaria}
+	Definiamo i seguenti tipi:
+	\begin{itemize}
+		\item dizionario: tipo strutturato con componenti
+		\begin{itemize}
+			\item elementi: array di maxlung elementi di tipo tipoelem;
+			\item ultimo: intero in [0..maxlung]
+		\end{itemize}
+	\end{itemize}
+	\begin{lstlisting}[style=pascalstyle]
+		bool appartiene(k: tipoelem, D: dizionario)
+			return ricbin(D.elementi, k, 1, D.ultimo)
+		
+		bool ricbin(V: vettore, k: tipoelem, i: integer, j: integer)
+			if i > j then
+				ricbin = false
+			else
+				m = (i + j) div 2
+				if k = V[m] then
+					ricbin = true
+				else 
+					if k < V[m] then
+						ricbin = ricbin(V, k, i, m - 1)
+					else 
+						ricbin = ricbin(V, k, m + 1, j)
+	\end{lstlisting}
+	\subsection{Rappresentazione con tabella hash}
+	Esiste una tecnica denominata ``hash'', che si appoggia su di una struttura di dati tabellare, che si presta ad essere usata per realizzare dizionari. Con questa struttura, le operazioni di ricerca e di modifica di un dizionario possono operare in tempi costanti e indipendenti sia dalla dimensione del dizionario che dall'insieme dei valori che verranno gestiti. \\
+	Nella rappresentazione con tabella hash, l'idea di basi è ricavare la posizione che la chiave occupa in un vettore dal valore della chiave. Esistono diverse varianti che si possono far risalire ad una forma statica e ad una forma dinamica o estensibile. \\
+	La prima fa uso di strutture o tabelle di dimensione prefissata, mentre l'hash dinamico è in grado di modificare dinamicamente le dimensioni della tabella hash sulla base del numero di elementi che vengono via via inseriti o eliminati. \\
+	L'hash, con rappresentazione statica, può assumere a sua volta due forme diverse denominate rispettivamente:
+	\begin{itemize}
+		\item \textbf{hash chiuso}: consente di inserire un insieme limitato di valori in uno spazio di dimensione fissa;
+		\item \textbf{hash aperto}: consente di memorizzare un insieme di valori di dimensione qualsiasi in uno spazio potenzialmente illimitato.
+	\end{itemize}
+	Entrambe queste varianti però utilizzano una sottostante tabella hash a dimensione fissa costituita da una struttura allocata sequenzialmente in memoria e che assume la forma di un array. \\
+	Nel caso di hash chiuso la struttura sarà composta da un certo numero, \textit{maxbucket}, di contenitori di uguale dimensione denominati \textit{bucket}. \\
+	Ognuno di questi contenitori può mantenere al proprio interno al massimo un numero $nb=1$ di elementi che comprenderanno la chiave e il corrispondente valore (nel cao $nb=1$ ogni bucket avrà una sola coppia <chiave, valore>).\\
+	Nel caso di hash aperto la struttura sarà composta da un certo numero indeterminato di contenitori bucket. \\
+	In entrambi i casi viene usata una funzione aritmetica allo scopo di calcolare, partendo dalla chiave, la posizione in tabella delle informazioni contenute nell'attributo collegato alla chiave. Questa è un'alternativa efficace all'indirizzamento diretto in un vettore perchè la dimensione è proporzionale al numero di chiavi attese. \\
+	Se $k$ è l'insieme di tutte le possibili chiavi distinte e $v$ è il vettore di dimensione $m$ in cui si memorizza il dizionario, la soluzione ideale è la funzione di accesso $h: K \to \{1, \dots, m\}$ che permette di ricavare la posizione $h(k)$ della chiave $k$ nel vettore $v$ così che, se $k_1 \in K$ e $k_2 \in K$ con $k_1 \neq k_2$ si ha $h(k_1) \neq h(k_2)$. \\
+	Utilizzando $m = |K|$ si ha garanzia di biunivocità e di poter accedere direttamente alla posizione contenente la chiave. Se $|K|$ è grande, si ha un enorme spreco di memoria e la dimensione, $m$, del vettore delle chiavi va scelta in base al numero delle chiavi attese.
 \end{document}
