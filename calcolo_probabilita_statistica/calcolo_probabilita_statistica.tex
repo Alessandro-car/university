@@ -2740,5 +2740,276 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\end{align*}
 		ovvero la funzione di densità di $\Gamma(\alpha_1 + \alpha_2)$ e risulta così dimostrata la riproducibilità della funzione $\Gamma$.
 	\end{proof}
-
+	\subsection{Proprietà del campione mormale}
+	Sia $(X_1, X_2, \dots, X_n)$ un campione gaussiano ove $X_i \sim N(\mu, \sigma^2)$ e le $X_i$ sono i. i. d. \\
+	La media campionaria è data da:
+	\[
+	\wbar{X}_n = \frac{1}{n}\sum_{i}^{n}X_i
+	\]	
+	e la varianza campionaria è data da:
+	\[
+	S_n^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2	
+	\]
+	e $E[\wbar{X}_n] = \mu$ e $E[S_n^2] = \sigma^2$. \\
+	Questi sono fatti generali, cioè veri indipendentemente dalla legge del campione. \\
+	Se il campione è gaussiano allora valgono le seguenti proprietà:
+	\begin{enumerate}
+		\item $\wbar{X}_n \sim N\Bigg(\mu, \dfrac{\sigma^2}{n}\Bigg)$
+		\item $\dfrac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1)$
+		\item $\wbar{X}_n$ e $S_n^2$ sono v.a. indipendenti.
+	\end{enumerate}
+	\begin{note}{\nmu V.a. pivotali}{va_pivotale}
+		$\dfrac{(n-1)S_n^2}{\sigma^2}$ è un esempio importante di variabile \textbf{pivotale}, cioè una v.a. ottenuta con le osservazioni la cui distribuzione \textbf{non} contiene il parametro incognito.\\
+		Queste tornano molto utili quando bisogna costruire un intervallo di confidenza.
+	\end{note}
+	\section{Quantili}
+	\begin{definition}{\nmu Quantili}{quantili}
+		Sia $X$ una v.a. con funzione di ripartizione, $F_X$, continua e invertibile. \\
+		Si chiama \textit{quantile di ordine $\alpha$}, con $0 < \alpha < 1$, di una v.a. $X$ il più grande numero $x_\alpha$ tale che:
+		\[
+		F_X(x_\alpha) = P[X \leq x_\alpha] = a
+		\]
+		I quantili corrispondono a dividere in $\alpha$ parti uguali l'intervallo $[0, 1]$.
+	\end{definition}
+	\begin{note}{}{}
+		Se la distribuzione è simmetrica attorno al valore medio $\mu$, allora media e mediana sono la stessa cosa:
+		\[
+		\mu = x_{\nicefrac{1}{2}}
+		\]
+	\end{note}
+	\begin{note}{\nmu Percentili}{percentili}
+		I quantili siffatti:
+		\[
+		x_{\nicefrac{k}{100}} \quad k = 1, 2, \dots, 99
+		\]
+		si chiamano \textbf{percentili}.
+	\end{note}
+	Nel seguito indicheremo con:
+	\begin{itemize}
+		\item $z_\alpha \Rightarrow \Phi(z_\alpha) = \alpha$ il quantile di ordine $\alpha$ di una legge normale;
+		\item $\chi^2_{n, \alpha}$ il quantile di ordinen $\alpha$ della legge $\chi^2(n)$
+	\end{itemize}
+	\subsection{Diseguaglianza di Cramér-Rao}
+	Sia $(X_1, X_2, \dots, X_n)$ un osservazione di parametro $\theta \in I \subset \mathbbm{R}$ ove $I$ è un intervallo. \\
+	Indico con $f(x, \theta)$ la legge congiunta, come la densità ad esempio, ove $x = (X_1, X_2, \dots, X_n)$. \\
+	Facciamo delle assunzioni:
+	\begin{enumerate}
+		\item La funzione $I \ni \theta \to f(x, \theta)$ è derivabile rispetto a $\theta$ con derivata continua.
+		\item $\{x \in \mathbbm{R}^n \mid f(x, \theta) \neq 0\}$ \textbf{non} dipende da $\theta$.
+		\item $\int_\mathbbm{R} f(x, \theta)dx = 1$ e quindi $\frac{\partial}{\partial\theta}\int_\mathbbm{R}f(x, \theta)dx = 0$, quindi assumo che si possa derivare sotto segno di integrale.
+	\end{enumerate}
+	\begin{note}{}{}
+		L'assunzione 2. non è soddisfatta se $(X_1, X_2, \dots, X_n)$ è un campione uniforme. Infatti, ad esempio, $X \sim [0, a]$ in qunato:
+		\[
+		f(x, a) = \begin{cases}
+			\dfrac{1}{a^n} & 0 \leq x \leq a \\
+			0 & \text{altrimenti}
+		\end{cases}
+		\]
+		e notiamo che quando $f(x, a) = 0$ dipende dal parametro $a$.
+	\end{note}
+	\begin{definition}{\nmu Informazione di Fisher}{info_fisher}
+		L'informazione di Fisher è cosi definita:
+		\[
+		I_n(\theta) = Var\Bigg[\frac{\partial}{\partial\theta}\ln f(x, \theta)\Bigg] \geq 0
+		\]
+		ove la $I$ sta per informazione.
+	\end{definition}
+	\begin{note}{}{}
+		La v.a. $\frac{\partial}{\partial \theta}\ln f(x, \theta)$ è centrata, ovvero:
+		\[
+		E\Bigg[\frac{\partial}{\partial \theta} \ln f(x, \theta)\Bigg] = 0
+		\]
+		Infatti:
+		\begin{align*}
+			E\Bigg[\frac{\partial}{\partial \theta} \ln f(x, \theta)\Bigg] &= \int\frac{\partial}{\partial \theta} \ln f(x, \theta)f(x, \theta)dx \\
+			&= \int\frac{1}{f(x, \theta)}\frac{\partial}{\partial \theta}f(x, \theta)f(x, \theta)dx \\
+			&= 0			
+		\end{align*}
+	\end{note}
+	\begin{example}{\nmu Campione bernoulliano}{fisher_bernoulliano}
+		Sia $X = (X_1, X_2, \dots, X_n)$ un campione bernoulliano, ove:
+		\[
+		P[X_1 = x_1, \dots, X_n = x_n] = p^{x_1 + x_2 + \dots + x_n}(1-p)^{n-(x_1 + x_2 + \dots + x_n)}
+		\]
+		allora calcoliamo l'informazione di Fisher come:
+		\[
+		\ln P[X_1 = x_1, \dots, X_n = x_n] = (x_1 + \dots + x_n)\ln p + (n - (x_1 + x_2 + \dots + x_n))\ln(1-p)
+		\]
+		\begin{align*}
+		\frac{\partial}{\partial \theta}\ln P[X_1 = x_1, \dots, X_n = x_n] &= \frac{x_1 + \dots + x_n}{p} - \frac{n - (x_1 + \dots + x_n)}{1-p} \\
+		&= \frac{(1-p)(x_1 + \dots + x_n) - np - p(x_1 + \dots + x_n)}{p(1-p)} \\
+		&= \frac{(x_1 + \dots + x_n) - np}{p(1-p)}
+		\end{align*}
+		La v.a. di cui devo calcolare la varianza è:
+		\[
+		\frac{\sum_{i=1}^{n}X_i - np}{p(1-p)}
+		\]
+		Allora:
+		\begin{align*}
+			Var\Bigg[\frac{\sum_{i=1}^{n}X_i - np}{p(1-p)}\Bigg] &= Var\Bigg[\frac{\sum_{i=1}^{n}X_i}{p(1-p)}\Bigg] \\
+			&= \frac{1}{p^2(1-p)^2}\sum_{i=1}^{n}Var[X_i] \\
+			&= \frac{np(1-p)}{p^2(1-p)^2} \\
+			&= \frac{n}{p(1-p)}
+		\end{align*}
+		Allora:
+		\[
+		I_n(p) = \frac{n}{p(1-p)}
+		\]
+		per il campione bernoulliano.
+	\end{example}
+	\begin{example}{\nmu Campione esponenziale}{fisher_esponenziale}
+		Sia $X = (X_1, X_2, \dots, X_n)$ un campione esponenziale, e la legge congiunta:
+		\[
+		f(X, \lambda) = \begin{cases}
+			\lambda^ne^{-\lambda\sum_{i=1}^{n}X_i} & X_i \geq 0 \\
+			0 & X_i < 0
+		\end{cases}
+		\]
+		Calcoliamo il logaritmo:
+		\begin{align*}
+			\ln f &= n\ln\lambda - \lambda \sum_{i=1}^{n}X_i
+		\end{align*}
+		e la derivata è pari a:
+		\[
+		\frac{\partial}{\partial \lambda}\ln f = \frac{n}{\lambda} - \sum_{i=1}^{n}X_i
+		\]
+		La varianza è pari a:
+		\begin{align*}
+			Var\Bigg[\frac{n}{\lambda} - \sum_{i=1}^{n}X_i\Bigg] &= Var\Bigg[\sum_{i=1}^{n}X_i\Bigg] \\
+			&= \sum_{i=1}^{n}Var[X_i] \\
+			&= \frac{n}{\lambda^2}
+		\end{align*}
+		Allora l'informazione di Fisher per il campione esponenziale è pari a:
+		\[
+		I_n(\lambda) = \frac{n}{\lambda^2}
+		\]
+	\end{example}
+	Se $X = (X_1, X_2, \dots, X_n)$ è un campione allora:
+	\[
+	I_n(\theta) = nI_1(\theta)
+	\]
+	quindi l'informazione di Fisher è una quantità ``estensiva''. \\
+	Sappiamo che $I_n(\theta) = Var\Big[\frac{\partial}{\partial \theta}\ln f(x, \theta)\Big]$ ma:
+	\[
+	f(x, \theta) = \prod_{i=1}^{n}g(X_i, \theta)
+	\]
+	e
+	\[
+	\ln f = \sum_{i=1}^{n}\ln g(X_i, \theta)
+	\]
+	la cui derivata è pari a:
+	\[
+	\frac{\partial}{\partial \theta} \ln f = \sum_{i=1}^{n}\frac{\partial}{\partial \theta}\ln g(X_i, \theta)
+	\]
+	Allora l'informazione di Fisher è pari a:
+	\begin{align*}
+	I_n(\theta) &= Var\Bigg[\sum_{i=1}^{n}\frac{\partial}{\partial \theta}\ln g(X_i, \theta)\Bigg] \\
+ 	&= \sum_{i=1}^{n}Var\Bigg[\frac{\partial}{\partial \theta}\ln g(X_i, \theta)\Bigg] \\
+	 &= nI_1(\theta)	
+ 	\end{align*}
+	 \begin{theorem}{\nmu Disuguaglianza di Cramér-Rao}{cramer_rao}
+	 	Sia $(X_1, X_2, \dots, X_n)$ è un'osservazione e sono soddisfatte le condizioni 1., 2. e 3. e $\psi(\theta)$ una funzione derivabile con continuità. \\
+	 	Se $T = t(X_1, X_2, \dots, X_n)$ è uno stimatore corretto di $\psi(\theta)$ allora:
+	 	\[
+	 	r_\theta(T) \geq \frac{|\psi'(\theta)|^2}{I_n(\theta)}
+	 	\]
+	 \end{theorem}
+	 \begin{note}{\nmu \nameref{th:cramer_rao} per un campione}{cramer_rao_campione}
+	 	Se $(X_1, X_2, \dots, X_n)$ è un campione allora:
+	 	\[
+	 	r_\theta(T) \geq \frac{|\psi'(\theta)|^2}{I_n(\theta)} = \frac{|\psi'(\theta)|^2}{nI_1(\theta)}
+	 	\]
+	 \end{note}
+	 \paragraph{Applicazioni (determinazioni di stimatori efficienti)} \quad \\
+	 \begin{example}{\nmu Campione bernoulliano}{cramer_rao_bernoulliano}
+	 	Sia $(X_1, X_2, \dots, X_n)$ un campione bernoulliano ove $\psi(p) = p$. Il limite di Cramér-Rao è pari a:
+	 	\[
+	 	r_\theta(T) \geq \frac{|\psi'(p)|^2}{I_n(p)} = \frac{p(1-p)}{n} = Var[\wbar{X}_n]
+	 	\]
+	 	allora $\wbar{X}_n$ è efficiente.
+	 \end{example}
+	 \begin{example}{\nmu Campione esponenziale}{cramer_rao_esponenziale}
+	 	Sia $(X_1, X_2, \dots, X_n)$ un campione bernoulliano ove $\psi(\lambda) = \frac{1}{\lambda}$ la cui derivata è $-\frac{1}{\lambda^2}$. Il limite di Cramér-Rao è pari a:
+	 	\[
+	 	r_\theta(T) \geq \frac{|\psi'(\frac{1}{\lambda})|^2}{I_n(p)} = \frac{\frac{1}{\lambda^4}}{I_n(\lambda)} = \frac{1}{\lambda^4} \cdot \frac{\lambda^2}{n} = \frac{1}{n\lambda^2}
+	 	\]
+	 	Calcoliamo la varianza campionaria:
+	 	\[
+	 	Var[\wbar{X}_n] = \frac{1}{n}\frac{1}{\lambda^2}
+	 	\]
+	 	che è uguale al limite di Cramér-Rao e allora $\wbar{X}_n$ è uno stimatore efficiente.
+	 \end{example}
+	 \begin{example}{\nmu Campione normale}{cramer_rao_normale}
+	 	Sia $(X_1, X_2, \dots, X_n)$ un campione normale ove $\psi(\mu) = \mu$. L'informazione di Fisher è pari a:
+	 	\[
+	 	I_n(\mu) = nI_1(\mu)
+	 	\]
+	 	Per calcolare l'informazione di Fisher ci serva la densità:
+	 	\[
+	 	f(X, \mu, \sigma^2) = \frac{1}{\sqrt{2\pi}\sigma}\exp\Bigg(\dfrac{(x-\mu)^2}{2\sigma^2}\Bigg)
+	 	\]
+	 	Il logaritmo è pari a:
+	 	\[
+	 	\ln f = \frac{-(x-\mu)^2}{2\sigma^2} \quad \text{ a meno di constanti additive}
+	 	\]
+	 	e la derivata è pari a:
+	 	\[
+	 	\frac{\partial}{\partial \mu}\ln f = -\frac{(x - \mu)}{\sigma^2}
+	 	\]
+	 	Allora l'informazione di Fisher è pari a:
+	 	\[
+	 	I_1(\theta) = Var\Bigg[\frac{X - \mu}{\sigma^2}\Bigg] = \frac{1}{\sigma^4}\sigma^2 = \frac{1}{\sigma^2}
+	 	\]
+	 	Il limite di Cramér-Rao è pari a:
+	 	\[
+	 	r_\theta(T) \geq \frac{|\psi'(p)|^2}{I_n(\mu)} = \frac{|\psi'(\mu)|^2}{nI_1(\mu)} = \frac{\sigma^2}{n}
+	 	\]
+	 	che è uguale alla varianza campionaria e quindi $\wbar{X}_n$ è efficiente.
+	 \end{example}
+	 Provare a calcolare l'inforamzione di Fisher per il campione di Poisson di parametro $\lambda$.
+	 \begin{example}{\nmu Campione Poissiano}{cramer_rao_poisson}
+	 	Sia $(X_1, X_2, \dots, X_n)$ un campione poissiano di parametro $\lambda$. \\
+	 	Sia $X = X_1 + X_2 + \dots + X_n$. La probabilità congiunta è pari a:
+	 	\[
+	 	P[X_1 = x_1, X_2 = x_2, \dots, X_n = x_n] = e^{-n\lambda}\dfrac{\lambda^X}{\prod_{i=1}^{n}X_i!}
+	 	\]
+	 	Ricordiamo che per la formula di Stirling:
+	 	\[
+	 	\ln(X!) = X \cdot \ln(X) - X
+	 	\]
+	 	Calcoliamo il logaritmo di $P[X_1 = x_1, X_2 = x_2, \dots, X_n = x_n]$:
+	 	\begin{align*}
+	 		\ln P[X_1 = x_1, X_2 = x_2, \dots, X_n = x_n] &= -n\lambda + X\ln(\lambda) - \sum_{i=1}^{n}(X_i\ln(X_i) - X_i) \\
+	 		&= -n\lambda + X\ln(\lambda) - \sum_{i=1}^{n}X_i\ln(X_i) + X
+	 	\end{align*}
+	 	Calcoliamo la derivata rispetto a $\lambda$:
+	 	\begin{align*}
+	 		\frac{\partial}{\partial\theta}\ln P[X_1 = x_1, X_2 = x_2, \dots, X_n = x_n] = -n + \frac{X}{\lambda}
+	 	\end{align*}
+	 	Calcoliamo la varianza:
+	 	\begin{align*}
+	 		& Var\Bigg[\frac{\partial}{\partial\lambda}\ln P[X_1 = x_1, X_2 = x_2, \dots, X_n = x_n]\Bigg] = \\ &= Var\Big[-n + \frac{X}{\lambda}\Big] \\
+	 		&= \frac{1}{\lambda^2}Var\Bigg[\sum_{i=1}^{n}X_i\Bigg] \\
+	 		&= \frac{1}{\lambda^2}n\lambda \\
+	 		&= \frac{n}{\lambda}
+	 	\end{align*}
+	 	Allora l'informazione di Fisher per il campione Poissiano è pari a:
+	 	\[
+	 	I_n(\lambda) = \frac{n}{\lambda}
+	 	\]
+	 	Calcoliamo il limite di Cramér-Rao ove $\psi(\lambda) = \lambda$.
+	 	\[
+	 	r_\theta(T) \geq \frac{|\psi(\lambda)|^2}{I_n(\lambda)} = \frac{\lambda}{n}
+	 	\]
+	 	Calcoliamo la varianza campionaria:
+	 	\begin{align*}
+	 		Var[\wbar{X}_n] &= Var\Bigg[\frac{1}{n}\sum_{i=1}^{n}X_i\Bigg] \\
+	 		&= \frac{1}{n^2}Var\Bigg[\sum_{i=1}^{n}X_i\Bigg] \\
+	 		&= \frac{1}{n^2}n\lambda \\
+	 		&= \frac{\lambda}{n} \\
+	 		&= \frac{|\psi(\lambda)|^2}{I_n(\lambda)} 
+	 	\end{align*}
+	 	Allora $\wbar{X}_n$ è uno stimatore efficiente.
+	 \end{example}
 \end{document}
