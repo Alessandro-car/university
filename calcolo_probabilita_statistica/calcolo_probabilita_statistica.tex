@@ -3012,4 +3012,96 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\end{align*}
 	 	Allora $\wbar{X}_n$ è uno stimatore efficiente.
 	 \end{example}
+	 \section{Intervalli di confidenza (fiducia)}
+	 \begin{definition}{\nmu Intervallo di confidenza}{intervallo_confidenza}
+	 	Dato $(\Omega, \mathcal{F}, (\mathcal{P}_{\theta})_{\theta \in \Theta})$ e $\psi(\theta) \in \mathbbm{R}$, un \textit{intervallo di confidenza} con livello $1 - \alpha$, ove $\alpha$ è un numero vicino a 0, è un intervallo aleatorio:
+	 	\[
+	 	[T_1, T_2]
+	 	\]
+	 	ove $T_1, T_2$ sono statistiche $(T = t(X_1, X_2, \dots, X_n))$ e vale che:
+	 	\[
+	 	P[T_1 < \psi(\theta) < T_2] \geq 1 - \alpha \quad \forall \theta \in \Theta
+	 	\]
+	 \end{definition}
+	 \begin{note}{}{}
+	 	Se $X_1 = x_1, X_2 = x_2, \dots, X_n = x_n$ allora l'intervallo aleatorio diventa un intervallo numerico.
+	 \end{note}
+	 \subsection{Intervalli di confidenza per la media della popolazione normale}
+	 Una popolazione normale è una v.a. $X \sim N(\mu, \sigma^2)$. \\
+	 Riconosciamo due casi: il caso nel quale $\sigma^2$ è ignota e il caso in cui è ignota.
+	 \paragraph{Caso nel quale $\sigma^2$ è nota} Ricordiamo che $\wbar{X}_n = \dfrac{1}{n}\sum_{i=1}^{n}X_i$ è uno stimatore corretto di $\mu$ e ne conosciamo la distribuzione $\wbar{X}_n \sim(\mu, \frac{\sigma^2}{n})$. \\
+	 Se ne consideriamo la standardizzazione otteniamo: $N = \dfrac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \sim N(0, 1)$ e questa è una quantità pivotale. \\
+	 Consideriamo:
+	 \begin{align*}
+	 	P[|N| \leq z_{1 - \frac{\alpha}{2}}] = 1-\alpha
+	 \end{align*}
+	 In questo modo vediamo che:
+	 \begin{align*}
+	 	P\Bigg[-z_{1-\frac{\alpha}{2}} \leq \dfrac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \leq z_{1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\
+	 	P\Bigg[\wbar{X}_n-\frac{\sigma}{\sqrt{n}}z_{1-\frac{\alpha}{2}} \leq \mu \leq \wbar{X}_n + \frac{\sigma}{\sqrt{n}}z_{1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha 
+	 \end{align*}
+	 Quindi questo è un intervallo di confidenza per $\mu$.
+	 \begin{note}{}{}
+	 	Quando $\alpha = 0$ e quindi $1 - \alpha = 1$:
+	 	\[
+	 	z_{1 - \frac{\alpha}{2}} = z_1 = +\infty
+	 	\]
+	 	I valori tipi per $1 - \alpha$ sono $\begin{cases}
+	 		99\% & \alpha = 0.1\\
+	 		95\% & \alpha = 0.05\\
+	 		90\% & \alpha = 0.011
+	 	\end{cases}$  
+	 \end{note}
+	 \paragraph{Caso nel quale $\sigma^2$ incognito} L'idea in questo caso è quella di sostituire $\sigma^2$ con un suo stimatore corretto $S_n^2 = \dfrac{1}{n-1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2$ e ricordiamo che: $\dfrac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1)$ \\
+	 Allora:
+	 \[
+	 \dfrac{\wbar{X}_n - \mu}{\frac{S_n}{\sqrt{n}}}
+	 \]
+	 è una quantità pivotale e ha una distribuzione \textbf{T di Student} ($\sim T(n-1)$ con n-1 gradi di libertà). \\
+	 \begin{align*}
+	 	P\Bigg[\Big|\dfrac{\wbar{X}_n - \mu}{\frac{S_n}{\sqrt{n}}}\Big| \leq t_{(n-1), 1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\	
+	 	P\Bigg[\wbar{X}_n - \frac{S_n}{\sqrt{n}}t_{(n-1), 1-\frac{\alpha}{2}} \leq \mu \leq \wbar{X}_m + \frac{S_n}{\sqrt{n}}t_{(n-1), 1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\		 	
+	 \end{align*}
+	 \subsection{Distribuzione T di Student}
+	 Supponiamo di avere $N \sim N(0, 1)$ e $\chi \sim \chi^2(n)$ con $N$ e $\chi$ indipendenti. \\
+	 Definiamo la v.a. T come:
+	 \[
+	 T = \dfrac{N}{\sqrt{\chi}}\sqrt{n}
+	 \]
+	 e $T$ è per definizione distribuita come una T di Student con $n$ gradi di libertà. \\
+	 La densità di $T$ è una funzione pari, cioè simmetrica rispetto all'asse delle ordinate, perchè lo è quella di $N$.
+	 \begin{note}{}{}
+	 	Quando il grado di libertà, $n$, cresce la T di Student diventa una normale standard, ovvero:
+	 	\[
+	 	\lim_{n\to\infty}P[T_n \leq x] = \Phi(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x}\exp\Big(-\frac{t^2}{2}\Big)
+	 	\]
+	 	e quindi:
+	 	\[
+	 	\lim_{n\to\infty}t_{(n), 1-\frac{\alpha}{2}} = z_{1-\frac{\alpha}{2}}
+	 	\]
+	 \end{note}
+	 Precedentemente abbiamo detto che:
+	 \[
+	 \dfrac{\wbar{X}_n -\mu}{\frac{S_n}{\sqrt{n}}} \sim T(n-1)
+	 \]
+	 Verifichiamolo:
+	 \begin{align*}
+	 \dfrac{\wbar{X}_n -\mu}{\frac{S_n}{\sqrt{n}}} &= \dfrac{\frac{\wbar{X}_n-\mu}{\frac{S_n}{\sqrt{n}}}}{\frac{S_n}{\sqrt{n}}\frac{\sqrt{n}}{\sigma}} \\
+	 &= \dfrac{N}{\sqrt{(n-1)\frac{S_n^2}{\sigma^2}}}\sqrt{n-1} \\
+	 &= \frac{N}{\sqrt{\chi}}\sqrt{n-1} \sim T(n-1)	
+	 \end{align*}
+	 \subsection{Intervallo di confidenza per la varianza di una popolazione normale}
+	 Data $X \sim N(\mu, \sigma^2)$ e consideriamo:
+	 \[
+	 \frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1)
+	 \] 
+	 La probabilità che:
+	 \begin{align*}
+	 	P\Bigg[\chi^2_{(n-1), 1 - \frac{\alpha}{2}} \leq \frac{(n-1)S_n^2}{\sigma^2} \leq \chi^2_{(n-1), 1-\frac{\alpha}{2}}\Bigg] = 1-\frac{\alpha}{2} - \frac{\alpha}{2} = 1 - \alpha
+	 \end{align*}
+	 Riscriviamola in modo che $\sigma^2$ venga al numeratore:
+	 \begin{align*}
+	 	P\Bigg[\frac{1}{\chi^2_{(n-1), 1 - \frac{\alpha}{2}}} \geq \frac{\sigma^2}{(n-1)S_n^2} \geq \frac{1}{\chi^2_{(n-1), 1-\frac{\alpha}{2}}}\Bigg] = &= 1 - \alpha \\
+	 	P\Bigg[\frac{(n-1)S_n^2}{\chi^2_{(n-1), 1 - \frac{\alpha}{2}}} \leq \sigma^2 \leq \frac{(n-1)S_n^2}{\chi^2_{(n-1), 1-\frac{\alpha}{2}}}\Bigg] &= 1 - \alpha \quad \forall \sigma^2
+	 \end{align*}
 \end{document}
