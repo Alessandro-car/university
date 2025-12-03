@@ -1,6 +1,6 @@
 /* Cancellazione database */
 
-DROP TABLE IF EXISTS testateGiornalistiche_carella;
+DROP DATABASE IF EXISTS testateGiornalistiche_carella;
 
 /* Creazione database */
 
@@ -110,7 +110,62 @@ CREATE TABLE IF NOT EXISTS inspriv (
 	CONSTRAINT FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice)
 );
 
+/* CORREZIONE NOME ATTRIBUTO DI redazioni da indirzzoWeb in indirizzoWeb*/
 
+ALTER TABLE redazioni RENAME COLUMN indirzzoWeb TO indirizzoWeb;
 
+CREATE TABLE IF NOT EXISTS citta (
+	CAP CHAR(5) NOT NULL,
+	provincia CHAR(2),
+	citta VARCHAR(30),
+	CONSTRAINT PRIMARY KEY(CAP)
+);
+
+ALTER TABLE redattori DROP COLUMN citta;
+ALTER TABLE redattori DROP COLUMN provincia;
+ALTER TABLE redattori ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+
+ALTER TABLE redazioni CHANGE citta CAP CHAR(5);
+ALTER TABLE redazioni ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+
+ALTER TABLE aziende DROP COLUMN citta;
+ALTER TABLE aziende DROP COLUMN provincia;
+ALTER TABLE aziende ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+
+ALTER TABLE privati DROP COLUMN citta;
+ALTER TABLE privati DROP COLUMN provincia;
+ALTER TABLE privati ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+
+INSERT INTO citta (CAP, provincia, citta) VALUES ('20100', 'MI', 'Milano');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('00100', 'RM', 'Roma');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('80100', 'NA', 'Napoli');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('50100', 'FI', 'Firenze');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('10100', 'TO', 'Torino');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('40100', 'BO', 'Bologna');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('90100', 'PA', 'Palermo');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('16100', 'GE', 'Genova');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('70100', 'BA', 'Bari');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('37100', 'VR', 'Verona');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('43100', 'PR', 'Parma');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('76125', 'BT', 'Trani');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('76123', 'BT', 'Andria');
+INSERT INTO citta (CAP, provincia, citta) VALUES ('34100', 'TS', 'Trieste');
+
+SELECT * FROM citta;
+
+INSERT INTO redazioni (idRedazione, nomeComitato, CAP, indirizzoWeb) VALUES ('RCRR', 'RedCorr', '20100', 'www.corriere.it');
+INSERT INTO redazioni (idRedazione, nomeComitato, CAP, indirizzoWeb) VALUES ('RREP', 'RedRepubbl', '00100', 'www.repubblica.it');
+INSERT INTO redazioni (idRedazione, nomeComitato, CAP, indirizzoWeb) VALUES ('RSTM', 'RedStampa', '10100', 'www.lastampa.it');
+
+SELECT * FROM redazioni;
+
+INSERT INTO testate (idTestata, nome, redazione) VALUES ('T001', 'Corriere della Sera', 'RCRR');
+INSERT INTO testate (idTestata, nome, redazione) VALUES ('T002', 'La Repubblica', 'RREP');
+INSERT INTO testate (idTestata, nome, redazione) VALUES ('T003', 'La Stampa', 'RSTM');
+
+SELECT * FROM testate;
+
+ALTER TABLE privati MODIFY COLUMN nome VARCHAR(30);
+ALTER TABLE privati MODIFY COLUMN cognome VARCHAR(30);
 
 

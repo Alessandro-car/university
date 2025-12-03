@@ -25,17 +25,17 @@
 /* A possibility for the representation of a dictionary is to use hashing.
  *
  * This method use a hash function to map dictionary pairs into positions in a table
- * called the hash table. 
+ * called the hash table.
  *
- * In the ideal situation, if pair p has the key k and f is the hash function, the pair p 
+ * In the ideal situation, if pair p has the key k and f is the hash function, the pair p
  * is stored in position f(k) of the table.
  *
  * Assume for now that each position of the table can store at most one pair. To search for
  * a pair with key k, we compute f(k) and see whether a pair exists at position f(k) of the table.
- * If so, we have found the desired pair. If not, the dictionary contains no pair with the 
+ * If so, we have found the desired pair. If not, the dictionary contains no pair with the
  * specified key k. In the former case the pair may be deleted (if desired) by making position
  * f(k) of the table empty. In the latter case the pair may be ed by placing it in position
- * f(k). 
+ * f(k).
  *
  * In the ideal situation just described, it takes O(b) time to initialize an empty dictionary
  * (b is the number of positions in the hash table) and O(1) time to perform a find, insert or
@@ -43,11 +43,11 @@
  *
  * When the key range is too large, we use a hash table that has a number of positions that is
  * smaller than the key range and a hash function f(k) that maps several different keys into the
- * same position of the hash table. Each position of the table is a _bucket_; f(k) is the 
+ * same position of the hash table. Each position of the table is a _bucket_; f(k) is the
  * _home bucket_ for the pair whose key is k; and the number of buckets in a table equals the
  * table length.
  *
- * Since a hash function may map several keys into the same bucket, we may consider designing 
+ * Since a hash function may map several keys into the same bucket, we may consider designing
  * buckets that can hold more than one pair.
  *
  * Of the many hash functions that have been proposed, hashing by division is most common.
@@ -57,11 +57,11 @@
  * A collision occurs whenever two different keys have the same home bucket.
  *
  * = DELETION =
- * 
+ *
  * The deletion of a pair must leave behind a table on which the search method works correctly.
  *
  * A deletion may require us to move several pairs. The search for pairs to move begins just after
- * the bucket vacated by the deleted pair and proceeds to successive buckets until 1) we either 
+ * the bucket vacated by the deleted pair and proceeds to successive buckets until 1) we either
  * reach an empty bucket or 2) we return to the bucket from which the deletion took place.
  *
  * When pairs are moved up the table following a deletion, we must take care not to move a pair
@@ -71,17 +71,17 @@
  * An alternative to this method is to introduce the field never_used in each bucket. When the
  * table is initialized, this field is set to true for all buckets. When a pair is placed into a
  * bucket, its never_used field is set to false. Now condition (2) for search termination is
- * replaced by: a bucket with its never_used field equal to true is reached. 
+ * replaced by: a bucket with its never_used field equal to true is reached.
  *
- * We accomplish a removal by setting the table position occupied by the removed pair to NULL. 
- * A new pair  may be inserted into the first empty bucket encountered during a search that 
- * begins at the pair's home bucket. 
+ * We accomplish a removal by setting the table position occupied by the removed pair to NULL.
+ * A new pair  may be inserted into the first empty bucket encountered during a search that
+ * begins at the pair's home bucket.
  *
- * Notice that in this alternative scheme, never_used is never reset to true. After a while all 
- * buckets have this field equal to false, and unsuccessful searches examines all buckets. 
+ * Notice that in this alternative scheme, never_used is never reset to true. After a while all
+ * buckets have this field equal to false, and unsuccessful searches examines all buckets.
  *
- * To improve performance, we must reorganize the table when many empty buckets have their 
- * never_used field equal to false. This reorganization could, for example, involve reinserting 
+ * To improve performance, we must reorganize the table when many empty buckets have their
+ * never_used field equal to false. This reorganization could, for example, involve reinserting
  * all remaining pairs into an empty hash table.
  */
 
@@ -110,9 +110,9 @@ public:
   }
 };
 
-/* = LINEAR PROBING = 
+/* = LINEAR PROBING =
  *
- * The easiest way to find a place to put a value in the table is to search the table for 
+ * The easiest way to find a place to put a value in the table is to search the table for
  * the next available bucket.
  *
  * On the other side, the search begins at the home bucket f(k) of the key k we are searching
@@ -132,26 +132,26 @@ struct mypair;
 template<class K, class E>
 class hash_table: public dictionary<K,E> {
 public:
-  
+
   bool empty() const{
     return (dsize == 0);
-  };	
-  
+  };
+
   int size() const{
     return dsize;
-  };		
-  
-  void erase(const K& k);	
+  };
+
+  void erase(const K& k);
   void modify(const K& k, const E& e);
-  
+
   hash_table(int);	    // the constructor
-  
+
   void create(){};
-  
+
   int search(const K& ) const;
-  
+
   mypair< K, E>* find(const K& ) const;
-  
+
   void insert( mypair< K, E>& );
 
 private:
@@ -211,7 +211,7 @@ mypair< K, E>* hash_table<K,E>::find(const K& the_key) const
  * It begins by invoking the method search. If the returned bucket b is empty, then there is no
  * pair in the table with key the_pair.first and the pair the_pair may be inserted into this
  * bucket. If the returned bucket is not empty, then it either contains a pair with key the_pair.first
- * or the table is full. In the former case we change the second component of the pair stored 
+ * or the table is full. In the former case we change the second component of the pair stored
  * in the bucket to the_pair.second; in the latter, we throw an exception
  */
 
@@ -227,7 +227,7 @@ void hash_table<K,E>::insert( mypair<K, E>& the_pair)
     dsize++;
   } else {
     // check id duplicate or table full
-    if (table[b]->first == the_pair.first) 
+    if (table[b]->first == the_pair.first)
       // duplicate, change table[b]->second
       table[b]->second = the_pair.second;
     else{
@@ -261,7 +261,7 @@ bool hash_table<K,E>::contains(const E& e){
     if (table[j] != NULL && table[j]->second == e)
       return true;
   return false;
-  
+
 }
 
 template<class K, class E>
@@ -275,7 +275,7 @@ vector<E> hash_table<K,E>::contains(const E& e){
 }
 
 bool subset(Set<T> &S1, Set<T> &S2){
-    
+
 }
 
 
