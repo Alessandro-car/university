@@ -2516,5 +2516,62 @@
 	\begin{center}
 		Le linee del campo elettrico sono uscenti dalla cariche positive (nelle quali hanno origine) ed entranti nelle cariche negative (nelle quali terminano).
 	\end{center}
-	Continuare da pagina 579 del libro.
+	Un campo che ha stesso modulo, stessa direzione e stesso verso in ogni punto in cui è presente il campo è detto \textit{campo puntiforme}.
+	\paragraph{Esempi di rappresentazioni di linee di campo} Seguono degli esempi di rappresentazioni di linee di campo:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{rappresentazioni_linee_campo}
+	\end{figure}
+	\section{Campo elettrico generato da una carica puntiforme}
+	Per trovare il campo elettrico generato da una particella carica, detta \textit{carica puntiforme}, poniamo una carica di prova positiva $q_0$ in un qualunque punto vicino alla particella a distanza $r$. Dalla legge di Coulomb la forza che agisce sulla carica di prova per effetto della carica $q$ è:
+	\[
+	\vec{F} = \frac{1}{4\pi\epsilon_0}\frac{qq_0}{r^2}\vec{r}
+	\]
+	La direzione di $\vec{F}$ è uscente se $q > 0$ perchè $q_0 > 0$ e entrante se $q < 0$. \\
+	Possiamo scrivere il campo elettrico generato dalla particella nella forma:
+	\[\vec{E} = \frac{\vec{F}}{q_0} = \frac{1}{4\pi\epsilon_0}\frac{q}{r^2}\vec{r}\]
+	La direzione e il verso di $\vec{E}$ coincidono con quelli della forza che agisce sulla carica di prova positiva: lungo il raggio e uscente se $q > 0$ e entrante se $q < 0$. \\
+	Possiamo scrivere il modulo del campo elettrico come:
+	\[
+	E = \frac{1}{4\pi\epsilon_0}\frac{|q|}{r^2}
+	\]
+	Scriviamo $|q|$ per evitare di avere un valore di $E$ negativo se $q<0$ e per non confonderci con direzione e verso di $E$. \\
+	I campi elettrici obbediscono al principio di sovrapposizione. Per trovare il campo risultante in un dato punto a diverse particelle, bisogna trovare il campo dovuto a ciascuna particella ed eseguire la somma vettoriale:
+	\[
+	\vec{E} = \frac{\vec{F}_0}{q_0} = \frac{\vec{F}_{01}}{q_0} + \frac{\vec{F}_{02}}{q_0} + \dots + \frac{\vec{F}_{0n}}{q_0} = \vec{E}_1 + \vec{E}_2 + \dots + \vec{E}_n
+	\]	
+	\section{Campo elettrico generato da un dipolo elettrico}
+	Un campo elettrico per due particelle che hanno stessa carica $q$ in valore assoluto ma segno opposto prende il nome di \textbf{dipolo elettrico}, che è una configurazione molto importante.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{dipolo_elettrico}
+	\end{figure}
+	Le particelle sono separate da una distanza $d$ e giacciono lungo l'asse del dipolo che denominiamo con $z$. Qui ci limitiamo a considerare il modulo, la direzione e il verso del campo elettrico in un generico punto $P$ lungo l'asse del dipolo, a una distanza $z$ dal centro del dipolo. \\
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{schema_dipolo_elettrico}
+	\end{figure}
+	Questa figura mostra i campi elettrici generati in $P$ da ciascuna particella. La particella più vicina, di carica $+q$, genera un campo $E_{(+)}$ nel verso positivo dell'asse $z$ (uscente dalla particella). La particella più lontana, di carica $-q$, genera un campo $E_{(-)}$ di modulo minore nel verso negativo dell'asse $z$. Vogliamo trovare il campo risultante nel punto $P$ e possiamo scriverla come:
+	\begin{align*}
+	E &= E_{(+)} - E_{(-)} \\
+	&= \frac{1}{4\pi\epsilon_0}\frac{q}{r^2_{(+)}} - \frac{1}{4\pi\epsilon_0}\frac{q}{r^2_{(-)}} \\
+	&= \frac{1}{4\pi\epsilon_0}\frac{q}{(z - \frac{1}{2}d)^2} - \frac{1}{4\pi\epsilon_0}\frac{q}{(z + \frac{1}{2}d)^2} \\
+	&= \frac{q}{4\pi\epsilon_0}\Bigg(\frac{1}{(z - \frac{1}{2}d)^2} - \frac{1}{(z + \frac{1}{2}d)^2}\Bigg) \\
+	&= \frac{q}{4\pi\epsilon_0}\frac{2d/z}{(1 - (\frac{d}{2z})^2)^2} \\
+	&= \frac{q}{2\pi\epsilon_0z^3}\frac{d}{(1 - (\frac{d}{2z})^2)^2}
+	\end{align*}
+	Possiamo trascurare il termine $\frac{d}{2z}$ in quanto la distanza è $\ll 1$ e si è interessati solo a distanze molto grandi. 
+	\begin{align*}
+		E &= \frac{q}{2\pi\epsilon_0z^3}\frac{d}{(1 - (\frac{d}{2z})^2)^2} \\
+		&= \frac{1}{2\pi\epsilon_0}\frac{qd}{z^3}
+	\end{align*}
+	Il prodotto $qd$, che contiene le due proprietà intrinsece $q$ e $d$ del dipolo, è il modulo $p$ di una grandezza vettoriale nota come \textbf{momento di dipolo elettrico $p$}. Allora:
+	\begin{align*}
+		E &= \frac{1}{2\pi\epsilon_0}\frac{qd}{z^3} \\
+		&= \frac{1}{2\pi\epsilon_0}\frac{p}{z^3}
+	\end{align*}
+	\chapter{Legge di Gauss}
+	\section{Flusso nel campo elettrico}
+	
 \end{document}
