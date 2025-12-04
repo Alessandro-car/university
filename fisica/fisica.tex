@@ -2572,6 +2572,110 @@
 		&= \frac{1}{2\pi\epsilon_0}\frac{p}{z^3}
 	\end{align*}
 	\chapter{Legge di Gauss}
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{gauss}
+	\end{figure}
+	La figura mostra una particella con carica $+Q$ circondata da una sfera immaginaria centrata sulla particella. Nei punti sulla sfera, detta \textit{superficie di Gauss}, i vettori campo elettrico hanno un modulo contenuto da $E = kQ/r^2$ e sono diretti lungo il raggio nel verso uscente dalla particella. Le linee del campo elettrico sono anch'esse uscenti e hanno una densità contenuta. Diciamo che i vettori e le linee del campo \textit{attraversano} la superficie. Se il valore della carica fosse $+2Q$ il modulo dei vettori del campo che attraversano la superficie gaussiana sarebbe il doppio e anche la densità delle linee sarebbe raddoppiata. Questa è la legge di Gauss.
+	\begin{center}
+		La legge di Gauss mette in relazione il campo elettrico nei punti che appartengono a una superficie gaussiana (chiusa) e la carica totale racchiusa dalla superficie stessa.
+	\end{center}
 	\section{Flusso nel campo elettrico}
-	
+	\paragraph{Superficie piana, campo uniforme} Cominciamo con una superficie piana di area $A$ immersa in un campo elettrico uniforme $\vec{E}$. Consideriamo la seguente figura: 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.3\textwidth]{flusso_sup_piana}
+	\end{figure}
+	Questa figura mostra uno dei vettori campo elettrico $\vec{E}$ che attraversa una piccola porzione della superficie di area $\Delta A$. In realtà solo la componente $x$, $E_x = E \cos \theta$, attraversa la porzione di superficie. La componente $y$ sfiora semplicemente la superficie e non entra in gioco la legge di Gauss. \\	
+	La quantità di campo elettrico che attraversa la superficie dell'elemento è definita come \textbf{flusso del campo elettrico} $\Delta \Phi$ attraverso tale superficie:
+	\[
+	\Delta \Phi = (E \cos \theta) \Delta A
+	\]
+	C'è un altro modo di scrivere il secondo membro in modo da avere soltanto la componente di $\vec{E}$ che attraversa la superficie considerata. Definiamo un vettore area $\Delta\vec{A}$ perpendicolare alla porzione di superficie e avente per modulo l'area $\Delta A$ della porzione stessa, come mostrato in figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.3\textwidth]{flusso_sup_piana2}
+	\end{figure}
+	Possiamo allora scrivere:
+	\[
+	\Delta \Phi = \vec{E} \cdot \Delta \vec{A}
+	\]
+	e il prodotto scalare ci dà la componente di $\vec{E}$ parallela a $\Delta\vec{A}$, quindi quella che attraversa la porzione di superficie. \\
+	Per trovare il flusso totale $\Phi$ attraverso la superficie sommiamo i flussi attraverso ciascuna porzione di superficie:
+	\[
+	\Phi = \sum\vec{E} \cdot \Delta \vec{A}
+	\]
+	Però, poichè non vogliamo sommare centinaia di valori del flusso trasformiamo la somma in un integrale riducendo le porzioni da piccoli quadrati di area $\Delta A$ ad \textit{aree elementari} di estensione $dA$. Il flusso totale è allora:
+	\[
+	\Phi = \int\vec{E} \cdot d\vec{A}
+	\]
+	\paragraph{Superficie chiusa} Per usare la legge di Gauss al fine di mettere in relazione il flusso e la carica ci occorre una superficie chiusa. Tuttavia, ora siamo interessati non solo alle componenti che attraversano la superficie, ma anche al verso nel quale la attraversano, verso l'interno o verso l'esterno. \\
+	Per tenere traccia della direzione e del verso dell'attraversamento, usiamo di nuovo un vettore area $\Delta\vec{A}$ perpendicolare alla porzione di superficie, ma ora lo disegniamo sempre nel verso \textit{uscente} dalla superficie. Quindi, se un vettore del campo attraversa la superficie nel verso uscente, questo e il vettore area hanno la stessa direzione e verso, quindi $\theta = 0$ e $\cos\theta = 1$. Pertanto, il prodotto scalare $\vec{E} \cdot \Delta\vec{A}$ è positivo e così il flusso del campo elettrico. Invece, se un vettore del campo attraversa la superficie nel verso entrante, si ha $\theta = 180^\circ$ e $\cos \theta  = -1$ e quuindi il prodotto scalare è negativo e così il flusso del campo elettrico. Se un vettore del campo sfiora la superficie, il prodotto scalare è nullo perchè $\cos90^\circ = 0$ e così il flusso del campo elettrico. 
+	Quindi per riassumere:
+	\begin{center}
+		un campo che attraversa la superficie nel verso entrante dà luogo a un flusso negativo; un campo che attraversa la superficie nel verso uscente dà luogo a un flusso positivo; un campo parallelo alla superficie dà luogo a un flusso nullo.
+	\end{center}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{flusso_totale}
+	\end{figure}
+	Per trovare il \textbf{flusso totale} attraverso una superficie chiusa trviamo il flusso attraverso ciascuna porzione e poi sommaimo i risultati, ma per risparmiare lavoro, riduciamo i quadrati a elementi infinetisimi con vettori area $d\vec{A}$ e poi integriamo:
+	\[
+	\Phi = \oint \vec{E} \cdot d\vec{A}
+	\]
+	$\oint$ indica che dobbiamo integrare sull'intera area superficie chiusa, in modo da ottenere il flusso totale attraverso l'intera superficie. Vogliamo determinare il flusso totale attraverso una superficie chiusa, perchè è questo flusso che la legge di Gauss mette in relazione con la carica racchiusa dalla superficie. 
+	\begin{note}{}{}
+		Il flusso del campo elettrico è una grandezza \textbf{scalare}.
+	\end{note}
+	\section{Legge di Gauss}
+	La legge di Gauss mette in relazione il flusso totale $\Phi$ di un campo elettrico attraverso una superficie chiusa e la carica totale $q_{int}$ che è \textit{racchiusa} all'interno di quella superficie. La legge di Gauss è così formulata:
+	\[
+	\epsilon_0\Phi = q_{int}
+	\]
+	Sostituendo $\Phi$ con la formula dle flusso totale otteniamo:
+	\[
+	\epsilon_0 \oint \vec{E}d\vec{A} = q_{int}
+	\]
+	Queste due equazioni valgono solo quando la carica totale si trova nel vuoto oppure in aria. \\
+	La carica totale $q_{int}$ è la somma algebrica di tutte le cariche positive e negative \textit{racchiuse}, e può essere positiva, negativa o nulla. Includiamo il segno perchè ci dice qualcosa sul flusso totale attraverso la superficie gaussiana: se $q_{int} > 0$ il flusso totale è uscente, se $q_{int} < 0$ il flusso totale è entrante. \\
+	La carica al di fuori della superficie, indipendentemente da quanto grande o quanto vicina possa essere, non è inclusa nel termine $q_{int}$. ANche la forma esatta e la posizione delle carciche interne alla superficie gaussiana non hanno importanza, conta solo il modulo e il segno della carica totale racchiusa. \\
+	La quantità $\vec{E}$ è il campo elettrico risultante da \textit{tutte} le cariche, sia quelle interne sia quelle esterne alla superficie gaussiana. \\
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{legge_gauss}
+	\end{figure}
+	Sono mostrate quattro superfici gaussiane in sezione trasversale. Consideriamole una alla volta.
+	\begin{itemize}
+		\item \textbf{Superficie $S_1$}. Il campo elettrico è uscente in tutti i punti della superficie. Per questo il flusso del campo elettrico è positivo e così la carica totale all'interno della superficie;
+		\item \textbf{Superficie $S_2$.} Il campo elettrico è entrante in tutti i punti della superficie. Per questo il flusso del campo elettrico è negativo e così la carica totale all'interno della superficie;
+		\item \textbf{Superficie $S_3$.} Questa superficie non racchiude alcuna carica, quindi $q_{int} = 0$ e quindi il flusso totale del campo elettrico è nullo. perchè per ogni linea di forza entrante nella superficie ce ne è una uscente. 
+		\item \textbf{Superficie $S_4$.} Questa superficie racchiude una carica totale \textbf{nulla}, quindi $q_{int} = 0$ e il flusso è nullo, perchè per ogni linea di forza entrante nella superficie ce ne è una uscente.
+	\end{itemize}
+	L'unità di misura del flusso nel SI è il $(N/C) \cdot m^2$.
+	\section{Conduttore carico isolato}
+	\subsection{Densità di carica}
+	Come nel caso delle distribuzioni continue di massa, è possibile avere una distribuzione continua di carica e definire le densità di carica:
+	\begin{itemize}
+		\item \textbf{Densità volumetrica di carica}:
+		\[
+		\rho = \frac{dq}{dV} \quad \rho_{omog.} = \frac{q}{V} \quad \bigg[\frac{C}{m^3}\bigg]
+		\]
+		\item \textbf{Densità superficiale di carica}:
+		\[
+		\sigma = \frac{dq}{dS} \quad \sigma_{omog.} = \frac{q}{S} \quad \bigg[\frac{C}{m^2}\bigg]
+		\]
+		\item \textbf{Densità lineare di carica}:
+		\[
+		\lambda = \frac{dq}{dl} \quad \lambda_{omog.} = \frac{q}{L} \quad \bigg[\frac{C}{m}\bigg] 
+		\]
+	\end{itemize}
+	\subsection{Conduttore carico isolato}
+	La legge di Gauss ci permette di dimostrare un importante teorema relativo ai conduttori:
+	\begin{center}
+		se una carica in eccesso viene posta su un conduttore isolato, la carica si sposterà internamente sulla superficie esterna del conduttore. Nessuna carica in eccesso si troverà all'interno del conduttore.
+	\end{center}
+	Questo perchè in \textbf{condizioni di equilibrio} all'interno del conduttore il campo elettrico deve essere nullo, altrimenti il campo eserciterebbe una forza sugli elettroni di conduzione presenti e esisterebbe sempre una corrente all'interno del conduttore. Naturalmente non c'è una corrente perpetua di questo tipo all'interno di un conduttore isolato, perciò il campo elettrico è nullo. \\
+	Se $\vec{E}$ è nullo allora anche il flusso che attraversa la superficie gaussiana deve essere nullo. Allora, poichè la carica in eccesso non è all'interno della superficie gaussiana, deve essere al di fuori di essa, il che vuol dire che deve essere sulla superficie del conduttore.
 \end{document}
