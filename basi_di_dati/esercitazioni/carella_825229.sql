@@ -168,4 +168,224 @@ SELECT * FROM testate;
 ALTER TABLE privati MODIFY COLUMN nome VARCHAR(30);
 ALTER TABLE privati MODIFY COLUMN cognome VARCHAR(30);
 
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('001', 'Rossi', 'Luca', 'Via A 5', '20100', 'l.rossi@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('002', 'Bianchi', 'Marco', 'Via B 9', '00100', 'm.bianchi@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('003', 'Verdi', 'Anna', 'Via C 45', '80100', 'a.verdi@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('004', 'Carella', 'Alessandro', 'Via D 13', '76125', 'a.carella@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('005', 'Carella', 'Davide', 'Via E 14', '76125', 'd.carella@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('006', 'Gesulado', 'Pasquale', 'Via F 51', '70100', 'p.gesualdo@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('007', 'Andrisani', 'Francesco', 'Via G 7', '70100', 'f.andrisani@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('008', 'Fiore', 'Fabrizio', 'Via H 10', '76123', 'f.fiore@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('009', 'Loparco', 'Pietro', 'Via I 32', '70100', 'p.loparco@gmail.com');
+INSERT INTO redattori (idRedattori, cognome, nome, via, CAP, email) VALUES ('010', 'Pasquale', 'Barletta', 'Via J 12', '34100', 'p.barletta@gmail.com');
+
+SELECT * FROM redattori;
+
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RCRR', '001');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RREP', '002');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RSTM', '003');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RCRR', '004');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RCRR', '005');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RREP', '006');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RSTM', '007');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RSTM', '008');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RREP', '009');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RCRR', '010');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RCRR', '003');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RSTM', '002');
+INSERT INTO redazRedat (idRedazione, idRedattori) VALUES ('RREP', '007');
+
+SELECT * FROM redazRedat;
+
+ALTER TABLE categorie RENAME COLUMN nomeCategoria TO idCategoria;
+
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Cronaca', NULL);
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Nera', 'Cronaca');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Locale', 'Cronaca');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Sport', NULL);
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Calcio', 'Sport');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Tennis', 'Sport');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Nuoto', 'Sport');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Politica', NULL);
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Governo', 'Politica');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Elezioni', 'Politica');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Esteri', NULL);
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Europa', 'Esteri');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Asia', 'Esteri');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('USA', 'Esteri');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Cultura', NULL);
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Libri', 'Cultura');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Arte', 'Cultura');
+INSERT INTO categorie (idCategoria, categoriaPadre) VALUES ('Musica', 'Cultura');
+
+SELECT * FROM categorie;
+
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN001', 'Analisi sulle ultime decisioni sul governo in materia fiscale.', 'Governo');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN002', 'Omicidio nella città di Bari', 'Nera');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN003', "Pallone d'oro a messi", 'Calcio');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN004', 'Vittoria di Sinner vittoria ATP', 'Tennis');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN005', 'Elezioni di Trump', 'USA');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN006', 'Omicidio nella città di Bari', 'Libri');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN007', 'Furto al Louvre', 'Cronaca');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN008', "Mostra d'arte contemporanea al museo centrale", 'Arte');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN009', 'Tensioni diplomatiche tra i paesi euroepi per il nuovo trattato', 'Europa');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN010', 'Annunciate le guest del festival di Sanremo', 'Musica');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN011', 'Incidente sulla tangenziale di Roma', 'Locale');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN012', "L'inter vince la Champions", 'Calcio');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN013', 'Il tennis continua a crescere di popolarità', 'Tennis');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN014', 'Nel nuoto emergono nuovi talenti mondiali', 'Nuoto');
+INSERT INTO inserzioni (codice, testo, categoria) VALUES ('IN015', 'Tensioni e sviluppi politici nei paesi asiatici', 'Asia');
+
+SELECT * FROM inserzioni;
+
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN001', 'T001');
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN002', 'T002');
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN003', 'T002');
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN004', 'T002');
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN005', 'T003');
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN006', 'T001');
+INSERT INTO instest (idInserzione, idTestata) VALUES ('IN007', 'T003');
+
+SELECT * FROM instest;
+
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0001', 'MediaPress', 'Luca Bianchi', '35167910110', '20100', 500000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0002', 'Editori Roma', 'Luigi Baldi', '32357910110', '00100', 320000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0003', 'Editori Napoli', 'Giovanni Esposito', '39867910990', '80100', 150000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0004', 'Editori Trani', 'Francesco di Bari', '35567910910', '76125', 210000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0005', 'Editori Bari', 'Andrea Gesulado', '31167220110', '70100', 275000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0006', 'Editori Andria', 'Sara Conti', '35227210110', '76123', 180000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0007', 'Editori Trieste', 'Marco Ferrero', '34337910110', '34100', 230000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0008', 'Editori Milano', 'Stefano Riva', '39235910110', '20100', 600000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0009', 'Palermo News', 'Marta de Luca', '37167910120', '90100', 750000);
+INSERT INTO aziende (idAzienda, nomeAzienda, referente, telefono, CAP, CapitaleSociale) VALUES ('A0010', 'Stampa Verona', 'Felice Romero', '38193920210', '37100', 220000);
+
+SELECT * FROM aziende;
+
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0001', 'IN008');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0002', 'IN009');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0003', 'IN010');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0004', 'IN011');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0005', 'IN012');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0006', 'IN013');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0007', 'IN014');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0008', 'IN015');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0009', 'IN001');
+INSERT INTO insaz (idAzienda, idInserzione) VALUES ('A0010', 'IN002');
+
+SELECT * FROM insaz;
+
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('001', 'Serra', 'Giorgio', 'Via Garibaldi', '16100', 'g.serra@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('002', 'Greco', 'Paolo', 'Via Sparano', '70100', 'p.greco@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('003', 'Rinaldi', 'Chiara', 'Via Dante', '20100', 'c.rinaldi@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('004', 'Fontana', 'Elisa', 'Via Toledo', '80100', 'e.fontana@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('005', 'Verdi', 'Anna', 'Via Roma', '50100', 'a.verdi@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('006', 'Esposito', 'Giulia', 'Via Po', '10100', 'g.esposito@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('007', 'Bianchi', 'Marco', 'Via Mazzini', '37100', 'm.bianchi@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('008', 'Ferrero', 'Stefano', 'Via Maqueda', '90100', 's.ferrero@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('009', 'Conti', 'Marta', 'Via Sparano', '70100', 'm.conti@gmail.com');
+INSERT INTO privati (idPrivato, cognome, nome, via, CAP, email) VALUES ('010', 'Rossi', 'Luca', 'Via Austria', '76125', 'l.rossi@gmail.com');
+
+SELECT * FROM privati;
+
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('001', 'IN003');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('002', 'IN004');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('003', 'IN005');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('004', 'IN006');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('005', 'IN007');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('006', 'IN008');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('007', 'IN009');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('008', 'IN010');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('009', 'IN011');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('010', 'IN012');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('001', 'IN013');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('002', 'IN014');
+INSERT INTO inspriv (idPrivato, idInserzione) VALUES ('003', 'IN015');
+
+SELECT * FROM inspriv;
+
+/* Aggiungo il nome ai vincoli di chiave esterna perchè mi servono per modificare le tabelle */
+/* Il vecchio nome dei vincoli è stato preso con il comando show create table nome_tabella; */
+
+ALTER TABLE testate DROP FOREIGN KEY `1`;
+ALTER TABLE testate ADD CONSTRAINT fk_testate_redazione FOREIGN KEY (redazione) REFERENCES redazioni(idRedazione) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE redattori DROP FOREIGN KEY `1`;
+ALTER TABLE redattori ADD CONSTRAINT fk_redattori_citta FOREIGN KEY (CAP) REFERENCES citta(CAP);
+
+ALTER TABLE categorie DROP FOREIGN KEY `1`;
+ALTER TABLE categorie ADD CONSTRAINT fk_categorie_categorie FOREIGN KEY (categoriaPadre) REFERENCES categorie(idCategoria);
+
+ALTER TABLE inserzioni DROP FOREIGN KEY `1`;
+ALTER TABLE inserzioni ADD CONSTRAINT fk_inserzioni_categorie FOREIGN KEY (categoria) REFERENCES categorie(idCategoria);
+
+ALTER TABLE instest DROP FOREIGN KEY `1`;
+ALTER TABLE instest ADD CONSTRAINT fk_instest_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice);
+ALTER TABLE instest DROP FOREIGN KEY `2`;
+ALTER TABLE instest ADD CONSTRAINT fk_instest_testate FOREIGN KEY (idTestata) REFERENCES testate(idTestata);
+
+ALTER TABLE aziende DROP FOREIGN KEY `1`;
+ALTER TABLE aziende ADD CONSTRAINT fk_aziende_citta FOREIGN KEY (CAP) REFERENCES citta(CAP);
+
+ALTER TABLE insaz DROP FOREIGN KEY `1`;
+ALTER TABLE insaz ADD CONSTRAINT fk_insaz_aziende FOREIGN KEY (idAzienda) REFERENCES aziende(idAzienda);
+ALTER TABLE insaz DROP FOREIGN KEY `2`;
+ALTER TABLE insaz ADD CONSTRAINT fk_insaz_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice);
+
+ALTER TABLE privati DROP FOREIGN KEY `1`;
+ALTER TABLE privati ADD CONSTRAINT fk_privati_citta FOREIGN KEY (CAP) REFERENCES citta(CAP);
+
+/* Rimuovo la chiave primaria dai due attributi e aggiungo un indice unico, tramite UNIQUE INDEX, così da mantenere l'unicità dei valori */
+ALTER TABLE inspriv DROP FOREIGN KEY `1`;
+ALTER TABLE inspriv DROP FOREIGN KEY `2`;
+ALTER TABLE inspriv DROP PRIMARY KEY;
+ALTER TABLE inspriv MODIFY COLUMN idPrivato CHAR(3);
+ALTER TABLE inspriv MODIFY COLUMN idInserzione CHAR(6);
+ALTER TABLE inspriv ADD UNIQUE INDEX unique_priv_inserzione (idPrivato, idInserzione);
+ALTER TABLE inspriv ADD CONSTRAINT fk_inspriv_privati FOREIGN KEY (idPrivato) REFERENCES privati(idPrivato);
+ALTER TABLE inspriv ADD CONSTRAINT fk_inspriv_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice) ON UPDATE SET NULL ON DELETE SET NULL;
+
+/* Query n. 6*/
+SELECT nome FROM testate;
+
+/* Query n. 7*/
+SELECT * FROM redattori;
+
+/* Query n. 8*/
+SELECT nome, cognome FROM redattori;
+
+/* Query n. 9*/
+SELECT nome, cognome, email FROM redattori;
+
+/* Query n. 10*/
+SELECT * FROM redattori WHERE email LIKE "a%";
+
+/* Query n. 11*/
+SELECT * FROM redattori WHERE email LIKE "%@%";
+
+/* Query n. 12*/
+SELECT * FROM redattori WHERE email NOT LIKE "%@%";
+
+/* Query n. 13*/
+SELECT nomeComitato, indirizzoWeb FROM redazioni WHERE indirizzoWeb IS NOT NULL;
+
+/* Query n. 14*/
+SELECT testo, codice FROM inserzioni WHERE categoria = 'Tennis';
+
+/* Query n. 15*/
+SELECT testo, codice FROM inserzioni WHERE testo REGEXP '\\bpaesi\\b';
+
+/* Query n. 16*/
+SELECT testo, codice FROM inserzioni WHERE testo REGEXP '\\btennis\\b' AND testo LIKE '%pop%';
+
+/* Query n. 17*/
+SELECT testo, codice FROM inserzioni WHERE testo LIKE '%cidi%';
+
+/* Query n. 18*/
+SELECT * FROM privati;
+
+/* Query n. 19*/
+SELECT * FROM privati WHERE CAP = '76125' OR CAP = '70100';
+
+/* Query n. 20*/
+SELECT * FROM aziende WHERE telefono LIKE '%556%';
 
