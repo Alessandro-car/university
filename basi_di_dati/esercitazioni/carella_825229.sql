@@ -477,3 +477,84 @@ SELECT CONCAT(cognome, nome) as Pilota, eta FROM privati WHERE cognome = 'Rossi'
 SELECT * FROM aziende WHERE telefono LIKE '392%';
 
 
+/* Parte 4 */
+/* Metto il numero civico di alcune aziende a null in modo che la query n.39 produca dei risultati */
+UPDATE aziende set numero_civico = NULL where idAzienda = 'A0004';
+UPDATE aziende set numero_civico = NULL where idAzienda = 'A0002';
+UPDATE aziende set numero_civico = NULL where idAzienda = 'A0007';
+
+/* Query n. 39 */
+SELECT nomeAzienda, numero_civico FROM aziende WHERE numero_civico > 15 OR numero_civico IS NULL;
+
+/* Query n.40 */
+/* Metto l'anno di fondazione di alcune aziende a NULL in modo che la query n.40 produca dei risultati */
+UPDATE aziende set anno_fondazione = NULL where idAzienda = 'A0004';
+UPDATE aziende set anno_fondazione = NULL where idAzienda = 'A0005';
+
+SELECT nomeAzienda, anno_fondazione FROM aziende WHERE anno_fondazione < 1980 OR anno_fondazione IS NULL;
+
+/* Query n.41 */
+SELECT nomeAzienda, anno_fondazione FROM aziende WHERE (anno_fondazione BETWEEN 1980 AND 1998) OR anno_fondazione IS NULL;
+
+/* Query n.42 */
+SELECT codice, testo, categoria FROM inserzioni;
+
+/* Query n.43 */
+SELECT idAzienda, idInserzione FROM insaz;
+
+/* Query n.44 */
+SELECT insaz.idInserzione, aziende.nomeAzienda, aziende.referente, aziende.telefono FROM insaz CROSS JOIN aziende;
+
+/* Query n.45 */
+SELECT
+	insaz.idInserzione,
+	inserzioni.testo, inserzioni.categoria,
+	insaz.idAzienda,
+	aziende.referente, aziende.telefono
+FROM
+	insaz CROSS JOIN inserzioni CROSS JOIN aziende;
+
+/* Query n.46 */
+SELECT
+	IA.idInserzione,
+	pubblicazioni.testo, pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente, elenco_aziende.telefono
+FROM
+	insaz as IA CROSS JOIN inserzioni as pubblicazioni CROSS JOIN aziende as elenco_aziende;
+
+/* Query n.47 */
+SELECT
+	IA.idInserzione as codice_articolo,
+	pubblicazioni.testo as descrizione, pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente, elenco_aziende.telefono
+FROM
+	insaz as IA CROSS JOIN inserzioni as pubblicazioni CROSS JOIN aziende as elenco_aziende;
+
+/* Query n.48 */
+/* Ho modificato il capitale sociale da 18000000 a 180000 in modo che la query produca dei risultati*/
+SELECT
+	IA.idInserzione as codice_articolo,
+	pubblicazioni.testo as descrizione, pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente, elenco_aziende.telefono, elenco_aziende.CapitaleSociale
+FROM
+	insaz as IA CROSS JOIN inserzioni as pubblicazioni CROSS JOIN aziende as elenco_aziende
+WHERE
+	elenco_aziende.CapitaleSociale > 180000;
+
+/* Query n.49 */
+SELECT nome FROM privati;
+
+/* Query n.50 */
+/* Ho modificato il nome di un privato in modo che la query produca dei risultati */
+UPDATE privati SET nome = 'Giorgio' WHERE idPrivato = '008';
+SELECT DISTINCT nome FROM privati;
+
+/* Query n.51 */
+
+
+
+
+
