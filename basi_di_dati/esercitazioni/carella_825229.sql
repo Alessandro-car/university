@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS testate (
 	nome VARCHAR(20),
 	redazione CHAR(4),
 	CONSTRAINT PRIMARY KEY(idTestata),
-	CONSTRAINT FOREIGN KEY (redazione) REFERENCES redazioni(idRedazione)
+	CONSTRAINT fk_testate_redazione FOREIGN KEY (redazione) REFERENCES redazioni(idRedazione)
 );
 
 CREATE TABLE IF NOT EXISTS redattori (
@@ -41,15 +41,15 @@ CREATE TABLE IF NOT EXISTS redazRedat (
 	idRedazione CHAR(4) NOT NULL,
 	idRedattori CHAR(4) NOT NULL,
 	CONSTRAINT PRIMARY KEY(idRedazione, idRedattori),
-	CONSTRAINT FOREIGN KEY (idRedazione) REFERENCES redazioni(idRedazione),
-	CONSTRAINT FOREIGN KEY (idRedattori) REFERENCES redattori(idRedattori)
+	CONSTRAINT fk_redazRedat_redazione FOREIGN KEY (idRedazione) REFERENCES redazioni(idRedazione),
+	CONSTRAINT fk_redazRedat_redattore FOREIGN KEY (idRedattori) REFERENCES redattori(idRedattori)
 );
 
 CREATE TABLE IF NOT EXISTS categorie (
 	nomeCategoria VARCHAR(10) NOT NULL,
 	categoriaPadre VARCHAR(10),
 	CONSTRAINT PRIMARY KEY(nomeCategoria),
-	CONSTRAINT FOREIGN KEY (categoriaPadre) REFERENCES categorie(nomeCategoria)
+	CONSTRAINT fk_categoria_categoria FOREIGN KEY (categoriaPadre) REFERENCES categorie(nomeCategoria)
 );
 
 CREATE TABLE IF NOT EXISTS inserzioni (
@@ -57,15 +57,15 @@ CREATE TABLE IF NOT EXISTS inserzioni (
 	testo VARCHAR(100),
 	categoria VARCHAR(10),
 	CONSTRAINT PRIMARY KEY(codice),
-	CONSTRAINT FOREIGN KEY (categoria) REFERENCES categorie(nomeCategoria)
+	CONSTRAINT fk_inserzioni_categoria FOREIGN KEY (categoria) REFERENCES categorie(nomeCategoria)
 );
 
 CREATE TABLE IF NOT EXISTS instest (
 	idInserzione CHAR(6) NOT NULL,
 	idTestata CHAR(4) NOT NULL,
 	CONSTRAINT PRIMARY KEY(idInserzione, idTestata),
-	CONSTRAINT FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice),
-	CONSTRAINT FOREIGN KEY (idTestata) REFERENCES testate(idTestata)
+	CONSTRAINT fk_instest_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice),
+	CONSTRAINT fk_instest_testate FOREIGN KEY (idTestata) REFERENCES testate(idTestata)
 );
 
 CREATE TABLE IF NOT EXISTS aziende (
@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS insaz (
 	idAzienda CHAR(6) NOT NULL,
 	idInserzione CHAR(6) NOT NULL,
 	CONSTRAINT PRIMARY KEY(idAzienda, idInserzione),
-	CONSTRAINT FOREIGN KEY (idAzienda) REFERENCES aziende(idAzienda),
-	CONSTRAINT FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice)
+	CONSTRAINT fk_insaz_aziende FOREIGN KEY (idAzienda) REFERENCES aziende(idAzienda),
+	CONSTRAINT fk_insaz_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice)
 );
 
 CREATE TABLE IF NOT EXISTS privati (
@@ -106,8 +106,8 @@ CREATE TABLE IF NOT EXISTS inspriv (
 	idPrivato CHAR(3) NOT NULL,
 	idInserzione CHAR(6) NOT NULL,
 	CONSTRAINT PRIMARY KEY(idPrivato, idInserzione),
-	CONSTRAINT FOREIGN KEY (idPrivato) REFERENCES privati(idPrivato),
-	CONSTRAINT FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice)
+	CONSTRAINT fk_inspriv_privati FOREIGN KEY (idPrivato) REFERENCES privati(idPrivato),
+	CONSTRAINT fk_inspriv_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice)
 );
 
 /* CORREZIONE NOME ATTRIBUTO DI redazioni da indirzzoWeb in indirizzoWeb*/
@@ -123,18 +123,18 @@ CREATE TABLE IF NOT EXISTS citta (
 
 ALTER TABLE redattori DROP COLUMN citta;
 ALTER TABLE redattori DROP COLUMN provincia;
-ALTER TABLE redattori ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+ALTER TABLE redattori ADD CONSTRAINT fk_redattori_citta FOREIGN KEY(CAP) REFERENCES citta(CAP);
 
 ALTER TABLE redazioni CHANGE citta CAP CHAR(5);
-ALTER TABLE redazioni ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+ALTER TABLE redazioni ADD CONSTRAINT fk_redazioni_citta FOREIGN KEY(CAP) REFERENCES citta(CAP);
 
 ALTER TABLE aziende DROP COLUMN citta;
 ALTER TABLE aziende DROP COLUMN provincia;
-ALTER TABLE aziende ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+ALTER TABLE aziende ADD CONSTRAINT fk_aziende_citta FOREIGN KEY(CAP) REFERENCES citta(CAP);
 
 ALTER TABLE privati DROP COLUMN citta;
 ALTER TABLE privati DROP COLUMN provincia;
-ALTER TABLE privati ADD CONSTRAINT FOREIGN KEY(CAP) REFERENCES citta(CAP);
+ALTER TABLE privati ADD CONSTRAINT fk_privati_citta FOREIGN KEY(CAP) REFERENCES citta(CAP);
 
 INSERT INTO citta (CAP, provincia, citta) VALUES ('20100', 'MI', 'Milano');
 INSERT INTO citta (CAP, provincia, citta) VALUES ('00100', 'RM', 'Roma');
@@ -306,37 +306,29 @@ SELECT * FROM inspriv;
 /* Aggiungo il nome ai vincoli di chiave esterna perchè mi servono per modificare le tabelle */
 /* Il vecchio nome dei vincoli è stato preso con il comando show create table nome_tabella; */
 
-ALTER TABLE testate DROP FOREIGN KEY `1`;
+ALTER TABLE testate DROP FOREIGN KEY fk_testate_redazione;
 ALTER TABLE testate ADD CONSTRAINT fk_testate_redazione FOREIGN KEY (redazione) REFERENCES redazioni(idRedazione) ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE redattori DROP FOREIGN KEY `1`;
-ALTER TABLE redattori ADD CONSTRAINT fk_redattori_citta FOREIGN KEY (CAP) REFERENCES citta(CAP);
 
-ALTER TABLE categorie DROP FOREIGN KEY `1`;
-ALTER TABLE categorie ADD CONSTRAINT fk_categorie_categorie FOREIGN KEY (categoriaPadre) REFERENCES categorie(idCategoria);
+ALTER TABLE categorie DROP FOREIGN KEY fk_categoria_categoria;
+ALTER TABLE categorie ADD CONSTRAINT fk_categoria_categoria FOREIGN KEY (categoriaPadre) REFERENCES categorie(idCategoria);
 
-ALTER TABLE inserzioni DROP FOREIGN KEY `1`;
-ALTER TABLE inserzioni ADD CONSTRAINT fk_inserzioni_categorie FOREIGN KEY (categoria) REFERENCES categorie(idCategoria);
+ALTER TABLE inserzioni DROP FOREIGN KEY fk_inserzioni_categoria;
+ALTER TABLE inserzioni ADD CONSTRAINT fk_inserzioni_categoria FOREIGN KEY (categoria) REFERENCES categorie(idCategoria);
 
-ALTER TABLE instest DROP FOREIGN KEY `1`;
+ALTER TABLE instest DROP FOREIGN KEY fk_instest_inserzioni;
 ALTER TABLE instest ADD CONSTRAINT fk_instest_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice);
-ALTER TABLE instest DROP FOREIGN KEY `2`;
+ALTER TABLE instest DROP FOREIGN KEY fk_instest_testate;
 ALTER TABLE instest ADD CONSTRAINT fk_instest_testate FOREIGN KEY (idTestata) REFERENCES testate(idTestata);
 
-ALTER TABLE aziende DROP FOREIGN KEY `1`;
-ALTER TABLE aziende ADD CONSTRAINT fk_aziende_citta FOREIGN KEY (CAP) REFERENCES citta(CAP);
-
-ALTER TABLE insaz DROP FOREIGN KEY `1`;
+ALTER TABLE insaz DROP FOREIGN KEY fk_insaz_aziende;
 ALTER TABLE insaz ADD CONSTRAINT fk_insaz_aziende FOREIGN KEY (idAzienda) REFERENCES aziende(idAzienda);
-ALTER TABLE insaz DROP FOREIGN KEY `2`;
+ALTER TABLE insaz DROP FOREIGN KEY fk_insaz_inserzioni;
 ALTER TABLE insaz ADD CONSTRAINT fk_insaz_inserzioni FOREIGN KEY (idInserzione) REFERENCES inserzioni(codice);
 
-ALTER TABLE privati DROP FOREIGN KEY `1`;
-ALTER TABLE privati ADD CONSTRAINT fk_privati_citta FOREIGN KEY (CAP) REFERENCES citta(CAP);
-
 /* Rimuovo la chiave primaria dai due attributi e aggiungo un indice unico, tramite UNIQUE INDEX, così da mantenere l'unicità dei valori */
-ALTER TABLE inspriv DROP FOREIGN KEY `1`;
-ALTER TABLE inspriv DROP FOREIGN KEY `2`;
+ALTER TABLE inspriv DROP FOREIGN KEY fk_inspriv_privati;
+ALTER TABLE inspriv DROP FOREIGN KEY fk_inspriv_inserzioni;
 ALTER TABLE inspriv DROP PRIMARY KEY;
 ALTER TABLE inspriv MODIFY COLUMN idPrivato CHAR(3);
 ALTER TABLE inspriv MODIFY COLUMN idInserzione CHAR(6);
@@ -388,4 +380,100 @@ SELECT * FROM privati WHERE CAP = '76125' OR CAP = '70100';
 
 /* Query n. 20*/
 SELECT * FROM aziende WHERE telefono LIKE '%556%';
+
+
+/* Esercitazione n.3 */
+
+ALTER TABLE privati ADD COLUMN eta INTEGER;
+ALTER TABLE privati ADD COLUMN numero_civico INTEGER;
+
+UPDATE privati SET eta = 23, numero_civico = 3 WHERE idPrivato = '001';
+UPDATE privati SET eta = 33, numero_civico = 5 WHERE idPrivato = '002';
+UPDATE privati SET eta = 43, numero_civico = 21 WHERE idPrivato = '003';
+UPDATE privati SET eta = 24, numero_civico = 7 WHERE idPrivato = '004';
+UPDATE privati SET eta = 34, numero_civico = 11 WHERE idPrivato = '005';
+UPDATE privati SET eta = 44, numero_civico = 10 WHERE idPrivato = '006';
+UPDATE privati SET eta = 25, numero_civico = 45 WHERE idPrivato = '007';
+UPDATE privati SET eta = 35, numero_civico = 57 WHERE idPrivato = '008';
+UPDATE privati SET eta = 45, numero_civico = 100 WHERE idPrivato = '009';
+UPDATE privati SET eta = 55, numero_civico = 98 WHERE idPrivato = '010';
+
+ALTER TABLE aziende ADD COLUMN numero_civico INTEGER;
+ALTER TABLE aziende ADD COLUMN anno_fondazione YEAR;
+
+UPDATE aziende set numero_civico = 5, anno_fondazione = 1980 WHERE idAzienda = 'A0001';
+UPDATE aziende set numero_civico = 1, anno_fondazione = 1990 WHERE idAzienda = 'A0002';
+UPDATE aziende set numero_civico = 24, anno_fondazione = 1998 WHERE idAzienda = 'A0003';
+UPDATE aziende set numero_civico = 7, anno_fondazione = 2000 WHERE idAzienda = 'A0004';
+UPDATE aziende set numero_civico = 46, anno_fondazione = 1999 WHERE idAzienda = 'A0005';
+UPDATE aziende set numero_civico = 91, anno_fondazione = 2012 WHERE idAzienda = 'A0006';
+UPDATE aziende set numero_civico = 76, anno_fondazione = 1965 WHERE idAzienda = 'A0007';
+UPDATE aziende set numero_civico = 42, anno_fondazione = 2020 WHERE idAzienda = 'A0008';
+UPDATE aziende set numero_civico = 11, anno_fondazione = 1973 WHERE idAzienda = 'A0009';
+UPDATE aziende set numero_civico = 10, anno_fondazione = 2025 WHERE idAzienda = 'A0010';
+
+/* Query n. 21 */
+SELECT nomeAzienda FROM aziende;
+
+/* Query n. 22 */
+SELECT nomeAzienda FROM aziende WHERE anno_fondazione < 1980;
+
+/* Query n. 23 */
+SELECT nomeAzienda FROM aziende WHERE anno_fondazione > 1998;
+
+/* Query n. 24 */
+SELECT nomeAzienda FROM aziende WHERE anno_fondazione BETWEEN 1980 AND 1998;
+
+/* Query n. 25 */
+SELECT idPrivato, cognome, nome, via, CAP, email, eta, numero_civico FROM privati;
+
+/* Query n. 26 */
+SELECT cognome, nome, numero_civico FROM privati WHERE numero_civico > 20;
+
+/* Query n. 27 */
+SELECT cognome, nome, numero_civico FROM privati WHERE numero_civico = 10 OR numero_civico = 15;
+
+/* Query n. 28 */
+SELECT nome, cognome, via, numero_civico, CAP as Codice_Avviamento_Postale FROM privati WHERE numero_civico BETWEEN 15 AND 30;
+
+/* Query n. 29 */
+SELECT nomeAzienda, CapitaleSociale, (CapitaleSociale / 2) as Plafond_max_disponibile FROM aziende;
+
+
+/* Query n. 30 */
+SELECT nome, eta FROM privati WHERE eta < 30;
+
+/* Query n. 31 */
+/* Ho modificato m t in m a cosi da ottenere un risultato */
+SELECT nomeComitato FROM redazioni WHERE nomeComitato LIKE '%m_a%';
+
+/* Query n. 32 */
+CREATE TABLE privatiGiovani LIKE privati;
+
+/* Query n. 33 */
+INSERT INTO privatiGiovani (idPrivato, cognome, nome, via, CAP, email, eta, numero_civico) SELECT idPrivato, cognome, nome, via, CAP, email, eta, numero_civico FROM privati WHERE eta < 30;
+
+SELECT * FROM privatiGiovani;
+
+/* Query n. 34 */
+/* Ho modificato la lettera con S in modo che la query produca dei risultati */
+UPDATE privatiGiovani SET cognome = 'Rossi' WHERE cognome LIKE 'S%';
+
+/* Query n. 35 */
+/* Ho modificato la sottostringa da aur a arc in modo che la query produca dei risultati */
+UPDATE privatiGiovani SET nome = 'Arnold' WHERE nome LIKE '%arc%';
+
+SELECT * FROM privatiGiovani;
+
+/* Query n. 36 */
+/* Ho modificato il nome da Arnold a Girogio in modo che la query produca dei risultati */
+SELECT cognome, nome as Nick, eta FROM privati WHERE nome = 'Giorgio';
+
+/* Query n. 37 */
+SELECT CONCAT(cognome, nome) as Pilota, eta FROM privati WHERE cognome = 'Rossi';
+
+/* Query n. 38 */
+/* Ho sostituito 080 con 392 in modo che la query produca dei risultati */
+SELECT * FROM aziende WHERE telefono LIKE '392%';
+
 
