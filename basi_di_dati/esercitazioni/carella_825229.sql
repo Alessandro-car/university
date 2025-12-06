@@ -553,8 +553,459 @@ UPDATE privati SET nome = 'Giorgio' WHERE idPrivato = '008';
 SELECT DISTINCT nome FROM privati;
 
 /* Query n.51 */
+SELECT
+	insaz.idInserzione,
+	inserzioni.testo,
+	inserzioni.categoria,
+	insaz.idAzienda,
+	aziende.referente,
+	aziende.telefono
+FROM
+	insaz NATURAL JOIN (
+		SELECT
+			inserzioni.codice as idInserzione,
+			inserzioni.testo,
+			inserzioni.categoria
+		FROM
+			inserzioni
+	) as inserzioni
+	NATURAL JOIN
+		aziende;
+
+SELECT
+	IA.idInserzione,
+	pubblicazioni.testo,
+	pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente,
+	elenco_aziende.telefono
+FROM
+	insaz as IA NATURAL JOIN (
+		SELECT
+			inserzioni.codice as idInserzione,
+			inserzioni.testo,
+			inserzioni.categoria
+		FROM
+			inserzioni
+	) as pubblicazioni
+	NATURAL JOIN
+		aziende as elenco_aziende;
+
+SELECT
+	IA.idInserzione as codice_articolo,
+	pubblicazioni.testo as descrizione,
+	pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente,
+	elenco_aziende.telefono
+FROM
+	insaz as IA NATURAL JOIN (
+		SELECT
+			inserzioni.codice as idInserzione,
+			inserzioni.testo,
+			inserzioni.categoria
+		FROM
+			inserzioni
+	)	as pubblicazioni
+	NATURAL JOIN
+		aziende as elenco_aziende;
+
+SELECT
+	IA.idInserzione as codice_articolo,
+	pubblicazioni.testo as descrizione,
+	pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente,
+	elenco_aziende.telefono,
+	elenco_aziende.CapitaleSociale
+FROM
+	insaz as IA
+	NATURAL JOIN (
+			SELECT
+				inserzioni.codice as idInserzione,
+				inserzioni.testo,
+				inserzioni.categoria
+			FROM
+				inserzioni
+		) as pubblicazioni
+	NATURAL JOIN
+		aziende as elenco_aziende
+WHERE
+	elenco_aziende.CapitaleSociale > 180000;
+
+/* Query n.52 */
+SELECT
+	insaz.idInserzione,
+	inserzioni.testo,
+	inserzioni.categoria,
+	insaz.idAzienda,
+	aziende.referente,
+	aziende.telefono
+FROM
+	insaz JOIN
+		inserzioni ON insaz.idInserzione = inserzioni.codice
+	JOIN
+		aziende ON insaz.idAzienda = aziende.idAzienda;
+
+SELECT
+	IA.idInserzione,
+	pubblicazioni.testo,
+	pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente,
+	elenco_aziende.telefono
+FROM
+	insaz as IA JOIN
+		inserzioni as pubblicazioni ON IA.idInserzione = pubblicazioni.codice
+	JOIN
+		aziende as elenco_aziende ON IA.idAzienda = elenco_aziende.idAzienda;
+
+erno del tSELECT
+	IA.idInserzione as codice_articolo,
+	pubblicazioni.testo as descrizione,
+	pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente,
+	elenco_aziende.telefono
+FROM
+	insaz as IA JOIN
+		inserzioni as pubblicazioni ON IA.idInserzione = pubblicazioni.codice
+	JOIN
+		aziende as elenco_aziende ON IA.idAzienda = elenco_aziende.idAzienda;
+
+SELECT
+	IA.idInserzione as codice_articolo,
+	pubblicazioni.testo as descrizione,
+	pubblicazioni.categoria,
+	IA.idAzienda,
+	elenco_aziende.referente,
+	elenco_aziende.telefono,
+	elenco_aziende.CapitaleSociale
+FROM
+	insaz as IA JOIN
+		inserzioni as pubblicazioni ON IA.idInserzione = pubblicazioni.codice
+	JOIN
+		aziende as elenco_aziende ON IA.idAzienda = elenco_aziende.idAzienda
+WHERE
+	elenco_aziende.CapitaleSociale > 180000;
+
+/* Query n.53 */
+SELECT
+	insaz.idInserzione,
+	inserzioni.testo,
+	inserzioni.categoria,
+	insaz.idAzienda,
+	aziende.referente,
+	aziende.telefono
+FROM
+	insaz CROSS JOIN
+		inserzioni
+	CROSS JOIN
+		aziende
+ORDER BY telefono;
+
+/* Query n. 54 */
+SELECT
+	insaz.idInserzione,
+	inserzioni.testo,
+	inserzioni.categoria,
+	insaz.idAzienda,
+	aziende.referente,
+	aziende.telefono
+FROM
+	insaz CROSS JOIN
+		inserzioni
+	CROSS JOIN
+		aziende
+ORDER BY telefono DESC;
+
+/* Query n. 55 */
+SELECT
+	aziende.nomeAzienda,
+	aziende.CAP
+FROM
+	aziende;
+
+/* Query n.56 */
+SELECT
+	aziende.nomeAzienda,
+	aziende.CAP,
+	citta.provincia,
+	citta.citta
+FROM
+	aziende JOIN citta ON aziende.CAP = citta.CAP;
+
+/* Query n.57 */
+SELECT
+	privati.cognome,
+	privati.nome,
+	privati.CAP
+FROM
+	privati;
+
+/* Query n.58 */
+SELECT
+	privati.cognome,
+	privati.nome,
+	privati.CAP,
+	citta.provincia,
+	citta.citta
+FROM
+	privati JOIN citta ON privati.CAP = citta.CAP;
+
+/* Query n.59 */
+SELECT DISTINCT
+	citta.CAP,
+	citta.provincia,
+	citta.citta,
+	aziende.nomeAzienda,
+	privati.nome,
+	privati.cognome
+FROM
+	citta JOIN
+		aziende ON citta.CAP = aziende.CAP
+	JOIN
+		privati ON citta.CAP = privati.CAP;
+
+/* Query n.60 */
+/* Ho modificato il cognome che inizia con R o F in modo che la query produca dei risultati */
+SELECT
+	privati.cognome,
+	privati.nome,
+	inspriv.idInserzione
+FROM
+	privati JOIN inspriv ON privati.idPrivato = inspriv.idPrivato
+WHERE
+	cognome LIKE 'R%' OR cognome LIKE 'F%';
+
+/* Query n. 61 */
+SELECT
+	privati.cognome,
+	privati.nome,
+	inspriv.idInserzione,
+	inserzioni.categoria
+FROM
+	inspriv JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato
+	JOIN
+		inserzioni ON inspriv.idInserzione = inserzioni.codice
+WHERE
+	cognome LIKE 'R%' OR cognome LIKE 'F%';
+
+/* Query n. 62 */
+SELECT
+	privati.cognome,
+	privati.nome,
+	inspriv.idInserzione,
+	inserzioni.categoria,
+	inserzioni.testo
+FROM
+	inspriv JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato
+	JOIN
+		inserzioni ON inspriv.idInserzione = inserzioni.codice
+WHERE
+	cognome LIKE 'R%' OR cognome LIKE 'F%';
+
+/* Query n. 63 */
+SELECT
+	privati.nome as nome_privato,
+	testate.nome as nome_testata
+FROM
+	inspriv JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato
+	JOIN
+		instest ON inspriv.idInserzione = instest.idInserzione
+	JOIN
+		testate ON instest.idTestata = testate.idTestata;
+
+/* Query n. 64 */
+SELECT
+	privati.nome as nome_privato,
+	testate.nome as nome_testata,
+	redazioni.nomeComitato
+FROM
+	inspriv JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato
+	JOIN
+		instest ON inspriv.idInserzione = instest.idInserzione
+	JOIN
+		testate ON instest.idTestata = testate.idTestata
+	JOIN
+		redazioni ON testate.redazione = redazioni.idRedazione;
+
+/* Query n. 65 */
+SELECT
+	privati.nome as nome_privato,
+	testate.nome as nome_testata,
+	redazioni.nomeComitato,
+	redattori.nome as nome_redattore
+FROM
+	inspriv JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato
+	JOIN
+		instest ON inspriv.idInserzione = instest.idInserzione
+	JOIN
+		testate ON instest.idTestata = testate.idTestata
+	JOIN
+		redazioni ON testate.redazione = redazioni.idRedazione
+	JOIN
+		redazRedat ON redazioni.idRedazione = redazRedat.idRedazione
+	JOIN
+		redattori ON redazRedat.idRedattori = redattori.idRedattori;
+
+/* Query n. 66 */
+/* Ho modificato il cognome che inizia con la lettera R o F in modo che la query produca dei risultati */
+SELECT
+	privati.nome as nome_privato,
+	privati.cognome as cognome_privato,
+	testate.nome as nome_testata,
+	redazioni.nomeComitato,
+	redattori.nome as nome_redattore
+FROM
+	inspriv JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato
+	JOIN
+		instest ON inspriv.idInserzione = instest.idInserzione
+	JOIN
+		testate ON instest.idTestata = testate.idTestata
+	JOIN
+		redazioni ON testate.redazione = redazioni.idRedazione
+	JOIN
+		redazRedat ON redazioni.idRedazione = redazRedat.idRedazione
+	JOIN
+		redattori ON redazRedat.idRedattori = redattori.idRedattori
+WHERE
+	privati.cognome LIKE 'R%' OR privati.cognome LIKE 'F%';
+
+/* Query n. 67 */
+SELECT
+	inserzioni.testo,
+	inserzioni.categoria
+FROM
+	inserzioni JOIN categorie ON inserzioni.categoria = categorie.idCategoria
+WHERE
+	categorie.categoriaPadre IS NULL;
+
+/* Query n. 68 */
+SELECT
+	COUNT(inserzioni.testo) as num_inserzioni
+FROM
+	inserzioni JOIN categorie ON inserzioni.categoria = categorie.idCategoria
+WHERE
+	categorie.categoriaPadre IS NULL;
+
+/* Query n. 69 */
+ALTER TABLE insaz ADD COLUMN costo INTEGER;
+
+/* Query n. 70 */
+UPDATE insaz SET costo = 30 WHERE idAzienda = 'A0001' AND idInserzione = 'IN008';
+UPDATE insaz SET costo = 35 WHERE idAzienda = 'A0002' AND idInserzione = 'IN009';
+UPDATE insaz SET costo = 33 WHERE idAzienda = 'A0003' AND idInserzione = 'IN010';
+UPDATE insaz SET costo = 41 WHERE idAzienda = 'A0004' AND idInserzione = 'IN011';
+UPDATE insaz SET costo = 42 WHERE idAzienda = 'A0005' AND idInserzione = 'IN012';
+UPDATE insaz SET costo = 50 WHERE idAzienda = 'A0006' AND idInserzione = 'IN013';
+UPDATE insaz SET costo = 47 WHERE idAzienda = 'A0007' AND idInserzione = 'IN014';
+UPDATE insaz SET costo = 37 WHERE idAzienda = 'A0008' AND idInserzione = 'IN015';
+UPDATE insaz SET costo = 43 WHERE idAzienda = 'A0009' AND idInserzione = 'IN001';
+UPDATE insaz SET costo = 43 WHERE idAzienda = 'A0010' AND idInserzione = 'IN002';
 
 
 
+/* Query n. 71 */
+/* Ho inserito altri valori in insaz cosi che la query produca maggiori risultati */
+INSERT INTO insaz (idAzienda, idInserzione, costo) VALUES ('A0001', 'IN003', 44);
+INSERT INTO insaz (idAzienda, idInserzione, costo) VALUES ('A0001', 'IN004', 50);
+
+/* Ho modificato il codice dell'aziende con  */
+SELECT
+	insaz.idAzienda,
+	SUM(insaz.costo) as costo_inserzioni
+FROM
+	insaz
+WHERE
+	insaz.idAzienda = 'A0001';
+
+/* Query n. 72 */
+SELECT * FROM inserzioni;
+
+/* Query n. 73 */
+SELECT COUNT(*) as num_inserzioni FROM inserzioni;
+
+/* Query n. 74 */
+/* Ho modificato la stringa da affa a atta in modo che la query produca dei risultati */
+SELECT * FROM inserzioni WHERE inserzioni.testo LIKE '%atta%';
+
+/* Query n. 75 */
+SELECT COUNT(*) as num_inserzioni FROM inserzioni WHERE inserzioni.testo LIKE '%atta%';
+
+/* Query n. 76 */
+SELECT
+	insaz.costo,
+	insaz.idInserzione as inserzione_az
+FROM
+	insaz
+UNION SELECT
+	inspriv.idPrivato,
+	inspriv.idInserzione
+FROM
+	inspriv;
 
 
+/* Query n. 77 */
+SELECT SUM(num_ins) as num_ins FROM (
+	SELECT
+		COUNT(insaz.idInserzione) as num_ins
+	FROM insaz
+	UNION SELECT
+		COUNT(inspriv.idInserzione) as num_ins
+	FROM
+		inspriv
+) as count_ins;
+
+/* Query n. 78 */
+SELECT
+		COUNT(insaz.idInserzione) as num_ins
+	FROM insaz
+	UNION SELECT
+		COUNT(inspriv.idInserzione) as num_ins
+	FROM
+		inspriv;
+
+
+/* Query n. 79 */
+SELECT
+	COUNT(inserzioni.codice) as num_ins,
+	inserzioni.categoria
+FROM inserzioni
+GROUP BY categoria;
+
+/* Query n. 80 */
+SELECT
+	inserzioni.codice,
+	inserzioni.testo,
+	inserzioni.categoria,
+	categorie.categoriaPadre
+FROM
+	inserzioni JOIN categorie ON inserzioni.categoria = categorie.idCategoria
+WHERE
+	categorie.categoriaPadre IS NOT NULL;
+
+/* Query n. 81 */
+/* Query n. 82 */
+/* Query n. 83 */
+/* Query n. 84 */
+/* Query n. 85 */
+/* Query n. 86 */
+/* Query n. 87 */
+/* Query n. 88 */
+/* Query n. 89 */
+/* Query n. 90 */
+/* Query n. 91 */
+/* Query n. 92 */
+/* Query n. 93 */
+/* Query n. 94 */
+/* Query n. 95 */
+/* Query n. 96 */
+/* Query n. 97 */
+/* Query n. 98 */
