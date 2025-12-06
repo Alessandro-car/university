@@ -992,20 +992,166 @@ WHERE
 	categorie.categoriaPadre IS NOT NULL;
 
 /* Query n. 81 */
+SELECT
+	COUNT(inserzioni.codice) as num_ins,
+	inserzioni.categoria
+FROM inserzioni
+GROUP BY categoria;
+
 /* Query n. 82 */
+SELECT
+	COUNT(instest.idInserzione) as num_ins,
+	instest.idTestata
+FROM instest
+GROUP BY instest.idTestata;
+
 /* Query n. 83 */
+SELECT
+	COUNT(instest.idTestata) as num_testate,
+	instest.idInserzione
+FROM instest
+GROUP BY instest.idInserzione;
+
+
 /* Query n. 84 */
+SELECT
+	insaz.idAzienda,
+	insaz.costo,
+	insaz.idInserzione,
+	inserzioni.testo
+FROM
+	insaz JOIN inserzioni ON insaz.idInserzione = inserzioni.codice
+WHERE insaz.costo < 35;
+
 /* Query n. 85 */
+SELECT
+	COUNT(insaz.idInserzione) as num_ins
+FROM insaz
+WHERE insaz.costo < 35;
+
 /* Query n. 86 */
+SELECT
+	COUNT(privati.idPrivato) as num_priv,
+	citta.citta
+FROM
+	privati JOIN citta ON privati.CAP = citta.CAP
+WHERE citta.citta NOT LIKE 'Putignano'
+GROUP BY citta.citta;
+
 /* Query n. 87 */
+SELECT
+	privati.nome,
+	privati.cognome,
+	citta.citta
+FROM
+	privati JOIN citta ON privati.CAP = citta.CAP
+WHERE citta.citta LIKE 'Bari'
+ORDER BY privati.nome;
+
 /* Query n. 88 */
+SELECT
+	privati.nome,
+	AVG(privati.eta) as eta_media
+FROM
+	privati
+GROUP BY privati.nome;
+
 /* Query n. 89 */
+SELECT
+	privati.nome,
+	privati.eta
+FROM
+	privati
+ORDER BY privati.eta DESC
+LIMIT 1;
+
 /* Query n. 90 */
+SELECT
+	insaz.idInserzione,
+	insaz.costo
+FROM insaz
+ORDER BY
+	insaz.costo,
+	insaz.idInserzione DESC;
+
 /* Query n. 91 */
+SELECT
+	insaz.idInserzione,
+	insaz.costo
+FROM insaz
+ORDER BY
+	insaz.costo DESC,
+	insaz.idInserzione DESC;
+
 /* Query n. 92 */
+SELECT
+	inserzioni.codice,
+	inserzioni.testo
+FROM inserzioni;
+
 /* Query n. 93 */
+SELECT
+	insaz.idAzienda,
+	inserzioni.codice,
+	inserzioni.testo
+FROM insaz JOIN inserzioni ON insaz.idInserzione = inserzioni.codice;
+
 /* Query n. 94 */
+SELECT
+	insaz.idAzienda,
+	aziende.referente,
+	inserzioni.codice,
+	inserzioni.testo
+FROM
+	insaz JOIN
+		inserzioni ON insaz.idInserzione = inserzioni.codice
+	JOIN
+		aziende ON insaz.idAzienda = aziende.idAzienda;
+
 /* Query n. 95 */
+SELECT
+	insaz.idAzienda,
+	aziende.referente,
+	aziende.telefono as referente_tel,
+	citta.citta,
+	inserzioni.codice,
+	inserzioni.testo
+FROM
+	insaz JOIN
+		inserzioni ON insaz.idInserzione = inserzioni.codice
+	JOIN
+		aziende ON insaz.idAzienda = aziende.idAzienda
+	JOIN
+		citta ON aziende.CAP = citta.CAP;
+
 /* Query n. 96 */
+SELECT
+	inspriv.idPrivato,
+	inserzioni.codice,
+	inserzioni.testo
+FROM inspriv JOIN inserzioni ON inspriv.idInserzione = inserzioni.codice;
+
 /* Query n. 97 */
+SELECT
+	inspriv.idPrivato,
+	privati.nome,
+	inserzioni.codice,
+	inserzioni.testo
+FROM
+	inspriv JOIN
+		inserzioni ON inspriv.idInserzione = inserzioni.codice
+	JOIN
+		privati ON inspriv.idPrivato = privati.idPrivato;
+
 /* Query n. 98 */
+SELECT
+	COUNT(insaz.idInserzione) as num_ins_azienda,
+	testate.nome as nome_testata
+FROM
+	insaz JOIN
+		instest ON insaz.idInserzione = instest.idInserzione
+	JOIN
+		testate ON instest.idTestata = testate.idTestata
+GROUP BY testate.nome
+ORDER BY COUNT(instest.idInserzione) DESC
+LIMIT 1;
