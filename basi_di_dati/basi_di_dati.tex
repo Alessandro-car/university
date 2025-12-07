@@ -1982,4 +1982,102 @@ create table Docenza (
  		\end{itemize}
  	\end{example}
  	Dopo questa strutturazione dei requisiti si avvia la prima fase della progettazione che consiste nella costruzione di uno schema concettuale in grado di descrivere in maniera adeguata tutte le specifiche dei dati raccolte.
+ 	\section{Rappresentazione concettuale di dati}
+ 	Cerchiamo di stabilire alcune pratiche per una corretta rappresentazione concettuale dei dati, analizzando prima alcuni criteri generali e poi alcuni classici \textit{design patter}, ovvero soluzioni progettuali a problemi comuni.
+ 	\subsection{Criteri generali di rappresentazione}
+ 	Va precisato che non esiste una rappresentazione univoca di un insieme di specifiche, perchè le stesse informazioni possono essere rappresentate in modi differenti e non comparabili. Comunque, quando ci si trova davanti a diverse possibilità, è utile avere delle indicazioni sulle scelte più opportune. Nel caso della progettazione concettuale conviene seguire le ``regole concettuali'' del modello E-R.
+ 	\begin{itemize}
+ 		\item \textit{Se un concetto ha proprietà significative e/o descrive classi di oggetti con esistenza autonoma, è opportuno rappresentarlo con un'entità}. Ad esempio, nel caso delle specifiche relative alla società di formazione, è naturale rappresentare il concetto di \textit{docente} con un'entità, in quanto possiede diverse proprietà e la sua esistenza è indipendente da altri concetti.
+ 		\item \textit{Se un concetto ha una struttura semplice e non possiede proprietà rilvanti associate, è opportuno rappresentarlo con un attributo di un altro concetto a cui si riferisce}. Ad esempio, nel caso della società di formazione, il concetto di età è certamente da rappresentare come attributo.
+ 		\item \textit{Se sono state individuate due ( o più ) entità e nei requisiti compare un concetto che le associa, questo concetto può essere rappresentato da una relazione}. Ad esempio, nel caso della società di formazione, il concetto di \textit{partecipazione a un corso} è rappresentabile da una relazione tra le entità che rappresentano i partecipanti e i corsi.
+ 		\item \textit{Se uno o più concetti risultano essere casi particolari di un altro, è opportuno rappresentarli facendo uso di una generalizzazione}. Ad esempio, i concetti di \textit{professionista} e \textit{dipendente} costituiscono dei casi particolari del concetto di \textit{partecipante} ed è quindi indicato definire una generalizzazione tra le entità che rappresentano questi concetti.
+ 	\end{itemize}
+ 	\section{Strategie di progetto}
+ 	Lo sviluppo di una schema concettuale a partire dalle sue specifiche può essere considerato a tutti gli effetti un processo di ingegnerizzazione e, come tale, risultano a esso applicabili strategie di progetto utilizzate anche in altre discipline.
+ 	\subsection{Strategia top-down}
+ 	In questa strategia, lo schema concettuale viene prodotto mediante una serie di raffinamenti successivi, a partire da uno schema iniziale che descrive tutte le specifiche con pochi concetti molto astratti. Lo schema viene poi via via raffinato mediante opportune trasformazioni che aumentano il dettaglio dei vari concetti presenti. \\
+ 	Nel passaggio da un livello di raffinamento a un altro, lo schema viene modificato facendo uso di alcune trasformazioni elementari che vengono denominate \textit{primitive di trasformazione top-down}.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1.0\textwidth]{strategia_top_down}
+ 		\caption{La strategia top down}
+ 	\end{figure}
+ 	Esempi di primitive di trasformazione top-down sono:
+ 	\begin{itemize}
+ 		\item la definizione degli attributi di un'entità o di una relazione; per esempio, la specifica per un'entità \texttt{Persona} di tutti gli attributi di interesse come il codice fiscale, il cognome, l'età, il sesso ecc.;
+ 		\item la reificazione di un attributo o di un'entità; ad esempio se un'entità \texttt{Impiegato} contiene come attributo il nome dell'azienda, quest'ultima viene rappresentata come entità e sussiste una relazione tra le due;
+ 		\item la decomposizione di una relazione in due relazioni distinte, come l'esempio descritto prima;
+ 		\item la trasformazione di un'entità in una gerarchia di generalizzazione; come per l'anagrifico di un'azienda, dove può esistere un anagrafico storico e uno corrente.
+ 	\end{itemize}
+ 	Il vantaggio della strategia top-down è che il progettista può descrivere inizialmente tutte le specifiche dei dati trascurandone i dettagli, per poi entrare nel merito di un concetto alla volta. Questo, però, è possibile solo quando si possiede una visione globaile e astratta di \textit{tutte} le componenti del sistema, che è una situazione rara quando si ha a che fare con problemi di una certa complessità.
+ 	\subsection{Strategia bottom-up}
+ 	In questa strategia, le specifiche iniziali sono suddivise in componenti via via sempre più piccole, fino a quando queste componenti descrivono un frammento elementare della realtà di interesse. A questo punto, le varie componenti vengono rappresentante da semplici schemi concettuali che possono consistere anche in singoli concetti. I vari schemi ottenuti vengono poi fusi fino a giungere, attraverso una completa integrazione di tutte le componenti, allo schema concettuale finale. Anche in questo caso lo schema finale si ottiene attraverso alcune trasformazioni elementari che vengono denominate \textit{primite di trasformazione bottom-up} che introducuno in uno schema nuovi concetti non presenti precedentemente e in grado di descrivere aspetti della realtà di interesse che non erano ancora stati rappresentati. 
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1.0\textwidth]{strategia_bottom_up}
+ 		\caption{La strategia bottom-up.}
+ 	\end{figure}
+ 	Esempi di primitive di trasformazione bottom-up sono:
+ 	\begin{itemize}
+ 		\item l'introduzione di una nuova entità o di una relazione dell'analisi delle specifiche;
+ 		\item l'individuazione nelle specifiche di un legame tra diverse entità riconducibile a una generalizzazione;
+ 		\item l'aggregazione di una serie di attributi in un'entità o in una relazione.
+ 	\end{itemize}
+ 	Il vantaggio della strategia bottom-up è che si adatta a una decomposizione del problema in componenti più semplici, facilmente individuabili, il cui progetto può essere affrontato anche da progettisti diversi. Lo svantaggio di questa strategia è invece i fatto che richiede delle operazioni di integrazione di schemi concettuali diversi che, nel caso di schemi complessi, presentano quasi sempre grosse difficoltà.
+ 	\subsection{Strategia inside-out}
+ 	Questa strategia può essere vista come un caso particolare della strategia bottom-up. Si individuano inizialmente solo alcuni concetti importanti e poi si procede, a partire da questi, a ``macchia d'olio''. Si rappresentano cioè prima i concetti in relazione con i concetti iniziali, per poi muoversi verso quelli più lontano attraverso una ``navigazione'' tra le specifiche. \\
+ 	Di seguito viene mostrato un esempio di applicazione della strategia inside-out:
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=1.0\textwidth]{strategia_inside_out}
+ 	\end{figure}
+ 	Si può osservare che è stata individuata inizialmente l'entità \texttt{Impiegato} con i suoi attributi. A partire da questa sono state rapprsentate la partecipazione degli impiegati ai progetti e tutte le proprietà dei progetti. Successivamente, sono state analizzate le correlazioni esistenti tra gli impiegati e i dipartimenti dell'azienda, individuando le relazioni \texttt{Direzione} e \texttt{Afferenza} e l'entità \texttt{Dipartimento} con i relativi attributi. Infine, partendo da quest'ultima, sono state rappresentati le sedi dell'azienda e l'appartenenza dei dipartimenti alle relative sedi. \\
+ 	Questa strategia ha il vantaggio di non richiedere passi di integrazione. D'altro canto è necessario, di volta in volta, esaminare tutte le specifiche per individuare concetti non ancora rappresentati e descrivere nuovi concetti nel dettaglio. Non è quindi possibile procedere per livelli di astrazione.
+ 	\subsection{Strategia mista}
+ 	La strategia mista cerca di combinare i vantaggi della strategia top-down con quelli della strategia bottom-up. Il progettista suddivide i requisiti in compoenenti separate, come nella strategia bottom-up, ma allo stesso tempo definisce uno \textit{schema scheletro} contenente, a livello astratto, i concetti principali dell'applicazione. Questo schema scheletro fornisce una visione unitaria, sia pure astratta, dell'intero progetto e favorisce le fasi di integrazione degli schemi sviluppati separatamente. \\
+ 	La strategia mista è probabilmente la più flessibile tra le strategia viste perchè si adatta bene a esigenze contrapposte: quella di suddivdere un problema complesso in sottoproblemi e qualla di procedere per raffinamenti successivi. Questa strategia ingloba anche la strategia inside-out che è solo un caso particolare della strategia bottom-up.\\
+ 	Inoltre, in quasi tutti i casi pratici di una certa complessità, la strategia mista è l'unica che si può effettivamente adottare perchè è spesso necessario cominciare la progettazione quando non sono ancora disponibili tutti i dati e, dei dati noti, abbiamo delle conoscenze a livello di dettaglio non omogenei.
+ 	\section{Qualità di uno schema concettuale}
+ 	Nella costruzione di uno schema concettuale vanno garantite alcune proprietà generali che uno schema concettuale di buona qualità deve possedere. Analizziamo le qualità più importanti e vediamo come è possibile verificare, durante la progettazione concettuale, queste qualità.
+ 	\begin{itemize}
+ 		\item \textbf{Correttezza}. Uno schema concettuale è \textit{corretto} quando utilizza propriamente i costrutti messi a disposizione dal modello concettuale di riferimento. Gli errori possono essere \textit{sintattici} o \textit{semantici}. Gli errori sintattici riguardano un uso non ammesso di costrutti, come una generalizzazione tra relazioni invece che tra entità. Gli errori semantici riguardano un uso di costrutti che non rispetta la loro definizione. Ad esempio, l'uso di una relazione per descrivere il fatto che un'entità è specializzazione di un'altra. La correttezza di uno schema si può verificare per ispezione, confrantando i concetti presenti nello schema in via di costruzione con le specifiche e con le definizioni dei costrutti del modello concettuale usato.
+ 		\item \textbf{Completezza}. Uno schema concettuale è \textit{completo} quando rappresenta tutti i dati di interesse e quando tutte le operazioni possono essere eseguite a partire dai concetti descritti nello schema. La completezza di uno schema si può descrivere controllando che tutte le specifiche sui dati siano rappresentate da qualche concetto presente nello schema in costruzione, e che tutti i concetti coinvolti in un'operazione presente nelle specifiche siano raggiungibili ``navigando'' attraverso lo schema.
+ 		\item \textbf{Leggibilità}. Uno schema concettuale è \textit{leggibile} quando rappresenta i requisiti in maniera naturale e facilmente comprensibile. Per garantire questa proprietà è necessario rendere lo schema autoesplicativo, per esempio, mediante una scelta opportuna dei nomi da dare ai concetti. La leggibilità dipende anche da criteri puramente estetici: la compresione di uno schema è facilitata anche se tracciamo il relativo diagramma su una griglia nella quale i vari costrutti hanno stesse dimensioni. Alcuni suggerimenti per rendere lo schema più leggibile sono:
+ 		\begin{itemize}
+ 			\item disporre i costrutti su una griglia scegliendo come elementi centrali quelli con più relazioni con altri;
+ 			\item tracciare solo linee perpendicolari e cercare di minimizzare le interesezioni;
+ 			\item disporre le entità che sono genitori di generalizzazioni sopra le relative entità figlie.
+ 		\end{itemize}
+ 		\item \textbf{Minimalità}. Uno schema è \textit{minimale} quando tutte le specifiche sui dati sono rappresentate una sola volta nello schema. Uno schema, quindi, non è minimale quando esistono delle \textit{ridondanze}, ovvero concetti che possono essere derivati da altri. La minimalità di uno schema si può verificare per ispezione, contrallando se esistono concetti che possono essere eliminati dallo schema che stiamo costruendo senza inficiare la sua completezza. Per quanto detto, si deve prestare particolare attenzione ai cicli presenti nello schema.
+ 	\end{itemize}
+ 	\section{Una metodologia generale}
+ 	Per quanto riguarda le strategia di progetto va precisato che, in pratica, non accade quasi mai che un progetto proceda \textit{sempre} in maniera top-down o bottom-up. Indipendentemente dalla strategia scelta, nelle sitauzioni reali capita di modificare lo schema in via di costruzione sia con trasformazioni che raffinano un concetto presente, e quindi top-down, sia con trasformazioni che aggiungono un concetto non presente, e quindi bottom-up. Presentiamo quindi una metodologia per la progettazione concettuale con il modello E-R con riferimento alla strategia mista. La metodologia è composta dai seguenti passi.
+ 	\begin{enumerate}
+ 		\item \textbf{Analisi dei requisiti}
+ 			\begin{enumerate}
+ 				\item Costruire un glossario dei termini.
+ 				\item Analizzare i requisiti ed eliminare le ambiguità presenti.
+ 				\item Raggruppare i requisiti in insiemi omogenei.
+ 			\end{enumerate}
+ 		\item \textbf{Passo base}
+ 		\begin{enumerate}
+ 			\item Individuare i concetti più rilevanti e rappresentarli in uno schema scheletro.
+ 		\end{enumerate}
+ 		\item \textbf{Passo di decomposizione}, da effettuare se necessario.
+ 		\begin{enumerate}
+ 			\item Effettuare una decomposizione dei requisiti con riferimento ai concetti presenti nello schema scheletro.
+ 		\end{enumerate}
+ 		\item \textbf{Passo iterativo} da ripetere, per tutti i sottoschemi, se presenti, finchè ogni specifica è stata rappresentata.
+ 		\begin{enumerate}
+ 			\item Raffinare i concetti presenti sulla base delle loro specifiche.
+ 			\item Aggiungere nuovi concetti allo schema per descrivere specifiche non ancora descritte.
+ 		\end{enumerate}
+ 		\item \textbf{Passo di integrazione}, da effettuare se è stato eseguito il passo 3.
+ 		\begin{enumerate}
+ 			\item Verificare la correttezza dello schema ed eventualmente ristrutturare lo schema.
+ 			\item Verificare la completezza dello schema ed eventualmente ristrutturare lo schema.
+ 			\item Verificare la minimalità, documentare le ridondanze ed eventualemente ristrutturare lo schema.
+ 			\item Verificare la leggibilità dello schema ed eventualmente ristrutturare lo schema.
+ 		\end{enumerate}
+ 	\end{enumerate}
 \end{document}
