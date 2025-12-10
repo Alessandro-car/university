@@ -368,7 +368,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\mathcal{P}\Bigg(\bigcup_{i=1}^{\infty}E_i\Bigg) \leq \sum_{i=1}^{\infty}\mathcal{P}(E_i)
 		\]
 		$\forall \{E_n : n \in \mathbbm{N}\} \subset \mathcal{F}$
-	\end{theorem} 
+	\end{theorem}
 	\begin{proof}{Dimostrazione della $\sigma-$additività} \quad \\
 		Sia: $F_1 = E_1$, $F_2 = E_2 \cup E_1$, $\dots,\ F_n = \mathlarger{\bigcup_{i=1}^{n}}E_i$ \\
 		Inoltre, $F_n \subseteq F_{n+1}$ e $\mathlarger{\lim_{n \to \infty}}\mathcal{P}(F_n) = 	\mathcal{P}\Bigg(\mathlarger{\bigcup_{n=1}^{\infty}}F_n\Bigg)$
@@ -387,7 +387,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\chapter{Eventi condizionati e indipendenti}
 	\begin{definition}{\nmu Eventi condizionati}{eventi_condizionati}
 		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ e supponiamo un evento $H \in \mathcal{F}$ ove $\mathcal{P}(H) > 0$. \\
-		Sia un ulteriore evento $E \in \mathcal{F}$, allora definiamo: 
+		Sia un ulteriore evento $E \in \mathcal{F}$, allora definiamo:
 		\[
 		\mathcal{P}(E \mid H) = \frac{\mathcal{P}(E \cap H)}{\mathcal{P}(H)}
 		\]
@@ -395,23 +395,23 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\end{definition}
 	\begin{note}{}{}
 		La funzione $E \in \mathcal{F} \mapsto \mathcal{P}(E \mid H)$ è una funzione di probabilità. \\
-		Infatti: 
+		Infatti:
 		\[
 		\mathcal{P}(\Omega \mid H) = \frac{\mathcal{P}(\Omega \cap H)}{\mathcal{P}(H)} = \frac{\mathcal{P}(H)}{\mathcal{P}(H)} = 1
 		\]
 		e inoltre rispecchia la proprietà di $\sigma$-additività, infatti:
 		\[
-		\{E_n\}_{n \in \mathbbm{N}} \subset F \quad E_n \cap E_m = \emptyset \quad \forall n \neq m 
+		\{E_n\}_{n \in \mathbbm{N}} \subset F \quad E_n \cap E_m = \emptyset \quad \forall n \neq m
 		\]
 		\[
 		\quad \mathcal{P}\Bigg(\bigcup_{n=1}^{\infty}E_n \mid H\Bigg) = \frac{1}{\mathcal{P}(H) } \cdot \mathcal{P}\Bigg(\bigcup_{n=1}^{\infty}E_n \cap H\Bigg) = \frac{1}{\mathcal{P}(H) } \cdot \sum_{n=1}^{\infty}\mathcal{P}(E_n \cap H) = \sum_{n=1}^{\infty}\mathcal{P}(E_n \mid H)
 		\]
-		
+
 	\end{note}
 	\begin{example}{}{}
 		Sia $\Omega = \{1, 2, 3, 4, 5, 6\}$, $\mathcal{F} = \mathcal{P}(\Omega)$ e $\mathcal{P}(\{i\}) = \frac{1}{6}$ \\
 		$H = \{2, 4, 6\}$ e $E = \{2\}$ ove $\mathcal{P}(E) = \frac{1}{6}$ \\
-		$\mathcal{P}(E \mid H) = \frac{\mathcal{P}(E \cap H)}{\mathcal{P}(H)} = \frac{\frac{1}{6}}{\frac{1}{2}} = \frac{1}{3}$ 
+		$\mathcal{P}(E \mid H) = \frac{\mathcal{P}(E \cap H)}{\mathcal{P}(H)} = \frac{\frac{1}{6}}{\frac{1}{2}} = \frac{1}{3}$
 	\end{example}
 	\subsection{Indipendenza stocastica per eventi}
 	\begin{definition}{\nmu Indipendenza stocastica}{indipendenza_stocastica}
@@ -440,7 +440,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\]
 		Verifichiamo che $E_1^C$ e $E_2$ sono indipendenti:
 		\begin{align*}
-			\mathcal{P}(E_1^C \cap E_2) &= \mathcal{P}(E_2 \backslash E_1) \\ 
+			\mathcal{P}(E_1^C \cap E_2) &= \mathcal{P}(E_2 \backslash E_1) \\
 			&=\mathcal{P}(E_2) - \mathcal{P}(E_2 \cap E_1) \\
 			&=\mathcal{P}(E_2) - \mathcal{P}(E_2)\mathcal{P}(E_1) \\
 			&=\mathcal{P}(E_2)(1 - \mathcal{P}(E_1)) \\
@@ -463,7 +463,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\begin{definition}{\nmu Indipendenza per famiglia di eventi}{indipendenza_famiglia}
 		Sia $(\Omega, \mathcal{F}, \mathcal{P})$ e $E_1, E_2, \dots, E_n \in \mathcal{F}$ sono indipendenti se:
 		\begin{align*}
-		\forall k \in 2 \leq k \leq n \quad \forall i_1, i_2, \dots, i_k \in \{1, 2, \dots, n\} & \\ \mathcal{P}(E_1 \cap E_2 \cap \dots E_k) = \mathcal{P}(E_1)\mathcal{P}(E_2) \dots \mathcal{P}(E_k) 
+		\forall k \in 2 \leq k \leq n \quad \forall i_1, i_2, \dots, i_k \in \{1, 2, \dots, n\} & \\ \mathcal{P}(E_1 \cap E_2 \cap \dots E_k) = \mathcal{P}(E_1)\mathcal{P}(E_2) \dots \mathcal{P}(E_k)
 		\end{align*}
 	\end{definition}
 	\begin{note}{}{}
@@ -484,10 +484,10 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\end{definition}
 	\begin{definition}{\nmu Formula della probabilità totale}{prob_totale}
 		Sia $E \in \mathcal{F}$, l'obiettivo è esprimere $\mathcal{P}(E)$ se conosco $\mathcal{P}(H_i)$ e $\mathcal{P}(E \mid H_i)$ \\
-		Allora: 
+		Allora:
 		\[
 		\mathcal{P}(E) = \sum_{i = 1}^{n}\mathcal{P}(E \mid H_i)\mathcal{P}(H_i)
-		\] 
+		\]
 	\end{definition}
 	\begin{proof}{Dimostrazione della \namerefl{def:prob_totale}}\quad \\
 		$E = \mathlarger{\bigcup_{i=1}^{n}(E \cap H_i)}$ e $(E \cap H_i) \cap (E \cap H_j ) = \emptyset \quad \forall i \neq j$ e quindi:
@@ -511,12 +511,12 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			Calcoliamo $\mathcal{P}(E \mid H_2) = \frac{1}{3}$ \\
 			Allora:
 			\begin{align*}
-				\mathcal{P}(E) &= \mathcal{P}(E \mid H_1)\mathcal{P}(H_1) + \mathcal{P}(E \mid H_2)\mathcal{P}(H_2) \\ 
+				\mathcal{P}(E) &= \mathcal{P}(E \mid H_1)\mathcal{P}(H_1) + \mathcal{P}(E \mid H_2)\mathcal{P}(H_2) \\
 				&= \frac{1}{2} \cdot \frac{3}{5} + \frac{1}{3} \cdot \frac{2}{5} \\
-				&= \frac{3}{10} + \frac{2}{15} = \frac{13}{30} 
+				&= \frac{3}{10} + \frac{2}{15} = \frac{13}{30}
 			\end{align*}
 		\end{itemize}
-	
+
 		Risolviamo il secondo punto. Questa è la probabilità di $H_1$ dato $E$, quindi:
 		\[
 		\mathcal{P}(H_1 \mid E) =\ ?
@@ -529,8 +529,8 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		Notiamo che $\mathcal{P}(E \mid H_j) = \dfrac{\mathcal{P}(E \cap H_j)}{\mathcal{P}(H_j)}$ \\
 		Allora:
 		\begin{align*}
-		\mathcal{P}(H_j \mid E) &= \frac{\mathcal{P}(H_j \cap E)}{\mathcal{P}(E)} \\ 
-		&= \frac{\mathcal{P}(H_j \cap E)}{\mathlarger{\sum_{i = 1}^n}\mathcal{P}(E\mid H_i)\mathcal{P}(H_i)} \\ 
+		\mathcal{P}(H_j \mid E) &= \frac{\mathcal{P}(H_j \cap E)}{\mathcal{P}(E)} \\
+		&= \frac{\mathcal{P}(H_j \cap E)}{\mathlarger{\sum_{i = 1}^n}\mathcal{P}(E\mid H_i)\mathcal{P}(H_i)} \\
 		&= \frac{\mathcal{P}(E \mid H_j)\mathcal{P}(H_j)}{\mathlarger{\sum_{i = 1}^n}\mathcal{P}(E\mid H_i)\mathcal{P}(H_i)} \\
 		&= \frac{\mathcal{P}(E \mid H_j)\mathcal{P}(H_j)}{\mathcal{P}(E)}
 		\end{align*}
@@ -538,14 +538,14 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	Con questa formula possiamo completare l'\namerefl{exe:esercizio_spazio}.
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Un'urna contiene 4 monete. Scelgo una palline e la lancio 2 volte. 
+			Un'urna contiene 4 monete. Scelgo una palline e la lancio 2 volte.
 			Consideriamo:
 			\begin{itemize}
 				\item $E_1$ = "Esce testa al primo lancio"
 				\item $E_2$ = "Esce testa al secondo lancio"
 			\end{itemize}
 			$E_1$ e $E_2$ sono indipendenti? \\
-			Ovvero $\mathcal{P}(E_1 \cap E_2) \overset{?}{=} \mathcal{P}(E_1)\mathcal{P}(E_2)$ 
+			Ovvero $\mathcal{P}(E_1 \cap E_2) \overset{?}{=} \mathcal{P}(E_1)\mathcal{P}(E_2)$
 		\end{assignment}
 		Dall'esercizio precedente \namerefl{exe:esercizio_spazio} abbiamo che $\mathcal{P}(E_1) = \mathcal{P}(E_2) = \dfrac{13}{30}$ \\ \quad \\
 		$\mathcal{P}(E_1 \cap E_2) = \mathcal{P}(E_1 \cap E_2 \mid H_1)\mathcal{P}(H_1) + \mathcal{P}(E_1 \cap E_2 \mid H_2)\mathcal{P}(H_2)$ \\ \quad \\
@@ -592,14 +592,14 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
 			Hai chiesto a un vicino di innaffiare una piantina mentre sei in vacanza. Senza acqua la piantina muore con $p = 0.8$, innaffiandola la probabilità che muoia diventa $p = 0.15$. Il vicino la annaffia con $p = 0.9$. \\
-			Qual è la probabilità che la piantina sia viva al tuo ritorno? Se fosse morta, qual è la probabilità che il vicino si è dimenticato di innaffiarla? 
+			Qual è la probabilità che la piantina sia viva al tuo ritorno? Se fosse morta, qual è la probabilità che il vicino si è dimenticato di innaffiarla?
 		\end{assignment}
 		\begin{itemize}
 			\item $H_1$ = "Il vicino si ricorda di innaffiare la piantina" \\
 			$\mathcal{P}(H_1) = 0.9$
 			\item $H_2$ =  "Il vicino si dimentica di innaffiare la piantina" \\
-			$\mathcal{P}(H_2) = 0.1$ 
-			\item $E = $ "La piantina è morta" 
+			$\mathcal{P}(H_2) = 0.1$
+			\item $E = $ "La piantina è morta"
 		\end{itemize}
 		$\mathcal{P}(E \mid H_1) = 0.15$ \\
 		$\mathcal{P}(E \mid H_2) = 0.8$ \\
@@ -624,7 +624,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			\item $R_1 =$ "La prima pallina estratta è rossa" \\
 			$\mathcal{P}(A \mid R_1) = \dfrac{\mathcal{P}(A \cap R_1)}{\mathcal{P}(R_1)}$ \\
 			$\mathcal{P}(R_1) = \dfrac{1}{3}$ e $\mathcal{P}(A \cap R_1) = \dfrac{1}{15}$ perchè è solo una la configurazione vincente avendo la prima pallina rossa. \\
-			$\mathcal{P}(A \mid R_1) = \dfrac{\frac{1}{15}}{\frac{1}{3}} = \dfrac{1}{5}$  
+			$\mathcal{P}(A \mid R_1) = \dfrac{\frac{1}{15}}{\frac{1}{3}} = \dfrac{1}{5}$
 		\end{enumerate}
 		$A$ e $R_1$ nno sono indipdenti $\mathcal{P}(A \cap R_1) = \frac{1}{15} \neq \mathcal{P}(A)\mathcal{P}(R_1)$
 	\end{exercise}
@@ -646,11 +646,11 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			$\mathcal{F} = \mathcal{P}(\Omega) \quad \mathcal{P}(E) = \dfrac{|E|}{3^n} \quad \forall E \subset \Omega$
 			\item $E_1$ = "Urna 1 rimane vuota" \\
 			$E_1 = \{\omega \in \Omega \mid \omega_i \in {2, 3}\}$ e $|E_1| = 2^n$ \\
-			$\mathcal{P}(E_1) = \dfrac{2^n}{3^n}$ 
+			$\mathcal{P}(E_1) = \dfrac{2^n}{3^n}$
 			\item $E_2$ = "Urna 2 è vuota" \\
 			$\mathcal{P}(E_1 \cap E_2) = \dfrac{|E_1 \cap E_2|}{3^n}$ \\
 			$E_1 \cap E_2 = \{(3, \dots, 3)\}$ quindi $|E_1 \cap E_2| = 1^n$ \\
-			$\mathcal{P}(E_1 \cap E_2) = \dfrac{1^n}{3^n}$ 
+			$\mathcal{P}(E_1 \cap E_2) = \dfrac{1^n}{3^n}$
 			\item $F_i$ = "Solo l'urna i resta vuota" ove $i = 1, 2, 3$ \\
 			$F(F_1 \cup F_2 \cup F_3) = \mathcal{P}(F_1) + \mathcal{P}(F_2) + \mathcal{P}(F_3) = 3\mathcal{P}(F_1)$ perchè gli eventi $F_i \cap F_j = \emptyset \quad \forall i \neq j$ \\
 			Notiamo che $F_1 \subset E_1$ e $|F_1| = |E_1| - |E_1 \backslash F_1|$ \\
@@ -659,10 +659,10 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			$|F_1| = 2^n - 2$ \\
 			$\mathcal{P}(F_1) = \dfrac{2^n - 2}{3^{n-1}}$
 			\item $\mathcal{P}(E_1 \mid E_2) = \dfrac{\mathcal{P}(E_1 \cap E_2)}{\mathcal{P}(E_2)} = \dfrac{(\frac{1}{3})^n}{(\frac{2}{3})^n} = \dfrac{1^n}{2^n}$
-			   
+
 		\end{enumerate}
 	\end{exercise}
-	\begin{exercise}{}{} 
+	\begin{exercise}{}{}
 			(Inserire nella dimostrazione dell'uniformità dello spazio prodotto) \\
 			Supponiamo di avere $(\Omega_1, \mathcal{F}_1, \mathcal{P}_1)$ e $(\Omega_2, \mathcal{F}_2, \mathcal{P}_2)$ ove $|\Omega_1| = n$ e $|\Omega_2| = m$. \\
 			Allora $(\Omega, \mathcal{P}(\Omega_1 \times \Omega_2), \mathcal{P})$ è uniforme. \\
@@ -674,7 +674,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\end{exercise}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
-			Quattro amici insieme ad altri 8 ragazzi partecipano ad una partita di calcio a 6 (con squadre di 6 giocatori ciascuna). Le squadre vengono sorteggiate a caso, qual è la probabilità che i 4 amici finiscano nella stessa squadra?   
+			Quattro amici insieme ad altri 8 ragazzi partecipano ad una partita di calcio a 6 (con squadre di 6 giocatori ciascuna). Le squadre vengono sorteggiate a caso, qual è la probabilità che i 4 amici finiscano nella stessa squadra?
 		\end{assignment}
 		12 è il numero di persone totali. \\
 		$\binom{12}{6} = \frac{12!}{6!6!} = 924$ \\
@@ -709,7 +709,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  	Se $X: \Omega \to \mathbbm{R}$, le seguenti condizioni sono soddisfatte:
  	\begin{enumerate}
  		\item $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega) < \alpha\} \in \mathcal{F}$
- 		\item $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega)\geq \alpha\} \in \mathcal{F}$ 
+ 		\item $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega)\geq \alpha\} \in \mathcal{F}$
  		\item $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega) \leq \alpha\} \in \mathcal{F}$
  		\item $\forall \alpha \in \mathbbm{R} \quad \{\omega \in \Omega \mid X(\omega) > \alpha\} \in \mathcal{F}$
  	\end{enumerate}
@@ -727,7 +727,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  				\item Se $\alpha \neq 0$ allora vale che:
  				\[
  				\{\omega \in \Omega \mid \alpha X(\omega) < c\} = \Bigg\{\omega \in \Omega \mid X(\omega) < \frac{c}{\alpha}\Bigg\} \in \mathcal{F} \quad \forall c \in \mathbbm{R}
- 				\] 
+ 				\]
  			\end{itemize}
  			\item X è una v.a. $\Rightarrow X^2$ è una v.a.
  			\begin{itemize}
@@ -737,7 +737,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  				\{\omega \in \Omega \mid X^2(\omega) < \alpha\} = \{\omega \in \Omega \mid -\sqrt{\alpha} < X(\omega) < \sqrt{\alpha}\} \in \mathcal{F}
  				\]
  			\end{itemize}
- 			
+
  		\end{enumerate}
  		Allora notiamo che:
  		\[
@@ -746,7 +746,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		è una v.a. se $X + Y$ è una v.a. \\
  		Dalla definizione di v.a. notiamo che:
  		\begin{align*}
- 		\{\omega \in \Omega \mid X(\omega) + Y(\omega) > \alpha\} &= \\ \bigcup_{q \in \mathbbm{Q}}\{\omega \in \Omega \mid X(\omega) > q \ e \ Y(\omega) > \alpha - q\} &= \\ \bigcup_{q \in \mathbbm{Q}} \{\omega \in \Omega \mid X(\omega) < q\} \cap \{\omega \in \Omega \mid Y(\omega) > \alpha - q\} 
+ 		\{\omega \in \Omega \mid X(\omega) + Y(\omega) > \alpha\} &= \\ \bigcup_{q \in \mathbbm{Q}}\{\omega \in \Omega \mid X(\omega) > q \ e \ Y(\omega) > \alpha - q\} &= \\ \bigcup_{q \in \mathbbm{Q}} \{\omega \in \Omega \mid X(\omega) < q\} \cap \{\omega \in \Omega \mid Y(\omega) > \alpha - q\}
  		\end{align*}
  		Sia:
  		\[F = \bigcup_{q\in \mathbbm{Q}}\{\omega \mid X(\omega) < q \ e \ Y(\omega) > \alpha - q\}\]
@@ -779,7 +779,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		\begin{itemize}
  			\item $p(1) = P\{1_E = 1\} = P(E)$
  			\item $p(0) = P\{1_E = 0\} = 1 - P(E)$
- 		\end{itemize} 
+ 		\end{itemize}
  	\end{example}
  	Una v.a. semplice è del tipo:
  	\[
@@ -802,7 +802,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		\item $E[\alpha X + \beta Y] = \alpha E[X] + \beta E[Y]$
  		\item Se $X \geq 0 \Rightarrow E[X] \geq 0$
  		\item Se $X \geq 0$ e $E[X] = 0 \Rightarrow X = 0$
- 	\end{itemize} 	
+ 	\end{itemize}
 	\begin{example}{\nmu Valore atteso della v.a. indicatrice}{media_va_indicatrice}
  		Sia $E \in \mathcal{F}$ e consideriamo la v.a. indicatrice $1_E$. Sappiamo che $1_E$ ha una legge di Bernoulli di parametro $p = P(E)$. Dunque:
  		\[
@@ -817,14 +817,14 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		\]
  		ove $\mu = E[X]$
  	\end{definition}
-	Se sappiamo con certezza che $\mu = E[X] = X$ allora $Var[X] = 0$ 
+	Se sappiamo con certezza che $\mu = E[X] = X$ allora $Var[X] = 0$
  	\begin{example}{\nmu Calcolo della varianza per la variabile di Bernoulli}{varianza_va_bernoulli}
  		Sia $E \in \mathcal{F}$ e consideriamo la v.a. indicatrice $1_E$. Sappiamo che $1_E$ ha una legge di Bernoulli di parametro $p = P(E)$ ove $E[X] = p$. Dunque:
  		\begin{align*}
  			Var[X] = E\bigl[(X - p)^2\bigr] &= \\ E\bigl[X^2 + p^2 - 2pX\bigr]  &= \\  E\bigl[X^2\bigr] + p^2 - 2pX &=  \\ E\bigl[X^2\bigr] - p^2 &= \\ p - p^2 = p(1-p)
  		\end{align*}
  	\end{example}
- 	\paragraph{Proprietà della varianza} 
+ 	\paragraph{Proprietà della varianza}
  	\begin{itemize}
  		\item $Var[\alpha X] = \alpha^2Var[X]$
  		\item $Var[X] = E[X^2] - E[X]^2$
@@ -860,7 +860,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  	\begin{lemma}{\nmu Attesa di due variabili aleatorie indipendenti}{attesa_va_ind}
  		Se X e Y sono v.a. semplici indipendenti:
  		\[
- 		E[XY] = E[X]E[Y] 
+ 		E[XY] = E[X]E[Y]
  		\]
  	\end{lemma}
  	\begin{proof}{Dimostrazione \namerefl{lem:attesa_va_ind}}
@@ -875,8 +875,8 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  	Se: $\mu = E[X]$ e $v = E[Y]$ allora $Var[X + Y] = Var[(X - \mu) + (Y - v)]$. \\
  	Possiamo supporre che: $\mu = v = 0$:
  	\begin{align*}
- 	Var[X + Y] = E\Bigl[\bigl(X + Y\bigr)^2 - \Bigl(E\bigl[X + Y\bigr]\Bigr)\Bigr]^2 &= \\ 
- 	E\Bigl[X^2 + Y^2 + 2XY\Bigr] &= \\ 
+ 	Var[X + Y] = E\Bigl[\bigl(X + Y\bigr)^2 - \Bigl(E\bigl[X + Y\bigr]\Bigr)\Bigr]^2 &= \\
+ 	E\Bigl[X^2 + Y^2 + 2XY\Bigr] &= \\
  	E\Bigl[X^2\Bigr] + E\Bigl[Y^2\Bigr] + 2E\bigl[XY\bigr] &= \\
  	E\Bigl[X^2\Bigr] + E\Bigl[Y^2\Bigr] + 2E\bigl[X\bigr]E\bigl[Y\bigr] &= \\
  	Var[X] + Var[Y]
@@ -887,7 +887,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	X = X_1 + X_2 + \dots + X_n
   	\]
   	ove $X_i$ puo' assumere i valori $\{0, 1\}$
-  	
+
   	$X = X_1 + X_2 + \dots + X_n$ dove $X_i$ prende valori $\{0, 1\}$ con legge di Bernoulli $p = P(E) = P(\{X_i = 1\})$ con $X_i$ indipendenti. \\
   	Allora, possiamo calcolare il valore atteso e la varianza in due modi:
   	\begin{enumerate}
@@ -903,7 +903,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   		Calcoliamo $E[X]$ e $Var[X]$ con la sola definizione:
   		Allora:
   		\[
-  			E[X] = \sum_{k=0}^{n}k\binom{n}{k}p^k(1-p)^{n-k} 
+  			E[X] = \sum_{k=0}^{n}k\binom{n}{k}p^k(1-p)^{n-k}
   		\]
   		\[
   			Var[X] = E[X^2] - n^2p^2 = \sum_{k=0}^{n}k^2\binom{n}{k}p^k(1-p)^{n-k} - n^2p^2
@@ -944,7 +944,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   		Rispondiamo alla seconda domanda:
   		\begin{itemize}
   			\item $F = $ "1 pezzo è difettoso" \\
-  			$P(F) = P(F \mid A)P(A) + P(F \mid B)P(B)$ \\ 
+  			$P(F) = P(F \mid A)P(A) + P(F \mid B)P(B)$ \\
   			$P(F \mid A) = \binom{10}{1}p^k(1-p)^{n-k} = \binom{10}{1}\frac{1}{10}(\frac{9}{10})^9 = 0.38$ \\
   			$P(F \mid B) = \binom{10}{1}\frac{17}{10}(\frac{83}{10})^9 = 0.31$ \\
   			$P(F) = 0.38 \cdot 0.3 + 0.31 \cdot 0.7 = 0.331$ \\
@@ -957,13 +957,13 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	\[
   	X = \sum_{n=1}^{\infty}\lambda_n1_{E_n}(\omega)
   	\]
-  	con $\{E_n: n \in \mathbbm{N}\} \subset \mathcal{F}$ 
+  	con $\{E_n: n \in \mathbbm{N}\} \subset \mathcal{F}$
   	\subsection{Variabile aleatoria di Poisson}
   	Una variabile di Poisson è una v.a. $X$ che prende i valori $\{0, 1, 2, \dots, \} = \mathbbm{N}$ e vale la legge:
   	\[
   	P[X = k] = e^{-\lambda}\cdot \frac{\lambda^k}{k!}
   	\]
-  	con $\lambda > 0$. \\ 
+  	con $\lambda > 0$. \\
   	$\lambda$ si presta ad una doppia interpretazione in quanto $E[X] = \lambda$ oppure $Var[X] = \lambda$ \\
   	Questa variabile si chiama anche \textit{variabile degli eventi rari} e si presta a contare la probabilità di $k$ eventi considerati rari.
   	\begin{theorem}{\nmu Formula di Poisson}{formula_poisson}
@@ -1098,11 +1098,11 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 	\]
   	 	\subsection{Distribuzione geometrica}
   	 	La distribuzione geometrica è la variabile aleatoria che conta il numero di tentativi necessari per ottenere primo successo nell'esperimento. \\
-  	 	L'esperimento è la ripetizione infinita dello stesso esperimento a due esiti, 0 e 1. Consideriamo la variabile aleatoria $X$ che conta il numero di tentativi necessari ad avere il primo successo. I valori che puo' assumere $X$ sono $\{1, 2, 3, \dots\}$. 
+  	 	L'esperimento è la ripetizione infinita dello stesso esperimento a due esiti, 0 e 1. Consideriamo la variabile aleatoria $X$ che conta il numero di tentativi necessari ad avere il primo successo. I valori che puo' assumere $X$ sono $\{1, 2, 3, \dots\}$.
   	 	\[
   	 	\mathcal{P}[X = n] = pq^{n-1}
   	 	\]
-  	 	ove $q = 1-p$ e $p$ è la probabilità di successo in un singolo lancio. Questa si chiama distribuzione geometrica in quanto nella legge appare una successione geometrica di ragione $q$. 
+  	 	ove $q = 1-p$ e $p$ è la probabilità di successo in un singolo lancio. Questa si chiama distribuzione geometrica in quanto nella legge appare una successione geometrica di ragione $q$.
   	 	\begin{theorem}{\nmu Attesa e varianza di una v.a. geometrica}{att_var_geo}
   	 		Se $X$ è una variabile aleatoria geometrica di parametro $p$, allora:
   	 		\[
@@ -1117,7 +1117,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 		\begin{itemize}
   	 			\item Dimostriamo che $E[X] = \dfrac{1}{p}$ \\
   	 			Per definizione: \[
-  	 			E[X] = \sum_{n=1}^{\infty}npq^{n-1} = p\sum_{n=1}^{\infty}nq^{n-1} = \frac{p}{(1-q)^2} = \frac{p}{p^2} = \frac{1}{p}\] 
+  	 			E[X] = \sum_{n=1}^{\infty}npq^{n-1} = p\sum_{n=1}^{\infty}nq^{n-1} = \frac{p}{(1-q)^2} = \frac{p}{p^2} = \frac{1}{p}\]
   	 		 	Abbiamo utilizzato la successione geometrica:
   	 		 	\[
   	 		 	\sum_{n=0}^{\infty}q^n = \frac{1}{1-q}
@@ -1129,11 +1129,11 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 		 	\item Dimostriamo che $Var[X] = \dfrac{q}{p^2}$ \\ \quad \\
   	 		 	Per definizione: $Var[X] = E[X^2] - E[X]^2$ \\
   	 		 	\[
-  	 		 	E[X^2] = \sum_{n=1}^{\infty}n^2pq^{n-1} = p\sum_{n=1}^{\infty}n^2q^{n-1} = p\frac{1+q}{p^3} = \frac{1+q}{p^2} 
+  	 		 	E[X^2] = \sum_{n=1}^{\infty}n^2pq^{n-1} = p\sum_{n=1}^{\infty}n^2q^{n-1} = p\frac{1+q}{p^3} = \frac{1+q}{p^2}
    	 		 	\]
   	 		 	Sappiamo che:
   	 		 	\[
-  	 		 	\sum_{n=0}^{\infty}nq^{n-1} = \frac{1}{(1-q)^2} 
+  	 		 	\sum_{n=0}^{\infty}nq^{n-1} = \frac{1}{(1-q)^2}
   	 		 	\]
   	 		 	Moltiplcando per $q$:
   	 		 	\[
@@ -1239,7 +1239,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 			\item $\mathlarger{\lim_{t \to -\infty}} F_X(t)=0$ e $\mathlarger{\lim_{t \to +\infty}}F_X(t) = 1$
   	 			\item $F_X$ è continua da destra:
   	 			\[
-  	 			\lim_{t \to t_0^+}F_X(t) = F_X(t) \quad \forall t_0 \in \mathbbm{R} 
+  	 			\lim_{t \to t_0^+}F_X(t) = F_X(t) \quad \forall t_0 \in \mathbbm{R}
   	 			\]
   	 			e $\forall t_0 > 0$
   	 			\[
@@ -1255,7 +1255,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 				\item $E_s = [X \leq s]$
   	 			\end{itemize}
   	 			allora se \[s \leq t \Rightarrow E_s \subset E_t \Rightarrow P(E_s) \leq P(E_t) \Rightarrow F_X(s) \leq F_X(t)\]
-  	 			\item Dimostriamo che: 
+  	 			\item Dimostriamo che:
   	 			\[
   	 			\lim_{t \to -\infty}F_x(t) = 0
   	 			\]
@@ -1273,12 +1273,12 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 				\lim_{n \to \infty}P(E_n) = P\Bigg(\bigcap_{n=1}^{\infty}E_n\Bigg) = P[X \leq t_0] = F_X(t_0)
   	 				\]
   	 				Verifichiamo che: \[[X \leq t_0]\subseteq \Bigg(\bigcap_{n=1}^{\infty}[X \leq t_n]\Bigg)\] ma $x \leq t_0 \Rightarrow x \leq t_n \quad \forall n$. \\
-  	 				Quindi ora dobbiamo verificare che: \[\Bigg(\bigcap_{n=1}^{\infty}[X \leq t_n]\Bigg)\subseteq [X \leq t_0]\] quindi $x \leq t_n \Rightarrow x \leq \mathlarger{\lim_{n \to \infty}}t_n = t_0$ 
+  	 				Quindi ora dobbiamo verificare che: \[\Bigg(\bigcap_{n=1}^{\infty}[X \leq t_n]\Bigg)\subseteq [X \leq t_0]\] quindi $x \leq t_n \Rightarrow x \leq \mathlarger{\lim_{n \to \infty}}t_n = t_0$
   	 				\item Verifichiamo che $\forall t_0 > 0$:
   	 				\[
   	 				P[X=t_0] = F_X(t_0) - \lim_{t \to t_0^-}F_X(t) = F_X(t_0) - F_X(t_0^-)
   	 				\]
-  	 				Consideriamo una successione crescente $\{t_n\}_{n\in\mathbbm{N}}$ tale che $t_n < t_{n+1} < t_0$ e $t_n \uparrow t_0$ \\ 
+  	 				Consideriamo una successione crescente $\{t_n\}_{n\in\mathbbm{N}}$ tale che $t_n < t_{n+1} < t_0$ e $t_n \uparrow t_0$ \\
   	 				Consideriamo $E_n = [X \leq t_n]$ e osserviamo che $E_n \subseteq E_{n+1}$. \\
   	 				Allora:
   	 				\[
@@ -1317,7 +1317,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 	\subsection{Esericizi sulle variabili aleatorie discrete}
   	 	\begin{exercise}{}{}
   	 		\begin{assignment}{}{}
-  	 			Due dadi equilibrati vengono lanciati separatamente piu' volte. Indichiamo con $X$ il numero di lanci necessari a ottenere 1 con il primo dado, e con $Y$ il numero di lanci a ottenere 5 o 6 con il secondo. 
+  	 			Due dadi equilibrati vengono lanciati separatamente piu' volte. Indichiamo con $X$ il numero di lanci necessari a ottenere 1 con il primo dado, e con $Y$ il numero di lanci a ottenere 5 o 6 con il secondo.
   	 			\begin{enumerate}
   	 				\item Qual è la legge di $X$ e $Y$?
   	 				\item Consideriamo $Z = max(X, Y)$, qual è la legge di $Z$?
@@ -1363,9 +1363,9 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 			\end{cases}
   	 			\]
   	 			Abbiamo trovato che $P[X=k] \sim Poisson(\lambda p)$ \\
-  	 			Quindi $Y \sim Poisson(\lambda(1-p))$ 
-  	 			\item $P[X = k \cap Y = l] = P[X = k]P[Y = l]$ 
-  	 			\\ 
+  	 			Quindi $Y \sim Poisson(\lambda(1-p))$
+  	 			\item $P[X = k \cap Y = l] = P[X = k]P[Y = l]$
+  	 			\\
   	 			$P[X=k]P[Y=l] = \frac{e^{-\lambda}(\lambda p)^l(\lambda (1-p))^l}{k!l!}$ \\
   	 			$P[X = k \cap Y = l] = \sum_{n=0}^{\infty}P[X=k \cap Y=k \mid N = n]P[N = n]$ \\
   	 			$P[X = k \cap Y = l \mid N = n] \neq 0 \iff k + l = n$ \\
@@ -1382,7 +1382,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 			\begin{enumerate}
   	 				\item Qual è la probabilità che il trucco venga scoperto?
   	 				\item Di quanto è aumentata la sua probabilità di fare terno?
-  	 			\end{enumerate} 
+  	 			\end{enumerate}
   	 		\end{assignment}
   	 		\begin{enumerate}
   	 			\item $E = $ " trucco viene scoperto" \\
@@ -1391,7 +1391,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 			$P(E) = P(E_1) + P(E_2)$ \\
   	 			$P(E_2) = \frac{|E|}{|\Omega|}$ ove $|\Omega| = \binom{93}{5}$ e $E_2 = 3 \cdot 89$ \\
   	 			$P(E_2) = \frac{3 \cdot 89}{\binom{93}{5}}$ \\
-  	 			$|E_1| = $  
+  	 			$|E_1| = $
   	 		\end{enumerate}
   	 	\end{exercise}
   	 	\section{Variabili aleatorie continue}
@@ -1419,7 +1419,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 		con $f(x) \geq 0 \quad \forall x \in \mathbbm{R}$, $f$ è integrabile e $\mathlarger{\int_{-\infty}^{+\infty}}f(t)dt = 1$ e vale che:
   	 		\[
   	 		\int_{a}^{b}f(t)dt = F(b) - F(a) = P[a \leq X \leq b]
-  	 		\] 
+  	 		\]
   	 	\end{definition}
   	 	\begin{note}{}{}
   	 		Se $F_X \subset C' \Rightarrow f = F_X'$ \\
@@ -1505,9 +1505,9 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 	\caption{Grafico della legge della distribuzione esponenziale}
   	 	\label{fig:distribuzione_esponenziale}
   	 \end{figure}
-  	 
+
   	 Notiamo dal grafico che $f(x) \geq 0 \quad \forall x \in \mathbbm{R}$. \\
-  	 \begin{proof} 
+  	 \begin{proof}
   	 	Verifichiamo che:
   	 	\[
   	 	\int_{-\infty}^{+\infty}f(x)dx = 1
@@ -1521,7 +1521,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 \end{proof}
   	 Calcoliamo la funzione di ripartizione:
   	 \[
-  	 F_X(x) = \int_{-\infty}^{x}f(t)dt = -e^{-\lambda \big[t\big]^{t=x}_{t=0}} = 1 - e^{-\lambda x} 
+  	 F_X(x) = \int_{-\infty}^{x}f(t)dt = -e^{-\lambda \big[t\big]^{t=x}_{t=0}} = 1 - e^{-\lambda x}
   	 \]
   	 \begin{figure}[H]
   	 	\centering
@@ -1530,7 +1530,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 	\label{fig:func_rip_dist_esp}
   	 \end{figure}
   	 Dal grafico notiamo che la funzione tende a 1 per valori che tendono a $+\infty$. \\
-  	 Quindi la distribuzione esponenziale verifica tutte le proprietà delle variabili aleatorie continue. \\ 
+  	 Quindi la distribuzione esponenziale verifica tutte le proprietà delle variabili aleatorie continue. \\
   	 \begin{theorem}{\nmu Proprietà di assenza della memoria per la distribuzione geometrica}{dis_esp_assenza_memoria}
   	 	Se $X$ è una v.a con distribuzione esponenziale, allora:
   	 	\[
@@ -1542,7 +1542,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 		P[X > u] &= \int_{u}^{+\infty}\lambda e^{-\lambda x}dx \\
   	 		&= -e^{-\lambda\big[x\big]^{x=+\infty}_{x=u}} \\
   	 		&= -(-e^{-\lambda u}) \\
-  	 		&= e^{-\lambda u} 
+  	 		&= e^{-\lambda u}
   	 	\end{align*}
   	 	Allora adesso possiamo vericare la proprietà di assenza di memoria:
   	 	\begin{align*}
@@ -1555,7 +1555,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 \end{proof}
   	 \begin{theorem}{}{}
   	 	Se $X$ è una v.a. continua distribuita su $[0, \infty)$ che gode della proprietà di assenza di memoria allora $X$ è esponenziale.
-  	 	
+
   	 	\begin{proof}{Cenni di dimostrazione} \quad \\
   	 		Definiamo la funzione:
   	 		\[
@@ -1603,7 +1603,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 	\begin{align*}
   	 	Var[X] &= E[X^2] - E[X]^2 \\
   	 	&= \frac{2}{\lambda^2} - \frac{1}{\lambda^2} \\
-  	 	&= \frac{1}{\lambda^2} 
+  	 	&= \frac{1}{\lambda^2}
   	 	\end{align*}
   	 \end{proof}
   	 \paragraph{Proposizione} Se $X_1, X_2, \dots, X_n$ sono v.a. esponenziali di parametro $\lambda_1, \lambda_2, \dots, \lambda_n$ e supponiamo siano indipendenti, allora:
@@ -1645,18 +1645,18 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
   	 \[
   	 E[X] = \mu
   	 \]
-  	 e 
+  	 e
   	 \[
   	 Var[X] = \sigma^2
   	 \]
-  	 ove $\sigma = \sqrt{Var[X]}$ è la deviazione standard. 
+  	 ove $\sigma = \sqrt{Var[X]}$ è la deviazione standard.
   	 \begin{theorem}{\nmu Integrale gaussiano}{int_gaussiano}
   	 	L'integrale gaussiano è così definito:
   	 	\[
   	 	\int_{-\infty}^{\infty}e^{-x^2}dx = \sqrt{\pi}
   	 	\]
   	 \end{theorem}
-  	 \begin{proof} Verifichiamo che: 
+  	 \begin{proof} Verifichiamo che:
   	 	\[
   	 	f(x) = \dfrac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{\infty}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}
   	 	\]
@@ -1674,14 +1674,14 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\begin{align*}
 	 		E[X] &= \int_{-\infty}^{\infty}x \dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx \\
 	 		&= \int_{-\infty}^{\infty} (x - \mu + \mu) \dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx \\
-	 		&= \int_{-\infty}^{\infty} (x - \mu) \dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx + \mu \\ 
+	 		&= \int_{-\infty}^{\infty} (x - \mu) \dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx + \mu \\
 	 		&= \mu
 	 	\end{align*}
 	 	perchè:
 	 	\[
 	 	\int_{-\infty}^{\infty} (x - \mu) \dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx = 0
 	 	\]
-	 	in quanto $\int_{-\infty}^{\infty}F(t)dt = 0 \iff F$ è integrabile e $F(-t) = -F(t)$ e possiamo sostiure $(x - \mu) = t$ 
+	 	in quanto $\int_{-\infty}^{\infty}F(t)dt = 0 \iff F$ è integrabile e $F(-t) = -F(t)$ e possiamo sostiure $(x - \mu) = t$
 	 \end{proof}
 	 \subsection{Varianza della distribuzione gaussiana}
 	 Come detto precedentemente:
@@ -1691,7 +1691,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 ove $X$ è una v.a. gaussiana.
 	 \begin{proof}{Dimostrazione della varianza della distribuzione gaussiana} \quad \\
 	 	\begin{align*}
-	 		Var[X] = \int_{-\infty}^{\infty}(x - \mu)^2\dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx 
+	 		Var[X] = \int_{-\infty}^{\infty}(x - \mu)^2\dfrac{1}{\sqrt{2\pi}\sigma}e^{\dfrac{-(x - \mu)^2}{2\sigma^2}}dx
 	 	\end{align*}
 	 	Consideriamo $t = \dfrac{x- \mu}{\sqrt{2}\sigma}$ e $(x - \mu)^2= 2 \sigma^2t^2$, allora:
 	 	\begin{align*}
@@ -1702,11 +1702,11 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 		&= \dfrac{2\sigma^2}{\sqrt{\pi}} - \frac{1}{2}e^{-\big[t^2\big]^{t=\infty}_{t=-\infty}}\big[t\big]^{t=\infty}_{t=-\infty} - \int_{-\infty}^{\infty}\frac{1}{2}e^{-t^2}dt \\
 	 		&= \dfrac{2\sigma^2}{\sqrt{\pi}} \cdot \dfrac{\pi}{2} \\
 	 		&= \sigma^2
-	 	\end{align*} 
+	 	\end{align*}
 	 \end{proof}
 	 Se scelgo $\mu = 0$ e $\sigma = 1$ ottengo la \textit{distribuzione normale standard}. \\
 	 \[\Phi(x) = \int_{-\infty}^{\infty}\dfrac{1}{\sqrt{2\pi}}e^{-\dfrac{t^2}{2}}dt\]
-	 ove $\Phi(x)$ è la funzione di errore ed è la funzione di ripartizione della distribuzione normale standard. 
+	 ove $\Phi(x)$ è la funzione di errore ed è la funzione di ripartizione della distribuzione normale standard.
 	 \begin{figure}[H]
 	 	\centering
 	 	\includegraphics[width=0.7\textwidth]{funzione_ripartizione_gaussiana}
@@ -1770,7 +1770,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\end{assignment}
 	 	Risolvo:
 	 	\begin{enumerate}
-	 		\item Affinchè $f$ sia una densità $f(x) \geq 0 \quad \forall x \in \mathbbm{R} \iff c > 0$ e inoltre, $\mathlarger{\int_{-\infty}^{\infty}}f(x)dx = 1$ 
+	 		\item Affinchè $f$ sia una densità $f(x) \geq 0 \quad \forall x \in \mathbbm{R} \iff c > 0$ e inoltre, $\mathlarger{\int_{-\infty}^{\infty}}f(x)dx = 1$
 	 		\begin{align*}
 	 			c\int_{r}^{\infty}x^{(-s + 1)}dx &= 1 \\
 	 			c\dfrac{x^{-s}}{-s} \Big|^{\infty}_{r} &= \\
@@ -1812,7 +1812,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 \end{exercise}
 	 \begin{exercise}{}{}
 	 	\begin{assignment}{}{}
-	 		Sia $X$ una v.a. uniformemente distribuita tra $(\frac{-\pi}{2}, \frac{\pi}{2})$ e $Y = \tan X$. 
+	 		Sia $X$ una v.a. uniformemente distribuita tra $(\frac{-\pi}{2}, \frac{\pi}{2})$ e $Y = \tan X$.
 	 		\begin{enumerate}
 	 			\item Qual è la legge di $Y$?
 	 			\item $Y$ ha aspettazione finita?
@@ -1834,7 +1834,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 		\]
 	 		\item Calcoliamo il valore atteso:
 	 		\begin{align*}
-	 			E[Y] &= \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{t}{1+t^2}dt  
+	 			E[Y] &= \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{t}{1+t^2}dt
 	 		\end{align*}
 	 		ma l'integrale non converge quindi $E[Y]$ non è finito.
 	 	\end{enumerate}
@@ -1875,7 +1875,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\end{assignment}
 	 	Risolvo:
 	 	\[
-	 	P\Big[\frac{X - \mu}{\sigma} \geq \frac{p_0 -\mu}{\sigma}\Big] = P\Big[N \geq \frac{p_0 - 100}{14.2}\Big] = 0.01 
+	 	P\Big[\frac{X - \mu}{\sigma} \geq \frac{p_0 -\mu}{\sigma}\Big] = P\Big[N \geq \frac{p_0 - 100}{14.2}\Big] = 0.01
 	 	\]
 	 	e questo corrisponde a:
 	 	\[
@@ -1883,7 +1883,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\]
 	 \end{exercise}
 	 \chapter{Convergenza e approssimazione}
-	 In questo capitolo vedremo come definire la convergenza di una successione $\{X_n\}_{n\in\mathbbm{N}}$ di v.a. e questo è un concetto molto importante in quanto spesso è complicato descrivere la legge di una v.a. $X_n$, mentre, se $X_n \longrightarrow X$ e $n$ è grande, può essere facile approssimarla con la legge del limite $X$. 
+	 In questo capitolo vedremo come definire la convergenza di una successione $\{X_n\}_{n\in\mathbbm{N}}$ di v.a. e questo è un concetto molto importante in quanto spesso è complicato descrivere la legge di una v.a. $X_n$, mentre, se $X_n \longrightarrow X$ e $n$ è grande, può essere facile approssimarla con la legge del limite $X$.
 	 \section{Disuguaglianza di Markov}
 	 \begin{theorem}{\nmu Disuguaglianza di Markov}{markov}
 	 	Sia $X$ una v.a. su $(\Omega, \mathcal{F}, \mathcal{P})$ con $E[X] < \infty$ e con $X \geq 0$. \\
@@ -1943,7 +1943,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\]
 	 	Supponendo che $Var[X] = 100cm^2$, allora:
 	 	\[
-	 	Var[X] = E[X^2] - 175^2 
+	 	Var[X] = E[X^2] - 175^2
 	 	\]
 	 	e
 	 	\[
@@ -1984,7 +1984,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\end{align*}
 	 \end{proof}
 	 La disuguaglianza di Chebychev quantifica l'interpretazione intuitiva della varianza come misura della dispersione: più $Var[X]$ è piccola, più è piccola a probabilità che $X$ prenda valori lontani dalla sua media.
-	 
+
 	 \section{Convergenza di variabili aleatorie}
 	 \begin{definition}{\nmu Convergenza quasi certa di variabili aleatorie}{convergenza_va}
 	 	Sia $(\Omega, \mathcal{F}, \mathcal{P})$ e sia una successione di variabili aleatorie $\{X_n : n\in \mathbbm{N}\}$ e $X$ una v.a. \\
@@ -2017,7 +2017,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	Sia $\delta > 0$ fissato e $E_n = \Big\{ \omega \in \Omega \mid \Big |X_n(\omega) - X(\omega)\Big| > \delta\Big\}$ \\
 	 	Definiamo:
 	 	\[
-	 	F_n = \bigcup_{k=n}^{\infty}E_k 
+	 	F_n = \bigcup_{k=n}^{\infty}E_k
 	 	\]
 	 	Questo è l'insieme degli eventi dove almeno un $X_n$ dista da $X$ più di $\delta$ e vale che $E_n \subset F_n$ e $F_{n+1} \subseteq F_n$, allora:
 	 	\[
@@ -2026,8 +2026,8 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	ove $\mathlarger{\bigcap_{n=1}^{\infty}}F_n = \mathlarger{\bigcap_{n=1}^{\infty}\bigcup_{k=n}^{\infty}}E_k$. \\
 	 	Questo è l'insieme degli $\omega$ tali che $\forall n\ \exists k \geq n$ tale che $\Big|X_n(\omega) - X(\omega)\Big| > \delta$. \\
 	 	Quindi, è l'insieme degli $\omega$ per cui accade spesso che $X_n(\omega)$ dista da $X(\omega)$ più di $\delta$ e quindi $X_n(\omega)$ non si avvicina mai a $X(\omega)$ allora:
-	 	
-	 	\[\lim_{n \to \infty} P(F_n) = P\Bigg(\bigcap_{n=1}^{\infty}F_n\Bigg) = 0\] 
+
+	 	\[\lim_{n \to \infty} P(F_n) = P\Bigg(\bigcap_{n=1}^{\infty}F_n\Bigg) = 0\]
 	 	perchè $\mathlarger{\bigcap_{n=1}^{\infty}}F_n \subset \{\omega\mid X_n(\omega) \text{ non converge a } X\}$. \\
 	 	Allora:
 	 	\[
@@ -2048,7 +2048,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 \begin{example}{}{}
 	 	Sia $X_n$ di Bernoulli di parametro $p$, allora:
 	 	\[
-	 	E[X_n] = p 
+	 	E[X_n] = p
 	 	\]
 	 	e
 	 	\[
@@ -2066,7 +2066,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	\]
 	 	e la varianza è pari a:
 	 	\[
-	 	 Var[Y_n] = Var\Bigg[\frac{1}{n} \sum_{n=1}^{n}X_i\Bigg] = \frac{1}{n^2}Var\Bigg[\sum_{n=1}^{n}X_i\Bigg] 
+	 	 Var[Y_n] = Var\Bigg[\frac{1}{n} \sum_{n=1}^{n}X_i\Bigg] = \frac{1}{n^2}Var\Bigg[\sum_{n=1}^{n}X_i\Bigg]
 	 	\]
 	 	e per indipendenza:
 	 	\[
@@ -2083,7 +2083,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	Sia $\{X_n\}_{n \in \mathbbm{N}}$ una successione di v.a. e non necessariamente definite sullo stesso spazio di probabilità e $X$ una v.a. Allora diciamo che $X_n$ converge a $X$ in legge:
 	 	\[
 	 	X_n \underset{n \to \infty}{\overset{L}{\longrightarrow}} X
-	 	\] 
+	 	\]
 	 	se $\forall x \in \mathbbm{R}$, dove $F_X$ è continua, si ha che:
 	 	\[
 	 	\lim_{n \to \infty}F_{X_n}(x) = F_X(x)
@@ -2108,7 +2108,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 \end{theorem}
 	 \begin{exercise}{}{}
 	 	\begin{assignment}{}{}
-	 		Si lanciano $n=10^4$ volte una moneta equa. Qual è la probabilità di ottenere più di 5600 teste? 
+	 		Si lanciano $n=10^4$ volte una moneta equa. Qual è la probabilità di ottenere più di 5600 teste?
 	 	\end{assignment}
 	 	Risolviamolo sfruttando il teorema del limite centrale. \\
 	 	Se $X$ è la v.a. che conta le teste allora:
@@ -2204,10 +2204,10 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			0 & f_X(x) = 0
 		\end{cases}
 		\]
-		
+
 	\end{definition}
 	\begin{note}{}{}
-		$X$ e $Y$ sono indipendenti $\iff f_{X \mathlarger{\mid} Y=y} = f_X$ e $f_{Y \mathlarger{\mid} X=x} = f_Y$ 
+		$X$ e $Y$ sono indipendenti $\iff f_{X \mathlarger{\mid} Y=y} = f_X$ e $f_{Y \mathlarger{\mid} X=x} = f_Y$
 	\end{note}
 	\begin{exercise}{}{}
 		\begin{assignment}{}{}
@@ -2240,7 +2240,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		&= \lambda \dfrac{e^{-\lambda y}}{-y} {\Big|}^{\lambda=1}_{\lambda=0} - \int_{0}^{1}\dfrac{e^{-\lambda y}}{-y}d\lambda \\
 		&= \dfrac{e^{-y}}{-y}  + \dfrac{1}{y} - \int_{0}^{1}e^{-\lambda y}d\lambda \\
 		&= \dfrac{e^{-y}}{-y}  + \dfrac{1}{y}\Bigg[\dfrac{e^{-\lambda y}}{-y} {\Big|}^{\lambda=1}_{\lambda=0}\Bigg] \\
-		&= -\dfrac{e^{-y}}{y} + \dfrac{1}{y}\Bigg(\dfrac{e^{-y}}{-y} + \dfrac{1}{y}\Bigg) \\ 
+		&= -\dfrac{e^{-y}}{y} + \dfrac{1}{y}\Bigg(\dfrac{e^{-y}}{-y} + \dfrac{1}{y}\Bigg) \\
 		&= \dfrac{1}{y^2}(1 - e^{-y} - ye^{-y}) \quad y \geq 0
 		\end{align*}
 	\end{exercise}
@@ -2256,7 +2256,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 			&= \int_{-\infty}^{\infty}dx\int_{-\infty}^{t-x}f_Z(x, y)dy \\
 			&= \int_{-\infty}^{\infty}dx\int_{-\infty}^{t - x}f(x)g(y)dy \\
 			&\underset{y' = y + x}{=}\int_{-\infty}^{\infty}\int_{-\infty}^{t}f(x)g(y' - x)dy' \\
-			&= \int_{-\infty}^{t}dy'\int_{-\infty}^{\infty}f(x)g(y' - x)dx 
+			&= \int_{-\infty}^{t}dy'\int_{-\infty}^{\infty}f(x)g(y' - x)dx
 		\end{align*}
 		ove abbiamo definito il \textbf{punto aleatorio} come:
 		\[
@@ -2284,7 +2284,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\[
 		g(x) = \dfrac{1}{\sqrt{2\pi}}e^{-\dfrac{x^2}{2}}
 		\]
-		e 
+		e
 		\[
 		f(y)= \dfrac{1}{\sqrt{2\pi}\sigma}e^{-\dfrac{y^2}{2\sigma^2}}
 		\]
@@ -2347,23 +2347,23 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\[
 		h(x_1, x_2, \dots, x_n, \theta) = f(x_1,\theta)f(x_2,\theta)\cdots f(x_n,\theta)
 		\]
-		ove $n$ prende il nome di \textit{rango del campione}. 
+		ove $n$ prende il nome di \textit{rango del campione}.
 	\end{definition}
 	\begin{example}{}{}
 		Sia $(\Omega, \mathcal{F}, (\mathcal{P}_p)_{p \in [0, 1]})$. \\
 		$\Omega = \{(\omega_1, \omega_2, \dots, \omega_n) : \omega_i \in \{0, 1\}\}$ ove $X_1 = \omega_1$, $X_2 = \omega_2, \dots, X_n = \omega_n$. \\
-		Quindi, $(X_1, X_2, \dots, X_n)$ è un campione bernoulliano. 
+		Quindi, $(X_1, X_2, \dots, X_n)$ è un campione bernoulliano.
 	\end{example}
 	\begin{definition}{\nmu Statistica}{statistica}
 		Dato uno spazio parametrico, $(\Omega, \mathcal{F}, (\mathcal{P}_\theta)_{\theta\in\Theta})$, una \textit{statistica} è una v.a., $T$, del tipo:
 		\[
 		T = t(X_1, X_2, \dots, X_n)
-		\] 
+		\]
 		ove $(X_1, X_2, \dots, X_n)$ è un'osservazione campione e $t: \mathbbm{R}^n \to \mathbbm{R}$ una funzione misurabile.
 	\end{definition}
 	Ad esempio, $S = \dfrac{X_1 + X_2 + \dots + X_n}{n} - p$ \textbf{non} è una statistica perchè appare esplicitamente il parametro $p$.
 	\begin{definition}{\nmu Stimatore corretto}{stimatore_corretto}
-		Dato uno spazio parametrico $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$, uno \textit{stimatore corretto} di $\psi(\theta) \in \mathbbm{R}$ è una statistica  $T = t(X_1, X_2, \dots, X_n)$ tale che $E_\theta(T) = \psi(\theta) \quad \forall \theta \in \Theta$. 
+		Dato uno spazio parametrico $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$, uno \textit{stimatore corretto} di $\psi(\theta) \in \mathbbm{R}$ è una statistica  $T = t(X_1, X_2, \dots, X_n)$ tale che $E_\theta(T) = \psi(\theta) \quad \forall \theta \in \Theta$.
 	\end{definition}
 	\begin{example}{}{}
 		Se $(X_1, X_2, \dots, X_n)$ è un campione e consideriamo:
@@ -2415,7 +2415,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\]
 	\end{definition}
 	\begin{theorem}{\nmu La varianza campionaria è uno stimatore corretto}{var_camp_stim_corr}
-		
+
 		Inoltre, vale che $S_n$ è uno stimatore corretto della varianza, $\sigma^2$, cioè:
 		\[
 		E_\theta[S_n^2] = \sigma^2(\theta)
@@ -2466,7 +2466,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\[
 		T_1 = \wbar{X_n} = \dfrac{1}{n}\sum_{i=1}^{n}X_i
 		\]
-		e 
+		e
 		\[
 		T_2 = X_i
 		\]
@@ -2498,7 +2498,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\]
 		Allora vale che:
 		\[r_p(\wbar{X}_n) = Var_p[\wbar{X}_n] = \dfrac{p(p-1)}{n}\]
-		
+
 		Quindi, se $T_n$ è uno stimatore corretto di $p$, allora:
 		\[
 		r_p(T_n) \geq \dfrac{p(p-1)}{n}
@@ -2522,7 +2522,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		allora vale che:
 		\[
 		T_n = \dfrac{n-1}{n}S_n^2
-		\] 
+		\]
 		Calcoliamo l'attesa di $T_n$:
 		\begin{align*}
 		E_\theta[T_n] &= \dfrac{n-1}{n}E_\theta\big[S_n^2\big] \\
@@ -2548,7 +2548,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\end{example}
 	\section{Stimatori di massima verosomiglianza}
 	\begin{definition}{\nmu Verosomiglianza}{verosomiglianza}
-		
+
 		Dato un campione $(X_1, \dots, X_n)$, consideriamo la distribuzione congiunta, $f$, allora:
 		\[
 		h(X_1, X_2, \dots, X_n, \theta) = f(X_1, \theta) \cdots f(X_n, \theta)
@@ -2558,7 +2558,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\begin{definition}{\nmu Stima di massima verosomiglianza}{stima_massima_verosomiglianza}
 		La stima di massima verosomiglianza $t=t(X_1, X_2, \dots, X_n)$ è quella che massimizza la funzione verosomiglianza.
 	\end{definition}
-	Supponiamo di avere un campione bernoulliano di parametro $p$, $(X_1, X_2, \dots, X_n)$, e supponiamo di voler calcolare lo stimatore di massima verosomiglianza. 
+	Supponiamo di avere un campione bernoulliano di parametro $p$, $(X_1, X_2, \dots, X_n)$, e supponiamo di voler calcolare lo stimatore di massima verosomiglianza.
 	\[
 	P[X_i = k] = p^k(1-p)^{1-k} \quad k \in \{0, 1\}
 	\]
@@ -2593,7 +2593,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\begin{proof}[Dimostrazione della \namerefl{def:func_gamma}] \quad \\
 		Calcoliamo $\Gamma(1)$:
 		\[
-		\Gamma(1) = \int_{0}^{+\infty}e^{-x}dx = 1 
+		\Gamma(1) = \int_{0}^{+\infty}e^{-x}dx = 1
 		\]
 		Calcoliamo $\Gamma(n + 1)$ integrando per parti, ponendo $g = x^n$ e $f' = e^{-x}$:
 		\begin{align*}
@@ -2628,7 +2628,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	$f$ è una densità, allora $f(x) \geq 0 \quad \forall x \in \mathbbm{R}$ e $\int_{-\infty}^{\infty}f(x)dx = 1$. Infatti:
 	\begin{align*}
 		\dfrac{\lambda^\alpha}{\Gamma(\alpha)}\int_{0}^{\infty}x^{\alpha - 1}e^{-\lambda x}dx \overset{?}{=} 1
-	\end{align*} 
+	\end{align*}
 	Calcoliamo $\mathlarger{\int_{0}^{\infty}}x^{\alpha-1}e^{-\lambda x}dx$, ponendo $\lambda x = u, x = \dfrac{u}{\lambda}$ e $dx = \dfrac{du}{\lambda}$:
 	\begin{align*}
 		\int_{0}^{\infty}x^{\alpha-1}e^{-\lambda x}dx &= \int_{0}^{+\infty}\dfrac{u^{\alpha - 1}}{\lambda^{\alpha - 1}}e^{-u}\dfrac{du}{\lambda} \\
@@ -2658,15 +2658,15 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  	& \text{Ponendo } \lambda x= u,\ \lambda dx = du, \text{ otteniamo: } \\
  	&= \dfrac{\lambda^\alpha}{\Gamma(\alpha)}\int_{0}^{\infty}\dfrac{u^\alpha}{\lambda^\alpha}e^{-u}\dfrac{du}{\lambda} \\
  	&=\dfrac{1}{\lambda\Gamma(\alpha)}\Gamma(\alpha + 1) \\
- 	&= \dfrac{\Gamma(\alpha + 1)}{2\Gamma(\alpha)} \\ 
+ 	&= \dfrac{\Gamma(\alpha + 1)}{2\Gamma(\alpha)} \\
  	&= \dfrac{\alpha}{\lambda}
 	\end{align*}
 	\begin{note}{}{}
 		Supponiamo di avere $X \sim N(0,1)$, allora il suo quadrato è una $\Gamma$:
 		\[
 		X^2 \sim \Gamma\Bigg(\dfrac{1}{2}, \dfrac{1}{2}\Bigg)
-		\]	
-		Infatti: 
+		\]
+		Infatti:
 		\[
 		F_{X^2}(t) = \begin{cases}
 			P\big[X^2 \leq t\big] & t \geq 0 \\
@@ -2702,7 +2702,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		f(x) &= \dfrac{\Big(\frac{1}{2}\Big)^{\nicefrac{n}{2}}}{\Gamma\Big(\frac{n}{2}\Big)}x^{\nicefrac{n}{2} - 1}e^{-\nicefrac{x}{2}}\mathbbm{1}_{[0, +\infty]}(x) \\
 		&= \dfrac{1}{2^{\nicefrac{n}{2}}\Gamma\Big(\frac{n}{2}\Big)}x^{\nicefrac{n}{2} - 1}e^{-\nicefrac{x}{2}}
 	\end{align*}
-	
+
 	\begin{proof}[Dimostrazione della \namerefl{th:riproducibilita_gamma}] \quad \\
 		Definiamo due funzioni, $f$ e $g$, nel seguente modo:
 		\[
@@ -2729,7 +2729,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		I(\alpha_1, \alpha_2) &\overset{def}{=} \int_{0}^{1}u^{\alpha_1 - 1}(1-u)^{\alpha_2 - 1}du \\
 		&= \dfrac{\Gamma(\alpha_1)\Gamma(\alpha_2)}{\Gamma(\alpha_1+ \alpha_2)}
 		\end{align*}
-		
+
 		Allora, ritornando alla dimostrazione principale:
 		\begin{align*}
 			&= \dfrac{\lambda^{\alpha_1 + \alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}e^{-\lambda x}x^{\alpha_2 - 1}\int_{0}^{x}y^{\alpha_1 - 1}\bigg(1 - \dfrac{y}{x}\bigg)^{\alpha_2 - 1}dy \\
@@ -2745,10 +2745,10 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	La media campionaria è data da:
 	\[
 	\wbar{X}_n = \frac{1}{n}\sum_{i}^{n}X_i
-	\]	
+	\]
 	e la varianza campionaria è data da:
 	\[
-	S_n^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2	
+	S_n^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2
 	\]
 	e $E[\wbar{X}_n] = \mu$ e $E[S_n^2] = \sigma^2$. \\
 	Questi sono fatti generali, cioè veri indipendentemente dalla legge del campione. \\
@@ -2824,7 +2824,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\begin{align*}
 			E\Bigg[\frac{\partial}{\partial \theta} \ln f(x, \theta)\Bigg] &= \int\frac{\partial}{\partial \theta} \ln f(x, \theta)f(x, \theta)dx \\
 			&= \int\frac{1}{f(x, \theta)}\frac{\partial}{\partial \theta}f(x, \theta)f(x, \theta)dx \\
-			&= 0			
+			&= 0
 		\end{align*}
 	\end{note}
 	\begin{example}{\nmu Campione bernoulliano}{fisher_bernoulliano}
@@ -2906,7 +2906,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\begin{align*}
 	I_n(\theta) &= Var\Bigg[\sum_{i=1}^{n}\frac{\partial}{\partial \theta}\ln g(X_i, \theta)\Bigg] \\
  	&= \sum_{i=1}^{n}Var\Bigg[\frac{\partial}{\partial \theta}\ln g(X_i, \theta)\Bigg] \\
-	 &= nI_1(\theta)	
+	 &= nI_1(\theta)
  	\end{align*}
 	 \begin{theorem}{\nmu Disuguaglianza di Cramér-Rao}{cramer_rao}
 	 	Sia $(X_1, X_2, \dots, X_n)$ è un'osservazione e sono soddisfatte le condizioni 1., 2. e 3. e $\psi(\theta)$ una funzione derivabile con continuità. \\
@@ -3008,7 +3008,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 		&= \frac{1}{n^2}Var\Bigg[\sum_{i=1}^{n}X_i\Bigg] \\
 	 		&= \frac{1}{n^2}n\lambda \\
 	 		&= \frac{\lambda}{n} \\
-	 		&= \frac{|\psi(\lambda)|^2}{I_n(\lambda)} 
+	 		&= \frac{|\psi(\lambda)|^2}{I_n(\lambda)}
 	 	\end{align*}
 	 	Allora $\wbar{X}_n$ è uno stimatore efficiente.
 	 \end{example}
@@ -3038,7 +3038,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 In questo modo vediamo che:
 	 \begin{align*}
 	 	P\Bigg[-z_{1-\frac{\alpha}{2}} \leq \dfrac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \leq z_{1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\
-	 	P\Bigg[\wbar{X}_n-\frac{\sigma}{\sqrt{n}}z_{1-\frac{\alpha}{2}} \leq \mu \leq \wbar{X}_n + \frac{\sigma}{\sqrt{n}}z_{1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha 
+	 	P\Bigg[\wbar{X}_n-\frac{\sigma}{\sqrt{n}}z_{1-\frac{\alpha}{2}} \leq \mu \leq \wbar{X}_n + \frac{\sigma}{\sqrt{n}}z_{1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha
 	 \end{align*}
 	 Quindi questo è un intervallo di confidenza per $\mu$.
 	 \begin{note}{}{}
@@ -3050,7 +3050,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 		99\% & \alpha = 0.1\\
 	 		95\% & \alpha = 0.05\\
 	 		90\% & \alpha = 0.011
-	 	\end{cases}$  
+	 	\end{cases}$
 	 \end{note}
 	 \paragraph{Caso nel quale $\sigma^2$ incognito} L'idea in questo caso è quella di sostituire $\sigma^2$ con un suo stimatore corretto $S_n^2 = \dfrac{1}{n-1}\sum_{i=1}^{n}(X_i - \wbar{X}_n)^2$ e ricordiamo che: $\dfrac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1)$ \\
 	 Allora:
@@ -3059,8 +3059,8 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 \]
 	 è una quantità pivotale e ha una distribuzione \textbf{T di Student} ($\sim T(n-1)$ con n-1 gradi di libertà). \\
 	 \begin{align*}
-	 	P\Bigg[\Big|\dfrac{\wbar{X}_n - \mu}{\frac{S_n}{\sqrt{n}}}\Big| \leq t_{(n-1), 1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\	
-	 	P\Bigg[\wbar{X}_n - \frac{S_n}{\sqrt{n}}t_{(n-1), 1-\frac{\alpha}{2}} \leq \mu \leq \wbar{X}_m + \frac{S_n}{\sqrt{n}}t_{(n-1), 1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\		 	
+	 	P\Bigg[\Big|\dfrac{\wbar{X}_n - \mu}{\frac{S_n}{\sqrt{n}}}\Big| \leq t_{(n-1), 1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\
+	 	P\Bigg[\wbar{X}_n - \frac{S_n}{\sqrt{n}}t_{(n-1), 1-\frac{\alpha}{2}} \leq \mu \leq \wbar{X}_m + \frac{S_n}{\sqrt{n}}t_{(n-1), 1 - \frac{\alpha}{2}}\Bigg] &= 1 - \alpha \\
 	 \end{align*}
 	 \subsection{Distribuzione T di Student}
 	 Supponiamo di avere $N \sim N(0, 1)$ e $\chi \sim \chi^2(n)$ con $N$ e $\chi$ indipendenti. \\
@@ -3088,7 +3088,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 \begin{align*}
 	 \dfrac{\wbar{X}_n -\mu}{\frac{S_n}{\sqrt{n}}} &= \dfrac{\frac{\wbar{X}_n-\mu}{\frac{S_n}{\sqrt{n}}}}{\frac{S_n}{\sqrt{n}}\frac{\sqrt{n}}{\sigma}} \\
 	 &= \dfrac{N}{\sqrt{(n-1)\frac{S_n^2}{\sigma^2}}}\sqrt{n-1} \\
-	 &= \frac{N}{\sqrt{\chi}}\sqrt{n-1} \sim T(n-1)	
+	 &= \frac{N}{\sqrt{\chi}}\sqrt{n-1} \sim T(n-1)
 	 \end{align*}
 	 \paragraph{Funzione di ripartizione}
 	 La funzione di ripartizione è pari a:
@@ -3097,7 +3097,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	&= P[N \leq \frac{t}{\sqrt{n}}\sqrt{\chi}] \\
 	 	&= \int_{0}^{\infty}dx\int_{-\infty}^{\frac{t\sqrt{\chi}}{\sqrt{n}}}f(x)g(y)dy
 	 \end{align*}
-	 con 
+	 con
 	 \[
 	 f(x) = \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}x^{\frac{n}{2} - 1}e^{-\nicefrac{x}{2}}\mathbbm{1}_{[0, \infty)}(x) \quad \text{la densita di }\chi
 	 \]
@@ -3109,16 +3109,16 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\[
 	F_T(t) = \int_{0}^{\infty}dx\int_{0}^{\frac{t\sqrt{\chi}}{\sqrt{n}}}f(x)g(y)dy
 	\]
-	Da cui possiamo calcolare la densità di $T$: 
-	\begin{align*} 
-		h(t) &= F_T(t)' \\ 
-		&= \int_{0}^{\infty}dx\Bigg[f(x)g\Bigg(\frac{t\sqrt{\chi}}{\sqrt{n}}\Bigg)\frac{\sqrt{\chi}}{\sqrt{n}}\Bigg] \\ 
-		&=\frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}x^{\frac{n}{2} - 1}e^{-\nicefrac{x}{2}}e^{-\frac{t^2x}{2n}}x^{\nicefrac{1}{2}}dx \\ 
-		&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}x^{\frac{n}{2} - \frac{1}{2}}e^{-\frac{1}{2}(\nicefrac{t^2}{n} + 1)x}dx \\ 
-		&= \text{ Poniamo } u = \frac{1}{2}(\nicefrac{t^2}{n} + 1)x \\ 
+	Da cui possiamo calcolare la densità di $T$:
+	\begin{align*}
+		h(t) &= F_T(t)' \\
+		&= \int_{0}^{\infty}dx\Bigg[f(x)g\Bigg(\frac{t\sqrt{\chi}}{\sqrt{n}}\Bigg)\frac{\sqrt{\chi}}{\sqrt{n}}\Bigg] \\
+		&=\frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}x^{\frac{n}{2} - 1}e^{-\nicefrac{x}{2}}e^{-\frac{t^2x}{2n}}x^{\nicefrac{1}{2}}dx \\
+		&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}x^{\frac{n}{2} - \frac{1}{2}}e^{-\frac{1}{2}(\nicefrac{t^2}{n} + 1)x}dx \\
+		&= \text{ Poniamo } u = \frac{1}{2}(\nicefrac{t^2}{n} + 1)x \\
 		&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}\frac{(2u)^{\nicefrac{n}{2} - \nicefrac{1}{2}}}{(\nicefrac{t^2}{n} + 1)^{\nicefrac{n}{2} - \nicefrac{1}{2}}}e^{-u}\frac{2}{(\nicefrac{t^2}{n} + 1)}du \\
 		&= \frac{2^{\nicefrac{n}{2} + \nicefrac{1}{2}}}{2^{\nicefrac{n}{2}}\Gamma(\nicefrac{n}{2})}(1 + \nicefrac{t^2}{n})^{-\nicefrac{n+1}{2}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}u^{\nicefrac{n}{2} + \nicefrac{1}{2} - 1}e^{-u}du \\
-		&= \frac{\Gamma(\nicefrac{n+1}{2})}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{\pi n}}(1 + \nicefrac{t^2}{n})^{-\frac{n+1}{2}} 
+		&= \frac{\Gamma(\nicefrac{n+1}{2})}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{\pi n}}(1 + \nicefrac{t^2}{n})^{-\frac{n+1}{2}}
 	\end{align*}
 	\begin{note}{}{}
 		Notiamo che:
@@ -3130,7 +3130,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\[
 	E[T] = 0
 	\]
-	e 
+	e
 	\[
 	Var[T] = \frac{n}{n-2} \quad \text{ per } n > 2
 	\]
@@ -3160,7 +3160,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 Data $X \sim N(\mu, \sigma^2)$ e consideriamo:
 	 \[
 	 \frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1)
-	 \] 
+	 \]
 	 La probabilità che:
 	 \begin{align*}
 	 	P\Bigg[\chi^2_{(n-1), 1 - \frac{\alpha}{2}} \leq \frac{(n-1)S_n^2}{\sigma^2} \leq \chi^2_{(n-1), 1-\frac{\alpha}{2}}\Bigg] = 1-\frac{\alpha}{2} - \frac{\alpha}{2} = 1 - \alpha
@@ -3170,4 +3170,318 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	P\Bigg[\frac{1}{\chi^2_{(n-1), 1 - \frac{\alpha}{2}}} \geq \frac{\sigma^2}{(n-1)S_n^2} \geq \frac{1}{\chi^2_{(n-1), 1-\frac{\alpha}{2}}}\Bigg] = &= 1 - \alpha \\
 	 	P\Bigg[\frac{(n-1)S_n^2}{\chi^2_{(n-1), 1 - \frac{\alpha}{2}}} \leq \sigma^2 \leq \frac{(n-1)S_n^2}{\chi^2_{(n-1), 1-\frac{\alpha}{2}}}\Bigg] &= 1 - \alpha \quad \forall \sigma^2
 	 \end{align*}
+	 \subection{Intervallo di confidenza per il parametro $p$ di una Bernoulli}
+		Se $(X_1, X_2, \dots, X_n)$ è un campione Bernoulliano, allora per il teorema del limite centrale la successione:
+		\[
+		\frac{X_1 + X_2 + \dots + X_n - np}{\sqrt{np(1-p)}} \overset{L}{\underset{n\to\infty}{\longrightarrow}} N(0, 1)
+		\]
+		Possiamo riscrivere la successione precedente come:
+		\[
+		\sqrt{n}\frac{\wbar{X}_n - p}{\sqrt{p(1-p)}} \overset{L}{\underset{n\to\infty}{\longrightarrow}} N(0, 1)
+		\]
+		con $\wbar{X}_n = \frac{1}{n}\sum_{i=1}^{n}X_i$. \\
+		Inoltre, per $n$ sufficientemente grande, possiamo assumere che $\sqrt{n}\frac{\wbar{X}_n - p}{\sqrt{p(1-p)}}$ abbia distribuzione normale standard, per cui:
+		\[
+		P\Bigg[-z_{1 - \nicefrac{\alpha}{2}} \leq \sqrt{n}\frac{\wbar{X}_n - p}{\sqrt{p(1-p)}} \leq z_{1 - \nicefrac{a}{2}}\Bigg] = 1 - \alpha
+		\]
+		Esplicitando rispetto a $p$ si ottiene:
+		\[
+		P\Bigg[\wbar{X}_n - \frac{\sqrt{p(1-p)}}{\sqrt{n}}z_{1 - \nicefrac{\alpha}{2}} \leq p \leq \wbar{X}_n + \frac{\sqrt{p(1-p)}}{\sqrt{n}}z_{1 - \nicefrac{\alpha}{2}}z_{1 - \nicefrac{\alpha}{2}}\Bigg]
+		\]
+		Ora $\sqrt{p(1-p)} \leq \frac{1}{2}$, per cui:
+		\[
+		\Bigg[\wbar{X}_n - \frac{1}{2\sqrt{n}}z_{1 - \nicefrac{\alpha}{2}}; \wbar{X}_n + \sqrt{1}{2\sqrt{n}}z_{1 - \nicefrac{\alpha}{2}}\Bigg]
+		\]
+		fornisce un intervallo di confidenza per $p$ con livello di fiducia $1 - \alpha$.
+		\begin{example}{}{}
+		Ricopiare esempio dalle slide.
+		\end{example}
+		\section{Test di verifica delle ipotesi}
+		Sia $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$ uno spazio di probabilità parametrico. \\
+		Dobbiamo stabilire se il parametro $\theta$ goda di una certa proprietà oppure no. \\
+		In generale in un problema di test si è in presenza di una partizione $\Theta = \Theta_0 \cup \Theta_1$ con $\Theta_0 \cap \Theta_1 = \emptyset$. \\
+		Inoltre, definiamo con:
+		\[
+		H_0: \theta \in \Theta_0 \quad \text{ l'ipotesi nulla}
+		\]
+		e con
+		\[
+		H_1: \theta \in \Theta_1 \quad \text{ l'ipotesi alternativa}
+		\]
+		L'obiettivo è quello di ideare un procedimento probabilistico che, sulla base di osservazioni $X = (X_1, X_2, \dots, X_n)$, ci porti ad accettare $H_0$. \\
+		Definiamo anche due categorie di errori:
+		\begin{enumerate}
+			\item \textbf{errore di prima specie}: si ha quando si rifiuta $H_0$ quando è vera;
+			\item \textbf{errore di seconda specie}: si ha quando si accetta $H_0$ quando è falsa.
+		\end{enumerate}
+		La \textbf{significatività} $\alpha$ del test è la probabilità di commettere un errore di prima specie e valori tipici per $\alpha$ sono $0.1\ (10\%)$, $0.05\ (5\%)$ oppure $0.01\ (1\%)$. \\
+		Per accettare o rifiutare $H_0$ si dà una regola operativa. \\
+		Si rifiuta $H_0$ se una data statistica, dipendente dal test, $T = t(X_1, X_2, \dots, X_n)$ prende valori in $D$, che è la ragione di rifiuto ove la $D$ sta per ``denial'', cioè rifiuto $H_0$ se $T \in D$. \\
+		La funzione:
+		\[
+		\Theta \ni \theta \longrightarrow P_\theta(T \in D) \in \mathbbm{R}
+		\]
+		prende il nome di \textit{funzione di potenza} del test e:
+		\[
+		\alpha = \underset{\theta \in \Theta_0}{\sup}P_\theta[T \in D]
+		\]
+		L'obiettivo è quell di costruire $T$ e $D$ in modo che la significatività $\alpha$ sia fissata a un certo valore prestabilito.
+		\subsection{Test sulla media di una popolazione normale}
+		Sia $X \sim N(\mu, \sigma^2)$ con $\sigma^2$ noto. Questo prende il nome di \textbf{test di Gauss}.
+		\paragraph{Test bilaterale} Poniamo:
+		\[
+		H_0: \mu = \mu_0
+		\]
+		e
+		\[
+		H_1: \mu \neq \mu_0
+		\]
+		Rifiuto tutto se:
+		\[
+		\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{\sigma}{\sqrt{n}}} > z_{1 - \nicefrac{\alpha}{2}} \quad \textbf{regola di rifiuto}
+		\]
+		con $\wbar{X}_n = \frac{1}{n}\sum_{i=1}^{n}X_i$. \\
+		Controlliamone la significatività:
+		\begin{align*}
+			P_{\m = \mu_0}\Bigg(\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{\sigma}{\sqrt{n}}} > z_{1 - \nicefrac{\alpha}{2}}\Bigg) &= P[|N| > z_{1-\nicefrac{\alpha}{2}}] \\
+			&= 2P[N > z_{1-\nicefrac{\alpha}{2}}] \\
+			&= 2[1 - P[N \leq z_{1-\nicefrac{\alpha}{2}}] \\
+			&= 2(1 - 1 + \nicefrac{\alpha}{2}) \\
+			&= \alpha
+		\end{align*}
+	\paragraph{Test unilaterale} Poniamo:
+		\[
+		H_0: \mu \geq \mu_0
+		\]
+		e
+		\[
+		H_1: \mu < \mu_0
+		\]
+		Rifiuto tutto se:
+		\[
+		\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} < -z_{1 - \alpha} \quad \textbf{regola di rifiuto}
+		\]
+		Per controllare la significatività occorre verificare che:
+		\[
+		\underset{\mu \geq \mu_0}{\sup}P_{\mu}\Bigg[\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} < -z_{1-\alpha}\Bigg] \leq \alpha
+		\]
+		A tal scopo osserviamo la disuguaglianza:
+		\begin{align*}
+			\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} = \frac{\wbar{X}_n - \m + \mu - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} \geq \frac{\wbar{X}_n - \mu}{\nicefrac{\sigma}{\sqrt{n}}}
+		\end{align*}
+		cioè:
+		\[
+		\frac{\wbar{X}_n - \mu}{\nicefrac{\sigma}{\sqrt{n}}} \leq \frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} < -z_{1 - \alpha}
+		\]
+		Pertanto:
+		\begin{align*}
+			P_\mu\Bigg(\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} < -z_{1-\alpha} \Bigg) \leq P_\mu\Bigg(\frac{\wbar{X}_n - \mu}{\nicefrac{\sigma}{\sqrt{n}}}\Bigg) = \alpha
+		\end{align*}
+		perciò:
+		\[
+	\underset{\mu \geq \mu_0}{\sup}P_{\mu}\Bigg[\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} < -z_{1-\alpha}\Bigg] \leq \alpha
+		\]
+		Se, invece, abbiamo che:
+		\[
+		H_0: \mu \leq \mu_0
+		\]
+		e
+		\[
+		H_1: \mu > \mu_0
+		\]
+		Rifiuto tutto se:
+		\[
+ 		\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} > z_{1-\alpha}
+		\]
+		e il controllo di significatività è uguale.
+		\paragraph{Caso $\sigma^2$ non noto, test di Student} Consideriamo sempre il test bilaterale e unilaterale.
+		\subparagraph{Test bilaterale}
+		Poniamo:
+		\[
+		H_0: \mu = \mu_0
+		\]
+		e
+		\[
+		H_1: \mu \neq \mu_0
+		\]
+		Rifiuto tutto se:
+		\[
+		\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{S_n}{\sqrt{n}}} > t(n-1)_{1 - \nicefrac{\alpha}{2}} \quad \textbf{regola di rifiuto}
+		\]
+		ove $t(n-1)_{1-\nicefrac{\alpha}{2}}$ è il quantile della $T$ di Student.
+		\subparagraph{Test unilaterale}  Poniamo:
+		\[
+		H_0: \mu \geq \mu_0
+		\]
+		e
+		\[
+		H_1: \mu < \mu_0
+		\]
+		Rifiuto tutto se:
+		\[
+		\frac{\wbar{X}_n - \mu_0}{\nicefrac{S_n}{\sqrt{n}}} < -t(n-1)_{1 - \alpha} \quad \textbf{regola di rifiuto}
+		\]
+		Equivalentemente, se:
+		\[
+		H_0: \mu \leq \mu_0
+		\]
+		e
+		\[
+		H_1: \mu > \mu_0
+		\]
+		Rifiuto tutto se:
+		\[
+		\frac{\wbar{X}_n - \mu_0}{\nicefrac{S_n}{\sqrt{n}}} < t(n-1)_{1 - \alpha} \quad \textbf{regola di rifiuto}
+		\]
+		\subsection{Test sulla varianza di una popolazione normale}
+		Sia $X\sim N(\mu, \sigma^2)$ e consideriamo il test bilaterale e unilaterale.
+		\paragraph{Test bilaterale} Poniamo:
+		\[
+		H_0: \sigma^2 = \sigma_0^2
+		\]
+		e
+		\[
+		H_1: \sigma^2 \neq \sigma_0^2
+		\]
+		Ricordiamo che:
+		\[
+		\frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1)
+		\]
+		Sotto $H_0$, otteniamo:
+		\[
+	\frac{(n-1)S_n^2}{\sigma^2} \sim \chi^2(n-1) = \frac{(n-1)S_n^2}{\sigma_0^2} \sim \chi^2(n-1)
+		\]
+		La regola di rifiuto è la seguente:
+		\[
+		\frac{(n-1)S_n^2}{\sigma_0^2} > \chi^2(n-1)_{1-\nicefrac{\alpha}{2}}
+		\]
+		oppure, equivalentemente:
+		\[
+		\frac{(n-1)S_n^2}{\sigma_0^2} < \chi^2(n-1)_{\nicefrac{\alpha}{2}}
+		\]
+		\paragraph{Test unilaterale}  Poniamo:
+		\[
+		H_0: \sigma^2 \geq \sigma_0^2
+		\]
+		e
+		\[
+		H_1: \sigma^2  < \sigma_0^2
+		\]
+		La regola di rifiuto è la seguente:
+		\[
+		\frac{(n-1)S_n^2}{\sigma_0^2} > \chi^2(n-1)_{\alpha}
+		\]
+		Controlliamone la significatività:
+		\begin{align*}
+			\frac{(n-1)S_n^2}{\sigma_0^2} &= \frac{(n-1)S_n^2}{\sigma^2} \frac{\sigma^2}{\sigma_0^2} \geq \frac{(n-1)S_n^2}{\sigma^2}
+		\end{align*}
+		cioè:
+		\[
+		\frac{(n-1)S_n^2}{\sigma^2} \leq \frac{(n-1)S_n^2}{\sigma_0^2}
+		\]
+		da cui:
+		\[
+		\frac{(n-1)S_n^2}{\sigma_0^2} < \chi^2(n-1)_{\alpha} \Rightarrow \frac{(n-1)S_n^2}{\sigma^2} < \chi^2(n-1)_{\alpha}
+		\]
+		per cui:
+		\[
+		P_{\sigma^2}\Bigg[\frac{(n-1)S_n^2}{\sigma_0^2} < \chi^2(n-1)_\alpha\Bigg] \leq P_{\sigma^2}\Bigg[\frac{(n-1)S_n^2}{\sigma^2} < \chi^2(n-1)_{\alpha}\Bigg] = \alpha \quad \forall \sigma^2\geq \sigma_0^2
+		\]
+		cioè:
+		\[
+		\underset{\sigma^2 \geq \sigma_0^2}{\sup}P_{\sigma^2}\Bigg[\frac{(n-1)S_n^2}{\sigma_0^2} < \chi^2(n-1)_{\alpha}\Bigg] \leq \alpha
+		\]
+		Equivalentemente se abbiamo:
+		\[
+		H_0: \sigma^2 \leq \sigma_0^2
+		\]
+		e
+		\[
+		H_1: \sigma^2  > \sigma_0^2
+		\]
+		La regola di rifiuto è la seguente:
+		\[
+		\frac{(n-1)S_n^2}{\sigma_0^2} > \chi^2(n-1)_{1-\alpha}
+		\]
+		\subsection{Confronto della media di de popolazioni normali indipedenti}
+		Siano $X \sim N(\mu_x, \sigma^2_x)$ e $Y \sim N(\mu_y, \sigma^2_y)$.
+		\paragraph{Caso $\sigma^2_x, \sigma^2_y$ noti}
+		Poniamo:
+		\[
+		H_0: \sigma_x = \sigma_y
+		\]
+		e
+		\[
+		H_1: \sigma_x \neq \sigma_y
+		\]
+		Sia $(X_1, X_2, \dots, X_n)$ il campione di $X$ con $\wbar{X}_n = \frac{1}{n}\sum_{i=1}^{n}X_i$ e sia $(Y_1, Y_2, \dots, Y_m)$ il campione di $Y$ con $\wbar{Y}_m =  \frac{1}{m}\sum_{i=1}^{m}Y_i$. \\
+		La successione:
+		\[
+		\frac{\wbar{X}_n - \mu_x - (\wbar{Y}_m - \mu_)}{\sqrt{\nicefrac{\sigma^2_x}{n} + \nicefrac{\sigma^2_y}{m}}} \sim N(0, 1)
+		\]
+		e sotto $H_0$ diventa:
+		\[
+\frac{\wbar{X}_n  - \wbar{Y}_m}{\sqrt{\nicefrac{\sigma^2_x}{n} + \nicefrac{\sigma^2_y}{m}}}
+		\]
+		Rifiuto tutto se:
+		\[
+\frac{|\wbar{X}_n  - \wbar{Y}_m|}{\sqrt{\nicefrac{\sigma^2_x}{n} + \nicefrac{\sigma^2_y}{m}}} > z_{1 - \nicefrac{\alpha}{2}}
+		\]
+		\paragraph{Caso $\sigma^2_x$ e $\sigma^2_y$ non noti ma uguali}
+		Possiamo scrivere $\sigma^2_x = \sigma^2_y = \sigma^2$ ma $\sigma^2$ è ignoto.\\
+		Allora la successione:
+		\[
+		(n-1)\frac{S_n^{x2}}{\sigma^2} + (m-1)\frac{S_n^{y2}}{\sigma^2} \sim \chi^2(n+m-2)
+		\]
+		E sappiamo che:
+		\[
+		\frac{(\wbar{X}_n - \mu_x) - (\wbar{Y}_m - \mu_y)}{\sigma\sqrt{\nicefrac{1}{n} + \nicefrac{1}{m}}} \sim N(0, 1)
+		\]
+		Allora:
+		\[
+		\dfrac{\dfrac{(\wbar{X}_n - \mu_x) - (\wbar{Y}_m - \mu_y)}{\sigma\sqrt{\nicefrac{1}{n} + \nicefrac{1}{m}}}}{(n-1)\frac{S_n^{x2}}{\sigma^2} + (m-1)\frac{S_n^{y2}}{\sigma^2}}\sqrt{n+m-2} \sim t(n + m - 2)
+		\]
+		Sotto $H_0$ diventa:
+		\[
+\dfrac{\dfrac{\wbar{X}_n - \wbar{Y}_m}{\sqrt{\nicefrac{1}{n} + \nicefrac{1}{m}}}}{S_p}
+		\]
+		con $S_p = \sqrt{\frac{(n-1)S_n^{x2} + (m-1)S_n^{y2}}{n+m-2}}$. \\
+		Rifiuto tutto se:
+		\[
+		\frac{|\wbar{X}_n - \wbar{Y}_m|}{S_p\sqrt{\nicefrac{1}{n} + \nicefrac{1}{m}}} > t_{1 - \nicefrac{\alpha}{2}}(n+m-2)
+		\]
+		\begin{exericise}{}{}
+		Copiare esercizi dalle slide.
+		\end{exercise}
+		\subsection{$p$-value di un test statistico}
+		I test statistici hanno la proprietà che se rifiuto $H_0$ con un certo livello di significatività $\alpha$, allora rifiuto a ogni livello $\alpha' \geq \alpha$. \\
+		Definiamo quindi $p$-value il più grande livello di significatività al di sotto del quale accetto $H_0$.
+		\begin{note}{}{}
+			A differenza della significatività, il $p$-vale non è stabilito a priori e dipende invece dalle osservazioni.
+		\end{note}
+		\begin{example}{$p$-value del test di Gauss}{p_value_gauss}
+		Poniamo:
+		\[
+		H_0: \mu = \mu_0
+		\]
+		e
+		\[
+		H_1: \mu \neq \mu_0
+		\]
+		con la seguente regola di rifiuto:
+		\[
+		\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{\sigma}{\sqrt{n}}} > z_{1 - \nicefrac{\alpha}{2}}
+		\]
+		Il $p$-value è determinato da:
+		\[
+		\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{\sigma}{\sqrt{n}}} = z_{1 - \nicefrac{p}{2}}
+		\]
+		cioè:
+		\[
+		1 - \frac{p}{2} = \Phi\Bigg(\frac{|\wbar{X}_n - \mu_0|}{\sigma}\sqrt{n}\Bigg) \Rightarrow p = 2\Bigg(1 - \Phi\Bigg(\frac{|\wbar{X}_n - \mu_0|}{\sigma}\sqrt{n}\Bigg)\Bigg)
+		\]
+		\end{example}
+		\begin{exercise}{}{}
+		Copiare esercizio dalle slide
+		\end{exercise}
 \end{document}
