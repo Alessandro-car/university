@@ -2785,11 +2785,11 @@
 	\[
 	\Phi = E2\pi rl
 	\]
-	ALlora la legge di Gauss diventa:
+	Allora la legge di Gauss diventa:
 	\[
 	\epsilon_0\Phi = q_{int} \Rightarrow \epsilon_0E2\pi r l = q_{int}
 	\]
-	ove $\lambda = \dfrac{q_{int}}{\lambda}$, allora il campo elettrico è pari a:
+	ove $\lambda = \dfrac{q_{int}}{l}$, allora il campo elettrico è pari a:
 	\[
 	E = \frac{\lambda}{2\pi\epsilon_0r}
 	\]
@@ -2888,4 +2888,222 @@
 	V = \sum_{i=1}^{n}V_i = \frac{1}{4\pi\epsilon_0}\sum_{i=1}^{n}\frac{q_i}{r_i}
 	\]
 	ove $q_i$ è il valore della $i$-esima carica e $r_i$ è la distanza radiale della $i-$esima carica dal punto in esame. 
+	\section{Potenziale dovuto a una distribuzione continua di carica}
+	Quando una distribuzione di carica $q$ è continua, non possiamo semplicemente sommare le potenziali in ogni punto per trovare la potenziale risultante nel punto $P$. Dobbiamo, invece, scegliere un elemento infinitesimo di carica $dq$, determinare il potenziale $dV$ in $P$ dovuto a $dq$ e poi integrare sull'intera distribuzione di carica. \\
+	Poniamo di nuovo lo zero del potenziale all'infinito. Se consideriamo l'elemento di carica $dq$ come una particella, allora possiamo scrivere $dV$ come:
+	\[
+	dV =\frac{1}{4\pi\epsilon_0}{dq}{r}
+	\]
+	ove $r$ è la distanza tra $P$ e $dq$. Per trovare il potenziale $V$ in $P$, calcoliamo l'integrale per sommare i ptoenziali dovuti a tutti gli elementi di carica:
+	\[
+	V = \int dV = \frac{1}{4\pi\epsilon_0}\int_{dq}^{r}
+	\]
+	L'integrale deve esteso all'intera distribuzione di carica.
+	\section{Potenziale di una sfera conduttrice carica}
+	Se il corpo conduttore è una sfera di raggio $R$, la carica $q$ si dispone in modo uniforme sulla superficie e il campo elettrico segue la legge del campo radiale  per distanze $r$ uguali o maggiori al raggio $R$ della sfera. Il campo elettrico sulla superficie e all'esterno della sfera è uguale al campo che si avrebbe se tutta la carica $q$ fosse concentrata nel centro della sfera.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{sfera_carica}
+	\end{figure}
+	ove il campo elettrico vale:
+	\begin{itemize}
+		\item all'\textbf{interno della sfera}
+		\[
+		E = 0
+		\]
+		\item \textbf{sulla superficie della sfera}:
+		\[
+		E = \frac{1}{4\pi\epsilon_0}{q}{R^2}
+		\]
+		\item \textbf{all'esterno della sfera} $r > R$:
+		\[
+		E = \frac{1}{4\pi\epsilon_0}{q}{r^2}
+		\]
+	\end{itemize}
+	Allora troviamo il potenziale come:
+	\[
+	V_r - V_\infty = -\int_{r}^{\infty}\vec{E} \cdot d\vec{s} = \frac{q}{4\pi\epsilon_0r}
+	\]
+	\section{Potenziale di un condensatore piano}
+	Un \textbf{condensatore piano} è formato da due piatti piano e paralleli, detti armature, di area $A$ posti a distanza $d$ su cui sono presenti cariche opposte $+q$ e $-q$.
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{condensatore_piano}
+		\caption{Un condensatore piano}
+	\end{figure}
+	e ricordiamo che il campo di un condensatore piano è pari a:
+	\[
+	\vec{E} = \frac{\sigma}{\epsilon_0}\hat{j}
+	\]
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{potenziale_cond_piano}
+		\caption{Campo elettrico del condensatore piano}
+	\end{figure}
+	La differenza di potenziale tra le armature è data da:
+	\begin{align*}
+	V_2 - V_1 &= 
+	 -\int_{1}^{2}\vec{E} \cdot d\vec{s} \\ 
+	 &= -\int_{1}^{2}\frac{\sigma}{\epsilon_0}\hat{j}\cdot d\vec{s} \\
+	 &= -\int_{1}^{2}\frac{\sigma}{\epsilon_0}dy \\
+	 &= -\frac{\sigma}{\epsilon_0}(y_2 - y_1) \\
+	 &= \frac{\sigma}{\epsilon_0}d
+	\end{align*}
+	La carica presente sulle armature è $q = \sigma A$ e la densità superficiale è pari a $\sigma = \dfrac{q}{A}$, allora abbiamo che:
+	\begin{align*}
+	\Delta V &= \frac{\sigma}{\epsilon_0}d  \\
+	&= \frac{q}{A}\frac{1}{\epsilon_0}d \\
+	&= \frac{d}{A\epsilon_0}q
+	\end{align*}
+	Da questa possiamo ricavare $q$ come:
+	\[
+	q = \frac{A\epsilon_0}{d}\Delta V
+	\]
+	Quindi, in ogni condensatore la carica immagazzinata sulle armature è proporzionale alla differenza di potenziale applicata tra di esse.
+	\chapter{Capacità elettrica}
+	I condensatori elettrici hanno la capacità di immagazzinare energia elettrica e la quantità di carica immagazzinata è chiamata \textbf{capacità elettrica}. \\
+	In ogni condensatore la carica immagazzinta sulle armature è proporzionale alla differenza di potenziale applicata tra di esse:
+	\[
+	q = C\Delta V
+	\]
+	ove la constante di proporzionalità $C$ è chiamata \textbf{capacità elettrica} del condensatore. Il suo valore dipende solo dalla geometria delle armature e non dalla carica o dalla differenza di potenziale. La capacità è una misura di quanta carica debba essere messa sulle armature per produrre tra di esse una certa differenza di potenziale: \textit{maggiore è la capacità maggiore è la carica necessaria}. \\
+		L'unità di misura della capacità nel SI è il coulumn fratto volt che prende il nome di \textbf{farad}:
+	\[
+	1\text{ farad} = 1\ \text{F} = 1 \text{ coulomn/volt } = 1\ C/V
+	\]
+	
+	\paragraph{Capacità del condensatore piano}
+	Partiamo dal calcolo della differenza di potenziale $\Delta V$, che sappiamo essere dal capitolo precedente pari a:
+	\[
+	\Delta V = \frac{d}{A\epsilon_0}q
+	\]
+	ove $q = \frac{A\epsilon_0}{d}\Delta V$
+	Possiamo calcolare $C$ come:
+	\begin{align*}
+	C &= \frac{q}{\Delta V} \\
+	&= \dfrac{\frac{A\epsilon_0}{d}\Delta V}{\Delta V} \\
+	&= \frac{A\epsilon_0}{d}
+	\end{align*}
+	\paragraph{Capacità del condensatore cilindrico}
+	Ricordiamo il condensatore cilindrico come:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{condensatore_cilindrico}
+	\end{figure}
+	Anche in questo caso partiamo dalla differenza di potenziale $\Delta V$:
+	\begin{align*}
+		\Delta V &= V_1 - V_2 \\
+		&= -\int_{R_2}^{R_1}\vec{E}\cdot d\vec{r} \\
+		&= -\int_{R_2}^{R_1}\frac{\lambda}{2\pi\epsilon_0r}dr \\
+		&= \frac{\lambda}{2\pi\epsilon_0}\ln\Bigg(\frac{R_2}{R_1}\Bigg) \\
+		&= \frac{q}{2\pi\epsilon_0l}\ln\Bigg(\frac{R_2}{R_1}\Bigg) 
+	\end{align*}
+	Ricordando che $E = \frac{\lambda}{2\pi\epsilon_0r}$ e $\lambda = \frac{q}{l}$. \\
+	Allora possiamo calcolare la capacità come:
+	\begin{align*}
+	C &= \frac{q}{\Delta V} \\
+	&= \dfrac{q}{\frac{q}{2\pi\epsilon_0l}\ln\Bigg(\frac{R_2}{R_1}\Bigg)} \\
+	&= \frac{2\pi\epsilon_0l}{\ln\Bigg(\dfrac{R_2}{R_1}\Bigg)}
+	\end{align*}
+	\subsection{Caricare un condensatore}
+	Un modo per caricare un condensatore è quello di inserirlo in un circuito elettrico nel quale è presente una batteria. Un \textit{circuito elettrico} è un percorso attraverso il quale la carica può fluire. Una \textit{batteria} è in dispositivo che mantiene una certa differenza di potenziale tra i suoi \textit{terminali}, detti \textit{poli}, \textit{elettrodi} o \textit{morsetti}. \\
+	Le seguenti figure mostrano una batteria collegata a un condensatore.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{caricare_condensatore}
+	\end{figure}
+	La prima figura mostra una batteria $B$, un interruttore $S$, un condensatore scarico $C$ e i fili di collegamento formano un circuito. Lo stesso circuito è mostrato nella sceonda figura che mostra uno \textit{schema elettrico} in cui la batteria, l'interruttore e il condensatore sono mostrati da simboli. La batteria mantiele la differenza di potenziale $V$ tra i suoi poli. Il polo con il potenziale più alto è indicato con +, detto \textit{polo positivo} e il polo con potenziale più basso è indicato con -, detto \textit{polo negativo}. \\
+	Il circuito, in questo caso, è incompleto perchè $S$ è aperto; ovvero non connette elettricamente i fili a esso collegati.
+	\section{Condensatori in serie e in parallelo}
+	Qunado in un circuito c'è una combinazione di condensatori, qualche volta possiamo sostituire questa combinazione con un \textbf{condensatore equivalente}, cioè con un singolo condensatore che ha la stessa capacità della combinazione di condensatori. In questo modo, possiamo semplificare il circuito e trovare soluzioni più semplici per le grandezze incognite del circuito.
+	\subsection{Condensatori in parallelo}
+	La seguente figura mostra un circuito elettrico in cui tre condensatori sono collegati \textit{in parallelo} a una batteria $B$.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{condensatori_parallelo}
+	\end{figure}
+	Quando dei condensatori sono collegati in parallelo, ciascun condensatore ha la stessa differenza di potenziale $V$, che produce la carica sul condensatore. In generale:
+	\begin{center}
+		quando una differenza di potenziale $V$ viene applicata a diversi condensatori collegati in parallelo, tale differenza di potenziale $V$ è applicata a ciascun condensatore. La carica totale $q$ immagazzinata nei condensatori è la somma delle cariche immagazzinate in ciascun condensatore.
+	\end{center}
+	Quando ci troviamo in situazioni di questo tipo, più condensatori collegati in parallelo possono essere sostituiti da un condensatore equivalente che ha la stessa carica totale $q$ e la stessa differenza di potenziale $V$ dei condensatori reali. \\
+	Per trovare la carica di ciascun condensatore reale:
+	\[
+	q_1 = C_1V \quad q_2  = C_2V \quad q_3 = C_3V
+	\]
+	La carica totale della combinazione in parallelo è pari a:
+	\[
+	q = q_1 + q_2 + q_3 = (C_1 + C_2 + C_3)V
+	\]
+	La capacità equivalente, con la stessa carica totale $q$ e la differenza di potenziale $V$ applicata, è pari a:
+	\[
+	C_{eq} = \frac{q}{V} = C_1 + C_2 + C_3
+	\]
+	Per $n$ condensatori abbiamo che:
+	\[
+	C_{eq} = \sum_{i=1}^{n}C_i
+	\]
+	\subsection{Condensatori in serie}
+	La seguente figura mostra tre condensatori collegati \textit{in serie} alla batteria $B$. In ``serie'' vuol dire che i condensatori sono collegati in successione, uno dopo l'altro, e che la differenza di potenziale $V$ è applicata alle due estremità della serie. Allora, la differenza di potenziale presente nei condensatori in serie produce su ciascuno di essi un'identica carica $q$.
+	\begin{center}
+		Quando una differenza di potenziale $V$ è applicata a diversi condensatori collegati in serie, i condensatori hanno un'identica carica $q$. La somma delle differenze di potenziale presenti su tutti i condensatori è uguale alla differenza di potenziale $V$ applicata.
+	\end{center}
+	Quando ci troviamo in situazioni di questo tipo, possiamo semplificare il circuito sostituendo i condensatori con un condensatore equivalente che ha stessa carica $q$ e la stessa differenza di potenziale \textit{totale} $V$ della serie di condensatori reali. \\
+	Troviamo la differenza di potenziale di ciascun condensatore reale in figura:
+	\[
+	V_1 = \frac{q}{C_1} \quad V_2 = \frac{q}{V_2} \quad V_3 = \frac{q}{C_3}
+	\]
+	La differenza di potenziale $V$ è la somma delle potenziali di ciascun condensatore:
+	\[
+	V = V_1 + V_2 + V_3 = q\Bigg(\frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3}\Bigg)
+	\]
+	La capacità equivalente è pari a:
+	\[
+	C_{eq} = \frac{q}{V} = \frac{1}{\sfrac{1}{C_1} + \sfrac{1}{C_2} + \sfrac{1}{C_3}}
+	\]
+	oppure
+	\[
+	\frac{1}{C_{eq}} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3}
+	\]
+	Per $n$ condensatori abbiamo che:
+	\[
+	\frac{1}{C_{eq}} = \sum_{i=1}^{n}\frac{1}{C_i}
+	\]
+	\section{Energia immagazzinata in un campo elettrico}
+	Per caricare un condensatore occorre un agente esterno che compia lavoro. Mentre la carica aumenta, anche il campo elettrico tra i piatti, che si oppone al trasferimento continuato, aumenta. Di conseguenza, aumenta il lavoro necessario. \\
+	Supponiamo che, in un certo istante, una carica $q'$ è stata trasferita da un piatto di un condensatore all'altro. La differenza di potenziale $V'$ tra i piatti in quell'istante sarà $q'/C$. Se un ulteriore incremento di carica $dq'$ viene poi trasferito, l'incremento di lavoro richiesto sarà:
+	\[
+	dL = V'dq'=\frac{q'}{C}dq'
+	\]
+	Il lavoro necessario per portare la carica totale del condensatore a un valore finale $q$ è:
+	\[
+	L = \int dL = \frac{1}{C}\int_{0}^{q}q'dq' = \frac{q^2}{2C}
+	\]
+	Questo lavoro è immagazzinato sotto forma di energia potenziale $U$ nel condensatore, per cui:
+	\[
+	U = \frac{q^2}{2C} = \frac{1}{2}CV^2
+	\]
+	in quanto $q = C\Delta V$. \\
+	In presenza di un sistema di $q$ puntiformi fisse, l'energia immagazzinata nel campo elettrico è uguale al lavoro svolto da un agente esterno per portare il sistema nella configurazione indicata, spostando ogni $q$ dall'infinito alla propria posizione.
+	\section{Dielettrici}
+	Un dielettrico è un materiale non conduttore e, al contrario dei conduttori, anche in presenza di un campo elettrico esternoin essi non si genera un movimento di cariche. Sperimentalmente si osserva che introducendo tra le armature di un condensatore un dielettrico la \textbf{differenza di potenziale, e quindi anche il campo, diminuisce}. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{dielettrico}
+		\caption{Un condensatore piano con una lastra di dielettrico inserita}
+	\end{figure}
+	Se lo spazio è completamente riempito, allora:
+	\[
+	\Delta V = \frac{\Delta V_0}{k}
+	\]
+	e il campo elettrico è pari a:
+	\[
+	E = \frac{\Delta V}{d} = \frac{\Delta V_0}{kd} = \frac{E_0}{k}
+	\]
+	ove $k = \frac{\epsilon_0}{\epsilon_r} > 1$ è la costante dielettrica relativa, $\epsilon_0$ è la costante dielettrica del vuoto e $\epsilon_r$ è la costante dielettrica del mezzo. \\
+	Quando mettiamo un dielettrico in un campo elettrico dal punto di vista atomico e molecolare si verificano due scenari.
+	\begin{enumerate}
+		\item \textbf{Dielettrici polari}. Le molecole di alcuni dielettrici, come l'acqua, hanno momenti di dipolo elettrico permanenti. In tali materiali i dipoli elettrici tendono ad allinearsi con il campo elettrico esterno. Poichè le molecole si spingono l'una con l'altra a causa della loro agitazione termica casuale, l'allineamento non è completo ma diventa più completo via via che il modulo del campo applicato viene aumentato, o la temperatura e quindi l'agitazione vengono diminuite. L'allineamento dei dipoli genera un camo elettrico opposto al campo applicato ma più piccolo in modulo.
+		\item \textbf{Dielettrici non polari}. A prescindere dal fatto che abbiamo o meno momenti di dipolo elettrico permanenti, le molecole acquistano momenti di dipolo per induzione quando vengono poste in un campo elettrico esterno. Questo perchè il campo elettrico esterno tende ad ``allungare'' le molecole, separando leggermente il centro della carica negativa e quello della carica positiva.
+	\end{enumerate}
 \end{document}
