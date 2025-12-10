@@ -2644,7 +2644,7 @@
 	Consideriamo la seguente figura:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1.0\textwidth]{legge_gauss}
+		\includegraphics[width=0.6\textwidth]{legge_gauss}
 	\end{figure}
 	Sono mostrate quattro superfici gaussiane in sezione trasversale. Consideriamole una alla volta.
 	\begin{itemize}
@@ -2677,5 +2677,215 @@
 		se una carica in eccesso viene posta su un conduttore isolato, la carica si sposterà internamente sulla superficie esterna del conduttore. Nessuna carica in eccesso si troverà all'interno del conduttore.
 	\end{center}
 	Questo perchè in \textbf{condizioni di equilibrio} all'interno del conduttore il campo elettrico deve essere nullo, altrimenti il campo eserciterebbe una forza sugli elettroni di conduzione presenti e esisterebbe sempre una corrente all'interno del conduttore. Naturalmente non c'è una corrente perpetua di questo tipo all'interno di un conduttore isolato, perciò il campo elettrico è nullo. \\
-	Se $\vec{E}$ è nullo allora anche il flusso che attraversa la superficie gaussiana deve essere nullo. Allora, poichè la carica in eccesso non è all'interno della superficie gaussiana, deve essere al di fuori di essa, il che vuol dire che deve essere sulla superficie del conduttore.
+	Se $\vec{E}$ è nullo allora anche il flusso che attraversa la superficie gaussiana deve essere nullo. Allora, poichè la carica in eccesso non è all'interno della superficie gaussiana, deve essere al di fuori di essa, il che vuol dire che deve essere sulla superficie del conduttore. \\
+	Il campo è perpendicolare alla superficie ed è pari a $\dfrac{\sigma}{\epsilon_0}$ ove $\sigma$ è la densità di carica superficiale.
+	\paragraph{Conduttore isolato con una cavità}
+	La seguente figura mostra un conduttore appeso con una cavità che è totalmente all'interno del conduttore:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{conduttore_cavita}
+	\end{figure}
+	È ragionevole supporre che, quando scaviamo il materiale elettrico neutro per creare la cavità, non cambiamo la distribuzione della carica o la struttura del campo elettrico. Per dimostrarlo quantitativamente dobbiamo utilizzare la legge di Gauss. \\
+	Tracciamo una superficie gaussiana che circonda la cavità, vicina alla sua superficie, ma all'interno del corpo del conduttore. Poichè $\vec{E} = 0$ all'interno del conduttore, non può esserci flusso attraverso questa nuove superficie gaussiana. Perciò, dalla legge di Gauss, la superficie non può racchiudere alcuna carica totale. Quindi, non può esserci una carica risultatnte sulle pareti della cavità; l'eccesso di carica resta suller superficie esterna del conduttore. \\
+	\begin{note}{\nmu Conduttore neutro con cavità }
+		Se un conduttore è neutro con all'interno una cavità, se lo immergiamo in un campo elettrico:
+		\begin{itemize}
+			\item \textbf{sulla superficie esterna} c'è una redistribuzione della carica del conduttore cavo;
+			\item \textbf{all'interno} del conduttore cavo non è presente nessun campo, non si deposita alcuna carica.
+		\end{itemize} 
+		Svolge il ruolo di \textbf{schermo elettrostatico} dall'esterno verso l'interno. \\
+		Se, invece, il conduttore presenta delle cariche $q$ al suo interno, \textbf{nella cavità} si crea un campo elettrico con linee di campo perpendicolari ad entrambe le superfici e \textbf{all'esterno della cavità} si crea un campo elettrico che dipende solo dalla superficie esterna e dalla quantità di carica $q$ quindi \textbf{non} svolge il ruolo di schermo elettrostatico.
+	\end{note}
+	\subsection{Simmetria piana}
+	Consideriamo una porzione di un piano non conduttore, sottile e infinito, avente una densità superficiale di carica positiva e uniforme $\sigma$, come mostrato in figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{lamina_carica}
+	\end{figure}
+	Troviamo il campo elettrico $\vec{E}$ a una distanza $r$ davanti alla lamina. Un'utile superficie gaussiana è un cilindro chiuso avente basi di area $A$, posto in modo tale da attraversare il piano perpendicolarmente come mostrato nella figura precedente. \\
+	Per simmetria, $\vec{E}$ deve essere perpendicolare al foglio e quindi alle basi. Inoltre, poirchè la carica è positiva, $\vec{E}$ è diretta nel verso \textit{uscente} della lamina e quindi le linee del campo elettrico attraversano le due superfici gaussiana nel verso uscente. Inoltre, poichè le liene del campo non attraversano la superficie curva, non c'è flusso attraverso questa porzione di superficie gaussiana. Quindi $\vec{E} \cdot d\vec{A}$ è semplicemente $EdA$, allora la legge di Gauss:
+	\[
+	\epsilon_0\oint\vec{E} \cdot d\vec{A} = q_{int}
+	\]
+	diventa:
+	\[
+	\epsilon_0(EA + EA) = \sigma A
+	\]
+	dove $\sigma A$ è la carica racchiusa dalla superficie gaussiana. Questa dà:
+	\[
+	E = \frac{\sigma}{2\epsilon_0}
+	\]
+	Dal momento che stiamo considerano un piano infinito di carica con densità puntiforme, questo risultato vale per ogni punto a una distanza finita dal piano.
+	\subsection{Simmetria cilindrica}
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{simmetria_cilindrica}
+	\end{figure}
+	Questa figura mostra una sezione di una bacchetta di plastica cilindrica, infinitamente lunga, con una densità lineare uniforme di carica $\lambda$. Vogliamo trovare un'espressione per il modulo $\vec{E}$ del campo elettrico a una distanza $r$ dall'asse cnetrale della baccketta, esternamente a essa. \\
+	La distribuzione di carica e il campo hanno simmetria cilindrica. Per trovare il campo alla distanza $r$ racchiudiamo un tratto della barretta in una superficie gaussiana cilindrica di raggio $r$ e lunghezza $h$. Possiamo ora applicare la legge di Gauss che mette in relazione la carica racchiusa dal cilindro e il flusso totale attraverso la superficie cilindrica.  \\
+	Inoltre, a causa della simmetria, il campo elettrico in ogni punto deve essere radiale e orientato verso l'esterno, quindi, in ogni punto delle due basi il campo è sempre parallelo alla superficie e non la attraverso, quindi il flusso attraverso ciascuna base è zero. \\
+	Per trovare il flusso attraverso la superficie curva del cilindro osserviamo che per ogni elemento di superficie il vettore area d$\vec{A}$ è radiale e orientato verso l'esterno. Il prodotto scalare è semplicemente $EdA\cos0 = EdA$ e possiamo portare $E$ fuori dall'integrale e sappiamo che l'area totale è pari a $2\pi r h$, allora il flusso totale attraverso il cilindro è pari a:
+	\[
+	\Phi = EA\cos 0 = E(2\pi r h)\cos 0 = E(2\pi r h)
+	\]
+	Al secondo membro della legge di Gauss abbiamo la carica $q_{int}$ racchiusa dal cilindro. Siccome la densità lineare di carica è uniforme, la carica racchiusa è $\lambda h$. Quindi, la legge di Gauss:
+	\[
+	\epsilon_0\Phi = q_{int}
+	\]
+	si riduce a:
+	\[
+	\epsilon_0E(2\pi r h) = \lambda h
+	\]
+	ovvero:
+	\[
+	E = \frac{\lambda}{2\pi \epsilon_0 r}
+	\]
+	\begin{note}{\nmu Campo elettrico sulla superficie}{}
+		Sulle superficie abbiamo che $r = R \Rightarrow E = \frac{\lambda}{2\pi\epsilon_0R}$ e abbiamo che $\sigma= \frac{\lambda}{2\pi R}$, allora:
+		\[
+		E = \frac{\sigma}{\epsilon_0}
+		\] 
+	\end{note}
+	\subsection{Condensatori}
+	Un condensatore è formato da due conduttori ``affacciati'' detti armature tra cui vi è completa induzione elettrostatica, ovvero sono presenti cariche elettriche uguali ed opposte. \\
+	Ad esempio, un \textbf{condensatore piano} è formato da due piatti piani e paralleli, detti armature, di area $A$ posti a distanza $d$ su cui sono presenti cariche opposte $+q$ e $-q$.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{condensatore_piano}
+		\caption{Un condensatore piano}
+	\end{figure}
+	Un condensatore cilindrico ideale è formato da due cilindri conduttori coassiali carichi con cariche opposte $+q$ per il cilindro interno e $-q$ per quello esterno.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{condensatore_cilindrico}
+	\end{figure}
+	\paragraph{Campo di un condensatore piano}
+	Un condensatore piano ideale è formato da due lastre piane, dette armature, parallele indefinite cariche con densità di cariche opposte $+\sigma$ per la lastra 1 e $-\sigma$ per la lastra 2:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\textwidth]{campo_cond_piano}
+	\end{figure}
+	ove $|\vec{E}_1| \dfrac{\sigma}{2\epsilon_0}$ è il vettore campo elettrico uscente per la piastra con carica positiva. \\
+	$|\vec{E}_2| = \dfrac{\sigma}{2\epsilon_0}$ è il vettore campo elettrico entrante per la piastra con carica negativa.
+	Il campo elettrico si calcola con il \textbf{principio di sovrapposizione}:
+	\begin{align*}
+		\vec{E} = \vec{E}_1 + \vec{E}_2
+	\end{align*}
+	Allora:
+	\[
+	E = E_1 + E_2 = 2\frac{\sigma}{2\epsilon_0} = \frac{\sigma}{\epsilon_0}
+	\]
+	\paragraph{Condensatore cilindrico} Un condensatore cilindrico ideale è formato da due cilindri conduttori coassiali carichi con cariche opposte $+q$ per il cilindro interno e $-q$ per quello esterno.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{campo_cond_cilindrico}
+	\end{figure}
+	$\vec{E}$ è radiale, va da $R_1$ a $R_2$, e possiamo calcolare il modulo di $\vec{E}$ tramite il teorema di Gauss applicato alla superficie chiusa cilindrica coassiale e avente raggio $r$ : $R_1 < r < R_2$:
+	\[
+	\Phi = E2\pi rl
+	\]
+	ALlora la legge di Gauss diventa:
+	\[
+	\epsilon_0\Phi = q_{int} \Rightarrow \epsilon_0E2\pi r l = q_{int}
+	\]
+	ove $\lambda = \dfrac{q_{int}}{\lambda}$, allora il campo elettrico è pari a:
+	\[
+	E = \frac{\lambda}{2\pi\epsilon_0r}
+	\]
+	\chapter{Potenziale elettrico}
+	Un obiettivo della fisica è identificare le forze fondamentali presenti in natura, come la forza elettrica. A questo è legato l'obiettivo di determinare se una forza è conservativa, cioè può essere associata un'energia potenziale e questo è importante in quanto si può applicare il principio di conservazione dell'energia meccanica.
+	\section{Potenziale elettrico ed energia potenziale elettrica}
+	Definiamo il potenziale elettrico, o \textit{potenziale}, in termini dell'energia potenziale elettrica. \\
+	Precedentemente abbiamo definito l'energia potenziale come:
+	\[
+	U = -L
+	\]
+	Seguiamo lo stesso procedimento con la forza elettrica. Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{potenziale_elettrico}
+	\end{figure}
+	Vogliamo trovare il potenziale associato a una carica di prova $q_0$ posta nel punto $P$ di un campo elettrico generato da una bacchetta di carica. Innanzitutto dobbiamo trovare una configurazione di riferimento per la quale $U = 0$ e possiamo farlo ponendo la carica di prova infinitamente lontano dalla bacchetta. Poi portiamo la cariac di prova dalla distanza infinita al punto $P$. Lungo il percorso misuriamo il lavoro compiuto dalla forza elettrica sul campo di prova. \\
+	Ora definiamo il potenziale elettrico $V$ nel punto $P$ in termini del lavoro compiuto dalla forza elettrica e della risultante energia potenziale:
+	\[
+	V = \frac{-L_\infty}{q_0} = \frac{U}{q_0}
+	\]
+	Il potenziale elettrico è la quantità di energia potenziale elettrica per unità di carica corrispondente alla situazione in cui una carica di prova positiva viene avvicinata da una distanza infinita. $V$ è una grandezza scalare e può essere positiva o negativa. \\
+	Ripetendo questo procedimento, troviamo che un potenziale elettrico è generato in ogni punto del campo elettrico prodotto dalla bacchetta. Qualsiasi oggetto carica genera un potenziale elettrico $V$ in tutti i punti del campo da esso generato. Se, ad esempio, poniamo una particella di carica $q$ in un punto in cui conosciamo il preesistente potenziale $V$, possiamo trovare l'energia potenziale con:
+	\[
+	U = qV
+	\]
+	\paragraph{Unità di misura} L'unità di misura del potenziale elettrico nel sistema SI, è il $J/C$ che si rappresenta con una speciale unità, il \textbf{volt}.
+	\subsection{Moto in un campo elettrico}
+	\paragraph{Differenza di potenziale elettrico} Se ci spostiamo da un punto iniziale $i$ a un secondo punto $f$ nel campo elettrico di un oggetto carico, il potenziale elettrico varia della quantità:
+	\[
+	\Delta V = V_f - V_i
+	\]
+	Quindi, se muoviamo una particella con carica $q$ da $i$ ad $f$, l'energia potenziale del sistema cambia della quantità:
+	\[
+	\Delta U = q\Delta V = q(V_f - V_i)
+	\]
+	Questa variazione può essere positiva o negativa oppure può essere anche 0 se non c'è variazione di potenziale da $i$ ad $f$. Inoltre, dato che la forza elettrica è conservativa, $\Delta U$ tra i punti $i$ ed $f$ è la stessa qualunque sia il percorso tra quei punti, cioè è \textbf{indipendente dal percorso}.
+	\paragraph{Lavoro compiuto dal campo} Possiamo mettere in relazione la variazione di energia potenziale $\Delta U$ e il lavoro $L$ compiuto dalle forze elettriche mentre la particella si sposta da $i$ a $f$ applicando la formula generale per una forza conservativa:
+	\[
+	L = -\Delta U = -q\Delta V = -q(V_f - V_i)
+	\]
+	Il lavoro può essere positivo, negativo o nullo. Poichè $\Delta U$ tra due punti qualunque è indipendente dal percorso, lo è anche il lavoro compiuto dal campo.
+	\section{Superfici equipotenziali e campo elettrico}
+	Punti adiacenti che hanno lo stesso potenziale elettrico formano una \textbf{superficie equipotenziale}, che può essere sia una superficie immaginaria sia una supericie fisica reale. Non viene compiuto alcun lavoro totale $L$ su una particella carica da un campo elettrico quando la particella si muove tra i punti $i$ ed $f$ della stessa superficie equipotenziale. \\
+	Le superfici equipotenziali sono sempre perpendicolari alle linee del campo elettrico e quindi a $\vec{E}$, che è sempre tangente a queste linee. Se $\vec{E}$ non fosse perpendicolare a una superficie equipotenziale, avrebbe una componente lungo tale superficie e questa componente compirebbe un lavoro su una particella carica emntre questa è in moto sulla superficie. Ma, se la superficie è equipotenziale non si può compiere lavoro e l'unica conclusione possibile è che $\vec{E}$ deve essere in ogni punto perpendicolare alla superficie. 
+	\subsection{Calcolo del potenziale dal campo elettrico}
+	Possiamo calcolare la differenza di potenziale tra due punti qualsiasi $i$ ed $f$ in un campo elettrico se conosciamo il vettore campo elettrico $\vec{E}$ in tutti i punti di un qualsiasi percorso che unisce quei punti. Per fare il calcolo troviamo il lavoro compiuto dal campo su una carica di prova positiva mentre si sposta da $i$ ad $f$. \\
+	Consideriamo un campo elettrico arbitrario e una carica di prova $q_0$ che si muove dal punto $i$ al punto $f$. In ogni punto del percorso sulla particella agisce una forza elettrostatica $q_0\vec{E}$, mentre la particella percorre uno spostamento infinitesimo $d\vec{s}$. Allora il lavoro compiuto da una forza $\vec{F}$ su una particella durante uno spostamento $d\vec{s}$ è pari a:
+	\begin{align*}
+		dL &= \vec{F} \cdot d\vec{s} \\
+		&= q_0\vec{E} \cdot d\vec{s}
+	\end{align*}
+	Per trovare il lavoro totoale compiuto dal campo elettrico sulla particella mentre questa si muove dal punto $i$ al punto $f$, sommiamo, tramite integrale, i lavori infinitesimi compiuti sulla carica mentre questa percorre gli spostamenti d$\vec{s}$ lungo il percorso:
+	\[
+	W = q_0\int_{i}^{f}\vec{E}\cdot d\vec{s}
+	\]
+	Possiamo sostituire il lavoro con $L = -q\Delta V$:
+	\[
+	V_f - V_i = -\int_{i}^{f}\vec{E}\cdot d\vec{s} 
+	\]
+	Se poniamo $V_i = 0$, allora otteniamo che:
+	\[
+	V = -\int_{i}^{f}\vec{E} \cdot d\vec{s}
+	\]
+	e questa ci dà il potenziale $V$ in ogni punto $f$ del campo elettrico \textit{rispetto al potenziale zero} attribuito al punto $i$.
+	\section{Potenziale dovuto a una particella carica}
+	Usiamo la seguente equazione $V_f - V_i = -\int_{i}^{f}\vec{E} \cdot d\vec{s}$ per trovare un'espressione del potenziale elettrico $V$ per lo spazio attorno a una particella carica rispetto al potenziale nullo a distanza infinita.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{potenziale_particella}
+	\end{figure}
+	Dalla figura notiamo un punto $P$ posto ad una distanza $R$ da una particella fissa di carica $q$. Per usare l'equazione scritta prima supponiamo di sposatre una carica di prova positiva $q_0$ dal punto $P$ a distanza infinita. Poichè non importa il percorso scelto, consideriamo quello più semplice, ossia un segmento che si estende in direzione radiale da $P$ all'infinito. Calcoliamo $\vec{E} \cdot d\vec{s}$:
+	\[
+	\vec{E}\cdot d\vec{s} = E\cos\theta ds
+	\]
+	Il vettore campo elettrico $\vec{E}$ è diretto radialmente nel verso uscente della particella fissa. Quindi, lo spostamento della particella di prova ha stessa direzione verso di $\vec{E}$ quindi $\theta = 0$ e $\cos\theta = 1$ e poichè il percorso è radiale scriviamo $dr$ al posto di $ds$. Poi sostituendo gli estremi di integrazione $R$ e $\infty$, possiamo scrivere:
+	\[
+	V_f - V_i = -\int_{R}^{\infty}Edr
+	\]
+	Poniamo $V_f = 0$ perchè va all'infinito e $V_i = V$ che si trova in $R$. Inoltre, sappiamo che il campo elettrico è dato da:
+	\[
+	E = \frac{1}{4\pi\epsilon_0}\frac{q}{r^2}
+	\]
+	Allora:
+	\begin{align*}
+		-V &= -\int_{R}^{\infty}\frac{1}{4\pi\epsilon_0}\frac{q}{r^2}dr \\
+		-V &= -\frac{q}{4\pi\epsilon_0}\int_{R}^{\infty}\frac{1}{r^2}dr \\
+		-V &= \frac{q}{4\pi\epsilon_0}\Bigg[\frac{1}{r}\Bigg]^\infty_R \\
+		-V &= -\frac{1}{4\pi\epsilon_0}\frac{q}{R} \\
+		V &= \frac{1}{4\pi\epsilon_0}\frac{q}{R}
+	\end{align*}
+	Abbiamo ricavato $V$ per una particella carica positivamente, ma questo vale anche per una particella carica negativamente, in questo caso $q$ è una grandezza negativa e $V$ sarà negativo perchè dipende dal segno di $q$.
+	\subsection{Potenziale dovuto a un sistema di particelle cariche}
+	Possiamo trovare il potenziale elettrico generato in un punto da un sistema di particelle cariche con l'aiuto del principio di sovrapposizione. Dobbiamo calcolare il potenziale risultante da ciascuna carica nel punto dato e poi sommare i potenziali. Quindi per $n$ cariche il potenziale totale è:
+	\[
+	V = \sum_{i=1}^{n}V_i = \frac{1}{4\pi\epsilon_0}\sum_{i=1}^{n}\frac{q_i}{r_i}
+	\]
+	ove $q_i$ è il valore della $i$-esima carica e $r_i$ è la distanza radiale della $i-$esima carica dal punto in esame. 
 \end{document}
