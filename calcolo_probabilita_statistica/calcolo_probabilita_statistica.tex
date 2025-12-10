@@ -3090,6 +3090,72 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 &= \dfrac{N}{\sqrt{(n-1)\frac{S_n^2}{\sigma^2}}}\sqrt{n-1} \\
 	 &= \frac{N}{\sqrt{\chi}}\sqrt{n-1} \sim T(n-1)	
 	 \end{align*}
+	 \paragraph{Funzione di ripartizione}
+	 La funzione di ripartizione è pari a:
+	 \begin{align*}
+	 	P[T \leq t] &= P[\frac{N}{\sqrt{\chi}}\sqrt{n} \leq t] \\
+	 	&= P[N \leq \frac{t}{\sqrt{n}}\sqrt{\chi}] \\
+	 	&= \int_{0}^{\infty}dx\int_{-\infty}^{\frac{t\sqrt{\chi}}{\sqrt{n}}}f(x)g(y)dy
+	 \end{align*}
+	 con 
+	 \[
+	 f(x) = \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}x^{\frac{n}{2} - 1}e^{-\nicefrac{x}{2}}\mathbbm{1}_{[0, \infty)}(x) \quad \text{la densita di }\chi
+	 \]
+	 e
+	 \[
+	 g(y) = \frac{1}{\sqrt{2\pi}}e^{-\nicefrac{y^2}{2}} \quad \text{ la densità di }N
+	 \]
+	 Allora:
+	\[
+	F_T(t) = \int_{0}^{\infty}dx\int_{0}^{\frac{t\sqrt{\chi}}{\sqrt{n}}}f(x)g(y)dy
+	\]
+	Da cui possiamo calcolare la densità di $T$: 
+	\begin{align*} 
+		h(t) &= F_T(t)' \\ 
+		&= \int_{0}^{\infty}dx\Bigg[f(x)g\Bigg(\frac{t\sqrt{\chi}}{\sqrt{n}}\Bigg)\frac{\sqrt{\chi}}{\sqrt{n}}\Bigg] \\ 
+		&=\frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}x^{\frac{n}{2} - 1}e^{-\nicefrac{x}{2}}e^{-\frac{t^2x}{2n}}x^{\nicefrac{1}{2}}dx \\ 
+		&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}x^{\frac{n}{2} - \frac{1}{2}}e^{-\frac{1}{2}(\nicefrac{t^2}{n} + 1)x}dx \\ 
+		&= \text{ Poniamo } u = \frac{1}{2}(\nicefrac{t^2}{n} + 1)x \\ 
+		&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{n}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}\frac{(2u)^{\nicefrac{n}{2} - \nicefrac{1}{2}}}{(\nicefrac{t^2}{n} + 1)^{\nicefrac{n}{2} - \nicefrac{1}{2}}}e^{-u}\frac{2}{(\nicefrac{t^2}{n} + 1)}du \\
+		&= \frac{2^{\nicefrac{n}{2} + \nicefrac{1}{2}}}{2^{\nicefrac{n}{2}}\Gamma(\nicefrac{n}{2})}(1 + \nicefrac{t^2}{n})^{-\nicefrac{n+1}{2}}\frac{1}{\sqrt{2\pi n}}\int_{0}^{\infty}u^{\nicefrac{n}{2} + \nicefrac{1}{2} - 1}e^{-u}du \\
+		&= \frac{\Gamma(\nicefrac{n+1}{2})}{\Gamma(\nicefrac{n}{2})}\frac{1}{\sqrt{\pi n}}(1 + \nicefrac{t^2}{n})^{-\frac{n+1}{2}} 
+	\end{align*}
+	\begin{note}{}{}
+		Notiamo che:
+		\[
+		\lim\limits_{n\to\infty}(1 + \nicefrac{t^2}{n})^{-\frac{n+1}{2}} = e^{-\nicefrac{t^2}{2}}
+		\]
+	\end{note}
+	\paragraph{Media e Varianza di T} La media e la varianza di $T$ sono pari a:
+	\[
+	E[T] = 0
+	\]
+	e 
+	\[
+	Var[T] = \frac{n}{n-2} \quad \text{ per } n > 2
+	\]
+	Infatti $E[T] = 0$, segue dalla simmetria della distribuzione.  \\
+	Calcoliamo la varianza:
+	\begin{align*}
+		Var[T] &= Var\Bigg[\sqrt{N}{\sqrt{\chi}}\sqrt{n}\Bigg] \\
+		&= E\Bigg[n\frac{N^2}{\chi}\Bigg] \\
+		&= nE[N^2]E\Bigg[\frac{1}{\chi}\Bigg] \\
+	\end{align*}
+		Calcoliamo $E[N^2]$ e $E\Bigg[\frac{1}{\chi}\Bigg]$
+		\[E[N^2] = Var[N] = 1 \]
+	\begin{align*}
+	E\Bigg[\frac{1}{\chi}\Bigg] &= \int_{0}^{\infty}\frac{1}{x}\frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}x^{\nicefrac{n}{2} - 1}e^{-\nicefrac{x}{2}}dx \\
+	&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\int_{0}^{\infty}x^{\nicefrac{n}{2} - 2}e^{-\nicefrac{x}{2}}dx \\
+	& \text{Poniamo } \frac{x}{2} = u \quad x = 2u \\
+	&= \frac{1}{2^{\nicefrac{n}{2}}}\frac{1}{\Gamma(\nicefrac{n}{2})}\int_{0}^{\infty}2^{\nicefrac{n}{2}-2}u^{\nicefrac{n}{2}-1-1}e^{-u}2du \\
+	&= \frac{1}{2}\frac{\Gamma(\nicefrac{n}{2} - 1)}{\Gamma(\nicefrac{n}{2})} \\
+	&= \frac{1}{2}\frac{\Gamma(\nicefrac{n}{2} - 1)}{(\nicefrac{n}{2} - 1)\Gamma(\nicefrac{n}{2} - 1)} \\
+	&= \frac{1}{n-2}
+	\end{align*}
+	Allora:
+	\[
+	Var[T] = nE[N^2]E\Bigg[\frac{1}{\chi}\Bigg] = \frac{n}{n-2}
+	\]
 	 \subsection{Intervallo di confidenza per la varianza di una popolazione normale}
 	 Data $X \sim N(\mu, \sigma^2)$ e consideriamo:
 	 \[
