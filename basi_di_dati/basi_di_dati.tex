@@ -34,7 +34,7 @@
 \usepackage{tikz}
 \usepackage{yhmath}
 
-\usetikzlibrary{angles, quotes, patterns}
+\usetikzlibrary{shapes, shapes.geometric, arrows.meta, positioning, angles, quotes, patterns}
 \usepackage{circledsteps}
 \date{}
 \author{Alessandro Carella}
@@ -2175,24 +2175,24 @@ create table Docenza (
 		Consideriamo il seguente schema:
 		\begin{center}
 		\begin{tikzpicture}[
-				node distance=3cm,
-				entity/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, thick},
-				relationship/.style={diamond, draw, minimum width=2cm, minimum height=1cm, thick, aspect=2},
-				attribute/.style={circle, draw},
-				>=Stealth
-		]
-
-		% Entities
-		\node[entity] (persona) {Persona};
-		\node[relationship, right=of persona] (residenza) {Residenza};
-		\node[entity, right=of residenza] (citta) {Città};
-		\node[attribute, right=of citta] (abitanti) {Numero abitanti};
-
-		% Connections
-		\draw[thick] (persona) -- node[above] {(1,1)} (residenza);
-		\draw[thick] (residenza) -- node[above] {(1,N)} (citta);
-		\draw[thick] (citta) -- (abitanti);
-
+			node distance=3cm,
+			entity/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, thick},
+			relationship/.style={diamond, draw, minimum width=2cm, minimum height=1cm, thick, aspect=2},
+			attribute/.style={circle, draw, minimum size=0.8cm},
+			>=Stealth
+			]
+			% Entities
+			\node[entity] (persona) {Persona};
+			\node[relationship, right=of persona] (residenza) {Residenza};
+			\node[entity, right=of residenza] (citta) {Città};
+			\node[attribute, above right=0.5cm and 1cm of citta] (abitanti) {};
+			\node[above=0.1cm of abitanti] {Numero};
+			\node[below=0.1cm of abitanti] {abitanti};
+			
+			% Connections
+			\draw[thick] (persona) -- node[above] {(1,1)} (residenza);
+			\draw[thick] (residenza) -- node[above] {(1,N)} (citta);
+			\draw[thick] (citta) -- (abitanti);
 		\end{tikzpicture}
 	\end{center}
 	Supponiamo che per questo schema vengono effettuate due operazioni principali:
@@ -2260,4 +2260,192 @@ create table Docenza (
 		La ristrutturazione delle generalizzazioni è un tipico caso per il quale il conteggio delle istanze e degli accessi non è sempre sufficiente per scegliere la migliore alternativa possibile. Infatti da quanto detto, la terza alternativa sembra non convenga quasi mai perchè richiede un numero di accessi superiore ma quest'alternativa ha il grosso vantaggio di generare entità con pochi attributi e questo si traduce, a livello pratico, in strutture logiche di poccole dimensioni per le quali un accesso fisico permette di recuparare molti dati in una volta sola. Quindi, in alcuni casi va effettuata un'analisi più accurata che tiene conto di altri fattori come le dimensioni dei domini degli attributi e la quantità di dati che è possibile recuperare con una sola operazione di accesso a memoria secondaria. \\
 		Le alternative non sono le uniche ammesse, ma è possibile effettuare ristrutturazioni che sono combinazioni delle tre trasformazioni presentate.
 		\subsection{Partizionamento/accorpamento di concetti}
+		Entità e associazioni in uno schema E-R possono essere partizionati o accorpati per garantire una maggior efficienza delle operazioni in base al seguente principio: gli accessi si riducono separando attributi di uno stesso concetto che vengono acceduti da operazioni diverse e raggruppando attributi di concetti diverse che vengono acceduti dalle medesime operazioni. 
+		\paragraph{Partizionamenti di entità} Consideriamo il seguente esempio:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{partizionamento_entita}
+		\end{figure}
+		Notiamo che l'entità \texttt{Impiegato} viene sostituita da due entità, collegate da un'associazione uno a uno, che descrivono i dati anagrafici degli impiegati e i dati relativi alla loro retribuzione. Questa ristrutturazione è conveniente se le operazioni riguardanti un impiegato richiedono solo informazioni di carattere anagrafico o solo di carattere lavorativo. \\
+		Un partizionamento di questo genere prende il nome di \textit{decomposizione verticale} di un'entità, nel senso che si suddivide il concetto operando sui suoi attributi. È possibile effettuare anche delle \textit{decomposizioni orizzontali} nelle quali la suddivisione avviene sulle occorrenze dell'entità. Ad esempio, per l'entità \texttt{Impiegato} ci potrebbero essere alcune operazioni che riguardano soltanto gli analisti e altre che rigurdano solo il venditore. \\
+		I partizionamenti orizzontali hanno un effetto collaterale: quello di dover duplicare tutte le associazioni a cui l'entità originaria partecipa. Questo può avere ripercussioni sulle prestazioni del sistema. I partizionamenti verticali generano entità con pochi attributi che possono essere tradotte in strutture logiche sulle quali, con un accesso, è possibile recuperare molti dati. Anche in questo caso, il semplice conteggio degli accessi e delle occorrenze non è sempre sufficiente per scegliere la miglior alternativa possibile. 
+		\paragraph{Eliminazione di attributi multivalore} Un particolare tipo di partizionamento è quello che riguarda l'eliminazione di attributi multivalore. Questa ristrutturazione è necessaria perchè il modello relazionale non permette di rappresentare in maniera diretta questo tipo di attributo. \\
+		Consideriamo l'esempio in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{attributo_multivalore}
+		\end{figure}
+		L'attributo \textit{Telefono} dell'entità \texttt{Agenzia} viene partizionata in due entità: una con lo stesso nome e gli stessi attributi dell'entità originale escluso l'attributo multivalore, e l'entità \texttt{Telefono}, con il solo attributo \textit{Numero}, legata mediante un'associazione uno a molti con l'entità \texttt{Agenzia}.
+		\paragraph{Accorpamento di entità}  L'accorpamento è l'operazione inversa del partizionamento. Consideriamo l'esempio in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{accorpamento_entita}
+		\end{figure}
+		L'entità \texttt{Persona} e l'entità \texttt{Appartamento}, legate dall'associazione uno a uno \texttt{Intestazione}, vengono accorpate in un'unica entità contenente gli attributi di entrambi. Questa ristrutturazione è utile se le operazioni relative alla persona coinvolgono sempre i dati relativi all'appartamento che occupa, e vogliamo risparmiare gli accessi necessari per risalire a questi dati attraverso l'associazione che li lega. Un difetto di questa ristrutturazione è la possibile presenza di valori nulli dovuta al fatto che le cardinalità ci dicono che ci sono persone che non sono intestatarie di nessun appartamento, e quindi non esistono valori per attributi \textit{Indirizzo} e \textit{Interno}. \\
+		Gli accorpamenti, in genere, si effettuano su associazioni uno a uno, raramente su associazioni uno a molti e quasi mai su associazioni molti a molti in quanto si potrebbero generare delle ridondanze. 
+		\paragraph{Altri tipi di partizionamento/accorpamento}
+		Le tecniche viste per il partizionamento e accorpamento di entità può essere esteso alle associazioni. In alcuni casi, conviene decomporre un'associazione tra due entità in due o più associazioni tra le stesse entità, per separare occorrenze dell'associazione originale accedute sempre separatamente e, viceversa, accorpare due o più associazioni tra le stesse entità in un'unica associazione, quando le relative occorrenze vengono sempre accedute contemporaneamente.   \\
+		\subsection{Scelta degli identificatori principali}
+		La scelta degli identificatori principali è essenziale nelle traduzioni verso il modello relazionale perchè in questo modello le chiavi vengono usate per stabilire legami tra dati in relazioni diverse. Inoltre, i DBMS richiedono di specificare una \textit{chiave primaria} sulla quale vengono costruite automaticamente delle strutture ausiliarie, dette \textit{indici}, per il reperimento efficiente di dati. Quindi, se esistono entità per le quali sono stati specificati più identificatori, bisogna decidere quali di questi identificatori verrà utilizzato come chiave primaria. \\
+		Ci sono diversi criteri per la scelta della chiave primaria e sono elencati di seguito.
+		\begin{itemize}
+			\item Gli attributi con valori nulli non possono costituire identificatori principali. Infatti, quest'ultimi non garantiscono l'accesso a tutte le occorrenze dell'entità corrispondente.
+			\item Un identificatore composto da uno o da pochi attributi è da preferire a identificatori costituiti da molti attributi. Questo garantisce che le strutture ausiliarie per accedere ai dati, gli indici, siano di dimensioni ridotte, permette un risparmio di memoria nella realizzazione dei legami logici tra le varie relazioni e facilita le operazioni di join.
+			\item Un identificatore interno con pochi attributi è da preferire a un identificatore esterno, che magari coinvolge diverse entità. I motivi sono gli stessi del punto precedente. 
+			\item Un identificatore che viene utilizzato da molte operazioni per accedere alle occorrenze di un'entità è da preferire rispetto agli altri. In questo modo, infatti, tali operazioni possono essere eseguite efficientemente poichè possono trarre vantaggio dagli indici creati automaticamente dai DBMS.
+		\end{itemize}
+		A questo punto, se nessuno degli identificatori candidati soddisfa tali requisiti, è possibile pensare di introdurre un ulteriore attributo all'entità: questo attributo conterrà  valori speciali, detti \textit{codici}, generati appositamente per identificare le occorrenze delle entità. È consigliabile tenere traccia degli identificatori non selezionati come principali ma che vengono utilizzati da qualche operazione per accedere ai dati. Per questi identificatori è possibile definire, in fase di progettazione fisica, degli \textit{indici secondari} che consentono l'accesso efficiente ai dati e possono essere usati in alternativa agli indici definiti automaticamente sugli identificatori principali.
+		\section{Traduzione verso il modello relazionale}
+		La seconda fase della progettazione logica corrisponde a una traduzione tra modelli di dati diversi: a partire da uno schema E-R ristrutturato si costruisce uno schema logico \textit{equivalente}, in grado cioè di rappresentare le medesime informazioni. Faremo riferimento a una versione semplificata del modello E-R, senza generalizzazioni e attributi multivalore, e nella quale ogni entità ha un solo identificatore. 
+		\subsection{Entità e associazioni molti a molti} Consideriamo lo schema in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{molti_a_molto}
+		\end{figure}
+		La traduzione nel modello relazionale prevede:
+		\begin{itemize}
+			\item per ogni entità, una relazione con lo stesso nome avente per attributi i medesimi attributi dell'entità e per chiave il suo identificatore;
+			\item per l'associazione, una relazione con lo stesso nome avente per attributi gli attributi dell'associazione e gli identificatori delle entità coinvolte; tali identificatori formano la chiave della relazione.
+		\end{itemize}
+		Lo schema relazione che si ottiene è quindi il seguente:
+		\begin{center}
+			\texttt{Impiegato}(\underline{Matricola}, Cognome, Stipendio) \\
+			\texttt{Progetto}(\underline{Codice}, Nome, Budget) \\
+			\texttt{Partecipazione}(\underline{Matricola}, \underline{Codice}, DataInizio)
+		\end{center}
+		Per rendere più comprensibile il significato dello schema è conveniente effettuare alcune ridenominazioni. Per esempio, si può chiarire il contenuto della relazione \texttt{Partecipazione} definendola come segue:
+		\begin{center}
+			\texttt{Partecipazione}(\underline{Impiegato}, \underline{Progetto}, DataInizio)
+		\end{center}
+		La ridenominazione è essenziale in alcuni casi, come nel caso di associazioni ricorsive. \\
+		Per quanto riguarda associazioni con più di due entità partecipanti, queste si traducono in maniera analoga a quanto detto per le associazioni binarie. In quest'ultimo caso bisogna, però, prestare attenzione ad alcuni casi particolari, nei quali l'insieme delle chaivi delle relazioni che rapprsentano le entità coinvolte costituisce in realtà una \textit{superchiave} ridondante della relazione che rappresenta l'associazione dello schema E-R.
+		\subsection{Associazioni uno a molti}
+		Consideriamo lo schema in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{uno_a_molti}
+		\end{figure}
+		Secondo la regola vista per le associazioni molti a molti, la traduzione di questo schema dovrebbe essere la seguente:
+		\begin{center}
+			\texttt{Giocatore}(\underline{Cognome}, \underline{DataNascita}, Ruolo) \\
+			\texttt{Squadra}(\underline{Nome}, Città, ColoriSociali) \\
+			\texttt{Contratto}(\underline{Giocatore}, \underline{DataNascitaGiocatore}, NomeSquadra, Ingaggio)
+		\end{center}
+		Va notato, che nella relazione \texttt{Contratto}, la chiave è costituita solo dall'identificatore di \texttt{Giocatore} perchè le cardinalità ci dicono che ogni giocatore ha un contratto con una sola squadra. A questo punto le relazioni \texttt{Contratto} e \texttt{Giocatore} hanno stessa chiave ed è possibile fonderle in un'unica relazione.
+		\begin{center}
+			\texttt{Giocatore}(\underline{Cognome}, \underline{DataNascita}, Ruolo, NomeSquadra, Ingaggio) \\
+			\texttt{Squadra}(\underline{Nome}, Città, ColoriSociali) 
+		\end{center}
+		In questo schema, esiste il vincolo di integrità referenziale tra l'attributo \textit{NomeSquadra} di \texttt{Giocatore} e l'attributo \textit{Nome} di \texttt{Squadra}. 
+		Quindi, l'entità che partecipa all'associazione con cardinalità massima pari a 1, viene tradotta in una relazione che contiene anche gli identificatori delle altre entità coinvolte nell'associazione ed eventualmente gli attributi dell'associazione stessa e non c'è più bisogno di rappresentare l'associazione di partenza. 
+		\subsection{Entità con identificatore esterno}
+		Le entità con identificatori esterni danno luogo a relazioni con chiavi che includono gli identificatori delle entità ``identificanti''. Consideriamo lo schema in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{entita_id_esterno}
+		\end{figure}
+		Lo schema relazione a quest schema è il seguente:
+		\begin{center}
+			\texttt{Studente}(\underline{Matricola}, \underline{NomeUniversità}, Cognome, AnnoIscrizione) \\
+			\texttt{Università}(\underline{Nome}, Città, Indirizzo) 
+		\end{center}
+		nel quale esiste un vincolo di integrità referenziale tra l'attributo \textit{NomeUniversità} della relazione \texttt{Studente} e l'attributo \textit{Nome} della relazione \texttt{Università}. \\
+		Rappresentando l'identificatore esterno si rappresenta direttamente anche l'associazione tra le due entità. Ricordiamo che le entità identificate esternamente partecipano all'associazione sempre con cardinalità massima pari a 1. \\
+		Questo tipo di traduzione è valido indipendentemente dalla cardinalità con cui l'altra entità partecipa all'associazione.
+		\subsection{Associazioni uno a uno}
+		Per le associazioni uno a uno ci sono, in genere, diverse possibilità di traduzione. Iniziamo con le associazioni uno a uno con partecipazioni obbligatorie per entrambe le entità. Consideriamo lo schema in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{uno_a_uno_obb}
+			\caption{Associazione uno a uno con partecipazione obbligatoria delle due entità}
+		\end{figure}
+		Per questo tipo di associazione abbiamo due possibilità ugualmente valide:
+		\begin{center}
+			\texttt{Direttore}(\underline{Codice}, Cognome, Stipendio, DipartimentoDiretto, InzioDirezione) \\
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede) 
+		\end{center}
+		con vincolo di integrità referenziale tra \textit{DipartimentoDiretto} di \texttt{Direttore} e \textit{Nome} di \texttt{Dipartimento}.
+		Oppure:
+		\begin{center}
+			\texttt{Direttore}(\underline{Codice}, Cognome, Stipendio) \\
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede, Direttore, InizioDirezione) 
+		\end{center}
+		con vincolo di integrità referenziale tra \textit{Direttore} di \texttt{Dipartimento} e \textit{Codice} di \texttt{Direttore}. \\
+		È possibile anche un'ulteriore alternativa nella quale si rappresentano tutti i concetti in un'unica relazione contenente tutti gli attributi in gioco. Questa alternativa è, però, da escludere, perchè non dobbiamo dimenticarci che lo schema che stiamo traducendo è il risultato di una fase di ristrutturazione nella quale sono state effettuate precise scelte riguardanti l'accorpamento e/o partizionamento di entità. \\
+		Consideriamo il caso di associazione uno a uno con partecipazione opzionale per una sola entità. Consideriamo lo schema in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{uno_a_uno_1op}
+			\caption{Associazione uno a uno con partecipazione opzionale di una sola entità}
+		\end{figure}
+		In questo caso abbiamo una soluzione preferibile rispetto alle altre:
+		\begin{center}
+			\texttt{Impiegato}(\underline{Codice}, Cognome, Stipendio) \\
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede, Direttore, InizioDirezione) 
+		\end{center}
+		per la quale esiste il vincolo di integrità referenziale tra l'attributo \textit{Direttore} della relazione \texttt{Dipartimento} e l'attributo \textit{Codice} della relazione \texttt{Impiegato}. Questa alternativa è preferibile rispetto a quella in cui l'associazione viene rappresentata nella relazione \texttt{Impiegato} mediante il nome del dipartimento diretto perchè avremmo, per questo attributo, possibili valori nulli. \\
+		Consideriamo il caso in cui entrambe le entità hanno partecipazione opzionale. Consideriamo lo schema in figura e supponiamo che possano esistere dipartimenti senza direttori.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{uno_a_uno_1op}
+			\caption{Associazione uno a uno con partecipazione opzionale per entrambe le entità}
+		\end{figure}
+		In questo caso esiste un'ulteriore possibilità che prevede tre relazioni separate:
+		\begin{center}
+			\texttt{Impiegato}(\underline{Codice}, Cognome, Stipendio) \\
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede)  \\
+			\texttt{Direzione}(\underline{Direttore}, Dipartimento, DataInzioDirezione) \\		
+		\end{center}
+		Su questo schema abbiamo due vincoli di integrità referenziale: uno tra l'attributo \textit{Direttore} della relazione \texttt{Direzione} e l'attributo \textit{Codice} della relazione \texttt{Impiegato} e l'altro tra l'attributo \textit{Dipartimento} della relazione \texttt{Direzione} e l'attributo \textit{Nome} della relazione \texttt{Dipartimento}.  \\
+		Questa soluzione ha il vantaggio di non presentare mai valori nulli sugli attributi che rappresentano l'associazione. Per contro, abbiamo bisogno di una relazione inn più con un conseguente aumento della complessità della base di dati. La soluzione con tre relazioni è da prendere in considerazione solo se il numero di occorrenze dell'associazione è molto basso ripsetto alle occorrenze delle entità che partecipano all'associazione. In questo caso, si evitano la presenza di molti valori nulli.
+		\subsection{Traduzione di schemi complessi}
+		Consideriamo lo schema in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{schema_complesso}
+		\end{figure}
+		Traduciamo ciascuna entità con una relazione. La traduzione delle entità dotate di identificatore interno è immediata:
+		\[
+		\texttt{E3}\text{(\underline{A31}, A32)} \quad \texttt{E4}\text{(\underline{A41}, A42)} \quad \texttt{E5}\text{(\underline{A51}, A52)}
+		\]
+		\[
+		\texttt{E6}\text{(\underline{A61}, \underline{A62}, A63)}
+		\]
+		Traduciamo ora le entità con identificazioni esterne. Otteniamo le seguenti relazioni:
+		\[
+		\texttt{E1}\text{(\underline{A11}, \underline{A51}, A12)} \quad \texttt{E2}\text{(\underline{A21}, \underline{A11}, \underline{A51}, A22)}
+		\]
+		Passiamo ora alla traduzione delle associazioni. Le traduzioni di $\texttt{R1}$e \texttt{R6} sono già state tradotte come conseguenza dell'identificazione esterna di $\texttt{E1}$ ed \texttt{E2} rispettivamente. Assumiamo di aver deciso di ottenere un numero minimo di relazioni nello schema finale e cerchiamo di accopare quando possibile. Questo comporta una possibile presenza di valori nulli nelle istanze relazionali per tutti gli attributi introdotti traducendo relazioni dal lato di cardinalità (0, 1). Otteniamo le seguenti modifiche da effettuare allo schema iniziale:
+		\begin{itemize}
+			\item per tradurre \texttt{R3} introduciamo con opportune ridenominazioni gli attributi che identificano \texttt{E6} tra quelli di \texttt{E5}, nonchè l'attributo \textit{AR3} proprio di \texttt{R3}; introduciamo \textit{A61R3}, \textit{A62R3} e \textit{AR3} in \texttt{E5};
+			\item analogamente per \texttt{R4}, introduciamo \textit{A61R4} e \textit{A62R4} in \texttt{E5};
+			\item analogamente per \texttt{R5}, introduciamo \textit{A61R5}, \textit{A62R5} e \textit{AR5} in \texttt{E5}. 
+		\end{itemize}
+		Infine traduciamo l'unica associazione molti a molti:
+		\[
+		\texttt{R2}\text{(\underline{A21}, \underline{A11}, \underline{A51}, \underline{A31}, \underline{A41}, AR21, AR22)}
+		\]
+		Lo schema relazionale ottenuto è il seguente:
+		\[
+		\texttt{E1}\text{(\underline{A11}, \underline{A51}, A12)} \quad \texttt{E2}\text{(\underline{A21}, \underline{A11}, \underline{A51}, A22)}
+		\]
+		\[
+		\texttt{E3}\text{(\underline{A31}, A32)} \quad \texttt{E4}\text{(\underline{A41}, A42)}
+		\]
+		\[
+		\texttt{E5}\text{(\underline{A51}, A52, A61R3, A62R3, AR3, A61R4, A62R4, A61R5, A62R5, AR5)}
+		\]
+		\[
+		\texttt{E6}\text{(\underline{A61}, \underline{A62}, A63)} \quad \texttt{R2}\text{(\underline{A21}, \underline{A11}, \underline{A51}, \underline{A31}, \underline{A41}, AR21, AR22)}
+		\]
+		\subsection{Tabelle riassuntive}
+		Le traduzioni viste vengono riassunte nella seguente tabella. I simboli $X$ e $Y$ indicano una qualunque tra le cardinalità ammesse, gli asterischi indicano la possibilità di avere valori nulli sugli attributi relativi e la sottolineatura tratteggiata indica una chiave alternativa a quella indicata da una sottolineatura piena.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{tabelle_riassuntive}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{tabelle_riassuntive2}
+		\end{figure}
 \end{document}
