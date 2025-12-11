@@ -3170,7 +3170,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	 	P\Bigg[\frac{1}{\chi^2_{(n-1), 1 - \frac{\alpha}{2}}} \geq \frac{\sigma^2}{(n-1)S_n^2} \geq \frac{1}{\chi^2_{(n-1), 1-\frac{\alpha}{2}}}\Bigg] = &= 1 - \alpha \\
 	 	P\Bigg[\frac{(n-1)S_n^2}{\chi^2_{(n-1), 1 - \frac{\alpha}{2}}} \leq \sigma^2 \leq \frac{(n-1)S_n^2}{\chi^2_{(n-1), 1-\frac{\alpha}{2}}}\Bigg] &= 1 - \alpha \quad \forall \sigma^2
 	 \end{align*}
-	 \subection{Intervallo di confidenza per il parametro $p$ di una Bernoulli}
+	 \subsection{Intervallo di confidenza per il parametro $p$ di una Bernoulli}
 		Se $(X_1, X_2, \dots, X_n)$ è un campione Bernoulliano, allora per il teorema del limite centrale la successione:
 		\[
 		\frac{X_1 + X_2 + \dots + X_n - np}{\sqrt{np(1-p)}} \overset{L}{\underset{n\to\infty}{\longrightarrow}} N(0, 1)
@@ -3243,7 +3243,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		con $\wbar{X}_n = \frac{1}{n}\sum_{i=1}^{n}X_i$. \\
 		Controlliamone la significatività:
 		\begin{align*}
-			P_{\m = \mu_0}\Bigg(\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{\sigma}{\sqrt{n}}} > z_{1 - \nicefrac{\alpha}{2}}\Bigg) &= P[|N| > z_{1-\nicefrac{\alpha}{2}}] \\
+			P_{\mu = \mu_0}\Bigg(\frac{|\wbar{X}_n - \mu_0|}{\nicefrac{\sigma}{\sqrt{n}}} > z_{1 - \nicefrac{\alpha}{2}}\Bigg) &= P[|N| > z_{1-\nicefrac{\alpha}{2}}] \\
 			&= 2P[N > z_{1-\nicefrac{\alpha}{2}}] \\
 			&= 2[1 - P[N \leq z_{1-\nicefrac{\alpha}{2}}] \\
 			&= 2(1 - 1 + \nicefrac{\alpha}{2}) \\
@@ -3267,7 +3267,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\]
 		A tal scopo osserviamo la disuguaglianza:
 		\begin{align*}
-			\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} = \frac{\wbar{X}_n - \m + \mu - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} \geq \frac{\wbar{X}_n - \mu}{\nicefrac{\sigma}{\sqrt{n}}}
+			\frac{\wbar{X}_n - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} = \frac{\wbar{X}_n - \mu + \mu - \mu_0}{\nicefrac{\sigma}{\sqrt{n}}} \geq \frac{\wbar{X}_n - \mu}{\nicefrac{\sigma}{\sqrt{n}}}
 		\end{align*}
 		cioè:
 		\[
@@ -3450,7 +3450,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\[
 		\frac{|\wbar{X}_n - \wbar{Y}_m|}{S_p\sqrt{\nicefrac{1}{n} + \nicefrac{1}{m}}} > t_{1 - \nicefrac{\alpha}{2}}(n+m-2)
 		\]
-		\begin{exericise}{}{}
+		\begin{exercise}{}{}
 		Copiare esercizi dalle slide.
 		\end{exercise}
 		\subsection{$p$-value di un test statistico}

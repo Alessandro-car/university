@@ -106,21 +106,21 @@
 \newcommand{\nmu}{}
 
 \lstdefinestyle{normalstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 }
 
@@ -191,7 +191,7 @@
 				\item i DBMS garantiscono la \textit{privatezza} dei dati; ciasun utente, opportunamente riconosciuto, viene abilitato a svolgere solo determinate azioni sui dati, attraverso meccanismi di \textit{autorizzazione};
 				\item i DBMS sono \textit{efficienti}, cioè sono capaci di svolgere le operazioni utilizzando un insieme di risorse, tempo e spazio, che sia accettabile per gli utenti;
 				\item i DBMS sono \textit{efficaci} in quanto sono capaci di rendere produttive le attività dei loro utenti.
-			\end{itemize} 
+			\end{itemize}
 			La gestione di collezioni di dati grandi e persistenti è possibile anche con strumenti meno sofisticati dei DBMS, anche con i file, introdotti per gestire insiemi di dati localmente ad una specifica applicazione. I DBMS sono stati concepiti per estendere le funzioni del file system fornendo la possibilità di accesso condiviso agli stessi dati da parte di piu' utenti e applicazioni. \\
 			Inoltre, nei programmi tradizionali che accedono a file, ogni programma contiene una descrizione della struttura del file con rischi di incoerenza fra le varie descrizioni e i file stessi, nei DBMS, invece, c'è una porzione di basi di dati, chiamata \textit{dizionario} o \textit{catalogo} che contiene una descrizione centralizzata dei dati che è accessibile dai vari programmi. \\
 			Diverse sono le tipologie di basi di dati e DBMS, come:
@@ -212,7 +212,7 @@
 			Un \textit{modello di dati} è un insieme di concetti utilizzati per organizzare i dati di interesse e descriverne la struttura in modo che risulti comprensibile a un elaboratore. \\
 			Ogni modello di dati fornisce \textit{meccanismi di strutturazione} analoghi ai costruttori di tipo dei linguaggi di programmazione, che permettono di definire nuovi tipi sulla base di tipi predefiniti e costruttori di tipo. \\
 			Il \textit{modello relazionale} dei dati, il piu' diffuso, permette di definire tipi per mezzo del costruttore \textit{relazione}, che consente di organizzare i dati in insiemi di record a struttura fissa. Una relazione viene spesso rappresentata per mezzo di una tabella, le cui righe rappresentano dei record e le colonne corrispondono ai campi dei record, ad esempio: \\
-			
+
 			\begin{center}
 			\begin{tabular}{|c|c|}
 				\hline
@@ -242,7 +242,7 @@
 			\]
 			Le righe della tabella, invece, variano nel tempo, l'istanza di una relazione è costituita dall'insieme delle sue righe,
 			\subsection{Livelli di astrazione nei DBMS}
-			La notazione di modello descritta in precedenza puo' essere sviluppata tenendo presente di altri fattori nella descrizione dei dati. In particolare, esiste un'architettura standard per DBMS articolata su tre lvielli, detti: \textit{esterno}, \textit{logico} e \textit{interno} e per ogni livello esiste uno schema. 
+			La notazione di modello descritta in precedenza puo' essere sviluppata tenendo presente di altri fattori nella descrizione dei dati. In particolare, esiste un'architettura standard per DBMS articolata su tre lvielli, detti: \textit{esterno}, \textit{logico} e \textit{interno} e per ogni livello esiste uno schema.
 			\begin{itemize}
 				\item Lo \textit{schema logico} costituisce una descrizione dell'intera basi di dati per mezzo del modello logico adottato dal DBMS;
 				\item Lo \textit{schema interno} costituisce la rappresentazione dello schema logico per mezzo di strutture fisiche di memorizzazione, ad esempio una relazione puo' essere realizzata tramite file sequenziale, file hash o altri approcci;
@@ -258,7 +258,7 @@
 			\end{itemize}
 			Gli accessi alla base di dati avvengono solo attraverso il livello esterno ed è il DBMS che traduce le operazioni in termini dei livelli sottostanti.
 			\section{Linguaggi e utenti delle basi di dati}
-			I DBMS sono caratterizzati dalla presenza di diversi linguaggi per la gestione dei dati e dalla presenza di molteplici utenti. 
+			I DBMS sono caratterizzati dalla presenza di diversi linguaggi per la gestione dei dati e dalla presenza di molteplici utenti.
 			\subsection{Linguaggi per basi di dati}
 			è possibile effettuare diverse operazioni su un DBMS, in particolare quelle relative agli schemi e alle istanze. I linguaggi per basi di dati si distinguono in due categorie:
 			\begin{itemize}
@@ -317,19 +317,19 @@ create table Docenza (
 			\item \textbf{Funzionamento}. In questa fase il sistema informativo diventa operativo ed esegue i compiti per i quali era stato progettato. Se non si verificano malfunzionamenti delle funzionalità del sistema, questa attività richiede solo operazioni di gestione e manutenzione.
 		\end{itemize}
 		Il processo non è quasi mai strettamente sequenziale in quanto, durante l'attività di una delle attività citate, bisogna rivedere decisioni prese nell'attività precedente. Inoltre, oltre alle attività descritte, si aggiunge quella di \textit{prototipizzazione}, che consiste nell'uso di specifici strumenti software pe la realizzazione rapida di una versione semplificata del sistema informativo, con la quale sperimentare le sue funzionalità. La verifica del prototipo puo' portare ad un'eventuale revisione del progetto. \\
-		I dati hanno un ruolo centrale nei sistemi informativi e questo giustifica uno studio autonomo relativo alla progettazione delle basi di dati. 
+		I dati hanno un ruolo centrale nei sistemi informativi e questo giustifica uno studio autonomo relativo alla progettazione delle basi di dati.
 		\section{Metodologie di progettazione e basi di dati}
 		Bisogna precisare cosa si intende per \textit{metodologia di progettazione} e quali sono le propriotà che deve garantire. Una metodologia di progettazione consiste in:
 		\begin{itemize}
 			\item una \textit{decomposizione} dell'interva attività di progetto in passi successivi indipendenti tra loro;
 			\item una serie di \textit{strategie} da seguire nei vari passi e alcuni \textit{criteri} per la scelta in caso di alternative;
-			\item alcuni \textit{modelli di riferimento} per descrivere i dati di ingresso e uscita delle varie fasi. 
+			\item alcuni \textit{modelli di riferimento} per descrivere i dati di ingresso e uscita delle varie fasi.
 		\end{itemize}
 		Le proprietà che una metodologie deve garantire sono principalmente:
 		\begin{itemize}
 			\item la \textit{generalità} rispetto alle applicazioni e ai sistemi di gioco (e quindi la possibilità di utilizzo indipendentemente dal problema allo studio e dagli strumenti a disposizione);
 			\item la \textit{qualità del prodtto} in termini di correttezza, completezza ed efficienza rispetto alla risorse impiegato;
-			\item la \textit{facilità d'uso} delle strategie e dei modelli di riferimento. 
+			\item la \textit{facilità d'uso} delle strategie e dei modelli di riferimento.
 		\end{itemize}
 		Nelle basi di dati, nel corso degli anni si è consolidata una metodologia di progetto che è articolata in tre fasi principali da effettuare in cascata. Questa metodologia separa le decisioni relative a \textit{cosa} rappresentare in una base di dati, da quelle relative a \textit{come} farlo.
 		\begin{figure}[H]
@@ -341,7 +341,7 @@ create table Docenza (
 			\item \textbf{Progettazione logica}. Consiste nella traduzione dello schema concettuale definito nella fase precedente, adottando il modello di rappresentazione di dati del DBMS a disposizione. Il prodotto di questa fase viene denominato \textit{schema logico} delle base di dati e fa riferimento a un \textit{modello logico} dei dati. Il modello logico ci consente di descrivere i dati prescindendo ancora da dettagli fisici, ma concreta perchè disponile nei sistemi di gestione di basi di dati. In questa fase, le scelte progettuali si basano su criteri di ottimizzazione delle operazioni da effettuare sui dati. Inoltre, si fa uso di tecniche formali di verifica della qualità dello schema logico ottenuto. Nel caso del modello relazione dei dati, la tecnica usata è quella della \textit{normalizzazione}
 			\item \textbf{Progettazione fisica}. In questa fase lo schea logico viene completato con la specifica dei parametri fisici di memorizzazione dei dati. Il prodotto di questa fase viene chiamato \textit{schema fisico} e fa riferimento a un \textit{modello fisico} dei dati che dipende dal DBMS scelto e si basa sui criteri di organizzazione fisica dei dati.
 		\end{itemize}
-		Analizziamo come i requisiti della base di dati vengono utilizzati nelle varie fasi della progettazione. Dobbiamo prima distinguere le \textit{specifiche sui dati} che riguardano il contenuto della base di dati, e \textit{specifiche sulle operazioni} che riguardano l'uso che utenti e applicazioni fanno della base di dati. Nella progettazione concettuale si fa uso delle specifiche sui dati mentre le specifiche sulle operazioni servono solo a verificare che lo schema concettuale sia completo, cioè che contenga le informazioni necessarie per eseguire tutte le operazioni previste. 
+		Analizziamo come i requisiti della base di dati vengono utilizzati nelle varie fasi della progettazione. Dobbiamo prima distinguere le \textit{specifiche sui dati} che riguardano il contenuto della base di dati, e \textit{specifiche sulle operazioni} che riguardano l'uso che utenti e applicazioni fanno della base di dati. Nella progettazione concettuale si fa uso delle specifiche sui dati mentre le specifiche sulle operazioni servono solo a verificare che lo schema concettuale sia completo, cioè che contenga le informazioni necessarie per eseguire tutte le operazioni previste.
 		\chapter{Il modello relazionale}
 		\section{Struttura del modello relazionale}
 		\subsection{Modelli logici nei sistemi di basi di dati}
@@ -355,7 +355,7 @@ create table Docenza (
 			\item \textit{relazione} come traduzione di \textit{relationship} costrutto del modello concettuale \textit{Entità-Relazione} utilizzato per descrivere legami tra entità del mondo reale.
 		\end{enumerate}
 		\subsection{Relazioni e tabelle}
-		In matematica, dati due insiemi $\mathcal{D}_1$ e $\mathcal{D}_2$, si chiama \textit{prodotto cartesiano} di $\mathcal{D}_1$ e $\mathcal{D}_2$, l'insieme di coppie ordinate $(v_1, v_2)$, tali che $v_1$ è un elemento di $\mathcal{D}_1$ e $v_2$ è un elemento di $\mathcal{D}_2$. 
+		In matematica, dati due insiemi $\mathcal{D}_1$ e $\mathcal{D}_2$, si chiama \textit{prodotto cartesiano} di $\mathcal{D}_1$ e $\mathcal{D}_2$, l'insieme di coppie ordinate $(v_1, v_2)$, tali che $v_1$ è un elemento di $\mathcal{D}_1$ e $v_2$ è un elemento di $\mathcal{D}_2$.
 		\begin{example}{\nmu Prodotto cartesiano}{prod_cartesiano}
 			Dati due insiemi $A = \{1, 2, 3, 4\}$ e $B = \{a, b\}$, il prodotto cartesiano è:
 			\[
@@ -404,11 +404,11 @@ create table Docenza (
 	\subsection{Relazioni e basi di dati}
 	Una base di dati è costituita da piu' relazioni, le cui tuple, contengono valori comuni per stabilire delle corrispondenze. Ad esempio date le seguenti relazioni:
 	\begin{center}
-		
+
 		\textbf{Studenti}
-		
+
 		\vspace{0.5cm}
-		
+
 		\begin{tabular}{|c|c|c|c|c|}
 			\hline
 			\textbf{Matricola} & \textbf{Cognome} & \textbf{Nome} & \textbf{Data di nascita} \\
@@ -420,15 +420,15 @@ create table Docenza (
 			937653 & Bruni & Mario & 01/12/2000 \\
 			\hline
 		\end{tabular}
-		
+
 		\vspace{1.5cm}
-		
+
 		\begin{minipage}[t]{0.45\textwidth}
 			\centering
 			\textbf{Esami}
-			
+
 			\vspace{0.5cm}
-			
+
 			\begin{tabular}{|c|c|c|}
 				\hline
 				\textbf{Studente} & \textbf{Voto} & \textbf{Corso} \\
@@ -444,9 +444,9 @@ create table Docenza (
 		\begin{minipage}[t]{0.45\textwidth}
 			\centering
 			\textbf{Corsi}
-			
+
 			\vspace{0.5cm}
-			
+
 			\begin{tabular}{|c|c|c|}
 				\hline
 				\textbf{Codice} & \textbf{Titolo} & \textbf{Docente} \\
@@ -457,14 +457,14 @@ create table Docenza (
 				\hline
 			\end{tabular}
 		\end{minipage}
-		
+
 	\end{center}
 	\begin{center}
-		
+
 		\textbf{Studenti}
-		
+
 		\vspace{0.5cm}
-		
+
 		\begin{tabular}{|c|c|c|c|c|}
 			\hline
 			\textbf{Matricola} & \textbf{Cognome} & \textbf{Nome} & \textbf{Data di nascita} \\
@@ -476,15 +476,15 @@ create table Docenza (
 			937653 & Bruni & Mario & 01/12/2000 \\
 			\hline
 		\end{tabular}
-		
+
 		\vspace{1.5cm}
-		
+
 		\begin{minipage}[t]{0.45\textwidth}
 			\centering
 			\textbf{Esami}
-			
+
 			\vspace{0.5cm}
-			
+
 			\begin{tabular}{|c|c|c|}
 				\hline
 				\textbf{Studente} & \textbf{Voto} & \textbf{Corso} \\
@@ -500,9 +500,9 @@ create table Docenza (
 		\begin{minipage}[t]{0.45\textwidth}
 			\centering
 			\textbf{Corsi}
-			
+
 			\vspace{0.5cm}
-			
+
 			\begin{tabular}{|c|c|c|}
 				\hline
 				\textbf{Codice} & \textbf{Titolo} & \textbf{Docente} \\
@@ -513,7 +513,7 @@ create table Docenza (
 				\hline
 			\end{tabular}
 		\end{minipage}
-		
+
 	\end{center}
 	\begin{itemize}
 		\item la relazione \textit{Studenti} contiene informazioni relative a un insieme di studenti, con numero di matricola, cognome, nome e data di nascita;
@@ -537,9 +537,9 @@ create table Docenza (
 		\item Un'\textit{istanza di relazione} o \textit{relazione} su uno schema $R(X)$ è un insieme di $r$ di tuple su $X$. Talvolta si usa la notazione di $r(X)$;
 		\item Un'\textit{istanza di base di dati} o semplicemente \textit{base di dati} è un insieme di relazioni $\mathbf{r} = \{r_1, r_2, \dots, r_n\}$ dove ogni $r_i$ per $1 \leq i \leq n$ è uno schema di relazione $R_i(X_i)$
 	\end{itemize}
-	Il modello relazionale permette di rappresentare informazioni strutturate in modo articolato, nella figura sottostante, sono schematizzate tre ricevute emesse da un ristorante. Esse hanno una struttura che prevede alcune informazioni fisse come numero, data e totale e un numero di righe variabile ognuna relativa a un insieme di portate omogenee. Possiamo rappresentare queste informazioni per mezzo di due relazioni, la relazione Ricevute con numero, data e totale e la relazione Dettaglio con quantità, descrizione e importo, associate alla ricevuta stessa tramite il numero. 
+	Il modello relazionale permette di rappresentare informazioni strutturate in modo articolato, nella figura sottostante, sono schematizzate tre ricevute emesse da un ristorante. Esse hanno una struttura che prevede alcune informazioni fisse come numero, data e totale e un numero di righe variabile ognuna relativa a un insieme di portate omogenee. Possiamo rappresentare queste informazioni per mezzo di due relazioni, la relazione Ricevute con numero, data e totale e la relazione Dettaglio con quantità, descrizione e importo, associate alla ricevuta stessa tramite il numero.
 	\begin{center}
-		
+
 		\begin{tabular}{|c|c|c|}
 			\hline
 			\multicolumn{3}{|c|}{\textbf{``DA MARIO''}} \\
@@ -593,15 +593,15 @@ create table Docenza (
 			\multicolumn{2}{|c|}{\textbf{Totale}} & \textbf{76,00} \\
 			\hline
 		\end{tabular}
-		
+
 	\end{center}
 	La base di dati che rappresenta le ricevute soprastanti è la seguente:
 	\begin{center}
-		
+
 		\textbf{Ricevute}
-		
+
 		\vspace{0.5cm}
-		
+
 		\begin{tabular}{|c|c|c|}
 			\hline
 			\textbf{Num} & \textbf{Data} & \textbf{Totale} \\
@@ -611,13 +611,13 @@ create table Docenza (
 			3002 & 4/8/2021 & 76,00 \\
 			\hline
 		\end{tabular}
-		
+
 		\vspace{1cm}
-		
+
 		\textbf{Dettaglio}
-		
+
 		\vspace{0.5cm}
-		
+
 		\begin{tabular}{|c|c|l|r|}
 			\hline
 			\textbf{Num} & \textbf{Q.tà} & \textbf{Descr} & \textbf{Costo} \\
@@ -639,14 +639,14 @@ create table Docenza (
 			3002 & 2 & caffè & 3,00 \\
 			\hline
 		\end{tabular}
-		
+
 	\end{center}
 	In questa situazione, la base di dati descritta non tiene traccia della riga dei singoli ordini come accade nelle ricevute, se vogliamo tener traccia dell'impaginazione della ricevuta basta aggiungere un attributo nella relazione Dettaglio che indica la posizione all'interno della ricevuta, come segue:
 	\begin{center}
 		\textbf{Dettaglio}
-		
+
 		\vspace{0.5cm}
-		
+
 		\begin{tabular}{|c|c|c|l|r|}
 			\hline
 			\textbf{Num} & \textbf{Riga} & \textbf{Q.tà} & \textbf{Descr} & \textbf{Costo} \\
@@ -678,11 +678,11 @@ create table Docenza (
 	Per rapprsentare in modo semplice e comodo l'assenza di informazione, il concetto di relazione viene esteso prevedendo che una tupla possa assumere, su ciascun attributo, o un valore del dominio, o un valore speciale, detto \textit{valore nullo}. Nelle rappresentazioni tabellari il valore nullo viene indicato con il simbolo \textit{null}. \\
 	Nei sistemi di basi di dati relazionali è prevista una gestione molto semplice del valore nullo, sul quale non viene fatta alcuna ipotesi e quindi rappresenta il valore senza informazione. \\
 	\begin{center}
-		
+
 		\textbf{Studenti}
-		
+
 		\vspace{0.5cm}
-		
+
 		\begin{tabular}{|c|c|c|c|}
 			\hline
 			\textbf{Matricola} & \textbf{Cognome} & \textbf{Nome} & \textbf{Data di nascita} \\
@@ -692,15 +692,15 @@ create table Docenza (
 			null & Verdi & Fabio & 12/02/2001 \\
 			\hline
 		\end{tabular}
-		
+
 		\vspace{1.5cm}
-		
+
 		\begin{minipage}[t]{0.45\textwidth}
 			\centering
 			\textbf{Esami}
-			
+
 			\vspace{0.5cm}
-			
+
 			\begin{tabular}{|c|c|c|}
 				\hline
 				\textbf{Studente} & \textbf{Voto} & \textbf{Corso} \\
@@ -715,9 +715,9 @@ create table Docenza (
 		\begin{minipage}[t]{0.45\textwidth}
 			\centering
 			\textbf{Corsi}
-			
+
 			\vspace{0.5cm}
-			
+
 			\begin{tabular}{|c|c|c|}
 				\hline
 				\textbf{Codice} & \textbf{Titolo} & \textbf{Docente} \\
@@ -728,16 +728,16 @@ create table Docenza (
 				\hline
 			\end{tabular}
 		\end{minipage}
-		
+
 	\end{center}
 	Il valore nullo sulla data di nascita è ammissibile perchè si puo' pensare che l'informazione non sia rilevante, ma un valore nullo sul numero di matricola o sul codice del corso genera problemi in quanto quei valori sono utilizzati per stabilire correlazioni fra tuple di relazioni diverse. Inoltre, la presenza di valori nulli rende inutilizzabili le informazioni. Infine, la presenza di molteplici valori nulli in una relazione puo' generare dubbi sulla significatività e identità delle tuple. è necessario quindi moderare oppurtunamente la presenza dei valori nulli nelle nostre relazioni, in genere, quando si definisce una relazione è possibile specificare quali attributi possono assumere valori nulli o meno. \\
 	\section{Vincoli di integrità}
 	In molti casi, non è vero che l'insieme di tuple sullo schema rappresenti informazioni corrette per l'applicazione, dopo aver descritto i problemi relativi alla presenza di valori nulli, analizziamo i problemi relativi alla presenza di valori non nulli. Analizziamo la relazione in figura:
 	\begin{center}
 		\textbf{Studenti}
-		
+
 		\vspace{0.3cm}
-		
+
 		\begin{tabular}{|c|c|c|c|}
 			\hline
 			\textbf{Matricola} & \textbf{Cognome} & \textbf{Nome} & \textbf{Data di nascita} \\
@@ -748,14 +748,14 @@ create table Docenza (
 			\hline
 		\end{tabular}
 	\end{center}
-	
+
 	\vspace{1cm}
-	
+
 	\begin{center}
 		\textbf{Esami}
-		
+
 		\vspace{0.3cm}
-		
+
 		\begin{tabular}{|c|c|c|c|}
 			\hline
 			\textbf{Studente} & \textbf{Voto} & \textbf{Lode} & \textbf{Corso} \\
@@ -767,14 +767,14 @@ create table Docenza (
 			\hline
 		\end{tabular}
 	\end{center}
-	
+
 	\vspace{1cm}
-	
+
 	\begin{center}
 		\textbf{Corsi}
-		
+
 		\vspace{0.3cm}
-		
+
 		\begin{tabular}{|c|c|c|}
 			\hline
 			\textbf{Codice} & \textbf{Titolo} & \textbf{Docente} \\
@@ -784,7 +784,7 @@ create table Docenza (
 			04 & Chimica & Belli \\
 			\hline
 		\end{tabular}
-	\end{center} 
+	\end{center}
 	\begin{itemize}
 		\item Nella prima tupla della relazione \textit{Esami} abbiamo un voto pari a 36 che, nel sistema italiano, non è ammissibile;
 		\item Nella seconda tupla della relazione \textit{Esami} viene indicato che è stata attribuita la lode ad un voto di 28;
@@ -792,7 +792,7 @@ create table Docenza (
 		\item La quarta tupla della relazione \textit{Esami} presente, per l'attributo \textbf{Studente}, un numero di matricola che non compare nella relazione \textit{Studenti}, analogamente compare un codice di corso non presente nella relazione \textit{Corsi}.
 	\end{itemize}
 	In una base di dati, bisogna evitare situazioni di questo tipo, quindi è stato introdotto il concetto di \textit{vincolo di integrità}, come proprietà che deve essere soddisfatta dalle istanze che rappresentano informazioni corrette per l'applicazione. Ogni vincolo puo' essere visto come un predicato che associa a ogni istanza il valore \textit{vero} o \textit{falso}. In uno schema a base di dati associamo un insieme di predicati e consideriamo corrette le istanze che soddisfano tutti i vincoli. In ciascuno dei casi discussi sopra possiamo introdurre un vincoli che vieti la situazione indesiderata. \\
-	Distinguiamo due categorie di vincoli a seconda degli elementi che sono coinvolti in una base di dati. 
+	Distinguiamo due categorie di vincoli a seconda degli elementi che sono coinvolti in una base di dati.
 	\begin{itemize}
 		\item Un vincolo è \textit{intrarelazionale} se è il soddisfacimento è definito rispetto a singole relazioni della base di dati; i primi tre casi corrispondono a vincoli intrarelazionali. Talvolta, il coinvolgimento riguarda le tuple separatamente le une dalle altre:
 		\begin{itemize}
@@ -806,7 +806,7 @@ create table Docenza (
 	Una possibile sintassi per esprimere condizioni di questo tipo è quella che permette di definire espressioni booleane, con connettivi \textit{and, or} e \textit{not} con atomi che confrontano, con operatori di uguaglianza, disuguaglianza e ordinamento, valori di attributo o espressioni aritmetiche su valori di attributo. Ad esempio i vincoli violati negli esempi precedenti possono essere descritti con le espressioni:
 	\[
 	(Voto \geq 18)\ and\ (Voto \leq 30)
-	\] 
+	\]
 	\[
 	(not(Lode\ =\ 'lodè))\ or\ (Voto\ =\ 30)
 	\]
@@ -816,7 +816,7 @@ create table Docenza (
 	Quindi, intuitivamente, una chiave è un insieme di attributi utilizzato per identificare univocamente le tuple di una relazione. Per formalizzare la definizione, procediamo in due passi:
 	\begin{enumerate}
 		\item un insieme di $K$ attributi è \textit{superchiave} di una relazione \textit{r} se \textit{r} non contiene due tuple distinte $t_1$ e $t_2$ con $t_1[K] = t_2[K]$
-		\item $K$ è \textit{chiave} di $r$ se è un superchiave minimale di $r$ 
+		\item $K$ è \textit{chiave} di $r$ se è un superchiave minimale di $r$
 	\end{enumerate}
 	Ad esempio, consideriamo la seguente relazione:
 	\begin{center}
@@ -856,14 +856,14 @@ create table Docenza (
  	\end{center}
  	Esaminando questa relazione, con due chiavi Matricola e (Cognome, Nome, Nascita), notiamo problemi di due tipi: la prima tupla ha valori nulli su Matricola e Nascita e quindi questa tupla non è identificabile in alcun modo. Inoltre, non è possibile in altre relazioni, fare riferimento a questa tupla, visto che andrebbe fatto con il valore di una chiave. Anche le ultime due tuple presentano un problema: nonostante ciascuna delle due tuple abbia una chiave completamente specificata, la presenza di valori nulli rende impossibile capire se le due tuple facciano riferimento allo stesso studente. \\
  	Questo esempio suggerisce la necessità di porre dei limiti alla presenza di valori nulli nelle chiavi delle relazioni. In pratica, si adotta una soluzione semplice, che permette di garantire l'identificazione univoca di tutte le tuple e la possibilità di far riferimento a esse: su una delle chiavi, detta \textit{chiave primaria}, si vieta la possibilità di avere valori nulli, sulle altre i valori nulli sono ammessi. Gli attributi che costituiscono la chiave primaria vengono evidenziati attraverso la sottolineatura. La maggior parte dei riferimenti tra relazioni avviene attraverso la chiave primaria. \\
- 	In quasi tutti i casi reali è possibile trovare attributi i cui valori sono identificanti e sempre disponibili. Se questo non accade è necessario introdurre un attributo aggiuntivo, solitamente un codice, che viene generato e assegnato ad ogni tupla all'atto dell'inserimento. 
+ 	In quasi tutti i casi reali è possibile trovare attributi i cui valori sono identificanti e sempre disponibili. Se questo non accade è necessario introdurre un attributo aggiuntivo, solitamente un codice, che viene generato e assegnato ad ogni tupla all'atto dell'inserimento.
  	\subsection{Vincoli di integrità referenziale}
  	Per discutere la piu' importante classe di vincoli interrelazionali, consideriamo la base di dati in figura:
  	\begin{center}
  		\textbf{Infrazioni}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		\begin{tabular}{|c|c|c|c|c|c|}
  			\hline
  			\textbf{\underline{Codice}} & \textbf{Data} & \textbf{Agente} & \textbf{Articolo} & \textbf{Stato} & \textbf{Numero} \\
@@ -876,14 +876,14 @@ create table Docenza (
  			\hline
  		\end{tabular}
  	\end{center}
- 	
+
  	\vspace{1cm}
- 	
+
  	\begin{center}
  		\textbf{Agenti}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		\begin{tabular}{|c|c|c|c|}
  			\hline
  			\textbf{\underline{Matricola}} & \textbf{CF} & \textbf{Cognome} & \textbf{Nome} \\
@@ -894,14 +894,14 @@ create table Docenza (
  			\hline
  		\end{tabular}
  	\end{center}
- 	
+
  	\vspace{1cm}
- 	
+
  	\begin{center}
  		\textbf{Auto}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		\begin{tabular}{|c|c|c|c|}
  			\hline
  			\textbf{\underline{Stato}} & \textbf{\underline{Numero}} & \textbf{Proprietario} & \textbf{Indirizzo} \\
@@ -916,9 +916,9 @@ create table Docenza (
  	La prima relazione, contiene informazioni relative a un insieme di infrazioni del codice della strada, la seconda agli agenti di polizia che le hanno rilevate e la terza a un insieme di autoveicoli di Paesi Europei. Le informazioni delle \textit{Infrazioni} sono rese significative attraverso il riferimento alla relazione \textit{Agenti} per mezzo della matricola di essi e alla relazione \textit{Auto} per tramite degli attributi Stato e Numero. I riferimenti sono significativi in quanto i valori nella relazione \textit{Infrazioni} sono uguali a quelli presenti nelle altre due relazioni. \\
  	Un \textit{vincolo di integrità referenziale} o \textit{foreign key} fra un insieme di attributi $X$ di una relazione $R_1$ e un'altra relazione $R_2$ è soddisfatto se i valori di $X$ di ciascuna tupla dell'istanza di $R_1$ compaiono come valori della chiave dell'istanza di $R_2$. Questa definizione richiede particolare attenzione, nei casi in cui la relazione alla quale ci riferiamo è composta da piu' attributi e nel caso in cui vi siano piu' chiavi. \\
  	Vedendo prima il caso in cui la chiave di $R_2$ è unica e composta da un solo attributo $B$ allora il vincolo di integrità referenziale fra l'attributo di $A$ di $R_1$ e la relazione $R_2$ è soddisfatto se, per ogni tupla $t_1$ in $R_1$ per cui $t_1[A]$ non è nullo, esiste una tupla $t_2$ in $R_2$ tale che $t_1[A] = t_2[B]$. Nel caso piu' generale, dobbiamo fare attenzione al fatto che ciascuno degli attributi $X$ deve corrispondere a un preciso attributo della chiave $K$ in $R_2$. è necessario specificare un ordinamento sia nell'insieme $X$ sia di $K$. Indicando gli attributi $X = A_1A_2\dots A_n$ e $K = B_1B_2\dots B_n$ il vincolo è soddisfatto se per ogni tupla $t_1$ in $R_1$ senza nulli su $X$ esiste una tupla $t_2$ in $R_2$ con $t_1[A_i]=t_2[B_i] \quad \forall i \in [1, p]$. \\
- 	Una considerazione va fatta riguardo le relazioni con piu' chiavi. In questo caso, è opportuno identificarne uno come chiave primaria e riferimenti vengono fatti attraverso essa. Pero', va notato che non tutti i sistemi di gestione di base di dati permettono di indicare esplicitamente la chiave primaria. In questi casi, il vincolo di integrità referenziale deve indicare esplicitamente gli attributi che compongono la chiave cui si fa riferimento. 
+ 	Una considerazione va fatta riguardo le relazioni con piu' chiavi. In questo caso, è opportuno identificarne uno come chiave primaria e riferimenti vengono fatti attraverso essa. Pero', va notato che non tutti i sistemi di gestione di base di dati permettono di indicare esplicitamente la chiave primaria. In questi casi, il vincolo di integrità referenziale deve indicare esplicitamente gli attributi che compongono la chiave cui si fa riferimento.
  	\chapter{Algebra relazionale}
- 	Come detto precedentemente, i linguaggi per basi di dati si suddividono in due categorie. 
+ 	Come detto precedentemente, i linguaggi per basi di dati si suddividono in due categorie.
  	\begin{itemize}
  		\item Operazioni sullo schema:
  		\begin{itemize}
@@ -946,7 +946,7 @@ create table Docenza (
  		\item operatori insiemistici tradizionali: \textit{unione, intersezione} e \textit{differenza} che possono essere anche definiti, con qualche differenza, sulle relazioni;
  		\item operatori di \textit{ridenominazione, selezione} e \textit{proiezione} che sono piu' specifici;
  		\item operatore di \textit{join} in varie forme: \textit{join naturale, prodotto cartesiano, semijoin} e \textit{theta-join};
- 		\item operatore di \textit{divisione}, che è ridondante perchè esprimibile per mezzo di altri operatori. 
+ 		\item operatore di \textit{divisione}, che è ridondante perchè esprimibile per mezzo di altri operatori.
  	\end{itemize}
  	\section{Algebra relazionale}
  	\subsection{Unione, intersezione e differenza}
@@ -979,7 +979,7 @@ create table Docenza (
  	Ora definiamo questo operatore in forma generale. Sia $r$ una relazione definita su un insieme di attributi $X$ e sia $Y$ un altro insieme di attributi con la stessa cardinalità. Siano $A_1, A_2, \dots, A_k$ e $B_1, B_2, \dots, B_k$ rispettivamente un ordinamento per gli attributi in $X$ e un ordinamento per quelli in $Y$. Allora la ridenominazione:
  	\[
  	\rho_{B_1B_2\dots B_k \leftarrow A_1A_2\dots A_k}(r)
- 	\] 
+ 	\]
  	contiene una tupla $t'$ per ciascuna tupla $t$ in $r$, definita come segue: $t'$ è una tupla su $Y$ e $t'[B_i] = t[A_i] \quad \forall i = 1, \dots, k$. La definizione conferma che cio' che cambia sono i nomi degli attributi, mentre i valori rimangono inalterati e vengono associati ai nuovi attributi. In pratica, nelle due liste $A_1A_2\dots A_k$ e $B_1B_2\dots B_k$ indicheremo solo gli attributi che vengono ridenominati, cioè quelli per cui $A_i \neq B_i$. \\
  	Quindi ritornando alle relazioni precedenti, l'unione delle due relazioni è la seguente:
  	\begin{figure}[H]
@@ -988,7 +988,7 @@ create table Docenza (
  	\end{figure}
  	\subsection{Selezione}
  	Esaminiamo, ora, gli operatori più tipici dell'algebra relazionale, che permettono di manipolare le relazioni. Si tratta di tre operatori: selezione, proiezione e join con diverse varianti. \\
- 	È bene precisare che la selezione e la proiezione svolgono funzioni ``complementari'', sono entrambe definire su un operando e producono come risultato una porzione dell'operando. Più precisamente la selezione produce un sottinsieme delle tuple, su tutti gli attributi, mentre la proiezione dà un risultato cui contribuiscono tutte le tuple, ma su un sottoinsieme degli attributi. Quindi, possiamo dire che la selezione genera ``decomposizioni orizzontali'' e la proiezione ``decomposizioni verticali''. La situazione descritta è mostrata nella seguente figura: 
+ 	È bene precisare che la selezione e la proiezione svolgono funzioni ``complementari'', sono entrambe definire su un operando e producono come risultato una porzione dell'operando. Più precisamente la selezione produce un sottinsieme delle tuple, su tutti gli attributi, mentre la proiezione dà un risultato cui contribuiscono tutte le tuple, ma su un sottoinsieme degli attributi. Quindi, possiamo dire che la selezione genera ``decomposizioni orizzontali'' e la proiezione ``decomposizioni verticali''. La situazione descritta è mostrata nella seguente figura:
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.5\textwidth]{selezione_proiezione}
@@ -999,7 +999,7 @@ create table Docenza (
  		\item $\Theta$ è un oepratore di confronto $(=, \neq, <, >, \leq, \geq)$;
  		\item $A$ e $B$ sono attributi in $X$ sui cui valori il confronto $\Theta$ abbia senso;
  		\item $c$ è una costante con il dominio di $A$.
- 	\end{itemize} 
+ 	\end{itemize}
  	Seguono due esempi di selezione:
  	\begin{figure}[H]
  		\centering
@@ -1033,7 +1033,7 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.5\textwidth]{proiezione_1}
  	\end{figure}
- 	In questo esempio viene illustrato chiaramento il concetto citato. 
+ 	In questo esempio viene illustrato chiaramento il concetto citato.
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.5\textwidth]{proiezione_2}
@@ -1041,8 +1041,8 @@ create table Docenza (
  	In questo esempio, invece, troviamo un numero di tuple inferiore a quelle dell'operando, perchè alcune tuple, avendo valori uguali sugli attributi della proiezione, danno lo stesso contributo alla proiezione. Essendo le relazioni definite come insiemi, non possono apparire più tuple uguali fra loro. Esiste, quindi, un legame fra i vincoli di chiave e le proiezioni relativamente a questo problema: $\pi_Y(r)$ contiene lo stesso numero di tuple di $r$ se e solo se $Y$ è superchiave per $r$. Infatti:
  	\begin{itemize}
  		\item se $Y$ è superchiave, allora $r$ non contiene tuple uguali su $Y$, quindi ogni tupla da un contributo diverso alla proiezione;
- 		\item se la proiezione ha tante tuple quante l'operando, allora ciascuna tupla contribuisce alla proiezione con valori diversi, quindi $r$ non contiene coppie di tuple uguali su $Y$ e questa è la definizione di superchiave. 
- 	\end{itemize} 
+ 		\item se la proiezione ha tante tuple quante l'operando, allora ciascuna tupla contribuisce alla proiezione con valori diversi, quindi $r$ non contiene coppie di tuple uguali su $Y$ e questa è la definizione di superchiave.
+ 	\end{itemize}
  	\subsection{Join}
  	Esaminiamo l'operatore più caratteristico dell'algebra relazionale, l'operatore di join, che permette di correlare dati contenuti in relazioni diverse, confrontando i valori contenuti in esse e utilizzando la caratteristica fondamentale del modello, cioè quella di essere basato su valori. Esistono due versioni dell'operatore: il \textit{join naturale} utile per riflessioni astratte e il \textit{theta-join} che è più rilevante dal punto di vista pratico.
  	\subsubsection{Join naturale}
@@ -1051,7 +1051,7 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.5\textwidth]{join_naturale}
  	\end{figure}
- 	In generale, il join naturale $r_1 \bowtie r_2$ di $r_1(X_1)$ e $r_2(X_2)$ è una relazione definita su $X_1X_2$ come segue: 
+ 	In generale, il join naturale $r_1 \bowtie r_2$ di $r_1(X_1)$ e $r_2(X_2)$ è una relazione definita su $X_1X_2$ come segue:
  	\[
  	r_1 \bowtie r_2 = \{t \text{ su } X_1X_2 \mid \text{esistono } t_1 \in r_1 \text{ e } t_2 \in r_2 \text{ con } t[X_1] = t_1 \text{ e } t[X_2] = t_2\}
  	\]
@@ -1065,14 +1065,14 @@ create table Docenza (
  		\centering
  		\includegraphics[width=0.5\textwidth]{join_chiave}
  	\end{figure}
- 	Notiamo che ciascuna delle tuple di \textit{Infrazioni} è stata combinata con una e una sola delle tuple di \textit{Auto}: una sola perchè \textbf{Prov} e \textbf{Numero} formano una chiave di \textit{Auto}, almeno una perchè è definito il vincolo di integrità referenziale fra \textbf{Prov} e \textbf{Numero} in \textit{Infrazioni} e \textit{Auto}. Il join, quindi, ha esattamente tante tuple quante la relazione \textit{Infrazioni}. 
- 	\subsubsection{Join completi e incompleti} 
+ 	Notiamo che ciascuna delle tuple di \textit{Infrazioni} è stata combinata con una e una sola delle tuple di \textit{Auto}: una sola perchè \textbf{Prov} e \textbf{Numero} formano una chiave di \textit{Auto}, almeno una perchè è definito il vincolo di integrità referenziale fra \textbf{Prov} e \textbf{Numero} in \textit{Infrazioni} e \textit{Auto}. Il join, quindi, ha esattamente tante tuple quante la relazione \textit{Infrazioni}.
+ 	\subsubsection{Join completi e incompleti}
  	Analizziamo diversi esempi di join, in modo da effettuare delle valutazioni sulla dimensione del risultato e al contributo a esso portato dalle tuple degli operandi. Nel primo esempio di join mostrato, ciasuna tupla di ciasuno degli operandi contribuisce ad almeno una tupla del risultato, quindi ci troviamo in un caso di \textit{join completo}: per ogni tupla $t_1$ di $r_1$, esiste una tupla $t$ in $r_1 \bowtie r_2$  tale che $t[X_1] = t$, analogamente per $r_2$. Questa proprietà non è sempre verificata, perchè richeide una corrispondenza fra le tuple delle due relazioni. \\
  	Consideriamo la relazione in figura:
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.8\textwidth]{tuple_dangling}
-		\caption{Un join con tuple \textit{dangling}} 	
+		\caption{Un join con tuple \textit{dangling}}
 		\label{fig:dangling}
  	\end{figure}
  	La figura mostra un join in cui alcune tuple degli operandi non contribuiscono al risultato, perchè l'altra relazione non contiene tuple con gli stessi valori sull'attributo comune. Queste tuple vengono chiamate \textit{dangling}. Inoltre, è possibile che nessuna tupla degli operandi sia combinabile, e allora il risultato del join è la relazione vuota.
@@ -1093,7 +1093,7 @@ create table Docenza (
  		\item se $X_1 \cap X_2$ contiene una chiave per $r_2$, allora il join di $r_1(X_1)$ e $r_2(X_2)$ contiene al più $|r_1|$ tuple;
  		\item se $X_1 \cap X_2$ coincide con una chiave per $r_2$ e sussite il vincolo referenziale fra $X_1 \cap X_2$ in $r_1$ e la chiave di $r_2$, allora il join di $r_1(X_1)$ e $r_2(X_2)$ contiene esattamente $|r_1|$ tuple.
  	\end{itemize}
- 	\subsubsection{Join esterni} 
+ 	\subsubsection{Join esterni}
  	La caratteristica dell'operatore di join di ``tralasciarè' le tuple di una relazione che non hanno controparte nell'altra è utile in molti casi ma pericolosa in altri in quanto potrebbe omettere informazioni utili. Consideriamo la figura~\ref{fig:dangling}, supponendo di essere interessati a tutti gli impiegati, con l'indicazione del capo, se noto. Per questo, è stata proposta una variante dell'operatore di join chiamta \textit{join esterno} o \textit{outer join}, che prevede che tutte le tuple diano un contributo al risultato, eventualmente estese con valori nulli ove non vi siano controparti opportune. Esistono tre varianti dell'opearatore di join esterno:
  	\begin{enumerate}
  		\item il join esterno \textit{sinistro}, che estende solo le tuple del primo operando;
@@ -1108,7 +1108,7 @@ create table Docenza (
  		\label{fig:join_esterni}
  	\end{figure}
  	\subsubsection{Semijoin}
- 	Un operatore derivato da quello di join è il \textit{semijoin}, che restituisce le tuple di una relazione che partecipano al join naturale di tale relazione con un'altra. La definizione formale dell'operatore, che viene indicano con il simbolo $\ltimes$, è la seguente: 
+ 	Un operatore derivato da quello di join è il \textit{semijoin}, che restituisce le tuple di una relazione che partecipano al join naturale di tale relazione con un'altra. La definizione formale dell'operatore, che viene indicano con il simbolo $\ltimes$, è la seguente:
  	\begin{center}
  		date due relazioni di $r_1(X_1)$ e $r_2(X_2)$ il semijoin $r_1 \ltimes r_2$ è una relazione definita su $X_1$ come segue:
  		\[
@@ -1135,7 +1135,7 @@ create table Docenza (
  	\[
  	r_1(X_2) \bowtie r_2(X_2) = r_1(X_1) \cap r_2(X_2) \quad \iff X_1 = X_2
  	\]
- 	Il caso in cui gli insiemi degli attributi sono disgiunti merita ancora maggiore attenzione. Il risultato è sempre definito sull'unione $X_1X_2$, e ciascuna tupla deriva sempre da due tuple, una per ciascuno degli operandi, ma dato che le tuple non hanno attributi comuni, non viene richiesta a esse nessuna condizione per partecipare insieme al join. Quindi, il risultato del join contiene le tuple ottenute comninando, in tutti i modi possibili, le tuple degli operandi. In questo caso allora il join diventa un \textit{prodotto cartesiano}. 
+ 	Il caso in cui gli insiemi degli attributi sono disgiunti merita ancora maggiore attenzione. Il risultato è sempre definito sull'unione $X_1X_2$, e ciascuna tupla deriva sempre da due tuple, una per ciascuno degli operandi, ma dato che le tuple non hanno attributi comuni, non viene richiesta a esse nessuna condizione per partecipare insieme al join. Quindi, il risultato del join contiene le tuple ottenute comninando, in tutti i modi possibili, le tuple degli operandi. In questo caso allora il join diventa un \textit{prodotto cartesiano}.
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.7\textwidth]{prodotto_cartesiano}
@@ -1160,13 +1160,13 @@ create table Docenza (
  	\texttt{Impiegati} \bowtie_{\textbf{Progetto=Codice}}\texttt{Progetti}
  	\]
  	Un theta-join in cui la condizione è una congiunzione di atomi di uguaglianza viene chiamato \textit{equi-join}. \\
- 	Il theta-join, in particolare l'equi-join, hanno un importante risvolto pratico, in quanto la maggior parte dei sistemi di basi di dati non utilizzano i nomi di attributi per correlare relazioni e quindi non utilizzano il join naturale ma il theta-join e l'equi-join. Il join naturale può essere simulato per mezzo della ridenominazione, dell'equi-join e della proiezione. 
+ 	Il theta-join, in particolare l'equi-join, hanno un importante risvolto pratico, in quanto la maggior parte dei sistemi di basi di dati non utilizzano i nomi di attributi per correlare relazioni e quindi non utilizzano il join naturale ma il theta-join e l'equi-join. Il join naturale può essere simulato per mezzo della ridenominazione, dell'equi-join e della proiezione.
  	\begin{example}{\nmu Simulazione join naturale}{sim_join_nat}
  		Date due relazioni $r_1(ABC)$ e $r_2(BCD)$, il join naturale di $r_1$ e $r_2$ può essere espresso per mezzo degli altri operatori, in tre passi:
  		\begin{itemize}
  			\item ridenominando gli attributi in modo di ottenere relazioni su schemi disgiunti:
  			\[
- 			\rho_{B'C' \leftarrow BC}(r_2) 
+ 			\rho_{B'C' \leftarrow BC}(r_2)
  			\]
  			\item effettuando l'equi-join, con condizioni di uguaglianza sugli attributi corrispondenti:
  			\[
@@ -1207,7 +1207,7 @@ create table Docenza (
  	\texttt{Impiegati(\textbf{\underline{Matr}, Nome, Età, Stipendio})}
  	\]
  	\[
- 	\texttt{Superivisione(\textbf{Capo, \underline{Impiegato}})} 	
+ 	\texttt{Superivisione(\textbf{Capo, \underline{Impiegato}})}
  	\]
  	La prima interrogazione chiede di trovare matricola, nome ed età degli impiegati che guadagnano più di 40000 mila euro:
  	\[
@@ -1217,7 +1217,7 @@ create table Docenza (
  	\[
  	\pi_{Capo}(\texttt{Supervisione} \underset{Impiegato = Matr}{\bowtie} \sigma_{Stipendio\ >\ 40}(\texttt{Impiegati}))
  	\]
- 	La terza interrogazione chiede di trovare nome e stipendio dei capi degli impiegati che guadagnano più di 40mila euro. In questo caso, possiamo far uso dell'espressione precedente, ma dobbiamo poi produrre, per ciascuna tupla del risultato, le informazioni richieste sul capo che vanno estratte dalla relazione \texttt{Impiegati}. Ogni tupla del risultato è costruita a partire da tre tuple: la prima di \texttt{Impiegati}, relativa a un impiegato che guadagna più di 30mila euro, la seconda di \texttt{Supervisione}, che indica la matricola del capo dell'impiegato in questione, e la terza di \texttt{Impiegati}, con le informazioni relative al capo.  
+ 	La terza interrogazione chiede di trovare nome e stipendio dei capi degli impiegati che guadagnano più di 40mila euro. In questo caso, possiamo far uso dell'espressione precedente, ma dobbiamo poi produrre, per ciascuna tupla del risultato, le informazioni richieste sul capo che vanno estratte dalla relazione \texttt{Impiegati}. Ogni tupla del risultato è costruita a partire da tre tuple: la prima di \texttt{Impiegati}, relativa a un impiegato che guadagna più di 30mila euro, la seconda di \texttt{Supervisione}, che indica la matricola del capo dell'impiegato in questione, e la terza di \texttt{Impiegati}, con le informazioni relative al capo.
  	\[
  	\pi_{NomeC, StipC} \left(
  	\begin{aligned}
@@ -1236,7 +1236,7 @@ create table Docenza (
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.7\textwidth]{quinta_interrogazione}
- 	\end{figure} 
+ 	\end{figure}
  	A volte, può essere conveniente utilizzare per l'algebra relazionale, una notazione grafica, in cui un'espressione è rappresentata per mezzo di un albero le cui foglie sono operandi e gli altri nodi corrispondono a degli operatori. Ogni nodo che non sia una foglia ha un numero di figli pari al numero di operandi dell'operatore, quindi i nodi con proiezione, selezioni e ridenominazioni hanno un solo figlio, mentre quelli relativi agli altri operatori ne hanno due. Di seguito viene mostrato un esempio di questa notazione:
  	\begin{figure}[H]
  		\centering
@@ -1271,11 +1271,11 @@ create table Docenza (
  		\item \textbf{Idempotenza delle proiezioni}: una proiezione può essere trasformata in una cascata di proiezioni che ``eliminano'' i vari attributi in fasi successive:
  		\[
  		\pi_{X}(E) \equiv \pi_{X}(\pi_{XY}(E))
- 		\] 
+ 		\]
  		Anche questa è una trasformazione preliminare rispetto ad altre.
  		\item \textbf{Anticipazione della selezione rispetto al join}, detta anche \textit{pushing selections down}, con riferimento al fatto che, nella rappresentazione di espressioni sotto forma di alberi, la selezione viene spostata verso il basso:
  		\[
- 		\sigma_{F}(E_1 \bowtie E_2) \equiv E_1 \bowtie \sigma_F(E_2) 
+ 		\sigma_{F}(E_1 \bowtie E_2) \equiv E_1 \bowtie \sigma_F(E_2)
  		\]
  		se la condizione $F$ fa riferimento solo ad attributi nella sottoespressione $E_2$.
  		\item \textbf{Anticipazione della proiezione rispetto al join}, detta anche \textit{pushing projections down}: siano $E_!$  e $E_2$ definite rispettivamente su $X_1$ e $X_2$: se $Y_2 \subseteq X_2$ e $Y_2 \supseteq (X_1 \cap X_2)$, cioè gli attributi $X_2 - Y_2$ non sono coinvolti nel join, allora vale l'equivalenza:
@@ -1288,12 +1288,12 @@ create table Docenza (
  		\]
  		dove indicando con $X_1$ ed $X_2$ gli attributi di $E_1$ ed $E_2$ rispettivamente e con $J_1$ ed $J_2$ i rispettivi sottoinsiemi coinvolti nella condizione $F$ di join:
  		\[
- 		Y_1 = (X_1 \cap Y) \cup J_1 
+ 		Y_1 = (X_1 \cap Y) \cup J_1
  		\]
  		\[
  		Y_2 = (X_2 \cap Y) \cup J_2
  		\]
- 		In sostanza, possiamo eliminare da ciascuna relazione gli attributi che non compaiono nel risultato finale e non sono coinvolti nel join. 
+ 		In sostanza, possiamo eliminare da ciascuna relazione gli attributi che non compaiono nel risultato finale e non sono coinvolti nel join.
  		\item \textbf{Inglobamento di una selezione in un prodotto cartesiano a formare un join}:
  		\[
  		\sigma_F(E_1 \bowtie E_2) \equiv E_1 \underset{F}{\bowtie} E_2
@@ -1305,7 +1305,7 @@ create table Docenza (
  		\centering
  		\includegraphics[width=1.0\textwidth]{esempio_Bdd_espressioni}
  		\caption{Esempio di una base di dati per le espressioni}
- 		\label{fig:esempio_bdd_espressioni} 
+ 		\label{fig:esempio_bdd_espressioni}
  	\end{figure}
  	Supponiamo di voler trovare i numeri di matricola dei capi di impiegati con meno di trent'anni.
  	\[
@@ -1337,7 +1337,7 @@ create table Docenza (
  		\item \textbf{Distributività della selezione rispetto all'unione}:
  		\[
  		\pi_F(E_1 \cup E_2) \equiv \pi_F(E_1) \cup \pi_F(E_2)
- 		\]	
+ 		\]
  	\end{enumerate}
  	Vale la pena notare che la proiezione non è distributiva rispetto alla differenza, come si può verificare applicando le espressioni:
  	\[
@@ -1398,7 +1398,7 @@ create table Docenza (
  	Possono esistere due tipi di relazioni derivate:
  	\begin{itemize}
  		\item \textit{viste materializzate}: relazioni effettivamente memorizzate nella base di dati;
- 		\item \textit{relazioni virtuali}: esse sono anche chiamate \textit{viste} e sono relazioni definite per mezzo di funzioni, non memorizzate nella base di dati, ma utilizzabili nelle interrogazioni come se le fossero. 
+ 		\item \textit{relazioni virtuali}: esse sono anche chiamate \textit{viste} e sono relazioni definite per mezzo di funzioni, non memorizzate nella base di dati, ma utilizzabili nelle interrogazioni come se le fossero.
  	\end{itemize}
  	Le viste materializzate hanno il vantaggio di essere immediatamente disponibili per le interrogazioni, ma spesso è oneroso mantenere il loro contenuto allineato con quello delle relazioni da cui derivano. Le relazioni virtuali devono essere calcolate per ogni interrogazione ma non presentano problemi di allienamento. Le viste materializzate sono convenienti quando gli aggiormamenti sono rari rispetto alle interrogazioni e il calcolo della vista è complesso. In generale, non esistono tecniche per mantenere l'allineamento e per questo, i sistemi atttuali forniscono solo meccanismi per la gestione di relazioni virtuali che chiameremo \textit{viste}. \\
  	Le viste vengono definite nei sistemi relazioni per mezzo di espressioni del linguaggio di interrogazione. Eventuali interrogazioni che si riferiscono alle viste vengonor risolte sostituendo alla vista la sua definizione. Di solito, i sistemi relazionali stabiliscono la strategia di esecuzione delle interrogazioni dopo aver sostituito alla vista la sua definizione. Per esempio, supponiamo di avere una base di dati sulle seguenti relazioni:
@@ -1419,19 +1419,19 @@ create table Docenza (
  	\]
  	L'uso delle viste può essere vantaggioso per diversi motivi:
  	\begin{itemize}
- 		\item Un utente interessato solo a una porzione della base di dati può evitare di considerare le componenti irrilevanti. 
+ 		\item Un utente interessato solo a una porzione della base di dati può evitare di considerare le componenti irrilevanti.
  		\item Espressioni molto complesse possono essere definite tramite viste, con vantaggi rilevanti soprattutto se ci sono sottoespressioni ripetute.
  		\item Attraverso la definzione di autorizzazioni di accesso rispetto alla viste, è possibile introdurre meccanismi di protezione della privatezza.
  		\item In occasione di ristrutturazione di una base di dati, può risultare conveniente definire viste che corrispondano a relazioni sostituite da altre e perciò non più presenti dopo la ristrutturazione, ma ricavabili dalle nuove relazioni. Ad esempio, se uno schema $R(ABC)$ viene sostituito dagli schemi $R_1(AB)$ e $R_2(BC)$ è possibile definire una vista $R = R_1 \bowtie R_2$ e mantenere inalterate le applicazioni che fanno riferimento a $R$.
  	\end{itemize}
- 	Per quanto riguarda le interrogazioni le viste possono essere trattate come le relazioni di base, ma non si può dire lo stesso per le operazioni di aggiormento. Infatti, in molti casi non è possibile definire una semantica degli aggiornamenti sulle viste: dato un aggiormento su una vista, in generale non esiste uno e un solo aggiornamento delle relazioni di base che porti a un'istanza della base di dati cui corrisponda un'istanza della vista che sia il risultato effettivo dell'aggiornamento specificato sulla vista. Per questo, molti sistemi pongono forti limitazioni riguardo alla possibilità di specificare aggiornamenti sulle viste. 
+ 	Per quanto riguarda le interrogazioni le viste possono essere trattate come le relazioni di base, ma non si può dire lo stesso per le operazioni di aggiormento. Infatti, in molti casi non è possibile definire una semantica degli aggiornamenti sulle viste: dato un aggiormento su una vista, in generale non esiste uno e un solo aggiornamento delle relazioni di base che porti a un'istanza della base di dati cui corrisponda un'istanza della vista che sia il risultato effettivo dell'aggiornamento specificato sulla vista. Per questo, molti sistemi pongono forti limitazioni riguardo alla possibilità di specificare aggiornamenti sulle viste.
  	\section{Calcolo relazionale}
  	Il \textit{calcolo relazionale} fa riferimento a una famiglia di linguaggi di interrogazione, basati sul calcolo dei predicati del primo ordine, che hanno la caratteristica di essere \textit{dichiarativi}, cioè di specificare le proprietà del risultato delle interrogazioni, anziché la procedura seguita per generarlo. In contrasto, l'algebra relazionale è un linguaggio \textit{procedurale}, in quanto le sue espressioni specificano passo passo la costruzione del risultato. \\
  	Esistono diverse versioni del calcolo relazionale:
  	\begin{itemize}
  		\item il \textbf{calcolo relazionale sui domini} che presenta in modo naturale tutte le caratteristiche originale di questi linguaggi;
  		\item il \textbf{calcolo su tuple con dichiarazioni di range}, che costituisce la base per molti dei costrutti disponibili per le interrogazioni nel linguaggio SQL.
- 	\end{itemize} 
+ 	\end{itemize}
  	Rispetto alla definzione dei calcoli del predicato del primo ordine, nel calcolo relazionale ci sono alcune semplificazioni. Mentre nel calcolo dei predicati abbiamo simboli di predicato e di funzione, nel calcolo relazionale i simboli di predicato corrispondono alle relazioni nelle base di dati e non compaiono simboli di funzione perchè non sono necessari. \\
  	Inoltre, nel calcolo dei predicati interessano sia formule aperte, cioè con variabili libere, sia formule chiuse, con tutte variabili legate. Nel calcolo relazionale interessano le formule aperte: un'interrogazione è definita per mezzo di una formula del calcolo e il risultato è costituito dalle tuple di valori che rendono vera la formula stessa.
  	\subsection{Calcolo relazione su domini}
@@ -1451,7 +1451,7 @@ create table Docenza (
  				\item $x\theta y$ o $x\theta c$ con $x$ e $y$ variabili, $c$ costante e $\theta$ operatore di confronto $(= , \neq, \leq, \geq, <, >)$
  			\end{itemize}
  			\item Se $f_1$ e $f_2$ sono formule, allora $f_1 \vee f_2$, $f_1 \wedge f_2$ e $\neg f_1$ sono formule;
- 			\item Se $f$ è una formula e $x$ una variabile allora $\exists x(f)$ e $\forall x(f)$ sono formule. 
+ 			\item Se $f$ è una formula e $x$ una variabile allora $\exists x(f)$ e $\forall x(f)$ sono formule.
  		\end{itemize}
  	\end{itemize}
  	La lista di coppie $A_1: x_1, \dots A_k: x_k$ viene chiamata \textit{target list} in quanto definisce la struttura del risultato, che è costituito dalla relazione su $A_1, \dots, A_k$ che contiene le tuple i cui valori, sostituiti a $x_1, \dots, x_k$, rendono vera la formula rispetto a un'istanza di base di dati a cui l'espressione viene applicata. \\
@@ -1497,7 +1497,7 @@ create table Docenza (
 		\textbf{Matr: }m, \textbf{Nome: }n, \textbf{Età: }e \mid \\
 		&\exists s(\texttt{Impiegati}(\textbf{Matr}: m, \textbf{Nome: } n, \textbf{Età: }e, \textbf{Stipendio: }s) \wedge s > 40)
  		\}
- 	\end{align*} 
+ 	\end{align*}
  	L'uso del quantificatore, in realtà, non è necessario, perchè scrivendo semplicemente:
  	\begin{align*}
  		& \hspace{3cm}\{\text{\textbf{Matr}: }m, \textbf{Nome: } n, \textbf{Età: } e \mid  \\
@@ -1542,7 +1542,7 @@ create table Docenza (
  	\pi_{Matr, Nome}(\texttt{Impiegati} \bowtie_{Matr=Capo}
  	\]
  	\[
- 	(\pi_{Capo}(\texttt{Supervisione}) - 
+ 	(\pi_{Capo}(\texttt{Supervisione}) -
  	\]
  	\[
  	\pi_{Capo}(\texttt{Supervisione} \bowtie_{Imp=Matr} \sigma_{Stip \leq 40}(\texttt{Impiegati}))))
@@ -1584,7 +1584,7 @@ create table Docenza (
  	\begin{itemize}
  		\item per ogni espressione del calcolo relazionae che sia indipendente dal dominio esiste un'espressione dell'algebra relazione equivalente a essa;
  		\item per ogni espressione dell'algebra relazione esiste un'espressione del calcolo relazionale equivalente a essa.
- 	\end{itemize} 
+ 	\end{itemize}
  	Oltre al problema della dipendenza dal dominio, un altro svantaggio è quello di richiedere numerose variabili. Quando poi sno necessarie quantificazioni, anche i quantificatori si moltiplicano. \\
  	Per superare i limiti sul calcolo dei domini, è stata proposta un'altra versione del calcolo relazione in cui le variabili, anzichè denotare singoli valori, denotano tuple. Molto spesso il numero di variabili si riduce di tanto, perchè si ha una variabile per ciascuna relazione coinvolta. Diventa poi necessario associare una struttura a ciascuna variabile e realizzare opportunamente le operazioni di confronto. Potremmo definire un \textit{calcolo relazione su tuple} perfettamente corrispondente al calcolo su domini, ma preferiamo passare a un linguaggio che, recependo le caratteristiche del calcolo su tuple, superi le dipendenza dal dominio, attraverso l'associazione delle variabili alle relazioni della base di dati.
  	\subsection{Calcolo su tuple con dichiarazioni di range}
@@ -1620,21 +1620,21 @@ create table Docenza (
   	Per interrogazioni che coinvolgono più relazioni sono necessarie più variabili, con specifica delle condizioni di correlazione sugli attributi. L'interrogazione che vuole trovare la matricole dei capi degli impiegati che guadagnano più di 40 mila euro, può essere formulata con:
   	\begin{align*}
   		&\{s.\textbf{Capo} \mid i(\texttt{Impiegati}), s(\texttt{Supervisione}) \mid \\
-  		& i.\textbf{Matr} = s.\textbf{Impiegato} \wedge i.\textbf{Stipendio} > 40\} 
+  		& i.\textbf{Matr} = s.\textbf{Impiegato} \wedge i.\textbf{Stipendio} > 40\}
   	\end{align*}
   	Nel caso delle espressioni corrispondenti al join di una relazione con se stessa, abbiamo più variabili aventi la stessa relazione come range. L'interrogazione: trovare nome e stipendio dei capi degli impiegati che guadagnano più di 40 mila euro può essere realizzata con l'espressione:
   	\[
   	\{\textbf{NomeC}, \textbf{StipC} : i'.(\textbf{Nome, Stip}) \mid
   	\]
   	\[
-  	i'(\texttt{Impiegati}), s(\texttt{Supervisione}), i(\texttt{Impiegati}) \mid 
+  	i'(\texttt{Impiegati}), s(\texttt{Supervisione}), i(\texttt{Impiegati}) \mid
   	\]
   	\[
   	i'.\textbf{Matr} = s.\textbf{Capo} \wedge s.\textbf{Impiegato} = i.\textbf{Matr} \wedge i.\textbf{Stipendio} > 40\}
   	\]
   	Le interrogazioni con i quantificatori mostrano appieno la sinteticità e praticità del calcolo su tuple con dichiarazioni di range. L'interrogazione che richiede di trovare matricola e nome dei capi i cui impiegati guadagnano tutti più di 40 mila euro si può esprimere in diversi modi in base all'uso dei quantificatori e della negazione. Con quantificatori universali:
   	\[
-  	\{i.(\textbf{Matr, Nome}) \mid i(\texttt{Impiegati}), s(\texttt{Supervisione}) \mid 
+  	\{i.(\textbf{Matr, Nome}) \mid i(\texttt{Impiegati}), s(\texttt{Supervisione}) \mid
   	\]
   	\[
   	i.\textbf{Matr} = s.\textbf{Capo} \wedge \forall i'(\texttt{Impiegati})(\forall s'(\texttt{Supervisione})
@@ -1657,9 +1657,9 @@ create table Docenza (
   	Se potessimo associare a una variabile un range costituito da più relazioni, risolveremmo il problema dell'unione ma non riusciremmo a formulare unioni complesse i cui operandi siano sottoespressioni non direttamente corrispondenti a schemi di relazione. Ad esempio, date due relazioni $R_1(ABC)$ e $R_2(BCD)$, l'unione delle loro proiezioni su $BC$:
   	\[
   	\pi_{BC}(R_1) \cup \pi_{BC}(R_2)
-  	\] 
+  	\]
   	non potrebbe essere espressa, perchè le due relazioni hanno schemi diversi e una variabile non può essere associata ad entrambe. \\
-  	Per quanto riguarda gli operatori di interesezione e differenza questi sono esprimibili. 
+  	Per quanto riguarda gli operatori di interesezione e differenza questi sono esprimibili.
   	\begin{itemize}
   		\item L'interesezione richiede che le tuple del risultato appartengano a entrambi gli opernadi, quindi si può costruire il risultato a partire da una relazione, richiedendo l'esistenza di una tupla uguale nell'altra relazione. Ad esempio:
   		\[
@@ -1680,9 +1680,9 @@ create table Docenza (
   	\end{itemize}
  	\chapter{Il modello Entità-Relazione}
  	Il modello Entità-Relazione, il modello E-R, è un modello \textit{concettuale} di dati e fornisce una serie di struttire, dette \textit{costrutti}, atte a descrivere la realtà di interesse in maniera facile da comprendere e che prescinde dall'organizzazione dei dati nei calcolatori. \\
- 	Questi costrutti sono usati per definire \textit{schemi} che descrivono l'organizzazione e la struttura delle \textit{occorrenze} dei dati, ovvero i valori assunti dai dati al variare del tempo. 
+ 	Questi costrutti sono usati per definire \textit{schemi} che descrivono l'organizzazione e la struttura delle \textit{occorrenze} dei dati, ovvero i valori assunti dai dati al variare del tempo.
  	\section{I costrutti principali del modello}
- 	Analizziamo i costrutti principali di questo modello: 
+ 	Analizziamo i costrutti principali di questo modello:
  	\begin{itemize}
  		\item le entità;
  		\item le relazioni;
@@ -1735,7 +1735,7 @@ create table Docenza (
  		\centering
  		\includegraphics[width=1.0\textwidth]{esempio_schemaER}
  	\end{figure}
- 	Si comprende facilemente che questo schema rappresenta informazioni organizzative relative a un'azienza con diverse sedi. Partendo dall'entità \texttt{Sede} si può vedere che una sede dell'azienza è dislocata in una certa città con un certo indirizzo. Ogni sede è organizzata in dipartimenti con un nome e un telefono. A questi dipartimenti afferiscono, a partire da una certa data, gli impiegati dell'azienda e ci sono impiegati che dirigono i dipartimenti. Gli impiegati sono rappresentati tramite codice, cognome, stipendio ed età. Gli impiegati lavorano su progetti a partire da una certa data e ogni progetto ha un nome, un budget e una data di consegna. 
+ 	Si comprende facilemente che questo schema rappresenta informazioni organizzative relative a un'azienza con diverse sedi. Partendo dall'entità \texttt{Sede} si può vedere che una sede dell'azienza è dislocata in una certa città con un certo indirizzo. Ogni sede è organizzata in dipartimenti con un nome e un telefono. A questi dipartimenti afferiscono, a partire da una certa data, gli impiegati dell'azienda e ci sono impiegati che dirigono i dipartimenti. Gli impiegati sono rappresentati tramite codice, cognome, stipendio ed età. Gli impiegati lavorano su progetti a partire da una certa data e ogni progetto ha un nome, un budget e una data di consegna.
  	\section{Altri costrutti del modello}
  	Esaminiamo altri costrutti del modello E-R:
  	\begin{itemize}
@@ -1767,7 +1767,7 @@ create table Docenza (
  		\caption{Esempio di relazioni con cardinalità}
  	\end{figure}
  	\subsection{Cardinalità degli attributi} Le cardinalità sugli attributi possono essere specificate per gli attributi di entità o realzioni e descrivono il numero minimo e massimo di valori dell'attributo associati a ogni occorrenza di entità o relazione. Nella maggiore parte dei casi la cardinalità è (1, 1) e viene omessa. Il valore per un certo attributo può essere però nullo, oppure possono esistere diversi valori di un certo attributo per un'occorrenza di entità. Queste situazioni si possono rappresentare assocaindo all'attributo una cardinalità minima pari a 0 nel primo caso, e una cardinalità massima pari a molti N, nel secondo. \\
- 	Come per le relazioni, un attributo con cardinalità minima pari a 0 è \textit{opzionale} per la relativa entità o relazione, mentre è \textit{obbligatorio} se la sua cardinalità minima è pari a 1. Un attributo si dice \textit{multivalore} se la sua cardinalità massima è pari a N. 
+ 	Come per le relazioni, un attributo con cardinalità minima pari a 0 è \textit{opzionale} per la relativa entità o relazione, mentre è \textit{obbligatorio} se la sua cardinalità minima è pari a 1. Un attributo si dice \textit{multivalore} se la sua cardinalità massima è pari a N.
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.5\textwidth]{cardinalita_attributi}
@@ -1783,7 +1783,7 @@ create table Docenza (
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=0.75\textwidth]{identificatore_esterno}
- 	\end{figure}  
+ 	\end{figure}
  	Facciamo alcune considerazioni:
  	\begin{itemize}
  		\item un identificatore può coinvolgere uno o più attributi, ognugno dei quali deve avere cardinalità (1, 1).
@@ -1798,13 +1798,13 @@ create table Docenza (
  	\end{figure}
  	\subsection{Generalizzazioni}
  	Le generalizzazioni riguardano legami logici tra un'entità \textit{E}, detta entità genitore, e una o più entità $E_1, \dots, E_n$ dette entità \textit{figlie}, di cui \textit{E} è generale, nel senso che le comprende come caso particolare. Si dice in questo caso che \textit{E} è generalizzazione di $E_1, \dots, E_n$ e che le entità $E_1, \dots, E_n$ sono \textit{specializzazioni} dell'entità \textit{E}. Per esempio, l'entità \texttt{Persona} è una generalizzazione delle entità \texttt{Uomo} e \texttt{Donna}. Di conseguenze, esse sono delle specializzazioni dell'entità \texttt{Persona}. \\
- 	Tra le entità coinvolte in una generalizzazione valgono le seguenti proprietà. 
+ 	Tra le entità coinvolte in una generalizzazione valgono le seguenti proprietà.
  	\begin{itemize}
- 		\item Ogni occorrenza di un'entità figlia è anche occorrenza dell'entità genitore. 
- 		\item Ogni proprietà dell'entità genitore, come attributi, identificatori, relazioni e altre generalizzazioni, è anche proprietà delle entità figlie. Questa proprietà è nota sotto il nome di \textit{ereditarietà}. 
+ 		\item Ogni occorrenza di un'entità figlia è anche occorrenza dell'entità genitore.
+ 		\item Ogni proprietà dell'entità genitore, come attributi, identificatori, relazioni e altre generalizzazioni, è anche proprietà delle entità figlie. Questa proprietà è nota sotto il nome di \textit{ereditarietà}.
  	\end{itemize}
  	Le generalizzazioni vengono rappresentate graficamente mediante delle frecce che congiungono le entità figlie con l'entità genitore. Per le entità figlie, le proprietà ereditate non vanno rappresentate esplicitamente. \\
- 	Le generalizzazioni possono essere classificate sulla base di due proprietà tra loro ortogonali. 
+ 	Le generalizzazioni possono essere classificate sulla base di due proprietà tra loro ortogonali.
  	\begin{itemize}
  		\item Una generalizzazione è \textit{totale} se ogni occorrenza dell'entità genitore è un'occorrenza di almeno una delle entità figlie, altrimenti è \textit{parziale};
  		\item Una generalizzazione è \textit{esclusiva} se ogni occorrenza dell'entità genitore è al più un'occorenza di una delle delle entità figlie, altrimenti è \textit{sovrapposta}.
@@ -1823,7 +1823,7 @@ create table Docenza (
  		\includegraphics[width=0.25\textwidth]{rappresentazione_generalizzazione}
  	\end{figure}
  	\chapter{Progettazione concettuale}
- 	La progettazione concettuale di una base di dati consiste nella costruzione di uno schema Entità-Relazione in grado di descrivere al meglio le specifiche sui dati di un'applicazione. Anche nel caso di applicazioni non particolarmente complesse, lo schema che si ottiene può contenere molti concetti correlati in una maniera piuttosto complicata. La costruzione finale dello schema è un processo graduale: lo schema concettuale viene progressivamente raffinato e arricchito attraverso una serie di trasformazioni ed eventuali correzioni. 
+ 	La progettazione concettuale di una base di dati consiste nella costruzione di uno schema Entità-Relazione in grado di descrivere al meglio le specifiche sui dati di un'applicazione. Anche nel caso di applicazioni non particolarmente complesse, lo schema che si ottiene può contenere molti concetti correlati in una maniera piuttosto complicata. La costruzione finale dello schema è un processo graduale: lo schema concettuale viene progressivamente raffinato e arricchito attraverso una serie di trasformazioni ed eventuali correzioni.
  	\section{La raccolta e l'analisi dei requisiti}
  	Il reperimento e l'analisi dei requisiti di un'applicazione sono attività difficilmente standardizzabili perchè dipendono molto dall'applicazione con cui si ha a che fare. \\
  	Per \textit{raccolta dei requisiti} si intende la completa individuazione dei problemi che l'applicazione da realizzare deve risolvere e le caratteristiche che tale applicazione dovrà avere. \\
@@ -1831,13 +1831,13 @@ create table Docenza (
  	L'\textit{analisi dei requisiti} consiste nel chiarimento e nell'organizzazione delle specifiche dei requisiti. Queste sono attività fortmente interconnesse: l'attività di analisi inizia con i i primi requisiti ottenuti per poi procedere di pari passo con l'attività di raccolta. \\
  	I requisiti di un'applicazione provengono, nella maggior parte dei casi, da fonti diverse. Le principali fonti di informazione sono, in genere, le seguenti.
  	\begin{itemize}
- 		\item Gli \textit{utenti dell'applicazione}. In questo caso le informazioni si acquisicono mediante opportune interviste, anche ripetute, oppure attraverso una documentazione scritta che gli utenti possono aver predisposto appositamente per questo scopo. 
+ 		\item Gli \textit{utenti dell'applicazione}. In questo caso le informazioni si acquisicono mediante opportune interviste, anche ripetute, oppure attraverso una documentazione scritta che gli utenti possono aver predisposto appositamente per questo scopo.
  		\item Tutta la \textit{documentazione esistente} che ha qualche attinenza con il problema allo studio come moduli, regolamenti interni, procedure aziendali e normative. È richiesta, in questo caso, un'attività di raccolta e selezione che viene assistita dagli utenti, ma è a carico del progettista.
- 		\item \textit{Realizzazioni preesistenti}, ovvero applicazioni che si devono rimpiazzare o che devono interagire in qualche maniera con il software da realizzare. La conoscenza delle caratteristiche di questi pacchetti software può fornirci importanti informazioni anche in relazione ai problemi esistenti che è necessario risolvere. 
+ 		\item \textit{Realizzazioni preesistenti}, ovvero applicazioni che si devono rimpiazzare o che devono interagire in qualche maniera con il software da realizzare. La conoscenza delle caratteristiche di questi pacchetti software può fornirci importanti informazioni anche in relazione ai problemi esistenti che è necessario risolvere.
  	\end{itemize}
  	Nella fase di acquisizione delle specifiche, gioca un importante ruolo l'interazione con gli utenti del sistema informativo. Durante questa interazione può avvenire che utenti diversi forniscano informazioni diverse, spesso complementari ma contraddittorie. Quindi, nel corso delle interviste, è opportuno effettuare con l'utente verifiche di comprensione e consistenza sulle informazioni che si stanno raccogliendo, attraverso esempi oppure richiedendo definizioni e classificazioni precise. \\
  	Inoltre, in questa fase, è importante individuare gli aspetti essenziali rispetto a quelli marginali e procedere per raffinamenti successivi. \\
- 	La specifica dei requisiti avviene spesso, facendo uso di descrizioni in linguaggio naturale e, data la sua ambiguità, è bene effettuare una profonda analisi del testo che descrive le specifiche per filtrare eventuali inesattezze e i termini ambigui presenti. 
+ 	La specifica dei requisiti avviene spesso, facendo uso di descrizioni in linguaggio naturale e, data la sua ambiguità, è bene effettuare una profonda analisi del testo che descrive le specifiche per filtrare eventuali inesattezze e i termini ambigui presenti.
  	Ad esempio, supponiamo di dover progettare una base di dati per una società di formazione e di aver raccolto, sulla base di alcune interviste fatte al personale di questa società, le specifiche dei dati espresse in linguaggio naturale.
  	\begin{example}{\nmu Società di formazione}{societa_formazione}
  			\centering
@@ -1874,10 +1874,10 @@ create table Docenza (
  		\item \textbf{Standardizzare la struttura delle frasi}. Nella specifica di requisiti è preferibile utilizzare sempre lo stesso stile sintattico. Per esempio, per ``per <dato> rappresentiamo <insieme di proprietà>''.
  		\item \textbf{Evitare frasi contorte}. Le definizioni devono essere semplici e chiare. Per esempio, \textit{lavoratori dipendenti}, o più semplicemente dipendenti, è da preferire a \textit{quelli che lavorano alle dipendenze di altri} alla riga 13.
  		\item \textbf{Individuare sinonimi/omonimi e unificare i termini}. I \textit{sinonimi} indicano termini diversi con lo stesso significato, per esempio \textit{docente} alla riga 2 e \textit{insegnante} alla riga 14, oppure \textit{partecipante} alla riga 2 e \textit{studente} alla riga 11; gli \textit{omonimi} indicano termini uguali ma con diversi significati, ad esempio \textit{posto}, riferito a ``impiego'' alla riga 5, \textit{città} alla riga 15 e \textit{luogo} riferito a ``città'' e ad ``aula'' alla riga 4. \\
- 		Queste situazioni possono generare ambiguità e vanno chiarite: nel caso di sinonimi unificando i termini, nel caso di omonimi utlizzando termini diversi o specificandoli meglio. 
+ 		Queste situazioni possono generare ambiguità e vanno chiarite: nel caso di sinonimi unificando i termini, nel caso di omonimi utlizzando termini diversi o specificandoli meglio.
  		\item \textbf{Rendere esplicito il riferimento tra termini}. Può succedere che l'assenza di un contesto di riferimento renda alcuni concetti ambigui: in questi casi bisogna esplicitare il riferimento tra termini. Per esempio, nella riga 6, non è chiaro se i termini \textit{indirizzo} e \textit{numero di telefono} sono relativi ai partecipanti o ai loro datori di lavoro; nella riga 13, nella frase \textit{per quelli che lavorano...} si deve chiarire esplicitamente a chi ci stiamo riferendo, se ai partecipanti o ai docenti, per evitare confusione.
  		\item \textbf{Costruire un glossario dei termini}. È molto utile, per la comprensione e la precisazione dei termini usati, definire un glossario che, per ogni termine, contenga: una breve descrizione, possibile sinonimi e altri termini contenuti nel glossario con i quali esiste un legame logico. Un glossario per la \namerefl{exa:societa_formazione} può essere il seguente.
- 		
+
  	\end{itemize}
  	\begin{example}{\nmu Glossario della \namerefl{exa:societa_formazione}}{glossario_societa_formazione}
  		\centering
@@ -1907,9 +1907,9 @@ create table Docenza (
  			\textit{Si vuole realizzare una base di dati per una società che eroga corsi, di cui vogliamo rappresentare i dati dei partecipanti ai corsi e dei docenti.} \\
  			\hline
  		\end{tabular}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		% Frasi relative ai partecipanti
  		\noindent
  		\begin{tabular}{|p{14cm}|}
@@ -1919,9 +1919,9 @@ create table Docenza (
  			\textit{Per i} partecipanti \textit{(circa 5000), identificati da un codice, rappresentiamo il codice fiscale, il cognome, l'età, il sesso, la città di nascita, i nomi dei loro attuali datori di lavoro e di quelli precedenti (insieme alle date di inizio e fine rapporto), le edizioni dei corsi che stanno attualmente frequentando e quelli che hanno frequentato in passato, con la relativa votazione finale in decimi.} \\
  			\hline
  		\end{tabular}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		% Frasi relative ai datori di lavoro
  		\noindent
  		\begin{tabular}{|p{14cm}|}
@@ -1931,9 +1931,9 @@ create table Docenza (
  			\textit{Relativamente ai} datori di lavoro \textit{presenti e passati dei partecipanti, rappresentiamo il nome, l'indirizzo e il numero di telefono.} \\
  			\hline
  		\end{tabular}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		% Frasi relative ai corsi
  		\noindent
  		\begin{tabular}{|p{14cm}|}
@@ -1943,9 +1943,9 @@ create table Docenza (
  			\textit{Per i} corsi \textit{(circa 180), rappresentiamo il titolo e il codice, le varie edizioni con date di inizio e fine e, per ogni edizione, rappresentiamo il numero di partecipanti e il giorno della settimana, le aule e le ore dove si sono tenute le lezioni.} \\
  			\hline
  		\end{tabular}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		% Frasi relative a tipi specifici di partecipanti
  		\noindent
  		\begin{tabular}{|p{14cm}|}
@@ -1955,9 +1955,9 @@ create table Docenza (
  			\textit{Per i} partecipanti \textit{che sono liberi professionisti, rappresentiamo l'area di interesse e, se lo possiedono, il titolo professionale. Per i partecipanti che sono dipendenti, rappresentiamo invece il loro livello e la posizione ricoperta.} \\
  			\hline
  		\end{tabular}
- 		
+
  		\vspace{0.3cm}
- 		
+
  		% Frasi relative ai docenti
  		\noindent
  		\begin{tabular}{|p{14cm}|}
@@ -2011,7 +2011,7 @@ create table Docenza (
  	\end{itemize}
  	Il vantaggio della strategia top-down è che il progettista può descrivere inizialmente tutte le specifiche dei dati trascurandone i dettagli, per poi entrare nel merito di un concetto alla volta. Questo, però, è possibile solo quando si possiede una visione globaile e astratta di \textit{tutte} le componenti del sistema, che è una situazione rara quando si ha a che fare con problemi di una certa complessità.
  	\subsection{Strategia bottom-up}
- 	In questa strategia, le specifiche iniziali sono suddivise in componenti via via sempre più piccole, fino a quando queste componenti descrivono un frammento elementare della realtà di interesse. A questo punto, le varie componenti vengono rappresentante da semplici schemi concettuali che possono consistere anche in singoli concetti. I vari schemi ottenuti vengono poi fusi fino a giungere, attraverso una completa integrazione di tutte le componenti, allo schema concettuale finale. Anche in questo caso lo schema finale si ottiene attraverso alcune trasformazioni elementari che vengono denominate \textit{primite di trasformazione bottom-up} che introducuno in uno schema nuovi concetti non presenti precedentemente e in grado di descrivere aspetti della realtà di interesse che non erano ancora stati rappresentati. 
+ 	In questa strategia, le specifiche iniziali sono suddivise in componenti via via sempre più piccole, fino a quando queste componenti descrivono un frammento elementare della realtà di interesse. A questo punto, le varie componenti vengono rappresentante da semplici schemi concettuali che possono consistere anche in singoli concetti. I vari schemi ottenuti vengono poi fusi fino a giungere, attraverso una completa integrazione di tutte le componenti, allo schema concettuale finale. Anche in questo caso lo schema finale si ottiene attraverso alcune trasformazioni elementari che vengono denominate \textit{primite di trasformazione bottom-up} che introducuno in uno schema nuovi concetti non presenti precedentemente e in grado di descrivere aspetti della realtà di interesse che non erano ancora stati rappresentati.
  	\begin{figure}[H]
  		\centering
  		\includegraphics[width=1.0\textwidth]{strategia_bottom_up}
