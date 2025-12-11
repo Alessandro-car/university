@@ -2080,4 +2080,184 @@ create table Docenza (
  			\item Verificare la leggibilità dello schema ed eventualmente ristrutturare lo schema.
  		\end{enumerate}
  	\end{enumerate}
+	\chapter{Progettazione logica}
+	\section{Fasi della progettazione logica}
+		Le attività principali della progettazione logica sono la riorganizzazione dello schema concettuale e la traduzione in un modello logico. La riorganizzazione può essere discussa indipendentemente dal modello logico ed è utile articolare la progettazione logica in due fasi:
+		\begin{enumerate}
+			\item \textbf{Ristrutturazione dello schema E-R}: è una fase indipendente dal modello logico scelto e si basa su criteri di ottimizzazione dello schema e di semplificazione della fase successiva.
+			\item \textbf{Traduzione verso il modello logico}: fa riferimento a uno specifico modello logico e può includere un'ulteriore ottimizzazione che si basa sulle caratteristiche del modello logico stesso.
+		\end{enumerate}
+		I dati di ingresso della prima fase sono le schame concettuale prodotto e il \textit{carico applicativo}.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\textwidth]{progettazione_logica}
+			\caption{Progettazione logica di basi di dati}
+		\end{figure}
+		\section{Analisi della prestazioni su schemi E-R}
+		Uno schema E-R può essere modificato per ottimizzare alcuni \textit{indici di prestazione} del progetto. È bene notare, però, che le prestazioni di una base di dati non sono valutabili durante la fase di progettazione logica, indipendenti da dettagli fisici,  ed è questo il motivo per il quale si parla di indici di prestazione. \\
+		Tuttavia, ci sono due parametri che regolano le prestazioni dei sistemi software:
+		\begin{enumerate}
+			\item \textbf{costo di un'operazione}: viene valutato in termini di numero di occorrenze di entità e associazioni che vanno visitate per rispondere a un'operazione sulla base di dati.
+			\item \textbf{occupazione di memoria}: viene valutato in termini dello spazio di memoria necessario per memorizzare i dati descritti dallo schema.
+		\end{enumerate}
+		Per lo studio di questi parametri, è necessario conoscere:
+		\begin{itemize}
+			\item \textbf{Volume dei dati}. Ovvero il numero di occorrenze di ogni entità e associazione nello schema e le dimensioni di ciascun attributo.
+			\item \textbf{Caratteristiche delle operazioni}. Ovvero:
+			\begin{itemize}
+				\item tipo dell'operazione, interattiva o \textit{batch};
+				\item frequenza, numero medio di esecuzioni in un certo intervallo di tempo;
+				\item dati coinvolti, entità e/o associazioni.
+			\end{itemize}
+		\end{itemize}
+		Consideriamo il seguente schema E-R:
+		\begin{figure}[H]
+			\begin{center}
+				\includegraphics[width=0.95\textwidth]{prestazioni_ER}
+			\end{center}
+			\caption{Uno schema E-R sul personale di un'azienda}
+		\end{figure}
+		Le operazioni possibili su questa base di dati potrebbero essere:
+		\begin{itemize}
+			\item Assegna un impiegato a un progetto;
+			\item Trova i dati di un impiegati, del dipartimento nel quale lavora e dei progetti ai quali partecipa;
+			\item trova i dati di tutti gli impiegati di un certo dipartimento;
+			\item per ogni sede, trova i suoi dipartimenti con il cognome del direttore e l'elenco degli impiegati del dipartimento.
+		\end{itemize}
+		Notiamo che le operazioni sulla base di dati seguono la regola ``80-20'', ovvero l'80\% del carico è generato dal 20\% delle operazioni e questo ci permette di valutare il carico concentrandoci solo sulle operazioni principali previste. \\
+		Il volume dei dati e le caratteristiche generali delle operazioni possono essere descritte facendo uso della \textit{tavola dei volumi} e della \textit{tavola delle operazioni} mostrate in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\textwidth]{tal_val_op}
+		\end{figure}
+		Nella tavola dei volumi vengono riportati tutti i concetti dello schema, le entità e assocazioni, con il volume previsto. Nella tavole delle operazioni vengono riportati, per ogni operazione, la frequenza prevista e un simbolo che indica se l'operazione è interattiva (I) o batch (B). \\
+		Nella tavola dei volumi, il numero di occorrenze delle associazioni dipende da due parametri: il numero di occorrenze delle entità coinvolte nelle assocazioni e il numero medio di partecipazioni di un'occorrenza di entità alle occorrenze di associazioni. Ad esempio, il numero di occorrenze dell'associazione \texttt{Composizione} è pari al numero dei dipartimenti, perchè le cardinalità dicono che un dipartimento appartiene a una sola sede. Il numero di occorrenze dell'associazione \texttt{Afferenza} è poco meno del numero degli impiegati, perchè le cardinalità dicono che ci sono impiegati che non afferiscono a nessun dipartimento. \\
+		Infine, se assumiamo che ciascun impiegati partecipa in media a 3 progetti, abbiamo $2000 \times 3 = 6000$ occorrenze per l'associazione \texttt{Partecipazione}. \\
+		Inoltre, per ogni operazione possiamo descrivere graficamente i dati coinvolti con uno \textit{schema di operaazione}, che consiste nel frammento dello schema E-R interessato dall'operazione sul quale viene disegnato il ``cammino logico'' da percorrere per accedere alle informazioni di interesse.
+		\begin{figure}[H]
+			\begin{center}
+				\includegraphics[width=0.75\textwidth]{schema_op}
+			\end{center}
+			\caption{Uno schema di operazione}
+		\end{figure}
+		Per ottenere le informazioni di interesse su un impiegato si parte dall'entità \texttt{Impiegato} per accedere, attraverso l'associazione \texttt{Afferenza}, al suo dipartimento e, attraverso l'associazione \texttt{Partecipazione}, ai progetti ai quali partecipa. \\
+		Con queste informazioni è possibile fare una stima del costo di un'operazione contando il numero di accessi alle occorrenze di entità e associazioni necessario per eseguire l'operazione.
+		Il meccanismo è basato sulle seguenti regole:
+		\begin{itemize}
+			\item si contano il numeri di accessi alle occorrenze del primo concetto presente nel cammino logico dello schema di operazione, assumendo che il recupero di un'occorrenza richieda un solo accesso;
+			\item si prosegue nel cammino assumendo che, avendo recuperato nei passi precedenti un'occorrenza, possiamo accedere tramite essa a tutte le occorrenze di altri concetti che coinvolgono questa occorrenza.
+		\end{itemize}
+		Tornando all'operazione precedente in figura, dobbiamo accedere a un'occorrenza dell'entità \texttt{Impiegato} per poi accedere a un'occorrenza dell'entità \texttt{Afferenza} e, attraverso questa, a un'occorrenza dell'entità \texttt{Dipartimento}. Dopodichè, per conoscere i dati dei progetti ai quali lavora, dobbiamo accedere a tre occorrenze dell'assocazione \texttt{Partecipazione} e, attraverso queste, a tre occorrenza dell'entità \texttt{Partecipazione}. Possiamo riasssumere questo in una \textit{tavola degli accessi} riportata in figura:
+		\begin{figure}
+			\begin{center}
+				\includegraphics[width=0.95\textwidth]{tavola_accessi}
+			\end{center}
+		\end{figure}
+		In questa tavola, viene anche riportato il tipo di accesso, se è in lettura L o in scrittura S. Questa distinzione è importante perchè, generalmente, le operazioni di scrittura sono più onerose di quelle di lettera.
+		\section{Ristrutturazione di schemi E-R}
+		La fase di ristrutturazione di uno schema E-R si può suddividere in una serie di passi sequenziali:
+		\begin{enumerate}
+			\item \textbf{Analisi delle ridondanze}. Si decide se eliminare o mantenere eventuali rindondanze presenti nello schema;
+			\item \textbf{Eliminazioni delle generalizzazioni}. Tutte le generalizzazioni presenti nello schema vengono analizzate e sostituite da altri costrutti;
+			\item \textbf{Partizionamento/accorpamento di entità e associazioni}. Si decide se è opportuno partizionare concetti dello schema in più concetti, o, viceversa, accorpare concetti separati in un unico concetto;
+			\item \textbf{Scelta degli identificatori principali}. Si seleziona un identificatore per quelle entità che ne hanno più di uno.
+		\end{enumerate}
+		\subsection{Analisi delle ridondanze}
+		Una ridondanza in uno schema concettuale corrisponde alla presenza di un dato che può essere derivato, cioè ottenuto attraverso una serie di operazioni, da altri dati. Ci possono essere diversi casi di ridondanza in uno schema E-R:
+		\begin{itemize}
+			\item Attributi derivabili, occorrenza per occorenza, da altri attributi della stessa entità.
+			\item Attributi derivabili da attributi di altre entità o associazioni, di solito attraverso funzioni aggregative.
+			\item Attributi derivabili da operazioni di conteggio di occorrenze.
+			\item Assocazioni derivabili dalla composizione di altre associazioni in presenza di cicli.
+		\end{itemize}
+		La presenza di un dato derivato presenta un vantaggio e alcuni svantaggi. Il vantaggio è una riduzione degli accessi necessari per calcolare il dato dderivato, gli svantaggi sono una maggiore occupazione di memoria (che è uno svantaggio trascurabile) e la necessità di effettuare operazioni aggiuntive per mantenere il dato derivato aggiornato. \\
+		La decisione di mantenere o eliminare una ridondanza va presa confrontando costo di esecuzione delle operaioni che coinvolgono il dato ridondante e relativa occupazione di memoria, nei casi di presenza e assenza della ridondanza. \\
+		Consideriamo il seguente schema:
+		\begin{center}
+		\begin{tikzpicture}[
+				node distance=3cm,
+				entity/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, thick},
+				relationship/.style={diamond, draw, minimum width=2cm, minimum height=1cm, thick, aspect=2},
+				attribute/.style={circle, draw},
+				>=Stealth
+		]
+
+		% Entities
+		\node[entity] (persona) {Persona};
+		\node[relationship, right=of persona] (residenza) {Residenza};
+		\node[entity, right=of residenza] (citta) {Città};
+		\node[attribute, right=of citta] (abitanti) {Numero abitanti};
+
+		% Connections
+		\draw[thick] (persona) -- node[above] {(1,1)} (residenza);
+		\draw[thick] (residenza) -- node[above] {(1,N)} (citta);
+		\draw[thick] (citta) -- (abitanti);
+
+		\end{tikzpicture}
+	\end{center}
+	Supponiamo che per questo schema vengono effettuate due operazioni principali:
+	\begin{enumerate}
+		\item Memorizza una nuova persona con la relativa città di residenza;
+		\item Stampa tutti i dati di una città, incluso il numero di abitanti.
+	\end{enumerate}
+	Proviamo a valutare gli indici di prestazione in caso di presenza del dato ridondante \textit{Numero abitante}. \\
+	La tavola dei volumi e delle operazioni per lo schema rappresentato sono le seguenti:
+	\begin{center}
+		\begin{minipage}{0.45\textwidth}
+		\centering
+		\textbf{Tavola dei volumi}
+
+		\vspace{0.5cm}
+
+		\begin{tabular}{|l|c|r|}
+		\hline
+		\textbf{Concetto} & \textbf{Tipo} & \textbf{Volume} \\
+		\hline
+		Città & E & 200 \\
+		\hline
+		Persona & E & 1\,000\,000 \\
+		\hline
+		Residenza & R & 1\,000\,000 \\
+		\hline
+		\end{tabular}
+		\end{minipage}
+		\hfill
+		\begin{minipage}{0.45\textwidth}
+		\centering
+		\textbf{Tavola delle operazioni}
+
+		\vspace{0.5cm}
+
+		\begin{tabular}{|l|c|l|}
+		\hline
+		\textbf{Operazione} & \textbf{Tipo} & \textbf{Frequenza} \\
+		\hline
+		Op. 1 & I & 500 al giorno \\
+		\hline
+		Op. 2 & I & 2 al giorno \\
+		\hline
+		\end{tabular}
+		\end{minipage}
+	\end{center}
+	Assumendo che il numero di abitanti di una città richieda 4 byte, abbiamo che il dato ridondante richiede $4 \times 200 = 800$ byte, ovvero meno di $1$ kilobyte di memoria aggiuntiva. \\
+	L'operazione 1 richiede un accesso in scrittura all'entità \texttt{Persona}, un accesso in scrittura all'entità \texttt{Residenza} e infine un accesso in lettura, per cercare la città di interesse, e uno in scrittura, per incrementare il numero di abitanti di quell'occorrenza all'entità \texttt{Città}, il tutto ripetuto per 500 volte al giorno, per un totale di 1500 accessi in scrittura e 500 accessi in lettura. Il costo dell'operazione 2 è ttrascurabile perchè richiede un solo accesso in lettura all'entità \texttt{Città} da ripetere due volte al giorno. Quindi, contanto che gli accessi in scrittura abbiano un costo doppio rispetto a quelli in lettura, abbiamo un totale di 3500 accessi al girono in caso di presenza di dato ridondante. \\
+	Se il dato ridondante è assente, per l'operazione 1 abbiamo bisogno di un accesso in scrittura all'entità \texttt{Persona} e un accesso in scrittura all'associazione \texttt{Residenza}, per un totale di 1000 accessi in scrittura al girono. Per l'operazione 2, invece, abbiamo bisogno di un accesso in lettura all'entità \texttt{Città}, che possiamo trascurare, e di 5000 accessi in lettura all'assocazione \texttt{Residenza} in media per calcolare il numero di abitanti di questa città, per un totale di 10000 accessi in lettura al giorno. Contando doppi gli accessi in scrittura abbiamo un totale di 12000 accessi al giorno in assenza del dato ridondante. Quindi abbiamo circa 8500 accessi in più rispetto al caso di dato ridondante contro un risparmi di un solo kilobyte. Possiamo concludere, quindi, che conviene in questo caso mantenere il dato ridondante.
+	\subsection{Eliminazione delle generalizzazioni}
+		I sistemi tradizionali per la gestione delle basi di dati non consentono di rappresentare direttamente una generalizzazione, risulta necessario trasformare questo costrutto in altri costrutti del modello E-R per i quali esiste un'implementazione naturale: le entità e le associazioni.  \\
+		Per rappresentare una generalizzazione mediante entità e associazioni abbiamo tre alternative disponibili. \\
+		Supponiamo di avere un'entità $E_0$ che ha due entità figlie $E_1$ ed $E_2$.
+		\begin{enumerate}
+			\item \textbf{Accorpamento delle figlie della generalizzazione nel genitore}. Le entità $E_1$ ed $E_2$ vengono eliminate e le loro proprietà, attributi ed eventuali partecipazioni ad associazioni e generalizzazioni, genono aggiunte all'entità genitore $E_0$. A tale entità viene aggiunto un ulteriore attributo che serve a distiguere il ``tipo'' di un'occorrenza di $E_0$, cioè se apparteneva a $E_1$, a $E_2$ o nel caso di generalizzazione non totale, a nessuna di esse.
+			\item \textbf{Accorpamento del genitore della generalizzazione nelle figlie}. L'entità genitore $E_0$ viene eliminata, e, per la proprietà dell'ereditarietà, i suoi attributi, il suo identificatore e le relazioni a cui tale entità partecipava, vengono aggiunti alle entità figlie $E_1$ ed $E_2$.
+			\item \textbf{Sostituzione della generalizzazione con assocazioni}. La generalizzazione si traforma in due associazioni uno a uno che legano rispettivamente l'entità genitore con le entità figlie $E_1$ ed $E_2$. Non ci sono trasferimenti di attributi o associazioni e le entità $E_1$ ed $E_2$ sono identificate esternamente dall'entità $E_0$. Nello schema che si ottiene, però, vanno aggiunti dei vincoli: ogni occorrenza di $E_0$ non può partecipare contemporaneamente a $R_{G1}$ ed $R_{G2}$: inoltre, se la generalizzazione è totale, ogni occorrenza di $E_0$ deve partecipare o a un'occorrenza di $R_{G1}$ o ad una di $R_{G2}$.
+		\end{enumerate}
+		La scelta tra le varie alternative può essere fatta considerando vantaggi e svantaggi di ognuna delle scelte possibili relativamente all'occupazione di memoria e al costo delle operazioni coinvolte. Ci sono comunque delle regole di carattere generale.
+		\begin{itemize}
+			\item La prima alternativa è conveniente quando le operazioni non fanno molta distinzione tra le occorrenze e tra gli attributi di $E_0, E_1$ ed $E_2$. In questo caso, anche se abbiamo uno spreco di memoria per la presenza di valori nulli, la scelta ci assicura in minore numero di accesso rispetto alle altre dove le occorrenze e gli attributi sono distribuiti tra le varie entità.
+			\item La seconda alternativa è possibile solo se la generalizzazione è totale, altrimenti le occorrenze di $E_0$ che non sono occorrenze né di $E_1$ né di $E_2$ non sarebbero rappresentate. È conveniente quando ci sono operazioni che si riferiscono solo a occorrenze di $E_1$ oppure di $E_2$ e dunque fanno delle distinzioni tra tali entità. In questo caso abbiamo un risparmio di memoria rispetto alla prima alternativa in quanto gli attributi non assumono mai valori nulli e c'è una riduzione degli accessi rispetto alla terza alternativa, perchè non si deve visitare $E_0$ per accedere ad alcuni attributi di $E_1$ o $E_2$.
+			\item La terza alternativa è conveniente quando la generalizzazione non è totale, ma non è un vincolo necessario, e ci sono operazioni che si riferiscono solo a occorrenze di $E_1 (E_2)$ oppure di $E_0$, e dunque fanno distinzioni tra entità figlia ed entità genitore. In questo caso c'è un risparmio di memoria rispetto alla prima alternativa per l'assenza di valori nulli, ma c'è un incremento degli accessi per mantenere la consistenza delle occorrenze rispetto ai vincoli introdotti.
+		\end{itemize}
+		La ristrutturazione delle generalizzazioni è un tipico caso per il quale il conteggio delle istanze e degli accessi non è sempre sufficiente per scegliere la migliore alternativa possibile. Infatti da quanto detto, la terza alternativa sembra non convenga quasi mai perchè richiede un numero di accessi superiore ma quest'alternativa ha il grosso vantaggio di generare entità con pochi attributi e questo si traduce, a livello pratico, in strutture logiche di poccole dimensioni per le quali un accesso fisico permette di recuparare molti dati in una volta sola. Quindi, in alcuni casi va effettuata un'analisi più accurata che tiene conto di altri fattori come le dimensioni dei domini degli attributi e la quantità di dati che è possibile recuperare con una sola operazione di accesso a memoria secondaria. \\
+		Le alternative non sono le uniche ammesse, ma è possibile effettuare ristrutturazioni che sono combinazioni delle tre trasformazioni presentate.
+		\subsection{Partizionamento/accorpamento di concetti}
 \end{document}
