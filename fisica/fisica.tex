@@ -30,14 +30,18 @@
 \usepackage{makecell}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{colortbl}
 \usepackage{pgfplots}
 \usepackage{calligra}
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
 \usepackage{yhmath}
 \usepackage[export]{adjustbox}
+\usepackage[thinc]{esdiff}
+\usepackage{physics}
 \usetikzlibrary{angles, quotes, patterns}
 \usepackage{circledsteps}
+\usepackage{circuitikz}
 \date{}
 \author{Alessandro Carella}
 \title{Fondamenti di fisica}
@@ -3106,4 +3110,254 @@
 		\item \textbf{Dielettrici polari}. Le molecole di alcuni dielettrici, come l'acqua, hanno momenti di dipolo elettrico permanenti. In tali materiali i dipoli elettrici tendono ad allinearsi con il campo elettrico esterno. Poichè le molecole si spingono l'una con l'altra a causa della loro agitazione termica casuale, l'allineamento non è completo ma diventa più completo via via che il modulo del campo applicato viene aumentato, o la temperatura e quindi l'agitazione vengono diminuite. L'allineamento dei dipoli genera un camo elettrico opposto al campo applicato ma più piccolo in modulo.
 		\item \textbf{Dielettrici non polari}. A prescindere dal fatto che abbiamo o meno momenti di dipolo elettrico permanenti, le molecole acquistano momenti di dipolo per induzione quando vengono poste in un campo elettrico esterno. Questo perchè il campo elettrico esterno tende ad ``allungare'' le molecole, separando leggermente il centro della carica negativa e quello della carica positiva.
 	\end{enumerate}
+	\chapter{Corrente elettrica}
+	Applicando una differenza di potenziale ai capi di un filo conduttore si produce un flusso ordinato di particelle cariche, cioè una corrente elettrica. Sebbene una corrente elettrica sia un flusso di cariche in movimento, non tutte le cariche in movimento costituiscono una corrente elettrica. Affinchè ci sia una corrente elettrica attraverso una data superficie, ci deve essere un flusso risultante di carica attraverso la superficie. Consideriamo questa figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{corrente_elettrica}
+		\label{fig:corrente}
+	\end{figure}
+	Questa figura mostra la sezione di un conduttore, che è parte di una spira conduttrice nella quale è stata generata una data corrente. Se la carica d$q$ passa attraverso un ipotetico piano $(aa')$ nel tempo $\dd t$, la corrente \textit{i} che attraversa quel piano è data da:
+	\[
+	i = \diff{q}{t}
+	\]
+	Possiamo trovare la carica che passa attraverso il piano della sezione in un intervallo di tempo da 0 a \textit{t} tramite un integrale:
+	\[
+	q = \int\dd q = \int_{0}^{t}i\dd t
+	\]
+	L'unità di misura della corrente del SI è il coulomb al secondo oppure \textbf{Ampere (A)} che è un'unità fondamentale del SI:
+	\[
+	1 \text{ ampere } = 1 \text{ A } = \text{ coulomb al secondo } = 1 \text{ C/s } 
+	\]
+	La corrente è una grandezza scalare perchè sia la carica sia il tempo in questa equazione sono scalari. \\
+	\paragraph{Versi della corrente} Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{verso_corrente}
+	\end{figure}
+	Vediamo le frecce della corrente verso in cui le particelle cariche positivamente sarebbero forzate a muoversi attraverso la spira dal campo elettrico. Questi \textit{portatori di carica}, si allontanerebbero dal polo positivo della batteria e si muoverebbero verso il polo negativo. Il campo elettrico li forza a muoversi nel verso opposto a quello delle frecce della corrente, dal polo negativo al polo positivo. Si utilizza la seguente convenzione:
+	\begin{center}
+		la freccia che indica il verso della corrente è disegnata nel verso in cui i portatori di carica positivi si muoverebbero, anche se i reali portatori di carica sono negativi e si muovono nel verso opposto.
+	\end{center}
+	
+	\paragraph{Corrente elettrica nei conduttori} In un conduttore in equilibrio elettrostatico le cariche di conduzione si muovono in maniera disordinata per effetto dell'\textit{agitazione termica}, ovvero i portatori di carica si muovono in modo casuale e il flusso netto di carica attraverso una sezione qualsiasi è nullo. \\
+	Per avere una corrente elettrica \textbf{stazionaria} è necessario che ci sia un flusso netto di carica attraverso una sezione di un conduttore. Questo flusso netto di carica può essere mantenuto applicando un campo elettrico all'interno del conduttore. I portatori di carica si muovono lungo le linee del campo elettrico, dando luogo ad una corrente.
+	\section{Resistenza e legge di Ohm}
+	Se applichiamo la stessa differenza di potenziale tra le estremità di bacchette di rame e di vetro geometricamente simili, si hanno correnti molto diverse. La caratteristica del conduttore che entra in gioco in questo caso è la \textbf{resistenza} elettrica. La resistenza elettrica \textit{R} è così definita:
+	\[
+	R = \frac{V}{i}
+	\]
+	ove \textit{V} è la differenza di potenziale pari a $V = \frac{U}{q}$ ove $U$ è l'energia potenziale della carica $q$. \\
+	L'unità del sistema SI per la resistenza è il volt su ampere. Questa viene espressa con l'\textbf{ohm} ($\Omega$). \\
+	Un conduttore la cui funzione in un circuito è quella di fornire una resistenza è detto \textbf{resistore}. Nello scehema di un circuito rappresentiamo un resistore e una resistenza con il simbolo 
+	\begin{circuitikz}
+		\draw (0,0) to[R=] (2,0);  % Resistor symbol
+	\end{circuitikz}. Se riscriviamo l'equazione della resistenza come:
+	\[
+	i = \frac{V}{R}
+	\]
+	vediamo che, per una data \textit{V}, maggiore è la resistenza minore è la corrente.  \\
+	Quindi, la resistenza rappresenta la tendenza del conduttore ad opporsi al flusso delle cariche che lo attraversano e la resistenza varia in base alla differenza di potenziale applicata. \subsection{Legge di Ohm}
+	Esiste una classe di conduttori, i \textit{conduttori ohmici}, la cui resistenza non dipende dalla differenza di potenziale applicata. In questa classe di conduttori, inoltre, la corrente che fluisce nel conduttore è proporzionale alla differenza di potenziale applicata, e questa proprietà prende il nome di \textit{legge di Ohm}. Tramite la legge di Ohm, possiamo distinguere le varie classi di conduttori.
+	\begin{center}
+		\textbf{La legge di Ohm} afferma che la corrente che scorre attraverso un dispositivo è \textit{sempre} direttamente proporzionale alla differenza di potenzaiale applicata al dispositivo stesso. \\
+		Un dispositivo conduttore che obbedisce alla legge di Ohm quando la sua resistenza è indipendente dal valore assoluto e dalla polarità della differenza di potenziale applicata. 
+	\end{center}
+	\section{Potenza nei circuiti elettrici}
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{potenza_circuiti}
+	\end{figure}
+	Questa figura mostra un circuito con una baterria $B$ connessa tramite dei fili ad un dispositivo conduttore non specificato. Poichè c'è un circuito esterno conduttore tra i due poli della batteria e poichè viene mantenuta una differenza di potenziale tra i poli, lungo il circuito scorre una corrente costante \textit{i} dal terminale \textit{a} al terminale \textit{b}. La quantità di carica $\dd{q}$ che si muove tra questi due terminali nell'intervallo di tempo $\dd{t}$ è uguale a $i\dd{t}$. Questa carica $\dd{q}$ si muove attraverso una diminuzione di potenziale di valore assoluto $V$, quindi la sua energia potenziale diminuisce di una quantità pari a:
+	\[
+	\dd{U} = \dd{q}V = i\dd{t} V
+	\]
+	Il principio di conservazione dell'energia ci dice che la diminuzione dell'energia potenziale elettrica da \textit{a} a \textit{b} è accompagnata da una trasformazione dell'energia in altre forme. La potenza \textit{P} associata a questa trasformazione è la rapidità del trasferimento $\diff{U}{t}$, che è data dall'equazione:
+	\[
+	P = iV
+	\]
+	$P$ indica anche la rapidità con la quale l'energia è trasferita dalla batteria al dispositivo non specificato. \\
+	L'unità di misura è $(V \cdot A)$ che prende il nome di \textbf{Watt (W)}. \\
+	In un dispositivo \textbf{che ha una resistenza}, quando un elettrone si muove attraverso un resistore la sua energia potenziale elettrica persa appare sotto forma di energia termica nel resistore. L'energia meccanica così trasformata in energia termica è \textit{dissipata}. Per un resistore o un dispositivo con resistenza $R$, possiamo calcolare la rapidità di dissipazione dell'energia elettrica dovuta alla resistenza:
+	\[
+	P = i^2R
+	\]
+	\[
+	P = \frac{V^2}{R}
+	\]
+	Queste equazioni si applicano \textbf{solo} al trasferimento di energia potenziale elettrica in un dispositivo che ha resistenza. 
+	\section{Generatore}
+	Per far fluire dei portatori di carica attraverso un resistore, bisogna stabilire una differenza di potenziale tra le estremità del dispositivo. Un modo per farlo è connettere ciascuna estremità di un resistore a un'armatura di condensatore carico. IL problema è che il flusso di carica agisce per scaricare il condensatore, portando le due armature allo stesso potenziale e quindi di conseguenza il flusso si arresta. \\
+	Per generare un flusso costante occorre ``pompare delle cariche'', tramite un dispositvo che, compiendo lavoro sui portatori di carica, mantiere una differenza di potenziale tra una coppia di terminali. \\
+	Questom dispostivo si chiama \textbf{generatore di f.e.m} e diciamo che il dispositivo fornisce una \textbf{f.e.m $\mathcal{E}$}, il che vuol dire che compie lavoro sui portatori di carica. Il termine \textit{f.e.m} sta per \textit{forza elettromotrice}. \\ 
+	La seguente figura mostra un generatore di f.e.m:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{generatore}
+	\end{figure}
+	Questo dispositivo mantiene uno dei suoi terminali a un potenziale elettrico più alto di quello dell'altro terminale. Possiamo rappresentare la f.e.m del generatore con una freccia che punta dal polo negativo al polo positivo. \\
+	Nel generatore di f.e.m i portatori di carica positivi si muovono da una regione a potenziale elettrico più basso, e quindi a energia potenziale elettrica più bassa (polo negativo), a una regione a potenziale elettrico più alto ed energia potenziale elettrica più alta (polo positivo). Quetso moto è proprio l'opposto di quello che il campo elettrico presente nei poli farebbe compiere ai portatori di carica. \\
+	Analizziamo questo circuito dal punto di vista del lavoro e dei trasferimenti di energia. In ogni intervallo di tempo $\dd{t}$ una carica $\dd{q}$ attraversa una sezione trasversale del circuito, per esempio $aa'$. Questa stessa quantità deve entrare nel generatore di f.e.m dal suo polo a potenziale minore e deve uscire dal polo a potenziale maggiore. Il generatore deve compiere un lavoro $\dd{L}$ sull'elemento di carica $\dd{q}$ per forzarlo a muoversi in questo modo. Definiamo la f.e.m del generatore in funzione del lavoro:
+	\[
+	\mathcal{E} = \diff{L}{q}
+	\]
+	L'unità di misura della f.e.m è il \textbf{volt}. \\
+	Un \textbf{generatore ideale di f.e.m} è un generatore che non ha resistenza interna al movimento della carica da un polo all'altro. La differenza di potenziale tra i morsetti di un generatore ideal di f.e.m è uguale alla f.e.m del dispositivo. \\
+	Un \textbf{generatore reale di f.e.m} ha una resistenza interna al movimento delle cariche. Quando un generatore reale di f.e.m. non è collegato a un circuito, e quindi non passa corrente al suo interno, la differnza di potenziale tra i suoi poli è uguale alla sua f.e.m. Quando tale generatore è attraversato dalla corrente, la differenza di potenziale tra i suoi morsetti è diversa dalla sua f.e.m.
+	\section{Calcolo della corrente nel circuito elementare}
+	Consideriamo il seguente circuito a maglia:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{maglia_singola}
+	\end{figure}
+	Calcoliamo in due modi equivalenti la corrente che passa nel circuito dato. Un metodo si basa su considerazioni relative alla conservazione di energia, il secondo sul concetto di potenziale. 
+	\paragraph{Metodo dell'energia}
+	L'equazione $P = i^2R$ stabilisce che in un intervallo di tempo $\dd{t}$ si sviluppa nella resistenza una quantità di energia ari a $i^2R\dd{t}$ sotto forma di energia termica. Durante lo stesso intervallodi tempo, una carica $\dd{q} = i \dd{t}$ è stata spostata attraverso la batteria $B$ e la batterià avrà compiuto un lavoro su questa carica che è pari a:
+	\[
+	\dd{L} = \mathcal{E}\dd{q} = \mathcal{E}i\dd{t}
+	\]
+	In base al principio di conservazione dell'energia, il lavoro fatto dalla batteria deve essere uguale all'energia termica dissipata dalla resistenza:
+	\[
+	\mathcal{E}i\dd{t} = i^2R\dd{t}
+	\]
+	da cui si ricava:
+	\[
+	\mathcal{E} = iR
+	\]
+	che significa che la f.e.m è l'energia per unità di carica trasferita dalla batteria alla carica in movimento. La quantità $iR$ è l'energia per untià di carica trasferita dalle cariche in movimento alla resistenza sotto forma di energia termica. L'energia per unità di carica trasferita alle cariche è uguale all'energia per untià di carica a esse sotratta. Risolvendo rispetto alla $i$ otteniamo:
+	\[
+	i = \frac{\mathcal{E}}{R}
+	\]
+	\paragraph{Metodo del potenziale}
+	Consideriamo il circuito precedente e supponiamo di partire da un qualsiasi punto del circuito e di procedere attorno al circuito in entrambi i sensi, sommando algebricamente le differenze di potenziale che si incontrano. Poi quando torniamo al punto di partenza dobbiamo tornare al potenziale iniziale. Quest'idea vale non solo per i circuiti a maglia singola ma anche per circuiti a più maglie.
+	\begin{center}
+		La \textbf{legge delle maglie}: la somma algebrica delle differenze di potenziale incontrate nell'attraversamento completo di una qualsiasi maglia di un circuito deve essere 0.
+	\end{center}
+	Questa legge è ota come \textbf{legge di Kirchoff delle maglie}. Nel cirucito precedente partiamo da un punto $a$, il cui potenziale è $V_a$ e camminiamo in senso orario attorno al circuito fino a ritornare in $a$, tenendo traccia delle variazioni di potenziale incontrate. Il punto di partenza è il polo a potenziael più basso della batteria. Poirchè la batteria è ideale, la differenza di energia potenziale tra i poli è uguale ad $\mathcal{E}$. Mentre camminiamo lungo il filo superiore fino all'estremità superiore del resistore, non c'è variazione di potenziale perchè il filo ha resistenza trascurabile. Quando attraversiamo il resistore, il potenziale varia secondo l'equazione $R = \frac{V}{i} \Rightarrow V = iR$. Inoltre, il potenziale deve diminuire perchè ci muoviamo dal lato a potenziale più alto del resistore. Quindi la variazione di potenziale è $-iR$. Torniamo al punto \textit{a} lungo il filo inferiore. Anceh in questo caso il filo ha resistenza trascubrabile, quindi non c'è variazione di potenziale. Tornati nel punti $a$, il potenziale è di nuovo $V_a$. Poichè abbiamo attraversato una maglia completa, il nostro potenziale iniziale, modificato per le variazioni di potenziale lungo il percorso, deve essere uguale a quello finale, cioè:
+	\[
+	V_a + \mathcal{E} - iR = V_a \Rightarrow \mathcal{E} - iR = 0 \Rightarrow i = \frac{\mathcal{E}}{{R}}
+	\]
+	Se applichiamo la legge delle maglie a un attraversamento completo in \textit{senso antiorario} attorno al circuito, la legge ci dà:
+	\[
+	-\mathcal{E} + iR = 0 \Rightarrow i = \frac{\mathcal{E}}{R}
+	\]
+	Seguono due regole per trovare le differenze di potenziale mentre ci si muove attorno a una maglia:
+	\begin{center}
+		\textbf{Regola della resistenza}: quando si attraversa una resistenza nel verso della corrente, la variazione di potenziale è $-iR$; nel verso opposto è $+iR$.
+	\end{center}
+	\begin{center}
+		\textbf{Regola della f.e.m.}: quando si attraversa un generatore ideal di f.e.m. nel verso della freccia della f.e.m, la variazione di potenziale è $+\mathcal{E}$, nel verso opposto è $-\mathcal{E}$
+	\end{center}
+	\subsection{Resistenze in serie}
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{resistenze_serie}
+	\end{figure}
+	Il primo circuito mostra tre resistenze collegate \textbf{in serie} a una batteria ideal di f.e.m. $\mathcal{E}$. In serie vuol dire che le resistenze sono collegate una dopo l'altra e che una differnza di potenziale $V$ è applicata alle due estremità della serie. Nella figura le tre serie sono connesse una dopo l'altra tra i punti \textit{a} e \textit{b}, tra i quali viene mantenuta una differnza di potenziale. Allora la differenza di potenziale che esiste ai capi delle resistenze in serie produce in essere correnti $i$ identiche. In generale,
+	\begin{center}
+		quando si applica una differenza di potenziale $V$ alle estremità di più resistenze collegate in serie, le resistenze sono attraversate da correnti $i$ identiche. La somma delle differenze di potenziale presenti ai capi di ciascuna resistenza è uguale alla differenza di potenziale applicata $V$.
+	\end{center}
+	Le resistenze collegate in serie possono essere sostituite da una resistenza equivalente $R_{eq}$ che è attraversata dalla stessa corrente $i$ e ha ai suoi capi la stessa differenza di potenziale totale $V$ delle resistenze reali. \\
+	Per ricavare un'espressione per $R_{eq}$ applichiamo la regola delle maglie a entrambi i circuiti. Per il primo circuito, partendo dal punto $a$ e muovendoci in senso orario del circuito, troviamo:
+	\[
+	\mathcal{E} - iR_1 - iR_2 - iR_3 = 0
+	\]
+	ossia
+	\[
+	i = \frac{\mathcal{E}}{R_1 + R_2 + R_3}
+	\]
+	Per il secondo circuito otteniamo:
+	\[
+	\mathcal{E} - iR_{eq} = 0 \Rightarrow i = \frac{\mathcal{E}}{R_{eq}}
+	\]
+	questo mostra che:
+	\[
+	R_{eq} = R_1 + R_2 + R_3
+	\]
+	Per $n$ resistenze abbiamo che:
+	\[
+	R_{eq} = \sum_{i=1}^{n}R_i
+	\]
+	\begin{note}{\nmu Conduttori ohmici}{}
+		Nell'esempio precedente abbiamo utilizzato la legge delle maglie per ogni resistenza, ma per conduttori ohmici possiamo applicare anche la legge di Ohm:
+		\[
+		V_a - V_b = Ri
+		\]
+		e nel caso ci siano, ad esempio, due resistenze in serie, attraversate dalla stessa corrente come in figura:
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.5\textwidth]{conduttori_ohmici}
+		\end{figure}
+		possiamo applicare la legge di Ohm per entrambe le resistenze:
+		\[
+		V_a - V_b = R_1i
+		\]
+		e
+		\[
+		V_b - V_c = R_2i
+		\]
+		e otteniamo:
+		\[
+		V_a - V_c = (R_1 + R_2)i
+		\]
+	\end{note}
+	\section{Circuiti a più maglie}
+	Consideriamo il seguente circuito:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{circuiti_piu_maglie}
+	\end{figure}
+	Questo circuito mostra un circuito contenente più di una maglia. Per semplicità supponiamo che le batterie sono ideali. Ci sono due \textit{nodi} in questo circuito, in $b$ e in $d$, e ci sono tre \textit{rami} che collegano i due nodi. I rami sono quello a sinistra \textit{bad} e quello a destra \textit{bcd} e quello centrale \textit{bd}. \\
+	La corrente $i_1$ ha lo setsso valore ovunque nel ramo \textit{bad}, $i_2$ ha lo stesso valore ovunque nel ramo \textit{bcd} e $i_3$ è la corrente che attraversa il ramo \textit{bd}. \\
+	Considerate per un momento il nodo $d$: le cariche arrivano nel nodo tramite le correnti $i_1$ e $i_3$ e fuoriescono attraverso la corrente uscente $i_2$. Poichè non c'è variazione di carica nel nodo, la corrente totale entrante deve uguagliare la corrente totale uscente:
+	\[
+	i_1 + i_3 = i_2
+	\]
+	Quest'equazione suggerisce un principio generale.
+	\begin{center}
+		La \textbf{legge dei nodi}: la somma delle correnti che entrano in un qualunque nodo deve essere uguale alla somma delle correnti che escono dal nodo stesso.
+	\end{center}
+	Questa legge è chiamata \textbf{legge di Kirchoff dei nodi}. Quindi, gli strumenti per risolvere i circuiti complessi sono: la \textit{legge della maglie} e la \textit{legge dei nodi}. \\
+	L'equazione della legge dei nodi coinvolge tre incognite. Per risolvere il circuito, abbiamo bisogno di altre due equazioni che coinvolgono le tre incognite. Le otteniamo applicando la legge della maglia due volte e nel circuito abbiamo tre maglie a disposizione, quello a sinistra $badb$, quello a destra $bcdb$ e quello grande $badcb$. Se percorriamo la maglia a sinistra in senso antiorario dal punto $b$, la legge delle maglie ci da:
+	\[
+	\mathcal{E}_1 - i_1R_1 + i_3R_3 = 0
+	\]
+	Se percorriamo la maglia a destra in senso antiorario dal punto $b$, la legge delle maglie ci dà:
+	\[
+	-i_3R_3 - i_2R_2 -\mathcal{E}_2 = 0
+	\]
+	\subsection{Resistenze in parallelo}
+	Consideriamo il seguente circuito:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{resistenze_parallelo}
+	\end{figure}
+	Questo circuito mostra tre resistenze collegate \textbf{in parallelo} a una batteria ideal f.e.m. $\mathcal{E}$. Il termine ``in parallelo'' significa che le resistenze sono collegate insieme da un lato e direttamente insieme dall'altro lato e che una differenza di potenziale $V$ è applicata alla coppia di lati connessi. In generale,
+	\begin{center}
+		quando una differenza di potenziale $V$ è applicata a una combinazione di resistenze collegate in parallelo, le resistenze hanno tutte la stessa differenza di potenziale $V$.
+	\end{center}
+	Le resistenze collegate in parallelo possono essere sostituite da una resistenza equivalente $R_{eq}$ che ha la stessa differenza di potenziale $V$ ai suoi capi ed è attraversata dalla stessa corrente \textit{totale i} che attraversa le resistenze reali. \\
+	Per ricavare un'espressione per $R_{eq}$ scriviamo prima la corrente di ciascuna resistenza nella forma:
+	\[
+	i_1 = \frac{V}{R_1} \quad i_2 = \frac{V}{R_2} \quad i_3 = \frac{V}{R_3}
+	\] 
+	dove $V$ è la differenza di potenziale tra $a$ e $b$. Se applichiamo la legge dei nodi al punto $a$ e poi sostituiamo questi valori, otteniamo:
+	\[
+	i = i_1 + i_2 + i_3 = V\Bigg(\frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3}\Bigg)
+	\]
+	Se sostituissimo la combinazione di resistenze in parallelo con la resistenza equivaente $R_{eq}$ avremmo:
+	\[
+	i = \frac{V}{R_{eq}}
+	\]
+	Estendendo il risultato a $n$ resistenze otteniamo:
+	\[
+	\frac{1}{R_{eq}} = \sum_{i=1}^{n}\frac{1}{R_i}
+	\]
+	Per riassumere le formule sulle resistenze e condensatori in serie e parallelo in un circuito, abbiamo questa tabella:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{riassunto_circuiti}
+	\end{figure}
 \end{document}
