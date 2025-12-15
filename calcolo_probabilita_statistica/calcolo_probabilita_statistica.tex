@@ -3450,6 +3450,75 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\[
 		\frac{|\wbar{X}_n - \wbar{Y}_m|}{S_p\sqrt{\nicefrac{1}{n} + \nicefrac{1}{m}}} > t_{1 - \nicefrac{\alpha}{2}}(n+m-2)
 		\]
+		Per verificare che $\sigma_x^2= \sigma_y^2$ sarebbe utile avere un test per confrontare le varianze di 2 popolazioni normali indipendenti.
+		\paragraph{Test di Fisher} Siano due popolazioni $x$ con $(X_1, X_2, \dots, X_n)$ e $y$ con $(Y_1, Y_2, \dots, Y_n)$. \\
+		Ricordiamo che:
+		\[
+		\frac{(n-1)S_n^2}{\sigma_x^2} \sim \chi^2(n-1)
+		\]
+		analogamente per $y$:
+		\[
+		\frac{(m-1)S_m^2}{\sigma_y^2} \sim \chi^2(m-1)
+		\]
+		Definiamo la distribuzione di Fisher come la distribuzione di una v.a. aleatoria:
+		\[
+		F = \frac{\frac{X}{n}}{\frac{Y}{m}}
+		\]
+		ove $X \sim \chi^2(n)$ e $Y \sim \chi^2(m)$. \\
+		Indichiamo i quantili della Fisher come $F_{n, m}$ e vale la seguente regola:
+		\[
+		F_{n,m, \alpha} \cdot F_{m, n, 1 - \alpha} = 1
+		\]
+		Definiamo il quantile:
+		\begin{align*}
+		P\Bigg[\frac{\frac{X}{n}}{\frac{Y}{m}} \leq F_{n, m, \alpha}\Bigg] &= \alpha \\
+		P\Bigg[\frac{\frac{Y}{m}}{\frac{X}{n}} \geq \frac{1}{F_{n, m, \alpha}}\Bigg] &= \alpha \\
+		1 - P\Bigg[\frac{\frac{Y}{m}}{\frac{X}{n}} \leq \frac{1}{F_{n, m, \alpha}}\Bigg] &= \alpha \\
+		P\Bigg[\frac{\frac{Y}{m}}{\frac{X}{n}} \leq \frac{1}{F_{n, m, \alpha}}\Bigg] &= 1 - \alpha \\
+		&\Rightarrow F_{n, m, \alpha} = F_{m, n, 1 - \alpha}
+		\end{align*}
+		Torniamo al test di Fisher-Snedecor che, come detto precedentemente, è un test di confronto tra le varianze di 2 popolanzioni normali. \\
+		Possiamo scrivere $F$ come:
+		\[
+		F = \frac{\frac{(n-1)S_n^2}{(n-1)\sigma_x^2}}{\frac{(m-1)S_n^2}{(m-1)\sigma_y^2}} = \frac{S_n^2}{S_m^2}\frac{\sigma_y^2}{\sigma_x^2} \sim F(n-1, m-1)
+		\]
+		Vediamo il test di Fisher ove:
+		\[
+		H_0: \sigma_x^2 = \sigma_y^2
+		\]
+		e
+		\[
+		H_1: \sigma_x^2 \neq \sigma_y^2
+		\]
+		Sotto $H_0$:
+		\[
+		F = \frac{S_n^2}{S_m^2}\frac{\sigma_y^2}{\sigma_x^2} = \frac{S_n^2}{S_m^2} \sim F(n-1, m-1)
+		\]
+		Rifiuto $H_0$ se:
+		\[
+		\frac{S_n^2}{S_m^2} < F_{n-1, m-1, \nicefrac{\alpha}{2}}
+		\]
+		o
+		\[
+		\frac{S_n^2}{S_m^2} < F_{n-1, m-1, 1-\nicefrac{\alpha}{2}}
+		\]
+		Calcoliamo la significatività del test:
+		\begin{align*}
+			P_{\sigma_x^2 = \sigma_y^2}\Bigg[\frac{S_n^2}{S_m^2} > F_{n-1, m-1, 1 - \nicefrac{\alpha}{2}} \text{ oppure } \frac{S_n^2}{S_m^2} < F_{n-1, m-1, \nicefrac{\alpha}{2}}\Bigg] = \frac{\alpha}{2} + 1 - (1 - \nicefrac{\alpha}{2}) = \alpha
+		\end{align*}
+		Se abbiamo:
+		\[
+		H_0: \sigma_x^2 \geq \sigma_y^2 \quad H_1: \sigma_x^2 < \sigma_y^2
+		\]
+		Allora sotto $H_0$:
+		\[
+		\frac{S_n^2}{S_m^2}\frac{\sigma_y^2}{\sigma_x^2} \leq \frac{S_n^2}{S_m^2}
+		\]
+		Se $\frac{S_n^2}{S_m^2} < F_{n-1, m-1, \alpha}$ allora $\frac{S_n^2}{S_m^2}\frac{\sigma_y^2}{\sigma_x^2} < F_{n-1, m-1, \alpha}$ e di conseguenza:
+		\[
+		P\Bigg[\frac{S_n^2}{S_m^2}\frac{\sigma_y^2}{\sigma_x^2} < F_{n-1, m-1, \alpha}\Bigg] = \alpha
+		\]
+		\textbf{Per casa provare a fare $H_0: \sigma_x^2 \leq \sigma_y^2$}
 		\begin{exercise}{}{}
 		Copiare esercizi dalle slide.
 		\end{exercise}
@@ -3484,4 +3553,52 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\begin{exercise}{}{}
 		Copiare esercizio dalle slide
 		\end{exercise}
+		\section{Potenza di un test statistico}
+		Indichiamo con $\beta$ la probabilità di commettere un errore di $2^\circ$ specie e prende il nome di $1 - \beta$ potenza del test. \\
+		\subsection{Potenza del test di Gauss}
+		Sia:
+		\[
+		H_0: \mu \geq \mu_0 
+		\]
+		e 
+		\[
+		H_1: \mu < 0
+		\]
+		e la regola di rifiuto è la seguente:
+		\[
+		\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} < -z_{1 - \alpha}
+		\]
+		di conseguenza, accetto $H_0$ se:
+		\[
+		\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1 - \alpha}
+		\]
+		Calcoliamo $\beta$, ovvero la probabilità di commettere l'errore di $2^\circ$ specie. \\
+		Se $H_0$ è falsa allora $\mu < \mu_0 \Rightarrow \exists \delta > 0 \mid \mu \leq \mu_0 - \delta$. Per calcolare $\beta$ devo calcolare:
+		\begin{align*}
+			P_\mu\Bigg[\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1 - \alpha}\Bigg] = \beta
+		\end{align*}
+		Possaimo scrivere:
+		\begin{align*}
+			\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} &= \frac{\wbar{X}_n + \mu - \mu - \mu_0}{\frac{\sigma}{\sqrt{n}}} \\
+			&\leq \frac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} - \frac{\delta}{\frac{\sigma}{\sqrt{n}}}
+		\end{align*}
+		da cui:
+		\begin{align*}
+			\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1 - \alpha} \Rightarrow \frac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1-\alpha} +  \frac{\delta}{\frac{\sigma}{\sqrt{n}}}
+		\end{align*}
+		Allora:
+		\begin{align*}
+			P_\mu\Bigg[\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1 - \alpha}\Bigg] &\leq P_\mu\Bigg[\frac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \geq \frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg] \\ 
+			&\sim N(0, 1) \\
+			&= 1 - \Phi\Bigg(\frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg)
+ 		\end{align*}
+ 		Allora:
+ 		\[
+ 		\beta \leq 1 - \Phi\Bigg(\frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg) \Rightarrow 1- \beta \geq \Phi\Bigg(\frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg)
+ 		\]
+ 		Notiamo che:
+ 		\[
+ 		\lim\limits_{n\to\infty}\Phi\Bigg(\frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg) = \Phi(+\infty) = 1
+ 		\]
+ 		\textbf{Provare a calcolare la potenza del test di Gauss per un test bilaterale}
 \end{document}
