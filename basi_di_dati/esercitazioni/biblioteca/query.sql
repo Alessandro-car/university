@@ -205,6 +205,12 @@ INSERT INTO Prestito VALUES ('P0015', '2024-10-15', '2024-11-14', NULL, '9788845
 INSERT INTO Prestito VALUES ('P0016', '2024-09-20', '2024-11-19', NULL, '9780062316097', 'U0007');
 INSERT INTO Prestito VALUES ('P0017', '2024-10-01', '2024-10-31', NULL, '9788830102361', 'U0009');
 
+INSERT INTO Prestito VALUES ('P0018', '2024-08-05', '2024-09-04', '2024-09-02', '9780131103627', 'U0002');
+INSERT INTO Prestito VALUES ('P0019', '2024-07-15', '2024-08-14', '2024-08-10', '9788845931390', 'U0002');
+INSERT INTO Prestito VALUES ('P0020', '2024-06-20', '2024-07-20', '2024-07-18', '9788845292910', 'U0002');
+INSERT INTO Prestito VALUES ('P0021', '2024-05-10', '2024-06-09', '2024-06-05', '9780553293357', 'U0002');
+INSERT INTO Prestito VALUES ('P0022', '2024-04-15', '2024-05-15', '2024-05-12', '9788830102361', 'U0002');
+
 SELECT * FROM Prestito;
 
 -- Elencare tutti i libri pubblicati dopo il 2015, mostrando ISBN, titolo e anno di pubblicazione
@@ -276,6 +282,16 @@ HAVING num_libri >= 10;
 
 -- Trovare tutti i prestiti la cui data di scadenza è passata ma il libro non è ancora stato restituito
 
+
+
+SELECT
+	Utente.Nome,
+	Utente.Cognome,
+	Libro.Titolo,
+	Periodo.DataScadenza
+FROM
+	Prestito JOIN Utente ON
+
 -- Elencare gli utenti che non hanno mai effettuato alcun prestito
 SELECT
 	Utente.Nome,
@@ -337,5 +353,43 @@ GROUP BY Libro.Titolo
 ORDER BY NumPrestiti DESC;
 
 -- Trovare le coppie di autori che hanno scritto insieme almeno un libro
+SELECT
+	CONCAT(a1.Nome, " ", a1.Cognome) as PrimoAutore,
+	CONCAT(a2.Nome, " ", a2.Cognome) as SecondoAutore,
+	Libro.Titolo
+FROM
+	Ideazione i1 JOIN Ideazione i2 ON i1.CodiceLibro = i2.CodiceLibro AND i1.CodiceAutore < i2.CodiceAutore
+JOIN
+	Autore a1 ON i1.CodiceAutore = a1.CodiceAutore
+JOIN
+	Autore a2 ON i2.CodiceAutore = a2.CodiceAutore
+JOIN
+	Libro ON Libro.ISBN = i1.CodiceLibro;
+
 -- Calcolare la durata media, in giorni, dei prestiti già restituiti per ogni categoria di libro
+SELECT
+	AVG(DATEDIFF(Prestito.DataRestituzione, Prestito.DataInizio)) as DurataMediaPrestito,
+	Categoria.Nome
+FROM
+	Prestito JOIN LibroCategoria ON LibroCategoria.CodiceLibro = Prestito.CodiceLibro
+JOIN
+	Categoria ON Categoria.CodiceCat = LibroCategoria.CodiceCategoria
+WHERE
+	Prestito.DataRestituzione IS NOT NULL
+GROUP BY Categoria.Nome;
+
 -- Trovare gli utenti che hanno preso in prestito libri di tutte le categorie presenti in biblioteca
+SELECT
+	CONCAT(Utente.Nome, " ",  Utente.Cognome) as NomeUtente
+FROM (SELECT DISTINCT
+				Utente.CodiceUtente,
+				LibroCategoria.CodiceCategoria
+			FROM
+				LibroCategoria JOIN Prestito ON LibroCategoria.CodiceLibro = Prestito.CodiceLibro
+			JOIN
+				Utente ON Prestito.CodiceUtente = Utente.CodiceUtente
+) as prestiti_utente
+JOIN Utente ON Utente.CodiceUtente = prestiti_utente.CodiceUtente
+GROUP BY NomeUtente
+HAVING COUNT(*) = (SELECT COUNT(*) FROM (SELECT DISTINCT LibroCategoria.CodiceCategoria FROM LibroCategoria) as num_categorie);
+

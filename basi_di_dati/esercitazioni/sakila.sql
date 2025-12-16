@@ -251,7 +251,7 @@ SELECT
 	CONCAT(a2.first_name, " ", a2.last_name) as second_actor,
 	COUNT(*) as film_together
 FROM
-	actor a1 JOIN actor a2 ON a1.actor_id != a2.actor_id
+	actor a1 JOIN actor a2 ON a1.actor_id < a2.actor_id
 JOIN
 	film_actor fa1 ON a1.actor_id = fa1.actor_id
 JOIN
