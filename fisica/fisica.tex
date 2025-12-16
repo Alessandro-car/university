@@ -2657,7 +2657,7 @@
 		\item \textbf{Superficie $S_3$.} Questa superficie non racchiude alcuna carica, quindi $q_{int} = 0$ e quindi il flusso totale del campo elettrico è nullo. perchè per ogni linea di forza entrante nella superficie ce ne è una uscente. 
 		\item \textbf{Superficie $S_4$.} Questa superficie racchiude una carica totale \textbf{nulla}, quindi $q_{int} = 0$ e il flusso è nullo, perchè per ogni linea di forza entrante nella superficie ce ne è una uscente.
 	\end{itemize}
-	L'unità di misura del flusso nel SI è il $(N/C) \cdot m^2$.
+	L'unità di misura del campo nel SI è il $(N/C) \cdot m^2$.
 	\section{Conduttore carico isolato}
 	\subsection{Densità di carica}
 	Come nel caso delle distribuzioni continue di massa, è possibile avere una distribuzione continua di carica e definire le densità di carica:
@@ -2846,9 +2846,9 @@
 		dL &= \vec{F} \cdot d\vec{s} \\
 		&= q_0\vec{E} \cdot d\vec{s}
 	\end{align*}
-	Per trovare il lavoro totoale compiuto dal campo elettrico sulla particella mentre questa si muove dal punto $i$ al punto $f$, sommiamo, tramite integrale, i lavori infinitesimi compiuti sulla carica mentre questa percorre gli spostamenti d$\vec{s}$ lungo il percorso:
+	Per trovare il lavoro totale compiuto dal campo elettrico sulla particella mentre questa si muove dal punto $i$ al punto $f$, sommiamo, tramite integrale, i lavori infinitesimi compiuti sulla carica mentre questa percorre gli spostamenti d$\vec{s}$ lungo il percorso:
 	\[
-	W = q_0\int_{i}^{f}\vec{E}\cdot d\vec{s}
+	L = q_0\int_{i}^{f}\vec{E}\cdot d\vec{s}
 	\]
 	Possiamo sostituire il lavoro con $L = -q\Delta V$:
 	\[
@@ -2863,7 +2863,7 @@
 	Usiamo la seguente equazione $V_f - V_i = -\int_{i}^{f}\vec{E} \cdot d\vec{s}$ per trovare un'espressione del potenziale elettrico $V$ per lo spazio attorno a una particella carica rispetto al potenziale nullo a distanza infinita.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1.0\textwidth]{potenziale_particella}
+		\includegraphics[width=0.4\textwidth]{potenziale_particella}
 	\end{figure}
 	Dalla figura notiamo un punto $P$ posto ad una distanza $R$ da una particella fissa di carica $q$. Per usare l'equazione scritta prima supponiamo di sposatre una carica di prova positiva $q_0$ dal punto $P$ a distanza infinita. Poichè non importa il percorso scelto, consideriamo quello più semplice, ossia un segmento che si estende in direzione radiale da $P$ all'infinito. Calcoliamo $\vec{E} \cdot d\vec{s}$:
 	\[
@@ -2900,7 +2900,7 @@
 	\]
 	ove $r$ è la distanza tra $P$ e $dq$. Per trovare il potenziale $V$ in $P$, calcoliamo l'integrale per sommare i ptoenziali dovuti a tutti gli elementi di carica:
 	\[
-	V = \int dV = \frac{1}{4\pi\epsilon_0}\int_{dq}^{r}
+	V = \int dV = \frac{1}{4\pi\epsilon_0}\int\frac{dq}{r}
 	\]
 	L'integrale deve esteso all'intera distribuzione di carica.
 	\section{Potenziale di una sfera conduttrice carica}
