@@ -3601,4 +3601,203 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		\lim\limits_{n\to\infty}\Phi\Bigg(\frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg) = \Phi(+\infty) = 1
  		\]
  		\textbf{Provare a calcolare la potenza del test di Gauss per un test bilaterale}
+ 		\section{Statistica sufficiente}
+ 		Dato un campione bernoulliano $(X_1, X_2, \dots, X_n)$ ove $\wbar{X}_n = \frac{1}{n}X_i$ è uno stimatore efficiente di $p$, quindi $E_p[\wbar{X}_n] = p$ e $V_p[\wbar{X}_n] = \frac{p(1-p)}{n}$. \\
+ 		\begin{definition}{\nmu Statistica sufficiente}{stat_sufficiente}
+ 			Dato uno spazio di probabilità parametrico $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$, diciamo che una statistica $T = t(X_1, X_2, \dots, X_n)$ è sufficiente se la legge condizionale di $X = (X_1, X_2, \dots, X_n)$ dato $T=t$ \textbf{non} contiene più il parametro $\theta$.
+ 		\end{definition}
+ 		Per un campione Bernoulliano, la legge congiunta di $X$ è pari a:
+ 		\[
+ 		P[X = x] = p^{X_1 + X_2 + \dots + X_n} (1-p)^{n - (X_1 + X_2 + \dots + X_n)}
+ 		\]
+ 		Calcoliamo ora la legge condizionale di $X$ dato $T = t$:
+ 		\begin{align*}
+ 			P[X = x \mid T = t] &= \frac{P[X = x \cap T = t]}{P[T = t]} \\
+ 			 &= \begin{cases}
+ 				0 & x_1 + x_2 + \dots + x_n \neq t \\
+ 				\frac{P[X = x]}{P[T = t(x)]}& x_1 + x_2 + \dots + x_n = t
+ 			\end{cases} \\
+ 			&= \frac{p^{t}(1-p)^{n - t}}{\binom{n}{t}p^t(1-p)^{n-t}} \\
+ 			&= \frac{1}{\binom{n}{t}}
+ 		\end{align*}
+ 		\begin{theorem}{\nmu Teorema di fattorizzazione di Fisher}{fattorizzazione_fisher}
+ 			Sia uno spazio di probabilità parametrico $(\Omega, \mathcal{F}, (P_\theta)_{\theta \in \Theta})$. \\
+ 			Allora una statistica $T = t(X_1, X_2, \dots, X_n)$ è sufficiente per $\theta$ se e solo se la legge congiunta di $(X_1, X_2, \dots, X_n)$ si scrive come:
+ 			\[
+ 			f(x; \theta) = u(t(x); \theta)v(x) \quad x = (x_1, x_2, \dots, x_n)
+ 			\]
+ 		\end{theorem}
+ 		Ricordiamo che:
+ 		\[
+ 			P[X = x] = p^{X_1 + X_2 + \dots + X_n} (1-p)^{n - (X_1 + X_2 + \dots + X_n)}
+ 		\]
+ 		vale anche con $v=1$ e $u(t(x), p) = p^{t(x)}(1-p)^{n-t(x)}$. \\
+ 		\subsection{Campione di Poisson}
+ 		Dato un campione $(X_1, X_2, \dots, X_n)$ di Poisson, la legge congiunta è pari a:
+ 		\[
+ 		P[X_1 = x_1, X_2 = x_2, \dots, X_n=x_n] = e^{-n\lambda}\frac{\lambda^{\sum_{i=1}^{n}x_i}}{x_1!x_2!\cdots x_n!}
+ 		\]
+ 		Quindi, $T = \sum_{i=1}^{n}X_i$ è una stima sufficiente. \\
+ 		\textbf{Provare a esibire una statistica efficiente per il campione esponenziale.}
+ 		\subsection{Campione su una distribuzione uniformemente distribuita}
+ 		Dato un campione $(X_1, X_2, \dots, X_n)$ con distribuzione uniformemente distribuita su $[0, a]$ con $a > 0$, la legge congiunta è pari a:
+ 		\begin{align*}
+ 		f(x_1, x_2, \dots, x_n; a) &= \begin{cases}
+ 			\frac{1}{a^n} & 0 \leq x_i \leq a \quad \forall i = 1, 2, \dots, n  \\
+ 			0
+ 		\end{cases} \\ 
+ 		&= \begin{cases}
+ 		\frac{1}{a^n} & a \geq \underset{1 \leq i \leq n}{\max}\{x_i\} \\
+ 		0 
+ 		\end{cases} 
+ 		\end{align*}
+ 		Quindi $T = \underset{1 \leq i \leq n}{\max}\{X_i\}$ è uno stimatore sufficiente. 
+ 		\subsection{Campione gaussiano} 
+ 		Dato un campione $(X_1, X_2, \dots, X_n)$ gaussiano, la legge congiunta è pari a:
+ 		\[
+ 		f(x_1, \dots, x_n; \mu, \sigma^2) = \frac{1}{(2\pi)^{\nicefrac{n}{2}}}\frac{1}{\sigma^{2n}}e^{-\frac{\sum_{i=1}^{n}(x_i - \mu)^2}{2\sigma^2}}
+ 		\]
+ 		Ove:
+ 		\begin{align*}
+ 			\sum_{i=1}^{n}(x_i - \mu)^2 &= \sum_{i=1}^{n}(x_i^2 + \mu^2 - 2\mu x_i) \\
+ 			&= \sum_{i=1}^{n}x_i^2 + \mu^2 - 2\mu\sum_{i=1}^{n}x_i
+ 		\end{align*}
+ 		Quindi, $T(X_1, \dots, X_n) = (\sum_{i=1}^{n}x_i; \sum_{i=1}^{n}x_i^2)$ è uno stimatore sufficiente.
+ 		\section{Dimostrazione del teorema di Fisher per distribuzioni discrete}
+ 		\begin{proof}{\nmu Dimostrazione del \namerefl{th:fattorizzazione_fisher}} \quad \\
+ 			Prima implicazione: se vale la fattorizzazione $P[X=x]=u(t(x), \theta)v(x)$ allora $T=t(x)$ è sufficiente. \\
+ 			Calcoliamo:
+ 			\begin{align*}
+ 				P[X=x \mid T = t] &= \frac{P[X = x \cap T = t]}{P[T=t]} \\
+ 				&= \begin{cases}
+ 					0 & t \neq t(x) \\
+ 					\frac{P[X=x]}{P[T=t]}& t = t(x)
+ 				\end{cases} \\
+ 				&= \frac{u(t(x), \theta)v(x)}{\sum_{y: t(y) = t}u(t(y), \theta)v(y)} \\
+ 				&= \frac{v(x)}{v(y)}
+ 			\end{align*}
+ 			Seconda implicazione: $P[X=x \mid T=t] = v(x)$ (non dipende dal parametro). 
+ 			\begin{align*}
+ 				P[X=x\mid T=t(x)] &= \frac{P[X=x]}{P[T=t(x)]} \\
+ 				v(x) &= \frac{P[X=x]}{P[T = t(x)]} \\
+ 				P[X=x] &= u(t(x), \theta)v(x)
+ 			\end{align*}
+ 		\end{proof}
+ 		Siano $(X_1, X_2, \dots, X_n)$ delle osservazioni e $T = t(X_1, X_2, \dots, X_n)$ uno stimatore sufficiente e $U = U(X_1, X_2, \dots, X_n)$ uno stimatore corretto di $\psi(\theta)$. \\
+ 		L'idea è quella di passare da $U$ a $U^* = E[U \mid T]$. \\
+ 		Notiamo che:
+ 		\[
+ 		E[X|Y=y] = \int_{-\infty}^{\infty}xf_{x|Y=y}(x, y)dx = h(y)
+ 		\] 
+ 		allora:
+ 		\[
+ 		E[X | Y] = h(Y)
+ 		\]
+ 		\begin{note}{}{}
+ 			Vale che:
+ 			\[
+ 			E[E[X|Y]] = E[X]
+ 			\]
+ 			Infatti:
+ 			\begin{align*}
+ 				E[E[X|Y]] &= \int_{-\infty}^{\infty}f_Y(y)h(g)dg \\
+ 				&= \int_{-\infty}^{\infty}f_Y(y)dx\int_{-\infty}^{\infty}x\frac{f(x, y)}{f_Y(y)}dy \\
+ 				&= \int_{-\infty}^{\infty}dx\int_{-\infty}^{\infty}xf(x, y)dy \\
+ 				&= \int_{-\infty}^{\infty}x\int_{-\infty}^{\infty}f(x, y)dydx \\
+ 				&= \int_{-\infty}^{\infty}xf_X(x)dx \\
+ 				&= E[X]
+ 			\end{align*}
+ 			E vale anche che:
+ 			\[
+ 			E[g(y)x|Y] = g(Y)E[X|Y]
+ 			\]
+ 		\end{note}
+ 		\begin{theorem}{\nmu Teorema di Blackwell-Rao}{blackwell-rao}
+ 			Se $U = U(X_1, X_2, \dots, X_n)$ è uno stimatore corretto di $\psi(\theta)$ e $T= t(X_1, X_2, \dots, X_n)$ è una statistica sufficiente, allora:
+ 			\[
+ 			U^* = E[U \mid T]
+ 			\]
+ 			ove $U^*$ è uno stimatore corretto di $\psi(\theta)$ e $r_\theta(U^*) \leq r_\theta(U) \quad \forall \theta \in \Theta$.
+ 		\end{theorem} 
+ 		\begin{proof}{\nmu Dimostrazione del \namerefl{th:blackwell-rao}} \quad \\
+ 			Notiamo che $U^*$ è una statistica. \\
+ 			\begin{align*}
+ 				E_\theta[U^*] &= E_\theta[E_\theta[U \mid T]] \\
+ 				&= E_\theta[U] \\
+ 				&= \psi(\theta) \quad \forall \theta
+ 			\end{align*}
+ 			Calcoliamo il rischio quadratico medio di $U$:
+ 			\begin{align*}
+ 				r_\theta(U) &= E_\theta[(U - \psi(\theta))^2] \\
+ 				&= E_\theta[(U - U^* + U^* - \psi(\theta))^2] \\
+ 				&= E_\theta[(U - U^*)^2] + E_\theta[(U^* - \psi(\theta))^2] + 2E_\theta[(U - U^*)(U^* - \psi(\theta))] 
+ 			\end{align*}
+ 			Quindi:
+ 			\[
+ 			r_\theta(U) \geq r_\theta(U^*) + 2E_\theta[(U - U^*)(U^* - \psi(\theta))] 
+ 			\]
+ 			Dobbiamo dimostrare che $2E_\theta[(U - U^*)(U^* - \psi(\theta))]=0$.
+ 			\begin{align*}
+ 				2E_\theta[(U - U^*)U^*] - E[(U - U^*)]\psi(\theta) 
+ 			\end{align*} 
+ 			devo far vedere che $E[UU^*] = E[U^{*2}]$ \\
+ 			\begin{align*}
+ 				E[UU^*] &= E[E[UU^* \mid T]] \\
+ 				&= E[U*E[U \mid T]] \\
+ 				&= E[U^{*2}]
+ 			\end{align*}
+ 		\end{proof}
+ 		\section{Completezza di una statistica}
+ 		\begin{definition}{\nmu Completezza}{completezza}
+ 			Una statistica $T = t(x)$ si dice \textit{completa} se, data $h: \mathbbm{R} \to \mathbbm{R}$:
+ 			\[
+ 			E_\theta[h(T)] = 0 \quad \forall \theta \in \Theta \Rightarrow h(T) = 0
+ 			\]
+ 			Altrimenti detto, date $h_1(T)$ e $h_2(T)$:
+ 			\[
+ 			E_\theta[h_1(T)] = E_\theta[h_2(T)] \quad \forall \theta \in \Theta \Rightarrow h_1 = h_2
+ 			\]
+ 			Quindi ci può essere che per uno stimatore corretto di $\psi(\theta)$ che sia funzione di $T$ statistica completa. 
+ 		\end{definition}
+ 		\begin{example}{\nmu Campione bernoulliano}{completezza_bernoulli}
+ 			Sia $(X_1, X_2, \dots, X_n)$ un campione bernoulliano e sappiamo che $T = \sum_{i=1}^{n}X_i$ è una statica sufficiente. \\
+ 			Vediamo se $T$ è completa.
+ 			\begin{align*}
+ 				E_p[h(T)] &= \sum_{i=1}^{n}\binom{n}{k}h(k)p^k(1-p)^{n-k} \\
+ 				&= (1-p)^n\sum_{i=1}^{n}h(k)\binom{n}{k}(\frac{1}{1-p})^k \\
+ 				&= 0 \quad \forall p \in [0, 1] \\
+ 				&\Rightarrow \binom{n}{k}h(k) = 0 \\
+ 				&\Rightarrow h(k) = 0 \quad \forall k
+ 			\end{align*}
+ 		\end{example}
+ 		\begin{example}{\nmu Campione uniforme}{completezza_uniforme}
+ 			Sia $(X_1, X_2, \dots, X_n)$ un campione uniforme su $[0, a]$ e sappiamo che $T = \underset{1 \leq i \leq n}{\max}\{X_i\}$ è una statica sufficiente. \\
+ 			Vediamo se $T$ è completa.
+ 			Ricordiamo che:
+ 			\[
+ 			P[T \leq t] = P[X_1 \leq t \quad \forall i = 1, 2,  \dots, n] = P[X_i \leq t]^n = \begin{cases}
+ 				0 & t < 0 \\
+ 				(\frac{t}{a})^n & 0 \leq t \leq a \\
+ 				1 & t > a
+ 			\end{cases}
+ 			\]
+ 			e la densità di $T$ è pari a:
+ 			\[
+ 			f(t) = n(\frac{t}{a})^{n-1}\frac{1}{a}\mathbbm{1}_[0, a](t)
+ 			\]
+ 			Allora:
+ 			\begin{align*}
+ 				E_a[h(T)] &= \int_{0}^{a}h(t)\frac{nt^{n-1}}{a^n}dt = 0 \\
+ 				&= \frac{n}{a^n}\int_{0}^{a}h(t)t^{n-1}dt = 0 \\
+ 				&\Rightarrow \int_{0}^{a}h(t)t^{n-1}dt = 0 \\
+ 				&\Rightarrow h(a)a^{n-1} = 0 \\
+ 				&\Rightarrow h(a) = 0 \quad \forall a
+ 			\end{align*}
+ 		\end{example}
+ 		\begin{theorem}{\nmu Teorema di Lehman-Scheffé}{lehman_scheffe}
+ 			Se $T = t(x)$ è una statistica sufficiente e completa, allora esiste al più uno stimatore corretto di  $\psi(\theta)\ $ $U = U(T)$ (che sia una funzione di $T$). Inoltre, $U$ è efficiente.
+ 		\end{theorem}
+ 		\begin{proof}[Dimostrazione del \namerefl{th:lehman_scheffe}] \quad \\
+ 			Dobbiamo solo verificare che $U$ è efficiente. A tal scopo, sia $S = s(x)$ uno stimatore corretto di $\psi(\theta)$. Dal \namerefl{th:blackwell-rao}, $r_\theta(S) \geq r_\theta(S^*)$ con $S^* = E[S \mid T] = U(T)$
+ 		\end{proof}
 \end{document}
