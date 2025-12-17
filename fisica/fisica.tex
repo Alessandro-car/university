@@ -3478,7 +3478,7 @@ Essa mostra un filo di forma arbitraria percorso da una corrente elettrica $i$. 
 Procediamo calcolando il modulo $\dd{\vec{B}}$ prodotto nel punto $P$ a una distanza $r$ da un elemento di corrente $i$ $\dd{\vec{s}}$ risulta essere:
 \[
 dB = \frac{\mu_0i\dd{s}\sin\theta}{4\pi r^2}
-\] 
+\]
 dove $\theta$ è l'angolo tra le direzioni di $\dd{\vec{s}}$ e di $\hat{r}$, un vettore unitario che punta da d$s$ verso $P$. \\
 La quantità $\mu_0$ è una costante detta \textit{permeabilità magnetica del vuoto} il cui valore esatto è:
 \[
@@ -3506,12 +3506,12 @@ o, in forma vettoriale:
 \[
 \vec{B}(z) = \frac{\mu_0iS}{2\pi z^3}\vec{u}_Z
 \]
-ove $S = \pi R^2$ e $z \gg R$. 
+ove $S = \pi R^2$ e $z \gg R$.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{campo_magnetico_spira}
 \end{figure}
-Inoltre, per il \textbf{principio di equivalenza di Ampere} una spira piana di area $S$ percorsa da corrente $i$ ha effetti magnetici equivalenti ad un dipolo magnetico elementare. 
+Inoltre, per il \textbf{principio di equivalenza di Ampere} una spira piana di area $S$ percorsa da corrente $i$ ha effetti magnetici equivalenti ad un dipolo magnetico elementare.
 \section{Forza tra due correnti parallele}
 Due lunghi fili paralleli percorsi da correnti esercitano delle forze l'uno sull'altro.  La seguente figura mostra due fili di questo tipo separati da una distanza $d$ e percorsri dalle correnti $i_a$ e $i_b$.
 \begin{figure}[H]
@@ -3537,7 +3537,7 @@ Possiamo trovare il campo magnetico generato da una qualsiasi distribuzione di c
 \[
 \oint\vec{B} \cdot \dd\vec{s} = \mu_oi_c
 \]
-Quindi il prodotto scalare deve essere integrato lungo una linea chiusa. La corrente $i_c$ è la corrente totale che fluisce attraverso la superficie compresa all'interno della linea chiusa. 
+Quindi il prodotto scalare deve essere integrato lungo una linea chiusa. La corrente $i_c$ è la corrente totale che fluisce attraverso la superficie compresa all'interno della linea chiusa.
 \begin{proof}{Dimostrazione della legge di Ampere in filo rettilineo percorso da corrente} \quad \\
 	Consideriamo la seguente immagine:
 	\begin{figure}[H]
@@ -3567,5 +3567,96 @@ C1: \oint\vec{B} \cdot \dd\vec{l} = \frac{\mu_0i2\pi}{2\pi} = \mu_0i_c
 \[
 C2: \oint\vec{B}\cdot \dd\vec{l} = 0
 \]
+\subsection{Solenoidi e toroidi}
+\paragraph{Solenoide}
+La legge di Ampere risulta utile quando dobbiamo calcolare il campo magnetico prodotto dalla corrente che scorre in un lungo filo avvolto strettamente a forma di spirale. Tale avvolgimento viene chiamato \textbf{solenoide}. \\
+\textbf{Aggiungere figura del solenoide}  \\
+Il campo magnetico del solenoide è la somma vettoriale dei campi prodotti dalle singole spire (\textit{avvolgimenti}) che lo compongono. Per punti molto vicini a un avvolgimento, il filo si comporta magneticamente qasi come un lungo filo rettilineo e linee di $\vec{B}$ in quei punti sono quasi circonferenze concentriche. Inoltre, il campo tra spire adiacenti tende ad annullarsi. Nei punti all'interno del solenoide e lontani dal filo, $\vec{B}$ è approssimativamente parallelo all'asse del solenoide. \\
+Nel caso di un \textit{solenoide ideale}, che ha una lunghezza infinita ed è formato da spire strettamente impacchettate di filo di sezione quadrata, il campo all'interno dell'avvolgimento è uniforme e parallelo all'asse del solenoide. \\
+In punti sopra il solenoide, il campo dovuto alle parti superiore delle spire è orientato verso sinistra e tende ad annullare il campo dovuto in $P$ alle parti inferiori delle spire, che è diretto verso destra. Il campo magnetico fuori dal solenoide si annulla. \\
+\textbf{Aggiungere le immagini} \\
+Applichiamo la legge di Ampere alla figura seguente \textbf{aggiungere immagine 29.21}:
+\[
+\oint \vec{B} \cdot \dd\vec{s} = \mu_0i_c
+\]
+Scriviamo l'integrale come la somma di quattro integrali, uno per ciascun segmento della linea:
+\[
+\oint\vec{B} \cdot \dd\vec{s} = \int_{a}^{b}\vec{B} \cdot \dd\vec{s} + \int_{b}^{c}\vec{B} \cdot \dd\vec{s} +\int_{c}^{d}\vec{B} \cdot \dd\vec{s} +\int_{d}^{a}\vec{B} \cdot \dd\vec{s}
+\]
+Il primo integrale al sceondo membro vale $Bh$. Il secondo e il quarto integrale sono nulli perchè $\vec{B}$ è perndicolare a $\dd s$ quindi il prodotto scalare vale 0. Il terzo integrale, che giace fuori dal solenoide vale 0. Quindi:
+\[
+\oint\vec{B} \cdot \dd\vec{s} = Bh
+\]
+La corrente totale $i_c$ non è la stessa corrente $i$ che scorre negli avvolgimenti del solenoide, perchè gli avvolgimenti passano più di una volta attraverso questa linea chiusa. Sia $n$ il numero di spire per unità di lunghezza del solenoide; allora la linea chiusa racchiude $nh$ avvolgimenti e
+\[
+i_c = i(nh)
+\]
+Allora, dalla legge di Ampere:
+\[
+Bh = \mu_0inh
+\]
+Oppure in un solenoide ideale:
+\[
+B = \mu_0in
+\]
+\paragraph{Toroide}
+Consideriamo la seguente figura: \textbf{Aggiungere figura 29.22} \\
+Essa mostra un \textbf{toroide}, che possiamo descrivere come un solenoide piegato fino a che le sue estremità non si incontrano, formando un bracciale vuoto al centro. \\
+Le linee del campo $\vec{B}$ formano circonferenze concentriche all'interno del toroide. Scegliamo na circonferenza concentrica di raggio $r$ come linea chisa e percorriamola in senso orario. La legge di Ampere da:
+\[
+B(2\pi r) = \mu_0iN
+\]
+ove $i$ è la corrente negli avvolgimenti toroidali e $N$ il numero totale di spire. Si ha:
+\[
+B = \frac{\mu_0iN}{2\pi r}
+\]
+\chapter{Induzione elettromagnetica}
+Come detto precedentemente, un campo magnetico può generare un campo elettrico e quindi dare origine a una corrente. Il legame tra campo magnetico e campo elettrico che esso genera, o \textit{induce}, è denominato \textit{legge di Faraday dell'induzione}. \\
+Esaminiamo due esperimenti per discutere la legge di Faraday sull'induzione.
+\begin{enumerate}
+	\item Consideriamo la seguente figura: \textbf{aggiungere immagine 30.1}. Essa mostra una spira condttrice collegata a un amperometro sensibile. Poichè non sono incluse fonti di f.e.m, come batterie, non c'è corrente nel circuito. Tuttavia, se vviciniamo una barra magnetica alla spira, nel circuito compare una corrente e scompare quando il magnete si ferma. Se allontaniamo il magnete dalla spira, compare di nuovo una corrente che scorre nel verso opposto. Infatti, valgono le seguenti proprietà:
+	\begin{enumerate}
+		\item Si genera una corrente solo se c'è un moto relativo tra la spira e il magnete; la corrente scompare quando il moto relativo cessa.
+		\item Un moto più veloce produce una corrente maggiore.
+		\item Se avvicinando il polo nord alla spira si genera una corrente in senso orario, allontanando il polo nord dalla spira si genera una corrente in senso antiorario.
+	\end{enumerate}
+	La corrente prodotto nella spira è detta \textbf{corrente indotta}; il lavoor compiuto per unità di carica per generare tale corrente è detto \textbf{f.e.m. indotta}; il processo che genera la corrente e la f.e.m. è detto \textbf{induzione}.
+	\item Consideriamo la seguente figura: \textbf{Aggiungere immagine}. Essa mostra due spire conduttrici vicine ma non a contatto. Se chiudiamo l'interruttore $S$ per generare una corrente nella spira di destra, l'amperometro, per un tempo breve, registra una corrente, viene quindi indotta una corrente nella spira di sinistra. Se apriamo l'interruttore, un'altra corrente compare per un tempo breve nella spira di sinistra ma nel verso oppposto. Otteniamo una corrente indotta solo quando la corrente nella spira di destra cambia e non quando è costante.
+\end{enumerate}
+\section{Legge di Faraday dell'induzione}
+	Faraday comprese che la f.e.m. e la corrente possono essere indotte in una spira, cambiando la \textit{quantità di campo magnetico} che attraversa la spira. Inoltre, questa ``quantità di campo magnetico'' può essere visualizzata in termini delle linee del campo che attraversano la spira. Il numero effettivo di linee del campo magnetico che attraversano la spira non ha importanza; i valori della f.e.m. e della corrente indonne sono determinati dalla \textit{rapidità} con la quale tale numero cambia. \\
+	Per rendere operativa la legge di Faraday dobbiamo calcolare la \textit{quantità di campo magnetico} che attraversa una spira. In precedenza, abbiamo calcolato la quantità di campo elettrico che attraversa una superficie $\Phi_E = \int \vec{E} \cdot \dd\vec{A}$. Qui definiamo, invece, un \textit{flusso magnetico}. Consideriamo che una spira che racchiude un'area $A$ sia posta in un campo magnetico $\vec{B}$. Allora il \textbf{flusso magnetico} che attraversa la spira è:
+	\[
+		\Phi_B = \int \vec{B} \cdot \dd\vec{A}
+	\]
+	L'unità di misura per il flusso magnetico è il testa moltiplicato per il metro quadrato, che viene detta \textbf{weber Wb}:
+	\[
+	1\ Wb = 1\ T \cdot m^2
+	\]
+	Con la definizione di flusso magnetico possiamo enunciare la legge di Faraday:
+	\begin{center}
+		La f.e.m. indotta $\mathcal{E}$ in una spira conduttrice è in valore assoluto uguale alla rapidità con la quale il flusso magnetico attraverso quella spira cambia nel tempo.
+	\end{center}
+	La f.e.m. indotta tende ad opporsi alla variazione di flusso, allora la legge di Faraday viene formalmente scritta come:
+	\[
+	\mathcal{E} = -\frac{\dd\Phi_B}{\dd t}
+	\]
+	con il segno meno per indicare che la f.e.m. si oppone alla variazione.
+	\section{Legge di Lenz}
+	La legge di Lenz, nata dopo la legge di Faraday sull'induzione, mette a punto una regola per stabilire il verso di una corrente indotta in una spira:
+	\begin{center}
+		Una corrente indotta ha un verso tale che il campo magnetico generato dalla \textit{corrente} si oppone alla variazione del flusso magnetico che induce la corrente stessa.
+	\end{center}
+	Inoltre, il verso di una f.e.m. indotta è quello della corrente indotta. \\
+	Consideriamo la seguente figura: \textbf{Immagine 30.4} Applichiamo la legge di Lenz.
+	\begin{enumerate}
+		\item \textbf{Si oppone al movimento del magnete}. L'avvicinarsi del polo nord del magnete fa aumentare il flusso magnetico attraverso la spira e quindi induce in essa una corrente. Per \textit{opporsi} all'aumento del flusso magnetico, il polo nord della spira, $\mu$, deve essere diretto verso il polo nord del magnete in avvcinamento, in modo da respingerlo. Di conseguenza, con la regola della mano destra applicata a $\mu$ ci dice che la corrente indotta nella spira deve avere verso antiorario. \\
+		Se allontaniamo il magnete dalla spira, di nuovo sarà indotta una corrente nella spira. Ora, però, la spiravrà un polo sd di fronte al polo nord del magnete che si allontana, in modo da opporsi all'allontanamento. Quindi, la corrente nella spira avrà verso orario.
+		\item \textbf{Si oppone alla variazione di flusso}. Con il magnete inizialmente lontano, non c'è flusso magnetico attraverso la spira. Mentre il polo nord del magnete si avvicina alla spira con il suo campo magnetico $\vec{B}$ diretto verso il basso, il flusso attraverso la spira aumenta. Per opporsi, la corrente indotta deve generare il suo campo magnetico $\vec{B}_{ind}$ diretto verso l'alto all'interno della spira. La regola della mano destra ci dice che la corrente $i$ deve essere in senso antiorario.
+	\end{enumerate}
+	\begin{note}{}{}
+		Il flusso $\vec{B}_{ind}$ si oppone sempre a $\vec{B}$ ma non è sempre opposto. Per esempio, se allontaniamo il magnete dalla spira, il flusso $\Phi_B$ dovuto al magnete è ancora orientato verso il basso attraverso la spira, ma ora diminuisce. Il flusso $\vec{B}_{ind}$ deve essere rivolto verso il basso dentro la spira per opporsi alla diminuzione di $\Phi_B$.
+	\end{note}
+	\textbf{Vedere le slide per un ulteriore approfondimento}.
 \end{document}
 
