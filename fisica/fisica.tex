@@ -3614,14 +3614,24 @@ B = \frac{\mu_0iN}{2\pi r}
 Come detto precedentemente, un campo magnetico può generare un campo elettrico e quindi dare origine a una corrente. Il legame tra campo magnetico e campo elettrico che esso genera, o \textit{induce}, è denominato \textit{legge di Faraday dell'induzione}. \\
 Esaminiamo due esperimenti per discutere la legge di Faraday sull'induzione.
 \begin{enumerate}
-	\item Consideriamo la seguente figura: \textbf{aggiungere immagine 30.1}. Essa mostra una spira condttrice collegata a un amperometro sensibile. Poichè non sono incluse fonti di f.e.m, come batterie, non c'è corrente nel circuito. Tuttavia, se vviciniamo una barra magnetica alla spira, nel circuito compare una corrente e scompare quando il magnete si ferma. Se allontaniamo il magnete dalla spira, compare di nuovo una corrente che scorre nel verso opposto. Infatti, valgono le seguenti proprietà:
+	\item Consideriamo la seguente figura.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{esperimento_1_induzione}
+	\end{figure}
+	 Essa mostra una spira condttrice collegata a un amperometro sensibile. Poichè non sono incluse fonti di f.e.m, come batterie, non c'è corrente nel circuito. Tuttavia, se vviciniamo una barra magnetica alla spira, nel circuito compare una corrente e scompare quando il magnete si ferma. Se allontaniamo il magnete dalla spira, compare di nuovo una corrente che scorre nel verso opposto. Infatti, valgono le seguenti proprietà:
 	\begin{enumerate}
 		\item Si genera una corrente solo se c'è un moto relativo tra la spira e il magnete; la corrente scompare quando il moto relativo cessa.
 		\item Un moto più veloce produce una corrente maggiore.
 		\item Se avvicinando il polo nord alla spira si genera una corrente in senso orario, allontanando il polo nord dalla spira si genera una corrente in senso antiorario.
 	\end{enumerate}
 	La corrente prodotto nella spira è detta \textbf{corrente indotta}; il lavoor compiuto per unità di carica per generare tale corrente è detto \textbf{f.e.m. indotta}; il processo che genera la corrente e la f.e.m. è detto \textbf{induzione}.
-	\item Consideriamo la seguente figura: \textbf{Aggiungere immagine}. Essa mostra due spire conduttrici vicine ma non a contatto. Se chiudiamo l'interruttore $S$ per generare una corrente nella spira di destra, l'amperometro, per un tempo breve, registra una corrente, viene quindi indotta una corrente nella spira di sinistra. Se apriamo l'interruttore, un'altra corrente compare per un tempo breve nella spira di sinistra ma nel verso oppposto. Otteniamo una corrente indotta solo quando la corrente nella spira di destra cambia e non quando è costante.
+	\item Consideriamo la seguente figura. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{esperimento_2_induzione}
+	\end{figure}
+	 Essa mostra due spire conduttrici vicine ma non a contatto. Se chiudiamo l'interruttore $S$ per generare una corrente nella spira di destra, l'amperometro, per un tempo breve, registra una corrente, viene quindi indotta una corrente nella spira di sinistra. Se apriamo l'interruttore, un'altra corrente compare per un tempo breve nella spira di sinistra ma nel verso oppposto. Otteniamo una corrente indotta solo quando la corrente nella spira di destra cambia e non quando è costante.
 \end{enumerate}
 \section{Legge di Faraday dell'induzione}
 	Faraday comprese che la f.e.m. e la corrente possono essere indotte in una spira, cambiando la \textit{quantità di campo magnetico} che attraversa la spira. Inoltre, questa ``quantità di campo magnetico'' può essere visualizzata in termini delle linee del campo che attraversano la spira. Il numero effettivo di linee del campo magnetico che attraversano la spira non ha importanza; i valori della f.e.m. e della corrente indonne sono determinati dalla \textit{rapidità} con la quale tale numero cambia. \\
@@ -3648,7 +3658,12 @@ Esaminiamo due esperimenti per discutere la legge di Faraday sull'induzione.
 		Una corrente indotta ha un verso tale che il campo magnetico generato dalla \textit{corrente} si oppone alla variazione del flusso magnetico che induce la corrente stessa.
 	\end{center}
 	Inoltre, il verso di una f.e.m. indotta è quello della corrente indotta. \\
-	Consideriamo la seguente figura: \textbf{Immagine 30.4} Applichiamo la legge di Lenz.
+	Consideriamo la seguente figura. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{legge_lenz}
+	\end{figure}
+	Applichiamo la legge di Lenz.
 	\begin{enumerate}
 		\item \textbf{Si oppone al movimento del magnete}. L'avvicinarsi del polo nord del magnete fa aumentare il flusso magnetico attraverso la spira e quindi induce in essa una corrente. Per \textit{opporsi} all'aumento del flusso magnetico, il polo nord della spira, $\mu$, deve essere diretto verso il polo nord del magnete in avvcinamento, in modo da respingerlo. Di conseguenza, con la regola della mano destra applicata a $\mu$ ci dice che la corrente indotta nella spira deve avere verso antiorario. \\
 		Se allontaniamo il magnete dalla spira, di nuovo sarà indotta una corrente nella spira. Ora, però, la spiravrà un polo sd di fronte al polo nord del magnete che si allontana, in modo da opporsi all'allontanamento. Quindi, la corrente nella spira avrà verso orario.
@@ -3657,6 +3672,57 @@ Esaminiamo due esperimenti per discutere la legge di Faraday sull'induzione.
 	\begin{note}{}{}
 		Il flusso $\vec{B}_{ind}$ si oppone sempre a $\vec{B}$ ma non è sempre opposto. Per esempio, se allontaniamo il magnete dalla spira, il flusso $\Phi_B$ dovuto al magnete è ancora orientato verso il basso attraverso la spira, ma ora diminuisce. Il flusso $\vec{B}_{ind}$ deve essere rivolto verso il basso dentro la spira per opporsi alla diminuzione di $\Phi_B$.
 	\end{note}
-	\textbf{Vedere le slide per un ulteriore approfondimento}.
+	Inoltre, valgono le seguenti relazioni:
+	\[
+	\frac{\dd\Phi(B)}{\dd t} > 0 \Rightarrow \mathcal{E}_i < 0 \Rightarrow i_i < 0
+	\]
+	e 
+	\[
+	\frac{\dd\Phi(B)}{\dd t} < 0 \Rightarrow \mathcal{E}_i > 0 \Rightarrow i_i > 0
+	\]
+	\subsection{Applicazione della legge di Lenz}
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{applicazione_lenz}
+	\end{figure}
+	Nella situazione rappresentata in figura c'è una variazione di flusso dovuta al cambio dell'aria della spira ancora immersa nel campo magnetico.  \\
+	Calcoliamo il flusso del campo magnetico:
+	\[
+	\Phi_B = \int\vec{B} \cdot \dd\vec{A} = BLx 
+	\]
+	Al diminuire di $x$, anche il flusso diminuisce. La legge di Faraday ci dice che con questa diminuzione del flusso si induce una f.e.m. nella spira. Calcoliamo il modulo della f.e.m. come:
+	\[
+	\mathcal{E} = \diff{\Phi_B}{t} = \diff{BLx}{t} = BL\diff{x}{t} = BLv
+	\]
+	dove viene sostituito $\diff{x}{t}$ con $v$, la velocità alla quale la spira si muove. \\
+	Nell'equazione abbiamo tralasciato il segno meno e abbiamo calcolato solo il modulo della f.e.m. indotta, il segno meno sta ad indicare che la corrente indotta deve opporsi alla variazione di flusso.
+	Per calcolare la corrente indotta, possiamo applicare l'equazione $i = \mathcal{E}/R$ e otteniamo:
+	\[
+	i = \frac{BLv}{R}
+	\]
+	\section{Campo indotto}
+	Consideriamo la seguente figura:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{campo_indotto}
+	\end{figure}
+	In questa figura troviamo una barretta conduttrice che si muove di moto traslatorio con una velocità $v$ in una regione in cui ci sia un campo magnetico $\vec{B}$ costante. Questo significa che gli elettroni di conduzione $e$, che ricordiamo che hanno una carica negativa, sono in moto  e su di essi agisce la forza di Lorentz. Applicando la forza di Lorentz, otteniamo:
+	\[
+	\vec{F}_E = -e\vec{v} \times \vec{B}
+	\]
+	e possiamo definire il \textbf{campo elettromotore} come: 
+	\[
+	E_i = \frac{\vec{F}_E}{-e} = \vec{v} \times \vec{B}
+	\]
+	Quindi le cariche si mettono in moto lungo la spira dando origine a una corrente indotta che scorre in verso opposto a quella degli elettroni di conduzione $-e$. \\
+	Inoltre, se il circuito ha una resistenza ohmica $R$, possiamo calcolare la \textit{corrente indotta} tramite l'equazione $i=\mathcal{E}_i/R$ ove:
+	\[
+	\mathcal{E}_i = -\diff{\Phi_B}{t}
+	\]
+	e quindi:
+	\[
+	i = -\frac{1}{R}\diff{\Phi_B}{t}
+	\]
 \end{document}
 
