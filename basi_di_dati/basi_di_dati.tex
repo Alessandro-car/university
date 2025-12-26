@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{libertinus}
+\usepackage{libertinust1math}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
 \usepackage{amsmath}
@@ -2448,4 +2449,119 @@ create table Docenza (
 			\centering
 			\includegraphics[width=1.0\textwidth]{tabelle_riassuntive2}
 		\end{figure}
+	\chapter{Normalizzazione}
+	\section{Ridondanza e anomalie}
+	Consideriamo la seguente relazione:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{normalizzazione}
+		\label{fig:normalizzazione}
+	\end{figure}
+	Questa relazione ha come chiave la coppia di attributi (\texttt{Impiegato, Progetto}). Si può inoltre verificare che le tuple della relazione soddisfano le seguenti proprietà:
+	\begin{itemize}
+		\item lo stipendio di ciascun impiegato è unico ed è funzione del solo impiegato, indipendentemente dei progetti cui partecipa;
+		\item il bilancio di ciascun progetto è unico e dipende dal solo progetto, indipendentemente dagli impiegati che vi partecipano.
+	\end{itemize}
+	Questi fatti hanno conseguenze sul contenuto della relazione e sulle operazioni che si possono effettuare su di essa. Limitiamo le osservazioni alla prima proprietà:
+	\begin{itemize}
+		\item il valore dello stipendio di ciascun impiegato è ripetuto in tutte le tuple relative a esso: si ha quindi una \textit{ridondanza};
+		\item se lo stipendio di un impiegato varia, è necessario andarne a modificare il valore in tutte le tuple corrispondenti affinchè la dipendenza continui a valere, questo comporta di effettuare più modifiche contemporaneamente e prende il nome di \textit{anomalia di aggiornamento};
+		\item se un impiegato interrompe la partecipazione a tutti i progetti senza lasciare l'azienda, e quindi tutte le corrispondenti tuple vegnono eliminate, non è possibile conservare traccia del suo nome e del suo stipendio, che potrebbero rimanere di interesse; questo problema viene indicato come \textit{anomalia di cancellazione};
+		\item se si hanno informazioni su un nuovo impiegato, non è possibile inserirle finchè questi non viene assegnato a un progetto; in questo caso parliamo di \textit{anomalia di inserimento}.
+	\end{itemize}
+	La presenza di questi inconvenienti è dovuta all'utilizzo di un'unica relazione per rappresentare informazioni eterogenee. \\
+	Generalizzando, possiamo arrivare alla seguenti conclusioni, che evidenziano i difetti presentati da relazioni che riuniscono concetti fra loro disomogenei.
+	\begin{itemize}
+		\item È possibile che alcuni dati debbano essere ripetuti in diverse tuple, senza aggiungere informazioni significative.
+		\item Se alcune informazioni sono ripetute in modo ridondante, il relativo aggiornamento deve essere ripetuto per ciascuna occorrenza dei relativi dati.
+		\item La cancellazione di una tupla può comportare l'eliminazione di tutti i concetti in questione, cioè anche di quelli che conservano la loro validità.
+		\item L'inserimento di informazioni relative a uno solo dei concetti di pertinenza per una relazione non è possibile se non esiste un intero insieme di concetti in grado di costituire una tupla completa.
+	\end{itemize}
+	\section{Dipendenze funzionali}
+	Per analizzare i concetti introdotti nel paragrafo precedente, è necessario far uso di uno specifico strumento di lavoro: la \textit{dipendenza funzionale}. La dipendenza funzioanle è un particolare vincolo di integrità per il modello relazionale che descrive legami di tipo funzionale tra gli attributi di una relazione. \\
+	Consideriamo la relazione nella figura~\ref{fig:normalizzazione} e abbiamo detto che lo stipendio di ciascun impiegato è unico e quindi, ogni volta che in tupla compare un certo impiegato, il valore del suo stipendio rimane sempre lo stesso. Possiamo dire che il valore dell'attributo \texttt{Impiegato} determina il valore dell'attributo \texttt{Stipendio}, o più precisamente, una funzione che associa a ogni elemento del dominio dell'attributo \texttt{Impiegato} un solo elemento dell'attributo \texttt{Stipendio}. \\
+	Lo stesso discorso si può fare per gli attributi \texttt{Progetto} e \texttt{Bilancio}, perchè il valore del progetto determina il valore del bilancio del progetto stesso. \\
+	Formalizziamo questo concetto. Data una relazione $r$ su uno schema $R(X)$ e due sottoinsieme di attributi non vuoti $Y$ e $Z$ di $X$, diremo che esiste su $r$ una dipendenza funzionale tra $Y$ e $Z$, se per ogni coppia di tuple $t_1$ e $t_2$ di $r$ aventi gli stessi valori sugli attributi $Y$, risulta che $t_1$ e $t_2$ hanno gli stessi valori anche sugli attributi $Z$. \\
+	Una dipendenza funzionale tra gli attributi $Y$ e $Z$ viene indicata con $Y \to Z$ e, come gli altri vincoli di integrità, viene associata a uno schema: una relazione su quello schema verrà considerata corretta se soddisfa tale dipendenza funzionale. \\
+	Se l'insieme $Z$ è composto dagli attributi $A_1, A_2, \dots, A_k$, allora una relazione soddisfa $Y \to Z$ se e solo se essa soddisfa tutte le $k$ dipendenze $Y \to A_1, \dots, Y \to A_k$. \\
+	Una seconda osservazione è la seguente: in base alla definizione data, possiamo notare che, nella nostra relazione, è verificata anche la dipendenza funzionale:
+	\[
+	\texttt{Impiegato Progetto} \to \texttt{Progetto}
+	\]
+	in quanto due tuple con gli stessi valori sulla coppia di attributi \texttt{Impiegato} e \texttt{Progetto} hanno lo stesso valore sull'attributo \texttt{Progetto}. Questa è una dipendenza funzionale banale perchè asserisce una proprietàovvia di una relazione. Le dipendenze funzionali dovrebbero servire a descrivere proprietà significative dell'applicazione che stiamo rappresentando. Diremo che una dipendenza funzionale $Y \to A$ è \textit{non banale} se $A$ non compare tra gli attributi di $Y$. \\
+	Un'ultima osservazione sulle dipendenze funzionali riguarda il loro legame con il vincolo di chiave. Se prendiamo una chiave $K$ di una relazione $r$, si può facilmente verificare che esiste una dipendenza funzionale tra $K$ e ogni altro attributo dello schema di $r$. Con riferimento al nostro esempio, abbiamo detto che gli attributi \texttt{Impiegato} e \texttt{Progetto} formano una chiave. Possiamo affermare che vale la dipendenza funzioanale $\texttt{Impiegato Progetto} \to \texttt{Funzione}$.
+	Possiamo concludere dicendo che il vincolo di dipendenza funzionale \textit{generelizza} il vincolo di chiave. Più precisamente, possiamo dire che una dipendenza funzionale $Y \to Z$ su uno schema $R(X)$ degenera nel vincolo di chiave se l'unione di $Y$ e $Z$ è pari a $X$. 
+	\section{Forma normale di Boyce e Codd}
+	\subsection{Definizione di forma normale di Boyce e Codd}
+	In riferimento alla dipendenze funzionali, si possono introdurre delle proprietà dette \textit{forme normali} che sono soddisfatte quando non ci sono anomalie. \\
+	Nel nostro esempio, le due proprietà casusa di anomalie corrispondono esattamente ad attributi coinvolti in dipendenze funzionali. 
+	\begin{itemize}
+		\item La proprietà ``lo stipendio di ciascun impiegato è funzione del solo impiegato, indipendentemente dai progetti cui partecipa'' implica il soddisfacimento della dipendenza funzionale $\texttt{Impiegato} \to \texttt{Stipendio}$.
+		\item La proprietà ``il bilancio di ciascun progetto dipende solo dal progetto, indipendentemente dagli impiegati che vi partecipano'' corrisponde alla dipendenza funzionale $\texttt{Progetto} \to \texttt{Bilancio}$. 
+	\end{itemize}
+	Inoltre, l'attributo \texttt{Funzione} indica, per ciascun tupla, il ruolo svolto dall'impiegato nel progetto. Questo ruolo è unico per ciascuna coppia impiegato-progetto. Anche questa proprietà può essere modellata per mezzo di una dipendenza funzionale.
+	\begin{itemize}
+		\item La proprietà ``in ciascun progetto, ciascuno degli impiegati coinvolti puo svolgere una e una sola funzione'' implica il soddisfacimento della dipendenza funzionale $\texttt{Impiegato Progetto} \to \texttt{Funzione}$
+	\end{itemize}
+	Abbiamo visto che la prime due proprietà generano ridondanze e anomalie indesiderate. La terza dipendenza non genera ridondanze perchè, dato che $\texttt{Impiegato Progetto}$ è la chiave, la relazione non può contenere due tuple uguali su questi attributi. Per quanto riguarda le anomalie, da un punto di vista concettuale essa non ne può generare, in quanto ogni impiegato ha uno stipendio e ogni progetto ha un bilancio, e quindi per ogni coppia impiegato-progetto è possibile avere valori univoci per tutti gli altri attributi della relazione. \\
+	Possiamo quindi concludere che le ridondanze e le anomalie sono causate dalle dipendenze funzionali $X \to A$ che permettono la presenza di più tuple fra loro uguali sugli attributi in $X$, cioè $X$ non contiene una chiave. \\
+	Precisiamo queste idee per mezzo della più importante delle forme normali, detta di Boyce e Codd, dal nome dei suoi ideatori. Una relazione $r$ è in \textit{forma normale di Boyce e Codd} se per ogni dipendenza funzionale $X \to A$ definita su di essa, $X$ contiene una chiave $K$ di $r$, cioè $X$ è superchiave per $r$.
+	\subsection{Decomposizione in forma normale di Boyce e Codd}
+	Data una relazione che non soddisfa la forma normale di Boyce e Codd è possibile, in molti casi, sostituirla con due o più relazioni normalizzate attraverso un processo di \textit{normalizzazione}. Questo processo si basa su un semplice criterio: se una relazione rappresenta più concetti indipendenti, allora va decomposta in relazioni più piccole, una per ogni concetto. \\
+	Se alla relazione in figura~\ref{fig:normalizzazione} sostituiamo le seguenti tre relazioni:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{boyce_codd}
+	\end{figure}
+	ottenute per mezzo di proiezioni sugli insiemi di attributi rispettivamente corrispondenti ai tre concetti prima menzionati, eliminiamo anomalie e ridondanze: le tre relazioni sono infatti in forma normale Boyce e Codd. \\
+	Nell'esempio, la separazione delle dipendenze è stata facilitata dalla struttura delle dipendenze stesse, ``naturalmente'' separate e indipendenti l'una dall'altra. In molti casi pratici, la decomposizione può essere effettuata producendo tante relazioni quante sono le dipendenze funzionali definite. In generale, le dipendenze possono avere una struttura complessa: può non essere necessario basare la decomposizione su tutte le dipendenze e può essere difficile individuare quelle su cui si deve basare la decomposizione. 
+	\section{Proprietà delle decomposizioni}
+	Analizziamo come non tutte le decomposizioni siano desiderabili e individuando alcune proprietà essenziali che devono essere soddisfatte da una ``buona'' decomposizione. 
+	\subsection{Decomposizione senza perdita}
+	Per discutere la prima proprietà, consideriamo la seguente relazione:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{decomposizione_senza_perdita}
+		\label{fig:prop_decomposizioni}
+	\end{figure}
+	Essa soddisfa le dipendenze funzionali:
+	\[
+	\texttt{Impiegato} \to \texttt{Sede}
+	\]
+	\[
+	\texttt{Progetto} \to \texttt{Sede} 
+	\]
+	che specificano il fatto che ciascun impiegato opera presso un'unica sede e che ciascun progetto è sviluppato presso un'unica sede. Ciascun impiegato può partecipare a più progetti anche se, sulla base delle dipendenze funzioanli, devono essere tutti progetti assegnati alla sede cui afferisce. \\
+	Operando come nei casi precedenti, ovvero separando sulla base delle dipendenze, saremmo portati a decomporre la relazione in due parti:
+	\begin{itemize}
+		\item una relazione sugli attributi \texttt{Impiegato} e \texttt{Sede}, in corrispondenza alla dipendenza $\texttt{Impiegato} \to \texttt{Sede}$;
+		\item l'altra sugli attributi \texttt{Progetto} e \texttt{Sede}, in corrispondenza alla dipendenza funzionale $\texttt{Progetto} \to \texttt{Sede}$
+	\end{itemize}
+	Otterremmo quindi:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figura9_4}
+	\end{figure}
+	Esaminiamo le due relazioni. In particolare, consideriamo come sia possibile ricostruire informazioni sulla partecipazione degli impiegati ai progetti. L'unica possibilità che abbiamo è di utilizzare l'attributo \texttt{Sede} , che è l'unico attributo comune alle due relazioni: possiamo cioè correlare un impiegato a un progetto se il progetto viene svolto nella sede presso cui l'impiegato opera. Purtroppo, in questo caso non riusciamo a ricostruire tutte e sole le informazioni nella relazione originaria: per esempio l'impiegato Verdi lavora a Milano e il progetto Saturno viene svolto presso la sede di Milano, ma Verdi non lavora a tale progetto.  \\
+	La ricostruzione della relazione originaria a partire dalle sue proiezioni viene effettuata per mezzo di un'operazione di join naturale delle due proiezioni ma il join contiene tutte le tuple della relazione originaria più altre tuple. \\
+	La situazione nell'esempio corrisponde al caso generale: data una relazione $r$ su un insieme di attributi $X$, se $X_1$ e $X_2$ sono due sottoinsiemi di $X$ la cui unione sia pari a $X$ stesso, allora il join delle deu relazioni ottenuteper proiezione da $r$ su $X_1$ e $X_2$, è una relazione che contiene tutte le tuple di $r$, più eventualmente altre che possiamo chiamare ``spurie''. Diciamo che $r$ si \textit{decompone senza perdita} su $X_1$ e $X_2$ se il join delle due proiezioni è uguale a $r$ stessa. \\
+	È possibile individuare una condizione che garantisce la decomposizione senza perdita di una relazione. Sia $r$ una relazione su $X$ e siano $X_1$ e $X_2$ sottoinsiemi di $X$ tali che $X_1 \cup X_2 = X$; inoltre sia $X_0 = X_1 \cap X_2$; allora: $r$ si decompone senza perdita su $X_1$ e $X_2$ se soddisfa la dipendenza funzionale $X_0 \to X_1$ oppure $X_0 \to X_2$.  \\
+	Possiamo dire che $r$ si decompone su due relazioni se l'insieme degli attributi comuni alle due relazioni è chiave per almeno una delle relazioni decomposte. Nell'esempio, possiamo vedere che l'intersezione degli insiemi di attributi su cui abbiamo effettuato le due proiezioni è costituita dall'attributo \texttt{Sede}, che non è il primo membro di alcuna dipendenza funzionale. \\
+	\subsection{Conservazione delle dipendenze}
+	Per introdurre la seconda proprietà esaminiamo la relazione nella figura~\ref{fig:prop_decomposizioni}. Volendo ancora rimuovere le anomalie, potremmo pensare di sfruttare solo la dipendenza $\texttt{Impiegato} \to \texttt{Sede}$ per ottenere una decomposizione senza perdita. Otteniamo in questa maniera due relazioni: una sugli attributi \texttt{Impiegato} e \texttt{Sede} e l'altra sugli attributi \texttt{Impiegato} e \texttt{Progetto}. 
+	Otteniamo, quindi:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figura9_6}
+	\end{figure}
+	Il join delle due relazioni produce la relazione di partenza, per cui possiamo dire che la relazione nella figura~\ref{fig:prop_decomposizioni} si decompone senza perditua su $\texttt{Impiegato}$, \texttt{Sede} e \texttt{Impiegato}, \texttt{Progetto}. In effetti, \texttt{Impiegato} è chiave per la prima relazione, per cui la decomposizione senza perdita è garantita. La decomposizione, però, presenta un altro inconveniente. Supponiamo di voler inserire una nuova tupla che specifica la partecipazione dell'impiegato Neri, che opera a Milano, al progetto Marte. Sulla relazione originaria, un tale aggiornamento verrebbe individuato come illecito, perchè porterebbe a una violazione della dipendenza $\texttt{Progetto} \to \texttt{Sede}$. Sulle relazioni decomposte invece, non è possibile rilevare alcuna violazione di dipendenze: sulla relazione avente per attributi \texttt{Impiegato} e \texttt{Progetto} non è possibile definire alcuna dipendenza funzionale e quindi non ci possono essere violazioni da rilevare, mentre nella relazione su \texttt{Impiegato} e \texttt{Sede} la tupla con valori Neri e Milano soddisfa la dipendenza funzionale $\texttt{Impiegato} \to \texttt{Sede}$. Non è possibile, quindi, effettuare alcuna verifica sulla dipendenza $\texttt{Progetto} \to \texttt{Sede}$ perchè i due attributi $\texttt{Progetto}$ e \texttt{Sede} sono stati separati. \\
+	Possiamo quindi concludere che, in ogni decomposizione, ciascuna delle dipendenze funzionali dello schema originario dovrebbe coinvolgere attributi che compaiono tutti insieme in uno degli schemi composti. In questo modo è possibile garantire, sullo schema decomposto, il soddisfacimento degli stessi vincoli il cui soddisfacimento è garantito dallo schema originario. Diremo che una decomposizione che soddisfa tale proprietà \textit{conserva le dipendenze} dello schema originario. 
+	\subsection{Qualità delle decomposizioni}
+	Le decomposizioni dovrebbero sempre soddisfare le proprietà di \textit{decomposizione senza perdita} e \textit{conservazione delle dipendenze}.
+	\begin{itemize}
+		\item La decomposizione senza perdita garantisce che le informazioni nella relazione originaria siano ricostruibili con precisione, senza informazioni spurie, a partire da quelle rappresentate nelle relazioni decomposte. 
+		\item La conservazione delle dipendenze garantisce che le relazioni decomposte hanno la stessa capacità della relazione originaria di rappresentare i vincoli di integrità e quindi rilevare aggiornamenti illeciti: a ogni aggiormento lecito sulla relazione originaria corrisponde un aggiornamento lecito sulle relazioni decomposte. Sulle relazioni decomposte, sono possimi ulteriori aggiornamenti, legati ai singoli concetti rappresentati in ciascuna di esse, che non hanno un corrispettivo sulla relazione originaria, senza però corrispondere a violazione dei vincoli.
+	\end{itemize}
+	Quindi, consderiamo accettabili solo le decomposizioni che soddisfano queste due proprietà.
+	\section{Terza forma normale}
 \end{document}
