@@ -2661,6 +2661,21 @@ create table Docenza (
 	\end{itemize}
 	Le dipendenze parziali e quelle transitive violano la terza forma normale così come noi l'abbiamo definita perchè coinvolgono una dipendenza funzionale il cui primo membro non è superchiave e il cui secondo membro non fa parte della chaive. \\
 	Inoltre, esistono altre forme normali che fanno riferimento a vincoli di integrità diversi dalle dipendenze funzionali. Tutte queste forme normali vengono poco usate nelle applicazizioni odierne in quanto è stato rilevato che la terza forma normale e la forma nornmale di Boyce e Codd forniscono il giusto compromesso tra semplicità e qualità dei risultato. 
+	\paragraph{Quarta forma normale} Prima di introdurre la definizione di quarta forma normale, introduciamo il concetto di dipendenza multivalente. Una dipendenza multivalente, MVD, si ha quando un attributo determina in modo indipendente più attributi, ad esempio: \texttt{Prodotto} $\to\to$ \texttt{Taglia} e \texttt{Prodotto} $\to\to$ \texttt{Colore}. \\
+	Dati $U$ e $V$ sottinsiemi di $r$, se $W$ è l'insieme di attributi di $r$ non compresi in $U$ e in $V$, la MVD $U \to\to V$ esiste in $r$ se e solo se: 
+	\[
+	r = r(UV) \text{ JOIN } R(W)
+	\]
+	La MVD è una generalizzazione della dipendenza funzionale in quanto tutte le dipendenze funzionali sono dipendenze multivalente e non tutte le dipendenze multivalente sono dipendenze funzionali. \\
+	Se la dipendenza multivalente è una dipendenza funzionale non causa ridondanze.  \\
+	Una relazione $r$ è in quarta forma normale se e solo se, se compare una dipendenza multivalente $A \to\to B$, tutti gli attributi di $r$ dipendono anche funzionalmente da $A$.
+	\paragraph{Quinta forma normale} Prima di introdurre la quinta forma normale, introduciamo il concetto di dipendenza da join, JD. La dipendenza da join non è ne una dipendenza funzionale nè una dipendenza multivalente. Una relazione $r(X, Y, Z)$ soddisfa la JD se e solo se:
+	\[
+	R = \pi(X) \text{ JOIN } \pi(Y) \text{ JOIN } \pi(Z)
+	\]
+	La dipendenza da join è la dipendenza più generale in quanto la dipendenza funzionale è un caso particolare di una dipendenza multivalente e la dipendenza multivalente è un caso particolare di dipendenza da join. \\
+	Una relazione $r$ è in quinta forma normale se e solo se ogni dipendenza di join presente in essa è conseguenza delle sue chiavi candidate. \\
+	Se la dipendenza di join è conseguenza delle chiavi candidate, la relazione è già in quinta forma normale, ad esempio data la relazione \texttt{Dipendenti(\underline{matricola}, CF, nome)} matricola e CF sono chiavi candidate e si può proiettare (matricola, CF), (CF, nome) e (matricola, nome) e ricostruire con join su matricola e CF. La relazione \texttt{Dipendenti} contiene una dipendenza da join, ma non contiene anomalie quindi è gia in quinta forma normale.
 	\subsection{Normalizzazione e scelta degli attributi}
 	Consideriamo la seguente relazione:
 	\begin{center}
@@ -2730,5 +2745,62 @@ create table Docenza (
 	\section{Progettazione di basi di dati e normalizzazione}
 	La teoria della normalizzazione può essere utilizzata come base per operazioni di verifica di qualità di schemi, sia nella fase di progettazione concettuale sia in quella di progettazione logica. \\
 	Le attività di progettazione sono sepre soggette a errori e incompletezze, e quindi una revisione delle relazioni ottenuti in sede di progettazzione logica pùo portare all'individuazione di imprecisioni nella formulazione dello schema concettuale: la verifica spesso risulta semplice, perchè l'individuazione delle dipendenze funzionali e delle chiavi deve essere svolta nell'ambito di una singola relazione, che corrisponde a un'entità o un'associazione già analizzata nella progettazione concettuale. In questi contesti, la struttura delle dipendenze risulta relativamente semplice ed è quindi possibile individuare direttamente la decomposizione necessaria per ottenere la terza forma normale.
-	\subsection{Verficihe di normalizzazione su entità}
+	\subsection{Verifiche di normalizzazione su entità}
+	Le idee di base della normalizzazione possono essere utilizzate anche durante la fase di progettazione concettuale. È possibile considerare ciascuna entità e ciascuna associazione come una relazione. In particolare, la relazione che corrisponde a un'entità ha attributi che corrispondono esattamente agli attributi dell'entità. Per le entità con identificatore esterno sono necessari ulteriori attributi in corrispondenza alle entità che partecipano all'identificazione. \\
+	La verifica di normalizzazione può procedere come stato visto finora. È sufficiente considerare le dipendenze funzionali che sussistono fra gli attributi dell'entità e verficare che ciascuna di esse abbia come primo membro l'identificatore. Per esempio, consideriamo la seguente entità:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{normalizzazione_entita}
+	\end{figure}
+	Nell'individuare le dipendenze relative a tale entità, possiamo notare che possono esistere fornitori diversi con lo stesso nome o stesso indirizzo, mentre tutte le proprietà di ogni fornitore sono identificate dalla partita IVA: quindi esiste la dipendenza funzionale $\texttt{PartitaIVA} \to \texttt{NomeFornitore, Indirizzo}$. Inoltre, tutti gli attributi dipendono dall'attributo \texttt{Codice}. Poichè l'unico identificatore dell'entità è l'attributo \texttt{Codice}, possiamo concludere che l'entità viola la terza forma normale, in quanto la dipendenza $\texttt{PartitaIva} \to \texttt{NomeFornitore, Indirizzo}$ ha un primo membro che non contiene l'identificatore e un secondo membro composto da attributi che nno fanno parte della chiave. In questi casi, la verifica di normalizzazione ci permette di segnalare il fatto che lo schema concettuale non è accurato e ci suggerisce di decomporre l'unità stessa. \\
+	La decomposizione può avvenire con diretto riferimento alle dipendenze oppure, più semplicemente, ragionando sui concentti rappresentati dall'entità insieme a quelli che derivano dalle dipendenze funzionali. \\
+	In questo caso, il concetto di fornitore è indipendente da quello di prodotto e ha proprietà associate, quindi è opportuno modellare il concetto di fornitore per mezzo di un'entità, con identificatore costituito dall'attributo $\texttt{PartitaIVA}$ e ulteriori attributi \texttt{NomeFornitore} e \texttt{Indirizzo}. \\
+	Se separiamo i concetti di \texttt{Prodotto} e \texttt{Fornitore} in due entità  è opportuno che queste siano correlate, ossia che sussista un'associazione tra esse. \\
+	La decomposizione ottenuta soddisfa la due proprietà fondamentali: è una decomposizione senza perdita, perchè sulla base dei fornitori è possibile ricostruire i valori degli attributi dell'entità originaria, e conserva le dipendenze, perchè ciascuna delle dipendenze è contenuta in una delle entità o è ricostruibile da esse. La decomposizione ottenuta è la seguente:
+	\subsection{Verifiche di normalizzazione su associazioni}
+	Per quanto riguarda le associazioni, il ragionamento è per certi aspetti più semplice, perchè l'insieme delle occorrenze di ciascuna associazione è una relazione e quindi è possibile applicare direttamente i concetti connessi con le forme normali, ma per altri più complesso, perchè i domini su cui tale relazione è definita sono gli insiemi delle occorrenze delle entità coinvolte. Per verificare il soddisfacimento della terza forma normale, è necessario individuare le dipendenze funzionali che sussistono fra le entità coinvolte. Dato che ogni relazione binaria è in terza forma normale e anche in forma di Boyce e Codd, la verifica di normalizzazione va effettuata solo sulle associazioni non binarie, cioè su quelle che coinvolgono almeno tre entità. \\
+	Consideriamo la seguente associazione:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{normalizzazione_associazione}
+	\end{figure}
+	Lo scopo di quest'associazione è descrivere il fatto che gli studenti, iscritti ai corsi di laurea, svolgono testi presso i dipartimenti sotto la guida dei professori. Esaminando l'associazione, possiamo arrivare alle seguenti conclusioni:
+	\begin{itemize}
+		\item ogni studente è iscritto a un solo corso di laurea;
+		\item ogni studente svolge una tesi sotto la suervisione di un solo professore;
+		\item ogni professore afferisce a un solo dipartimento e gli studenti sotto la sua supervisione svolgono la tesi presso tale dipartimento.
+	\end{itemize}
+	Le proprietà dell'applicazione di interesse sono descritte in modo esauriente da tre dipendenze funzionali:
+	\begin{align*}
+		&\texttt{Studente} \to \texttt{CorsoDiLaurea} \\
+		&\texttt{Studente} \to \texttt{Professore} \\
+		&\texttt{Professore} \to \texttt{Dipartimento}
+	\end{align*}
+	La chiave della relazione risulta essere costituita da \texttt{Studente}: dato uno studente sono univocamente individuati il corso di laurea, il professore e il dipartimento. \\
+	Di conseguenza, la terza dipendenza funzionale, \texttt{Professore} $\to$ \texttt{Dipartimento}, causa una violazione della terza forma normale. In effetti, l'afferenza di un professore a un dipartimento è un concetto indipendente dall'esistenza di studneti che svolgono la tesi con il professore stesso. Quindi, l'assocazione presenta aspetti indesiderabili e che va quindi decomposta, separando le dipendenze funzionali con primi membri diversi. La decomposizione che si ottiene è la seguente:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{decomposizione_associazione}
+		\label{fig:decomposizione_associazione}
+	\end{figure}
+	\subsection{Ulteriori decomposizioni di associazioni}
+	Considerando l'associazione nella figura~\ref{fig:decomposizione_associazione} possiamo fare alcune considerazioni aggiuntive. L'associazione \texttt{Tesi} è in terza forma normale, perchè la sua chiave è costituita dall'entità \texttt{Studente} e le uniche dipendenze sono quelle che hanno la chiave \texttt{Studente} come primo membro, e cioè \texttt{Studente} $\to$ \texttt{Professore} e \texttt{Studente} $\to$ \texttt{CorsoDiLaurea}. Le proprietà descritte dalle due dipendenze sono fra loro indipendenti: non tutti gli studenti stanno svolgendo una testi e quindi non tutti hanno un relatore. Dal punto di vista della normalizzazione, questa situazione non presenta problemi, perchè si assume che le relazioni possano contenere valori nulli, purchè non nella chiave. D'altra parte, a livello di modellazione concettuale è necessario distinguere i vari concetti. Attraverso le dipendenze possiamo notare che sarebbe opportuno decomporre ulteriorormente l'associazione, ottenendo il seguente schema:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figura9_17}
+	\end{figure}
+	La decomposizione è accettabile perchè conserva le dipendenze ed è senza perdita. \\
+	È opportuno, quindi, decomporre le associazioni non binarie sulle quali sia definita qualche dipendenza il cui secondo membro contiene più di un'entità, ovvero è opportuno decomporre un'associazione ternaria se su di essa è definita una dipendenza funzionale il cui primo membro è costituito da un'entità e il secondo membro dalle altre due. 
+	\subsection{Ulteriori decomposizioni di schemi concettuali}
+	Anche il caso in cui non esiste, per una relazione, una buona decomposizione in forma normale di Boyce e Codd, può essere esaminato nell'ambito della progettazione concettuale. Supponiamo di avere il seguente schema:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figura9_18}
+	\end{figure}
+	In questo schema valgono le seguenti dipendenze fra entità: \texttt{Dirigente} $\to$ \texttt{Sede} e \texttt{Progetto Sede} $\to$ \texttt{Dirigente}. L'associazione non è in forma normale di Boyce e Codd e non può essere utilmente decomposta. Possiamo, però, individuare la possibilità di introdurre il concetto di reparto, per mezzo di una nuova entità, come mostrato nel seguente schema:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figura9_19}
+	\end{figure}
+	Quest'entità partiziona le singole sedi, come indicato dal suo identificatore esterno. Inoltre, i vincoli di cardinalità ci dicono che ogni reparto di una sede ha associato un direttore e diversi progetti.
 \end{document}
