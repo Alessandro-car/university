@@ -2564,4 +2564,171 @@ create table Docenza (
 	\end{itemize}
 	Quindi, consderiamo accettabili solo le decomposizioni che soddisfano queste due proprietà.
 	\section{Terza forma normale}
+	\subsection{Limitazioni della forma normale di Boyce e Codd}
+	Consideriamo la seguente relazione:
+	\begin{center}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Dirigente & Progetto & Sede \\
+		\hline
+		Rossi & Marte & Roma \\
+		Verdi & Giove & Milano \\
+		Verdi & Marte & Milano \\
+		Neri & Saturno & Milano \\
+		Neri & Venere & Milano \\
+		\hline
+	\end{tabular}
+	\end{center}
+	Su di essa, possiamo supporre che siano definite le seguenti dipendenze:
+	\begin{itemize}
+		\item $\texttt{Dirigente} \to \texttt{Sede}$: ogni dirigente opera presso una sede;
+		\item $\texttt{Progetto Sede} \to \texttt{Dirigente}$: ogni progetto ha più dirigenti che ne sono responsabili, ma in sedi diverse, e ogni dirigente può essere responsabile di più progetti; però, per ogni sede, un progetto ha un solo responsabile.
+	\end{itemize}
+	La relazione non è in forma normale di Boyce e Codd perchè il primo membro della dipendenza $\texttt{Dirigente} \to \texttt{Sede}$ non è superchiave. Inoltre, non è possibile effettuare alcuna buona decomposizione di questa relazione: infatti la dipendenza $\texttt{Progetto Sede} \to \texttt{Dirigente}$ coinvolge tutti gli attributi e quindi nessuna decomposizione è in grado di conservarla. Quindi, questo esempio mostra l'esistenza di schemi che violano la forma normale di Boyce e Codd per i quali non esiste alcuna decomposizione che conserva le dipendenze. Quindi, ``la forma normale di Boyce e Codd non è raggiungibile''.
+	\subsection{Definizione di terza forma normale}
+	Per trattare casi come quello dell'esempio precedente si ricorre a una forma normale meno restrittiva di quella di Boyce e Codd che non ammette ulteriori fonti di ridondanza e anomalia. \\
+	Diciamo che una relazione $r$ è in \textit{terza forma normale} se, per ogni dipendenza funzionale $X \to A$ definita su di essa, almeno una delle seguenti condizioni è verificata:
+	\begin{itemize}
+		\item $X$ contiene una chiave $K$ di $r$;
+		\item $A$ appartiene ad almeno una chiave di $r$.
+	\end{itemize}
+	Possiamo notare che lo schema precedente soddisfa la terza forma normale. Infatti, la dipendenza $\texttt{Progetto Sede} \to \texttt{Dirigente}$ ha come primo membro una chiave della relazione, mentre $\texttt{Dirigente} \to \texttt{Sede}$, pur non contenendo una chiave al primo membro, ha un unico attributo al secondo membro che fa parte della chiave $\texttt{Progetto Sede}$. \\
+	La relazone presenta una forma di ridondanza in quanto ogni volta che un dirigente compare in una tupla, viene ripetuta per esso la sede in cui opera. Questa ridondanza, però, viene ``tollerata'' dalla terza forma normale perchè non sarebbe possibile una decomposizione che elimini tale ridondanza e al tempo stesso conservi tutte le dipendenze. \\
+	La terza forma normale è meno forte della forma normale di Boyce e Codd e quindi non offre le stesse qualità per una relazione; però rispetto alla forma normale di Boyce e Codd è sempre ottenibile. 
+	\subsection{Decomposizione in terza forma normale}
+	Per ottenere una decomposizione in terza forma normale si può procedere come suggerito nel caso della forma normale di Boyce e Codd: una relazione che non soddisfa la terza forma normale si decompone in relazioni ottenute per proiezione sugli attributi corrispondenti alla dipendenze funzionali, con l'unica accortezza di mantenere sempre una relazione che contiene una chiave della relazione originaria. \\
+	Consideriamo la seguente figura:
+	\begin{center}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Impiegato & Progetto & Stipendio \\
+		\hline
+		Rossi & Marte & 30000 \\
+		Verdi & Giove & 30000 \\
+		Verdi & Giove & 30000 \\
+		Neri & Saturno & 40000 \\
+		Neri & Venere & 40000 \\
+		\hline
+	\end{tabular}
+	\end{center}
+	Per essa vale la sola dipendenza funzionale $\texttt{Impiegato} \to \texttt{Stipendio}$. Una decomposizione in una relazione sugli attributi \texttt{Impiegato} e \texttt{Stipendio} e in un'altra sul solo attributo \texttt{Progetto} violerebbe la proprietà di decomposizione senza perdita, proprio perchè nessuna delle due relazioni contiene una chiave. Per garantire tale proprietà dobbiamo definire la seconda relazione sugli attributi \texttt{Impiegato} e \texttt{Progetto}, che formano una chiave della relazione originaria. La decomposizione è la seguente: 
+	\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		Impiegato & Progetto \\
+		\hline
+		Rossi & Marte \\
+		Verdi & Giove \\
+		Verdi & Venere \\
+		Neri & Saturno \\
+		Neri & Venere \\
+		\hline
+	\end{tabular}
+	\hspace{1cm}
+	\begin{tabular}{|c|c|}
+		\hline
+		Impiegato & Stipendio \\
+		\hline
+		Rossi & 30000 \\
+		Verdi & 30000 \\
+		Neri & 40000 \\
+		\hline
+	\end{tabular}
+	\end{center}
+	Sulla prima relazione non sono definite dipendenze e la sua chiave è costituita da entrambi gli attributi. \\
+	Una decomposizione tesa in terza forma normale produce nalla maggior parte dei casi schemi in forma normale di Boyce e Codd. In particolare, se una relazione ha solo una chiave, allora le due forme normali coincidono, cioè una relazione in terza forma normale è anche in forma normale di Boyce e Codd.
+	\subsection{Altre forme normali}
+	Esistono altre forme normali a quelle di Boyce e Codd e alla terza forma normale. La prima forma normale stabilisce semplicemente una condizione che sta alla base del modello relazionale stesso: gli attributi delle relazioni sono definite su valori atomici e non su valori complessi come insiemi o relazioni. \\
+	La seconda forma normale è una variante debole della terza e la introduciamo con un sempio. Consideriamo la seguente relazione:
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Impiegato & Categoria & Stipendio \\
+			\hline
+			Neri & 3 & 30000 \\
+			Verdi & 3 & 30000 \\
+			Rossi & 4 & 50000 \\
+			Mori & 4 & 50000 \\
+			Bianchi & 5 & 72000 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	Essa soddisfa le dipendenze $\texttt{Impiegato} \to \texttt{Categoria}$ e $\texttt{Categoria} \to \texttt{Stipendio}$ e quindi viola la terza forma normale, perchè $\texttt{Categoria}$ non è chiave. La seconda forma normale tollera la dipendenza tra \texttt{Categoria} e \texttt{Stipendio}, perchè \texttt{Stipendio} dipende comunque dall'intera chiave \texttt{Impiegato}. \\
+	Riportiamo le definizioni originarie di seconda e terza forma normale.
+	\begin{itemize}
+		\item Una relazione è in seconda forma normale se su d essa non sono definite \textit{dipendenze parziali}, cioè dipendenze fra un sottoinsieme proprio della chaive e altri attributi. 
+		\item Una relazione è in terza forma normale se su di essa non sono definite \textit{dipendenze transitive}, cioè dipendenze della forma $K \to A$, dove $K$ è la chiave ed esiste un altro sottoinsieme di attributi $X$, non chiave, con le dipendenze $K \to X$ e $X \to A$.
+	\end{itemize}
+	Le dipendenze parziali e quelle transitive violano la terza forma normale così come noi l'abbiamo definita perchè coinvolgono una dipendenza funzionale il cui primo membro non è superchiave e il cui secondo membro non fa parte della chaive. \\
+	Inoltre, esistono altre forme normali che fanno riferimento a vincoli di integrità diversi dalle dipendenze funzionali. Tutte queste forme normali vengono poco usate nelle applicazizioni odierne in quanto è stato rilevato che la terza forma normale e la forma nornmale di Boyce e Codd forniscono il giusto compromesso tra semplicità e qualità dei risultato. 
+	\subsection{Normalizzazione e scelta degli attributi}
+	Consideriamo la seguente relazione:
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Dirigente & Progetto & Sede \\
+			\hline
+			Rossi & Marte & Roma \\
+			Verdi & Giove & Milano \\
+			Verdi & Marte & Milano \\
+			Neri & Saturno & Milano \\
+			Neri & Venere & Milano \\
+			\hline
+		\end{tabular}
+	\end{center}
+	Esaminando meglio le specifiche, avremmo potuto descrivere l'applicazione di interesse in maniera più appropriata introducendo un ulteriore attributo \texttt{Reparto}, che partiziona le singole sedi, ottenendo la seguente relazione:
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Dirigente & Progetto & Sede & Reparto \\
+			\hline
+			Rossi & Marte & Roma & 1\\
+			Verdi & Giove & Milano & 1\\
+			Verdi & Marte & Milano & 1\\
+			Neri & Saturno & Milano & 2\\
+			Neri & Venere & Milano & 2\\
+			\hline
+		\end{tabular}
+	\end{center}
+	Le dipendenze, in questo caso, possono essere così definite:
+	\begin{itemize}
+		\item $\texttt{Dirigente} \to \texttt{Sede Reparto}$: ogni dirigente opera presso una sede e dirige un reparto;
+		\item $\texttt{Sede Reparto} \to \texttt{Dirigente}$: per ogni sede e reparto c'è un solo dirigente;
+		\item $\texttt{Progetto Sede} \to \texttt{Reparto}$: per ogni sede, un progetto è assegnato a un solo reparto; la dipendenza funzionale \texttt{Progetto Sede} $\to$ \texttt{Dirigente} è quindi ricostruibile. 
+	\end{itemize}
+	Per questo schema esiste una buona decomposizione. Infatti:
+	\begin{itemize}
+		\item la decomposizione è senza perdita, perchè gli attributi \texttt{Sede} e \texttt{Reparto} forma una chiave per la prima relazione;
+		\item le dipendenze sono conservate, perchè per ciascuna dipendenza esiste una relazione decomposta che ne contiene tutti gli attributi;
+		\item entrambe le relazioni sono in forma normale di Boyce e Codd, perchè tutte le dipendenza hanno il primo membro costituito da una chiave.
+	\end{itemize}
+	La decomposizione è la seguente:
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Dirigente & Sede & Reparto \\
+			\hline
+			Rossi & Roma & 1 \\
+			Verdi & Milano & 1 \\
+			Neri & Milano & 2 \\
+			\hline
+		\end{tabular}
+		\hspace{1cm}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Progetto & Sede & Reparto \\
+			\hline
+			Marte & Roma & 1 \\
+			Giove & Milano & 1 \\
+			Marte & Milano & 1 \\
+			Saturno & Milano & 2 \\
+			Venere & Milano & 2 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	Quindi, possiamo concludere che la non raggiungibilità della forma normale di Boyce e Codd può essere dovuta a un'analisi non sufficientemente accurata dell'applicazione. 
+	\section{Progettazione di basi di dati e normalizzazione}
+	La teoria della normalizzazione può essere utilizzata come base per operazioni di verifica di qualità di schemi, sia nella fase di progettazione concettuale sia in quella di progettazione logica. \\
+	Le attività di progettazione sono sepre soggette a errori e incompletezze, e quindi una revisione delle relazioni ottenuti in sede di progettazzione logica pùo portare all'individuazione di imprecisioni nella formulazione dello schema concettuale: la verifica spesso risulta semplice, perchè l'individuazione delle dipendenze funzionali e delle chiavi deve essere svolta nell'ambito di una singola relazione, che corrisponde a un'entità o un'associazione già analizzata nella progettazione concettuale. In questi contesti, la struttura delle dipendenze risulta relativamente semplice ed è quindi possibile individuare direttamente la decomposizione necessaria per ottenere la terza forma normale.
+	\subsection{Verficihe di normalizzazione su entità}
 \end{document}
