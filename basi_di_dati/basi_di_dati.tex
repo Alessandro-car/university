@@ -5,11 +5,11 @@
 \usepackage{libertinust1math}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
-\usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb} 
 \usepackage{mathtools}
 \usepackage{tabularx}
-\usepackage{amssymb}
 \usepackage{enumitem}
 \usepackage{amsfonts}
 \usepackage{centernot}
@@ -30,6 +30,7 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{calligra}
 \usepackage[toc,page]{appendix}
 \usepackage{tikz}
@@ -2256,7 +2257,7 @@ create table Docenza (
 		\begin{itemize}
 			\item La prima alternativa è conveniente quando le operazioni non fanno molta distinzione tra le occorrenze e tra gli attributi di $E_0, E_1$ ed $E_2$. In questo caso, anche se abbiamo uno spreco di memoria per la presenza di valori nulli, la scelta ci assicura in minore numero di accesso rispetto alle altre dove le occorrenze e gli attributi sono distribuiti tra le varie entità.
 			\item La seconda alternativa è possibile solo se la generalizzazione è totale, altrimenti le occorrenze di $E_0$ che non sono occorrenze né di $E_1$ né di $E_2$ non sarebbero rappresentate. È conveniente quando ci sono operazioni che si riferiscono solo a occorrenze di $E_1$ oppure di $E_2$ e dunque fanno delle distinzioni tra tali entità. In questo caso abbiamo un risparmio di memoria rispetto alla prima alternativa in quanto gli attributi non assumono mai valori nulli e c'è una riduzione degli accessi rispetto alla terza alternativa, perchè non si deve visitare $E_0$ per accedere ad alcuni attributi di $E_1$ o $E_2$.
-			\item La terza alternativa è conveniente quando la generalizzazione non è totale, ma non è un vincolo necessario, e ci sono operazioni che si riferiscono solo a occorrenze di $E_1 (E_2)$ oppure di $E_0$, e dunque fanno distinzioni tra entità figlia ed entità genitore. In questo caso c'è un risparmio di memoria rispetto alla prima alternativa per l'assenza di valori nulli, ma c'è un incremento degli accessi per mantenere la consistenza delle occorrenze rispetto ai vincoli introdotti.
+			\item La terza alternativa è conveniente quando la generalizzazione non è totale, ma non è un vincolo necessario, e ci sono operazioni che si riferiscono solo a occorrenze di $E_{1}\left(E_{2}\right)$ oppure di $E_0$, e dunque fanno distinzioni tra entità figlia ed entità genitore. In questo caso c'è un risparmio di memoria rispetto alla prima alternativa per l'assenza di valori nulli, ma c'è un incremento degli accessi per mantenere la consistenza delle occorrenze rispetto ai vincoli introdotti.
 		\end{itemize}
 		La ristrutturazione delle generalizzazioni è un tipico caso per il quale il conteggio delle istanze e degli accessi non è sempre sufficiente per scegliere la migliore alternativa possibile. Infatti da quanto detto, la terza alternativa sembra non convenga quasi mai perchè richiede un numero di accessi superiore ma quest'alternativa ha il grosso vantaggio di generare entità con pochi attributi e questo si traduce, a livello pratico, in strutture logiche di poccole dimensioni per le quali un accesso fisico permette di recuparare molti dati in una volta sola. Quindi, in alcuni casi va effettuata un'analisi più accurata che tiene conto di altri fattori come le dimensioni dei domini degli attributi e la quantità di dati che è possibile recuperare con una sola operazione di accesso a memoria secondaria. \\
 		Le alternative non sono le uniche ammesse, ma è possibile effettuare ristrutturazioni che sono combinazioni delle tre trasformazioni presentate.
