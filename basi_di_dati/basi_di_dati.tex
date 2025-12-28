@@ -2482,7 +2482,7 @@ create table Docenza (
 	Per analizzare i concetti introdotti nel paragrafo precedente, è necessario far uso di uno specifico strumento di lavoro: la \textit{dipendenza funzionale}. La dipendenza funzioanle è un particolare vincolo di integrità per il modello relazionale che descrive legami di tipo funzionale tra gli attributi di una relazione. \\
 	Consideriamo la relazione nella figura~\ref{fig:normalizzazione} e abbiamo detto che lo stipendio di ciascun impiegato è unico e quindi, ogni volta che in tupla compare un certo impiegato, il valore del suo stipendio rimane sempre lo stesso. Possiamo dire che il valore dell'attributo \texttt{Impiegato} determina il valore dell'attributo \texttt{Stipendio}, o più precisamente, una funzione che associa a ogni elemento del dominio dell'attributo \texttt{Impiegato} un solo elemento dell'attributo \texttt{Stipendio}. \\
 	Lo stesso discorso si può fare per gli attributi \texttt{Progetto} e \texttt{Bilancio}, perchè il valore del progetto determina il valore del bilancio del progetto stesso. \\
-	Formalizziamo questo concetto. Data una relazione $r$ su uno schema $R(X)$ e due sottoinsieme di attributi non vuoti $Y$ e $Z$ di $X$, diremo che esiste su $r$ una dipendenza funzionale tra $Y$ e $Z$, se per ogni coppia di tuple $t_1$ e $t_2$ di $r$ aventi gli stessi valori sugli attributi $Y$, risulta che $t_1$ e $t_2$ hanno gli stessi valori anche sugli attributi $Z$. \\
+	Formalizziamo questo concetto. Data una relazione $r$ su uno schema $R\left(X\right)$ e due sottoinsieme di attributi non vuoti $Y$ e $Z$ di $X$, diremo che esiste su $r$ una dipendenza funzionale tra $Y$ e $Z$, se per ogni coppia di tuple $t_1$ e $t_2$ di $r$ aventi gli stessi valori sugli attributi $Y$, risulta che $t_1$ e $t_2$ hanno gli stessi valori anche sugli attributi $Z$. \\
 	Una dipendenza funzionale tra gli attributi $Y$ e $Z$ viene indicata con $Y \to Z$ e, come gli altri vincoli di integrità, viene associata a uno schema: una relazione su quello schema verrà considerata corretta se soddisfa tale dipendenza funzionale. \\
 	Se l'insieme $Z$ è composto dagli attributi $A_1, A_2, \dots, A_k$, allora una relazione soddisfa $Y \to Z$ se e solo se essa soddisfa tutte le $k$ dipendenze $Y \to A_1, \dots, Y \to A_k$. \\
 	Una seconda osservazione è la seguente: in base alla definizione data, possiamo notare che, nella nostra relazione, è verificata anche la dipendenza funzionale:
@@ -2491,7 +2491,7 @@ create table Docenza (
 	\]
 	in quanto due tuple con gli stessi valori sulla coppia di attributi \texttt{Impiegato} e \texttt{Progetto} hanno lo stesso valore sull'attributo \texttt{Progetto}. Questa è una dipendenza funzionale banale perchè asserisce una proprietàovvia di una relazione. Le dipendenze funzionali dovrebbero servire a descrivere proprietà significative dell'applicazione che stiamo rappresentando. Diremo che una dipendenza funzionale $Y \to A$ è \textit{non banale} se $A$ non compare tra gli attributi di $Y$. \\
 	Un'ultima osservazione sulle dipendenze funzionali riguarda il loro legame con il vincolo di chiave. Se prendiamo una chiave $K$ di una relazione $r$, si può facilmente verificare che esiste una dipendenza funzionale tra $K$ e ogni altro attributo dello schema di $r$. Con riferimento al nostro esempio, abbiamo detto che gli attributi \texttt{Impiegato} e \texttt{Progetto} formano una chiave. Possiamo affermare che vale la dipendenza funzioanale $\texttt{Impiegato Progetto} \to \texttt{Funzione}$.
-	Possiamo concludere dicendo che il vincolo di dipendenza funzionale \textit{generelizza} il vincolo di chiave. Più precisamente, possiamo dire che una dipendenza funzionale $Y \to Z$ su uno schema $R(X)$ degenera nel vincolo di chiave se l'unione di $Y$ e $Z$ è pari a $X$. 
+	Possiamo concludere dicendo che il vincolo di dipendenza funzionale \textit{generelizza} il vincolo di chiave. Più precisamente, possiamo dire che una dipendenza funzionale $Y \to Z$ su uno schema $R\left(X\right)$ degenera nel vincolo di chiave se l'unione di $Y$ e $Z$ è pari a $X$. 
 	\section{Forma normale di Boyce e Codd}
 	\subsection{Definizione di forma normale di Boyce e Codd}
 	In riferimento alla dipendenze funzionali, si possono introdurre delle proprietà dette \textit{forme normali} che sono soddisfatte quando non ci sono anomalie. \\
@@ -2654,7 +2654,7 @@ create table Docenza (
 			\hline
 		\end{tabular}
 	\end{center}
-	Essa soddisfa le dipendenze $\texttt{Impiegato} \to \texttt{Categoria}$ e $\texttt{Categoria} \to \texttt{Stipendio}$ e quindi viola la terza forma normale, perchè $\texttt{Categoria}$ non è chiave. La seconda forma normale tollera la dipendenza tra \texttt{Categoria} e \texttt{Stipendio}, perchè \texttt{Stipendio} dipende comunque dall'intera chiave \texttt{Impiegato}. \\
+	Essa soddisfa le dipendenze $\ \texttt{Impiegato} \to \texttt{Categoria}\ $ e $\ \texttt{Categoria} \to \texttt{Stipendio} \ $ e quindi viola la terza forma normale, perchè $\texttt{Categoria}$ non è chiave. La seconda forma normale tollera la dipendenza tra \texttt{Categoria} e \texttt{Stipendio}, perchè \texttt{Stipendio} dipende comunque dall'intera chiave \texttt{Impiegato}. \\
 	Riportiamo le definizioni originarie di seconda e terza forma normale.
 	\begin{itemize}
 		\item Una relazione è in seconda forma normale se su d essa non sono definite \textit{dipendenze parziali}, cioè dipendenze fra un sottoinsieme proprio della chaive e altri attributi. 
@@ -2662,21 +2662,21 @@ create table Docenza (
 	\end{itemize}
 	Le dipendenze parziali e quelle transitive violano la terza forma normale così come noi l'abbiamo definita perchè coinvolgono una dipendenza funzionale il cui primo membro non è superchiave e il cui secondo membro non fa parte della chaive. \\
 	Inoltre, esistono altre forme normali che fanno riferimento a vincoli di integrità diversi dalle dipendenze funzionali. Tutte queste forme normali vengono poco usate nelle applicazizioni odierne in quanto è stato rilevato che la terza forma normale e la forma nornmale di Boyce e Codd forniscono il giusto compromesso tra semplicità e qualità dei risultato. 
-	\paragraph{Quarta forma normale} Prima di introdurre la definizione di quarta forma normale, introduciamo il concetto di dipendenza multivalente. Una dipendenza multivalente, MVD, si ha quando un attributo determina in modo indipendente più attributi, ad esempio: \texttt{Prodotto} $\to\to$ \texttt{Taglia} e \texttt{Prodotto} $\to\to$ \texttt{Colore}. \\
+	\paragraph{Quarta forma normale} Prima di introdurre la definizione di quarta forma normale, introduciamo il concetto di dipendenza multivalente. Una dipendenza multivalente, MVD, si ha quando un attributo determina in modo indipendente più attributi, ad esempio: \texttt{ Prodotto} $\to\to$ \texttt{ Taglia} e \texttt{ Prodotto} $\to\to$ \texttt{ Colore}. \\
 	Dati $U$ e $V$ sottinsiemi di $r$, se $W$ è l'insieme di attributi di $r$ non compresi in $U$ e in $V$, la MVD $U \to\to V$ esiste in $r$ se e solo se: 
 	\[
-	r = r(UV) \text{ JOIN } R(W)
+	r = r\left(UV\right) \text{ JOIN } r\left(W\right)
 	\]
 	La MVD è una generalizzazione della dipendenza funzionale in quanto tutte le dipendenze funzionali sono dipendenze multivalente e non tutte le dipendenze multivalente sono dipendenze funzionali. \\
 	Se la dipendenza multivalente è una dipendenza funzionale non causa ridondanze.  \\
 	Una relazione $r$ è in quarta forma normale se e solo se, se compare una dipendenza multivalente $A \to\to B$, tutti gli attributi di $r$ dipendono anche funzionalmente da $A$.
 	\paragraph{Quinta forma normale} Prima di introdurre la quinta forma normale, introduciamo il concetto di dipendenza da join, JD. La dipendenza da join non è ne una dipendenza funzionale nè una dipendenza multivalente. Una relazione $r(X, Y, Z)$ soddisfa la JD se e solo se:
 	\[
-	R = \pi(X) \text{ JOIN } \pi(Y) \text{ JOIN } \pi(Z)
+	R = \pi\left(X\right) \text{ JOIN } \pi\left(Y\right) \text{ JOIN } \pi\left(Z\right)
 	\]
 	La dipendenza da join è la dipendenza più generale in quanto la dipendenza funzionale è un caso particolare di una dipendenza multivalente e la dipendenza multivalente è un caso particolare di dipendenza da join. \\
 	Una relazione $r$ è in quinta forma normale se e solo se ogni dipendenza di join presente in essa è conseguenza delle sue chiavi candidate. \\
-	Se la dipendenza di join è conseguenza delle chiavi candidate, la relazione è già in quinta forma normale, ad esempio data la relazione \texttt{Dipendenti(\underline{matricola}, CF, nome)} matricola e CF sono chiavi candidate e si può proiettare (matricola, CF), (CF, nome) e (matricola, nome) e ricostruire con join su matricola e CF. La relazione \texttt{Dipendenti} contiene una dipendenza da join, ma non contiene anomalie quindi è gia in quinta forma normale.
+	Se la dipendenza di join è conseguenza delle chiavi candidate, la relazione è già in quinta forma normale, ad esempio data la relazione \texttt{ Dipendenti(\underline{matricola}, CF, nome)} matricola e CF sono chiavi candidate e si può proiettare (matricola, CF), (CF, nome) e (matricola, nome) e ricostruire con join su matricola e CF. La relazione \texttt{Dipendenti} contiene una dipendenza da join, ma non contiene anomalie quindi è gia in quinta forma normale.
 	\subsection{Normalizzazione e scelta degli attributi}
 	Consideriamo la seguente relazione:
 	\begin{center}
@@ -2692,7 +2692,7 @@ create table Docenza (
 			\hline
 		\end{tabular}
 	\end{center}
-	Esaminando meglio le specifiche, avremmo potuto descrivere l'applicazione di interesse in maniera più appropriata introducendo un ulteriore attributo \texttt{Reparto}, che partiziona le singole sedi, ottenendo la seguente relazione:
+	Esaminando meglio le specifiche, avremmo potuto descrivere l'applicazione di interesse in maniera più appropriata introducendo un ulteriore attributo \texttt{ Reparto}, che partiziona le singole sedi, ottenendo la seguente relazione:
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|}
 			\hline
@@ -2710,7 +2710,7 @@ create table Docenza (
 	\begin{itemize}
 		\item $\texttt{Dirigente} \to \texttt{Sede Reparto}$: ogni dirigente opera presso una sede e dirige un reparto;
 		\item $\texttt{Sede Reparto} \to \texttt{Dirigente}$: per ogni sede e reparto c'è un solo dirigente;
-		\item $\texttt{Progetto Sede} \to \texttt{Reparto}$: per ogni sede, un progetto è assegnato a un solo reparto; la dipendenza funzionale \texttt{Progetto Sede} $\to$ \texttt{Dirigente} è quindi ricostruibile. 
+		\item $\texttt{Progetto Sede} \to \texttt{Reparto}$: per ogni sede, un progetto è assegnato a un solo reparto; la dipendenza funzionale \texttt{ Progetto Sede} $\to$ \texttt{Dirigente } è quindi ricostruibile. 
 	\end{itemize}
 	Per questo schema esiste una buona decomposizione. Infatti:
 	\begin{itemize}
@@ -2758,6 +2758,10 @@ create table Docenza (
 	In questo caso, il concetto di fornitore è indipendente da quello di prodotto e ha proprietà associate, quindi è opportuno modellare il concetto di fornitore per mezzo di un'entità, con identificatore costituito dall'attributo $\texttt{PartitaIVA}$ e ulteriori attributi \texttt{NomeFornitore} e \texttt{Indirizzo}. \\
 	Se separiamo i concetti di \texttt{Prodotto} e \texttt{Fornitore} in due entità  è opportuno che queste siano correlate, ossia che sussista un'associazione tra esse. \\
 	La decomposizione ottenuta soddisfa la due proprietà fondamentali: è una decomposizione senza perdita, perchè sulla base dei fornitori è possibile ricostruire i valori degli attributi dell'entità originaria, e conserva le dipendenze, perchè ciascuna delle dipendenze è contenuta in una delle entità o è ricostruibile da esse. La decomposizione ottenuta è la seguente:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{decomposizione_entita}
+	\end{figure}
 	\subsection{Verifiche di normalizzazione su associazioni}
 	Per quanto riguarda le associazioni, il ragionamento è per certi aspetti più semplice, perchè l'insieme delle occorrenze di ciascuna associazione è una relazione e quindi è possibile applicare direttamente i concetti connessi con le forme normali, ma per altri più complesso, perchè i domini su cui tale relazione è definita sono gli insiemi delle occorrenze delle entità coinvolte. Per verificare il soddisfacimento della terza forma normale, è necessario individuare le dipendenze funzionali che sussistono fra le entità coinvolte. Dato che ogni relazione binaria è in terza forma normale e anche in forma di Boyce e Codd, la verifica di normalizzazione va effettuata solo sulle associazioni non binarie, cioè su quelle che coinvolgono almeno tre entità. \\
 	Consideriamo la seguente associazione:
