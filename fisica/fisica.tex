@@ -2495,7 +2495,7 @@
 	Quindi, la conservazione della carica è rispettata anche nei processi nucleari, come i decadimenti radioattivi, e nei processi che coinvolgono le particelle elementari, come l'annichilazione e la produzione di coppie.
 	\chapter{Campi elettrici}
 	\section{Campo elettrico}
-	Un campo elettrico è un \textit{campo vettoriale}, perchè è responsabile del trasporto di informazioni relative a una forza, che implica sia un modulo sia una direzione e un verso. Tale campo consiste in una distribuzione di vettori campo elettrico $\vec{E}$, uno per ciascun unto dello spazo che circonda una carica elettrica. In linea di principio, possiamo definire $\vec{E}$ per ciascun punto attorno al corpo dotato di carica, come il punto $P$ della figura sottostante, tramite questa procedura: poniamo in $P$ una piccola carica positiva $q_0$, chiamata \textit{carica di prova} perchè la vogliamo usare per testare il campo.
+	Un campo elettrico è un \textit{campo vettoriale}, perchè è responsabile del trasporto di informazioni relative a una forza, che implica sia un modulo sia una direzione e un verso. Tale campo consiste in una distribuzione di vettori campo elettrico $\vec{E}$, uno per ciascun punto dello spazio che circonda una carica elettrica. In linea di principio, possiamo definire $\vec{E}$ per ciascun punto attorno al corpo dotato di carica, come il punto $P$ della figura sottostante, tramite questa procedura: poniamo in $P$ una piccola carica positiva $q_0$, chiamata \textit{carica di prova} perchè la vogliamo usare per testare il campo.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\textwidth]{campo_elettrico}
@@ -2562,7 +2562,7 @@
 	&= \frac{1}{4\pi\epsilon_0}\frac{q}{r^2_{(+)}} - \frac{1}{4\pi\epsilon_0}\frac{q}{r^2_{(-)}} \\
 	&= \frac{1}{4\pi\epsilon_0}\frac{q}{(z - \frac{1}{2}d)^2} - \frac{1}{4\pi\epsilon_0}\frac{q}{(z + \frac{1}{2}d)^2} \\
 	&= \frac{q}{4\pi\epsilon_0}\Bigg(\frac{1}{(z - \frac{1}{2}d)^2} - \frac{1}{(z + \frac{1}{2}d)^2}\Bigg) \\
-	&= \frac{q}{4\pi\epsilon_0}\frac{2d/z}{(1 - (\frac{d}{2z})^2)^2} \\
+	&= \frac{q}{4\pi\epsilon_0z^2}\frac{2d/z}{(1 - (\frac{d}{2z})^2)^2} \\
 	&= \frac{q}{2\pi\epsilon_0z^3}\frac{d}{(1 - (\frac{d}{2z})^2)^2}
 	\end{align*}
 	Possiamo trascurare il termine $\frac{d}{2z}$ in quanto la distanza è $\ll 1$ e si è interessati solo a distanze molto grandi.
@@ -2643,7 +2643,7 @@
 	\]
 	Queste due equazioni valgono solo quando la carica totale si trova nel vuoto oppure in aria. \\
 	La carica totale $q_{int}$ è la somma algebrica di tutte le cariche positive e negative \textit{racchiuse}, e può essere positiva, negativa o nulla. Includiamo il segno perchè ci dice qualcosa sul flusso totale attraverso la superficie gaussiana: se $q_{int} > 0$ il flusso totale è uscente, se $q_{int} < 0$ il flusso totale è entrante. \\
-	La carica al di fuori della superficie, indipendentemente da quanto grande o quanto vicina possa essere, non è inclusa nel termine $q_{int}$. ANche la forma esatta e la posizione delle carciche interne alla superficie gaussiana non hanno importanza, conta solo il modulo e il segno della carica totale racchiusa. \\
+	La carica al di fuori della superficie, indipendentemente da quanto grande o quanto vicina possa essere, non è inclusa nel termine $q_{int}$. Anche la forma esatta e la posizione delle carciche interne alla superficie gaussiana non hanno importanza, conta solo il modulo e il segno della carica totale racchiusa. \\
 	La quantità $\vec{E}$ è il campo elettrico risultante da \textit{tutte} le cariche, sia quelle interne sia quelle esterne alla superficie gaussiana. \\
 	Consideriamo la seguente figura:
 	\begin{figure}[H]
@@ -2657,7 +2657,7 @@
 		\item \textbf{Superficie $S_3$.} Questa superficie non racchiude alcuna carica, quindi $q_{int} = 0$ e quindi il flusso totale del campo elettrico è nullo. perchè per ogni linea di forza entrante nella superficie ce ne è una uscente.
 		\item \textbf{Superficie $S_4$.} Questa superficie racchiude una carica totale \textbf{nulla}, quindi $q_{int} = 0$ e il flusso è nullo, perchè per ogni linea di forza entrante nella superficie ce ne è una uscente.
 	\end{itemize}
-	L'unità di misura del campo nel SI è il $(N/C) \cdot m^2$.
+	L'unità di misura del flusso nel SI è il $(N/C) \cdot m^2$.
 	\section{Conduttore carico isolato}
 	\subsection{Densità di carica}
 	Come nel caso delle distribuzioni continue di massa, è possibile avere una distribuzione continua di carica e definire le densità di carica:
@@ -2691,7 +2691,7 @@
 	\end{figure}
 	È ragionevole supporre che, quando scaviamo il materiale elettrico neutro per creare la cavità, non cambiamo la distribuzione della carica o la struttura del campo elettrico. Per dimostrarlo quantitativamente dobbiamo utilizzare la legge di Gauss. \\
 	Tracciamo una superficie gaussiana che circonda la cavità, vicina alla sua superficie, ma all'interno del corpo del conduttore. Poichè $\vec{E} = 0$ all'interno del conduttore, non può esserci flusso attraverso questa nuove superficie gaussiana. Perciò, dalla legge di Gauss, la superficie non può racchiudere alcuna carica totale. Quindi, non può esserci una carica risultatnte sulle pareti della cavità; l'eccesso di carica resta suller superficie esterna del conduttore. \\
-	\begin{note}{\nmu Conduttore neutro con cavità }
+	\begin{note}{\nmu Conduttore neutro con cavità}{}
 		Se un conduttore è neutro con all'interno una cavità, se lo immergiamo in un campo elettrico:
 		\begin{itemize}
 			\item \textbf{sulla superficie esterna} c'è una redistribuzione della carica del conduttore cavo;
@@ -2770,7 +2770,7 @@
 		\centering
 		\includegraphics[width=0.4\textwidth]{campo_cond_piano}
 	\end{figure}
-	ove $|\vec{E}_1| \dfrac{\sigma}{2\epsilon_0}$ è il vettore campo elettrico uscente per la piastra con carica positiva. \\
+	ove $|\vec{E}_1| = \dfrac{\sigma}{2\epsilon_0}$ è il vettore campo elettrico uscente per la piastra con carica positiva. \\
 	$|\vec{E}_2| = \dfrac{\sigma}{2\epsilon_0}$ è il vettore campo elettrico entrante per la piastra con carica negativa.
 	Il campo elettrico si calcola con il \textbf{principio di sovrapposizione}:
 	\begin{align*}
@@ -2917,11 +2917,11 @@
 		\]
 		\item \textbf{sulla superficie della sfera}:
 		\[
-		E = \frac{1}{4\pi\epsilon_0}{q}{R^2}
+		E = \frac{1}{4\pi\epsilon_0}\frac{q}{R^2}
 		\]
 		\item \textbf{all'esterno della sfera} $r > R$:
 		\[
-		E = \frac{1}{4\pi\epsilon_0}{q}{r^2}
+		E = \frac{1}{4\pi\epsilon_0}\frac{q}{r^2}
 		\]
 	\end{itemize}
 	Allora troviamo il potenziale come:
