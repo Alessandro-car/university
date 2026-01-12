@@ -1463,4 +1463,319 @@ Una specifica per il tipo di dato insieme è la seguente:
 		Usando metodi di scansione interna e potendo cancellare chiavi, non si è mai sicuri che, raggiunta una posizione vuota nella ricerca di $k$, tale chiave non si trovi in un'altra posizione di $v$, poichè la posizione ora vuota era occupata quando $k$ è stata inserita. \\
 		Bisogna dunque scandire anche le posizioni in cui si è cancellato e fermarsi o sulla posizione mai riempita o essere tornati su una posizione già scandita e questo determina un aumento del tempo di ricerca. \\
 		Se sono previste molte cancellazioni è bene utilizzare il metodo di scansione esterna. 
-\end{document}
+	\chapter{Alberi}
+	Un albero ordinato è formato da un insieme finito di elementi, detti nodi. Se tale insieme non è vuoto, allora un particolare nodo è designato come radice, ed i rimanenti nodi, se esistono, sono a loro volta partizionati in insiemi ordinati disgiunti, ciascuno dei quali è un albero ordinato. L'albero ordinato, comunemente chiamato ``albero'', è una struttura informativa fondamentale, che si presta a rappresentare svariate situazioni, quali:
+	\begin{enumerate}
+		\item partizioni successive di un insieme in sottinsiemi disgiunti;
+		\item organizzazioni gerarchiche di dati;
+		\item procedimenti enumerativi o decisionali.
+	\end{enumerate}
+	Sia $T$ un albero ordinato di $n$ nodi di radice $r$. Siano $T_1, \dots, T_k$ gli insiemi disgiunti non vuoti in cui sono partizionati i rimanenti $n - 1$ nodi di $T$, aventi come radici, rispettivamente, i nodi $r_1, \dots, r_k$. Ciascun $T_i$ è detto sottoalbero di $T$ radicato in $r_i$, mentra ciascun $r_i$ è detto figlio di $r$. I nodi $r_1, \dots, r_k$ sono tra loro fratelli, ed $r$ è il loro padre. Un discendente di un nodo $u$ è un figlio di $u$ oppure un figlio di un discendente di $u$; analogamente, un antenato di $u$ è suo padre oppure il padre di un suo antenato. Un nodo senza figli è detto fogia, mentre la radice dell'albero è l'unico nodo senza padre. In pratica, in un albero ordinato è stabilito un doppio ordinamento tra i nodi. In primo luogo c'è un ordinamento ``verticale'' per livelli, cioè in base alla distanza dei nodi dalla radice. La radice $r$ è a livello 0, tutti i figli di $r$ stanno al livello 1, i figli dei figli di $r$ stanno al livello 2, e così via fino all'esaurimento dei nodi. In secondo luogo, è stabilito un ordinamento ``orizzontale'' tra i nodi che stanno allo stesso livello, distinguendo così tra il primo figlio di un nodo, il suo secondo figlio, e così via fino all'ultimo. \\
+	Un \textbf{cammino} di un albero è la sequenza di linee che unisce due nodi, uno dei quali è antenato dell'altro; la \textbf{lunghezza} di un cammino è costituita dal numero di linee che lo compongono. \\
+	L'\textbf{altezza} di un nodo è la lunghezza del cammino più lungo da quel nodo ad una foglia. \\
+	La \textbf{profondità} di un nodo è la lunghezza del cammino dalla radice a quel nodo. \\
+	In un albero valgono le seguenti proprietà:
+	\begin{itemize}
+		\item Un albero è un \textbf{grafo aciclico}, in cui per ogni nodo c'è solo un arco entrante, tranne che per la radice che non ne ha nessuno.
+		\item Un albero è un \textbf{grafo debolmente connesso}.
+		\item Se esiste un cammino che va da un nodo $u$ ad un altro nodo $v$, tale cammino è unico.
+		\item In un albero esiste un solo cammino che va dala radice a qualunque altro nodo.
+		\item Tutti i nodi di un albero $T$, tranne $r$, possono essere ripartiti in insiemi disgiunti ciascuno dei quali individua un albero.
+	\end{itemize}
+	\section{Specifica}
+	L'albero ordinato può essere interpretato come una generalizzazione di una sequenza lineare, in cui ciascun elemento ha ancora un solo predecessore (il padre), ma in generale può avere più di un successore (i figli). Infatti, una lista è un particolare albero in cui ogni nodo ha al più un figlio e c'è una sola foglia. Analogamente alle operazioni sulle liste, quelle definite sugli alberi ordinati prevedono la possibilità di spostarsi da un nodo ad un suo parente, come figlio, fratello o padre, e inoltre di inserire o cancellare interi sottoalberi. \\
+	Un tipico insieme di operazioni per gli alberi ordinati comprende l'operazione di creazione \texttt{CREAALBERO}, quelle di selezione \texttt{RADICE}, per accedere direttamente alla radice, e \texttt{PADRE, PRIMOFIGLIO} e \texttt{SUCCFRATELLO}, per accedere, rispettivamente, al padre, al primo figlio, o al fratello sucessivo di un nodo, quelle di interrogazione \texttt{ALBEROVUOTO}, per verificare che l'albero sia vuoto, \texttt{FOGLIA} e \texttt{FINEFRATELLI}, per controllare che un nodo non abbia figli o che siano stati considerati tutti i fratelli, e quelle di modifica \texttt{INSRADICE}, per inserire la radice in un albero vuoto, \texttt{CANCSOTTOALBERO} e \texttt{INSSOTTOALBERO}, per cancellare o inserire un sottoalbero. 
+	\begin{align*}
+		&\texttt{CREAALBERO:} &\quad () \to \text{albero} \\
+		&\texttt{ALBEROVUOTO:} &\quad (albero) \to \text{booleano} \\
+		&\texttt{INSRADICE:} &\quad (nodo, albero) \to \text{albero} \\
+		&\texttt{RADICE:} &\quad (albero) \to \text{nodo} \\
+		&\texttt{PADRE:} &\quad (nodo, albero) \to \text{nodo} \\
+		&\texttt{FOGLIA:} &\quad (nodo, albero) \to \text{booelano} \\
+		&\texttt{PRIMOFIGLIO:} &\quad (nodo, albero) \to \text{nodo} \\
+		&\texttt{FINEFRATELLI:} &\quad (nodo, albero) \to \text{booleano} \\
+		&\texttt{SUCCFRATELLO:} &\quad (nodo, albero) \to \text{nodo} \\
+		&\texttt{INSSOTTOALBERO:} &\quad (nodo, albero, albero) \to \text{albero} \\
+		&\texttt{INSPRIMOSOTTOALBERO:} &\quad (nodo, albero, albero) \to \text{albero} \\
+		&\texttt{CANCSOTTOALBERO:} &\quad (nodo, albero) \to \text{albero} 
+	\end{align*}
+	Indicando per semplicità con il termine ``albero'' l'insieme di tutti gli alberi ordinati, come definiti precedentemente, e con $T$ un generico albero ordinato, la specifica semantica è la seguente.
+	\begin{itemize}
+		\item \texttt{CREAALBERO() = } $T'$ \\
+		\quad \textit{Post}: $T' = \Lambda$
+		\item \texttt{ALBEROVUOTO($T$) = b} \\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & T = \Lambda \\
+			b = falso & altrimenti 
+		\end{cases}$
+		\item \texttt{INSRADICE($u, T$) = T'} \\
+		\quad \textit{Pre}: $T = \Lambda$ \\
+		\quad \textit{Post}: $T'$ è formato dalla sola radice $u$
+		\item \texttt{RADICE($T$) = $u$} \\
+		\quad \textit{Pre:} $T \neq \Lambda$
+		\quad \textit{Post:} $u$ è la radice di $T$ 
+		\item \texttt{FOGLIA($u, T$) = $b$} \\
+		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è un nodo di $T$ \\
+		\quad \textit{Post:} $\begin{cases}
+			b = vero & \text{se non esiste alcun figlio di }u \\
+			b = falso & \text{altrimenti}
+		\end{cases}$
+		\item \texttt{PRIMOFIGLIO($u, T$) = $v$} \\
+		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è un nodo di $T$, $\texttt{FOGLIA}(u, T) = falso$ \\
+		\quad \textit{Post:} $v$ è il primo figlio di $u$ secondo la relazione precedente stabilita tra i figli di $u$.
+		\item \texttt{FINEFRATELLI}($u, T$) = $b$ \\
+		\quad \textit{Pre}: $T \neq \Lambda$, $u$ è un nodo di $T$ o un nodo ``sentinella'' $s$ che segue l'ultimo fratello di ciascun nodo\\
+		\quad \textit{Post}: $\begin{cases}
+			b = vero & u = s \\
+			b = falso & \text{altrimenti}
+		\end{cases}$
+		\item \texttt{SUCCFRATELLO}($u, T$) = $v$ \\
+		\quad \textit{Pre}: $T \neq \Lambda$, $u$ è un nodo di $T$ \\
+		\quad \textit{Post}: $v$ è il fratello di $u$ che lo segue immediatamente $u$ nella relazione di precedenza (e quindi $v$ è la sentinella se $u$ è l'ultimo fratello)
+		\item \texttt{INSOTTOALBERO($u, v, T, U$) = $T'$} \\
+		\quad \textit{Pre}: $T \neq \Lambda, U \neq \Lambda$, $u$ è un nodo di $T$ non è radice di $T$.
+		\quad \textit{Post}: $T'$ è ottenuto da $T$ aggiungendovi $U$ come sottoalbero: la radice $z$ di $U$ diventa il nuovo fratello che segue immediatamente $u$ nella relazione di precedenza.
+		\item \texttt{INSPRIMOSOTTOALBERO($u, T, U$) = $T'$} \\
+		\quad \textit{Pre}: $T \neq \Lambda, U \neq \Lambda$, $u$ è un nodo di $T$.
+		\quad \textit{Post}: $T'$ è ottenuto da $T$ aggiungendovi $U$ come sottoalbero la cui radice $r'$ è il nuovo primofiglio di $u$.
+		\item \texttt{CANCSOTTOALBERO($u, T$) = $T'$} \\
+		\quad \textit{Pre}: $T \neq \Lambda$, $u$ è un nodo di $T$ \\
+		\quad \textit{Post}: $T'$ è ottenuto da $T$ togliendovi il sottoalbero di radice $u$, cioè $u$ stesso e tutti i discendenti di $u$ (e quindi $T'=\Lambda$ se $u$ è la radice di $T$)
+  \end{itemize}
+  \section{Visite}
+  La visita di un albero ordinato consiste nel seguire una ``rotta'' di viaggio che consenta di esaminare ogni nodo dell'albero esattamente una volta. La visita può essere eseguita in vari modi, detti ``ordini'', tra cui i 3 più importanti sono: ordine anticipato o \textit{previsita}, differito o \textit{postivisita}, e simmetrico o \textit{invisita}. \\
+  Sia $T$ un albero non vuoto di radice $r$. Se $r$ non è una foglia ma ha $k > 0$  figli, indichiamo con $T_1, \dots, T_k$ i $k$ sottoalberi di $T$ radicati nei $k$ figli di $r$. I predetti ordini di visita sono definiti ricorsivamente come segue:
+  \begin{enumerate}
+  	\item la previsita di $T$ consiste nell'esaminare $r$ e poi nell'effettuare, nell'ordine, la previsita di $T_1, \dots, T_k$;
+  	\item la postvisita di $T$ consiste nell'effettuare, nell'ordine, la postvisita di $T_1, \dots, T_k$ e poi nell'esaminare $r$;
+  	\item Fissato $i \geq 1$, la invisita di $T$ consiste nell'effettuare, nell'ordine, la invisita di $T_1, \dots, T_1$, nell'esaminare $r$, e poi nell'effettuare, nell'ordine, la invisita di $T_{i+1}, \dots, T_k$.
+  \end{enumerate}
+  Il seguente schema di proceudra Pascal serve per effettuare sia la visita anticipata che quella differita.
+  \begin{lstlisting}[style=pascalstyle]
+  	procedure VISITA(u: nodo; var T: albero);
+  		var v: nodo;
+  		begin
+(1) 			{esame ``anticipato'' del nodo u};
+  			if not (FOGLIA(u, T)) then begin
+  				v := PRIMOFIGLIO(u, T);
+  				while not (FINEFRATELLI(v, T)) do begin
+  					PREVISITA(v, T);
+  					v := SUCCFRATELLO(v, T)
+  				end
+  			end;
+(2)  			{esame ``differito'' del nodo u};
+  		end;
+  \end{lstlisting}
+  La chiamata nel programma principale è:
+  \begin{lstlisting}[style=pascalstyle]
+  	if not ALBEROVUOTO(T) then VISITA(RADICE(T), T)
+  \end{lstlisting}
+  Se l'esame del nodo $u$ viene effettuato solo nella riga (1), ignorando la riga (2), si ottiene la procedura $\texttt{PREVISITA}$, mentre se viene effettuato solo nella riga (2), ignorando la riga (1), allora si ottiene la procedura \texttt{POSTVISITA}. La procedura \texttt{INVISITA} invece segue uno schema diverso. Per $i=1$ lo schema è il seguente:
+  \begin{lstlisting}[style=pascalstyle]
+  	procedure INVISITA(u: nodo; var T: albero);
+  		var v: nodo;
+  		begin 
+  			if FOGLIA(u, T) then
+  				{esamina il nodo u}
+  			else begin 
+  				v := PRIMOFIGLIO(u, T);
+  				INVISITA(v, T);
+  				{esame ``simmetrico'' del nodo u};
+  				v := SUCCFRATELLO(v, T);
+  				while not (FINEFRATELLI(v, T)) do begin
+  					INVISITA(v, T);
+  					v := SUCCFRATELLO(v, T)
+  				end
+  			end
+  		end;
+  \end{lstlisting} 
+  \section{Realizzazioni}
+  \subsection{Realizzazione con vettore dei padri}
+  Si supponga che i nodi dell'albero $T$ siano numerati da 1 ad $n$. La più semplice realizzazione fa uso di un vettore contentenente, per ogni nodo $i$, $1 \leq i \leq n$, il cursore al padre: $T[i] = j$, se $j$ è il padre di $i$; $T[i] = 0$, se $i$ è la radice. \\
+  Con questa realizzazione è facile visitare i nodi lungo percorsi, che vadano dal basso verso l'alto, cioè dalle foglie verso la radice. Viceversa, è costoso passare da un nodo ai suoi figli, individuare il livello di un nodo, e inserire e cancellare sottoalberi. Infine non è chiara la relazione di precedenza tra fratelli, a meno che non se ne assuma una implicitamente,  per esempio imponendo che un figlio abbia sempre un numero maggiore del padre e che nodi fratelli siano numerati in modo crescente da sinistra verso destra. \\
+  \subsection{Realizzazione con liste di figli}
+  Si supponga ancora che i nodi dell'albero $T$ siano numerati da 1 ad $n$. Una realizzazione talvolta usata consiste nel mantenere un vettore contenente, per nodo $i$, $1 \leq i \leq n$, l'identificatore di una lista di tutti i figli del nodo $i$. Trascurando la realizzazione del tipo di dato lista, si hanno le seguenti dichiarazioni:
+  \begin{lstlisting}[style=pascalstyle]
+  	type 
+  		nodo = integer;
+  		albero = record
+  			testa: array[1..maxlung] of lista;
+  			radice: nodo
+  		end;
+  \end{lstlisting}
+  Gli operatori degli alberi possono essere realizzati in termini degli operatori delle liste. Per esempio,
+  \begin{lstlisting}[style=normalstyle]
+  	PRIMOFIGLIO = LEGGILISTA(PRIMOLISTA(T.testa[u]), T.testa[u])\end{lstlisting}
+  	Ovviamente, la realizzazione con liste dei figli presenta il vantaggio di poter scorrere velocemetne tutti i figli di un dato nodo, ma non permette di realizzare efficientemente altri operatori come \texttt{PADRE} o \texttt{SUCCFRATELLO}. Infatti, per poter individuare il padre o il fratello successivo di un dato nodo $u$, occorre scandire nel caso pessimo tutte le $n$ liste alla ricerca dell'unica lista nella quale compare il nodo $u$. 
+  	\begin{lstlisting}[style=pascalstyle]
+  		function PADRE(u: nodo; var T: albero): nodo;
+  			var i: nodo;
+  			begin 
+  				i := 1;
+  				while (not APPARTIENE(u, T.testa[u]) and (i <= n)) do i := i + 1
+  				PADRE := i
+  			end;
+  		
+  		function APPARTIENE(u: nodo; var L: lista): boolean;
+  			var p: posizione; trovato: boolean;
+  			begin
+  				p := PRIMOLISTA(L); trovato := false;
+  				while (not trovato) and (not FINELISTA(L)) do
+  					if LEGGILISTA(p, L) = u THEN trovato := true;
+  				APPARTIENE := trovato
+  			end;
+  	\end{lstlisting}
+  	Per realizzare \texttt{SUCCFRATELLO}, occorre essenzialmente ripetere le stesse operazioni effettuate per \texttt{PADRE}, modificando la funzione \texttt{APPARTIENE} in modo da resstituire il nodo che segue $u$ nella lista $L$.
+  	\subsection{Realizzazione con puntatori padre/primofiglio/fratello}
+  	La realizzazione con liste dei figli non si presta bene ad eseguire operazioni come \texttt{PADRE, SUCCFRATELLO} o \texttt{INSSOTTOALBERO}. Per realizzare \texttt{PADRE} e \texttt{SUCCFRATELLO} si potrebbero introdurre due campi con questi valori in ciascuna delle celle liste, oppure usare, oltre al vettore testa, anche un vettore dei padri e un vettore dei fratelli successivi. Ciò comunque non renderebbe efficiente la \texttt{INSSOTTOALBERO}. Per effettuare un'inserzione efficientemente, occorre che tutti gli alberi condividano un'area comune, così come le liste condividono la memoria indirizzabile dei puntatori nella realizzazione con puntatori o il vettore SPAZIO nella realizzazione con cursori. Inoltre, è necessario che tutte le celle dell'area comune abbiano la stessa struttura dove siano immediatamente reperibili le informazioni per raggiungere il padre, il primo figlio, e il fratello successivo di un nodo. Quest scopo è raggiunto imponendo che ogni cella contenga almeno tre puntatori: uno al padre, uno al primo figlio e uno al fratello successivo. In tal caso, il nodo diventa un puntatore nell'area comune e non può più essere identificato col valore del nodo stesso, e in ogni cella occorre un campo apposito per il valore del nodo. \\
+  	A tal fine, si introducono due ulteriori operazioni, una di lettura \texttt{LEGGINODO}, per leggere il valore contenuto in un nodo, e una di modifica \texttt{SCRIVINODO}, per cambiare il valore memorizzato in un nodo, la cui specifica è la seguente. 
+  		\begin{align*}
+  		\texttt{LEGGINODO:} &\quad (nodo, albero) \to \text{tipoelem} \\
+  		\texttt{SCRIVINODO:} &\quad (tipoelem, nodo, albero) \to \text{albero} \\
+  	\end{align*}
+  	\begin{itemize}
+  		\item \texttt{LEGGINODO($u, T$) = $a$} \\
+  		\quad \textit{Pre}: $T \neq \Lambda$, $u$ è un nodo di $T$ \\
+  		\quad \textit{Post}: $a$ è il valore memorizzato nel nodo $u$
+  		\item \texttt{SCRIVINODO($a, u, T$) = $T'$} \\
+  		\quad \textit{Pre}: $T \neq \Lambda$, $u$ è un nodo di $T$ \\
+  		\quad \textit{Post}: $T'$ è ottenuto scrivendo il valore di $a$ nel nodo $u$
+  	\end{itemize}
+  	Nella realizzazione con puntatori, le dichiarazioni sono:
+  	\begin{lstlisting}[style=pascalstyle, mathescape]
+  		albero = $\uparrow$cella;
+  		nodo = albero;
+  		cella = record
+  			valore: tipoelem;
+  			genitore, figlio, fratello: nodo;
+  	\end{lstlisting}
+  	\section{Alberi binari}
+  	Un albero binario è un particolare albero ordinato in cui ogni nodo ha al più due figli e si fa distinzione tra il figlio sinistro e il figlio destro di un nodo. Questa proprietà è sottile, poichè impone che due alberi $T$ e $U$ aventi gli stessi nodi, gli stessi figli per ogni nodo e la stessa radice, siano distinti qualora un nodo $u$ sia designato come figlio sinistro di un nodo $v$ in $T$ e come figlio destro del medesimo nodo in $U$.\\
+  	L'importanza degli alberi binari risiede sia sulla semplicità della loro struttura che sulle innumerevoli applicazioni in cui possono essere impiegati. Una specifica ragionevole per gli alberi binari può includere gli operatori \texttt{CREABINALBERO, BINALBEROVUOTO, BINRADICE, BINPADRE, CANCSOTTOALBERO, LEGGINODO, SCRIVINODO} che sono analoghi ai rispettivi operatori per gli alberi ordinati ed i nuovi operatori:
+  	\begin{align*}
+  		&\texttt{FIGLIOSINISTRO}: &\quad \text{(nodo, binalbero)} \to \text{nodo} \\
+  		&\texttt{FIGLIODESTRO:} &\quad \text{(nodo, binalbero)}  \to \text{nodo}  \\
+  		&\texttt{SINISTROVUOTO:} &\quad \text{(nodo, binalbero)}  \to \text{booleano}  \\
+  		&\texttt{DESTROVUOTO:} &\quad \text{(nodo, binalbero)}  \to \text{booleano}   \\
+  		&\texttt{COSTRBINALBERO:} &\quad \text{(binalbero, binalbero)}  \to \text{binalbero} \\
+  		&\texttt{CANCSOTTOBINALBERO:} &\quad \text{(nodo, binalbero)} \to \text{binalbero}
+  	\end{align*}
+  	la cui specifica semantica è:
+  	\begin{itemize}
+  		\item \texttt{FIGLIOSINISTRO($u, T$) = $v$} \\
+  		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$, $u$ ha un figlio sinistro \\
+  		\quad \textit{Post:} $v$ è il figlio sinistro di $u$ in $T$.
+  		
+  		\item \texttt{FIGLIODESTRO($u, T$) = $v$} \\
+  		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$, $u$ ha un figlio destro \\
+  		\quad \textit{Post:} $v$ è il figlio destro di $u$ in $T$.
+  		
+  		\item \texttt{SINISTROVUOTO($u, T$) = $b$} \\
+  		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$ \\
+  		\quad \textit{Post:} $\begin{cases}
+  			b = vero & \text{se } u \text{ non ha figlio sinistro} \\
+  			b = falso & altrimenti 
+  		\end{cases}$
+  		
+  		\item \texttt{DESTROVUOTO($u, T$) = $b$} \\
+  		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$\\
+  		\quad \textit{Post:} $\begin{cases}
+  			b = vero & \text{se } u \text{ non ha figlio destro} \\
+  			b = falso & altrimenti 
+  		\end{cases}$
+  		
+  		\item \texttt{COSTRBINALBERO($T, U$) = $T'$} \\
+  		\quad \textit{Post:} $T'$ è ottenuto introducendo un nuovo nodo $u$, che è la radice di $T'$, che ha come sottoalbero sinistro $T$ e come sottoalbero destro $U$ (se $T = \Lambda$, $u$ non ha figlio sinistro; se $U = \Lambda$, $u$ non ha figlio destro)
+  		\item \texttt{CANCSOTTOBINALBERO($u, T$) = $T'$} \\
+  		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è un nodo di $T$.\\
+  		\quad \textit{Post:} $T'$ è ottenuto da $T$ eliminando il sottoalbero di radice $u$, con tutti i suoi discendenti.
+  	\end{itemize}
+  	Si noti che l'operatore \texttt{FOGLIA} è ridondante, poichè \texttt{FOGLIA($(u, T)$) = vero} se e solo se \texttt{SINISTROVUOTO($u, T$) = DESTROVUOTO($u, T$)} = vero. \\
+  	L'algebra appena presentata rappresenta una scelta precisa di progetto, si è scelto di enfatizzare la natura ricorsiva degli alberi e di costruire l'albero binario dal basso verso l'alto, cioè dal livello delle foglie verso la radice. \\
+  	Non sempre questa scelta è opportuna: soprattutto se l'albero è usato per rappresentare un processo decisionale è preferibile un'algebra che preveda di costruire l'albero dall'alto verso il basso, inserendo prima la radice e poi i nodi figli via via. \\
+  	In tal caso, mentre rimangono validi tutti gli operatori definiti, andrebbe sostituito l'operatore di costruzione con tre operatori nuovi, uno dedicato all'inserimento della radice e gli altri due dedicati all'inserimento del figlio sinistro e del figlio destro.
+  	\begin{align*}
+  		&\texttt{INSBINRADICE}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\ 
+  		&\texttt{INSFIGLIOSINISTRO}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\
+  		&\texttt{INSFIGLIODESTRO}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\
+  	\end{align*}
+  	Con la relativa specifica semantica:
+  	\begin{itemize}
+  		\item \texttt{INSBINRADICE($u, T$) = $T'$} \\
+  		\quad \textit{Pre:} $T = \Lambda$ \\
+  		\quad \textit{Post:} $T'$ è l'albero costituito dalla sola radice $u$.
+  		
+  		\item \texttt{INSFIGLIOSINISTRO($u, T$) = $T'$} \\
+  		\quad \textit{Pre:} $T = \Lambda$, $\texttt{SINISTROVUOTO}(u, T) = vero$\\
+  		\quad \textit{Post:} $T'$ è l'albero ottenuto da $T$ aggiungendo un nodo $v$ come figlio sinistro di $u$.
+  		
+  		\item \texttt{INSFIGLIODESTRO($u, T$) = $T'$} \\
+  		\quad \textit{Pre:} $T = \Lambda$, $\texttt{DESTROVUOTO}(u, T) = vero$ \\
+  		\quad \textit{Post:} $T'$ è l'albero ottenuto da $T$ aggiungendo un nodo $v$ come figlio destro di $u$.
+  	\end{itemize}
+  	Utilizzando gli operatori introdotti, la visita di un albero binario può essere effettuata molto semplicemente nel modo seguente:
+  	\begin{lstlisting}[style=pascalstyle]
+  		begin
+ (1) 		{esame ``anticipato'' del nodo u};
+  			if not SINISTROVUOTO(um T) then
+  				BINVISITA(FIGLIOSINISTRO(um T), T);
+ (2)		{esame ``simmetrico'' del nodo u};
+ 			if not DESTROVUOTO(u, T) then
+ 				BINVISITA(FIGLIODESTRO(u, T), T);
+ (3)		{esame ``differito'' del nodo u}
+ 		end;	
+  	\end{lstlisting}
+  	La previsita si ottiene esaminando il nodo $u$ soltanto nella riga (1) e ignorando le righe (2) e (3). Analogamente, la invisita o la postvisita si hanno esaminando il nodo $u$ solo nella riga (2) o (3), rispettivamente.`\\
+  	Una realizzazione ragionevole fa uso di un'area comune \texttt{AREALIBERA}, come nel caso degli alberi ordinati, in cui i campi ``figlio'' e ``fratello'' sono chiamate, invece, ``sinistro'' e ``destro''. \\
+  	Ovviamente è possibile utilizzare puntatori anzichè cursori. Indicando la mancanza di un figlio col valore \textbf{nil} contenuto nell'apposito campo si ha:
+  	\begin{lstlisting}[style=pascalstyle, mathescape]
+  		type 
+  			binalbero = $\uparrow$bincella;
+  			nodo = binalbero;
+  			bincella = record
+  				valore: tipoelem;
+  				sinistro, destro, genitore: nodo;
+  			end;
+  		procedure CREABINALBERO(var T: binalbero);
+  			begin 
+  				T := nil
+  			end;
+  		function BINALBEROVUOTO(var T: binalbero): boolean;
+  			begin 
+  				BINALBEROVUOTO := (T = nil)
+  			end;
+  		function BINRADICE(var T: binalbero): nodo;
+  			begin
+  				BINRADICE := T
+  			end;
+  		function BINPADRE(u: nodo; var T: binalbero): nodo;
+  			begin
+  				BINPADRE := u$\uparrow$.genitore
+  			end;
+  		function FIGLIOSINISTRO(u: nodo; var T: binalbero): nodo;
+  			begin 
+  				FIGLIOSINISTRO := u$\uparrow$.sinistro
+  			end;
+  		function FIGLIODESTRO(u: nodo; var T: binalbero): nodo;
+  			begin
+  				FIGLIODESTRO := u$\uparrow$.destro
+  			end;
+  		function SINISTROVUOTO(u: nodo; var T: binalbero): boolean;
+  			begin 
+  				SINISTROVUOTO := (u$\uparrow$.sinistro = nil)
+  			end;
+  		function DESTROVUOTO(u: nodo; var T: binalbero): boolean;
+  			begin
+  				DESTROVUOTO := (u$\uparrow$.destro = nil)
+  			end;
+  		procedure COSTRBINALBERO(var T, U: binalbero);
+  			var u: nodo;
+  			begin
+  				new(u);
+  				u$\uparrow$.sinistro := T; u$\uparrow$.destro L := U; u$\uparrow$.genitore := nil;
+  				if T $\neq$ nil then T$\uparrow$.genitore := u;
+  				if U $\neq$ nil then U$\uparrow$.genitore := u;
+  				T := u
+  			end;
+  	\end{lstlisting}
+ \end{document}
