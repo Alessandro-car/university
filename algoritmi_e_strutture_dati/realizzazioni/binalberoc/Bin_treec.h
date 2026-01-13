@@ -118,7 +118,7 @@ bool Bin_treec<T>::empty() const
 }
 
 template <class T>
-typename Bin_treec<T>::Nodo Bin_treec<T>::root() const 
+typename Bin_treec<T>::Nodo Bin_treec<T>::root() const
 {
   return(inizio);
 }

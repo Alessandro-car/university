@@ -68,7 +68,7 @@ template <class T, class N>
 void Bin_tree<T,N>::print() const{
 	if (!empty())
 		printSubTree(root());
-	else 
+	else
 		std::cout << "[]" << std::endl;
 	std::cout << std::endl;
 }

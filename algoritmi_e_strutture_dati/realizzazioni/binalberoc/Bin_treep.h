@@ -54,7 +54,7 @@ class Bin_treep : public Bin_tree<T, <treenode>*>{
   Nodo dx(Nodo) const;
   bool sx_empty(Nodo) const;
   bool dx_empty(Nodo) const;
-  
+
   //void costr(Bin_treec<T>);
   void erase(Nodo);
 
@@ -88,7 +88,7 @@ bool Bin_treec<T>::empty() const
 }
 
 template <class T>
-typename Bin_treec<T>::Nodo Bin_treec<T>::root() const 
+typename Bin_treec<T>::Nodo Bin_treec<T>::root() const
 {
   return(root);
 }
