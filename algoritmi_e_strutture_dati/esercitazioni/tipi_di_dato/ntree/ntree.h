@@ -1,6 +1,7 @@
 #ifndef NTREE_H_
 #define NTREE_H_
 
+#include <algorithm>
 template <class T>
 class ntree;
 
@@ -127,17 +128,20 @@ template <class T>
 void ntree<T>::insert_subtree(node<T>* first, node<T>* n, ntree<T>& nt) {
 	if (nt.empty())
 		return;
-	node<T>* copy_root = copy_tree(nt.root());
+	node<T>* copy_root = new node<T>;
+	copy_root->m_value = nt.m_root->m_value;
+	copy_root->m_parent = n;
+	copy_root->m_sibling = nullptr;
+	copy_root->m_son = copy_tree(nt.m_root->m_son);
+
 	if (first == n) {
 		node<T>* old_son = n->m_son;
 		n->m_son = copy_root;
 		copy_root->m_sibling = old_son;
-		copy_root->m_parent = n;
 	} else {
 		node<T>* old_sibling = first->m_sibling;
 		first->m_sibling = copy_root;
 		copy_root->m_sibling = old_sibling;
-		copy_root->m_parent = n;
 	}
 }
 
@@ -196,7 +200,6 @@ node<T>* ntree<T>::copy_tree(node<T>* n) {
 
 	node<T>* new_node = new node<T>;
 	new_node->m_value = n->m_value;
-
 	new_node->m_son = copy_tree(n->m_son);
 	node<T>* current_child = new_node->m_son;
 	while (current_child != nullptr) {
@@ -205,6 +208,7 @@ node<T>* ntree<T>::copy_tree(node<T>* n) {
 	}
 	new_node->m_sibling = copy_tree(n->m_sibling);
 	return new_node;
+
 }
 
 template <class T>
