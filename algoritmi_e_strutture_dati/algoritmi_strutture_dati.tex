@@ -1778,4 +1778,48 @@ Una specifica per il tipo di dato insieme è la seguente:
   				T := u
   			end;
   	\end{lstlisting}
+  	\chapter{Code con priorità}
+  	Una coda con priorità è un particolare insieme, sugli elementi del quale è definita una relazione ``$\leq$'' di ordinamento totale, in cui è possibile inserire un nuovo elemento o estrarre l'elemento ``minimo''. La specifica è simile a quella del tipo di dato ``insieme'', in cui sono amesse, oltre alla creazione, le operazioni \texttt{INSERISCI, MIN} e la nuova operazione \texttt{CANCELLAMIN}, che rimuove l'elemento minimo.
+  	Il nome deriva dall'interpretazione in cui $A$ è una coda di elementi che devono essere serviti rispettandone la priorità. Per semplicità si fa coincidere le priorità con gli elementi stessi e si assumono priorità distinte in accordo alla specifica del tipo di dato insieme. \\
+  	\section{Specifica}
+  	La specifica sintattica è la seguente:
+  	\begin{align*}
+  		&\texttt{CREAPRIORCODA:} &\quad &() \to \text{priorcoda} \\
+  		&\texttt{INSERISCI:} &\quad &(\text{tipoelem, priorcoda}) \to \text{priorcoda} \\
+  		&\texttt{MIN:} &\quad &(\text{priorcoda}) \to \text{tipoelem} \\
+  		&\texttt{CANCELLAMIN:} &\quad &(\text{priorcoda}) \to \text{priorcoda}
+  	\end{align*}
+  	La specfica semantica è la seguente:
+  	  	\begin{itemize}
+		\item \texttt{CREAPRIORCODA() = $A$} \\
+		\quad \textit{Post}: $A = \emptyset$
+		
+		\item \texttt{INSERISCI($x, A$) = $A'$} \\
+		\quad \textit{Post}: $A' = A \cup \{x\}$
+		
+		\item \texttt{MIN($A$) = $x$} \\
+		\quad \textit{Pre}: $A \neq \emptyset$ \\
+		\quad \textit{Post}: $x \in A$ e $x < y \quad \forall y \in A\ x \neq y$
+		
+  		\item \texttt{CANCELLAMIN($A$) = $A'$} \\
+  		\quad \textit{Pre}: $A \neq \emptyset$ \\
+  		\quad \textit{Post}: $A' = A - \{x\}$ ove $x = \texttt{MIN}(A)$
+  	\end{itemize}
+  	\section{Realizzazioni}
+  	Si può rappresentare una coda con priorità di $n$ elementi utilizzando strutture sequenziali come liste ordinate e non ordinate. \\
+  	Tuttavia, poichè la coda con priorità è costituito da un insieme di atomi linearmente ordinati ma senza alcuna relazione strutturale sull'insieme delle posizioni, la sua raprpesentazione è quasi sempre associata ad un unico modello concettuale: quello di albero binario. 
+  	\subsection{Realizzazione con heap}
+  	Gli elementi della coda con priorità $C$ possono essere disposti in un vettore $H$, chiamato \textit{heap}, che può essere interpretato come un albero binario $B$. Ciascun nodo di $B$ corrisponde ad una posizione di $H$ che memorizza un elemento di $C$. L'albero $B$ deve verificare le seguenti proprietà:
+  		\begin{enumerate}
+  			\item se $h$ è il livello massimo delle foglie, allora ci sono esattamente $2^h - 1$ nodi di livello minore di $h$;
+  			\item tutte le foglie di livello $h$ sono addossate a sinistra;
+  			\item ogni nodo contiene un elemento di $C$ che è maggiore di quello contenuto nel padre.  
+  		\end{enumerate}
+  	Grazie alle prime due proprietà, ciascun livello $k$ (tranne l'ultimo) di $B$ contiene tutti i possibili $2^k$ nodi, $0 \leq  \leq h$, mentre tutti i nodi di livello massimo $h$ stanno a sinistra. $B$ è ``quasi pieno'', cioè non ha nodi mancanti tranne le foglie a destra di livello massimo. Pertanto gli $n$ nodi di $B$ corrispondono alle posizioni $1\dots n$ del vettore $H$ nell'ordine in cui si incontrano i nodi visitando $B$ per livelli crescenti ed esaminando da sinistra verso destra i nodi dello stesso livello. Poichè ad ogni livello il numero di nodi raddoppia, si ha che:
+  	\begin{itemize}
+  		\item la radice di $B$ corrisponde alla posizione 1 di $H$;
+  		\item il figlio sinistro e il figlio destro di $i$ corrispondono alle posizioni $2i$ e $2i+1$ di $H$.
+  	\end{itemize}
+  	Il figlio sinistro (destro) di $i$ non esiste se e solo se $2i > n$ ($2i + 1 > n$). Inoltre, per $1 \leq i \leq n$, il padre di $i$ è $\dfrac{i}{2}$. Ovviamente in $H[i]$ è memorizzato l'elemento di $C$ contenuto nel corrispondente nodo di $B$. Così, per la terza proprietà, se il figlio sinistro (destro) di $i$, allora $H[2i] > H[i]\ (H[2i+1] > H[i])$. \\
+  	La realizzazione degli operatori $\texttt{MIN, CANCELLAMIN}$ e \texttt{INSERISCI} è molto semplice se si immagina di operare sull'albero $B$ anzichè sul vettore $H$. Per eseguire \texttt{MIN} basta leggere l'elemento contenuto della radice, mentre per eseguire \texttt{CANCELLAMIN} si cancella la foglia di livello massimo più a destra, così da mantenere verificate le prime due proprietà, se ne copia l'elemento nella radice, e si fa ``scendere'' tale elemento lungo un percorso radice-foglia, scambiandolo col minimo degli elementi contenuti nei figli, fino a verificare la terza proprietà. 
  \end{document}
