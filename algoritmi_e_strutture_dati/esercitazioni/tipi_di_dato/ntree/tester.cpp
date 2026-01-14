@@ -1,6 +1,20 @@
 #include <iostream>
-#include <string>
 #include "ntree.h"
+
+template <typename T>
+void print_tree(ntree<T>& tree, node<T>* n, int depth = 0) {
+    if (n == nullptr) return;
+
+    for (int i = 0; i < depth; ++i) std::cout << "  ";
+    std::cout << "|-- " << tree.read(*n) << std::endl;
+
+    node<T>* child = tree.first_son(*n);
+    while (child != nullptr) {
+        print_tree(tree, child, depth + 1); // Recurse down
+        if (tree.last_sibling(*child)) break;
+        child = tree.next_sibling(*child); // Move across
+    }
+}
 
 void test_ntree() {
     std::cout << "=== N-ary Tree Tester ===" << std::endl << std::endl;
@@ -11,6 +25,7 @@ void test_ntree() {
     std::cout << "Tree is empty: " << (tree1.empty() ? "YES" : "NO") << std::endl;
     std::cout << "Root is null: " << (tree1.root() == nullptr ? "YES" : "NO") << std::endl;
     std::cout << std::endl;
+		print_tree(tree1, tree1.root());
 
     // Test 2: Insert root
     std::cout << "Test 2: Insert root" << std::endl;
@@ -50,6 +65,7 @@ void test_ntree() {
 
     std::cout << "Root is now leaf: " << (tree1.leaf(*root) ? "YES" : "NO") << std::endl;
     std::cout << std::endl;
+		print_tree(tree1, tree1.root());
 
     // Test 6: Navigate children
     std::cout << "Test 6: Navigate children" << std::endl;
@@ -84,6 +100,9 @@ void test_ntree() {
     // Test 8: Copy constructor
     std::cout << "Test 8: Copy constructor" << std::endl;
     ntree<int> tree2(tree1);
+		print_tree(tree2, tree2.root());
+		std::cout << std::endl << std::endl;
+		print_tree(tree1, tree1.root());
     std::cout << "Copied tree root value: " << tree2.read(*tree2.root()) << std::endl;
     std::cout << "Trees are equal: " << (tree1 == tree2 ? "YES" : "NO") << std::endl;
     std::cout << std::endl;
@@ -105,16 +124,9 @@ void test_ntree() {
         std::cout << "First child after deletion: " << tree1.read(*tree1.first_son(*tree1.root())) << std::endl;
     }
     std::cout << std::endl;
+		print_tree(tree1, tree1.root());
 
-    // Test 11: Test with strings
-    std::cout << "Test 11: Testing with strings" << std::endl;
-    ntree<std::string> string_tree;
-    string_tree.insert_root();
-    string_tree.write("Root", *string_tree.root());
-    std::cout << "String tree root: " << string_tree.read(*string_tree.root()) << std::endl;
-    std::cout << std::endl;
-
-    std::cout << "=== All tests completed ===" << std::endl;
+ std::cout << "=== All tests completed ===" << std::endl;
 }
 
 int main() {

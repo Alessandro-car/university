@@ -41,6 +41,7 @@ class ntree {
 		ntree<T>& operator=(const ntree<T>&);
 		bool operator==(const ntree<T>&) const;
 	private:
+		void delete_nodes(node<T>*);
 		node<T>* copy_tree(node<T>*);
 		bool compare_tree(node<T>*, node<T>*) const;
 		node<T>* m_root;
@@ -58,7 +59,7 @@ ntree<T>::ntree(const ntree<T>& nt) {
 
 template <class T>
 ntree<T>::~ntree() {
-	delete_subtree(m_root);
+	delete_nodes(m_root);
 }
 
 template <class T>
@@ -124,40 +125,40 @@ void ntree<T>::insert_root() {
 
 template <class T>
 void ntree<T>::insert_subtree(node<T>* first, node<T>* n, ntree<T>& nt) {
+	if (nt.empty())
+		return;
+	node<T>* copy_root = copy_tree(nt.root());
 	if (first == n) {
-		n->m_son = nt.m_root;
-		n->m_son->m_sibling = first;
-		n->m_son->m_parent = n;
+		node<T>* old_son = n->m_son;
+		n->m_son = copy_root;
+		copy_root->m_sibling = old_son;
+		copy_root->m_parent = n;
 	} else {
 		node<T>* old_sibling = first->m_sibling;
-		first->m_sibling = nt.m_root;
-		first->m_sibling->m_sibling = old_sibling;
-		first->m_sibling->m_parent = n;
+		first->m_sibling = copy_root;
+		copy_root->m_sibling = old_sibling;
+		copy_root->m_parent = n;
 	}
 }
 
 template <class T>
 void ntree<T>::delete_subtree(node<T>* n) {
-	if (n->m_parent->m_son == n) {
-		n->m_parent->m_son = n->m_sibling;
-	} else {
-		node<T>* prev_sibling = n->m_parent->m_son;
-		while (prev_sibling != nullptr && prev_sibling->m_sibling != n) {
-			prev_sibling = prev_sibling->m_sibling;
+	if (n == nullptr)
+		return;
+
+	if (n->m_parent != nullptr) {
+		if (n->m_parent->m_son == n) {
+			n->m_parent->m_son = n->m_sibling;
+		} else {
+			node<T>* prev_sibling = n->m_parent->m_son;
+			while (prev_sibling != nullptr && prev_sibling->m_sibling != n) {
+				prev_sibling = prev_sibling->m_sibling;
+			}
+			if (prev_sibling != nullptr)
+				prev_sibling->m_sibling = n->m_sibling;
 		}
-		if (prev_sibling != nullptr)
-			prev_sibling->m_sibling = n->m_sibling;
 	}
-
-	node<T>* child = n->m_son;
-	while (child != nullptr) {
-		node<T>* next = child->m_sibling;
-		delete_subtree(child);
-		child = next;
-	}
-
-
-	delete n;
+	delete_nodes(n);
 }
 
 template <class T>
@@ -174,8 +175,20 @@ bool ntree<T>::operator==(const ntree<T>& nt) const {
 	return compare_tree(m_root, nt.m_root);
 }
 
+template <class T>
+void ntree<T>::delete_nodes(node<T>* n) {
+	if (n == nullptr)
+		return;
 
-//TODO: This function gives segmentation fault
+	node<T>* child = n->m_son;
+	while (child != nullptr) {
+		node<T>* next = child->m_sibling;
+		delete_nodes(child);
+		child = next;
+	}
+	delete n;
+}
+
 template <class T>
 node<T>* ntree<T>::copy_tree(node<T>* n) {
 	if (n == nullptr)
@@ -183,21 +196,14 @@ node<T>* ntree<T>::copy_tree(node<T>* n) {
 
 	node<T>* new_node = new node<T>;
 	new_node->m_value = n->m_value;
-	if (n->m_son != nullptr) {
-		new_node->m_son = copy_tree(n->m_son);
-		node<T>* child = new_node->m_son;
-		while (child != nullptr) {
-			child->m_parent = new_node;
-			child = child->m_sibling;
-		}
-	} else {
-		new_node->m_son = nullptr;
+
+	new_node->m_son = copy_tree(n->m_son);
+	node<T>* current_child = new_node->m_son;
+	while (current_child != nullptr) {
+		current_child->m_parent = new_node;
+		current_child = current_child->m_sibling;
 	}
-	if (n->m_sibling != nullptr) {
-		new_node->m_sibling = copy_tree(n->m_sibling);
-	} else {
-		new_node->m_sibling = nullptr;
-	}
+	new_node->m_sibling = copy_tree(n->m_sibling);
 	return new_node;
 }
 
@@ -207,7 +213,7 @@ bool ntree<T>::compare_tree(node<T>* n1, node<T>* n2) const {
 		return true;
 	if (n1 == nullptr || n2 == nullptr)
 		return false;
-	return n1->m_value == n2->m_value &&
+	return n1->m_value == n2->m_value 								&&
 				 compare_tree(n1->m_sibling, n2->m_sibling) &&
 				 compare_tree(n1->m_son, n2->m_son);
 }
