@@ -64,7 +64,7 @@ void priority_queue<T>::insert(const value_type& el) {
 		m_heap[k] = tmp;
 		i = k;
 		if (i > 0)
-			k = i / 2;
+			k = (i - 1) / 2;
 	}
 }
 
