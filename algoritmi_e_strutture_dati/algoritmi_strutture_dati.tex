@@ -1821,5 +1821,75 @@ Una specifica per il tipo di dato insieme è la seguente:
   		\item il figlio sinistro e il figlio destro di $i$ corrispondono alle posizioni $2i$ e $2i+1$ di $H$.
   	\end{itemize}
   	Il figlio sinistro (destro) di $i$ non esiste se e solo se $2i > n$ ($2i + 1 > n$). Inoltre, per $1 \leq i \leq n$, il padre di $i$ è $\dfrac{i}{2}$. Ovviamente in $H[i]$ è memorizzato l'elemento di $C$ contenuto nel corrispondente nodo di $B$. Così, per la terza proprietà, se il figlio sinistro (destro) di $i$, allora $H[2i] > H[i]\ (H[2i+1] > H[i])$. \\
-  	La realizzazione degli operatori $\texttt{MIN, CANCELLAMIN}$ e \texttt{INSERISCI} è molto semplice se si immagina di operare sull'albero $B$ anzichè sul vettore $H$. Per eseguire \texttt{MIN} basta leggere l'elemento contenuto della radice, mentre per eseguire \texttt{CANCELLAMIN} si cancella la foglia di livello massimo più a destra, così da mantenere verificate le prime due proprietà, se ne copia l'elemento nella radice, e si fa ``scendere'' tale elemento lungo un percorso radice-foglia, scambiandolo col minimo degli elementi contenuti nei figli, fino a verificare la terza proprietà. 
+  	La realizzazione degli operatori $\texttt{MIN, CANCELLAMIN}$ e \texttt{INSERISCI} è molto semplice se si immagina di operare sull'albero $B$ anzichè sul vettore $H$. Per eseguire \texttt{MIN} basta leggere l'elemento contenuto della radice, mentre per eseguire \texttt{CANCELLAMIN} si cancella la foglia di livello massimo più a destra, così da mantenere verificate le prime due proprietà, se ne copia l'elemento nella radice, e si fa ``scendere'' tale elemento lungo un percorso radice-foglia, scambiandolo col minimo degli elementi contenuti nei figli, fino a verificare la terza proprietà. \\
+  	Vediamo le procedure Pascal che realizzano la coda con priorità usando il vettore heap. Gli $n$ elementi sono memorizzati in $heap[1\dots n]$ dove $heap[1]$ contiene l'elemento minimo. Il cursore \textit{ultimo} registrea $n$, cioè l'ultima posizione occupata, che corrisponde alla foglia di $B$ che sta più a destra tra quelle di livello massimo. Al solito, il valore 0 in \textit{ultimo} indica una coda con priorità vuota. 
+  	\begin{lstlisting}[style=pascalstyle]
+  	type
+  		priorcoda = record 
+  			heap: array[1..maxlung] of tipoelem;
+  			ultimo: 0..maxlung;
+  		end;
+  	
+  	procedure CREAPRIORCODA(var C: priorcoda);
+  		begin
+  			C.ultimo := 0
+  		end;
+  	
+  	function MIN(var C: prioricoda): tipoelem;
+  		begin 
+  			if C.ultimo = 0
+  				then {errore: priorcoda vuota}
+  				else 
+  					MIN := C.heap[1]
+  		end;
+  	\end{lstlisting}
+  	Nella \texttt{INSERISCI}, si incrementa il valore del cursore \textit{ultimo}, così da far spazio per il nuovo elemento $x$. Questo corrisponde ad aggiungere una foglia al livello massimo più a sinistra in $B$. Si usano due cursori $i$ e $k$ per risalire l'heap. Inzialmente $i$ indica la foglia che è stata aggiunta. Il cursore $k = \lfloor i/2 \rfloor$ indica il padre del nodo $i$, che esiste solo se $i > 1$, cioè se $i$ non è la radice. Se non è verificata la terza proprietà tra $heap[i]$ e $heap[k]$, allora avviene lo scambio e si continua a risalire, con $i$ che assume il vecchio valore di $k$. Nel caso pessimo, la risalita ha termine quando è raggiunta la radice, cioè quando $i = 1$.
+  	\begin{lstlisting}[style=pascalstyle]
+  		procedure INSERISCI(x: tipoelem; var C: priorcoda);
+  			var i, k: integer; temp: tipoelem;
+  			begin 
+  				if C.ultimo = maxlung then
+  					{errore: priorcoda piena}
+  				else begin
+  					C.ultimo := C.ultimo + 1
+  					C.heap[C.ultimo] := x;
+  					i := C.ultimo;
+  					if i > i then k := i div 2;
+  					while (i > 1) and (C.heap[i] < C.heap[k]) do begin
+  						temp := C.heap[i];
+  						C.heap[i] = C.heap[k];
+  						C.heap[k] = temp;
+  						i := k;
+  						if i > 1 then k := i div 2;
+  					end
+  			end
+  		end;
+  	\end{lstlisting}
+  	Nella \texttt{CANCELLAMIN}, si decrementa il valore del cursore \textit{ultimo}, così da rimuovere la foglia al livello massimo più a destra in $B$, il cui valore è copiato nella radice. Si usano ancora due cursori $i$ e $k$ per scendere nell'heap, ma stavolta $i$ inizia dalla radice. Il cursore $k$ indica il figlio sinistro $2i$ o il figlio destro $2i + 1$, se esistono, a seconda di chi contiene l'elemento minimo. Se non è verificata la terza prorprietà tra $heap[i]$ e $heap[k]$, allora avviene lo scambio e si continua a scendere con $i$ che assume il vecchio valore di $k$. Nel caso peggiore, la discesa ha termine quando è raggiunta una foglia, cioè quando $i > \lfloor n/2\rfloor$ dove $n$ è il valore contenuto in ultimo.
+  	\begin{lstlisting}[style=pascalstyle]
+  		procedure CANCELLAMIN(var C: priorcoda);
+  			var i, k: integer; temp: tipoelem; scambio: boolean;
+  			begin 
+  				if C.ultimo = 0 then
+  					{errore: priorcoda vuota}
+  				else begin
+  					C.heap[1] := C.heap[C.ultimo]
+  					C.ultimo := C.ultimo - 1;
+  					i := 1; scambio = true;
+  					while (i < C.ultimo div 2) and (scambio) do begin
+	  					k := 2 * i;
+	  					if (k < C.ultimo) then
+	  						if C.heap[k] > C.heap[k + 1] then 
+	  							k := k + 1;
+	  					if C.heap[k] < C.heap[i] then begin
+	  						temp := C.heap[i];
+	  						C.heap[i] := C.heap[k];
+	  						C.heap[k] := temp;
+	  						i := k
+	  					end else 	
+	  						scambio := false;
+  					end
+  			end
+  		end;
+  	\end{lstlisting} 
  \end{document}
