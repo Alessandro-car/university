@@ -6,6 +6,7 @@ void print_test_result(std::string name, bool condition) {
     std::cout << "[TEST] " << name << ": " << (condition ? "PASSED ✅" : "FAILED ❌") << std::endl;
 }
 
+
 int main() {
     bst<int> tree;
 
