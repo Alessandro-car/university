@@ -1892,4 +1892,179 @@ Una specifica per il tipo di dato insieme è la seguente:
   			end
   		end;
   	\end{lstlisting} 
+  	\chapter{Alberi binari di ricerca}
+  	Gli alberi di ricerca sono strutture dati che supportano molte operazioni sugli insiemi dinamici:
+  	\begin{itemize}
+  		\item \texttt{SEARCH($S, k$)} \\
+  		\quad Query che dato un insieme $S$ e un valore chiave $k$ restituisce un elemento $x$ di $S$.
+  		\item \texttt{MINIMUM($S$)} e \texttt{MAXIMUM($S$)} \\
+  		\quad Query su insieme $S$ totalmente ordinato che restituiscono un elemento di $S$ con la chiave più piccola, rispettivamente con la chiave più grande. 
+  		\item \texttt{SUCCESSOR($S, x$)} e \texttt{PREDECESSOR($S, x$)} \\
+  		\quad Query che dato un elemento $x$, la cui chiave appartiene ad $S$, restituisce il prossimo elemento più grande, rispettivamente il più piccolo.
+  		\item \texttt{INSERT($S, x$)} e \texttt{DELETE($S, x$)} \\
+  		\quad Operazioni di modifica che inseriscono, rispettivamente rimuovo, elementi da $S$.
+  	\end{itemize}
+  	Gli alberi di ricerca possono essere utilizzati come dizionari o come code di priorità. \\
+  	Un albero binario di ricerca è organizzato in un albero binario e valgono le segueneti proprietà:
+  	\begin{enumerate}
+  		\item Per ogni nodo $u$, tutti gli elementi contenuti nel sottoalbero radicato nel figlio sinistro di $u$ sono minori dell'elemento contenuto in $u$;
+  		\item Per ogni nodo $u$, tutti gli elementi contenuti nel sottoalbero radicato nel figlio destro di $u$ sono maggiori dell'elemento contenuto in $u$.
+  	\end{enumerate}
+  	Queste due proprietà hanno lo scopo di agevolare la ricerca di un elemento. \\
+  	Le chiavi vengono memorizzate in modo tale da soddisfare le proprietà di un albero binario di ricerca (BST), ovvero se $u$ è un nodo in un BST e $y$ è un nodo nel sotto-albero sinistro (destro) di $x$, allora $y.key \leq x.key$ ($y.key \geq x.key$). \\
+  	Sfruttando le proprietà di un BST possiamo stampare in ordine gli elementi di un BST con una funzione ricorsiva di visita inorder:
+  	\begin{lstlisting}[style=pascalstyle]
+  		INORDER-TREE-WALK(BST T)
+  			INORDER-TREE-WALK(T, T.root())
+  		INORDER-TREE-WALK(BST T, Node n)
+  			if (!T.sx_empty(n))
+  				INORDER-TREE-WALK(T, T.sx(n))
+  			print n.key
+  			if (!T.dx_empty(n))
+  				INORDER-TREE-WALK(T, T.dx(n))
+  	\end{lstlisting}
+  	La complessità è lineare rispetto al numero dei nodi del BST.  \\
+  	Spesso si ha la necessità di cercare una chiave in un BST. Oltre all'operazione di ricerca, un BST mette a disposizione anche operazioni di \texttt{MINIMUN, MAXIMUM, SUCCESSOR, PREDECESSOR} e la complessità è lineare rispetto all'altezza dell'albero. 
+  	\section{Specifica}
+  	La specifica sintattica è la seguente:
+  	  	\begin{align*}
+  		&\texttt{create}: &\quad \text{()} \to \text{BST} \\
+  		&\texttt{empty:} &\quad \text{(BST)}  \to \text{boolean}  \\
+  		&\texttt{insert:} &\quad \text{(BST, key)}  \to \text{BST}  \\
+  		&\texttt{erase:} &\quad \text{(BST, key)}  \to \text{BST}   \\
+  		&\texttt{search:} &\quad \text{(BST, key)}  \to \text{Node} \\
+  		&\texttt{minimum:} &\quad \text{(BST)} \to \text{Node} \\
+  		&\texttt{maximum:} &\quad \text{(BST)} \to \text{Node} \\
+  		&\texttt{predecessor:} &\quad \text{(BST, Node)} \to \text{Node} \\
+  		&\texttt{successor:} &\quad \text{(BST, Node)} \to \text{Node}
+  	\end{align*}
+  	Di seguito l'implementazione dei metodi:
+  	\begin{lstlisting}[style=pascalstyle]
+  		TREE-SEARCH(BST T, key k)
+  			TREE-SEARCH(T, T.root())
+  			
+  		TREE-SEARCH(BST T, Node n, key k)
+  			if (n.key == k)
+  				return n
+  			if (k < n.key && !T.sx_empty(n))
+  				return TREE-SEARCH(T, T.sx(n), k)
+  			if (k > n.key && !T.dx_empty(n))
+  				return TREE-SEARCH(T, T.dx(n), k)
+  			return NULL
+  			
+  		TREE-MINIMUN(BST T)
+  			TREE-MINIMUM(T, T.root())
+  		
+  		TREE-MINIMUM(BST T, Node n)
+  			if (T.sx_empty(n))
+  				return n
+  			return TREE-MINIMUM(T, T.sx(n))
+  			
+  		TREE-MAXIMUM(BST T)
+  			TREE-MAXIMUM(T, T.root())
+  		
+  		TREE-MAXIMIM(BST T, Node n)
+  			if (T.dx_empty(n))
+  				return n
+  			return TREE-MAXIMUM(T, T.sx(n))
+  			
+  		TREE-SUCCESSOR(BST T, Node n)
+  			if (!T.dx_empty(n))
+  				return TREE-MINIMUM(T, T.dx(n))
+  			if (T.root() != n) {
+  				p = T.parent(n)
+  				while (T.dx(p) == n) {
+  					n = p
+  					p = T.parent(n)
+  				}
+  				return p
+  			}
+  			return NULL
+  	\end{lstlisting}
+  	Nel successore se il nodo $n$ ha un figlio destro il successore è il minimo del sotto-albero destro, altrimenti il successore è il più piccolo antenato di $n$ il cui figlio sinistro è anche antenato di $n$, ad esempio:
+  	\begin{figure}[H]
+  		\centering
+  		\includegraphics[width=0.5\textwidth]{alberi_bin_ricerca}
+  	\end{figure}
+  	Il successore di 15 è 17 e il successore di 13 è 5. \\
+  	Analizziamo l'inserimento:
+  	\begin{lstlisting}[style=pascalstyle]
+  		TREE-INSERT(BST T, key k)
+  			if (T.empty())
+				T.ins_root()
+				n.key = k
+				T.write(T.root(), n)
+			else 
+				x = T.root()
+				found = true
+				while (found)
+					if (k < x.key && !T.sx_empty()) 
+						x = T.sx(x)
+					elif (k > x.key && !T.dx_empty()) 
+						x = T.dx(x)
+					else 
+						found = false
+				if (k < x.key)
+					T.ins_sx(x)
+					n.key = k
+					T.write(T.sx(x), n)
+				else 
+					T.ins_dx(x)
+					n.key = k
+					T.write(T.dx(x), n)
+   	\end{lstlisting}
+   	Analizziamo la rimozione di una chiave $k$ memorizzata in un nodo $z$ del BST. 
+   	\begin{itemize}
+   		\item Se $z$ è foglia rimuoviamo il nodo $z$ dal BST;
+   		\item Se $z$ ha un solo figlio $y$ allora facciamo occupare da $y$ la posizione di $z$ nel BST;
+   		\item Se $z$ ha due figli, allora cerchiamo il successore di $y$ di $z$, e facciamo occupare ad  $y$ la posizione di $z$ nel BST:
+   		\begin{itemize}
+   			\item $y$ si troverà nel sotto-albero destro di $z$;
+   			\item Si dovrà distinguere tra:
+   			\begin{itemize}
+   				\item $y$ figlio destro di $z$;
+   				\item $y$ appartenente al sotto-albero destro di $z$ ma non figlio destro di $z$, si noti che in questo caso $y$ non ha figlio sinistro in quanto è il minimo di un sotto-albero. 
+   			\end{itemize}
+   		\end{itemize}
+   	\end{itemize}
+   	\section{Albero rosso-neri}
+   	Abbiamo visto che in un BST le operazioni hanno complessità lineare rispetto all'altezza dell'albero. Gli alberi rosso-neri (RBT) sono uno dei tanti schemi di bilanciamento di BST che garantiscono complessità log-lineare nel caso pessimo. Un albero rosso-nero è un BST in cui ogni nodo memorizza anche il proprio colore, rosso o nero. Imponendo un vincolo sul colore dei nodi su un path dalla radice ad una foglia, i RBT assicurano che nessun path ha una lunghezza doppia di un altro, quindi l'albero è approssimativamente bilanciato. \\
+   	Un RBT soddisfa le seguenti proprietà:
+   	\begin{itemize}
+   		\item Ogni nodo è rosso o nero;
+   		\item La raidice è nera;
+   		\item Ogni foglia è nera;
+   		\item Se un nodo è rosso, entrambi i figli sono neri;
+   		\item Per ogni nodo, tutti i path dal nodo ad una foglia contentono lo stesso numero di nodi neri.
+   	\end{itemize}
+   	Si dimostra che un RBT con $n$ nodi interni ha un altezza al più di $2\log(n + 1)$ e quindi la ricerca in un RBT ha complessità log-lineare. \\
+   	Le operazioni di inserimento e cancellazione per BST potrebbero dare un BST che viola le proprietà di RBT e per ripristinare le proprietà si dovrà cambiare il colore di alcuni nodi dell'albero. Questa si ottiene con delle operazioni di rotazione che preservano le proprietà di un BST.
+   	\section{AVL Tree}
+   	Un AVL Tree è un BST bilanciato in altezza: per ogni nodo $x$, le altezze del sotto-albero sinistro e destro di $x$ differiscono di al più 1. \\
+   	Per implementare un AVL si mantiene un attributo extra per ogni nodo, la sua altezza. Per l'inserimento usiamo l'inserimento classico per i BST, ma l'albero potrebbe non essere bilanciato in altezza e in questo caso si usano delle rotazioni che rendono tali alberi bilanciati in altezza. \\
+   	In alternativa, si può usare una proceudra ricorsiva che inserisce un nodo in un AVL tree conservandole proprietà di un AVL in tempo log-lineare.
+   	\section{Treaps}
+   	L'inserimento di $n$ chiavi in un BST potrebbe dar luogo ad un albero molto sbilanciato, degradando le prestazioni della ricerca di chiavi. Si può dimostrare che BST costruiti a random tendono ad essere bilanciati: dato un insieme di elementi si inseriscono gli elementi nel BST seguendo l'ordine di una loro permutazione random. \\
+   	Ma, se gli elementi vengono forniti uno alla volta la soluzione per costruire in modo random il corrispondente BST è mediante l'utilizzo di \textit{treaps}. \\
+   	Un treap è un BST che memorizza i nodi in modo diverso dal tradizionale. Ad ogni nodo, oltre alla chiave è associata una priorità, un numero random scelto indipendentemente per ogni nodo e \textbf{tutte le chiavi e le priorità sono distinte}. \\
+   	I nodi in un treap sono ordinati in modo tale che le chiavi obbediscono alle proprietà di un BST e le priorità alla proprietà di un min-heap:
+   	\begin{itemize}
+   		\item Se $v$ è figlio sinistro di $u$, allora $v.key < u.key$;
+   		\item Se $v$ è figlio destro di $u$, allora $v.key > u.key$;
+   		\item Se $v$ è figlio di $u$, allora $v.priority > u.priority$.
+   	\end{itemize}
+   	Quindi, un treap ha le caratteristiche di un BST e di un heap. \\
+   	Supponiamo di inserire i nodi $x_1, x_2, \dots, x_n$ in un treap. Il treap risultante è un albero che si sarebbe ottenuto se i nodi fossero stati inseriti in un normale BST nell'ordine dato dalle loro priorità, scelte in modo randomico. Ad esempio:
+   	\begin{figure}[H]
+   		\centering 
+   		\includegraphics[width=1.0\textwidth]{ins_treap1}
+   	\end{figure} 
+   	\begin{figure}[H]
+   		\centering 
+   		\includegraphics[width=1.0\textwidth]{ins_treap2}
+   	\end{figure} 
+   	\begin{figure}[H]
+   		\centering 
+   		\includegraphics[width=1.0\textwidth]{ins_treap3}
+   	\end{figure} 
  \end{document}
