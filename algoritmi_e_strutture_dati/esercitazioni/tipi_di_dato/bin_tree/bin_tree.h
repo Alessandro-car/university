@@ -42,6 +42,7 @@ class bin_tree {
 		void insert_right(node<T>*);
 		void insert_subtree(bin_tree<T>&&);
 		void delete_subtree(node<T>*);
+		void replace_node(node<T>*, node<T>*);
 		bool operator==(const bin_tree<T>&) const;
 		bin_tree<T>& operator=(const bin_tree&);
 	private:
@@ -184,6 +185,21 @@ void bin_tree<T>::delete_subtree(node<T>* n) {
 			n->m_parent->m_left = nullptr;
 	}
 	delete n;
+}
+
+template <class T>
+void bin_tree<T>::replace_node(node<T>* u, node<T>* n) {
+	if (u->m_parent == nullptr) {
+		m_root = n;
+	} else if (u == u->m_parent->m_left) {
+		u->m_parent->m_left = n;
+	} else {
+		u->m_parent->m_right = n;
+	}
+
+	if (n != nullptr) {
+		n->m_parent = u->m_parent;
+	}
 }
 
 template <class T>
