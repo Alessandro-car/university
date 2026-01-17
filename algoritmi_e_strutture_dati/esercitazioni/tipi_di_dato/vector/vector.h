@@ -136,11 +136,11 @@ namespace myvec {
 	template <class T>
 	vector<T>::vector(vector<T>&& v) noexcept {
 		m_dim = v.m_dim;
-		m_arr = new T[m_arr];
+		m_len = v.m_len;
+		m_arr = new T[v.m_dim];
 		for (size_t i = 0; i < v.m_len; i++) {
 			m_arr[i] = std::move(v.m_arr[i]);
 		}
-		m_len = v.m_len;
 	}
 
 	template <class T>
@@ -169,11 +169,12 @@ namespace myvec {
 	template <class T>
 	vector<T>& vector<T>::operator=(vector<T>&& v) noexcept {
 		if (this != &v) {
-			m_dim = v.m_dim;
 			delete[] m_arr;
-			m_arr = new T[m_dim];
+			m_dim = v.m_dim;
+			m_len = v.m_len;
+			m_arr = new T[v.m_dim];
 			m_len = 0;
-			for (size_t i = 0; i < v.size(); i++) {
+			for (size_t i = 0; i < v.m_len; i++) {
 				m_arr[m_len++] = std::move(v.m_arr[i]);
 			}
 		}

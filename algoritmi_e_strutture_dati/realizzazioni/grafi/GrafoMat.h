@@ -15,29 +15,29 @@ class InfoArco {
 public:
 	P peso;
 	bool vuoto;
-    
-	InfoArco(){ 
-		vuoto = true; 
+
+	InfoArco(){
+		vuoto = true;
 	}
 };
 
 
-template<class E, class P> 
+template<class E, class P>
 class InfoNodo {
  public:
 	E etichetta;
 	bool vuoto;
 	void* info;
 	InfoArco<P>* archi;
-    
-	InfoNodo(){ 
-		info = 0; 
-		vuoto = true; 
+
+	InfoNodo(){
+		info = 0;
+		vuoto = true;
 	}
-    
+
 	~InfoNodo(){
-		if (!vuoto) 
-			delete [] archi; 
+		if (!vuoto)
+			delete [] archi;
 	}
 };
 
@@ -145,11 +145,11 @@ template<class E, class P>
 	// ATTENZIONE: controllare prima che non ci siano archi uscenti o entranti in n
 	bool canc = true;
 	int i;
-	for (i=0; i < dimensione && canc; i++) 
-		if (!matrice[n.getId()].archi[i].vuoto) 
+	for (i=0; i < dimensione && canc; i++)
+		if (!matrice[n.getId()].archi[i].vuoto)
 			canc = false;
-	for (i=0; i < dimensione && canc; i++) 
-		if (!matrice[i].vuoto && !matrice[i].archi[n.getId()].vuoto) 
+	for (i=0; i < dimensione && canc; i++)
+		if (!matrice[i].vuoto && !matrice[i].archi[n.getId()].vuoto)
 			canc = false;
 
 	if (canc){
@@ -180,7 +180,7 @@ template<class E, class P>
 	typename GrafoMat<E, P>::ListaNodi GrafoMat<E, P>::list_nodi() const {
 	ListaNodi list;
 	for (int i = 0; i < dimensione; i++)
-		if (!matrice[i].vuoto) 
+		if (!matrice[i].vuoto)
 			list.insert(new NodoG(i), list.begin());
 	return list;
 }
