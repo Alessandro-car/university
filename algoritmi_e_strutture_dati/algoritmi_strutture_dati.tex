@@ -2067,4 +2067,152 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\centering 
    		\includegraphics[width=1.0\textwidth]{ins_treap3}
    	\end{figure} 
+   	\chapter{Grafi}
+   	Un grafo orientato è una coppia $G = (N, A)$, con $N$ insieme finito di elementi, detti nodi, ed $A$ insieme finito di coppie ordinate di nodi, detti archi. I grafi orientati possono essere rappresentati graficamente disegnando ogni nodo con un cerchietto e ogni arco $(i, j)$ con una freccia che esce dal nodo $i$ al nodo $j$. Il numero di nodi ed il numero di archi sono di solito indicati, rispettivamente, con $n$ ed $m$. Poichè possono esserci al più $n-1$ archi uscenti da ciascun nodo, risulta $0 \leq m \leq n(n-1)$.
+   	In generale, i nodi sono usati per rappresentare oggetti e gli archi per rappresentare relazioni tra coppie di oggetti. \\
+   	In un grafo orientato $G$, un cammino è una sequenza di nodi $u_0, u_1, \dots, u_k$ tali che $(u_i, u_{i + 1}) \in A$, per $i = 0, 1, 2, \dots, k - 1$. Il cammino parte dal nodo $u_0$, attraversa i nodi $u_1, \dots, u_{k-1}$, arriva al nodo $u_k$, ed ha lunghezza uguale al numero $k$ di archi. Se non ci sono nodi ripetuti, cioè $u_i \neq u_j$, per $0 \leq i < j \leq k$, allora il cammino è semplice, mentre se $u_0 = u_k$, allora è chiuso. Un cammino sia semplice che chiuso, dove l'unica ripetizione è $u_0 = u_k$, è detto ciclo. \\
+   	Un grafo orientato è fortemente connesso se per ogni coppia di nodi $u$ e $v$ esiste almeno un cammino da $u$ a $v$ ed almeno un cammino da $v$ ad $u$. \\
+   	Talvolta, gli archi di un grafo $G$ sono formato da coppie non ordinate $[i, j]$. In tal caso, $G$ è un grafo non orientato. Mentre in un grafo orientato $(i, j)$ e $(j, i)$ indicano due archi distinti, in uno non orientato $[i, j]$ e $[j, i]$ indicano lo stesso arco, che è detto incidere sui due nodi, i quali sono adiacenti tra loro. Grafi non orientati sono usati per rappresentare relazioni simmetriche tra oggetti. \\
+   	Anche nei grafi non orientati ci sono nozioni analoghe a quelle di cammino e ciclo. In un grafo non orientato $G$, una catena è una sequenza di nodi $u_0, u_1, \dots, u_k$ tali che $[u_i, u_{i+1}] \in A$, per $i = 0, 1, 2, \dots, k - 1$. La catena collega $u_0$ con $u_k$, o viceversa, ed ha lunghezza uguale a $k$. Se non ci sono nodi ripetuti, allora la catena è semplice, mentre se $u_0 = u_k$, allora è chiusa. Una catena sia semplice che chiusa i cui archi sono tutti distinti è un circuito. Si noti che nei grafi orientati la mancanza di ripetizioni di nodi implica la mancanza di ripetizione degli archi, ma questo non è vero per i grafi non orientati. \\
+   	Un grafo non orientato è connesso se per ogni coppia di nodi distinti $u$ e $v$ esiste una catena tra $u$ e $v$.
+   	\section{Specifica}
+   	Poichè ogni grafo non orientato $G$ può essere visto come un grafo orientato $D$, ottenuto da $G$ sostituendo ogni arco $[i, j]$ con i due archi $(i, j)$ e $(j, i)$, sarà fornita una specifica solo per grafi orientati. Le operazioni definite sui grafi prevedono la possibilità di inserire o cancellare nodi o archi, e di spostarsi da un nodo ad un suo adiacente. 
+   	\begin{align*}
+   		&\texttt{CREAGRAFO:} &\quad &() \to \text{grafo} \\
+   		&\texttt{GRAFOVUOTO:} &\quad &(\text{grafo}) \to \text{booleano} \\
+   		&\texttt{INSNODO:} &\quad &(\text{nodo, grafo}) \to \text{grafo} \\
+   		&\texttt{INSARCO:} &\quad &(\text{nodo, nodo, grafo}) \to \text{grafo} \\
+   		&\texttt{CANCNODO:} &\quad &(\text{nodo, grafo}) \to \text{grafo} \\
+   		&\texttt{CANCARCO:} &\quad &(\text{nodo, nodo, grafo}) \to \text{grafo} \\
+   		&\texttt{ADIACENTI:} &\quad &(\text{nodo, grafo}) \to \text{insieme}
+   	\end{align*} 
+   	L'operazione \texttt{CREAGRAFO} restituisce un grafo ``vuoto'', cioè senza nodi e senza archi, mentre \texttt{GRAFOVUOTO} verifica se il grafo è vuoto oppure no. L'operazione \texttt{INSNODO} aggiunge al grafo un nuovo nodo ``isolato'', cioè non collegato a nessun altro nodo del grafo, mentre \texttt{INSARCO} aggiunge un nuovo arco tra una coppia di nodi del grafo. \texttt{CANCARCO} permette di cancellare un arco esistente tra una coppia di nodi, mentre \texttt{CANCNODO} cancella un nodo ``isolato''. Se il nodo da cancellare non è isolato, occorre preventivamente cancellare tutti gli archi che lo collegano ad altri nodi con ripetute applicazioni di \texttt{CANCARCO}. Infine, l'operazione \texttt{ADIACENTI} restituisce l'insieem di tutti i nodi adiacenti ad un certo nodo, cioè tutti i nodi raggiungibili con un arco che esce da tale nodo. Di seguito la specifica semantica:
+   	\begin{itemize}
+   		\item \texttt{CREAGRAFO = $G$} \\ 
+   		\quad \textit{Post}: $G = (N, A)$, con $N = \emptyset$ ed $A = \emptyset$ 
+   		\item \texttt{GRAFOVUOTO($G$) = $b$} \\
+   		\textit{Post}: $\begin{cases}
+   			b = vero & N = \emptyset \wedge A = \emptyset \\
+   			b = falso & altrimenti
+   		\end{cases}$
+   		\item \texttt{INSNODO($u, G$) = $G'$} \\
+   		\quad \textit{Pre}: $G = (N, A)$, $u \notin N$ \\
+   		\quad \textit{Post}: $G' = (N', A)$ con $N'= N\cup \{u\}$
+   		\item \texttt{INSARCO($u, v, G$) = $G'$} \\
+   		\quad \textit{Pre}: $G = (N, A)$, $u \in N$, $v \in N$ e $(u, v) \notin A$ \\
+   		\quad \textit{Post}: $G' = (N, A')$ con $A'= A \cup \{(u, v)\}$
+   		\item \texttt{CANCNODO($u, G$) = $G'$} \\
+   		\quad \textit{Pre}: $G = (N, A)$, $u \in N \wedge \centernot{\exists}v \in N \mid (u, v) \in A \vee (v, u) \in A$ \\
+   		\quad \textit{Post}: $G' = (N', A)$ con $N'= N - \{u\}$
+   		\item \texttt{CANCARCO($v, u, G$) = $G'$} \\
+   		\quad \textit{Pre}: $G = (N, A)$, $u \in N$, $v \in N$ e $(u, v) \in A$ \\
+   		\quad \textit{Post}: $G' = (N, A')$ con $A'= A - \{(u, v)\}$
+   		\item \texttt{ADIACENTI($u, G$) = $A(u)$} \\
+   		\quad \textit{Pre}: $G = (N, A)$, $u \in N$ \\
+   		\quad \textit{Post}: $A(u) = \{v: (u, v) \in A\}$ detto insieme di adiacenza di $u$.
+   	\end{itemize}
+   	In molte applicazioni, ai nodi e/o agli archi sono associate delle informazioni di un certo tipo dette etichette o passi. In tal caso, si parla di grafi etichettati o pesati, sui quali è utile introdurre ovvi operatori, per reperire e/o modicare le informazioni associate a nodi e/o archi. 
+   	\section{Realizzazioni con matrici}
+   	\subsection{Matrici di incidenza}
+   	La più semplici rappresentazioni di grafi utilizzano matrici. Tra queste le più usate sono la matrice di incidenza nodi-archi e la matrice di adiacenza nodi-nodi. La matrice di incidenza nodi-archi è una matrice rettangolare $B = [b_{ik}]$ di dimensioni $n \times m$, dove ciascuna riga rappresenta un nodo e ciascuna colonna rappresenta un arco, tale che:
+   	\[
+   	b_{ik} = \begin{cases}
+   		-1 & \text{se l'arco $k$-esimo esce dal nodo $i$} \\
+   		+1 & \text{se l'arco $k$-esimo entra nel nodo $i$} \\
+   		0 & \text{altrimenti}
+   	\end{cases}
+   	\]
+   	Se il grafo non è orientato, invece, si ha:
+   	\[
+   	b_{ik} = \begin{cases}
+   		1 & \text{se l'arco $k$-esimo è incidente nel nodo $i$} \\
+   		0 & \text{altrimenti}
+   	\end{cases}
+   	\]
+   	La matrice di incidenza è molto utile per rappresentare un grafo in certi problemi di programmazione linare, nei quali si cerca un vettore $x$ di $m$ incognite associato agli archi che soddisfi un sistema di equazioni del tipo $Bx = c$, dove $c$ è un vettore di $n$ termini noti interi. Lo spazio di memoria occupato è sempre $\Theta(nm)$ e dato un nodo non è agevole ricavare l'insieme di adiacenza. Infatti per calcolare un qualsiasi $A(u)$ occure scandire la riga $u$ di $B$ alla ricerca delle colonne $k$ con elementi $b_{uk} = -1$ e per ciascuna colonna $k$ scandirla per individuare l'indice di riga $v$ tale che $b_{vk} = +1$. 
+   	\subsection{Matrici di adiacenza}
+   	La matrice di adiacenza nodi-nodi, invece, è una matrice quadrata $E = [e_{ij}]$ di dimensioni $n \times n$, tale che:
+   	\[
+   	e_{ij} = \begin{cases}
+   		1 & (i, j) \in A \\
+   		0 & (i, j) \notin A
+   	\end{cases}
+   	\]
+   	Se il grafo non è orientato, allora tale matrice è simmetrica, ovvero $e_{ij} = e_{ji}$ per ogni $i$ e $j$. \\
+   	Con questa realizzazione è banale verficare in tempo $O(1)$ se un dato arco è presente nel grafo oppure no. Il tempo per ricavare l'insieme di adiacenza $A(u)$ di un qualsiasi nodo $u$ è sempre $\Theta(n)$, indipendentemente dalla cardinalità di $A(u)$, perchè occorre scandire un'intera riga della matrice alla ricerca degli elementi $b_{uv} = 1$. Se il grafo è pesato, allora nella matrice $E$ si utilizzano i pesi degli archi al posto degli elementi binari. Se $p_{ij}$ è il peso dell'arco $(i, j)$, allora la matrice $E$ diventa:
+   	\[
+   	e_{ij} = \begin{cases}
+   		p_{ij} & (i, j) \in A\\
+   		+\infty\ (-\infty) & (i, j) \notin A
+   	\end{cases}
+   	\]
+   	\section{Realizzazione con vettore di adiacenza}
+   	È possibile rappresentare il grafo $G = (N, A)$ con due vettori, il vettore NODI e il vettore ARCHI. \\
+   	Il vettore NODI è formato da $N$ elementi e NODI($i$) contiene un cursore alla posizione di ARCHI a partire dalla quale è memorizzato $A(i)$. Per semplicità denotiamo i nodi con interi. Nel caso il grafo sia etichettato possiamo associare al nodo altre informazioni. 
+   	\begin{figure}[H]
+   		\centering 
+   		\includegraphics[width=0.6\textwidth]{grafo_vec_adiacenza}
+   	\end{figure}
+   	Se il grafo non è orientato è necessario rappresentare ogni arco due volte, se i grafi sono etichettati sui nodi e/o sugli archi i pesi possono essere memorizzati in vettori PESINODI($n$) e PESIARCHI($m$).
+   	\begin{figure}[H]
+   		\centering 
+   		\includegraphics[width=0.5\textwidth]{grafo_non_orientato_vec_adiacenza}
+   	\end{figure}
+   	\section{Rappresentazione con lista di adiancenza}
+   	È possibile anche utilizzare un vettore di nodi $A$ ed $n$ liste. Una generica componente $A(i)$ del vettore è il puntatore alla lista $i-$esima in cui sono memorizzati i nodi adiacenti a $i$.
+   	\begin{figure}[H]
+   		\centering
+   		\includegraphics[width=0.5\textwidth]{grafo_lista_adiacenza}
+   	\end{figure}
+   	\section{Rappresentazione con struttura a puntatori}
+   	La rappresentazione con struttura a puntatori è la versione dinamica della matrice di adiacenza estesa. Il nodo $v$ con etichetta $e$, $h$ archi entranti e $k$ archi uscenti è rappresentato mediante un record. 
+   	\begin{figure}[H]
+   		\centering
+   		\includegraphics[width=0.8\textwidth]{grafo_struttura_record}
+   	\end{figure}
+   	\section{Esplorazione di un grafo}
+   	Vediamo due metodi sistematici per ``visitare'' almeno una volta ogni nodo ed ogni arco di un grafo orientanto fortemente connesso (o non orientato e connesso). \\
+   	Entrambi i metodi effettuano la visita in tempo ottimo $\Theta(n + m)$ a partire da un generico nodo $r$:
+   	\begin{enumerate}
+   		\item \textit{Depth-First-Search} (DFS), ovvero visita in profondità, detta anche a scandaglio;
+   		\item \textit{Breadth-First-Search} (BFS), ovvero visita in ampiezza, detta anche a ventaglio. 
+   	\end{enumerate}
+   	Il metodo di visita DFS è una diretta estensione della visita in ordine anticipato di un albero ordinato. Quando viene visitato un nuovo nodo $u$, ci si allontana da esso il più possibile lungo un cammino (o catena), visitando nodi (e archi) nel cammino fino a giungere in un ``vincolo cieco'', ovvero in un nodo $v$ i cui nodi adiacenti sono già stati tutti visitati. Quando si è raggiunto $v$, si torna indietro lungo l'ultimo arco visitato e si riprende la visita allontanandosi lungo un altro cammino di nodi (e archi) non ancora visitati. \\
+   	Nella visita BFS, invece, i nodi sono visitati in ordine di distanza crescente dal nodo di partenza $r$, dove la distanza $r$ ad un generico nodo $u$ è il minimo numero di archi in un cammino (o catena) da $r$ ad $u$. Tale metodo di visita è un'estensione di una visita per livelli di un albero radicato, in cui i figli di un nodo sono visitati dopo aver visitato tutti gli altri nodi che stanno allo stesso livello del padre. \\
+   	In entrambi i metodi, occorre mantenere una lista dei nodi che sono già stati visitati, ma i cui nodi adiacenti non sono ancora stati visitati. Poichè la DFS torna indietro dal più recente vicolo cieco, tale lista è di fatto una pila. D'altro lato, poichè la BFS visita i nodi più vicini ad $r$ prima di quelli più lontani, tale lista è una coda. Nel seguito la DFS è descritta con una procedura Pascal ricorsiva, perchè più concisa ed elegante, mentre la BFS è descritta utilizzando gli operatori delle code.
+   	\begin{lstlisting}[style=pascalstyle]
+   		procedure DFS(var G: grafo; u: nodo);
+   			var v: nodo;
+   			begin
+   				{esamina il nodo u e visitato = true}
+   				for each v in A(u) do begin
+   					{esamina l'arco (u, v)}
+   					if v not visitato then DFS(G, v);
+   				end;
+   			end;
+   			
+   		procedure BFS(var G: grafo; u: nodo);
+   			var v: nodo, Q: coda;
+   			begin
+   				CREACODA(Q);
+   				INCODA(u, Q);
+   				while not CODAVUOTA(Q) do begin
+   					u := LEGGICODA(Q);
+   					FUORICODA(Q);
+   					{esamina il nodo u e visitato = true};
+   					for each v in A(u) do begin
+   						{esamina l'arco (u, v)};
+   						if v not visitato and v not in Q then INCODA(v, Q);
+   					end;
+   				end;
+   			end;
+   	\end{lstlisting}
+   	Le procedure DFS e BFS sono metodi di vista sistematica che possono essere usati per risolvere molti problemi. Ad esempio:
+   	\begin{enumerate}
+   		\item Verificare se un grafo non orientato è conneso oppure no (lo è solo se e solo se, al termine della visita, tutti i nodi sono stati marcati visitati);
+   		\item Verificare se un grafo orientato è fortemente connesso oppure no (lo è se e solo se, al termine della visita, tutti i nodi sono stati marcati visitati e, rovesciando successsivamente il vereso di tutti gli archi $(i, j)$ in $(j, i)$ e riapplicando la visita a partire dal medesimo nodo $r$, tutti i nodi vengono nuovamente marcati visitati);
+   		\item Trovare le componenti connesse di un grafo non orientato $G$, cioè tutti i sottografi connessi di cui $G$ è composto, tali che nessun sottografo è contenuto in uno più grosso (è sufficiente richiamare iterativamente una DFS modifcata in modo da marcare ciascun nodo con il numero della componente connessa cui il nodo appartiene).
+   	\end{enumerate}
+   	Inoltre, sia la visita DFS che la visita BFS di un grafo, connettendo i nodi marcati ad uno ad uno a partire da un generico nodo $i$, generano un albero radicato nel nodo iniziale $i$. Questo risulta interessante quando si voglia risolvere un problema che richiede di selezionare, tra tutti i percorsi che connettono due nodi in un grafo, quello che risulta ottimo, ad esempio in base al criterio di minimizzazione della somma dei pesi associati agli archi, detto ricerca dell'albero minimo di copertura o di attraversamento. \\
+   	La ricerca del percorso più breve è un problema classico. Sia $G = (N, A)$ un grafo orientato etichettato negli archi con valori interi positivi, i pesi. Partendo dal nodo $r \in N$, per ogni nodo $u \in N$, si calcola il percorso (cammino o catena) che connette $r$ ad $u$ tale che la somma dei pesi associati agli archi che compongono il cammino sia minima. Ad esempio i nodi possono essere delle città e gli archi sono le strade che le collegano e le etichette sugli archi sono le distanze. Il problema consiste nel trovare il percorso più breve tra tutti quelli che connettono la città alle altre città.
  \end{document}
