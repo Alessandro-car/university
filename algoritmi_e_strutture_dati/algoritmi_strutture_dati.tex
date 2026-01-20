@@ -2593,4 +2593,243 @@ Una specifica per il tipo di dato insieme è la seguente:
    			&= m + \frac{(n+1)}{2} - 1
    		\end{align*}
    	\end{itemize}
+   	\chapter{Tencniche algoritmiche}
+   	\section{Classificazione dei problemi}
+   	I problemi si possono classificare in:
+   	\begin{itemize}
+   		\item problemi di ricerca;
+   		\item problemi di decisione;
+   		\item problemi di ottimizzazione.
+   	\end{itemize}
+   	Nella fase di concettualizzazione si fornisce una specifica del problema, si stabiliscono le caratteristiche strutturali del problema senza far riferimento ai metodi per la risoluzione. \\
+   	Nella fase di realizzazione si passa dalla specifica del problema alle scelte per la sua risoluzione, che coinvolgono la definizione dell'\textit{algoritmo risolutivo} e la \textit{realizzazione del programma}. \\
+   	La specifica del problema si suddivide in diverse fasi:
+   	\begin{itemize}
+   		\item \textbf{la scelta dell'input}: si stabilisce che i valori di alcune variabili in gioco siano i dati di ingresso del problema. L'insieme di tali valori è lo \textit{spazio di input} del problema;
+   		\item \textbf{la scelta dello scopo della risoluzione}: si stabilisce che i valori di alcune variabili in gioco rappresentino le soluzioni del problema. L'insieme di tali valori è lo \textit{spazio delle soluzioni};
+   		\item L'identificazione del legame che i \textbf{vincoli del problema} impongono tra i valori dello spazio di input e i valori dello spazio delle soluzioni. Ciò conduce alla definizione della \textit{relazione caratteristica} del problema;
+   		\item la determinazione di quali \textbf{informazioni in uscita} si vuole che il processo risolutivo del problema produca. Queste informazioni stabiliscono lo \textit{spazio di output} e il \textit{quesito} del problema. 
+   	\end{itemize}
+   	Ad esempio, se vogliamo determinare la posizione di un numero interno in un vettore di interi, le variabili in gioco sono: un vettore \textbf{v}, un indice \textbf{k}, un numero intero \textbf{m}. \\
+   	Lo \textit{spazio di input} è l'insieme delle possibili coppie formate da un vettore $v$ e un numero intero $m$. Lo \textit{spazio delle soluzioni} è l'insieme degli indici di ogni possibile vettore. La \textit{relazione caratteristica} associa ad ogni coppia $(v, m)$ una posizione $k$ se e solo se il $k$-esimo elemento di $v$ coincide con $m$. La relazione la chiamiamo $R_{vett}$. Lo \textit{spazio di output} contiene lo spazio delle soluzioni più un particolare simbolo che denota l'assenza di soluzioni. Il \textit{quesito} stabilisce che, per ogni manifestazione che ammette soluzione, vogliamo come output un qualunque elemento dello spazio delle soluzioni legato a quella manifestazione della relazione caratteristica. 
+   	\begin{definition}{\nmu Specifica del problema}{specifica_problema}
+   		La specifica del problema è una quintupla $<I, S, R, O, Q>$ ove:
+   		\begin{itemize}
+   			\item $I$ è lo spazio di input;
+   			\item $S$ è lo spazio delle soluzioni;
+   			\item $R \subseteq I \times S$ è una reazione su $I$ ed $S$ detta relazione caratteristica;
+   			\item $O$ è lo spazio dell'output;
+   			\item $Q$ è una regola, detto \textit{quesito}, che sulla base della relazione caratteristica $R$ consente di definire una relazione su $I$ e $O$, $R_Q \subseteq I \times O$.
+   		\end{itemize}	
+   	\end{definition}
+   	Una particolare istanza del problema si ottiene ogni volta che scegliamo un particolare valore dei dati di ingresso. In relazione ad un problema e ad una sua istanza diamo la nozione di \textbf{soluzione}. 
+   	\begin{definition}{\nmu Soluzione di un problema}{sol_problema}
+   		Sia $P = <I, S, R, O, Q>$ un problema e sia $i \in I$ una sua istanza, una soluzione $S_i$ di $P$ per $i$ è un elemento di $S$ per cui vale:
+   		\[
+   		<i, S_i> \in R
+   		\]
+   	\end{definition}
+   	\begin{definition}{\nmu Rispostaza ad un problema}{risp_problema}
+   		Sia $P = <I, S, R, O, Q>$ un problema e sia $i$ una sua istanza, una \textit{risposta} $r_i$ a $P$ per $i$ è un elemento di $O$ per cui vale:
+   		\[
+   		<i, r_i> \in R_Q  		
+   		\]
+   		dove $R_Q$ è la relazione su $I$ e $O$ definita in base ad $R$ applicando la regola $Q$.  	
+   	\end{definition}
+   	\subsection{Problemi di ricerca}
+   	Tra tutte le possibili soluzioni siamo interessati a conoscere una qualunque delle soluzioni del problema per l'istanza che stiamo considerando, oppure, nel caso non esista soluzione, siamo interessati a saperlo. Introduciamo nello spazio di output il simbolo $\perp$ che individua l'\textit{assenza di soluzione}.
+   	\begin{definition}{\nmu Problema di ricerca}{problema_ricerca}
+   		Un \textit{problema di ricerca} $P$ è un problema specificato con una quintupla del tipo:
+   		\[
+   		<I, S, R, S \cup \{\perp\}, q_{ric}>
+   		\]
+   		ove $q_{ric}$ è la regola che definisce, in base ad $R$, la relazione $R_{qric}$ contenente tutti e soli i seguenti elementi:
+   		\begin{itemize}
+   			\item ogni coppia contenuta in $R$;
+   			\item ogni coppia $<i, \perp>$ per ogni istanza $i$ di $P$ per la quale $P$ non ha soluzioni.
+   		\end{itemize}
+   	\end{definition}
+   	Ad esempio, il problema della definizione della posizione di un intero in un vettore  di interi è un problema di ricerca:
+   	\[
+   	<I, S, R, S \cup \{\perp\}, q_{ric}>
+   	\]
+   	ove:
+   	\begin{itemize}
+   		\item $I$ è l'insieme delle coppie $<V, M>$;
+   		\item $S$ è l'insieme degli interi positivi (indici);
+   		\item $R$ è la relazione $R_{vett}$.
+   	\end{itemize}
+   	Siamo interessati, per ogni istanza, a calcolare una delle soluzioni oppure a segnalare il fatto che non ne esistono. Si dice anche: ``trovare una soluzione ammissibile, cioè che soddisfi la relazione''.
+   	\begin{example}{\nmu Problema delle regine}{problema_regine}
+   		Dato un intero positivo $N$ si determini un posizionamento di $N$ regine in una schiacchiera $N \times N$ tale che nessuna regina minacci qualche altra regina. \\
+   		La specifica è una quintupla $<\mathbbm{N}^+, D, R, D \cup \{\perp\}, q_{ric}>$ ove:
+   		\begin{itemize}
+   			\item $\mathbbm{N}^+$ è l'insieme di numeri interi positivi;
+   			\item $D$ è l'insieme delle disposizioni di regine in scacchiere di ogni dipensione ove il numero di regine è uguale alla dimensione della scacchiera;
+   			\item $R$ è la relazione che contiene tutte e sole le coppie $<x, y>$ in cui $x \in \mathbbm{N}^+$ e $y$ è una disposizione di $x$ regine nella scacchiera $x * x$.
+   		\end{itemize}
+   	\end{example}
+   	\begin{example}{\nmu Ordinamento crescente di un vettore di interi}{asc_ord_vec}
+   		Fornire la specifica in termini di input, spazio delle soluzioni, relazione caratteristica, spazio di output e quesito del problema. \\
+   		Lo \textit{spazio degli input} è l'insieme di tutti i vettori di interi. \\
+   		Lo \textit{spazio delle soluzioni} è l'insieme di tutte le possibili sequenze di indici di un vettore (per ogni intero positivo $n$, l'insieme di tutte le possibili permutazioni da 1 ad $n$). \\
+   		La \textit{relazione caratteristica} è l'insieme di tutte e sole le coppie $<V, W>$ tale che se $V = [v_1, \dots, v_n]$ allora $W = [w_1, \dots, w_n]$ e dati due indici qualunque $q$ ed $m$, dove $1 \leq q \leq n$ e $1 \leq m \leq n$ vale:
+   		\[
+   		V_{W_q} > V_{W_m} \iff q \geq m
+   		\]
+   		Ad esempio, se $V = [7, 1, 3, 4]$ allora $W = [2, 3, 4, 1]$ e $V_{W_2} > V_{W_1}$
+   	\end{example}
+   	\subsection{Problemi di decisione}
+   	La risposta è vero o falso a seconda che il dato di ingresso soddisfi o meno una certa proprietà. Dunque lo spazio di output contiene solo i due valori di verità. 
+   	\begin{definition}{\nmu Problema di decisione}{problema_decisione}
+   		Un problema di decisione $P$ è un problema specificato con una quintupla del tipo:
+   		\[
+   		<I, S, R, \{TRUE, FALSE\}, q_{dec}>
+   		\]
+   		dove il quesito $q_{dec}$ definisce la funzione:
+   		\[
+   		R_{qdec}: I \to \{TRUE, FALSE\}
+   		\]
+   		Tale che per ogni istanza $i$ di $P$, $R_{qdec}(i)$ vale:
+   		\begin{itemize}
+   			\item TRUE se $\exists s \in S \mid <i, s> \in R$;
+   			\item FALSE altrimenti.
+   		\end{itemize}
+   	\end{definition}
+   	In linea di principio, un problema di decisione può essere risolto mediante due approcci:
+   	\begin{enumerate}
+   		\item cercando una risposta al corrispondente problema di ricerca $P'=<I, S, R, S \cup \{\perp\}, q_{ric}>$ detto \textit{problema sottostante}, sfruttando il fatto che dato un $i \in I$, la risposta a $P$ per $i$ è FALSE solo se la risposta a $P'$ coincide con $\perp$, mentre in ogni altro caso la risposta a $P$ è TRUE (\textit{approccio costruttivo});
+   		\item determinando la risposta apropriata a $P$ senza ottenere una soluzione al corrispondente problema di ricerca sottostante (\textit{approccio non costruttivo}).
+   	\end{enumerate}
+   	\begin{example}{\nmu Problema di partizionamento}{problema_partizionamento}
+   		Sono dati $k$ numeri interi positivi, $n_1, \dots, n_k$ la cui somma è $2m$ per un certo intero $m$. Decidere se i $k$ numeri possano essere ripartiti in due gruppi in modo che la somma dei componenti di ogni gruppo sia $m$. \\
+   		Dunque se:
+   		\[
+   		n_{a_1}, \dots, n_{a_p} \text{ e } n_{b_1}, \dots, n_{b_q}
+   		\]
+   		Sono i due gruppi di numeri (cioè $p + q = k$), deve essere:
+   		\[
+   		\sum_{i=1}^{p}n_{a_i} = \sum_{j=1}^{q}n_{b_j} = m
+   		\]
+   		Lo \textit{spazio di input} è l'insieme $I$ di tutti i possibili insiemi di interi la cui somma è pari. \\
+   		Lo \textit{spazio delle soluzioni} è l'insieme $S$ di tutte le possibili coppie di insiemi di interi. \\
+   		La \textit{relazione caratteristica} è l'insieme $R$ di tutte e sole le coppie $<x, y>$ tale che:
+   		\begin{itemize}
+   			\item $x \in I$, $y \in S$;
+   			\item $y = <y_1, y_2>$ è una coppia di insiemi tale che:
+   			\[
+   			y_1 \cap y_2 = \emptyset \wedge y_1 \cup y_2 = x 
+   			\]
+   			e tale che
+   			\[
+   			\sum_{i}y_{1_i} = \sum_{j}y_{2_j}
+   			\]
+   		\end{itemize}
+   		Ad esempio il vettore $V = [1, 2, 2, 4, 7]$ viene partizionato in: $[1, 2]$ e $[2, 2, 4]$.
+   	\end{example}
+   	\subsection{Problemi di ottimizzazione}
+   	Alle soluzioni ammissibili è associata una misura (costo, obiettivo): risolvere il problema non significa trovare una qualunque soluzione, ma la magliore soluzione seconda la misura o criterio di preferenza fissato.
+   	\begin{definition}{\nmu Problema di ottimizzazione}{problema_ottimizzazione}
+   		Un problema di ottimizzazione $P$ è un problema specificato con una quintupla del tipo:
+   		\[
+   		<I, S, R, S \cup \{\perp\}, q_{ott}(M, m, \subseteq)>
+   		\]
+   		ove:
+   		\begin{itemize}
+   			\item $M$ è un insieme qualsiasi;
+   			\item $m$ è una funzione del tipo $I\times S \to M$ detta \textit{funzione obiettivo} di $P$; per una certa istanza $i \in I$, il valore $m(i, s)$ rappresenta una misura dell'elemento $S$ nello spazio delle soluzioni;
+   			\item $\subseteq$ è una relazione di ordinamento su $M$ ($x \subseteq y$ indica ``$x$ è migliore di $y$'');
+   			\item $q_ott(M, m, \subseteq)$ è una regola che definisce, in base ad $R$, la relazione $R_{qott} \subseteq I \times S$ su $I$ ed $S$ così da individuare:
+   			\begin{itemize}
+   				\item una coppia $(i, s) \forall i \mid \centernot{\exists} s' $ associata ad $i$ migliore;
+   				\item una coppia $(i, \perp) \forall i$ per la quale $P$ non ha soluzioni.
+   			\end{itemize}
+   		\end{itemize}
+   	\end{definition}
+   	\begin{example}{\nmu Tre differenti problemi per uno stesso ambito}{ottimizzazione_esempio}
+   		Dato un insieme $W$ di parole, determinare una parola $A \in W$ tale che non esistano altre parole in $W$:
+   		\begin{itemize}
+   			\item $P_1$ maggiori di $A$ secondo l'ordine alfabetico;
+   			\item $P_2$ di lunghezza maggiore a quella di $A$;
+   			\item $P_3$ composte usando tutte le lettere dell'alfabeto che compongono $A$, più altre lettere.
+   		\end{itemize}
+   		Lo schema generale per i tre problemi è il seguente:
+   		\[
+   		<2^W, W, \{(X, y) \mid X \in 2^W \wedge y \in X\}, W \cup \{\perp\}, q_{ott}(M, m, \subseteq)>
+   		\]
+   		ove $W$ è l'insieme della parole, $2^W$ è l'insieme di tutti gli insiemi di parole e $M$ è un differente insieme per ciascun problema. \\
+   		Per il problema $P_1$ $M = W$ e la funzione obiettivo:
+   		\[
+   		m: 2^W \times W \to M \quad \forall i \in I\ m(i, W) = W
+   		\]
+		e la relazione $\subseteq$ è la relazione di ordinamneto alfabetico. \\
+		Per il problema $P_2$ abbiamo che $M = N$ e la funzione obiettivo:
+		\[
+		m: 2^W \times W \to M \quad \forall i \in I\ m(i, W)\ \text{ è la lunghezza di $W$}
+		\] 
+		e la relazione $\subseteq$ è la relazione di ordinamento $\geq$ tra numeri. \\
+		Per il problema $P_3$ $M$ è l'insieme di tutti gli insiemi di lettere dell'alfabeto e la funzione obiettivo:
+		\[
+		m: 2^W\times W\to M \quad \forall i \in I\ m(i, W) \text{ restituisce l'insieme delle lettere che compongono $W$}
+		\]
+		e la relazione è quella di contenmento $\supseteq$ tra insiemi. \\
+		Ad esempio sia l'istanza per i tre problemi:
+		\[
+		\{"TORRE", "ERRORE", "ZERO", "TENORE"\}
+		\] 
+		$P_1$ ha una soluzione ottima ``ZERO''. \\
+		$P_2$ ha sue soluzioni ottimali ``ERRORE'' e ``TENORE''. \\
+		$P_3$ ha due soluzioni ottimali ``TENORE'' e ``ZERO''.
+   	\end{example}
+   	\begin{example}{}{}
+   		Dato un albero i cui nodi sono etichettato con valori interi non negativi, trovare un livello dell'albero il cui peso è massimo, dove per peso di un livello dell'albero si intende la somma delle etichette dei nodi di quel livello. \\
+   		Lo \textit{spazio degli input} è un insieme $I$ degli alberi i cui nodi sono etichettati con valori interi non negativi. \\
+   		Lo \textit{spazio delle soluzioni} è un insieme $S$ degli interi non negativi. \\
+   		La \textit{relazione caratteristica} è l'insieme delle coppie $(T, n)$ dove $T$ è l'albero di profondità $p$ e $n \leq p$. \\
+   		Lo \textit{spazio di output} è $S \cup \{\perp\}$. \\
+   		Il \textit{quesito di ottimizzazione} è $q_{ott}(N, m, \geq)$ dove:
+   		\[
+   		m: I \times S \to N
+   		\]
+   		è la funzione tale che $m(T, n)$ è la somma delle etichette dei nodi in $T$ di livello $n$.
+   	\end{example}
+   	\begin{example}{\nmu Problema dello zaino}{problema_zaino}
+   		Un ladro durante una rapina in un negozio si trova di fronte a $n$ articoli: l'articolo $i$-esimo ha un valore di $P_i$ euro e un peso di $C_i$ chilogrammi, dove sia $P_i$ che $C_i$, per semplicità, sono interi. Il ladro vuole prendere gli articoli di maggior valore ma il suo zaino può supportare un peso massimo di $B$ chilogrammi. Cosa gli conviene fare? \\
+   		Per formalizzare il problema occorre considerare $2n + 1$ interi positivi:
+   		\[
+   		P_1, \dots, P_n, C_1, \dots, C_n, B
+   		\]
+   		ove $P_1, \dots, P_n$ sono detti \textit{profitti}, $C_1, \dots, C_n$ sono i \textit{costi} e $B$ è il \textit{budget}. \\
+   		Questo problema è un'astrazione di molti prolbemi reali. \\
+   		Dati $2n + 1$ interi  positivi: $P_1, \dots, P_n, C_1, \dots, C_n, B$ trovare  $n$ valori interi $X_1, \dots, X_n$ tale che:
+   		\[
+   		X_{i} \in \{0, 1\} \quad 1 \leq i \leq n
+   		\] 
+   		ove $\sum_{i=1}^{n}P_iX_i$ abbia valore massimo e $\sum_{i=1}^{n}C_iX_i \leq B$. \\
+   		Lo \textit{spazio di input} $I$ è l'insieme delle coppie $(n, Q)$ dove $n$ è un intero positivo e $Q$ è una sequenza di $2n + 1$ interi positvi. L'elemento di questo spazio è:
+   		\[
+   		(n, (P_1, \dots, P_n, C_1, \dots, C_n, B))
+   		\]
+   		Lo \textit{spazio delle soluzioni} $S$ è l'insieme delle sequenze finite:
+   		\[
+   		<X_1, \dots, X_n>
+   		\]
+   		con $n \in N^+$ e $X_i \in \{0, 1\}$. \\
+   		La \textit{relazione caratteristica} è data dall'insieme delle coppie:
+   		\[
+   		(n, (P_1, \dots, P_n, C_1, \dots, C_n)), (X_1, \dots, X_n)
+   		\]
+   		tali che:
+   		\[
+   		\sum_{i=1}^{n}C_iX_i \leq B
+   		\]
+   		Il \textit{quesito} è $q_{ott}(N, m, \geq)$ dove:
+   		\[
+   		m = \sum_{i=1}^{n}P_iX_i
+   		\]
+   	\end{example}
+   	Dunque, la \textit{specifica di un problema} mira a determinare la struttura del problem, in modo indipendente da considerazioni relative al modo in cui il problema verrà risolto. \\
+   	Lo \textit{spazio delle soluzioni} è caratteristica generale del problema e non fornisce indicazioni sulle soluzioni per una generica istanza. \\
+   	È ora necessario uno strumento che aiuti a ``caratterizzare'' le potenziali soluzioni ad una generica istanza di un problema, per orientare la scelta di un algoritmo risolutivo, il cosidetto \textbf{spazio di ricerca}. 
+   	\section{Spazio di ricerca}
  \end{document}
