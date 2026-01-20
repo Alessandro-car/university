@@ -88,6 +88,26 @@
 	language=Pascal
 }
 
+\lstdefinestyle{cppstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	language=C++
+}
+
 \lstdefinestyle{normalstyle}{
 	backgroundcolor=\color{backcolour},   
 	commentstyle=\color{codegreen},
@@ -2365,4 +2385,212 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\item Assumono solo valori positivi.
    		\item Sono crescenti rispetto alla dimensione dei dati.
    	\end{enumerate}
+   	Per semplificare l'analisi, non si cerca di individuare esattamente la funzione che esprime il costo del programma ma si ritiene sufficiente stabilire il suo comportamento asintotico quando le dimensioni dell'input tendono all'infinito. Si trascurano così costanti moltiplicative e termini additivi di ordine inferiore. \\
+   	Due programmi i cui costi sono espressi rispettivamente dalle funzioni:
+   	\[
+   	(n + 3) \quad \quad (100n + 3027)
+   	\]
+   	sono caratterizzati dalla stessa complessità asintotica. \\
+   	$(n + 3)$ esprime un costo minore della funzione $(100n + 3027)$ e, quindi, ignorare la costante moltiplicativa può essere in alcuni casi una semplificazione eccessiva. \\
+   	Lo studio asintotico offre un criterio chiaro per confrontare due algoritmi. Ad esempio siano:
+   	\[
+   	A_1: f_1(n) = 3n^2 - 4n + 2 \quad \quad A_2: f_2(n) = 2n + 3
+   	\]
+   	Per $n = 1, 2$ abbiamo $f_1(n) < f_2(n)$, per $n = 3, 4$ otteniamo $f_1(n) > f_2(n)$ quindi l'algoritmo più efficiente è $A_2$ perchè $\forall n > 2$ vale che $f_1(n) > f_2(n)$. Invece, le funzioni di complessità:
+   	\begin{align*}
+   		&f_1(n) = 3n^2 + n + 1 \\
+   		&f_2(n) = 4n^2 \\
+   		&f_3(n) = 4n^2 + 2n
+   	\end{align*}
+   	sono asintoticamente equivalenti, in quanto crescono tutte con il quadrato di $n$. \\
+   	Il costo di esecuzione di un programma, o di un algoritmo, si esprime come funzione delle dimensioni dell'input in cui si ignorano le costanti moltiplicative. Si definiscono, inoltre, diversi tipi di delimitazioni che formalizzano la complessità di un programma o algoritmo. 
+   	\section{Notazioni}
+   	Descriviamo le notazioni usate per descrivere la complessità di un programma o di un algoritmo.  \\
+   	\paragraph{Limite superiore}
+   	$O(f(n))$ è l'insieme di tutte le funzioni $g(n)$ tali che esistono due costanti positive $c$ e $m$ per cui: 
+   	\[
+   	g(n) \leq cf(n) \quad \forall n \geq m
+   	\]
+   	$g(n) \in O(f(n))$ e tradizionalmente si legge ``$g(n)$ è di orine $f(n)$'' e fornisce un limite superiore al comportamento asintotico della funzione $g$ ovvero $g$ non si comporta asintoticamente peggio di $f$. \\
+   	Applicata alla funzione di complessità, la notazione $O$ ne delimita superiormente la crescita e fornisce un indicatore di bontà dell'algoritmo. Consideriamo la seguente funzione:
+   	\[
+   	f(n) = 3n^2 + 3n - 1
+   	\]
+   	è un $O(n^2)$ dal momento che esistono due costanti $c = 4$ e $m = 3$ tali che:
+   	\[
+   	\forall n \geq 3 \quad f(n) \leq 4n^2
+   	\]
+   	In generale, $f(n)$ è un $O(n^k)$ per $k \geq 2$. \\
+   	\paragraph{Limite inferiore}
+   	$\Omega(f(n))$ è l'insieme di tutte le funzioni $g(n)$ tali che esistono due costanti positive $c$ e $m$ per cui:
+   	\[
+   	g(n) \geq cf(n) \forall n \geq m
+   	\]
+   	$g(n) \in \Omega(f(n))$ tradizionalmente si legge ``$g(n)$ è di ordine $\Omega$ $f(n)$'' e  fornisce un limite inferiore al comportamento asintotico della funzione. \\
+   	$\Theta(f(n))$ è l'insieme di tutte le funzioni $g(n)$ che sono sia $\Omega(f(n))$ sia $O(f(n))$. Formalmente è l'insieme di tutte le funzioni $g(n)$ tali che esistano tre costanti positive $c, d$ e $m$ per cui:
+   	\[
+   	df(n) \geq g(n) \geq cf(n)
+   	\]
+   	$g(n) \in \Theta(f(n))$ tradizionalmente si legge ``$g(n)$ è di ordine $\Theta(f(n))$''; la $g$ si comporta asintoticamente esattamente come $f$, per cui l'andamento di $f$ caratterizza precisamente quello di $g$. \\
+   	La funzione $h(n) = 3n^2 + 3n - 1$ è di ordine $n^2$ perchè esistono le costanti $c = 4$ e $n = 3$ per cui $h(n) < 4n^2$ per $n \geq 3$. \\
+   	Notiamo che qualsiasi polinomio di grado $k$ è di ordine $n^k$ e, in accordo con la definizione, è anche di ordine $n^j$ con $j > k$. \\
+   	La funzione $g(n) = 3n^2 + 2n + 1$ è $O(n^2)$ e anche $O(n^3)$ ma è anche di ordine $\Omega(4n^2), \Omega(n^2), \Omega(n)$; inoltre è di ordine $\Theta(n^2)$, $\Theta(4n^2)$ ma non di ordine $\Theta(n)$ e neppure di ordine $\Theta(n^3)$. 
+   	\paragraph{Proprietà} Seguono alcune proprietà:
+   	\begin{itemize}
+   		\item $g \in O(f)$ implica $(f + g) \in O(f)$
+   		\item $f_1 \in O(g_1), f_2 \in O(g_2)$ implica $f_1 + f_2 \in O(g_1 + g_2)$
+   		\item $O$ e $\Omega$ sono relazioni riflessive e transitive
+   		\item $\Theta$ è una relazione di equivalenza
+   		\item $f\in O(g) \iff g \in \Omega(f)$ 
+   	\end{itemize}
+   	\section{Valutazione della complessità}
+   	La valutazione del costo di un programma o di un algoritmo richiede la determinazione di una delimitazione superiore ed una inferiore. Diamo una serie di regole che aiutano a trovare la delimitazione superiore della complessità.
+   	\begin{enumerate}
+   		\item Supponiamo che il programma sia composto di due parti $P$ e $Q$ da eseguire sequenzialmente e che i costi di $P$ e $Q$ siano $S(n)=O(f(n))$ e $T(n) = O(g(n))$ rispettivamente. Allora il costo del programma è $O(\max(f(n), g(n)))$. Dimostriamo questo risultato. \\
+   		In questo caso il costo complessivo del programma è, chiaramente, pari a:
+   		\[
+   		S(n) + T(n)
+   		\]
+   		Inoltre si noti che:
+   		\begin{enumerate}
+   			\item $S(n) = O(f(n)) \Rightarrow$ esistono costanti $a'$ e $n'$ tali che $S(n) < a'f(n) \quad \forall n > n'$;
+   			\item $T(n) = O(g(n)) \Rightarrow$ esistono costanti $a''$ e $n''$ tali che $S(n) < a''g(n) \quad \forall n > n''$. 
+   		\end{enumerate}
+   		Ne deriva che, per $n > \max(n', n'')$:
+   		\[
+   		S(n) + T(n) < a'f(n) + a''g(n) < (a' + a'')\max(f(n), g(n))
+   		\]
+   		Quindi, $O(S(n) + T(n))$ è proprio $O(\max(f(n), g(n)))$. 
+   		\item Questa regola permette di valutare il costo del programma quando esso richiede più volte l'esecuzione di un insieme di istruzioni o l'attivazione di una procedura. \\
+   		Supponiamo che un programma richieda per $k$ volte l'esecuzione di una istruzione composta o l'attivazione di una procedura, e sia $f_i(n)$ il costo relativo all'esecuzione $i$-esima, $i = 1, 2, \dots, k$. Il costo complessivo del programma è pari a:
+   		\[
+   		O\Bigg(\sum_{i}, f_i(n)\Bigg)
+   		\]
+   	\end{enumerate}
+   	\subsection{Istruzione dominante}
+   	Introduciamo ora il concetto di istruzione dominante che permette, in molti casi, di semplificare in modo drastico la valutazione della complessità di un problema. \\
+   	\begin{definition}{\nmu Operazione dominante}{op_dominante}
+   		Sia dato un programma o un algoritmo $P$ il cui costo di esecuzione è $t(n)$. Una istruzione di $P$ si dice \textit{istruzione} o \textit{operazione dominante} se, per ogni intero $n$, essa viene eseguita, nel caso peggiore di input avente dimensione $n$, un numero di volte $d(n)$ che verifica la seguente condizione:
+   		\[
+   		t(n) < ad(n) + b
+   		\]
+   		per opportune costanti $a$ e $b$. 
+   	\end{definition}
+   	In altre parole, un'istruzione dominante viene eseguita un numero di volte proporzionale al costo di esecuzione di tutto l'algoritmo. È importante osservare che in un programma, più istruzioni possono essere dominanti, ma può anche accadere che il programma non contenga affatto istruzioni dominanti. \\
+   	\textbf{Regola 3.} Supponiamo che un programma contenga un'istruzione dominante che, nel caso peggiore di input di dimensione $n$, viene eseguita $d(n)$ volte. La delimitazione superiore alla complessità del programma è $O(d(n))$. \\
+   	Per individuare un'istruzione dominante è sufficiente, in molti casi, esaminare le operazioni che sono contenute nei cicli più interni del programma.
+   	\section{Classi di complessità}
+   	Grazie all'analisi della complessità asintotica possiamo categorizzare gli algortimi nelle seguenti classi di complessità:
+   	\begin{align*}
+   		&\text{costante} \quad& O(1) \\
+   		&\text{logaritmica} \quad& O(\log n) \\
+   		&\text{lineare} \quad& O(n) \\
+   		&\text{nlog} \quad& O(n\log n) \\
+   		&\text{quadratica} \quad& O(n^2) \\
+   		&\text{cubica} \quad& O(n^3) \\
+   		&\text{esponenziale} \quad& O(a^n) \quad a > 1 
+   	\end{align*}
+   	Gli algoritmi con complessità costante sono più efficienti di quelli con complessità logaritmica che a loro volta sono più efficienti di quelli con complessità lineare e così via. 
+   	\begin{figure}[H]
+   		\centering
+   		\includegraphics[width=0.8\textwidth]{complexity}
+   		\caption{$O(1) < O(\log n) < O(n) < O(n\log n) < O(n^2) < O(n^3) < \dots < O(a^n)$}
+   	\end{figure}
+   	La distinzione di maggiore interesse in teoria della complessità è fra:
+   	\begin{itemize}
+   		\item algoritmi \textit{polinomiali} con complessità $O(n^k)$ con $k > 0$;
+   		\item algoritmi \textit{esponenziali} con complessità $O(a^{g(n)})$ con $a > 1$ e $g(n)$ funzione crescente. 
+   	\end{itemize}
+   	Gli algoritmi di importanza pratica sono quelli polinomiali. \\ 
+   	Ad esempio, ordinare un elenco di elementi è un compito molto frequente:
+   	\begin{itemize}
+   		\item ordinare numeri in modo crescente;
+   		\item ordinare numeri in modo decrescente;
+   		\item ordinare stringhe in modo alfabetico.
+   	\end{itemize}
+   	Vi sono molti modi per ordinare un elenco, ad esempio, il selection sort è uno dei più facili, facili da capire e da programmare, ma non è il più efficiente. \\
+   	Per ordinare un array di interi in modo crescente, si cerca nell'array il numero più piccolo e lo si scambia col primo elemento dell'array; la parte ordinata dell'array è ora il primo elemento, mentre quella non ancora ordinata sono i rimanenti elementi. \\
+   	Dopodichè, si cerca nella parte non ordinata il numero più piccolo e lo si cambia con il secondo elemento dell'array e questa ricerca viene ripetuta fino a quando tutti gli elementi sono al posto giusto. 
+   	\begin{lstlisting}[style=cppstyle]
+   		public void selectionSort(int[] a) {
+   			int i,j, indexOfNextSmallest, min, temp;
+   			for (i = 0; i < a.length - 1; i++) {
+   				min = a[i];
+   				indexOfNextSmallest = i;
+   				for (j = i + 1; j < a.length; j++) {
+   					if (a[j] < min) {
+   						min = a[j];
+   						indexOfNextSmalles = j;
+   					}
+   				}
+   				temp = a[i];
+   				a[i] = a[indexOfNextSmallest];
+   				a[indexOfNextSmallest] = temp;
+   			}
+   		}
+   	\end{lstlisting}
+   	L'ordinamento per selezione ha un ciclo più esterno e uno più interno con proprietà simili, sebbene con scopi differenti. Il ciclo più esterno viene eseguito una volta per ogni valore nell'array e quello più interno confronta il valore scelto dal ciclo più esterno con molti, se non tuti, i valori rimanenti nell'array. \\
+   	Quindi eseguire $n^2$ ove $n$ è il valore di elementi dell'array. L'algoritmo di selection sort è quindi di ordine $n^2$. \\
+   	Per valutare il costo di un programma a partire dal costo delle sue componenti va affrontato il problema del costo con sottoprogrammi ripetuti. \\
+   	Sia $A$ un programma la cui esecuzione consiste nell'esecuzione ripetuta di chiamate di funzione il cui costo all'$i$-esima ripetizione è $f_i(n)$ dove $n$ è la dimensione dell'input di $A$. Sia $g(n)$ il numero di ripetizione legate alla dimensione dell'input. Il costo del programma $f_A(n)$ è dato da:
+   	\[
+   	O\Bigg(\sum_{i=1}^{g(n)}f_i(n)\Bigg)
+   	\]
+   	Ad esempio, consideriamo la funzione in grado di determinare se tutti gli elementi di un vettore $w$ siano presenti in un altro vettore $v$. Per la ricerca si può utilizzare una banale ricerca sequenziale.
+   	\begin{lstlisting}[style=cppstyle]
+   		bool cercaInTutti(int v[], int w[]) {
+   			for (int i = 0; i < v.length; i++)
+   				if (!RicercaSequenziale(v, w[i]))
+   					return false;
+   			return true;
+   		}
+   	\end{lstlisting}
+   	Il numero massimo di chiamate al sottoprogramma \textit{RicercaSequenziale()} è pari a $v.length = n$ e si ha quando tutti gli elementi di $w$ vengono trovati in $v$. Poichè il costo dell'esecuzione del sottoprogramma è delimitato superiormente da $O(n)$ si può concludere che \textit{CercaInTutti()} è delimitato superiormente da $O(n^2)$.
+   	\section{Costi per ADT}
+   	Da quanto detto si deduce che, poichè gli operatori sulle strutture dati definite da noi sono, di fatto, sottoprogrammi che hanno una loro complessità e vengono applicati più volte, il costo di una realizzazione piuttosto che un'altra incide sicuramente sul costo complessivo del programma che utilizza quegli operatori. \\
+   	Ad esempio, la complessità degli operatori su lista realizzati con corsori/puntatori è costante $O(1)$ per tutti gli operatori l'occupazione di memoria è $O(maxlung)$ per tutte le liste. \\
+   	Per la realizzazione con cursori va però considerata la funzione \texttt{INIZIALIZZALISTALIBERA}. \\
+   	La complessità della procedura di fusione di liste dipende dalla complessità degli operatori su lista utlizzati:
+   	\begin{enumerate}
+   		\item \texttt{CREALISTA};
+   		\item \texttt{PRIMOLISTA};
+   		\item \texttt{FINELISTA};
+   		\item \texttt{LEGGILISTA};
+   		\item \texttt{INSLISTA};
+   		\item \texttt{SUCCLISTA}.
+   	\end{enumerate}
+   	Nella realizzazione con puntatori e doppi puntatori la complessità di questi operatori è $O(1)$. Nella realizzazione con cursori occorre tenere presente il costo della procedura \texttt{INIZIALIZZALISTALIBERA} che compunque è eseguita fuori dalla procedura di fusione e quindi non va conteggiato ai fini della complessità della procedura. \\
+   	Consideriamo come operazione dominante il confronto di $elem1$ con $elem2$. Allora la complessità dipende dalla configurazione dei dati di ingresso. In particolare, dette $m$ ed $n$ le lunghezze rispettivamente di $Lista1$ e $Lista2$, possiamo distinguere i seguenti casi:
+   	\begin{itemize}
+   		\item Caso ottimo: tutti gli elementi della lista più corta sono minori degli elementi della lista più lunga. Si effettueranno tanti confronti quanti sono gli elementi della lista più corta:
+   		\[
+   		f_{ott}(m, n) = \min{m, n}
+   		\]
+   		\item Caso pessimo: l'inserimento dell'ultimo elemento di una delle due liste può avvenire solo dopo l'inserimento del penultimo elemento dell'altra lista. Il numero di confroni è pari a:
+   		\[
+   		f_{pess}(m, n) = m + n - 1
+   		\]
+   		\item Caso medio. Senza perdere di generalità supponiamo essere $m \leq n$. Consideriamo allora i seguenti eventi:
+   		\begin{itemize}
+   			\item $E_k$: l'ultimo elemento di $Lista1$ è inserito prima del $k$-esimo elemento di $Lista2$ per $k = 1, 2, \dots, n$.
+   			\item Suppniamo che i vari eventi siano tutti equiprobabili (poichè non abbiamo informazioni sufficienti per sostenere il contrario, ipotizziamo una distribuzione uniforme), allora:
+   			\[
+   			P(E_k) = \frac{1}{n}
+   			\]
+   			poichè i diversi eventi sono $n$.
+   		\end{itemize}
+   		Il costo, espresso in termini di numero di confronti, associato ad ogni evento è dato da:
+   		\[
+   		costo(E_k) = m + k - 1
+   		\]
+   		ove $E_1$ è il caso ottimo e $E_n$ il caso pessimo. \\
+   		Allora la complessità nel caso medio sarà data da:
+   		\begin{align*}
+   			f_{med}(m, n) &= \sum_{k=1, \dots, n}P(E_k)costo(E_k) \\
+   			&= \frac{1}{n}\sum_{k=1, \dots n}(m+k-1) \\
+   			&= \frac{1}{n}\Bigg(\sum_{k=1, \dots, n}m + \sum_{k=1, \dots, n}k - \sum_{k=1, \dots, n}1\Bigg) \\
+   			&= \frac{1}{n}\Bigg(mn + \frac{n(n+1)}{2} - n\Bigg) \\
+   			&= m + \frac{(n+1)}{2} - 1
+   		\end{align*}
+   	\end{itemize}
  \end{document}
