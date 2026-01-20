@@ -2832,4 +2832,110 @@ Una specifica per il tipo di dato insieme è la seguente:
    	Lo \textit{spazio delle soluzioni} è caratteristica generale del problema e non fornisce indicazioni sulle soluzioni per una generica istanza. \\
    	È ora necessario uno strumento che aiuti a ``caratterizzare'' le potenziali soluzioni ad una generica istanza di un problema, per orientare la scelta di un algoritmo risolutivo, il cosidetto \textbf{spazio di ricerca}. 
    	\section{Spazio di ricerca}
+   	Affinchè l'analisi di un problema aiuti a formulare un algoritmo risolutivo è necessario disporre di uno strumento concettuale che aiuti a caratterizzare le potenziali soluzioni di una generica istanza del problema. \\
+   	Determinare lo \textit{spazio di ricerca} per un problema $P$ significa stabilire un metodo che, per ogni istanza $i$ di $P$, consente di definire un insieme con associate due funzioni:
+   	\begin{enumerate}
+   		\item la \textit{funzione di ammissibilità} che permette di verificare se un elemento dello spazio di ricerca corrisponde effettivamente ad una soluzione per $i$;
+   		\item la \textit{funzione di risposta} che permette di ottenere, dagli elementi dello spazio di ricerca, le corrispondenti risposte per $i$.
+   	\end{enumerate}
+   	\begin{definition}{\nmu Spazio di ricerca}{spazio_ricerca}
+   		Sia $i$ un'istanza di un problema $P = <I, S, R, S  \cup \{\perp\}, Q>$. \\
+   		Uno \textit{spazio di ricerca di $P$ per $i$} è costituito da:
+   		\begin{itemize}
+   			\item un insieme $Z_i$ con associate due funzioni:
+   			\begin{itemize}
+   				\item la funzione di ammisibilità:
+   				\[
+   				a: Z_i \to \{TRUE, FALSE\}
+   				\]
+   				\item la funzione di risposta:
+   				\[
+   				o: Z_i \to S
+   				\]
+   			\end{itemize}
+   			che soddisfano le seguenti condizioni:
+   			\begin{enumerate}
+   				\item per ogni elemento $z$ di $Z_i$, $a(z) = TRUE \iff o(z)$ è soluzione di $P$ per $i$;
+   				\item $i$ ha risposta positiva se e solo se vi è almeno un elemento $z$ di $Z_i$ per cui $a(z) = TRUE$ e $o(z)$ è una risposta a $P$ per $i$.
+   			\end{enumerate}
+   			\item un metodo per rappresentare ogni elemento di $Z_i$ mediante una struttura dati e per esprimere la funzione di ammissibilità e di risposta in termini di tale struttura. 
+   		\end{itemize}
+   	\end{definition}
+   	Lo spazio di ricerca associato associato ad una istanza $i$ di $P$ caratterizza le soluzioni e le corrispondenti risposte a $P$ per $i$.
+   	\paragraph{Struttura dello spazio di ricerca per problemi di ricerca con risposta positiva} L'insieme $\{s \in S \mid (i, S) \in R\}$ rappresenta le soluzioni di $P$ per l'istanza $i$ (per un problema di ricerca questo insieme coincide con l'insieme delle risposte). \\
+   	L'insieme $\{s \in S \mid \exists z \in Z_i, a(z) = TRUE \wedge o(z) = s\}$ è costituito dalle soluzioni di $P$ per l'istanza $i$ che sono rappresentate nello spazio di ricerca. \\
+   	Lo spazio di ricerca non rappresenta necessariamente tutte le soluzioni ad $i$. Se esistono risposte positive per $i$ basta che una sia rappresentata nello spazio di ricerca. 
+   	\begin{figure}[H]
+   		\centering
+   		\includegraphics[width=0.8\textwidth]{spazio_ricerca}
+   	\end{figure}
+   	\paragraph{Struttura dello spazio di ricerca per i problemi di ottimizzazione} Per i problemi di ottimizzazione valgono le seguenti osservazioni:
+   	\begin{itemize}
+   		\item la definizione di spazio di ricerca stabilisce che la funzione di ammissibilità deve assicurare che:
+   		\[
+   		\forall z \in Z_i\ a(z) = TRUE \iff (i, o(z)) \in R
+   		\]
+   		e queste sono condizioni relative alla relazione caratteristica e non al quesito.
+   		\item ottenere una risposta per una certa istanza significa calcolare una soluzione ottimale: lo spazio di ricerca deve includere almeno un elemento dal quale si possa ottenere una soluzione ottimale all'istanza.
+   	\end{itemize}
+   	Per un problema di ottimizzazione, l'insieme:
+   	\[
+   	\{s \in S \mid (i, s) \in R \wedge \centernot{\exists} s' \in S, (i, s') \in R' \wedge m(i, s') \subseteq m(i, s)\}
+   	\]
+   	rappresenta le soluzioni ottimali di $P$ per l'istanza $i$, cioè le risposte a $P$ per $i$. \\
+   	Uno spazio di ricerca per $i$ di $P$ deve contenere la rappresentazione di almeno una tra le soluzioni ottimali se esistono, cioè non deve essere vuota l'intersezione tra l'insieme:
+   	\[
+   	\{s \in S \mid (i, s) \in R \wedge \centernot{\exists} s' \in S, (i, s') \in R' \wedge m(i, s') \subseteq m(i, s)\}
+   	\]
+   	e
+   	\[
+   	\{s \in S \mid \exists z \in Z_i, a(z) = TRUE \wedge o(z) = s\}
+   	\]
+   	\begin{figure}[H]
+   		\centering
+   		\includegraphics[width=0.8\textwidth]{spazio_ricerca_ottimale}
+   	\end{figure}
+   	\begin{example}{\nmu Ricerca di un elemento in un vettore}{}
+   		Consideriamo una generica istanza del problema con input un vettore $V$ di $n$ elementi e un numero $M$. \\
+   		Lo spazio di ricerca associato a tale istanza è l'insieme dei valori che sono indici del vettore, da 1 a $n$ e la funzione di ammissibilità verifica, dato un $j$, se $V[j] = M$. La funzione di risposta restituisce $j$. \\
+   		La struttura dati per rappresentare i singoli elementi dell'insieme è una semplice variabile di tipo intero. 
+   	\end{example}
+   \paragraph{Differenze tra spazio delle soluzioni e spazio di ricerca} Lo \textit{spazio delle soluzioni} è una componente della specifica del problema e fa globalmente riferimento a tutte le possibili soluzioni del problema. \\
+   Lo \textit{spazio di ricerca} fornisce uno strumento per caratterizzare le soluzioni di ogni singola istanza del problema e determina anche, per ogni istnaza del problema, una struttura di dati e un meccanismo per verificare, tramite la formulazione della funzione di ammissibilità in termini di tale struttura, se una sua configurazione corrisponde o meno ad una soluzione per l'istanza e un metodo per derivare, tramite la formulazione della funzione di risposta, una risposta all'istanza. \\
+   Esistono diversi modi per determinare uno spazio di ricerca di un problema. I criteri per valutare la qualità di una scelta rispetto ad un'altra sono i seguenti.
+   \begin{itemize}
+   	\item Lo spazio di ricerca deve caratterizzare le soluzioni ad una istanza in modo non ridondante: è opportuno scegliere una struttura dati che escluda a priori configurazioni che non corrispondono a priori ad alcuna soluzione. 
+   	\item Lo spazio di ricerca non deve essere una banale riformulazione del problema e della sua relazione caratteristica nè deve nascondere la difficoltà di un problema, ma deve fornire elementi significativi per la comprensione della struttura del problema e delle sue soluzioni. 
+   \end{itemize}
+   \begin{example}{\nmu Problema delle $n$ regine}{problema_ricerca_regine}
+   	Sia $i$ la dimensione della scacchiera. 
+ 	\begin{itemize}
+ 		\item L'insieme che forma lo spazio di ricerca è l'insieme di tutte le possibili scacchiere di dimensione $i$ in cui sono poste $i$ regine.
+ 		\item La funzione di ammissibilità verifica se la scacchiera soddisfa i vincoli del problema, cioè se non esistono nella scacchiera due regine piazzate nella stessa riga, colonna o diagonale. \\
+ 		\item La funzione di risposta è la funzione identità.
+ 		\item La struttura dati è una matrice $i \times i$ magari di caratteri in cui il carattere $Q$ o $*$ indica la posizione della regina.
+ 	\end{itemize}
+ 	Adesso ci chiediamo se questa rappresentazione possa essere migliorata. Per escludere configurazioni con due regine sulla stessa riga rappresentiamo la configurazione di scacchiera mediante un vettore di dimensione $i$ comn elementi interi compresi tra 1 ed $i$: se l'elemento in posizione $j$ del vettore è $h$ vuol dire che la regina della riga $j$ è in colonna $h$. \\
+ 	Per escludere configurazioni errate basta escludere vettori che hanno valori uguali in posizioni diverse. \\
+ 	Allora l'insieme degli elementi dello spazio di ricerca coincide con tutti i possibili modi di memorizzare i valori da 1 ad $i$ in un vettore $V$, ovvero tutte le possibili permutazioni di $(1, \dots, i)$. \\
+ 	La funzione di ammissibilità verifica se il generico elemento dello spazio di ricerca, cioè il generico vettore $V$, non contenga due elementi in posizione $h$ e $k$ tali che:
+ 	\[
+ 	\left|V[h] - V[k]\right| = \left| h-k\right| 
+ 	\]
+ 	ovvero due regine nella stessa diagonale. \\
+ 	La funzione di risposta ricostruisce semplicemente, a partire da un generico vettore, la corrispondente configurazione nella scacchiera. 
+ 	\end{example}
+ 	\section{Teniche algoritmiche}
+ 	Le tecniche algoritmiche sono basate su diversi paradigmi di utilizzo dello spazio di ricerca e consideriamo:
+ 	\begin{itemize}
+ 		\item la tecnica di enumerazione;
+ 		\item la tecnica di backtracking;
+ 		\item la tecnica golosa o greedy;
+ 		\item la tecnica divide et impera.
+ 	\end{itemize}
+ 	I paradigmi sono di tipo \textit{selettivo} o \textit{generativo}. \\
+ 	Dal paradigma \textit{selettivo} sono create tecniche di progetto di algoritmi che, per l'istanza del problema presa in considerazione, visitano lo spazio di ricerca tentando di trovare un elemento ammissibile. \\
+ 	Ogni algoritmo fa riferimento all'intero spazio di ricerca che viene esplorato con sistematicità in una definita modalità. A questo paradigma appartiene la tecnica \textit{enumerativa} e quella di \textit{backtracking}. \\
+ 	Dal paradigma \textit{generativo} scaturiscono tecniche di progetto di algoritmi che generano direttamtente la soluzione senza selezionarla tra gli elementi dello spazio di ricerca. \\
+ 	In questo paradigma lo spazio di ricerca è considerato esclusivamente in fase di progetto dell'algoritmo allo scopo di caratterizzare le soluzioni del problema e definire una strategia risolutiva diretta per ogni istanza. A questo paradigma appartengono la tecnica \textit{greedy} e la tecnica \textit{divide-et-impera}.
  \end{document}
