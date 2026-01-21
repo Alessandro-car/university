@@ -2936,6 +2936,438 @@ Una specifica per il tipo di dato insieme è la seguente:
  	I paradigmi sono di tipo \textit{selettivo} o \textit{generativo}. \\
  	Dal paradigma \textit{selettivo} sono create tecniche di progetto di algoritmi che, per l'istanza del problema presa in considerazione, visitano lo spazio di ricerca tentando di trovare un elemento ammissibile. \\
  	Ogni algoritmo fa riferimento all'intero spazio di ricerca che viene esplorato con sistematicità in una definita modalità. A questo paradigma appartiene la tecnica \textit{enumerativa} e quella di \textit{backtracking}. \\
+ 	\begin{example}{\nmu Ordinamento di un vettore}{}
+ 		Dato un vettore di interi $V$, ordinarlo in ordine crescente. \\
+ 		Lo spazio di ricerca è costituito dalle permutazioni di $V$ e la funzione di ammissibilità verifica che non esistano permutazioni tali che se $h > k$, sia:
+ 		\[
+ 		V[h] < V[k]
+ 		\]
+ 		La funzione di risposta è la funzione identità. Se $N$ è la dimensione di $V$ lo spazio di ricerca ha dimensione $N!$.
+ 	\end{example}
+ 	Un algoritmo \textit{selettivo} effettua la visita dello spazio di ricerca per trovare una permutazione che soddisfi la condizione di ammissibilità. 
  	Dal paradigma \textit{generativo} scaturiscono tecniche di progetto di algoritmi che generano direttamtente la soluzione senza selezionarla tra gli elementi dello spazio di ricerca. \\
- 	In questo paradigma lo spazio di ricerca è considerato esclusivamente in fase di progetto dell'algoritmo allo scopo di caratterizzare le soluzioni del problema e definire una strategia risolutiva diretta per ogni istanza. A questo paradigma appartengono la tecnica \textit{greedy} e la tecnica \textit{divide-et-impera}.
+ 	In questo paradigma lo spazio di ricerca è considerato esclusivamente in fase di progetto dell'algoritmo allo scopo di caratterizzare le soluzioni del problema e definire una strategia risolutiva diretta per ogni istanza. A questo paradigma appartengono la tecnica \textit{greedy} e la tecnica \textit{divide-et-impera}. \\
+ 	Un algoritmo \textit{generativo} deriva la soluzione con un procedimento diretto sull'istanza, senza visitare lo spazio di ricerca. \\
+ 	Rappresentiamo il procedimento di esplorazione dello spazio di ricerca mediante un albero, che ha nei nodi i confronti utili a scegliere le permutazioni che sono soluzioni. Lo spazio viene partizionato e ciascuna foglia dell'albero rappresenta un possibile ordinamento. La profondità dell'albero rappresenta il numero di confronti necessario nel caso peggiore.
+ 	\begin{figure}[H]
+ 		\centering
+ 		\includegraphics[width=0.8\textwidth]{albero_esplorazione}
+ 	\end{figure} 
+ 	\subsection{Tecnica enumerativa}
+ 	La tecnica enumerativa è basata sulla sistematica ispezione, elemento per elemento, dello spazio di ricerca associato ad un'istanza di un problema, è una tecnica che \textbf{garantisce}, se lo spazio di ricerca è finito, una terminazione. \\
+ 	Per un problema di ricerca si termina quando si è individuato un elemento ammissibile o quando è esaurito lo spazio di ricerca. \\
+ 	Per un problema di ottimizzazione si dovrà confrontare, ai fini della selezione, tutti gli elementi ammissibili e la terminazione è comunque data dall'esaurimento dello spazio di ricerca. \\
+ 	Per garantire la possibilità di una visita sistematica di uno spazio di ricerca si associa ad esso una relazione di ordinamento totale in modo da definire per lo spazio $Z_i$ associato ad $i$:
+ 	\begin{itemize}
+ 		\item un metodo per stabilire il primo elemento da considerare;
+ 		\item un metodo per stabilire l'elemento successivo;
+ 		\item un metodo per verificare se si sono esaminati tutti gli elementi.
+ 	\end{itemize}
+ 	\paragraph{Algoritmo enumerativo per problemi di ricerca} Un algoritmo enumerativo per i problemi di ricerca è il seguente:
+ 	\begin{enumerate}
+ 		\item Considera il primo elemento $x$ dello spazio di ricerca;
+ 		\item Se $a(x) = TRUE$, allora fornisci $O(x)$ come risultato;
+ 		\item Se tutti gli elementi dello spazio di ricerca sono stati esaminati, fornisci $\perp$ come risultato;
+ 		\item Altrimenti considera come nuovo $x$ l'elemento successivo dello spazio di ricerca e ripeti dal punto 2.
+ 	\end{enumerate}
+ 	\begin{example}{\nmu Gioco dell'otto}{}
+ 		\begin{figure}[H]
+ 			\centering
+ 			\includegraphics[width=0.8\textwidth]{gioco_otto}
+ 		\end{figure}
+ 		I tasselli numerati devono essere disposti e ordinati lungo i bordi: la soluzione può essere ricercata esaminando tutte  le possibili disposizioni generate attraverso mosse successive. Il procedimento di ricerca è rappresentabile mediante un albero che ha nei nodi le configurazioni possibili generate mossa dopo mossa.
+ 		\begin{figure}[H]
+			\centering 
+			\includegraphics[width=1.0\textwidth]{albero_gioco_otto}
+ 		\end{figure}
+ 	\end{example}
+ 	\paragraph{Algoritmo enumerativo per problemi di ottimizzazione} Un algoritmo enumerativo per i problemi di ottimizzazione è il seguente:
+ 	\begin{enumerate}
+ 		\item Considera il primo elemento $x$ dello spazio di ricerca;
+ 		\item Se $a(x) = TRUE$ e $x$ è la prima soluzione trovata, oppure se $a(x) = TRUE$ e $x$ è la migliore della soluzione ottima corrente, poni la soluzione ottima corrente pari a $x$;
+ 		\item Se tutti gli elementi dello spazio di ricerca sono stati considerati, allora fonisci come risultato $\perp$ se non sono state trovate soluzioni ammissibili, oppure $O(x)$ se $x$ è la soluzione ottima corrente;
+ 		\item Altrimenti considera come nuovo $x$ l'elemento successivo dello spazio di ricerca e ripeti dal punto 2.
+ 	\end{enumerate}
+ 	\begin{example}{\nmu Gioco dell'otto}{}
+ 		Se consideriamo come problema il gioco dell'otto, potremmo porci l'obiettivo non solo di trovare una soluzione qualsiasi ma di trovarne una ottima, per esempio, sulla base del criterio ``il prima possibile''. Questo si traduce nella possibilità di valutare il numero di mosse che ci porta alla soluzione e nell'esplorare l'intero albero alla ricerca del cammino più breve che ci porta alla soluzione.
+ 	\end{example}
+ 	\subsection{La tecnica del backtracking} 
+ 	Nella tecnica di backtracking la generazione degli elementi dello spazio di ricerca da visitare avviene secondo un processo suddiviso in stadi e basato sul fatto che:
+ 	\begin{itemize}
+ 		\item ogni elemento dello spazio di ricerca è considerato costituito da diverse componenti e ad ogni stadio viene scelta una componente;
+ 		\item se ogni elemento dello spazio di ricerca è strutturato in $n$ componenti, dopo $i$ stadi, ove $i < n$, si è costruita una \textit{soluzione parziale}. La caratteristica della tecnica di backtracking è che in molti problemi è possibile giungere alla conclusione che la soluzione parziale generata è fallimentare. Riconosciuto ciò l'algoritmo interrompe il processo di costruzione e tenta altre vie. 
+ 	\end{itemize}
+ 	\begin{example}{\nmu String matching}{string_matching}
+ 		Il problema dello string matching prevede di trovare un'occorrenza di una sequenza $P$ di  $m$ caratteri (``pattern'')
+ 		in un'altra sequenza $T$ di $n$ caratteri (``testo''). Le due stringhe $P$ e $T$ sono formate da caratteri tratti dallo stesso alfabeto ed $m$ non supera $n$. \\
+ 		Un algoritmo banale consiste nel cerca di riconsocere il pattern a partire dalla prima posizione del testo e se il pattern non è intermente riconosciuto, ripetere il procedimento a partire dalla posizione successiva nel testo continuando fino al riconoscimento dell'intero pattern o all'esaurimento del testo. \\
+ 		Se il pattern non è riconosciuto l'algoritmo torna a ripetere il procedimento dalla posizione che segue. \\
+ 		Le stringhe $P$ e $T$ si possono realizzare con due vettori di caratteri e il programma può realizzarsi mediante una funzione che restituisce la posizione di $T$ a partire dalla quale si trova la prima occorrenza di $P$ (se il pattern occorre nel testo) oppure $n + 1$ se $P$ non occorre in $T$. 
+ 		\begin{lstlisting}[style=pascalstyle]
+ 			function string1(var P: array; var T: array; var n: integer; var m: integer): integer;
+ 				i := 1;
+ 				j := 1;
+ 				k := 1;
+ 				while (i <= n) and (j <= m) do
+ 					if T[i] = P[j] then
+ 						i := i + 1;
+ 						j := j + 1;
+ 					else 
+ 						k := k + 1;
+ 						i := k;
+ 						j := 1;
+ 					if j > m then
+ 						return k
+ 					else 
+ 						return i
+ 		\end{lstlisting}
+ 		La funzione effettua backtracking sugli indici $i$ e $j$.  	\\
+ 		Un altro algoritmo per lo string matching è l'algoritmo di Knuth-Morris-Pratt che trae vantaggio dai confronti già fatti precedentemente sul pattern. Infatti se:
+ 		\[
+ 		T = 110111011001
+ 		\]
+ 		\[
+ 		P = 110110
+ 		\]
+ 		I primi 5 caratteri di $P$ sono sono uguali ai primi $5$ di $T$, solo il sesto è diverso. Al momento del primo backtrack risulta $i = j = 6$ e ripartire con  $i = 2$ e $j = 1$ corrisponde a traslare di una posizione il pattern rispetto al testo. \\
+ 		Vale la pena di verificare che nella sequenza riconosciuta di $P$: $\mathbf{11011}1$ i primi 4 caratteri di $P$ non coincidono con gli ultimi 4 caratteri della sottosequenza riconosciuta di $T$, nè i primi 3 con gli ultimi 3, ma i primi 2 coincidono con gli ultimi 2. \\
+ 		Quindi, non vale la pena ripartire con $i=2$ o $i=3$ ma con $i=4$ direttamente. \\
+ 		Poichè i due caratteri di $P$ a questo punto coincidono con quelli di $T$ è conveniente ripartire col backtrack con $i=6$ e $j=3$ ove 6 è proprio il vecchio valore di $i$ al momento del backtrack, dunque è inutile effettuare backtrack su $i$. basta farlo su $j$ portandolo dal 6 originario all'attuale 3. \\
+ 		Se si considerano due ``copie'' dei primi $j-1$ caratteri del pattern: si dispongano una sotto l'altra in modo che il primo carattere della copia inferiore sia esattamente sotto il secondo carattere della superiore.  \\
+ 		Se tutti i caratteri sovrapposti nelle due copie non sono uguali, si traslano di una posizione a destra tutti i caratteri della copia inferiore. Il procedimento si arresta non appena i caratteri sono identici o quando non ci sono più caratteri sovrapposti. \\
+ 		Il nuovo valore di backtrack da assegnare a $j$ $SUCC(j)$ è uguale al numero di caratteri sovrapposti + 1.
+ 		\begin{lstlisting}[style=pascalstyle]
+ 			procedure CALC_SUCC(var P: array; var SUCC: array; var m: integer);
+ 				j := 1;
+ 				h := 0;
+ 				succ[1] := 0;
+ 				while j <= m do
+ 					if h = 0 then
+ 						j := j + 1;
+ 						h := 1;
+ 						if j <= m then
+ 							if P[j] = P[1] then
+ 								SUCC[j] := 0;
+ 							else 
+ 								SUCC[j] := 1;
+ 						else 
+ 							if P[j] = P[h] then
+ 								j := j + 1;
+ 								h := h + 1;
+ 								if j <= m then
+ 									if P[j] = P[h] then
+ 										SUCC[j] := SUCC[h];
+ 								else 
+ 									SUCC[j] := h;
+ 							else 
+ 								h := SUCC[h]
+ 			
+ 			function string2(var P: array; var T: array, var n: integer, var m: integer): integer;
+ 				i := 1;
+ 				j := 1;
+ 				CALC_SUCC(p, SUCC, m);
+ 				while (i <= n) and (j <= m) do
+ 					if j = 0 then
+ 						i := i + 1;
+ 						j := 1;
+ 					else 
+ 						if T[i] = P[j] then
+ 							i := i +1;
+ 							j := j + 1;
+ 						else 
+ 							j := SUCC(j);
+ 					if j > m then
+ 						return i - m;
+ 					else  
+ 						return i;\end{lstlisting}
+ 	\end{example}
+ 	\begin{example}{\nmu Problema delle 8 regine con algoritmo di backtracking}{otto_regine_backtracking}
+ 		Come si è detto possiamo esprimere la soluzione attraverso una permutazione dei numeri da 1 a 8. La soluzione si può esprimere mediante il vettore $V$ definito come segue:
+ 		\begin{lstlisting}[style=pascalstyle]
+ 			type posizione = [1..8];
+ 				vettore = array[1..8] of posizione;
+ 			var V: vettore;
+ 			
+ 			procedure otto_regine(var V: vettore; var successo: boolean);
+ 				k := 1;
+ 				V[k] := 1;
+ 				successo := false;
+ 				repeat
+ 					VERIFICA(a); /* Programma che controlla il vettore */
+ 					if (a) then	
+ 						repeat
+ 							if (V[k] < 8) then begin
+ 								b := true; 
+ 								V[k] := V[k] + 1;
+ 							else /* Backtracking */
+ 								b := false;
+ 								k := k - 1;
+ 						until b or (k = 0);
+ 					else if (k = 8) then
+ 						successo := true;
+ 					else 
+ 						k := k + 1; 
+ 						V[k] := 1;
+ 				until successo or (k = 0);
+ 		\end{lstlisting}
+ 		I vincoli imposti sono:
+ 		\begin{itemize}
+ 			\item le componenti di $V$ devono costituire una permutazione da 1 a 8; per ogni coppia di indici $i$ e $j$ vale $V[i] \neq V[j]$;
+ 			\item non è possibile avere due elementi sulla stessa diagonale, cioè:
+ 			\[
+ 			(i - j) \neq k - 1
+ 			\]
+ 			\[
+ 			(i + j) \neq k + 1
+ 			\]
+ 		\end{itemize}
+ 		Il sottoprogramma verifica ha il compito di esaminare il vettore $V$ e se il vettore viola uno dei vincoli rende TRUE la variabile $a$, altrimenti se i vincoli sono ambedue soddisfatti $a = FALSE$.
+ 	\end{example}
+ 	\paragraph{Albero di ricerca} Sia $P$ un problema e sia dato un metodo per associare ad ogni istanza $i$ di $P$ uno spazio di ricerca $Z_i$. Sia definito un modo per strutturare ogni elemento di $Z_i$ in un numero finito di componenti. \\
+ 	L'albero di ricerca associato a $i$ tramite $Z_i$ è un albero tale che:
+ 	\begin{itemize}
+ 		\item la radice rappresenta una soluzione parziale fittizia;
+ 		\item ogni nodo interno a livello $j$ con $j > 0$, rappresenta una soluzione parziale $S$ in cui sono state scelte le prime $j$ componenti, ed ha tanti fili quanti sono i modi possibili di aggiungere ad $S$ la $j+1$-esima componente.
+ 		\item ogni foglia è un elemento di $Z_i$. 
+ 	\end{itemize}
+ 	Per un albero di ricerca associato ad un'istanza $i$ tramite $Z_i$ è importante definire:
+ 	\begin{itemize}
+ 		\item un metodo per rappresentare ogni soluzione parziale;
+ 		\item un metodo per stabilire se una soluzione parziale viola i vincoli del problema;
+ 		\item una funzione di controllo del backtracking:
+ 		\[
+ 		C: \text{NODI} \to \{\text{TRUE, FALSE}\}
+ 		\]
+ 		detta \textit{funzione di ammissibilità} tale che $C(N) = TRUE$ per ogni nodo interno $N$ dell'albero, se e solo se la soluzione parziale viola i vincoli, mentre, se $N$ è una foglia, $C(N) = TRUE$ quando il corrispondente elemento dello spazio di ricerca non è ammissibile.
+ 	\end{itemize}
+ 	\begin{example}{\nmu Partizionamento di un insieme}{partizionamento_insieme}
+ 		Dato un insieme $Y = \{y_1, y_2, \dots, y_n\}$ di $n$ interi positivi la cui somma è $2m$ vogliamo sapere se esiste un sottoinsieme di $Y$ la cui somma sia pari a $M$. \\
+ 		Data l'istanza:
+ 		\[
+ 		Y = \{8, 5, 1, 4\}
+ 		\]
+ 		cerchiamo un sottoinsieme $X$ la cui somma sia 9. \\
+ 		La soluzione può essere espressa mediante un vettore:
+ 		\[
+ 		[x_1, \dots, x_4]
+ 		\]
+ 		ove $x_i \in \{0, 1\}$ e $x_i = 1 \iff y_i \in X$. \\
+ 		L'algoritmo di backtracking invece di generare tutte le quadruple $[x_1, \dots, x_4]$ costruisce il vettore soluzione partendo dal vettore vuoto e aggiungendo una componente alla volta. \\
+ 		Il comportamento dell'algoritmo si può descrivere mediante la rappresentazione ad albero dello spazio di ricerca. \\
+ 		La radice rappresenta il vettore vuoto, a livello 1 abbiamo i vettori che è possibile formare con la prima variabile $x_1 = 1$ e $x_1 = 0$ e così via.\\
+ 		Solo nelle foglie avrò la configurazione completa del vettore e solo alcune delle foglie rappresentano soluzioni ammissibili. \\
+ 		L'algoritmo di backtracking è un algoritmo di visita in ordine anticipato dell'albero di ricerca. 
+ 	\end{example}
+ 	L'algoritmo di backtracking si riferisce all'albero di ricerca $B_i$ associato all'istanza $i$ di un problema. Si comporta come se effettuase una visista in profondità. 
+ 	\begin{itemize}
+ 		\item Ogni volta che nella visita si analizza un nodo si applica la funzione di controllo del backtracking al nodo. Se la funzione restituisce TRUE, allora quel nodo e tutto il sottoalbero associato al nodo viene abbandonato e la visita continua. 
+ 		\item Se il problema è di ricerca, la visita termina quando si incontra una soluzione (una foglia con funzione di backtracking pari a false) oppure quando non esistono altri nodi da visitare. 
+ 		\item Se il problema è di ottimizzazione, l'algoritmo utilizza una variabile \texttt{OTTIMO CORRENTE}, che memorizza ad ogni passo il miglior elemento ammissibile. L'algoritmo non si interrompre al primo elemento ammissibile trovato, ma continua la visita aggiornando tale variabile.  
+ 	\end{itemize}
+ 	\begin{example}{\nmu Backtracking sul problema dello zaino}{backtracking_zaino}
+ 		L'albero di ricerca si ottiene considerando che, se $n$ sono gli oggetti, ogni elemento dello spazio di ricerca si può costruire in $n$ stadi dove all'$i-$esimo stadio si decide se includere o no, nel sottoinsieme rappresentato da $X$, l'oggetto $i$-esimo. L'albero di ricerca è un albero binario di profondità $n$. \\
+ 		Ogni soluzione parziale è rappresentata con un vettore e un indice, che indica lo stadio del processo: l'elemento $i$-esimo del vettore vale 1 se e solo se il $i$-esimo oggetto è nello zaino. \\
+ 		La funzione di controllo del backtracking su un nodo dell'albero, cui corrisponde la soluzione parziale $<X_1, \dots, X_i>$, deve restituire il valore TRUE se le scelte fatte portano ad un costo totale già maggiore del budget cioè:
+ 		\[
+ 		\sum_{k=1\dots i}C_kX_k > B
+ 		\]
+ 		La funzione, inoltre, vale TRUE se il massimo profitto ottenibile con le scelte già fatte è minore del profitto corrispondente all'ottimo corrente. 
+ 		\[
+ 		\sum_{I = 1\dots I} P_iX_i + \sum_{i=I+1,\dots N}P_i < P_{ott}
+ 		\]
+ 	\end{example}
+ 	\section{La tecnica greedy}
+ 	La tecnica greedy su applica principalmente a problemi di ottimizzazione e richiede che l'algoritmo esegua il processo di costruzione di un elemento dello spazio di ricerca in stadi e si basa sui seguenti principi:
+ 	\begin{itemize}
+ 		\item ad ogni stadio $i$, per la componente $i$-esima viene scelto il valore che, tra quelli ammissibili, risulta il migliore rispetto ad un determinato criterio;
+ 		\item una volta fatta la scelta per la $i$-esima componente, si passa a considerare le altre, senza più tornare sulla decisione presa. 
+ 	\end{itemize}
+ 	Lo schema di un algoritmo greedy presuppone che l'algoritmo acquisisca la rappresentazione di un'istanza del problema e disponga di un metodo per organizzare in stadi la costruzione di un elemento dello spazio di ricerca. 
+ 	\begin{enumerate}
+ 		\item Poni $i$ a 1 e inizializza $z$.
+ 		\item Determina l'insieme $A$ dei valori ammissibili per la componente $i$-esima di $z$ e se $A \neq \empty$ scegli il migiore in $A$, rispetto al criterio di preferenza fissato.
+ 		\item Se l'$i$-esimo stadio è l'ultimo allora termina e restituisce $o(z)$ come risultato.
+ 		\item Altrimenti incrementa $i$ di 1 e torna al passo 2.
+ 	\end{enumerate}
+ 	\begin{example}{\nmu Problema dello zaino (knapsack)}{greedy_problema_zaino}
+ 	Come è noto, si dispone din un budget $B$ e si deve cercare di massimizzare la rendita scegliendo tra $n$ possibili investimenti, ciascuno dei quali caratterizzato da un profitto $P_i$ e da un costo $C_i$. Dati $2n + 1$ interi positivi:
+ 	\[
+ 	P_1, P_2, \dots, P_n, C_1, C_2, \dots, C_n, B
+ 	\]
+ 	si vogliono trovare $n$ valori:
+ 	\[
+ 	X_1, X_2, \dots, X_n
+ 	\]
+ 	tali che $X_n \in \{0, 1\}$ e $\sum_{i=1}^{n}P_iX_i$ sia massima e $\sum_{i=1}^{n}C_iX_i \leq B$. \\
+ 	Consideriamo l'istanza $B = 5$ e tre elementi disponibili. 
+ 	\begin{center}
+	 	\begin{tabular}{|c|c|c|c|}
+	 		\textbf{i} & $\mathbf{P_i}$ & $\mathbf{C_i}$ & $\mathbf{\sfrac{P_i}{C_i}}$ \\
+	 		1 & 6 & 2 & 3 \\
+	 		2 & 4 & 1 & 4 \\
+	 		3 & 7 & 3 & 3.5
+	 	\end{tabular}
+ 	\end{center}
+ 	Il criterio di base per ordinare le variabili è quello di valutare sia il costo che il profitto $\sfrac{P_i}{C_i}$. Una volta effettuato l'ordinamento, si possono scegliere le variabili ponendole al massimo valore compatibile con i vincoli. \\
+ 	Il primo metodo consiste nel definire una funzione \texttt{ZAINOGREEDY} che ha come parametri:
+ 	\begin{itemize}
+ 		\item il numero $n$ di oggetti denotati dai numeri da 0 a $n - 1$;
+ 		\item il vettore $P$ dei profitti;
+ 		\item il vettore $C$ dei costi;
+ 		\item il budget $B$.
+ 	\end{itemize}
+ 	Il risultato viene restituito nel vettore $X$ nel quale la $i$-esima componente vale 1 se l'oggetto $i$  è incluso nella soluzione e 0 altrimenti. \\
+ 	Il secondo metodo consiste nell'ordinare in un vettore ausiliario $V$ gli oggetti secondo l'ordine decrescente del rapporto $\sfrac{P_i}{C_i}$. Ogni elemento è in corrispondenza di un oggetto e contiene l'indice dell'oggetto in un apposito campo, oltre al rapporto $\sfrac{P_i}{C_i}$ ad esso associato. \\
+ 	Dopo l'ordinamento, la funzione scandisce il vettore $V$, analizzando per ogni $i$ l'oggetto in $V[i]$  e decidendo, in base alla compatibilità con il vincolo sul budget, se includerlo o meno nella soluzione. 	
+ \end{example}
+ Un algoritmo greedy permette di ottenere una soluzione mediante una sequenza di decisioni; in ogni passo viene presa la decisione che al momento appare migliore. Questa strategia euristica non garantisce sempre una soluzione ottima. \\
+ Come possiamo determinare se un algoritmo greedy è in grado di trovare la soluzione di un problema di ottimizzazione? I problemi che si prestano ad essere risolti con una strategia greedy presentano alcune caratteristiche:
+ \begin{itemize}
+ 	\item la proprietà della scelta greedy;
+ 	\item la sottostruttura ottima.
+ \end{itemize}
+ La proprietà della scelta greedy assicura che si può ottenere una soluzione ottima globale prendendo decisioni che sono \textit{ottimi locali}.\\
+ Un problema presenta una sottostruttura ottima se una soluzione ottima del problema contiene al suo interno una soluzione ottima dei sottoproblemi. \\
+ La tecnica greedy è spesso utile per problemi di  ``scheduling'', in cui si hanno programmi da eseguire su un ``processore'' e si vuole l'ordine di esecuzione ``ottimo'' in base a un certo criterio. 
+ \begin{example}{\nmu Problema di selezione di attività}{problema_greedy_attivita}
+ 	Il prolema è quello dell'assegnamento di una risorsa condivisa da un certo numero di attività in competizione tra loro. \\
+ 	Sia $S = \{1, 2, \dots, n\}$ un insieme di $n$ attività che devono utilizzare una determinata risorsa che non può essere utilizzata contemporanemente. Una generica attività $k$ è caratterizzata da un tempo di inizio, detta attivazione $I_k$ e un tempo di fine detto conclusione $F_k$ con $I_k \leq F_k$. \\
+ 	Due attività $k$ e $j$ sono dette \textit{compatibili} se gli intervalli $[I_k, F_k]$ e $[I_i, F_j]$ non si sovrappongono. \\
+ 	Il probema chiede di individuare un insieme contenente il massimo numero di attività mutuamente compatibili. \\
+ 	Si assume che le attività in ingresso siano ordinate in modo crescente rispetto al loro tempo di fine: $F_1 \leq F_2 \leq \dots \leq F_n$. \\
+ 	Lo spazio di ricerca può essere così definito. Se $1, \dots, n$ sono le attività relative a un'istanza $i$, allora lo spazio di ricerca  è l'insieme di tutti i possibili sottoinsiemi di $\{1, \dots, n\}$. \\
+ 	Ad ogni stadio l'algortimo greedy sceglie le attività $k$ che, tra quelle ancora disponibili, rilascia per prima la risorsa condivisa, quindi con un $F_k$ minore. \\
+ 	Una volta scelta l'attività $k$, si aggiorna l'insieme di attività disponibili, eliminando dall'insieme quelle incompatibili con $k$, cioè quelle che richiedono l'uso della risorsa nel tempo che intercorre tra $I_k$ e $F_k$. 
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		procedure greedy(var I: array, var F: array, var n: integer);
+ 		var A: insieme;
+ 		CREAINSIEME(A);
+ 		INSERISCI(1, A);
+ 		j := 1;
+ 		for k=2 to n do:
+ 			if I[k] >= F[j] then:
+ 				INSERISCI(k, A);
+ 				j := k;
+ 	\end{lstlisting}
+ \end{example}
+ \begin{example}{\nmu Percorso più breve in un grafo}{greedy_percorso_breve}
+ 	Sia $G=(N, A)$ un grafo orientato etichettato negli archi con valori interi positivi. Trovare la lunghezza del percorso più breve che, dato un nodo $r\in N$, per ogni nodo $u \in N$, connetta $r$ ad $u$. \\
+ 	L'idea è quella di calcolare, in ordine crescente, la lunghezza dei cammini minimi da $r$ a tutti i nodi del grafo. Indichiamo con $S$ l'insieme dei nodi di cui, ad un dato istante, si è già calcolato la lunghezza del cammino minimo da $r$. \\
+ 	Utilizziamo un vettore $DIST$ con tante componenti quanti sono i nodi del grafo, in modo che $DIST[i]$ rappresenti la lunghezza del cammino minimo tra quelli che vanno da $r$ ad $i$ passando solo per nodi contenuti in $S$. L'ipotesi di fondo è che le distanze siano interi positivi. \\
+ 	Osserviamo che se il prossimo cammino minimo da generare $C$ è da $r$ al nodo $u$, tutti i nodi sono in $S$. Infatti se un nodo $k$ di $C$ non appartenesse a $S$ vi sarebbe un cammino da $r$ a un nodo $k$ non contenuto in $S$ di lunghezza minore a quella di $C$, contraddicendo l'ipotesi che il prossimo cammino da generare sia $C$. La lunghezza di $C$ e il nodo $u$ sono facilmente individuabili; basta calcolare il valore minimo di $DIST[i]$ per $i \notin S$. Individuato $u$ si inserisce in $S$ e si aggiorna $DIST$ per i nodi che non sono in $S$. \\
+ 	In particolare, se per un certo nodo $z$ connesso a $u$ da $<u, z>$ con etichetta $E$, la somma $DIST[u] + E$ è minore di $DIST[z]$ allora a $DIST[z]$ va assegnato il nuovo valore $DIST[u] + E$. \\
+ 	Viene generato un albero di copertura $T$, radicato in $r$, che include un cammino da $r$ ad ogni altro nodo. L'albero radicato $T$ può essere rappresentato con un vettore di padri, inizializzato ad un albero ``fittizio'' in cui tutti i nodi sono figli di $r$ connessi ad un arco fittizio etichettato con un valore maggiore di tutte le altre etichette. \\
+ 	Una soluzione ammissibile $T$ è ottima se e solo se:
+ 	\[
+ 	DIST[i] + C_{ij} = DIST[j] \quad \forall (i, j) \in T 
+ 	\]
+ 	e
+ 	\[
+ 	DIST[i]  +C_{ij} \geq DIST[j] \quad \forall \text{ARCO}(i, j) \in A
+ 	\]
+ 	Esiste un altro algoritmo, l'algortimo di Bellman-Ford, che risolve il problema dei cammini minimi nel caso più generale in cui i pesi degli archi possono essere negativi.
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		procedure CAMMINIMINIMI(var G: grafo; var r: nodo);
+ 			T[r] := 0;
+ 			DIST[r] := 0;
+ 			for k = 1 to n do
+ 				if k != r then
+ 					T[k] := r;
+ 					DIST[k] := MAXINT;
+ 				INSERISCI(r, S);
+ 				while not INSIEMEVUOTO(S) do
+ 					i := LEGGI(S);
+ 					CANCELLA(i, S);
+ 				for j in A[i] do /* A e' l'insieme di adiacenza */
+ 					if DIST[i] + Cij < DIST[j] then
+ 						T[j] := i;
+ 						DIST[j] := DIST[i] + Cij;
+ 						if not APPARTIENE(j, S) then
+ 							INSERISCI(j, S)\end{lstlisting}
+  \end{example}
+  \paragraph{Algoritmo di Dijkstra}
+  Se la struttura $S$ è una coda con priorità,rappresentata mediante una lista non ordinata, si ottiene un algoritmo noto dal 1959 e attribuito a Dijkstra. \\
+  In questo caso le operazioni \texttt{LEGGI} e \texttt{CANCELLA} sono gli operatori basici disponbili nell'algebra della coda con priorità:
+  \begin{align*}
+  	&\texttt{MIN:} &\quad &(\text{priorcoda}) \to \text{tipoelem} \\
+  	&\texttt{CANCELLAMIN:} &\quad &(\text{priorcoda}) \to \text{priorcoda} \\
+  \end{align*}
+  Gli elementi della coda con priorità sono i nodi del grafo e le priorità associate altro non sono che le distanze dal nodo origine $r$. Ad ogni iterazione è estratto da $S$ il noto avente priorità, e quindi distanza, minima. 
+  \paragraph{Algoritmo di Kruskal}
+  L'algoritmo di Kruskal permette di risolvere il problema del minimo albero di copertura. Dato un grafo non orientato e connesso $G=(N, A)$, con pesi positivi sugli archi, trovare un albero di copertura per $G$, cioè un albero avente tutti i nodi in $N$, ma solo alcuni archi in $A$, in modo tale che sia minima la somma dei pesi associati agli archi. \\
+  Il problema può essere risolto con molti algoritmi, dei quali i più noti si devono a Kruskal (1956) e a Prim (1957). \\
+  L'algoritmo di Kruskal usa la tecnica ``greedy'' e, dopo aver ordinato gli archi secondo i pesi crescenti, li esamina in tale ordine, inserendoli nella soluzione se non formano cicli con altri archi già scelti. \\
+  Ad un livello molto generale, l'algoritmo è esprimibile in questi termini:
+  \begin{lstlisting}[style=normalstyle]
+  	procedure kruskal(var G: grafo);
+  		T := {};
+  		for a = 1 to m do 
+  			if (ARCO a = (i, j) non forma ciclo con altri archi di T) then
+  				T := T + a;
+  \end{lstlisting}
+  Possiamo rappresentare il grafo $G$ come preferiamo. Nella realizzazione data di seguito il grafo è realizzato con un vettore di archi e l'albero $T$ con una lista di archi, realizzata con puntatori. 
+  \begin{lstlisting}[style=normalstyle]
+  	ARCO: tipo strutturato con componenti
+  		- i, j: integer;
+  		- peso: integer
+  	GRAFO: tipo strutturato con componenti
+  		- A: array di maxlung elementi di tipo arco;
+  		- n, m: integer
+  \end{lstlisting}
+  Dato il seguente grafo:
+  \begin{figure}[H]
+  	\centering 
+  	\includegraphics[width=0.5\textwidth]{grafo_kruskal}
+  \end{figure}
+  Una volta che si considera un arco, se questo unisce due alberi distinti nella foresta, l'arco viene aggiunto alla foresta e i due alberi fusi in uno. 
+  \begin{figure}[H]
+  	\centering
+  	\includegraphics[width=0.5\textwidth]{applicazione_kruskal}
+  \end{figure}
+  Nell'algoritmo di Kruskal la costruzione di $T$ avviene per unione di componenti connesse rappresentabili come insiemi disgiunti, due componenti si fondono in una con l'aggiunta di un nuovo arco. \\
+  Come è noto, la struttura mfset detta merge-find set è una partizione di un insieme in sottoinsiemi disgiunti detti componenti. Dunque è possibile utilizzare una struttura dati di tipo mfset per costruire $T$. 
+ 	\begin{lstlisting}[style=pascalstyle]
+ 	procedure kruskal(var G: grafo);
+ 		var h: integer;
+ 		var T: lista;
+ 		var S; mfset;
+ 		CREALISTA(T);
+ 		ORDINA(G.A(1), ..., G.A(G.m)) per ordine crescente di G.A(h).PESO;
+ 		CREAMFSET(G.n, S);
+ 		for h = 1 to G.m do begin
+ 			if not TROVA(A(h).i, A(h).j, S) then
+ 				FONDI(A(h).i, A(h).j, S)
+ 				INSLISTA(PRIMOLISTA(T), A(h), T)
+ 	\end{lstlisting}
+ 	\section{La tecnica divide-et-impera}
+ 	Questa tecnica deriva dall'idea di determinarela strategia di un problema facendo ricorso al principio di decomposizione induttiva. È necessario disporre di:
+ 	\begin{itemize}
+ 		\item una relazione di ordinamento sulle istanze del problema, basata sulla dimensione dell'input;
+ 		\item un metodo di risoluzione diretto per tutte le istanze del problema che non superano una prefissata dimensione limite;
+ 		\item un meccanismo per suddividere i dati di ingresso relativi ad un'istanza in diverse parti, ciascuna di dimensione minore di quella originaria e rappresentante l'input di una nuova istanza dello stesso problema;
+ 		\item un meccanismo per comporre le soluzioni per le istanze individuate dalla suddivisione, per ottenere la soluzione per l'istanza originaria. 
+ 	\end{itemize}
+ 	L'algortimo divide-et-impera ha il seguente schema:
+ 	\begin{enumerate}
+ 		\item se l'input ha dimensione inferiore a un certo valore $k$ allora utilizza un metodo diretto per ottenere il risultato;
+ 		\item altrimenti, dividi l'input in parti, ciascuna di dimensione inferiore all'input originario (\textit{divide});
+ 		\item esegui ricorsivamente l'algoritmo su ciascuno degli input individuati al passo precedente;
+ 		\item componi i risultati ottenuti al passo precedenete ottenendo il risultato per l'istanza originaria (\textit{impera}).
+ 	\end{enumerate}
+ 	L'applicazione più nota di questa tecnica si ha negli algoritmi di ordinamneto (\textit{natural-merge-sort} e \textit{quicksort}). 
+ 	\begin{example}{\nmu Problema di minimo e massimo simultanei}{max_min_divideimpera}
+ 		In alcune applicazioni serve trovare il minimo e il massimo in un insieme di $n$ elementi simulataneamente. Per esempio, un programma grafico può aver bisogno di rappresentare in scala un insieme di dati $(x, y)$: in questo caso va determinato il minimo e il massimo di ogni coordinata.\\
+ 		Cercando il minimo e il massimo in modo indipendente ci vorrà un totale di $2(n-1)$ confronti. Mantenendo gli elementi minimo e massimo via via incontrati e confrontando i due elementi della coppia di input sono sufficienti $3(n/2)$ confronti. L'algoritmo è il seguente:
+ 		\begin{enumerate}
+ 			\item Se la dimensione del vettore non supera 2, allora calcola direttamente, mediante unico confronto, il minimo e il massimo.
+ 			\item Altrimenti, dividi il vettore in due sottovettori della stessa dimensione, calcola ricorsivamente il minimo \textit{min1}  e il massimo \textit{max1} del primo sottovettore e il secondo \textit{min2} e \textit{max2} del secondo sottovettore.
+ 			\item Determina il minimo e il massimo del vettore complessivo confrontando \textit{min1} con \textit{min2} e \textit{max1} con \textit{max2}.
+ 		\end{enumerate}
+ 	\end{example}
+ 	La tecnica divide-et-impera è una tecnica generativa che fa uso della decomposizione induttiva per determinare il metodo solutivo. L'efficacia della tecnica si manifesta attraverso due aspetti:
+ 	\begin{itemize}
+ 		\item consente di progettare algoritmi semplici e intuitivi attraverso l'induzione;
+ 		\item spesso questi algoritmi hanno prestazioni migliori rispetto ad altri, tipicamente a quelli del paradigma selettivo.
+ 	\end{itemize}
+ 	L'efficienza degli algoritmi dipende dal numero $a$ di sottoproblemi generati, dalla dimensione $b$ dei dati di ingresso ai sottoproblemi e dal costo $f(n)$ necessario per la scomposizione del problema e la composizione dei risultati.
  \end{document}
