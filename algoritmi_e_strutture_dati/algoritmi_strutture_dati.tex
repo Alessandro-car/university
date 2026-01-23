@@ -1073,8 +1073,8 @@ procedure INPILA(a: tipoelem, var P: pila);
 		&\texttt{INCODA(a, Q) = Q'} \\
 		&\quad Pre: Q = a_1, a_2, \dots, a_n \quad n \geq 0 \\
 		&\quad Post: \begin{cases}
-			Q' = a_1, a_2, \dots, a_n, a & n > 0 \\
-			Q'= a & n = 0
+			Q' = a_1, a_2, \dots, a_n & n > 0 \\
+			Q'= a_1, a_2, \dots, a_n, a 
 		\end{cases}
 	\end{align*}
 	Per simulare \texttt{INCODA} con operazioni delle liste, bisogna distinguere il caso di inserzione in una coda vuota da quello di inserzione in una coda non vuota. Nel primo caso la simulazione è identica a quella di \texttt{INPILA}, mentre nel secondo caso occorre inserire l'elemento nella posizione che segue quella dell'ultimo elemento della lista:
