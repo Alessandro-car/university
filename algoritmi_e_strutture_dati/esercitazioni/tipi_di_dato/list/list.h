@@ -100,7 +100,8 @@ void list<T>::erase(size_t p) {
 
 template<class T>
 list<T>& list<T>::operator=(const list<T>& l) {
-	m_elements = l.m_elements;
+	if (this != &l)
+		m_elements = l.m_elements;
 	return *this;
 }
 
