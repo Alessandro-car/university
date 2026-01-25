@@ -1,7 +1,7 @@
 #ifndef SET_H
 #define SET_H
 
-#include "../vector/vector.h"
+#include "../tipi_di_dato/vector/vector.h"
 #include <stdexcept>
 
 template <class T>
@@ -17,10 +17,6 @@ class set {
 
 		bool empty() const;
 		size_t size() const;
-		size_t begin() const;
-		value_type read(size_t) const;
-		size_t next(size_t) const;
-		bool end(size_t) const;
 		int contain(value_type) const;
 		bool insert(value_type);
 		bool erase(value_type);
@@ -28,6 +24,7 @@ class set {
 		set<T> union_set(const_ref);
 		set<T> intersection(const_ref);
 		set<T> difference(const_ref);
+		set<T> simmetric_difference(const_ref);
 		bool is_subset(const_ref) const;
 
 		bool operator==(const_ref) const;
@@ -62,29 +59,6 @@ template <class T>
 size_t set<T>::size() const {
 	return m_elems.size();
 }
-
-template <class T>
-size_t set<T>::begin() const {
-	return 0;
-}
-
-template <class T>
-typename set<T>::value_type set<T>::read(size_t i) const {
-	return m_elems.at(i);
-}
-
-template <class T>
-size_t set<T>::next(size_t i) const {
-	if (i >= 0 && i < m_elems.size())
-		return i + 1;
-	return i;
-}
-
-template <class T>
-bool set<T>::end(size_t i) const {
-	return i == m_elems.size();
-}
-
 
 template <class T>
 int set<T>::contain(value_type e) const {
@@ -147,6 +121,12 @@ set<T> set<T>::difference(const_ref s) {
 			d_set.insert(elem);
 	}
 	return d_set;
+}
+
+template <class T>
+set<T> set<T>::simmetric_difference(const_ref s) {
+	set<T> u_set = union_set(s);
+	return u_set.difference(intersection(s));
 }
 
 template <class T>

@@ -1,6 +1,7 @@
 #ifndef HASH_TABLE_H_
 #define HASH_TABLE_H_
 #include "../vector/vector.h"
+#include "../insiemi/set.h"
 #include <stdexcept>
 #include <string>
 
@@ -28,6 +29,17 @@ class hash<string>
 		static constexpr size_t first_prime = 51001;
 		static constexpr size_t second_prime = 60961;
 		static constexpr size_t factor = 31;
+};
+
+template <>
+class hash<int> {
+	public:
+		unsigned operator()(int x) const {
+			x = ((x >> 16) ^ x) * 0x45d9f3b;
+			x = ((x >> 16) ^ x) * 0x45d9f3b;
+			x = (x >> 16) ^ x;
+			return x;
+		}
 };
 
 template <class K, class V>
@@ -58,13 +70,19 @@ class hash_table {
 		void modify(const K& , const V&);
 		V find(const K&) const;
 		bool contains(const K&) const;
+		set<bucket<K, V>*> entry_set() const;
+		bool contains_value(const V&) const;
+		myvec::vector<V> values() const;
+		myvec::vector<K> keys() const;
 	private:
 		myvec::vector<bucket<K, V>*> m_data;
 		hash<K> m_hash;
 };
 
 template <class K, class V>
-hash_table<K, V>::hash_table() : m_data() {}
+hash_table<K, V>::hash_table() {
+	m_data.resize(20);
+}
 
 template <class K, class V>
 bool hash_table<K, V>::empty() const {
@@ -73,7 +91,7 @@ bool hash_table<K, V>::empty() const {
 
 template <class K, class V>
 size_t hash_table<K, V>::search(const K& key) const {
-	size_t bucket_idx = (size_t) m_hash(key) % m_data.capacity();
+	size_t bucket_idx = (size_t) m_hash(key) % m_data.size();
 	size_t j = bucket_idx;
 	do {
 		bucket<K, V>* el = m_data[j];
@@ -81,7 +99,7 @@ size_t hash_table<K, V>::search(const K& key) const {
 			return j;
 		if (el->active && el->key == key)
 			return j;
-		j  = (j + 1) % m_data.max_size();
+		j  = (j + 1) % m_data.size();
 	} while (j != bucket_idx);
 
 	return j;
@@ -136,6 +154,53 @@ bool hash_table<K, V>::contains(const K& key) const {
 	if (m_data[idx] != nullptr && m_data[idx]->active && m_data[idx]->key == key)
 		return true;
 	return false;
+}
+
+template <class K, class V>
+set<bucket<K, V>*> hash_table<K, V>::entry_set() const {
+	set<bucket<K, V>*> entry_set;
+	for (size_t i = 0; i < m_data.size(); ++i) {
+		bucket<K, V>* b = m_data[i];
+		if (b != nullptr && b->active)
+			entry_set.insert(b);
+	}
+	return entry_set;
+}
+
+template <class K, class V>
+bool hash_table<K, V>::contains_value(const V& value) const {
+	set<bucket<K, V>*> buckets = entry_set();
+	size_t i = buckets.begin();
+	while (!buckets.end(i)) {
+		if (buckets.read(i)->value == value)
+			return true;
+		i = buckets.next(i);
+	}
+	return false;
+}
+
+template <class K, class V>
+myvec::vector<V> hash_table<K, V>::values() const {
+	myvec::vector<V> values;
+	set<bucket<K, V>*> buckets = entry_set();
+	size_t i = buckets.begin();
+	while (!buckets.end(i)) {
+		values.push_back(buckets.read(i)->value);
+		i = buckets.next(i);
+	}
+	return values;
+}
+
+template <class K, class V>
+myvec::vector<K> hash_table<K, V>::keys() const {
+	myvec::vector<K> keys;
+	set<bucket<K, V>*> buckets = entry_set();
+	size_t i = buckets.begin();
+	while (!buckets.end(i)) {
+		keys.push_back(buckets.read(i)->key);
+		i = buckets.next(i);
+	}
+	return keys;
 }
 
 #endif

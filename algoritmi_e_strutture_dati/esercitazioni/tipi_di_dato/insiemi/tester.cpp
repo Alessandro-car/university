@@ -1,93 +1,102 @@
-#include "set.h"
 #include <iostream>
+#include <cassert>
+#include "set.h" // Ensure this path is correct
+
+using std::cout;
+using std::endl;
+
+void test_basic_logic() {
+    cout << "--- Testing Basics (Insert, Erase, Size) ---" << endl;
+    set<int> s;
+    assert(s.empty());
+
+    s.insert(1);
+    s.insert(2);
+    s.insert(3);
+    s.insert(1); // Duplicate - should fail silently or return false
+
+    cout << "Set S (expected [1][2][3]): ";
+    s.print();
+    assert(s.size() == 3);
+
+    s.erase(2);
+    cout << "Set S after erasing 2: ";
+    s.print();
+    assert(s.size() == 2);
+    assert(s.contain(2) == -1);
+}
+
+void test_set_operations() {
+    cout << "\n--- Testing Set Theory Operations ---" << endl;
+    set<int> A;
+    set<int> B;
+
+    // A = {1, 2, 3}
+    A.insert(1);
+		A.insert(2);
+		A.insert(3);
+		cout << "Set A: ";
+		A.print();
+    // B = {3, 4, 5}
+    B.insert(3);
+		B.insert(4);
+		B.insert(5);
+		cout << "Set B: ";
+		B.print();
+
+    // Union: {1, 2, 3, 4, 5}
+    set<int> U = A.union_set(B);
+    cout << "Union (A U B): "; U.print();
+    assert(U.size() == 5);
+
+    // Intersection: {3}
+    set<int> I = A.intersection(B);
+    cout << "Intersection (A n B): ";
+		I.print();
+    assert(I.size() == 1);
+    assert(I.contain(3) != -1);
+
+    // Difference: {1, 2}
+    set<int> D = A.difference(B);
+    cout << "Difference (A - B): "; D.print();
+    assert(D.size() == 2);
+    assert(D.contain(1) != -1 && D.contain(3) == -1);
+}
+
+void test_boolean_logic() {
+    cout << "\n--- Testing Subsets and Equality ---" << endl;
+    set<int> A;
+    set<int> B;
+
+    A.insert(10);
+		A.insert(20);
+    cout << "Set A: ";
+		A.print();
+
+		B.insert(10);
+		B.insert(20);
+		cout << "Set B: ";
+		B.print();
+    assert(A == B);
+
+    B.insert(30);
+    // A is subset of B, but B is not subset of A
+    assert(A.is_subset(B) == true);
+    assert(B.is_subset(A) == false);
+    assert(!(A == B));
+
+    cout << "Boolean logic tests passed!" << endl;
+}
 
 int main() {
-    // Test 1: Basic insert and contains
-    std::cout << "Test 1: Basic insert and contains" << std::endl;
-    set<int> set1;
-    set1.insert(1);
-    set1.insert(2);
-    set1.insert(3);
-    std::cout << "set 1: ";
-    set1.print();
-    // Test 2: Duplicate insert
-    std::cout << "Test 2: Duplicate insert" << std::endl;
-    bool inserted = set1.insert(2);
-    std::cout << "Inserting duplicate 2: " << (inserted ? "Success" : "Failed (already exists)") << std::endl;
-    std::cout << "Size after duplicate: " << set1.size() << "\n" << std::endl;
+    try {
+        test_basic_logic();
+        test_set_operations();
+        test_boolean_logic();
 
-    // Test 3: Remove element
-    std::cout << "Test 3: Remove element" << std::endl;
-    set1.erase(2);
-    std::cout << "After removing 2: ";
-    set1.print();
-    std::cout << "Size: " << set1.size() << "\n" << std::endl;
-
-    // Test 4: Create second set
-    std::cout << "Test 4: Create second set" << std::endl;
-    set<int> set2;
-    set2.insert(3);
-    set2.insert(4);
-    set2.insert(5);
-    std::cout << "set 2: ";
-    set2.print();
-
-		//TODO: Check union, intersection, difference and subset
-
-    // Test 5: Union
-    std::cout << "\nTest 5: Union" << std::endl;
-    set<int> unionset = set1.union_set(set2);
-    std::cout << "set 1: ";
-    set1.print();
-    std::cout << "set 2: ";
-    set2.print();
-    std::cout << "Union: ";
-    unionset.print();
-
-    // Test 6: Intersection
-    std::cout << "\nTest 6: Intersection" << std::endl;
-    set<int> intersectionset = set1.intersection(set2);
-    std::cout << "Intersection: ";
-    intersectionset.print();
-
-    // Test 7: Difference
-    std::cout << "\nTest 7: Difference" << std::endl;
-    set<int> differenceset = set1.difference(set2);
-    std::cout << "Difference (set1 - set2): ";
-    differenceset.print();
-
-    // Test 8: Subset check
-    std::cout << "\nTest 8: Subset check" << std::endl;
-    set<int> set3;
-    set3.insert(3);
-    set3.insert(4);
-    std::cout << "set 3: ";
-    set3.print();
-    std::cout << "Is set 3 subset of set 2? " << (set3.is_subset(set2) ? "Yes" : "No") << std::endl;
-    std::cout << "Is set 2 subset of set 3? " << (set2.is_subset(set3) ? "Yes" : "No") << std::endl;
-
-    // Test 9: Clear
-    std::cout << "\nTest 9: Clear" << std::endl;
-    std::cout << "set 3 before clear: ";
-    set3.print();
-    set3.clear();
-    std::cout << "set 3 after clear: ";
-    set3.print();
-    std::cout << "Is empty? " << (set3.empty() ? "Yes" : "No") << std::endl;
-
-    // Test 11: String set
-    std::cout << "\nTest 11: String set" << std::endl;
-    set<std::string> stringset;
-    stringset.insert("apple");
-    stringset.insert("banana");
-    stringset.insert("cherry");
-    std::cout << "String set: ";
-    stringset.print();
-    std::cout << "Contains 'banana': " << (stringset.contain("banana") ? "Yes" : "No") << std::endl;
-
-    std::cout << "\n======================================" << std::endl;
-    std::cout << "All tests completed!" << std::endl;
-    std::cout << "======================================" << std::endl;
-
+        cout << "\nALL TESTS PASSED SUCCESSFULLY!" << endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Test failed with exception: " << e.what() << endl;
+    }
     return 0;
 }

@@ -1,8 +1,9 @@
-#ifndef _LIST_H
-#define _LIST_H
+#ifndef LINEAR_LIST_H
+#define LINEAR_LIST_H
 
+#include <iterator>
 #include <stdexcept>
-#include "../vector/vector.h"
+#include "../tipi_di_dato/vector/vector.h"
 
 template <class T>
 class list {
@@ -15,17 +16,17 @@ class list {
 		list(const list<T>&);
 
 		bool empty() const;
-		size_t size() const;
 		type_value read(position) const;
 		void write(type_value, position);
 		position begin() const;
-		position last() const;
 		bool end(position) const;
 		position next(position) const;
 		position previous(position) const;
-		void insert(type_value, position);
+		void insert_linear(type_value);
 		void erase(position);
-
+		bool in(T) const;
+		void reverse();
+		void merge(const list<T>&);
 		list<T>& operator=(const list<T>&);
 		bool operator==(const list<T>&) const;
 
@@ -48,11 +49,6 @@ bool list<T>::empty() const {
 }
 
 template <class T>
-size_t list<T>::size() const {
-	return m_elements.size();
-}
-
-template <class T>
 typename list<T>::type_value list<T>::read(size_t p) const {
 	return m_elements.at(p);
 }
@@ -66,11 +62,6 @@ void list<T>::write(T elem, size_t p) {
 template <class T>
 typename list<T>::position list<T>::begin() const {
 	return 0;
-}
-
-template <class T>
-typename list<T>::position list<T>::last() const {
-	return m_elements.size() - 1;
 }
 
 template <class T>
@@ -95,8 +86,14 @@ typename list<T>::position list<T>::previous(size_t p) const {
 }
 
 template <class T>
-void list<T>::insert(T elem, size_t p) {
-	m_elements.insert(p + m_elements.begin(), elem);
+void list<T>::insert_linear(T elem) {
+	size_t i = begin();
+	while (!end(i)) {
+		if (elem <= read(i))
+			break;
+		i = next(i);
+	}
+	m_elements.insert(i + m_elements.begin(), elem);
 }
 
 template <class T>
@@ -104,10 +101,41 @@ void list<T>::erase(size_t p) {
 	m_elements.erase(p + m_elements.begin());
 }
 
+template <class T>
+bool list<T>::in(T elem) const {
+	size_t i = 0;
+	while (!end(i)) {
+		if (read(i) == elem)
+			return true;
+		i = next(i);
+	}
+	return false;
+}
+
+template <class T>
+void list<T>::reverse() {
+	size_t end = m_elements.size() - 1;
+	for (size_t i = 0; i < m_elements.size() / 2; ++i) {
+		T tmp = read(i);
+		write(read(end), i);
+		write(tmp, end);
+		--end;
+	}
+}
+
+template <class T>
+void list<T>::merge(const list<T>& l) {
+	size_t j = l.begin();
+	while (!l.end(j)) {
+		if (!in(l.read(j)))
+			insert_linear(l.read(j));
+		j = l.next(j);
+	}
+}
+
 template<class T>
 list<T>& list<T>::operator=(const list<T>& l) {
-	if (this != &l)
-		m_elements = l.m_elements;
+	m_elements = l.m_elements;
 	return *this;
 }
 

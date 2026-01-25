@@ -64,8 +64,17 @@ int main() {
             std::cout << "Caught expected error: " << e.what() << std::endl;
         }
 
-        std::cout << "\n--- ALL TESTS COMPLETED ---" << std::endl;
+				std::cout << "\nTesting contains value function" << std::endl;
+				std::cout << scores.contains_value(95) << std::endl;
 
+				myvec::vector<int> values = scores.values();
+				for (int& value : values)
+					std::cout << value << std::endl;
+
+				myvec::vector<string> keys = scores.keys();
+				for (string& key : keys)
+					std::cout << key << std::endl;
+        std::cout << "\n--- ALL TESTS COMPLETED ---" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "CRITICAL ERROR during testing: " << e.what() << std::endl;
         return 1;
