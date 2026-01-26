@@ -1502,6 +1502,16 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\item In un albero esiste un solo cammino che va dala radice a qualunque altro nodo.
 		\item Tutti i nodi di un albero $T$, tranne $r$, possono essere ripartiti in insiemi disgiunti ciascuno dei quali individua un albero.
 	\end{itemize}
+	Un albero è un particolare tipo di grafo defintio matematicamente con una coppia:
+	\[
+	T = (N, A)
+	\]
+	dove $N$ è un insieme finito di noid ed $A$ è un insieme di coppie non ordinate tali che:
+	\begin{itemize}
+		\item il numero di archi è uguale al numero di nodi meno 1 $|A| = |N| - 1$
+		\item $T$ è connesso, ovvero per ogni coppia di nodi $u$ e $v$ in $N$, esiste una sequenza di nodi distinti $u_0, u_1, \dots, u_k$ tali che $u = u_0$ e $v = u_k$ e a coppia $<u_i, u_{i+1}>$ è un arco di $A$, per $i = 0, 1, \dots,k-1$.
+	\end{itemize}
+	Un albero radicato è ottenuto da un albero libero designando aribitriaramente un nodo $r$ come radice e e ordinando i nodi per livelli.
 	\section{Specifica}
 	L'albero ordinato può essere interpretato come una generalizzazione di una sequenza lineare, in cui ciascun elemento ha ancora un solo predecessore (il padre), ma in generale può avere più di un successore (i figli). Infatti, una lista è un particolare albero in cui ogni nodo ha al più un figlio e c'è una sola foglia. Analogamente alle operazioni sulle liste, quelle definite sugli alberi ordinati prevedono la possibilità di spostarsi da un nodo ad un suo parente, come figlio, fratello o padre, e inoltre di inserire o cancellare interi sottoalberi. \\
 	Un tipico insieme di operazioni per gli alberi ordinati comprende l'operazione di creazione \texttt{CREAALBERO}, quelle di selezione \texttt{RADICE}, per accedere direttamente alla radice, e \texttt{PADRE, PRIMOFIGLIO} e \texttt{SUCCFRATELLO}, per accedere, rispettivamente, al padre, al primo figlio, o al fratello sucessivo di un nodo, quelle di interrogazione \texttt{ALBEROVUOTO}, per verificare che l'albero sia vuoto, \texttt{FOGLIA} e \texttt{FINEFRATELLI}, per controllare che un nodo non abbia figli o che siano stati considerati tutti i fratelli, e quelle di modifica \texttt{INSRADICE}, per inserire la radice in un albero vuoto, \texttt{CANCSOTTOALBERO} e \texttt{INSSOTTOALBERO}, per cancellare o inserire un sottoalbero. 
