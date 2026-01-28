@@ -31,9 +31,9 @@ class ntree {
 		node<T>* root() const;
 		node<T>* parent(node<T>&) const;
 		bool leaf(node<T>&) const;
-		node<T>* first_son(node<T>&);
+		node<T>* first_son(node<T>&) const;
 		bool last_sibling(node<T>&) const;
-		node<T>* next_sibling(node<T>&);
+		node<T>* next_sibling(node<T>&) const;
 		value_type read(node<T>&) const;
 		void write(value_type, node<T>&);
 		void insert_root();
@@ -86,7 +86,7 @@ bool ntree<T>::leaf(node<T>& n) const {
 }
 
 template <class T>
-node<T>* ntree<T>::first_son(node<T>& n) {
+node<T>* ntree<T>::first_son(node<T>& n) const {
 	if (n.m_son != nullptr)
 		return n.m_son;
 	return nullptr;
@@ -98,7 +98,7 @@ bool ntree<T>::last_sibling(node<T>& n) const {
 }
 
 template <class T>
-node<T>* ntree<T>::next_sibling(node<T>& n) {
+node<T>* ntree<T>::next_sibling(node<T>& n) const {
 	if (n.m_sibling != nullptr)
 		return n.m_sibling;
 	return nullptr;
@@ -128,20 +128,14 @@ template <class T>
 void ntree<T>::insert_subtree(node<T>* first, node<T>* n, ntree<T>& nt) {
 	if (nt.empty())
 		return;
-	node<T>* copy_root = new node<T>;
-	copy_root->m_value = nt.m_root->m_value;
-	copy_root->m_parent = n;
-	copy_root->m_sibling = nullptr;
-	copy_root->m_son = copy_tree(nt.m_root->m_son);
-
+	node<T>* sub_root = copy_tree(nt.m_root);
+	sub_root->m_parent = n;
 	if (first == n) {
-		node<T>* old_son = n->m_son;
-		n->m_son = copy_root;
-		copy_root->m_sibling = old_son;
+		sub_root->m_sibling = n->m_son;
+		n->m_son = sub_root;
 	} else {
-		node<T>* old_sibling = first->m_sibling;
-		first->m_sibling = copy_root;
-		copy_root->m_sibling = old_sibling;
+		sub_root->m_sibling = first->m_sibling;
+		first->m_sibling = sub_root;
 	}
 }
 

@@ -29,7 +29,7 @@ size_t level_red(bin_tree<string> tree) {
 					q.push(*tree.left(n));
 				if (!tree.right_empty(n))
 					q.push(*tree.right(n));
-			}
+	}
 			++level;
 		}
 

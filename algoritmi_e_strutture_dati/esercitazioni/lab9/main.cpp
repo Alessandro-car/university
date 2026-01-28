@@ -29,10 +29,6 @@ void mutation(bin_tree<T>& t1, bin_tree<T>& t2, node<T>* u, node<T>* v) {
 	node<T>* v_parent = t2.parent(*v);
 }
 
-bin_tree<string> parse_tree(const string& exp) {
-	bin_tree<string> p_tree;
-	return p_tree;
-}
 
 int main() {
 	// --- Setup Tree 1 ---

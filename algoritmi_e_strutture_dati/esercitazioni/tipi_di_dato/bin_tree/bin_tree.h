@@ -13,6 +13,9 @@ class node {
 		node() :
 			m_parent(nullptr), m_right(nullptr), m_left(nullptr), m_value(T())
 		{}
+		node(T val) :
+			m_parent(nullptr), m_right(nullptr), m_left(nullptr), m_value(val)
+		{}
 	private:
 		node<T>* m_parent;
 		node<T>* m_left;
