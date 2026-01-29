@@ -1,6 +1,6 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
-#include "../vector/vector.h"
+#include "../tipi_di_dato/vector/vector.h"
 
 template <class E>
 class graph;
@@ -44,10 +44,15 @@ class graph {
 		label read_label(node) const;
 		void write_label(node, label);
 		myvec::vector<node> adjacent(label) const;
+		size_t in_degree(label) const;
+		size_t out_degree(label) const;
+		double mean_out_degree() const;
+		void find_path(label, label) const;
 		graph<E> operator=(const graph<label>&);
 		bool operator==(const graph<label>&) const;
 		void print_mat() const;
 	private:
+		bool find_path_h(label, label, myvec::vector<label>&) const;
 		bool label_exists(label) const;
 		myvec::vector<node> m_nodes;
 		myvec::vector<myvec::vector<size_t>> m_mat;
@@ -149,7 +154,7 @@ Node<E> graph<E>::get_node(label l) const {
 		if (m_nodes[i].m_label == l)
 			return m_nodes[i];
 	}
-	return nullptr;
+	throw std::runtime_error("The node doesn't exists");
 }
 
 template <class E>
@@ -164,7 +169,7 @@ typename graph<E>::weight graph<E>::read_weight(label n, label u) const {
 	}
 
 	if (id_n == -1 || id_u == -1)
-		throw std::runtime_error("The nodes don't exists");
+		throw std::runtime_error("The nodes don't exist");
 
 	return m_mat[id_n][id_u];
 }
@@ -210,7 +215,7 @@ myvec::vector<Node<E>> graph<E>::adjacent(label n) const {
 	}
 
 	if (id_n == -1)
-		throw std::runtime_error("The node does not exists!");
+		throw std::runtime_error("The node doesn't exists");
 
 	myvec::vector<node> adj;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
@@ -218,6 +223,38 @@ myvec::vector<Node<E>> graph<E>::adjacent(label n) const {
 			adj.push_back(m_nodes[i]);
 	}
 	return adj;
+}
+
+template <class E>
+size_t graph<E>::in_degree(label l) const {
+	Node<E> n = get_node(l);
+	size_t count = 0;
+	for (size_t i = 0; i < m_nodes.size(); ++i) {
+		if (m_mat[i][n.get_id()] != 0)
+			++count;
+	}
+	return count;
+}
+
+template <class E>
+size_t graph<E>::out_degree(label l) const {
+	return adjacent(l).size();
+}
+
+template <class E>
+double graph<E>::mean_out_degree() const {
+	float mean = 0;
+	for (size_t i = 0; i < m_nodes.size(); ++i) {
+		mean += out_degree(m_nodes[i].m_label);
+	}
+	return mean / m_nodes.size();
+}
+
+template <class E>
+void graph<E>::find_path(label l, label n) const {
+	myvec::vector<label> visited;
+	if (!find_path_h(l, n, visited))
+		std::cout << "No path found from " << l << " to " << n << std::endl;
 }
 
 template <class E>
@@ -240,6 +277,28 @@ bool graph<E>::operator==(const graph<E>& g) const {
 		}
 	}
 	return true;
+}
+
+template <class E>
+bool graph<E>::find_path_h(label l, label n, myvec::vector<label>& visited) const {
+	if (l == n) {
+		std::cout << l;
+		return true;
+	}
+	for (size_t i = 0; i < visited.size(); ++i) {
+		if (visited[i] == l)
+			return false;
+	}
+
+	visited.push_back(l);
+	myvec::vector<Node<E>> l_adj = adjacent(l);
+	for (size_t i = 0; i < l_adj.size(); ++i) {
+		if (find_path_h(l_adj[i].m_label, n, visited)) {
+			std::cout << " <- " << l;
+			return true;
+		}
+	}
+	return false;
 }
 
 template <class E>

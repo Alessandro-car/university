@@ -131,7 +131,7 @@ bin_tree<string> build_ast(queue<string>& postfix_exp) {
 
 
 int main() {
-	string exp = "(5-3)*(9-2)";
+	string exp = "(3/(12+15))*(19-1)";
 	queue<string> postfix_exp = parse_expression(exp);
 	postfix_exp.print();
 	bin_tree<string> btree = build_ast(postfix_exp);
