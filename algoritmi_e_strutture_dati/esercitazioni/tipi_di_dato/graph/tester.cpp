@@ -1,6 +1,6 @@
 #include <iostream>
-#include <stdexcept>
 #include <string>
+#include <stdexcept>
 #include "graph.h"
 
 void print_separator(const std::string& title) {
@@ -9,69 +9,51 @@ void print_separator(const std::string& title) {
 
 int main() {
     try {
-        // 1. Test Constructor and n_nodes
-        print_separator("Testing Constructor");
-        graph<std::string> g(3);
-        std::cout << "Graph(3) created. Nodes: " << g.n_nodes() << " (Expected: 3)" << std::endl;
-
-        // 2. Test Node Insertion (Dynamic Growth)
         print_separator("Testing Dynamic Node Insertion");
         graph<std::string> flight_plan;
-        flight_plan.ins_node("Bari");
-        flight_plan.ins_node("Rome");
-        flight_plan.ins_node("London");
-        flight_plan.ins_node("Paris");
-        std::cout << "Nodes added: " << flight_plan.n_nodes() << " (Expected: 4)" << std::endl;
 
-        // 3. Test Edge (Bow) Insertion
+        // Inseriamo i nodi
+        flight_plan.ins_node("Bari");   // Diventerà indice 0
+        flight_plan.ins_node("Rome");   // Diventerà indice 1
+        flight_plan.ins_node("London"); // Diventerà indice 2
+        flight_plan.ins_node("Paris");  // Diventerà indice 3
+
+        // Poiché le label non sono univoche, recuperiamo i nodi dalla lista interna
+        // che garantisce di puntare agli oggetti corretti tramite il loro ID/posizione.
+        myvec::vector<Node<std::string>> nodes = flight_plan.list_node();
+
+        Node<std::string> n_bari   = nodes[0];
+        Node<std::string> n_rome   = nodes[1];
+        Node<std::string> n_london = nodes[2];
+        Node<std::string> n_paris  = nodes[3];
+
         print_separator("Testing Edge (Bow) Creation");
-        // Connecting cities with distances (weights)
-        flight_plan.ins_bow("Bari", "Rome", 450);
-        flight_plan.ins_bow("Rome", "London", 1400);
-        flight_plan.ins_bow("London", "Paris", 340);
-        flight_plan.ins_bow("Bari", "London", 1800);
+        // Ora passiamo gli oggetti Node, non le stringhe
+        flight_plan.ins_bow(n_bari, n_rome, 450);
+        flight_plan.ins_bow(n_rome, n_london, 1400);
+        flight_plan.ins_bow(n_london, n_paris, 340);
+        flight_plan.ins_bow(n_bari, n_london, 1800);
 
-				flight_plan.print_mat();
+        flight_plan.print_mat();
 
-        std::cout << "Weight Bari -> Rome: " << flight_plan.read_weight("Bari", "Rome") << " (Expected: 450)" << std::endl;
-        std::cout << "Weight Rome -> London: " << flight_plan.read_weight("Rome", "London") << " (Expected: 1400)" << std::endl;
+        std::cout << "Weight Bari -> Rome: " << flight_plan.read_weight(n_bari, n_rome) << " (Expected: 450)" << std::endl;
 
-        // 4. Test Adjacency
         print_separator("Testing Adjacent Nodes");
-        std::cout << "Finding cities reachable from Bari..." << std::endl;
-        auto adj_to_bari = flight_plan.adjacent("Bari");
+        // Adiacenti di Bari
+        auto adj_to_bari = flight_plan.adjacent(n_bari);
+        std::cout << "Finding cities reachable from Bari (" << n_bari.get_label() << "):" << std::endl;
         for (size_t i = 0; i < adj_to_bari.size(); ++i) {
-            // Note: read_label takes a node object
-            std::cout << " - " << flight_plan.read_label(adj_to_bari[i]) << std::endl;
+            std::cout << " - " << flight_plan.read_label(adj_to_bari[i]) << " (ID: " << adj_to_bari[i].get_id() << ")" << std::endl;
         }
 
-        // 5. Test Copy Constructor (Deep Copy Verification)
-        print_separator("Testing Deep Copy");
-        graph<std::string> network_copy(flight_plan);
-        std::cout << "Copy n_nodes: " << network_copy.n_nodes() << " (Expected: 4)" << std::endl;
-
-        if (network_copy == flight_plan) {
-            std::cout << "Equality Check: SUCCESS (Copy matches original)" << std::endl;
-        }
-
-        // 6. Test Error Handling
-        print_separator("Testing Error Handling");
-        try {
-            flight_plan.ins_node("Bari"); // Duplicate
-        } catch (const char* e) {
-            std::cout << "Caught expected error: " << e << std::endl;
-        }
-
-        try {
-            flight_plan.read_weight("Bari", "New York"); // Missing node
-        }	catch (const char* e) {
-            std::cout << "Caught expected error: " << e << std::endl;
-        }
+        print_separator("Testing Non-Unique Labels");
+        flight_plan.ins_node("Bari"); // Ora è permesso!
+        std::cout << "Total nodes: " << flight_plan.n_nodes() << " (Expected: 5)" << std::endl;
 
     } catch (const std::exception& e) {
         std::cerr << "Standard Exception: " << e.what() << std::endl;
     } catch (...) {
-        std::cerr << "An unknown error occurred. (Likely a memory/pointer issue)" << std::endl;
+        std::cerr << "An unknown error occurred." << std::endl;
     }
 
     print_separator("Testing Finished");

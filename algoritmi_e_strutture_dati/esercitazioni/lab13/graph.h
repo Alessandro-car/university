@@ -1,6 +1,7 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 #include "../tipi_di_dato/vector/vector.h"
+#include <stdexcept>
 
 template <class E>
 class graph;
@@ -18,6 +19,9 @@ class Node {
 		void set_id(size_t id) { m_id = id; }
 		E get_label() const { return m_label; }
 		void set_label(E label) { m_label = label; }
+		bool operator==(const Node<E>& n) const {
+			return m_id == n.m_id;
+		}
 	private:
 		size_t m_id;
 		E m_label;
@@ -30,30 +34,34 @@ class graph {
 		typedef Node<E> node;
 		typedef E label;
 		typedef size_t weight;
+
 		graph();
 		graph(size_t);
 		graph(const graph<label>&);
+
 		bool empty() const;
 		size_t n_nodes() const;
-		void ins_node(label);
-		void ins_bow(label, label, weight);
-		void erase_node(label);
-		void erase_bow(label, label);
-		Node<E> get_node(label) const;
-		weight read_weight(label, label) const;
+
+		node ins_node(label);
+		void ins_bow(node, node, weight);
+		void erase_node(node);
+		void erase_bow(node, node);
+
+		weight read_weight(node, node) const;
 		label read_label(node) const;
 		void write_label(node, label);
-		myvec::vector<node> adjacent(label) const;
-		size_t in_degree(label) const;
-		size_t out_degree(label) const;
+		myvec::vector<node> adjacent(node) const;
+		myvec::vector<node> list_node() const;
+		size_t in_degree(node) const;
+		size_t out_degree(node) const;
 		double mean_out_degree() const;
-		void find_path(label, label) const;
+		void find_path(node, node) const;
+
 		graph<E> operator=(const graph<label>&);
 		bool operator==(const graph<label>&) const;
 		void print_mat() const;
 	private:
-		bool find_path_h(label, label, myvec::vector<label>&) const;
-		bool label_exists(label) const;
+		bool _find_path(node, node, myvec::vector<node>&) const;
 		myvec::vector<node> m_nodes;
 		myvec::vector<myvec::vector<size_t>> m_mat;
 };
@@ -81,9 +89,7 @@ bool graph<E>::empty() const {
 }
 
 template <class E>
-void graph<E>::ins_node(label l) {
-	if (label_exists(l))
-		throw std::runtime_error("The label already exists");
+typename graph<E>::node graph<E>::ins_node(label l) {
 	node n;
 	n.set_label(l);
 	n.set_id(m_nodes.size());
@@ -93,52 +99,40 @@ void graph<E>::ins_node(label l) {
 
 	for (size_t i = 0; i < m_nodes.size(); ++i)
 		m_mat[i].resize(m_nodes.size(), 0);
+	return n;
 }
 
 template <class E>
-void graph<E>::ins_bow(label n, label u, weight w) {
-	int id_n = -1;
-	int id_u = -1;
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n)
-			id_n = m_nodes[i].m_id;
-		if (m_nodes[i].m_label == u)
-			id_u = m_nodes[i].m_id;
-	}
-
-	if (id_n == -1 || id_u == -1)
-		return;
-
-	m_mat[id_n][id_u] = w;
+void graph<E>::ins_bow(node n, node u, weight w) {
+ 	if (n.m_id < m_nodes.size() && u.m_id < m_nodes.size())
+		m_mat[n.m_id][u.m_id] = w;
 }
 
 
 template <class E>
-void graph<E>::erase_node(label n) {
-	int id = -1;
-	for (size_t i = 0; i < m_nodes.size(); i++) {
-		if (m_nodes[i].m_label == n) {
-			id = m_nodes[i].m_id;
-			break;
-		}
-	}
-
-	if (id == -1)
+void graph<E>::erase_node(node n) {
+	size_t id = n.m_id;
+	if (id >= m_nodes.size())
 		return;
+
+	m_mat.erase(m_mat.begin() + id);
+	for (size_t i = 0; i < m_mat.size(); ++i) {
+		m_mat[i].erase(m_mat[i].begin() + id);
+	}
 
 	m_nodes.erase(m_nodes.begin() + id);
 	for (size_t i = 0; i < m_nodes.size(); i++)
-		m_nodes[i].m_id -= 1;
+		m_nodes[i].m_id = i;
 }
 
 template <class E>
-void graph<E>::erase_bow(label n, label u) {
+void graph<E>::erase_bow(node n, node u) {
 	int id_n = -1;
 	int id_u = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n)
+		if (m_nodes[i] == n)
 			id_n = m_nodes[i].m_id;
-		if (m_nodes[i].m_label == u)
+		if (m_nodes[i] == u)
 			id_u = m_nodes[i].m_id;
 	}
 
@@ -149,29 +143,10 @@ void graph<E>::erase_bow(label n, label u) {
 }
 
 template <class E>
-Node<E> graph<E>::get_node(label l) const {
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == l)
-			return m_nodes[i];
-	}
-	throw std::runtime_error("The node doesn't exists");
-}
-
-template <class E>
-typename graph<E>::weight graph<E>::read_weight(label n, label u) const {
-	int id_n = -1;
-	int id_u = -1;
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n)
-			id_n = m_nodes[i].m_id;
-		if (m_nodes[i].m_label == u)
-			id_u = m_nodes[i].m_id;
-	}
-
-	if (id_n == -1 || id_u == -1)
-		throw std::runtime_error("The nodes don't exist");
-
-	return m_mat[id_n][id_u];
+typename graph<E>::weight graph<E>::read_weight(node n, node u) const {
+	if (n.m_id >= m_nodes.size() || u.m_id >= m_nodes.size())
+		throw std::runtime_error("Nodes do not exists");
+	return m_mat[n.m_id][u.m_id];
 }
 
 template <class E>
@@ -205,17 +180,17 @@ void graph<E>::write_label(node n, label l) {
 
 
 template <class E>
-myvec::vector<Node<E>> graph<E>::adjacent(label n) const {
+myvec::vector<Node<E>> graph<E>::adjacent(node n) const {
 	int id_n = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n) {
+		if (m_nodes[i] == n) {
 			id_n = m_nodes[i].m_id;
 			break;
 		}
 	}
 
 	if (id_n == -1)
-		throw std::runtime_error("The node doesn't exists");
+		throw std::runtime_error("The node does not exists!");
 
 	myvec::vector<node> adj;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
@@ -226,35 +201,39 @@ myvec::vector<Node<E>> graph<E>::adjacent(label n) const {
 }
 
 template <class E>
-size_t graph<E>::in_degree(label l) const {
-	Node<E> n = get_node(l);
+myvec::vector<Node<E>> graph<E>::list_node() const {
+	return m_nodes;
+}
+
+template <class E>
+size_t graph<E>::in_degree(node n) const {
 	size_t count = 0;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_mat[i][n.get_id()] != 0)
+		if (m_mat[i][n.m_id] != 0)
 			++count;
 	}
 	return count;
 }
 
 template <class E>
-size_t graph<E>::out_degree(label l) const {
-	return adjacent(l).size();
+size_t graph<E>::out_degree(node n) const {
+	return adjacent(n).size();
 }
 
 template <class E>
 double graph<E>::mean_out_degree() const {
-	float mean = 0;
+	double mean = 0;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		mean += out_degree(m_nodes[i].m_label);
+		mean += out_degree(m_nodes[i]);
 	}
 	return mean / m_nodes.size();
 }
 
 template <class E>
-void graph<E>::find_path(label l, label n) const {
-	myvec::vector<label> visited;
-	if (!find_path_h(l, n, visited))
-		std::cout << "No path found from " << l << " to " << n << std::endl;
+void graph<E>::find_path(node n1, node n2) const {
+	myvec::vector<Node<E>> visited;
+	if (!_find_path(n1, n2, visited))
+		std::cout << "No path found from" << n1.m_label << " to " << n2.m_label;
 }
 
 template <class E>
@@ -280,37 +259,6 @@ bool graph<E>::operator==(const graph<E>& g) const {
 }
 
 template <class E>
-bool graph<E>::find_path_h(label l, label n, myvec::vector<label>& visited) const {
-	if (l == n) {
-		std::cout << l;
-		return true;
-	}
-	for (size_t i = 0; i < visited.size(); ++i) {
-		if (visited[i] == l)
-			return false;
-	}
-
-	visited.push_back(l);
-	myvec::vector<Node<E>> l_adj = adjacent(l);
-	for (size_t i = 0; i < l_adj.size(); ++i) {
-		if (find_path_h(l_adj[i].m_label, n, visited)) {
-			std::cout << " <- " << l;
-			return true;
-		}
-	}
-	return false;
-}
-
-template <class E>
-bool graph<E>::label_exists(label l) const {
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == l)
-			return true;
-	}
-	return false;
-}
-
-template <class E>
 void graph<E>::print_mat() const {
     if (m_nodes.size() == 0) {
         std::cout << "Graph is empty." << std::endl;
@@ -330,6 +278,27 @@ void graph<E>::print_mat() const {
         }
         std::cout << std::endl;
     }
+}
+
+template <class E>
+bool graph<E>::_find_path(node n1, node n2, myvec::vector<Node<E>>& visited) const {
+	if (n1 == n2) {
+		std::cout << n1.m_label;
+		return true;
+	}
+	for (size_t i = 0; i < visited.size(); ++i) {
+		if (visited[i] == n1)
+			return false;
+	}
+	visited.push_back(n1);
+	myvec::vector<Node<E>> n1_adj = adjacent(n1);
+	for (Node<E>& node : n1_adj) {
+		if (_find_path(node, n2, visited)) {
+			std::cout << " <- " << n1.m_label;
+			return true;
+		}
+	}
+	return false;
 }
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 #include "../vector/vector.h"
+#include <stdexcept>
 
 template <class E>
 class graph;
@@ -18,6 +19,9 @@ class Node {
 		void set_id(size_t id) { m_id = id; }
 		E get_label() const { return m_label; }
 		void set_label(E label) { m_label = label; }
+		bool operator==(const Node<E>& n) const {
+			return m_id == n.m_id;
+		}
 	private:
 		size_t m_id;
 		E m_label;
@@ -30,25 +34,29 @@ class graph {
 		typedef Node<E> node;
 		typedef E label;
 		typedef size_t weight;
+
 		graph();
 		graph(size_t);
 		graph(const graph<label>&);
+
 		bool empty() const;
 		size_t n_nodes() const;
+
 		void ins_node(label);
-		void ins_bow(label, label, weight);
-		void erase_node(label);
-		void erase_bow(label, label);
-		Node<E> get_node(label) const;
-		weight read_weight(label, label) const;
+		void ins_bow(node, node, weight);
+		void erase_node(node);
+		void erase_bow(node, node);
+
+		weight read_weight(node, node) const;
 		label read_label(node) const;
 		void write_label(node, label);
-		myvec::vector<node> adjacent(label) const;
+		myvec::vector<node> adjacent(node) const;
+		myvec::vector<node> list_node() const;
+
 		graph<E> operator=(const graph<label>&);
 		bool operator==(const graph<label>&) const;
 		void print_mat() const;
 	private:
-		bool label_exists(label) const;
 		myvec::vector<node> m_nodes;
 		myvec::vector<myvec::vector<size_t>> m_mat;
 };
@@ -77,8 +85,6 @@ bool graph<E>::empty() const {
 
 template <class E>
 void graph<E>::ins_node(label l) {
-	if (label_exists(l))
-		throw std::runtime_error("The label already exists");
 	node n;
 	n.set_label(l);
 	n.set_id(m_nodes.size());
@@ -91,49 +97,36 @@ void graph<E>::ins_node(label l) {
 }
 
 template <class E>
-void graph<E>::ins_bow(label n, label u, weight w) {
-	int id_n = -1;
-	int id_u = -1;
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n)
-			id_n = m_nodes[i].m_id;
-		if (m_nodes[i].m_label == u)
-			id_u = m_nodes[i].m_id;
-	}
-
-	if (id_n == -1 || id_u == -1)
-		return;
-
-	m_mat[id_n][id_u] = w;
+void graph<E>::ins_bow(node n, node u, weight w) {
+ 	if (n.m_id < m_nodes.size() && u.m_id < m_nodes.size())
+		m_mat[n.m_id][u.m_id] = w;
 }
 
 
 template <class E>
-void graph<E>::erase_node(label n) {
-	int id = -1;
-	for (size_t i = 0; i < m_nodes.size(); i++) {
-		if (m_nodes[i].m_label == n) {
-			id = m_nodes[i].m_id;
-			break;
-		}
-	}
-
-	if (id == -1)
+void graph<E>::erase_node(node n) {
+	size_t id = n.m_id;
+	if (id >= m_nodes.size())
 		return;
+
+	m_mat.erase(m_mat.begin() + id);
+	for (size_t i = 0; i < m_mat.size(); ++i) {
+		m_mat[i].erase(m_mat[i].begin() + id);
+	}
 
 	m_nodes.erase(m_nodes.begin() + id);
 	for (size_t i = 0; i < m_nodes.size(); i++)
-		m_nodes[i].m_id -= 1;
+		m_nodes[i].m_id = i;
 }
 
 template <class E>
-void graph<E>::erase_bow(label n, label u) {
+void graph<E>::erase_bow(node n, node u) {
 	int id_n = -1;
 	int id_u = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n)
+		if (m_nodes[i] == n)
 			id_n = m_nodes[i].m_id;
-		if (m_nodes[i].m_label == u)
+		if (m_nodes[i] == u)
 			id_u = m_nodes[i].m_id;
 	}
 
@@ -144,29 +137,10 @@ void graph<E>::erase_bow(label n, label u) {
 }
 
 template <class E>
-Node<E> graph<E>::get_node(label l) const {
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == l)
-			return m_nodes[i];
-	}
-	return nullptr;
-}
-
-template <class E>
-typename graph<E>::weight graph<E>::read_weight(label n, label u) const {
-	int id_n = -1;
-	int id_u = -1;
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n)
-			id_n = m_nodes[i].m_id;
-		if (m_nodes[i].m_label == u)
-			id_u = m_nodes[i].m_id;
-	}
-
-	if (id_n == -1 || id_u == -1)
-		throw std::runtime_error("The nodes don't exists");
-
-	return m_mat[id_n][id_u];
+typename graph<E>::weight graph<E>::read_weight(node n, node u) const {
+	if (n.m_id >= m_nodes.size() || u.m_id >= m_nodes.size())
+		throw std::runtime_error("Nodes do not exists");
+	return m_mat[n.m_id][u.m_id];
 }
 
 template <class E>
@@ -200,10 +174,10 @@ void graph<E>::write_label(node n, label l) {
 
 
 template <class E>
-myvec::vector<Node<E>> graph<E>::adjacent(label n) const {
+myvec::vector<Node<E>> graph<E>::adjacent(node n) const {
 	int id_n = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == n) {
+		if (m_nodes[i] == n) {
 			id_n = m_nodes[i].m_id;
 			break;
 		}
@@ -218,6 +192,11 @@ myvec::vector<Node<E>> graph<E>::adjacent(label n) const {
 			adj.push_back(m_nodes[i]);
 	}
 	return adj;
+}
+
+template <class E>
+myvec::vector<Node<E>> graph<E>::list_node() const {
+	return m_nodes;
 }
 
 template <class E>
@@ -240,15 +219,6 @@ bool graph<E>::operator==(const graph<E>& g) const {
 		}
 	}
 	return true;
-}
-
-template <class E>
-bool graph<E>::label_exists(label l) const {
-	for (size_t i = 0; i < m_nodes.size(); ++i) {
-		if (m_nodes[i].m_label == l)
-			return true;
-	}
-	return false;
 }
 
 template <class E>
