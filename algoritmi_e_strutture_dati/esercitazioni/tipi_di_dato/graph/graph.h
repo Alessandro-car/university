@@ -42,10 +42,10 @@ class graph {
 		bool empty() const;
 		size_t n_nodes() const;
 
-		void ins_node(label);
-		void ins_bow(node, node, weight);
+		node ins_node(label);
+		void ins_edge(node, node, weight);
 		void erase_node(node);
-		void erase_bow(node, node);
+		void erase_edge(node, node);
 
 		weight read_weight(node, node) const;
 		label read_label(node) const;
@@ -84,7 +84,7 @@ bool graph<E>::empty() const {
 }
 
 template <class E>
-void graph<E>::ins_node(label l) {
+typename graph<E>::node graph<E>::ins_node(label l) {
 	node n;
 	n.set_label(l);
 	n.set_id(m_nodes.size());
@@ -94,10 +94,12 @@ void graph<E>::ins_node(label l) {
 
 	for (size_t i = 0; i < m_nodes.size(); ++i)
 		m_mat[i].resize(m_nodes.size(), 0);
+
+	return n;
 }
 
 template <class E>
-void graph<E>::ins_bow(node n, node u, weight w) {
+void graph<E>::ins_edge(node n, node u, weight w) {
  	if (n.m_id < m_nodes.size() && u.m_id < m_nodes.size())
 		m_mat[n.m_id][u.m_id] = w;
 }
@@ -120,7 +122,7 @@ void graph<E>::erase_node(node n) {
 }
 
 template <class E>
-void graph<E>::erase_bow(node n, node u) {
+void graph<E>::erase_edge(node n, node u) {
 	int id_n = -1;
 	int id_u = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
