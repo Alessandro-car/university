@@ -2246,7 +2246,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	Inoltre, sia la visita DFS che la visita BFS di un grafo, connettendo i nodi marcati ad uno ad uno a partire da un generico nodo $i$, generano un albero radicato nel nodo iniziale $i$. Questo risulta interessante quando si voglia risolvere un problema che richiede di selezionare, tra tutti i percorsi che connettono due nodi in un grafo, quello che risulta ottimo, ad esempio in base al criterio di minimizzazione della somma dei pesi associati agli archi, detto ricerca dell'albero minimo di copertura o di attraversamento. \\
    	La ricerca del percorso più breve è un problema classico. Sia $G = (N, A)$ un grafo orientato etichettato negli archi con valori interi positivi, i pesi. Partendo dal nodo $r \in N$, per ogni nodo $u \in N$, si calcola il percorso (cammino o catena) che connette $r$ ad $u$ tale che la somma dei pesi associati agli archi che compongono il cammino sia minima. Ad esempio i nodi possono essere delle città e gli archi sono le strade che le collegano e le etichette sugli archi sono le distanze. Il problema consiste nel trovare il percorso più breve tra tutti quelli che connettono la città alle altre città.
    	\chapter{Complessità degli algoritmi e efficienza dei programmi}
-   	Lo studio della computabilità aiuta a stabilire quali problemi ammettono una soluzione algoritmica e quali no. Per i problemi computabili, è interessante conoscere la complessita ddegli algoritmi che lo risolvono. La \textit{complessità di un algoritmo} è una misura delle risorse di calcolo consumate durante la computazione e l'\textit{efficienza di un algoritmo} è inversamente proporzionale alla sua complessità. La teoria della complessità studia l'uso delle risorse di calcolo necessarie per la computazione di algoritmi e, più in generale, per la soluzione di problemi. Questo studio è importante al fine di:
+   	Lo studio della computabilità aiuta a stabilire quali problemi ammettono una soluzione algoritmica e quali no. Per i problemi computabili, è interessante conoscere la complessità degli algoritmi che lo risolvono. La \textit{complessità di un algoritmo} è una misura delle risorse di calcolo consumate durante la computazione e l'\textit{efficienza di un algoritmo} è inversamente proporzionale alla sua complessità. La teoria della complessità studia l'uso delle risorse di calcolo necessarie per la computazione di algoritmi e, più in generale, per la soluzione di problemi. Questo studio è importante al fine di:
    	\begin{itemize}
    		\item poter confrontare algoritmi diversi che risolvono lo stesso problema;
    		\item stabilire se dei problemi ammettono algoritmi risolutivi che sono praticamente computabili. 
@@ -2264,18 +2264,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\item la significatività dei dati sui quali è eseguita la prova.
    	\end{itemize}
    	Utilizzando unità di tempo standard come i secondi non otteniamo una valutazione oggettiva del costo di esecuzione di un programma. \\
-   	L'efficienza di un programma è legata alla complessità dell'algoritmo, infatti, la teoria della complessità studia in modo oggettivo l'uso delle risorse di calcolo necessarie per la computazione di algoritmi. \\
    	Per risolvere un problema spesso sono disponibili molti algoritmi diversi e, in genere, si valutà la qualità di un algoritmo o si confrontano più algoritmi sulla base del comportamento ch questi presentano al crescere della dimensione del problema. \\
-   	Questo studio è importante al fine di:
-   	\begin{itemize}
-   		\item poter confrontare algoritmi diversi che risolvono lo stesso problema;
-   		\item stabilire se dei problemi ammettono algoritmi risolutivi che sono praticamente computabili. 
-   	\end{itemize}
-   	Per i problemi computabili si parla di:
-   	\begin{itemize}
-   		\item \textbf{Complessità dell'algoritmo}: è una misura delle risorse di calcolo consumate durante la computazione;
-   		\item \textbf{Efficienza dell'agoritmo}: è inversamente proporzionale alla sua complessità.
-   	\end{itemize}
    	\section{Risorse di interesse}
    	Le risorse di interesse sono il \textit{tempo} e lo \textit{spazio di memoria}. Quindi per un algoritmo si parla di:
    	\begin{itemize}
@@ -2421,7 +2410,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\[
    	g(n) \leq cf(n) \quad \forall n \geq m
    	\]
-   	$g(n) \in O(f(n))$ e tradizionalmente si legge ``$g(n)$ è di orine $f(n)$'' e fornisce un limite superiore al comportamento asintotico della funzione $g$ ovvero $g$ non si comporta asintoticamente peggio di $f$. \\
+   	$g(n) \in O(f(n))$ e tradizionalmente si legge ``$g(n)$ è di ordine $f(n)$'' e fornisce un limite superiore al comportamento asintotico della funzione $g$ ovvero $g$ non si comporta asintoticamente peggio di $f$. \\
    	Applicata alla funzione di complessità, la notazione $O$ ne delimita superiormente la crescita e fornisce un indicatore di bontà dell'algoritmo. Consideriamo la seguente funzione:
    	\[
    	f(n) = 3n^2 + 3n - 1
@@ -2434,7 +2423,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\paragraph{Limite inferiore}
    	$\Omega(f(n))$ è l'insieme di tutte le funzioni $g(n)$ tali che esistono due costanti positive $c$ e $m$ per cui:
    	\[
-   	g(n) \geq cf(n) \forall n \geq m
+   	g(n) \geq cf(n) \quad \forall n \geq m
    	\]
    	$g(n) \in \Omega(f(n))$ tradizionalmente si legge ``$g(n)$ è di ordine $\Omega$ $f(n)$'' e  fornisce un limite inferiore al comportamento asintotico della funzione. \\
    	$\Theta(f(n))$ è l'insieme di tutte le funzioni $g(n)$ che sono sia $\Omega(f(n))$ sia $O(f(n))$. Formalmente è l'insieme di tutte le funzioni $g(n)$ tali che esistano tre costanti positive $c, d$ e $m$ per cui:
@@ -2665,7 +2654,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\]
    	ove:
    	\begin{itemize}
-   		\item $I$ è l'insieme delle coppie $<V, M>$;
+   		\item $I$ è l'insieme delle coppie $<v, m>$;
    		\item $S$ è l'insieme degli interi positivi (indici);
    		\item $R$ è la relazione $R_{vett}$.
    	\end{itemize}
@@ -2749,9 +2738,9 @@ Una specifica per il tipo di dato insieme è la seguente:
    			\item $M$ è un insieme qualsiasi;
    			\item $m$ è una funzione del tipo $I\times S \to M$ detta \textit{funzione obiettivo} di $P$; per una certa istanza $i \in I$, il valore $m(i, s)$ rappresenta una misura dell'elemento $S$ nello spazio delle soluzioni;
    			\item $\subseteq$ è una relazione di ordinamento su $M$ ($x \subseteq y$ indica ``$x$ è migliore di $y$'');
-   			\item $q_ott(M, m, \subseteq)$ è una regola che definisce, in base ad $R$, la relazione $R_{qott} \subseteq I \times S$ su $I$ ed $S$ così da individuare:
+   			\item $q_{ott}(M, m, \subseteq)$ è una regola che definisce, in base ad $R$, la relazione $R_{qott} \subseteq I \times S$ su $I$ ed $S $ così da individuare:
    			\begin{itemize}
-   				\item una coppia $(i, s) \forall i \mid \centernot{\exists} s' $ associata ad $i$ migliore;
+   				\item una coppia $(i, s) \forall i \mid {\nexists} s' $ associata ad $i$ migliore;
    				\item una coppia $(i, \perp) \forall i$ per la quale $P$ non ha soluzioni.
    			\end{itemize}
    		\end{itemize}
@@ -2890,12 +2879,12 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\end{itemize}
    	Per un problema di ottimizzazione, l'insieme:
    	\[
-   	\{s \in S \mid (i, s) \in R \wedge \centernot{\exists} s' \in S, (i, s') \in R' \wedge m(i, s') \subseteq m(i, s)\}
+   	\{s \in S \mid (i, s) \in R \wedge {\nexists} s' \in S, (i, s') \in R' \wedge m(i, s') \subseteq m(i, s)\}
    	\]
    	rappresenta le soluzioni ottimali di $P$ per l'istanza $i$, cioè le risposte a $P$ per $i$. \\
    	Uno spazio di ricerca per $i$ di $P$ deve contenere la rappresentazione di almeno una tra le soluzioni ottimali se esistono, cioè non deve essere vuota l'intersezione tra l'insieme:
    	\[
-   	\{s \in S \mid (i, s) \in R \wedge \centernot{\exists} s' \in S, (i, s') \in R' \wedge m(i, s') \subseteq m(i, s)\}
+   	\{s \in S \mid (i, s) \in R \wedge {\nexists} s' \in S, (i, s') \in R' \wedge m(i, s') \subseteq m(i, s)\}
    	\]
    	e
    	\[
