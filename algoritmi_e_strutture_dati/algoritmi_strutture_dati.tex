@@ -1880,7 +1880,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   			begin 
   				if C.ultimo = maxlung then
   					{errore: priorcoda piena}
-  				else begin
+  				else
   					C.ultimo := C.ultimo + 1
   					C.heap[C.ultimo] := x;
   					i := C.ultimo;
@@ -1902,21 +1902,22 @@ Una specifica per il tipo di dato insieme è la seguente:
   			begin 
   				if C.ultimo = 0 then
   					{errore: priorcoda vuota}
-  				else begin
+  				else 
   					C.heap[1] := C.heap[C.ultimo]
   					C.ultimo := C.ultimo - 1;
-  					i := 1; scambio = true;
+  					i := 1; 
+  					scambio = true;
   					while (i < C.ultimo div 2) and (scambio) do begin
 	  					k := 2 * i;
 	  					if (k < C.ultimo) then
 	  						if C.heap[k] > C.heap[k + 1] then 
 	  							k := k + 1;
-	  					if C.heap[k] < C.heap[i] then begin
+	  					if C.heap[k] < C.heap[i] then
 	  						temp := C.heap[i];
 	  						C.heap[i] := C.heap[k];
 	  						C.heap[k] := temp;
 	  						i := k
-	  					end else 	
+	  					else 	
 	  						scambio := false;
   					end
   			end
@@ -3184,7 +3185,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  	Lo schema di un algoritmo greedy presuppone che l'algoritmo acquisisca la rappresentazione di un'istanza del problema e disponga di un metodo per organizzare in stadi la costruzione di un elemento dello spazio di ricerca. 
  	\begin{enumerate}
  		\item Poni $i$ a 1 e inizializza $z$.
- 		\item Determina l'insieme $A$ dei valori ammissibili per la componente $i$-esima di $z$ e se $A \neq \empty$ scegli il migiore in $A$, rispetto al criterio di preferenza fissato.
+ 		\item Determina l'insieme $A$ dei valori ammissibili per la componente $i$-esima di $z$ e se $A \neq \emptyset$ scegli il migiore in $A$, rispetto al criterio di preferenza fissato.
  		\item Se l'$i$-esimo stadio è l'ultimo allora termina e restituisce $o(z)$ come risultato.
  		\item Altrimenti incrementa $i$ di 1 e torna al passo 2.
  	\end{enumerate}
@@ -3273,16 +3274,16 @@ Una specifica per il tipo di dato insieme è la seguente:
  				if k != r then
  					T[k] := r;
  					DIST[k] := MAXINT;
- 				INSERISCI(r, S);
- 				while not INSIEMEVUOTO(S) do
- 					i := LEGGI(S);
- 					CANCELLA(i, S);
- 				for j in A[i] do /* A e' l'insieme di adiacenza */
- 					if DIST[i] + Cij < DIST[j] then
- 						T[j] := i;
- 						DIST[j] := DIST[i] + Cij;
- 						if not APPARTIENE(j, S) then
- 							INSERISCI(j, S)\end{lstlisting}
+ 			INSERISCI(r, S);
+ 			while not INSIEMEVUOTO(S) do
+ 				i := LEGGI(S);
+ 				CANCELLA(i, S);
+ 			for j in A[i] do /* A e' l'insieme di adiacenza */
+ 				if DIST[i] + Cij < DIST[j] then
+ 					T[j] := i;
+ 					DIST[j] := DIST[i] + Cij;
+ 					if not APPARTIENE(j, S) then
+						INSERISCI(j, S)\end{lstlisting}
   \end{example}
   \paragraph{Algoritmo di Dijkstra}
   Se la struttura $S$ è una coda con priorità,rappresentata mediante una lista non ordinata, si ottiene un algoritmo noto dal 1959 e attribuito a Dijkstra. \\
