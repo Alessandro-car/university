@@ -21,5 +21,7 @@ int main() {
 	cout << g.in_degree(frank) << endl;
 	cout << g.mean_out_degree() << endl;
 	g.find_path(milano, frank);
+
 	return 0;
 }
+
