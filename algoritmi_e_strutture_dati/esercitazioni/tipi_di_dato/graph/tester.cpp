@@ -10,7 +10,7 @@ void print_separator(const std::string& title) {
 int main() {
     try {
         print_separator("Testing Dynamic Node Insertion");
-        graph<std::string> flight_plan;
+        graph<std::string, int> flight_plan;
 
         // Inseriamo i nodi
         flight_plan.ins_node("Bari");   // Diventerà indice 0
@@ -20,19 +20,19 @@ int main() {
 
         // Poiché le label non sono univoche, recuperiamo i nodi dalla lista interna
         // che garantisce di puntare agli oggetti corretti tramite il loro ID/posizione.
-        myvec::vector<Node<std::string>> nodes = flight_plan.list_node();
+        myvec::vector<Node<std::string, int>> nodes = flight_plan.list_node();
 
-        Node<std::string> n_bari   = nodes[0];
-        Node<std::string> n_rome   = nodes[1];
-        Node<std::string> n_london = nodes[2];
-        Node<std::string> n_paris  = nodes[3];
+        Node<std::string, int> n_bari   = nodes[0];
+        Node<std::string, int> n_rome   = nodes[1];
+        Node<std::string, int> n_london = nodes[2];
+        Node<std::string, int> n_paris  = nodes[3];
 
         print_separator("Testing Edge (Bow) Creation");
         // Ora passiamo gli oggetti Node, non le stringhe
-        flight_plan.ins_bow(n_bari, n_rome, 450);
-        flight_plan.ins_bow(n_rome, n_london, 1400);
-        flight_plan.ins_bow(n_london, n_paris, 340);
-        flight_plan.ins_bow(n_bari, n_london, 1800);
+        flight_plan.ins_edge(n_bari, n_rome, 450);
+        flight_plan.ins_edge(n_rome, n_london, 1400);
+        flight_plan.ins_edge(n_london, n_paris, 340);
+        flight_plan.ins_edge(n_bari, n_london, 1800);
 
         flight_plan.print_mat();
 

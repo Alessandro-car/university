@@ -3,13 +3,13 @@
 #include "../vector/vector.h"
 #include <stdexcept>
 
-template <class E>
+template <class E, class P>
 class graph;
 
-template <class E>
+template <class E, class P>
 class Node {
 	public:
-		friend graph<E>;
+		friend graph<E, P>;
 		Node(){}
 		Node(size_t id, E label) {
 			m_id = id;
@@ -19,7 +19,7 @@ class Node {
 		void set_id(size_t id) { m_id = id; }
 		E get_label() const { return m_label; }
 		void set_label(E label) { m_label = label; }
-		bool operator==(const Node<E>& n) const {
+		bool operator==(const Node<E, P>& n) const {
 			return m_id == n.m_id;
 		}
 	private:
@@ -28,16 +28,16 @@ class Node {
 };
 
 
-template <class E>
+template <class E, class P>
 class graph {
 	public:
-		typedef Node<E> node;
+		typedef Node<E, P> node;
 		typedef E label;
-		typedef size_t weight;
+		typedef P weight;
 
 		graph();
 		graph(size_t);
-		graph(const graph<label>&);
+		graph(const graph<label, weight>&);
 
 		bool empty() const;
 		size_t n_nodes() const;
@@ -53,38 +53,38 @@ class graph {
 		myvec::vector<node> adjacent(node) const;
 		myvec::vector<node> list_node() const;
 
-		graph<E> operator=(const graph<label>&);
-		bool operator==(const graph<label>&) const;
+		graph<E, P> operator=(const graph<label, weight>&);
+		bool operator==(const graph<label, weight>&) const;
 		void print_mat() const;
 	private:
 		myvec::vector<node> m_nodes;
-		myvec::vector<myvec::vector<size_t>> m_mat;
+		myvec::vector<myvec::vector<weight>> m_mat;
 };
 
-template <class E>
-graph<E>::graph() : m_nodes(), m_mat() {}
+template <class E, class P>
+graph<E, P>::graph() : m_nodes(), m_mat() {}
 
-template <class E>
-graph<E>::graph(size_t n) : m_nodes(n), m_mat(n) {
+template <class E, class P>
+graph<E, P>::graph(size_t n) : m_nodes(n), m_mat(n) {
 	for (size_t i = 0; i < n; ++i)
 		m_mat[i].resize(n);
 }
 
-template <class E>
-graph<E>::graph(const graph<E>& g) : m_nodes(g.m_nodes), m_mat(g.m_mat) {}
+template <class E, class P>
+graph<E, P>::graph(const graph<E, P>& g) : m_nodes(g.m_nodes), m_mat(g.m_mat) {}
 
-template <class E>
-size_t graph<E>::n_nodes() const {
+template <class E, class P>
+size_t graph<E, P>::n_nodes() const {
 	return m_nodes.size();
 }
 
-template <class E>
-bool graph<E>::empty() const {
+template <class E, class P>
+bool graph<E, P>::empty() const {
 	return m_nodes.size() == 0;
 }
 
-template <class E>
-typename graph<E>::node graph<E>::ins_node(label l) {
+template <class E, class P>
+typename graph<E, P>::node graph<E, P>::ins_node(label l) {
 	node n;
 	n.set_label(l);
 	n.set_id(m_nodes.size());
@@ -98,15 +98,15 @@ typename graph<E>::node graph<E>::ins_node(label l) {
 	return n;
 }
 
-template <class E>
-void graph<E>::ins_edge(node n, node u, weight w) {
+template <class E, class P>
+void graph<E, P>::ins_edge(node n, node u, weight w) {
  	if (n.m_id < m_nodes.size() && u.m_id < m_nodes.size())
 		m_mat[n.m_id][u.m_id] = w;
 }
 
 
-template <class E>
-void graph<E>::erase_node(node n) {
+template <class E, class P>
+void graph<E, P>::erase_node(node n) {
 	size_t id = n.m_id;
 	if (id >= m_nodes.size())
 		return;
@@ -121,8 +121,8 @@ void graph<E>::erase_node(node n) {
 		m_nodes[i].m_id = i;
 }
 
-template <class E>
-void graph<E>::erase_edge(node n, node u) {
+template <class E, class P>
+void graph<E, P>::erase_edge(node n, node u) {
 	int id_n = -1;
 	int id_u = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
@@ -138,15 +138,15 @@ void graph<E>::erase_edge(node n, node u) {
 	m_mat[id_n][id_u] = 0;
 }
 
-template <class E>
-typename graph<E>::weight graph<E>::read_weight(node n, node u) const {
+template <class E, class P>
+typename graph<E, P>::weight graph<E, P>::read_weight(node n, node u) const {
 	if (n.m_id >= m_nodes.size() || u.m_id >= m_nodes.size())
 		throw std::runtime_error("Nodes do not exists");
 	return m_mat[n.m_id][u.m_id];
 }
 
-template <class E>
-typename graph<E>::label graph<E>::read_label(node n) const {
+template <class E, class P>
+typename graph<E, P>::label graph<E, P>::read_label(node n) const {
 	int id_n = -1;
 	for (node tmp: m_nodes) {
 		if (n.get_id() == tmp.get_id()) {
@@ -160,8 +160,8 @@ typename graph<E>::label graph<E>::read_label(node n) const {
 	return n.get_label();
 }
 
-template <class E>
-void graph<E>::write_label(node n, label l) {
+template <class E, class P>
+void graph<E, P>::write_label(node n, label l) {
 	int id_n = -1;
 	for (node tmp: m_nodes) {
 		if (n == tmp) {
@@ -175,8 +175,8 @@ void graph<E>::write_label(node n, label l) {
 }
 
 
-template <class E>
-myvec::vector<Node<E>> graph<E>::adjacent(node n) const {
+template <class E, class P>
+myvec::vector<Node<E, P>> graph<E, P>::adjacent(node n) const {
 	int id_n = -1;
 	for (size_t i = 0; i < m_nodes.size(); ++i) {
 		if (m_nodes[i] == n) {
@@ -196,13 +196,13 @@ myvec::vector<Node<E>> graph<E>::adjacent(node n) const {
 	return adj;
 }
 
-template <class E>
-myvec::vector<Node<E>> graph<E>::list_node() const {
+template <class E, class P>
+myvec::vector<Node<E, P>> graph<E, P>::list_node() const {
 	return m_nodes;
 }
 
-template <class E>
-graph<E> graph<E>::operator=(const graph<E>& g) {
+template <class E, class P>
+graph<E, P> graph<E, P>::operator=(const graph<E, P>& g) {
 	if (this != &g) {
 		m_nodes = g.m_nodes;
 		m_mat = g.m_mat;
@@ -210,8 +210,8 @@ graph<E> graph<E>::operator=(const graph<E>& g) {
 	return *this;
 }
 
-template <class E>
-bool graph<E>::operator==(const graph<E>& g) const {
+template <class E, class P>
+bool graph<E, P>::operator==(const graph<E, P>& g) const {
 	if (m_mat.size() != g.n_nodes())
 		return false;
 	for (size_t i = 0; i < g.n_nodes(); ++i) {
@@ -223,8 +223,8 @@ bool graph<E>::operator==(const graph<E>& g) const {
 	return true;
 }
 
-template <class E>
-void graph<E>::print_mat() const {
+template <class E, class P>
+void graph<E, P>::print_mat() const {
     if (m_nodes.size() == 0) {
         std::cout << "Graph is empty." << std::endl;
         return;
