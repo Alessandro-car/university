@@ -2,6 +2,7 @@
 #define NTREE_H_
 
 #include <algorithm>
+#include <iostream>
 template <class T>
 class ntree;
 
@@ -41,6 +42,7 @@ class ntree {
 		void delete_subtree(node<T>*);
 		ntree<T>& operator=(const ntree<T>&);
 		bool operator==(const ntree<T>&) const;
+		void print(node<T>*, int depth = 0) const;
 	private:
 		void delete_nodes(node<T>*);
 		node<T>* copy_tree(node<T>*);
@@ -215,5 +217,20 @@ bool ntree<T>::compare_tree(node<T>* n1, node<T>* n2) const {
 				 compare_tree(n1->m_sibling, n2->m_sibling) &&
 				 compare_tree(n1->m_son, n2->m_son);
 }
+
+template <class T>
+void ntree<T>::print(node<T>* n, int depth) const {
+	if (n == nullptr) return;
+
+	for (int i = 0; i < depth; ++i) std::cout << "  ";
+
+	std::cout << "|-- " << read(*n) << std::endl;
+	node<T>* child = first_son(*n);
+	while (child != nullptr) {
+			print(child, depth + 1);
+			child = next_sibling(*child);
+	}
+}
+
 
 #endif

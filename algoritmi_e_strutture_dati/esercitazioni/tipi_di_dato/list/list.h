@@ -29,6 +29,7 @@ class list {
 		list<T>& operator=(const list<T>&);
 		bool operator==(const list<T>&) const;
 
+		void print() const;
 	private:
 		myvec::vector<T> m_elements;
 };
@@ -70,7 +71,7 @@ typename list<T>::position list<T>::begin() const {
 
 template <class T>
 typename list<T>::position list<T>::last() const {
-	return m_elements.size() - 1;
+	return m_elements.size();
 }
 
 template <class T>
@@ -114,6 +115,11 @@ list<T>& list<T>::operator=(const list<T>& l) {
 template <class T>
 bool list<T>::operator==(const list<T>& l) const {
 	return m_elements == l.m_elements;
+}
+
+template <class T>
+void list<T>::print() const {
+	m_elements.print();
 }
 
 

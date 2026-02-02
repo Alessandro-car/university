@@ -2,6 +2,7 @@
 #include <string>
 #include "vector.h"   // <-- your custom vector header
 
+
 template<typename T>
 void print_vector(const myvec::vector<T>& v, const std::string& name)
 {
@@ -15,13 +16,9 @@ void print_vector(const myvec::vector<T>& v, const std::string& name)
     std::cout << "\n";
 }
 
-void test_int_vector()
-{
+void test_int_vector() {
     std::cout << "\n===== TEST int vector =====\n";
-
-
     myvec::vector<int> v1;
-
 		v1.push_back(10);
     v1.push_back(20);
     v1.push_back(30);

@@ -48,6 +48,8 @@ class bin_tree {
 		void replace_node(node<T>*, node<T>*);
 		bool operator==(const bin_tree<T>&) const;
 		bin_tree<T>& operator=(const bin_tree&);
+
+		void print(node<T>*, int depth = 0) const;
 	private:
 		node<T>* copy_tree(node<T>*);
 		bool compare_tree(node<T>*, node<T>*) const;
@@ -241,6 +243,21 @@ bool bin_tree<T>::compare_tree(node<T>* n1, node<T>* n2) const {
 	return (n1->m_value == n2->m_value) 			 	&&
 				 compare_tree(n1->m_left, n2->m_left) &&
 				 compare_tree(n1->m_right, n2->m_right);
+}
+
+template <class T>
+void bin_tree<T>::print(node<T>* n, int depth) const {
+	if (n == nullptr) return;
+
+	for (int i = 0; i < depth; ++i) std::cout << "  ";
+
+	std::cout << "|-- " << read(*n) << std::endl;
+
+	if (!left_empty(*n))
+		print(left(*n), depth + 1);
+	if (!right_empty(*n))
+		print(right(*n), depth + 1);
+
 }
 
 #endif
