@@ -1,0 +1,249 @@
+\documentclass[12pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertinus}
+\usepackage[italian]{babel}
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{centernot}
+\usepackage{relsize}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage{lipsum}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{calligra}
+\usepackage{subdepth}
+\usepackage{tikz}
+\usepackage{yhmath}
+\usepackage{accents}
+\usepackage{nicefrac}
+\usetikzlibrary{angles, quotes, patterns}
+\usepackage{circledsteps}
+\date{}
+\author{Alessandro Carella}
+\title{Calcolo numerico}
+\setcounter{chapter}{0}
+\setlist[enumerate]{label*=\arabic*.}
+\setlength{\parindent}{0pt}
+\definecolor{brickred}{RGB}{182, 50, 28}
+\definecolor{darkred}{RGB}{139, 0, 0}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=darkred,
+	filecolor=darkred,
+	urlcolor=darkred
+}
+
+\newcounter{theorem}
+\newcounter{lemma}
+\newcounter{corollary}
+\newcounter{definition}
+\newcounter{exercise}
+
+\labelformat{theorem}{teorema #1}
+\labelformat{lemma}{lemma #1}
+\labelformat{corollary}{corollario #1}
+\labelformat{definition}{definizione #1}
+\labelformat{note}{nota #1}
+\labelformat{example}{esempio #1}
+\labelformat{exercise}{esercizio #1}
+
+\newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
+{Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
+
+\newtcbtheorem[no counter]
+{note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
+
+\newtcbtheorem[no counter]
+{example}{Esempio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exa}
+
+\newtcbtheorem[number within=section,use counter=exercise]
+{exercise}{Esercizio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exe}
+
+\newtcbtheorem[no counter]
+{assignment}{Traccia}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{brickred!65},coltitle=black,fonttitle=\bfseries}{asg}
+
+\newtcbtheorem[number within=chapter,use counter=corollary]{corollary}%
+{Corollario}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries}{cor}
+
+\newtcbtheorem[number within=chapter,use counter=definition]{definition}%
+{Definizione}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,
+	borderline west={2.5mm}{0pt}{green!55!black},coltitle=black,
+	fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
+
+\newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
+{Teorema}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries, separator sign={:\hspace{0.5em}}}{th}
+
+\tcolorboxenvironment{proof}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black}}
+\newcommand{\namerefl}[1]{%
+	\bgroup
+	\let\nmu\MakeLowercase
+	\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
+\newcommand{\wbar}[1]{%
+	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
+}
+
+\begin{document}
+	{
+		\let\cleardoublepage\clearpage
+		\maketitle
+		\tableofcontents
+	}
+\chapter{Metodi numerici per zeri di funzione}
+\begin{assignment}{\nmu Trovare gli zeri di una funzione}{zeri_funzione}
+	Data una funzione $f: [a, b] \to \mathbbm{R}$, determinare gli zeri appartenenti all'intervallo $[a, b]$. \\
+	Ricordiamo che $\alpha \in [a, b]$ si dice zero di $f$ se $f(\alpha) = 0$. Quindi, il problema della determinazione degli zeri di una funzione $f(x)$ è equivalente al problema della risoluzione dell'equazione:
+	\[
+	f(x) = 0
+	\]
+\end{assignment}
+\begin{example}{}{}
+	Siano:
+	\[
+	f(x) = x - \cos x \quad \quad g(x) = x - e^{-x}
+	\]
+	$\alpha$ è zero di $f \iff f(\alpha) = 0 \iff \alpha$ è soluzione dell'equazione $f(x) = 0$
+\end{example}
+\section{Teoremi di localizzazione}
+Richiamiamo dall'analisi i seguenti risultati.
+\subsection{Teorema degli zeri o di Bolzano}
+\begin{theorem}{\nmu Teorema degli zeri}{teorema_zeri}
+	Sia $f: [a, b] \to \mathbbm{R}$, continua in $[a,b]$ e tale che $f(a)f(b) < 0$, ovvero cambia segno agli estremi dell'intervallo. \\
+	Allora:
+	\[
+	\exists \alpha \in (a, b) \mid f(\alpha) = 0
+	\]
+	cioè $f$ ammette almeno uno zero $\alpha \in (a, b)$.
+\end{theorem}
+Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno zero di $f$, tuttavia non ne assicura l'unicità. Per ottenere l'unicità potremmo assumere ulteriormente che $f$ sia strettamente monotona. \\
+\begin{theorem}{\nmu Esistenza e unicità dello zero}{unicita_zero}
+	Sia $f: [a, b] \to \mathbbm{R}$, derivabile in $[a, b]$ e tale che:
+	\[
+	f(a)f(b) < 0 \quad \text{e} \quad f'(x) \neq 0
+	\]
+	Allora $f$ ammette un unico zero $\alpha$ in $(a, b)$:
+	\[
+	\exists ! \alpha \in (a, b) \mid f(\alpha) = 0
+	\] 
+	In quanto se $f'(x)$ è sempre maggiore di zero allora $f$ è monotona crescente, altrimenti se $f'(x)$ è sempre minore di zero allora $f$ è monotona decrescente.
+\end{theorem}
+\paragraph{Metodo delle successive bisezioni} \quad \\
+	La dimostrazione del teorema degli zeri è di tipo costruttivo, cioè induce un algoritmo che può essere implementato sul calcolatore per approssimare $\alpha$, che è lo zero di $f$.\\
+	Il metodo delle successive bisezioni definisce tre successioni numberiche:
+	\[
+	\{a_n\} \quad \{b_n\} \quad \{c_n\}
+	\]
+	così definite:
+	\begin{itemize}
+		\item inizialmente si pone:
+		\[
+		a_0 = a \quad b_0 = b \quad c_0 = \frac{a_0 + b_0}{2}
+		\]
+	\end{itemize}
+	Al primo passo, costruiamo $[a_1, b_1]$ a partire da $[a_0, b_0]$. \\
+	Se $f(c_0) = 0 \Rightarrow$ si esce dall'algoritmo e si pone $\alpha = c_0$. \\
+	Altrimenti si pone:
+	\[
+	[a_1, b_1] = \begin{cases}
+		[a_0, c_0] & f(a_0)f(c_0) < 0 \\
+		[c_0, b_0] & f(c_0)f(b_0) < 0
+	\end{cases}
+	\]
+	Procedendo per induzione, supponiamo di aver definito l'intervallo $[a_{n-1}, b_{n-1}]$ e vediamo come costruire $[a_n, b_n]$. \\
+	Si pone:
+	\[
+	c_{n-1} = \frac{a_{n-1} + b_{n-1}}{2}
+	\]
+	Se $f(c_{n-1}) = 0 \Rightarrow$ ci si ferma e si pone $\alpha = c_{n-1}$. \\
+	Altrimenti:
+	\[
+	[a_n, b_n] = \begin{cases}
+		[a_{n-1}, c_{n-1}] & f(a_{n-1})f(c_{n-1}) < 0 \\
+		[c_{n-1}, b_{n-1}] & f(c_{n-1})f(b_{n-1}) < 0
+	\end{cases}
+	\]
+	Nell'ipotesi che $f(c_n) \neq 0 \forall n$, si dimostra che:
+	\[
+	\lim\limits_{n \to \infty} a_n = \lim\limits_{n \to \infty} b_n = \lim\limits_{n \to \infty} c_n = \alpha.
+	\]
+	Dimostriamo questo risultato.
+\begin{proof}
+	Le successioni $\{a_n\}$ e $\{b_n\}$ verificano le seguenti proprietà:
+	\begin{enumerate}
+		\item $[a_n, b_n] \subset [a_{n-1}, b_{n-1}]$
+		\item $b_n - a_n = \dfrac{1}{2}(b_{n-1}  - a_{n-1})$
+		\item $f(a_n)f(b_n) < 0 \quad \forall n$
+	\end{enumerate}
+	Dalla proprietà $1.$ si ricava che:
+	\begin{itemize}
+		\item $a_n \geq a_{n-1} \quad a_n < b$
+		\item $b_n \leq b_{n-1} \quad b_n > a$
+	\end{itemize}
+	Quindi $\{a_n\}$ è monotona crescente e limitata superiormente ($b$ è un suo maggiorante). \\
+	Dall'analisi sappiamo allora che $\{a_n\}$ ammette limite finito:
+	\[
+	\exists \lim\limits_{n \to \infty} a_n = \overline{a} \in \mathbbm{R}
+	\]
+	Analogamente, $\{b_n\}$ è monotona decrescente e limitata inferiormente ($a$ è un suo minorante). Ne consegue che ammetterà limite finito:
+	\[
+	\exists \lim\limits_{n \to \infty} b_n = \overline{b} \in \mathbbm{R}
+	\]
+	Proviamo ora che $\overline{a} = \overline{b}$. Infatti:
+	\begin{align*}
+		\overline{b} - \overline{a} &= \lim\limits_{n\to\infty}b_n - \lim\limits_{n\to\infty}a_n \\
+		&= \lim\limits_{n\to\infty}(b_n - a_n) \\
+		&= \frac{1}{2}\lim\limits_{n\to\infty}(b_{n-1} - a_{n-1}) \\
+		&= \dots = \lim\limits_{n\to\infty}\frac{1}{2^{n}}(b-a) \\
+		&= 0
+	\end{align*}
+	Proviamo ora che $\overline{a} (= \overline{b}) = \alpha$. \\
+	\begin{align*}
+		0 \leq [f(\overline{a})]^2 &= \\
+		f(\overline{a})f(\overline{b}) \\
+		&= f(\lim\limits_{n\to\infty}a_n) f(\lim\limits_{n\to\infty}b_n) \\
+		&= \lim\limits_{n\to\infty}f(a_n) \lim\limits_{n\to\infty}f(b_n) \\ 
+		&= \lim\limits_{n\to\infty}f(a_n)f(b_n) \leq 0
+	\end{align*}
+	Ne consegue che $f(\overline{a}) = 0 \Rightarrow \overline{a} = \alpha$. \\
+	Occorre infine provare che anche $\{c_n\}$ tende ad $\alpha$. Essendo $\{c_n\}$ la successione dei punti medi, avremo:
+	\[
+	a_n < c_n < b_n
+	\]
+	Dal teorema dei due carabinieri deduciamo che:
+	\[
+	\lim\limits_{n\to\infty}c_n = \alpha
+	\]
+\end{proof}
+\paragraph{Criteri di arresto}
+Non potendo costruire gli infiniti elementi delle successioni $\{a_n\}, \{b_n\}$ e $\{c_n\}$, termineremo l'iterazione quando avremo raggiunto un'accuratezza sufficiente. \\
+Volendo scegliere $c_n$ quale approssimante di $\alpha$, andiamone a calcolare la distanza:
+\[
+|c_n - \alpha| < b_n - a_n
+\]
+La maggiorazione $b_n - a_n$ è calcolabile. Quindi, come criterio di arresto, possiamo usare:
+\[
+b_n - a_n < \text{tol}
+\]
+essendo tol la precisione richiesta dall'utente. \\
+Seguono i codici Matlab e Python.
+\end{document}

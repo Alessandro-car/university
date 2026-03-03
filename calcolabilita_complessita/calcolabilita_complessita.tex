@@ -1,0 +1,113 @@
+\documentclass[12pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertinus}
+\usepackage[italian]{babel}
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{centernot}
+\usepackage{relsize}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage{lipsum}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{calligra}
+\usepackage{subdepth}
+\usepackage{tikz}
+\usepackage{yhmath}
+\usepackage{accents}
+\usepackage{nicefrac}
+\usetikzlibrary{angles, quotes, patterns}
+\usepackage{circledsteps}
+\date{}
+\author{Alessandro Carella}
+\title{Calcolabilità e complessità}
+\setcounter{chapter}{0}
+\setlist[enumerate]{label*=\arabic*.}
+\setlength{\parindent}{0pt}
+\definecolor{brickred}{RGB}{182, 50, 28}
+\definecolor{darkred}{RGB}{139, 0, 0}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=darkred,
+	filecolor=darkred,
+	urlcolor=darkred
+}
+
+\newcounter{theorem}
+\newcounter{lemma}
+\newcounter{corollary}
+\newcounter{definition}
+\newcounter{exercise}
+
+\labelformat{theorem}{teorema #1}
+\labelformat{lemma}{lemma #1}
+\labelformat{corollary}{corollario #1}
+\labelformat{definition}{definizione #1}
+\labelformat{note}{nota #1}
+\labelformat{example}{esempio #1}
+\labelformat{exercise}{esercizio #1}
+
+\newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
+{Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
+
+\newtcbtheorem[no counter]
+{note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
+
+\newtcbtheorem[no counter]
+{example}{Esempio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exa}
+
+\newtcbtheorem[number within=section,use counter=exercise]
+{exercise}{Esercizio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exe}
+
+\newtcbtheorem[no counter]
+{assignment}{Traccia}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{brickred!65},coltitle=black,fonttitle=\bfseries}{asg}
+
+\newtcbtheorem[number within=chapter,use counter=corollary]{corollary}%
+{Corollario}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries}{cor}
+
+\newtcbtheorem[number within=chapter,use counter=definition]{definition}%
+{Definizione}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,
+	borderline west={2.5mm}{0pt}{green!55!black},coltitle=black,
+	fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
+
+\newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
+{Teorema}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries, separator sign={:\hspace{0.5em}}}{th}
+
+\tcolorboxenvironment{proof}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black}}
+\newcommand{\namerefl}[1]{%
+	\bgroup
+	\let\nmu\MakeLowercase
+	\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
+\newcommand{\wbar}[1]{%
+	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
+}
+
+\begin{document}
+	{
+		\let\cleardoublepage\clearpage
+		\maketitle
+		\tableofcontents
+	}
+	
+\end{document}
