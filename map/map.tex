@@ -1,0 +1,313 @@
+\documentclass[12pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertinus}
+\usepackage[italian]{babel}
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{centernot}
+\usepackage{relsize}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage{lipsum}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{calligra}
+\usepackage{subdepth}
+\usepackage{tikz}
+\usepackage{yhmath}
+\usepackage{accents}
+\usepackage{nicefrac}
+\usetikzlibrary{angles, quotes, patterns}
+\usepackage{circledsteps}
+\date{}
+\author{Alessandro Carella}
+\title{Metodi avanzati di programmazione}
+\setcounter{chapter}{0}
+\setlist[enumerate]{label*=\arabic*.}
+\setlength{\parindent}{0pt}
+\definecolor{brickred}{RGB}{182, 50, 28}
+\definecolor{darkred}{RGB}{139, 0, 0}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=darkred,
+	filecolor=darkred,
+	urlcolor=darkred
+}
+
+\newcounter{theorem}
+\newcounter{lemma}
+\newcounter{corollary}
+\newcounter{definition}
+\newcounter{exercise}
+
+\labelformat{theorem}{teorema #1}
+\labelformat{lemma}{lemma #1}
+\labelformat{corollary}{corollario #1}
+\labelformat{definition}{definizione #1}
+\labelformat{note}{nota #1}
+\labelformat{example}{esempio #1}
+\labelformat{exercise}{esercizio #1}
+
+\newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
+{Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
+
+\newtcbtheorem[no counter]
+{note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
+
+\newtcbtheorem[no counter]
+{example}{Esempio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exa}
+
+\newtcbtheorem[number within=section,use counter=exercise]
+{exercise}{Esercizio}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{yellow!55},coltitle=black,fonttitle=\bfseries}{exe}
+
+\newtcbtheorem[no counter]
+{assignment}{Traccia}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{brickred!65},coltitle=black,fonttitle=\bfseries}{asg}
+
+\newtcbtheorem[number within=chapter,use counter=corollary]{corollary}%
+{Corollario}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries}{cor}
+
+\newtcbtheorem[number within=chapter,use counter=definition]{definition}%
+{Definizione}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,
+	borderline west={2.5mm}{0pt}{green!55!black},coltitle=black,
+	fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
+
+\newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
+{Teorema}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries, separator sign={:\hspace{0.5em}}}{th}
+
+\tcolorboxenvironment{proof}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black}}
+\newcommand{\namerefl}[1]{%
+	\bgroup
+	\let\nmu\MakeLowercase
+	\nameref{#1}\egroup}
+
+\newcommand{\nmu}{}
+\newcommand{\wbar}[1]{%
+	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
+}
+
+\begin{document}
+	{
+		\let\cleardoublepage\clearpage
+		\maketitle
+		\tableofcontents
+	}
+	\chapter{Astrazione nella progettazione}
+	In ambito scientifico la parola ''astrarre`` significa cambiare la rappresentazione di un problema e questo serve a concentrarsi su aspetti \textit{rilevanti} dimenticando gli elementi \textit{incidentali}. \\
+	Il termine astrazione sotto-intende:
+	\begin{itemize}
+		\item un \textbf{processo}: l'estrazione delle informazioni essenziali e rilevanti per un particolare scopo, ignorando il resto dell'informazione;
+		\item un'\textbf{entità}: una descrizione semplificata di un sistema che enfatizza alcuni dei dettagli o proprietà trascurandone altri. 
+	\end{itemize}
+	In programmazione, l'astrazione allude alla distinzione che si fa tra:
+	\begin{itemize}
+		\item \textit{cosa} (\textit{what}) un programma fa;
+		\item \textit{come} (\textit{how}) viene implementato.
+	\end{itemize}
+	Per l'utente del codice l'essenziale è cosa fa il codice mentre non è interessato ai dettagli implementativi. \\
+	Nell'informatica l'astrazione è un concetto importante, in quanto, i sistemi software diventano sempre più complessi e per \textit{padroneggiare la complessità} è necessario concentrarsi solo sui pochi aspetti che più interessano in un certo contesto e ignorarne altri. \\
+	L'astrazione permette ai progettisti di sistemi software di risolvere problemi complessi in modo organizzato e gestibile. \\
+	Esistono diverse tipologie di astrazione: l'\textit{astrazione funzionale} e l'\textit{astrazione dati}.
+	\section{Astrazione funzionale}
+	L'astrazione funzionale si riferisce alla \textit{progettazione del software}, e in particolare alla possibilità di specificiare un modulo software che \textbf{trasforma} dei dati di input in dati di output nascondendo i dettagli algoritmici della trasformazione. \\
+	Sinteticamente, un modulo software deve trasformare un input in un output, cioè deve calcolare una funzione. I dettagli della trasformazione non sono visibili al consumatore del modulo, esso conosce solo le corrette convenzioni di chiamata, la \textit{specifica sintattica}, e cosa fa il modulo, la \textit{specifica semantica} e il consumatore deve fidarsi del risultato. \\
+	Un esempio di modulo software è il modulo che realizza un operatore per il calcolo del fattoriale. La \textit{specifica sintattica} indica il nome del modulo, il tipo di dato in input e il tipo di risultato, in modo da permettere la corretta chiamata del modulo. Per la funzione del fattoriale:
+	\[
+	fatt(intero) \to intero
+	\]
+	La \textit{specifica semantica} indica la trasformazione operata, cioè la funzione calcolata:
+	\[
+	fatt(n) = \begin{cases}
+		n(n-1)\cdots2\cdot1 & n \geq 1 \\
+		1 & n=0
+	\end{cases}
+	\]
+	Come la trasformazione è calcolata o realizzata non è noto al fruitore del modulo. \\
+	\subsection{Specifiche semantiche}
+	Un modo per specificare la semantica di un modulo è quello di esprimere, mediante due \textit{predicati}, la relazione che lega i dati di ingresso e ai dati di uscita: se il primo predicato, detto \textit{precondizione}, è vero sui dati di ingresso e se il programma termina su quei dati, allora il secondo, detto \textit{postcondizione}, è vero sui dati di uscita. \\
+	Queste specifiche semantiche sono dette \textbf{assiomatiche}. \\
+	Nell'esempio del fattoriale:
+	\begin{itemize}
+		\item \textbf{Precondizione}: $n \in \mathbbm{N}$ 
+		\item \textbf{Postcondizione}: $fatt(n) = \begin{cases}
+			n(n-1)\cdots 2 \cdot 1 & n \geq 1\\
+			1 & n = 0
+		\end{cases}$
+	\end{itemize}
+	\begin{exercise}{}{}
+		Un modulo ha in input un intero \textit{x} e un vettore \textbf{A} di \textit{n} interi e restituisce un intero \textit{p} e un vettore \textbf{B} di \textit{n} interi. \\
+		Siano date le seguenti:
+		\begin{itemize}
+			\item \textbf{Precondizione}: $\{n > 0\ \wedge\ \forall i \in [1, n]\ A[i] \in Z\}$ 
+			\item \textbf{Postcondizione}: $\{\forall i \in [1, n]\ \exists j \in [1, n]\ B[i] = A[j]\ \wedge\ \forall i \in [1, p-1]\ B[i] \leq x\ \wedge\ \forall i \in [p + 1, n]\ B[i] > x\}$
+		\end{itemize}
+		Questa è la specifica semantica del modulo dell'\textit{x partition del quick sort}
+	\end{exercise}
+	\subsection{Limiti dell'astrazione funzionale}
+	L'astrazione funzionale non permette di progettare, e quindi sviluppare, moduli software \textit{invarianti ai cambiamenti nei dati}, sono invariant solo ai cambiamenti nei processi di trasformazione che operano. \\
+	Questo rende difficoltosa la manutenzione delle soluzioni progettate ed è inappropriata per lo sviluppo di soluzioni a problemi complessi. 
+	\section{Astrazione dati}
+	Alla base dell'\textit{astrazione dati} c'è il principio che non \textit{non si può accedere direttamente alla rappresentazione di un dato, qualunque esso sia, ma solo attraverso un insieme di operazioni considerate lecite} e questo è detto \textbf{principio dell'astrazione dati}. \\
+	Un vantaggio dell'astrazione dati è che un cambiamento nella rappresentazione del dato si ripercuoterà solo sulle operazioni lecite, che potrebbero subire delle modifiche, mentre non inficerà il codice che utilizza il dato astratto.
+	\subsection{Information Hiding}
+	In generale un principio di astrazione suggerisce di \textit{occultare l'informazione}, l'\textbf{information hiding}, sulla rappresentazione del dato sia perchè non necessaria al fruitore dell'entità astratta e sia perchè la sua rivelazione creerebbe delle inutili dipendenze che comprometterebbero l'invarianza ai cambiamenti. \\
+	Il principio dell'astrazione funzionale suggerisce di occultare i dettagli del processo di trasformazione. Il principio dell'astrazione dati identifica nella rappresentazione del dato l'informazione da nascondere.
+	\subsection{Incapsulamento}
+	L'\textbf{incapsulamento} è una tecnica di progettazione consistente nell'impachettare una collezione di entità, creandone una barriera concettuale. Come l'astrazione, l'incapsulamento sottintende:
+	\begin{itemize}
+		\item un \textbf{processo}: l'impacchettamento;
+		\item un'\textbf{entità}: il pacchetto ottenuto.
+	\end{itemize}
+	Ad essa corrispondono tecniche di programmazione che consentono l'incapsulamento dei dati. \\
+	L'incapsulamento non dice come devono essere le ``pareti'' del pacchetto, che potranno essere:
+	\begin{itemize}
+		\item \textbf{trasparenti}: permettendo di vedere tutto ciò che è stato impachettato;
+		\item \textbf{traslucide}: permettendo di vedere in modo parziale il contenuto;
+		\item \textbf{opache}: nascondendo tutto il contenuto del pacchetto.
+	\end{itemize}
+	La combinazione del principio dell'astrazione dati con la tenica dell'incapsulamento suggerisce che:
+	\begin{enumerate}
+		\item La rappresentazione del dato va nascosta;
+		\item L'accesso al dato deve passare solo attraverso operazioni lecite;
+		\item Le operazioni lecite, che ovviamente devono avere accesso all'informazione sulla rappresentazione del dato, vanno impacchettate con la rappresentazione del dato stesso.
+	\end{enumerate}
+	L'astrazione dati ricalca ed estende quella funzionale. Attualmente la possibilitàdi effettuare astrazione di dati è considerata importante almeno quanto quella di definire nuovi operatori con astrazioni funzionali. L'esperienza ha infatti dimostrato che la scelta delle strutture di dati è il primo passo sostanziale per un buon risultato dell'attività di programmazione. \\
+	L'astrazione funzionale stimola gli sforzi per evidenziare operazioni ricorrenti o comunque ben caratterizzate all'interno della soluzione di un dato problema. \\
+	L'astrazione di dati stimola in più gli sforzi per individuare l'organizzazione dei dati più consone alla soluzione del problema. Si è passati quindi da una progettazione \textit{function centered} ad una \textit{data centered}. \\
+	In generale, le astrazioni supportano la separazione dei diversi interessi di:
+	\begin{itemize}
+		\item \textbf{Utenti}: interessati a cosa si astrae (\textit{what});
+		\item \textbf{Implementatori}: interessati a come (\textit{how}) si realizza.
+ 	\end{itemize}
+ 	Per questa ragione una definizione di astrazione ha sempre due componenti:
+ 	\begin{itemize}
+ 		\item la \textbf{specifica};
+ 		\item la \textbf{realizzazione}.
+ 	\end{itemize}
+ 	Per descrivere una specifica occorre ricorrere a dei \textit{linguaggi di specifica}, che sono diversi dai linguaggi usati per descrivere le realizzazioni delle astrazioni.
+ 	\section{Specifica sintattica e semantica}
+ 	La specifica potrà poi essere:
+ 	\begin{itemize}
+ 		\item \textbf{Sintattica}: stabilisce quali identificatori sono associati all'astrazione;
+ 		\item \textbf{Semantica}: definisce il risultato della computazione inclusa nell'astrazione.
+ 	\end{itemize}
+ 	L'efficacia di un'astrazione può essere migliorata mediante l'uso di \textbf{parametri} per la comunicazione con l'ambiente esterno. Quando un'astrazione è chiamata, ciascun parametro formale verrà associato in qualche modo al corrispondente argomento. \\
+ 	Anche un'astrazione dati è costituita da una \textbf{specifica} e da una \textbf{realizzazione}:
+ 	\begin{itemize}
+ 		\item la \textbf{specifica} consente di descrivere un nuovo dato e gli operatori che ad esso sono applicabili;
+ 		\item la \textbf{realizzazione} stabilisce come il nuovo dato e i nuovi operatori vengono ricondotti ai dati e agli operatori già disponibili. 
+ 	\end{itemize}
+ 	Chi intende usare i nuovi dati con i nuovi operatori nella scrittura dei suoi programma sarà tenuto a conoscere la specifica dell'astrazione dei dati, ma potrà astrarre delle tecniche utilizzate per la realizzazione. \\
+ 	I linguaggi di specifica per astrazione dati più noti sono due:
+ 	\begin{enumerate}
+ 		\item il linugaggio logico-matematico usato nelle asserzioni, chiamate \textbf{specifiche assiomatiche};
+ 		\item il linguaggio dell'algebra usato nelle equazioni definite fra gli operatori specificati nel dato astratto, chiamate \textbf{specifiche algebriche}.
+ 	\end{enumerate} 
+ 	\subsection{Specifiche assiomatiche}
+ 	Un linguaggio formale per la specifica di un dato astratto è costituito dalla notazione logico-matematica delle \textbf{asserzioni}. In questo caso si parla di specifica assiomatica. \\
+ 	Una specifica assiomatica è composta da:
+ 	\begin{itemize}
+ 		\item una specifica \textbf{sintattica}, detta \textit{signature}, che fornisce:
+ 		\begin{itemize}
+ 			\item l'elenco dei nomi dei domini e delle operazioni specifiche del tipo;
+ 			\item i domini di partenza e di arrivo per ogni nome di operatore.
+ 		\end{itemize}
+ 		\item una specifica \textbf{semantica} che associa:
+ 		\begin{itemize}
+ 			\item un insieme ad ogni tipo introdotto nella specifica sintattica;
+ 			\item una funzione ad ogni nome di operatore, esplicitando le condizioni sui domini di partenza e di arrivo:
+ 			\begin{itemize}
+ 				\item \textit{precondizione}, che definisce quando l'operatore è applicabile;
+ 				\item \textit{postcondizione}, che stabilisce la relazione tra argomenti e risultato.
+ 			\end{itemize}
+ 		\end{itemize}
+ 	\end{itemize}
+ 	\paragraph{Limiti delle specifiche assiomatiche}
+ 	Si noti che il metodo di specifica assiomatica è preciso nella definizione della specifica sintattica, mentre è piuttosto informale per altri aspetti, infatti a volte si ricorre al linguaggio naturale per semplicità. Pertanto esso non consente di caratterizzare precisamente un dato astratto. In particolare, non consente di definire i valori che possono essere generati mediante l'applicazione di operatori, e non consente di stabilire quando l'applicazione di diverse sequenze di operatori porta al medesimo valore. \\
+ 	Questo problema è superato dalle specifiche algebriche.
+ 	\subsection{Specifica algebriche}
+ 	Le specifiche algebriche si basano sull'algebra, piuttosto che sulla logica. Essenzialmente definiscono un dato astratto come un'\textbf{algebra eterogenea}, ovvero come una collezione di diversi insiemi su cui sono definite diverse operazioni. \\
+ 	Le algebre tradizionali sono omogenee. Un'algebra omogena consiste in un unico insieme e diverse operazioni. \\
+ 	Ad esempio, l'insieme $\mathbbm{Z}$ con le operazioni di addizione e moltiplicazione è un algebra omogenea. \\
+ 	Invece, se consideriamo un alfabeto $\sum$ e consideriamo $\sum^*$ l'insieme di tutte le stringhe, inclusa quella vuota, costruite con i simboli di $\sum$.  \\
+ 	$\sum^{*}$ con le operazioni di concatenazione e calcolo della lunghezza non sono un'algebra omogena, visto che il codominio dell'operazione di calcolo della lunghezza è $\mathbbm{N}$ e non $\sum^{*}$. Quindi, quest'algebra consiste di due insiemi, stringhe e interi, su cui sono definite le operazioni di concatenamento e lunghezza delle stringhe. \\
+ 	Una specifica algebrica consiste di tre parti:
+ 	\begin{enumerate}
+ 		\item \textbf{Sintattica}: elenca i nomi del tipo, le sue operazioni e il tipo degli argomenti delle operazioni. Se un'operazione è una funzione allora è specificato il codominio della funzione;
+ 		\item \textbf{Semantica}: consiste di un insieme di equazioni algebriche che descrivono in modo indipendente dalla rappresentazione le proprietà delle operazioni;
+ 		\item \textbf{Di restrizione}: stabilisce varie condizioni che devono essere soddisfatte o prima che siano applicate le operazioni o dopo che esse siano state completate. 
+ 	\end{enumerate}
+ 	A volte si possono trovare le specifiche di restrizione in quelle semantiche.  \\
+ 	Uno degli aspetti più interessanti delle specifiche algebriche è la semplicità del linguaggio di specifica rispetto ai linguaggi di programmazione procedurale. Infatti, il linguaggio di specifica consiste di solo cinque primitive:
+ 	\begin{enumerate}
+ 		\item composizione funzionale;
+ 		\item relazione di equaglianza;
+ 		\item la constante \textit{true};
+ 		\item la constante \textit{false};
+ 		\item un numero illimitato di variabili libere.
+ 	\end{enumerate}
+ 		La funzione \textit{if then else} può essere facilmente descritta dalle seguenti equazioni:
+ 		\[
+ 		if\ then\ else\ (true, q, r)\ =\ q
+ 		\]
+ 		\[
+ 		if\ then\ else\ (false, q, r)\ =\ r
+ 		\]
+ 		Questa funzione è cosi importante cje si assume già data come operatore infisso:
+ 		\[
+ 		if\ then\ q\ else\ r
+ 		\]
+ 		Inoltre si assume che sono predefiniti i valori interi e booleani
+ 	\begin{example}{\nmu Specifica algebrica di Pila}{specifica_algebrica_pila}
+ 		\begin{itemize}
+ 			\item \textbf{Specifica sintattica} \\
+ 			\quad \textit{sorts}: stack, item, boolean \\
+ 			\quad \textit{operations}:
+ 			\begin{itemize}
+ 				\item newstack() $\to$ stack
+ 				\item push(stack, item) $\to$ stack
+ 				\item pop(stack) $\to$ stack
+ 				\item top(stack) $\to$ item
+ 				\item isnew(stack) $\to$ boolean 
+ 			\end{itemize}
+ 			Ogni insieme è detto un \textit{sort} dell'algebra eterogenea. I \textit{sort} item e boolean sono \textit{ausiliari} alla definizione di stack.
+ 			\item \textbf{Specifica semantica} \\
+ 			\quad declare \textit{stk: stack}, \textit{i: item}
+ 			\begin{itemize}
+ 				\item pop(push(stk, i)) = stk
+ 				\item top(push(stk, i)) = i
+ 				\item isnew(newstack) = true
+ 				\item isnew(push(stk, i)) = false
+ 			\end{itemize}
+ 			\item \textbf{Specifica di restrizione} \\
+ 			\begin{itemize}
+ 				\item pop(newstack) = error
+ 				\item top(newstack) = error
+ 			\end{itemize}
+ 			dove \textit{error} è un elemento speciale indefinito.
+ 		\end{itemize}
+ 		Ovviamente avremmo potuto scrivere molte altre equazioni, come:
+ 		\[
+ 		isnew(pop(push(newstack, i)))\ =\ true
+ 		\]
+ 		che evidenzia come il predicato \textit{isnew} sia vero anche per quelli stack ottenuti inserendo un generico elemento \textit{i} in un \textbf{nuovo} stack e poi rimuovendolo. \\
+ 		Tuttavia questa equazione è ridondante, poichè è ricavabile da altre scritte in precedenza. Infatti, grazie alla prima e alla quarta equazione possiamo scrivere \textit{isnewstack(pop(push(newstack, i))) = isnew(newstack) = true}.
+ 	\end{example}
+\end{document}
