@@ -245,5 +245,120 @@ La maggiorazione $b_n - a_n$ è calcolabile. Quindi, come criterio di arresto, p
 b_n - a_n < \text{tol}
 \]
 essendo tol la precisione richiesta dall'utente. \\
-Seguono i codici Matlab e Python.
+Seguono i codici Matlab e Python. \\
+Richiamiamo le seguenti definizioni.
+\begin{definition}{\nmu Errore assoluto}{errore_assoluto}
+	Siano $x \in \mathbbm{R}$ una quantità teorica e $\overline{x}$ una sua approssimazione. Definiamo l'errore assoluto come:
+	\[
+	E_a = |x - \overline{x}|
+	\]
+	L'errore assoluto è quindi la distanza tra $x$ e $\overline{x}$ sulla retta reale.
+\end{definition}
+\begin{definition}{\nmu Errore relativo}{errore_relativo}
+	Siano $x \in \mathbbm{R}$ una quantità teorica e $\overline{x}$ una sua approssimazione. Definiamo l'errore relativo come:
+	\[
+	E_r = \frac{|x - \overline{x}|}{|x|} \quad \text{se } x \neq 0
+	\]
+	L'errore relativo scala l'errore assoluto della grandezza della quantità da approssimare. 
+\end{definition}
+L'importanza dell'errore relativo è quella di fornirci un'informazione sul numero di cifre significative corrette contenute nell'approssimazione $\overline{x}$. Più precisamente, lavorando in base 10, se:
+\[
+\frac{|x-\overline{x}|}{|x|} < \frac{1}{2} \cdot 10^{-d}
+\]
+allora l'approsimazione $\overline{x}$ conterrà almeno $d$ cifre significative corrette. Questo significa che gli arrotondamenti di $x$ e $\overline{x}$ a $d$ cifre significative coincidono. \\
+\begin{definition}{\nmu Errore misto}{errore_misto}
+	Siano $x \in \mathbbm{R}$ una quantità teorica e $\overline{x}$ una sua approssimazione. Definiamo l'errore misto come:
+	\[
+	E_m = \frac{|x - \overline{x}|}{1 + |x|}
+	\]
+\end{definition}
+L'errore misto è utile sul calcolatore quando $|x| \approx 0$, per cui l'espressione dell'errore relativo causerebbe problemi. Può essere interpretato come una via intermedia tra l'errore assoluto e l'errore relativo. Infatti:
+\[
+\frac{|x-\overline{x}|}{1+|x|} = \begin{cases}
+	|x-\overline{x}| & x \approx 0 \\
+	\frac{|x-\overline{x}|}{|x|} & x \gg 1
+\end{cases}
+\]
+Torniamo a discutere i criteri di arresto del metodo delle successive bisezioni. Abbiamo già esaminato quello sull'errore assoluto. Vediamo come ottenere un criterio di arresto basato sull'errore relativo. Facciamo riferimento ai seguenti grafici: 
+My apologies! I see what happened—the previous code rendered them too close together, causing the labels or lines to clash on the page.
+
+To fix this, I have increased the xshift and used a minipage approach. This ensures they are treated as two distinct blocks that won't bleed into each other's space.
+Separated Number Lines
+Snippet di codice
+
+\begin{figure}[H]
+	\centering
+	% --- Left Side: alpha > 0 ---
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\begin{tikzpicture}[x=1.5cm]
+			\node at (1, 1) {\large \color{red} $\alpha > 0$};
+			
+			% Axis
+			\draw[thick, ->] (-0.5, 0) -- (2.5, 0);
+			
+			% Ticks and Labels
+			\draw[thick] (0, 0.1) -- (0, -0.1) node[below] {$0$};
+			\draw[blue, thick] (0.7, 0.1) -- (0.7, -0.1) node[below] {$a_n$};
+			\draw[red, thick] (1.4, 0.1) -- (1.4, -0.1) node[below] {$\alpha$};
+			\draw[blue, thick] (2.1, 0.1) -- (2.1, -0.1) node[below] {$b_n$};
+		\end{tikzpicture}
+	\end{minipage}
+	\hfill % This pushes the second graph to the other side
+	% --- Right Side: alpha < 0 ---
+	\begin{minipage}{0.45\textwidth}
+		\centering
+		\begin{tikzpicture}[x=1.5cm]
+			\node at (-1, 1) {\large \color{red} $\alpha < 0$};
+			
+			% Axis
+			\draw[thick, ->] (-2.5, 0) -- (0.5, 0);
+			
+			% Ticks and Labels
+			\draw[blue, thick] (-2.1, 0.1) -- (-2.1, -0.1) node[below] {$a_n$};
+			\draw[red, thick] (-1.4, 0.1) -- (-1.4, -0.1) node[below] {$\alpha$};
+			\draw[blue, thick] (-0.7, 0.1) -- (-0.7, -0.1) node[below] {$b_n$};
+			\draw[thick] (0, 0.1) -- (0, -0.1) node[below] {$0$};
+		\end{tikzpicture}
+	\end{minipage}
+\end{figure}
+Poichè $\lim\limits_{n\to\infty}a_n = \lim\limits_{n\to\infty}b_n = \alpha$, per $n$ grande, $a_n$ e $b_n$ avranno lo stesso segno di $\alpha$. Pertanto, per $\alpha > 0$:
+\[
+a_n < \alpha \Rightarrow \frac{1}{\alpha} < \frac{1}{a_n}
+\]
+Per $\alpha < 0$: 
+\[
+\alpha < b_n \Rightarrow \frac{1}{-\alpha} < \frac{1}{-b_n} = \frac{1}{|\alpha|} < \frac{1}{|b_n|}
+\]
+Volendo racchiudere in un unico caso:
+\[
+\frac{1}{|\alpha|} < \frac{1}{\min\{|a_n|, |b_n|\}}
+\]
+In definitiva, il criterio di arresto sull'errore relativo diventa:
+\[
+\frac{b_n - a_n}{\min\{|a_n|, |b_n|\}} < \text{tol}
+\]
+Infine, il criterio di arresto sull'errore misto è:
+\[
+\frac{b_n - a_n}{1 + \min\{|a_n|, |b_n|\}} < \text{tol}
+\]
+\begin{note}{}{}
+	Lavorando con l'errore assoluto, è possibile stabilire a priori il numero di iterazioni necessarie per ottenere una certa accuratezza tol. Infatti, durante la dimostrazione della convergenza, avevamo stabilito che:
+	\[
+	b_n - a_n = \frac{b-a}{2^n}
+	\]
+	Dunque il criterio di arresto:
+	\[
+	b_n - a_n < tol
+	\]
+	diventa
+	\[
+	\frac{b-a}{2^n}
+	\]
+	che può essere risolto rispetto ad $n$:
+	\[
+	2^n > \frac{b-a}{tol} \Rightarrow n > \log_2\frac{b-a}{tol}
+	\]
+	Quindi potremo scegeliere $n = \Big\lceil \log_2\frac{b-a}{tol} \Big\rceil$
+\end{note}
 \end{document}
