@@ -35,6 +35,7 @@
 \usepackage{yhmath}
 \usepackage{accents}
 \usepackage{nicefrac}
+\usepackage{multirow}
 \usetikzlibrary{angles, quotes, patterns}
 \usepackage{circledsteps}
 \date{}
@@ -102,6 +103,8 @@
 \newcommand{\wbar}[1]{%
 	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
 }
+
+\renewcommand{\arraystretch}{2}
 
 \begin{document}
 	{
@@ -309,5 +312,91 @@
  		\]
  		che evidenzia come il predicato \textit{isnew} sia vero anche per quelli stack ottenuti inserendo un generico elemento \textit{i} in un \textbf{nuovo} stack e poi rimuovendolo. \\
  		Tuttavia questa equazione è ridondante, poichè è ricavabile da altre scritte in precedenza. Infatti, grazie alla prima e alla quarta equazione possiamo scrivere \textit{isnewstack(pop(push(newstack, i))) = isnew(newstack) = true}.
+ 	\end{example}
+ 	Nelle specifiche semantiche è importante indicare l'insieme minimale di equazioni, dette \textit{assiomi}, a partire dalle quali possiamo derivare tutte le altre. Le specifiche semantiche si diranno \textbf{incomplete} se non permetteranno di derivare tutte le verità desiderate dell'algebra specificate. \\
+ 	Le specifiche semantiche si diranno \textbf{inconsistenti} se permetteranno di derivare delle equazioni indesiderate, cioè considerate false. Le specifiche semantiche si diranno \textbf{ridondanti} se alcune delle equazioni sono ricavabili dalle altre. \\
+ 	Scrivere delle specifiche semantiche complete, consistenti e non ridondanti può non essere un compito semplice. Per questo conviene introdurre una \textbf{metodologia}, che si basa sulla distinzione degli operatori di un dato astratto in:
+ 	\begin{itemize}
+ 		\item \textbf{costruttori}, che creano o istanziano il dato astratto;
+ 		\item \textbf{osservazioni}, che ritrovano informazioni sul dato astratto.
+ 	\end{itemize}
+ 	Il comportamento di un'astrazione dati può essere specificata riportando il valore di ciascuna osservazione applicata a ciascun costruttore. Questa informazione è organizzata in modo naturale in una matrice, con i costruttori lungo una dimensione e le osservazioni lungo l'altra. \\
+ 	Un esempio di costruttori e osservazioni per la pila è il seguente.
+ 	\begin{center}
+\ 	\begin{tabular}{|c|c|c|}
+ 		\hline
+ 		\multirow{2}{*}{\textbf{\textit{osservazioni}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{stk'}}}} \\ \cline{2-3} 
+ 		& \textit{newstack} & \textit{push(stk, i)} \\ \hline
+ 		\textit{pop(\textcolor{orange}{stk'})}           & error             & stk                   \\ \hline
+ 		\textit{top(\textcolor{orange}{stk'})}           & error             & i                     \\ \hline
+ 		\textit{isnew(\textcolor{orange}{stk'})}         & true              & false                 \\ \hline
+ 	\end{tabular}
+ 	\end{center}
+ 	Tutte le osservazioni viste finora sono unarie, nel senso che esse osservano un singolo valore del dato astratto, ma spesso, è necessario disporre di osservazioni più complesse. Per confrontare due valori è necessario osservare due istanze del dato astratto e questo complica la specifica, perchè il valore dell'osservazione dev'essere definito per tutte le \textbf{combinazioni di costruttori} possibili per i valori astratti che si devono confrontare.
+ 	\begin{example}{\nmu Predicato \textit{equal}}{equal}
+ 		Consideriamo il predicato \textit{equal(l, m)} che è vero solo se le due pile contengono gli stessi elementi nello stesso ordine.
+ 		\begin{center}
+ 			\begin{tabular}{|c|c|c|}
+ 				\hline
+ 				\multirow{2}{*}{\textbf{\textit{Costruttore di \textcolor{orange}{m}}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{l}}}} \\ \cline{2-3} 
+ 				& \textit{newstack} & \textit{push(stk, i)} \\ \hline
+ 				\textit{newstack}                                                        & true              & false                 \\ \hline
+ 				\textit{push(stk', i')}                                                  & false             & \makecell{i=i' and \\ equal(stk,stk')} \\ \hline
+ 			\end{tabular}
+ 		\end{center}
+ 		Questa tabella può essere vista come l'aggiunta di una terza dimensione alla tabella di base per le osservazioni unarie. \\
+ 		Questa terza dimensione può essere rimossa andando a classificare esplicitamente solo il primo argomento dell'osservazione e referenziando in modo astratto il secondo argomento mediante una \textit{variabile libera}.
+ 		\begin{center}
+ 			\begin{tabular}{|c|c|c|}
+ 				\hline
+ 				\multirow{2}{*}{\textbf{\textit{osservazione}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{stk'}}}} \\ \cline{2-3} 
+ 				& \textit{newstack} & \textit{push(stk, i)} \\ \hline
+ 				\textit{equal(\textcolor{orange}{stk'},\textcolor{blue}{m})} & isnew(m) & \makecell{\textbf{not} isnew(m) \textbf{and} \\ i=top(m) \textbf{and} \\ equal(stk,pop(m))} \\ \hline
+ 			\end{tabular}
+ 		\end{center}
+ 	\end{example}
+ 	\begin{example}{\nmu Specifica algebrica della coda}{specifica_coda}
+ 		\begin{itemize}
+ 			\item \textbf{Specifica sintattica} \\
+ 			\quad \textit{sorts}: queue, item, boolean \\
+ 			\quad \textit{operations}:
+ 			\begin{itemize}
+ 				\item newq() $\to$ queue
+ 				\item addq(queue, item) $\to$ queue
+ 				\item deleteq(queue) $\to$ queue
+ 				\item frontq(queue) $\to$ item
+ 				\item isnewq(queue) $\to$ boolean 
+ 			\end{itemize}
+ 			\item \textbf{Specifica semantica} \\
+ 			\quad declare \textit{q: queue}, \textit{i: item}
+ 			\begin{itemize}
+ 				\item deleteq(addq(q, i)) = if isnewq(q) then newq else addq(deleteq(q), i) 
+ 				\item frontq(addq(q, i)) = if isnewq(q) then i else frontq(q)
+ 				\item isnew(newq) = true
+ 				\item isnew(addq(q, i)) = false
+ 			\end{itemize}
+ 			\item \textbf{Specifica di restrizione} \\
+ 			\begin{itemize}
+ 				\item deleteq(newq) = error
+ 				\item frontq(newq) = error
+ 			\end{itemize}
+ 		\end{itemize}
+ 		Se volessi rappresentare costruttori e osservazioni mediante una tabella, il risultato è il seguente.
+ 		\begin{center}
+ 			\renewcommand{\arraystretch}{1.5} % Adds padding for readability
+ 			\begin{tabular}{|c|c|c|}
+ 				\hline
+ 				\textbf{\textit{osservazioni}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{red}{q'}}}} \\
+ 				\cline{2-3}
+ 				& $newq$ & $addq(q, i)$ \\
+ 				\hline
+ 				$isnewq(\textcolor{red}{q'})$ & true & false \\
+ 				\hline
+ 				$frontq(\textcolor{red}{q'})$ & error & \textbf{if} $isnewq(q)$ \textbf{then} $i$ \textbf{else} $frontq(q)$ \\
+ 				\hline
+ 				$deleteq(\textcolor{red}{q'})$ & error & \textbf{if} $isnewq(q)$ \textbf{then} $newq$ \textbf{else} $addq(deleteq(q), i)$ \\
+ 				\hline
+ 			\end{tabular}
+ 		\end{center}
  	\end{example}
 \end{document}
