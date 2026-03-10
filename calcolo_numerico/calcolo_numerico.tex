@@ -361,4 +361,482 @@ Infine, il criterio di arresto sull'errore misto è:
 	\]
 	Quindi potremo scegeliere $n = \Big\lceil \log_2\frac{b-a}{tol} \Big\rceil$
 \end{note}
+\section{Metodi one-step}
+\begin{definition}{\nmu Punto fisso}{punto_fisso}
+	Sia $\theta : [a, b] \to \mathbbm{R}$. $\alpha \in [a, b]$ si dice \textit{punto fisso} di $\theta$ se:
+	\[
+	\theta(\alpha) = \alpha
+	\]
+\end{definition}
+L'interpretazione geometrica è la seguente:
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[
+		axis lines = middle,
+		xlabel = $x$,
+		ylabel = $y$,
+		xmin = -1.5, xmax = 4,
+		ymin = -1,   ymax = 5,
+		ticks = none,
+		axis line style={->},
+		clip = false % This ensures the curve isn't cut off at the edges
+		]
+		% Draw the line y = x (dashed)
+		\addplot [domain=-1:3.5, thick, dashed] {x} node[pos=1, right, blue] {$y=x$};
+		
+		% Draw the curve y = phi(x) crossing the y-axis
+		% Using an exponential function to match the visual curve and cross the axis
+		\addplot [domain=-0.8:4, thick, samples=100] {3*exp(-x/1.2)} node[pos=0.6, above right, blue] {$y = \phi(x)$};
+		
+		% Calculate intersection (Fixed Point alpha)
+		% For this specific function, intersection is approx at x = 1.15
+		\coordinate (alpha) at (axis cs:1.15, 1.15);
+		
+		% Vertical dashed line to alpha
+		\draw [red, dashed, thick] (alpha) -- (axis cs:1.15, 0) node[below] {$\alpha$};
+		
+		% Red dot at the intersection point
+		\fill [red] (alpha) circle (2pt);
+		
+	\end{axis}
+\end{tikzpicture}
+\end{center}
+Poichè la prima bisettrice è il luogo geometrico dei punti che hanno stesse ascisse e ordinate, i punti fissi di $\theta$ sono le ascisse dei punti di intersezione del grafico di $\theta$ con la prima bisettrice. In effetti:
+\[
+x = \theta(x) \iff \begin{cases}
+	y = x \\
+	y = \theta(x)
+\end{cases}
+\]
+Trasformiamo il problema della ricerca degli zeri di una funzione $f(x)$ in un problema \textit{equivalente} della ricerca dei punti fissi di un'opportuna funzione $\theta(x)$:
+\[
+f(x) = 0 \iff x = \theta(x)
+\]
+Dire che i due problemi sono equivalenti, significa dire che le due equazioni $f(x) = 0$ e $x = \theta(x)$ ammettono le stesse soluzioni. \\
+Il vantaggio di operare con le $\theta$ è che l'equazione $x = \theta(x)$ suggerisce il seguente metodo risolutivo. Si genera la seguente successione:
+\[
+\begin{cases}
+	x_0\ \text{assegnato} \\
+	x_n = \theta(x_{n-1})
+\end{cases}
+\]
+ove $x_0$ è una stima iniziale di $\alpha$. \\
+Sotto opportune ipotesi, che studieremo in seguito, si ha:
+\[
+\lim\limits_{n \to \infty} x_n = \alpha
+\]
+cioè, la successione $\{x_n\}$ converge a un punto fisso di $\theta$. 
+\begin{example}{}{}
+	Consideriamo al funzione $f(x) = x - \cos x$ e abbiamo detto che:
+	\[
+	f(x) = 0 \iff x - \cos x = 0 \iff x = \cos x
+	\]
+	e quindi scegliamo $\theta(x) = \cos x$. \\
+	Partiamo da $x_0 = 0$ e calcoliamo la successione $\{x_n\}$: 
+	\begin{align*}
+		x_0 &= 0 \\
+		x_1 &= \cos(x_0) = \cos(0) = 1 \\
+		x_2 &= \cos(x_1) = \cos(1) = 0.5403 \\
+		x_3 &= \cos(x_2) = \cos(0.5403) = 0.8575 \\
+		x_4 &= \dots \\
+		\vdots \\
+		x_{20} &= \cos(x_{19}) \simeq 0.73893 \approx \alpha
+	\end{align*}
+\end{example}
+La successione $\{x_n\}$ è detta \textit{metodo one-step} (la costruzione dell'elemento $x_n$ dipende dall'elemento precedentemente calcolato $x_{n-1}$). \\
+La funzione $\theta$ è detta \textit{funzione iteratrice}. 
+\begin{note}{}{}
+	Se $\theta$ è una funzione continua in $[a, b]$ ed esiste $\lim\limits_{n\to\infty}x_n = \alpha$, necessariamente $\alpha$ dovrà essere punto fisso di $\theta$. Infatti:
+	\begin{align*}
+		\alpha &= \lim\limits_{n\to\infty}x_n\\
+		&= \lim\limits_{n\to\infty}\theta(x_{n-1}) \\
+		&= \theta(\lim\limits_{n\to\infty}x_{n-1}) \\ 
+		&= \theta(\alpha)
+	\end{align*}
+\end{note}
+\subsection{Notazioni e richiami}
+Denoteremo con:
+\[
+C([a, b]) = \{f:[a, b] \to \mathbbm{R} \mid f \text{ continua in } [a, b]\}
+\]
+\[
+C^1([a, b]) = \{f:[a, b] \to \mathbbm{R} \mid f \text{ continua in } [a, b] \text{ con } f'(x) \text{ continua in } [a, b]\}
+\]
+Evidentemente:
+\[
+C^1([a, b]) \subset C([a, b])
+\]
+Più in generale:
+\[
+C^k([a, b]) = \{f: [a, b] \to \mathbbm{R} \mid f \text{ derivabile $k$ volte in $[a, b]$, con $f^{(k)}(x)$ continua in $[a, b]$}\}
+\]
+e vale che:
+\[
+C^k([a, b]) \subset C^{k-1}([a, b]) \subset \dots \subset C^1([a, b]) \subset C([a, b])
+\]
+\begin{definition}{\nmu Intorno sferico}{intorno sferico}
+	Siano $\alpha \in \mathbbm{R}$ e $\delta > 0$. Si definisce \textit{intorno sferico} di centro $\alpha$ e raggio $\delta$ e lo si denota con $B(\alpha, \delta)$:
+	\[
+	B(\alpha, \delta) = (\alpha - \delta, \alpha + \delta)
+	\]
+	\begin{center}
+		\begin{tikzpicture}
+			
+			% Draw the main horizontal axis
+			\draw[thick, ->] (-4,0) -- (4,0);
+			
+			% Define points
+			% alpha is at 0, x is at -1.5, delta is 3
+			\coordinate (A) at (0,0);      % centro alpha
+			\coordinate (X) at (-1.8,0);   % point x
+			\coordinate (L) at (-3,0);     % alpha - delta
+			\coordinate (R) at (3,0);      % alpha + delta
+			
+			% Blue hatched/shaded area (the interval)
+			\foreach \i in {-2.8,-2.5,...,2.8}
+			\draw[blue, thin] (\i-0.1, -0.1) -- (\i+0.1, 0.1);
+			
+			% Vertical markers for the boundaries and points
+			\draw[red, thick] (L) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$\alpha - \delta$};
+			\draw[red, thick] (R) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$\alpha + \delta$};
+			\draw[red, thick] (A) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$\alpha$};
+			\draw[thick] (X) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$x$};
+			
+			% Label "centro"
+			\node[red] at (0,-1.2) {centro};
+			\draw[red, ->] (0,-0.8) -- (0,-1);
+			
+			% Distance |x - alpha| with double arrow
+			\draw[<->] (-1.8, 0.5) -- (0, 0.5) node[midway, above] {$|x - \alpha|$};
+			
+			% Curly brace for "raggio delta"
+			\draw[decorate, decoration={brace, amplitude=10pt}, red, thick] 
+			(0, 0.3) -- (3, 0.3) node[midway, above=12pt] {raggio $\delta$};
+			
+		\end{tikzpicture}
+	\end{center}
+\end{definition}
+ove $B$ sta per \textit{Ball}. \\
+Vediamo di interpretare la scrittura $x \in B(\alpha, \delta)$:
+\begin{align*}
+x \in B(\alpha, \delta) &\iff x \in (\alpha - \delta, \alpha + \delta) \\
+&\iff \alpha - \delta < x < \alpha + \delta \\
+&\iff -\delta < x - \alpha < \delta \\
+&\iff |x-\alpha| < \delta  
+\end{align*}
+ove $|x-\alpha|$ è la distanza di $x$ dal centro $\alpha$ e $\delta$ è il raggio. \\
+In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\alpha$ dell'intorno è minore del raggio $\delta$.
+\subsection{Convergenza}
+\begin{definition}{\nmu Convergenza locale}{convergenza_locale}
+	Siano $\theta: [a, b] \to \mathbbm{R}$ e $\alpha \in (a, b)$ punto fisso di $\theta$. Il metodo one-step indotto dalla funzione iteratrice $\theta$ si dice \textit{localmente convergente} al punto fisso di $\alpha$ se:
+	\[
+	\exists B(\alpha, \delta), \text{ intorno sferico di centro $\alpha$ e raggio $\delta$, tale che, } \forall x_0 \in B(\alpha, \delta):
+	\]
+	\begin{center}
+		\begin{itemize}
+			\item $x_n \in B(\alpha, \delta), n \geq 0$
+			\item $\lim\limits_{n\to\infty}x_n = \alpha$
+		\end{itemize}
+	\end{center}
+\end{definition}
+\begin{note}{}{}
+	Nel caso di convergenza locale si richiede che $x_0$ dia una stima sufficientemente buona di $\alpha$.
+\end{note}
+\begin{definition}{\nmu Convergenza globale}{convergenza_globale}
+	Siano $\theta: [a, b] \to \mathbbm{R}$ e $\alpha$ punto fisso di $\theta$. \\
+	Il metodo iterativo one-step definito dalla funzione iteratrice $\theta$ è detto \textit{globalmente convergente} ad $\alpha$ in $[a, b]$ se, $\forall x_0 \in [a, b]$:
+	\begin{itemize}
+		\item $x_n \in [a, b], n \geq 0$ 
+		\item $\lim\limits_{n\to\infty}x_n = \alpha$.
+	\end{itemize}
+\end{definition}
+\begin{note}{}{}
+	La convergenza globale implica la convergenza locale.
+\end{note}
+\begin{theorem}{\nmu Condizione sufficiente per la convergenza locale}{condizione_convergenza_locale}
+	Siano $\theta \in C^1([a, b])$ e $\alpha$ punto fisso di $\theta$ in $(a, b)$. Allora, se $|\phi'(\alpha)| < 1$ il metodo one-step definito dalla funzione iteratrice $\theta$ risulta localmente convergente ad $\alpha$. 
+\end{theorem}
+\begin{proof} \quad \\
+	\begin{center}
+		\begin{tikzpicture}
+			
+			% Draw the main horizontal axis with arrow
+			\draw[thick, ->] (-1,0) -- (6,0);
+			
+			% Define points along the axis
+			% P1: |\phi'(\alpha)|, P2: L, P3: 1
+			\coordinate (P1) at (0.5, 0);
+			\coordinate (P2) at (3, 0);
+			\coordinate (P3) at (5, 0);
+			
+			% Vertical markers (ticks)
+			\draw[thick] (P1) -- ++(0,0.15) -- ++(0,-0.3) node[below=5pt] {$|\phi'(\alpha)|$};
+			\draw[thick] (P2) -- ++(0,0.15) -- ++(0,-0.3) node[below=5pt, red] {$L$};
+			\draw[thick] (P3) -- ++(0,0.15) -- ++(0,-0.3) node[below=5pt] {$1$};
+			
+		\end{tikzpicture}
+	\end{center}
+	Sia $0 < L < 1 \mid |\theta'(\alpha)| < L < 1$ \\
+	Essendo $\theta \in C'([a, b])$, $\theta'(x)$ è continua in $[a, b]$ così pure il suo valore assoluto $|\theta'(x)|$. Per il teorema della permanenza del segno vicino ad $\alpha$, $|\theta'(x)|$ continua ad essere minore di $L$:
+	\[
+	\exists B(\alpha, \delta) \mid |\theta'(x)| < L \quad \forall x \in B(\alpha, \delta)
+	\]
+	Facciamo vedere che, all'interno di questo intorno, sono verificate la due proprietà della definizione di \namerefl{def:convergenza_locale}. \\
+	Dimostriamo la prima proprietà. Si procede per induzione sull'indice $n$. Per $n=0$ l'asserto è vero in quanto, per definizione, sappiamo che $x_0 \in B(\alpha, \delta)$. \\
+	Supponiamo l'asserto vero per $x_{n-1} \in B(\alpha, \delta)$ e proviamolo per $n$. Risulta:
+	\begin{align*}
+		|x_n - \alpha| &= |\theta'(x_{n-1}) - \theta(\alpha)| \\
+		& \text{ Per il teorema di Lagrange: } \\
+		&= |\theta'(\eta_{n-1})(x_{n-1}-\alpha)
+	\end{align*}
+	dove $\eta_{n-1}$ è un opportuno punto tra $x_{n-1}$ e $\alpha$:
+	\begin{center}
+	\begin{tikzpicture}
+		
+		% Draw the main horizontal axis
+		\draw[thick, ->] (-5,0) -- (4,0);
+		
+		% Coordinates for points (adjusted spacing for the left side)
+		\coordinate (L)  at (-4.0, 0);   % alpha - delta
+		\coordinate (X)  at (-2.5, 0);   % x_{n-1}
+		\coordinate (Eta) at (-0.5, 0);  % eta_{n-1}
+		\coordinate (A)  at (1.2, 0);    % alpha
+		\coordinate (R)  at (3.5, 0);    % alpha + delta
+		
+		% Ticks and Labels
+		% Left boundary (alpha - delta)
+		\draw[cyan, thick] (L) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\alpha - \delta$};
+		
+		% x_{n-1}
+		\draw[cyan, thick] (X) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$x_{n-1}$};
+		
+		% eta_{n-1} (The Intermediate Point in Red)
+		\draw[red, thick] (Eta) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\eta_{n-1}$};
+		
+		% alpha (The center/fixed point)
+		\draw[cyan, thick] (A) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\alpha$};
+		
+		% Right boundary (alpha + delta)
+		\draw[cyan, thick] (R) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\alpha + \delta$};
+		
+	\end{tikzpicture}
+	\end{center}
+	Osserviamo che $\eta_{n-1} \in B(\alpha, \delta) \Rightarrow |\theta'(\eta_{n-1}) < L$. Dunque:
+	\[
+	|x_n - \alpha| = |\theta(\eta_{n-1})|x_{n-1}-\alpha| < L|x_{n-1}-\alpha| < L\delta < \delta
+	\]
+	Dimostriamo la seconda proprietà. Abbiamo visto che $|x_n - \alpha| < L|x_{n-1} - \alpha|$. \\
+	Essendo $n$ generico, possiamo iterare:
+	\[
+	|x_n - \alpha| < L|x_{n-1}-\alpha| < L^2|x_{n-2} - \alpha| < \dots < L^n|x_0 - \alpha| 
+	\]
+	e per $n \to \infty$ $L^n \simeq 0$. Quindi, in conclusione:
+	\[
+	0 \leq |x_n - \alpha| < L^n|x_0 - \alpha|
+	\]	
+	Per il teorema dei due caraibinieri:
+	\[
+	\lim\limits_{n\to\infty}|x_n - \alpha| = 0 \Rightarrow \lim\limits_{n\to\infty}x_n = \alpha
+	\]
+\end{proof}
+\begin{note}{}{}
+	Se $|\theta'(\alpha)| > 1$ il metodo non può essere localmente convergente ad $\alpha$. Infatti, vicino ad $\alpha$, $|\theta'(x)| > L > 1$ e quindi se $x_0$ è sufficientemente vicino ad $\alpha$:
+	\[
+	|x_1 - \alpha| > L|x_0 - \alpha| > |x_0 - \alpha|
+	\]
+	ci allontaniamo da $\alpha$. \\
+	Se $|\theta'(\alpha) = 1|$, non si può dire nulla a priori circa la convergenza locale. \\
+	Osserviamo ulteriormente che nell'ipotesi avremmo potuto scrivere $\theta \in C^1(B(\alpha, r))$ anzichè scrivere $\theta \in C^1([a, b])$.
+\end{note}
+\begin{theorem}{\nmu Condizione sufficiente per la convergenza globale}{condizione_convergenza_globale}
+	Sia $\theta \in C^1([a, b])$ tale che:
+	\begin{itemize}
+		\item $\theta([a, b]) \subset [a, b]$ 
+		\item $|\theta'(x)| < 1, \forall x \in [a, b]$
+	\end{itemize}
+	Allora $\theta$ ammette un unico punto fisso $\alpha \in [a, b]$ e il metodo one-step definito dalla funzione iteratrice $\theta$ risulta essere globalmente convergente ad $\alpha$ nell'intervallo $[a, b]$. 
+\end{theorem}
+\begin{proof} \quad \\
+	Proviamo innanzitutto l'esistenza e l'unicità del punto fisso $\alpha$ di $\theta$. A tal fine consideriamo la seguente funzione ausiliaria $g(x)$:
+	\[
+	g(x) = x - \theta(x)
+	\]
+	Ovviamente $g \in C^1([a, b])$ e risulta:
+	\[
+	g'(x) = 1 - \theta'(x) > 0 \quad \forall x \in [a, b]
+	\]
+	cioè $g(x)$ è strettamente crescente in $[a, b]$. Inoltre:
+	\[
+	g(a) = a - \theta(a) \leq 0 
+	\]
+	\[
+	g(b) = b - \theta(b) \geq 0
+	\]
+	Per un teorema di localizzazione, $g(x)$ ammette un unico zero $\alpha \in [a, b]$:
+	\[
+	\exists! \alpha \in [a, b] \mid g(x) = 0
+	\]
+	\[
+	\alpha - \theta(\alpha) = 0 \iff \alpha = \theta(\alpha)
+	\]
+	Ora proviamo a dimostrare le proprietà 1. e 2. della definizione di \namerefl{def:convergenza_globale}. \\
+	Dimostriamo la prima proprietà. Dalla prima ipotesi sappiamo che:
+	\[
+	\theta([a, b]) \subset [a, b]
+	\]
+	ciò significa che:
+	\[
+	\forall x \in [a, b]: \theta(x) \in [a,b]
+	\]
+	e questo equivale alla prima proprietà. \\
+	Dimostriamo la seconda proprietà e sia:
+	\[
+	M = \max_{a \leq x \leq b}|\theta'(x)| < 1
+	\]
+	Il massimo M esiste per il teorema di Weirstrass, essendo $|\theta'(x)|$ continua in $[a, b]$.
+	\begin{align*}
+		0 \leq |x_n - \alpha| &= |\theta(x_{n- 1}) - \theta(\alpha)| \\
+		&= |\theta'(\eta_{n-1})||x_{n-1} -\alpha| \\
+		&< M|x_{n-1}-\alpha| < M^2|x_{n-2}-\alpha| < \dots \\
+		&< M^n|x_0 - \alpha|
+	\end{align*}
+	Per il teorema dei due carabinieri:
+	\[
+	\lim\limits_{n\to\infty}|x_n-\alpha| = 0
+	\]
+\end{proof}
+\begin{example}{}{}
+	Riprendiamo l'esempio: $x - \cos x = 0 \iff x = \cos x$ ove abbiamo definito $\theta(x) = \cos x$ e $x \in \Big[0, \dfrac{\pi}{2}\Big]$. Ne segue il grafico:
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				axis lines = middle,
+				xlabel = {$x$},
+				ylabel = {$y$},
+				xmin = -0.2, xmax = 1.8,
+				ymin = -0.2, ymax = 1.2,
+				% Impostiamo i tick sull'asse x in termini di pi greco
+				xtick = {0, 0.7853, 1.5708},
+				xticklabels = {0, $\frac{\pi}{4}$, $\frac{\pi}{2}$},
+				ytick = {0, 0.5, 1},
+				grid = major,
+				grid style = {dashed, gray!30},
+				samples = 100,
+				domain = 0:pi/2,
+				width=10cm,
+				height=7cm,
+				title={Grafico di $y = \cos(x)$}
+				]
+				% La funzione cos in pgfplots accetta gradi di default, 
+				% quindi usiamo deg(x) per convertire i radianti
+				\addplot [blue, thick] {cos(deg(x))};
+				
+			
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	Quindi, notiamo che per $0 \leq x \leq \frac{\pi}{2} \Rightarrow 0 \leq \cos x \leq 1 < \frac{\pi}{2}$, quindi la prima proprietà del teorema della \namerefl{th:condizione_convergenza_globale} è soddisfatta. Inoltre: 
+	\[
+	|\theta'(x)| = |-\sin x| = \sin x
+	\]
+	e notiamo che:
+	\[
+	0 \leq \sin x \leq 1 \quad \forall x \in \Big[0, \dfrac{\pi}{2}\Big]
+	\]
+	quindi anche la seconda proprietà del teorema della \namerefl{th:condizione_convergenza_globale} è verificata in $\Big[0, \dfrac{\pi}{2}\Big)$ dato che $\sin\frac{\pi}{2} = 1$. \\
+	Tuttavia, scegliendo $x_0 = \frac{\pi}{2}$ otteniamo $x_1 = \cos \frac{\pi}{2} = 0$ e quindi anche con questa scelta di $x_0$ otteniamo la convergenza ad $\alpha$. Quindi il metodo risulta globalmente convergente in $\Big[0, \dfrac{\pi}{2}\Big]$.
+\end{example}
+\begin{exercise}{}{}
+	Si consideri la funzione:
+	\[
+	f(x) = x^3 - 2x - 5 \quad x \in [1, 3]
+	\]
+	\begin{enumerate}
+		\item Provare che $f(x)$ ammette un unico zero $\alpha \in (1, 3)$.
+		\item Per l'approssimazione di $\alpha$ si considerino i seguenti due metodi iterativi one-step:
+		\begin{enumerate}
+			\item Il primo metodo è ottenuto andando a risolvere l'equazione:
+			\[
+			x^3 - 2x - 5 = 0
+			\]
+			isolando il secondo termine:
+			\[
+			x = \frac{x^3 - 5}{2}
+			\]
+			Ciò suggerisce la funzione iterativa:
+			\[
+			\theta_1(x) = \frac{x^3 - 5}{2}
+			\]
+			\item Il secondo metodo è ottenuto risolvendo rispetto al primo termine $x^3$:
+			\[
+			x = \sqrt[3]{2x + 5}
+			\]
+			da cui la funzione iteratrice:
+			\[
+			\theta_2(x) = \sqrt[3]{2x + 5}
+			\]
+		\end{enumerate}
+		Studiare la convergenza locale e globale dei due metodi definiti da $\theta_1(x)$ e $\theta_2(x)$. \\
+		La risoluzione è la seguente. \\
+		\begin{enumerate}
+			\item $f(1) = 1^3 - 2 \cdot 1 - 5 = -6 < 0$ \\
+			$f(3) = 3^3 - 2 \cdot 3 - 5 = 16 > 0$ \\
+			$f'(x) = 3x^2 - 2 > 0 \quad \forall x \in [1, 3]$. \\
+			Per il teorema di \namerefl{th:unicita_zero}, $f$ ammette un unico zero $\alpha \in (1, 3)$.
+			\item Studiamo i due metodi separatamente.
+			\begin{enumerate}
+				\item $\theta_1(x) = \frac{x^3-5}{2}$ da cui:
+				\[
+				\theta_1'(x) = \frac{3}{2}x^2 \geq \frac{3}{2} > 1 \quad \forall x \in [1, 3]
+				\]
+				per cui $\theta_1'(\alpha) > 1$. \\
+				Per cui il primo metodo non converge localmente e a maggior ragione non converge globalmente in $[1, 3]$. 
+				\item $\theta_2(x) = \sqrt[3]{2x + 5}$ da cui:
+				\[
+				\theta_2'(x) = \frac{1}{3}(2x + 5)^{-\frac{2}{3}}\cdot 2 = \frac{2}{3} \frac{1}{\sqrt[3]{(2x+5)^2}}
+				\]
+				Notiamo che $\theta_2'(x)$ decresce nell'intervallo di lavoro $[1, 3]$, pertanto:
+				\[
+				0 < \theta_2'(x) \leq \max_{1 \leq x \leq 3}\theta_2'(x) = \theta_2'(1) = \frac{2}{3}(7)^{-\frac{2}{3}} \approx 0.18
+				\]
+				Per cui:
+				\[
+				0 < \theta_2'(x) < 1
+				\]
+				Possiamo subito concludere che $|\theta_2'(\alpha)| < 1$ e quindi questo metodo converge localmente. \\
+				Per la convergenza globale, resta da provare la prima proprietà del teorema della \namerefl{th:condizione_convergenza_globale}:
+				\[
+				\theta_2([1, 3]) \subset [1, 3]
+				\]
+				il chè significa:
+				\[
+				1 \leq x \leq 3 \Rightarrow 1 \leq \theta_2(x) \leq 3
+				\]
+				Dovremo risolvere il sistema:
+				\[
+				\begin{cases}
+					\sqrt[3]{2x + 5} \geq 1 \\
+					\sqrt[3]{2x+5} \leq 3
+				\end{cases}
+				\]
+				Detto $S$ l'insieme delle soluzioni dobbiamo verificare se $[1, 3] \subset S$. \\
+				Avevamo visto che $\theta_2'(x) > 0$ quindi è strettamente crescentet in $[1, 3]$. Allora:
+				\[
+				1 \leq x \leq 3 \Rightarrow 1 < \theta_2(1) \leq \theta_2(x) \leq \theta_2(3) < 3
+				\]
+				Quindi abbiamo provato che $1 < \theta_2(x) < 3$ e quindi questo metodo risulta globalmente convergente in $[1, 3]$.
+				\begin{note}{}{}
+					Abbiamo calcolato direttamente il valore di $\theta_2(1)$ e $\theta_2(3)$ senza risolvere il sistema in quanto $\theta_2(x)$ è monotona nell'intervallo $[1, 3]$. In particolare, se $\theta(x)$ è crescente in $[a, b]$:
+					\[
+					a \leq x \leq b \Rightarrow \theta(a) \leq \theta(x) \leq \theta(b)
+					\]
+					Se $\theta(x)$ è decrescente in $[a, b]$:
+					\[
+					a \leq x \leq b \Rightarrow \theta(b) \leq \theta(x) \leq \theta(a)
+					\]
+ 				\end{note}
+			\end{enumerate}
+		\end{enumerate}
+	\end{enumerate}
+\end{exercise}
 \end{document}
