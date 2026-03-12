@@ -46,6 +46,11 @@
 \setlength{\parindent}{0pt}
 \definecolor{brickred}{RGB}{182, 50, 28}
 \definecolor{darkred}{RGB}{139, 0, 0}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{darkblue}{rgb}{0,0,0.6}
 \hypersetup{
 	colorlinks=true,
 	linkcolor=darkred,
@@ -105,6 +110,86 @@
 }
 
 \renewcommand{\arraystretch}{2}
+
+\lstdefinestyle{pascalstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	language=Pascal
+}
+
+\lstdefinestyle{javastyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries, % Java has many keywords; bold helps
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=4, % Java standard is usually 4 spaces
+	language=Java
+}
+
+\lstdefinestyle{mlstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen}\itshape, % ML comments often look better in italics
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2, % ML code is usually deeply nested; keep tabsize small
+	language=ML
+}
+
+\lstdefinestyle{adastyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=3, % 3 spaces is a common Ada convention
+	language=Ada
+}
 
 \begin{document}
 	{
@@ -399,4 +484,106 @@
  			\end{tabular}
  		\end{center}
  	\end{example}
+ 	\chapter{L'astrazione nella programmazione}
+ 	È possibile costruire astrazioni su una qualunque classe sintattica, purchè le frasi di quella classe specifichino un qualche tipo di computazione. \\
+ 	Di seguito si esaminerà l'applicazione del principio di astrazione in sei classi sintattiche, in particolare:
+ 	\begin{enumerate}
+ 		\item Espressione $\rightarrow$ \textbf{astrazione di funzione};
+ 		\item Comando $\rightarrow$ \textbf{astrazione di procedura};
+ 		\item Controllo di sequenza $\rightarrow$ \textbf{astrazione di controllo};
+ 		\item Accesso a un'area di memoria $\rightarrow$ \textbf{astrazione di selettore};
+ 		\item Definizione di un dato $\rightarrow$ \textbf{astrazione di tipo};
+ 		\item Dichiarazione $\rightarrow$ \textbf{astrazione generica}.
+ 	\end{enumerate}
+ 	Tutte queste classi sintattiche sottointendono una computazione, infatti:
+ 	\begin{itemize}
+ 		\item L'astrazione di \textit{funzione} include un'espressione da valutare.
+ 		\item L'astrazione di una \textit{procedura} include un comando da seguire.
+ 		\item L'astrazione di \textit{controllo} include delle espressioni di controllo dell'ordine di esecuzione delle istruzioni.
+ 		\item L'astrazione di \textit{selettore} include il calcolo dell'accesso ad una variabile.
+ 		\item L'astrazione di \textit{tipo} include un gruppo di operatori che definiscono implicitamente un insieme di valori.
+ 		\item L'astrazione \textit{generica} include una frase che sarà elaborata per produrre legami.
+ 	\end{itemize}
+ 	\section{Astrazione di funzione}
+ 	Un'astrazione di funzioni include un'espressione da valutare, e quando chiamata, darà un valore come risultato. \\
+ 	Un'astrazione di funzione è specificata mediante una definizione di funzione del tipo:
+ 	\[
+ 	\text{function I(FP$_1$; $\dots$; FP$_n$) is E}
+ 	\]
+ 	dove $I$ è un identificatore, FP$_1$; $\dots$; FP$_n$ sono parametri formali ed $E$ è l'espressione da valutare. \\
+ 	In questo modo si lega $I$ ad un'entità, l'astrazione di funzione, che ha la proprietà di dare un risultato ogni qualvolta che è chiamata con argomenti appropriati. \\
+ 	Una chiamata di funzione, $I(AP_1; \dots; AP_n)$ dove i parametri effettivi, $AP_1; \dots; AP_n$ determinano gli argomenti, ha due punti di vista:
+ 	\begin{enumerate}
+ 		\item Punto di vista dell'\textit{utente}: la chiamata di una funzione trasforma gli argomenti in un risultato;
+ 		\item Punto di vista dell'\textit{implementatore}: la chiamata valuta \textit{E}, avendo precedentemente vincolato i parametri formali agli argomenti corrispondenti. \\
+ 		L'algoritmo codificato in \textit{E} è di interesse per l'implementatore.
+ 	\end{enumerate}
+ 	\subsection{Anomalie di progetto dei linguaggi}
+ 	Se l'astrazione di funzione include un'espressione \textit{E} da valutare, è naturale attendersi che il corpo della funzione non includa dei comandi, come assegnazioni, istruzioni di salto, iterazioni, e altro, il cui effetto è quello di cambiare lo stato di un sistema, non di produrre valori.  \\
+ 	Non sempre ciò accade, come si può osservare in questo esempio di funzione scritto in Pascal.
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		function power(x: real; n: integer) : real
+ 		begin
+ 			if n = 1 then power := x
+ 			else power := x * power(x, n - 1)
+ 		end
+ 	\end{lstlisting}
+ 	Nel corpo di questa funzione compaiono i comandi di assegnazione. Non è proprio possibile farne a meno, perchè per poter restituire un valore, in Pascal è necessario assegnare un valore ad una pseudo variabile, che ha lo stesso nome della funzione. \\
+ 	Il corpo della funzione è sintatticamente un comando, ma semanticamente è un'espressione, questa funzione, infatti, può essere invocata solo alla destra di operazioni di assegnazione. \\
+ 	Non tutti i linguaggi di programmazione includono comandi nel corpo di funzioni, infatti, nel linguaggio funzionale ML la funzione vista prima diventa:
+ 	\begin{lstlisting}[style=mlstyle]
+ 		function power(x: real; n: int) is 
+ 			if n = 1 then x
+ 			else x *  power(x, n-1)
+ 	\end{lstlisting}
+ 	Nel corpo della funzione definita in ML compare un'espressione condizionale la cui valutazione non modifica lo stato del sistema. Il motivo per il quale altri linguaggi di programmazione, come Pascal, Ada, o altro, permettono di avere comandi nel corpo di funzione è quello di poter sfruttare la potenza espressiva dell'assegnazione e dell'\textit{iterazione} nella computazione di risultati. Diversamente saremmo costretti a esprimere ricorsivamente le espressioni da valutare. E la ricorsione, com'è noto, può essere fonte di inefficienze nell'uso delle risorse di calcolo. \\
+ 	Quindi, per ragioni di efficienza, molti linguaggi permettono di avere comandi nel corpo di funzioni e si lascia al programmatore il compito di utilizzare correttamente i comandi in modo da evitare che la funzione possa avere effetti collaterali, \textit{side effect}, oltre quello di calcolare un valore.  \\
+ 	Le funzioni in quanto astrazioni di espressioni, possono comparire ovunque occorra un'espressione. Pertanto, esse compaiono alla destra di operazioni di assegnazioni, ma anche al posto di parametri effettivi nelle chiamate di altre funzioni, laddove il valore potrebbe essere calcolato mediante un'espressione. 
+ 	\[
+ 	\text{y := f(y, power(x, 2))}
+ 	\]
+ 	In molti linguaggi di programmazione è possibile definire dei parametri formali che sono riferimento ad una funzione. 
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		function sommatoria(function F(R: real; M: integer): real; X: real; N: integer) : real;
+ 			var I: integer;
+ 			var Sum: real;
+ 			begin
+ 				Sum := 0;
+ 				for I := 1 to N do Sum := Sum  + F(x, I);
+ 				Sommatoria := Sum
+ 			end
+ 	\end{lstlisting}
+ 	Se la funzione $F$ è la funzione $power$ definita in precedenza, allora: \[Y := Sommatoria(power, x, n)\] calcola la sommatoria $\sum_{i=1}^{n}x^i$. \\
+ 	In alcuni linguaggi si separa il concetto di astrazione di funzione da quello di legame a un identificatore. Questo permette di passare come parametri delle funzioni anonime. Infine, le funzioni possono essere il risultato di valutazioni di espressioni o possono essere assegnate a variabili:
+ 	\begin{lstlisting}[style=mlstyle]
+ 		val cube = fn(x: real) => x * x * x\end{lstlisting}
+ 	Riepilogando, in alcuni linguaggi di programmazione, le funzioni sono di \textit{terza classe}, cioè possono essere solo chiamate, in altri sono di \textit{seconda classe}, cioè possono essere passate come argomenti, mentre in altri linguaggi di programmazione esse sono di \textit{prima classe} in quanto possono essere anche restituite come risultato della chiamata di altre funzioni o possono essere assegnate come valore a una variabile.
+ 	\paragraph{Cittadini di prima classe}
+ 	In generale, in programmazione una qualunque entità si dice \textit{cittadino di prima classe} quando non è soggetta a restrizioni nel suo utilizzo. A tal proposito, osserviamo che i valori possono essere:
+ 	\begin{itemize}
+ 		\item \textit{Denotabili}, se possono essere associati ad un nome;
+ 		\item \textit{Esprimibili}, se possono essere il risultato di un'espressione complessa;
+ 		\item \textit{Memorizzabili}, se possono essere memorizzati in una variabile.
+ 	\end{itemize}
+ 	
+ 	\section{Astrazione di procedura}
+ 	Un'astrazione di procedura include un comando da eseguire, e quando chiamata, aggiornerà le variabili che rappresentano lo stato del sistema. Un'astrazione di procedura è specificata mediante una definizione di procedura, del tipo:
+ 	\[
+ 	\text{procedure I(FP$_1; \dots;$ FP$_n$) is C}
+ 	\]
+ 	dove $I$ è un identificatore, FP$_1; \dots; $ FP$_n$ sono parametri formali, e $C$ è il blocco di comandi da eseguire. \\
+ 	In questo modo si lega $I$ all'astrazione di procedura, che gode della proprietà di cambiare lo stato del sistema quando chiamata con argomenti appropriati. \\
+ 	Data una chiamata di procedura, $I(AP_1;\dots; AP_n)$ dove $AP_1;\dots; AP_n$ sono i parametri effettivi, il punto di vista dell'\textit{utente} è che la chiamata aggiornerà lo stato del sistema in modo dipendente dai parametri, mentre il punto di vista dell'\textit{implementatore} è che la chiamata consentirà l'esecuzione del corpo di procedura $C$, avendo precedentemente vincolato i parametri formali agli argomenti corrispondenti. L'algoritmo in $C$ è di interesse solo per l'implementatore. \\
+ 	In Pascal e in C le proceudure sono \textit{cittadini di seconda classe}. \\
+ 	L'astrazione di funzione o di procedura sono due tecniche di programmazione di supporto all'astrazione funzionale, intesa come tecnica di progettazione del software seconda la quale occorre distinguere la specifica di un'operatore dala sua realizzazione. \\
+ 	Quale sia la tecnica di programmazione, se di funzione o di procedura, più opportuna da adottare dipende da:
+ 	\begin{itemize}
+ 		\item \textbf{Tipo di operatore progettato}:
+ 		\begin{itemize}
+ 			\item ha effetti collaterali, come accade nell'astrazione di procedura;
+ 			\item non ha effetti collaterali, cime accade nell'astrazione di funzione.
+ 		\end{itemize}
+ 		\item \textbf{Limiti imposti dal linguaggio di programmazione}. \\
+ 		Ad esempio, l'operatore di \textit{bubblesort} non modifica l'array passato in ingresso, ma ne restituisce uno ordinato, pertanto sarebbe più opportuno implementarlo ricorrendo ad un'astrazione di funzione. Tuttavia, non tutti i linguaggi di programmazione consentono di restituire come un tipo di dato complesso e quindi l'operatore \textit{bubblesort} dovrà essere realizzato mediante un'astrazione di procedura.
+ 	\end{itemize} 
 \end{document}
