@@ -839,4 +839,273 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 		\end{enumerate}
 	\end{enumerate}
 \end{exercise}
+\section{Metodo della direzione costante}
+Introduciamo questo metodo mediante la sua interpretazione geometrica:
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines = middle,
+			xlabel = {$x$},
+			ylabel = {$y$},
+			xmin = -0.5, xmax = 6,
+			ymin = -2, ymax = 10,
+			ticks = none,
+			axis line style={->, thick},
+			clip = false,
+			every axis x label/.style={at={(current axis.right of origin)}, anchor=north west},
+			every axis y label/.style={at={(current axis.above origin)}, anchor=south east}
+			]
+			% 1. Blue Curve: f(x) = 0.5x^2 - 2
+			\addplot[blue, thick, domain=0:5.2, samples=100] {0.5*x^2 - 2} 
+			node[pos=0.1, left, xshift=-2pt] {$y=f(x)$};
+			
+			% 2. The Root (alpha)
+			\fill[red] (axis cs:2,0) circle (2pt);
+			\node[below, red, xshift=-8pt] at (axis cs:2,0) {$\alpha$};
+			
+			% 3. First Iteration Point (x0, f(x0))
+			\def\xzero{4.5}
+			\def\yzero{8.125}
+			\draw[dashed, red, thick] (axis cs:\xzero, 0) -- (axis cs:\xzero, \yzero);
+			\fill[red] (axis cs:\xzero, \yzero) circle (2pt) 
+			node[right, black, xshift=3pt] {$(x_0, f(x_0))$};
+			\node[below, red] at (axis cs:\xzero, 0) {$x_0$};
+			
+			% --- FIRST TANGENT LINE (Solid Green) ---
+			% Starts at (x0, f(x0)) and hits the x-axis at x1
+			\addplot[green!70!black, thick, domain=2.5:5] {4.5*(x - 4.5) + 8.125};
+			
+			% 4. Point x1 (The intercept of the first tangent)
+			\def\xone{2.694}
+			\def\yone{1.63}
+			\draw[dashed, red, thick] (axis cs:\xone, 0) -- (axis cs:\xone, \yone);
+			\fill[red] (axis cs:\xone, \yone) circle (2pt) 
+			node[above left, black, font=\small] {$(x_1, f(x_1))$};
+			\node[below, red, yshift=-2pt] at (axis cs:\xone, 0) {$x_1$};
+			
+			% --- SECOND TANGENT LINE (Dashed Green) ---
+			% Starts at (x1, f(x1)) and hits the x-axis at x2
+			\addplot[green!70!black, thick, dashed, domain=1.9:3.2] {2.694*(x - 2.694) + 1.63};
+			
+			% 5. Point x2
+			\node[below, red, xshift=6pt] at (axis cs:2.08, 0) {$x_2$};
+			\fill[red] (axis cs:2.08, 0) circle (1.5pt);
+			
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+\textbf{Rivedere il grafico}. \\
+A partire da una stima iniziale $x_0$ di $\alpha$, si considera la retta passante per il punto $(x_0, f(x_0))$ è di coefficiente angolare $\frac{1}{m}$ con $m \neq 0$. La sua equazione sarà: 
+\[
+y - f(x_0) = \frac{1}{m}(x - x_0)
+\]
+Definiamo $x_1$ come l'intercetta di questa retta con l'asse delle ascisse:
+\[
+\begin{cases}
+	y - f(x_0) = \frac{1}{m}(x - x_0) \\
+	y = 0	
+\end{cases}
+\]
+da cui \[x_1 = x_0 - mf(x_0)\]
+Iterando la procedura si perviene al metodo della direzione costante:
+\[
+\begin{cases}
+	x_0 \text{ assegnato } \\
+	x_n = x_{n-1} - m(fx_{n-1})
+\end{cases}
+\]
+La funzione iteratrice è:
+\[
+\phi(x) = x - mf(x)
+\]
+Essa dipende dal parametro $m$. Come deve essere scelto questo parametro per ottenere convergenza locale o globale? Risulta:
+\[
+\phi'(x) = 1 -mf'(x)
+\]
+\paragraph{Convergenza locale}
+Dovremo imporre $|\phi'(\alpha)| < 1$.
+\begin{align*}
+	&-1 < 1 - mf'(\alpha) < 1 \\
+	&-2 < -mf'(\alpha) < 0 \\
+	&0 < mf'(\alpha) < 2
+\end{align*}
+Questa è la condizione per la convergenza locale.
+\paragraph{Convergenza globale} Per la convergenza globale si ha il seguente risultato.
+\begin{theorem}{\nmu Converngenza globale}{teorema_convergenza_globale}
+	Sia $f \in C^1([a, b])$ tale che:
+	\begin{enumerate}[label=(\alph*)]
+		\item $f(a)f(b) < 0$
+		\item $f'(x) \neq 0 \quad \forall x \in [a, b]$
+		\item $0 < mf'(x) \leq 1 \quad \forall x \in [a,b]$
+	\end{enumerate}
+	Allora $f$ ammette un unico zero $\alpha \in (a,b)$ e il metodo della direzione costante converge globalmente ad $\alpha$ in tutto l'intervallo $[a, b]$. \\
+\end{theorem}
+\begin{proof}
+	Dalla (a) ricaviamo:
+\begin{align*}
+	&0 < mf'(x) \leq 1 \\
+	&-1 \leq -mf'(x) < 0 \\
+	&0 \leq 1 - mf'(x) < 1 \\
+	&0\leq \phi'(x) < 1
+\end{align*}
+Quindi la seconda ipotesi del teorema di convergenza globale è soddisfatta. Resta da provare $\phi([a, b]) \subset [a, b]$. \\
+Poichè $\phi'(x) \geq 0$, $\phi(x)$ è monotona crescente e quindi
+\[
+a \leq x \leq b \Rightarrow \phi(a)  \leq \phi(x) \leq \phi(b)
+\]
+Si possono presentare i due casi nelle due figure sottostanti:
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines = middle,
+			xmin = -1.5, xmax = 3.5,
+			ymin = -2, ymax = 4,
+			ticks = none,
+			axis line style={->, thick},
+			title={$f'(x) > 0$},
+			title style={at={(0,1)}, anchor=south west, blue}
+			]
+			% Increasing blue curve
+			\addplot[blue, thick, domain=-1:3, samples=100] {0.5*x^2 + x - 1.5};
+			
+			% Root alpha
+			\node[below right, red] at (axis cs:1, 0) {$\alpha$};
+			\fill[red] (axis cs:1,0) circle (1.5pt);
+			
+			% Interval a
+			\draw[dashed, red, thick] (axis cs:-1, 0) -- (axis cs:-1, -2);
+			\fill[red] (axis cs:-1, -2) circle (2pt);
+			\node[below left, red] at (axis cs:-1, 0) {$a$};
+			
+			% Interval b
+			\draw[dashed, red, thick] (axis cs:2.5, 0) -- (axis cs:2.5, 4.1);
+			\fill[red] (axis cs:2.5, 4.125) circle (2pt);
+			\node[below right, red] at (axis cs:2.5, 0) {$b$};
+		\end{axis}
+	\end{tikzpicture}
+\end{minipage}
+\hfill
+% --- RIGHT GRAPH (f'(x) < 0) ---
+\begin{minipage}{0.48\textwidth}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines = middle,
+			xmin = -1.5, xmax = 4, % xmin set to -1.5 to show negative x-axis
+			ymin = -1.5, ymax = 4,
+			ticks = none,
+			axis line style={->, thick},
+			clip = false,
+			title={$f'(x) < 0$},
+			title style={at={(axis cs:-1,3.5)}, anchor=south west, blue, font=\large}
+			]
+			% 1. The Decreasing Curve (Blue)
+			% Adjusted function to cover negative x-values
+			\addplot[blue, thick, domain=-0.8:3.5, samples=100] {3.2*exp(-0.5*(x+0.5)) - 0.8};
+			
+			% 2. Root alpha
+			\fill[red] (axis cs:2.27,0) circle (1.5pt);
+			\node[below right, red, yshift=-2pt] at (axis cs:2.27, 0) {$\alpha$};
+			
+			% 3. Point a (Now at a negative x-coordinate)
+			\def\xa{-0.6}
+			\def\ya{3.23} 
+			\draw[dashed, red, thick] (axis cs:\xa, 0) -- (axis cs:\xa, \ya);
+			\fill[red] (axis cs:\xa, \ya) circle (2pt);
+			\node[below, red, yshift=-2pt] at (axis cs:\xa, 0) {$a$};
+			
+			% 4. Point b
+			\def\xb{3.2}
+			\def\yb{-0.28}
+			\draw[dashed, red, thick] (axis cs:\xb, 0) -- (axis cs:\xb, \yb);
+			\fill[red] (axis cs:\xb, \yb) circle (2pt);
+			\node[below, red, yshift=-2pt] at (axis cs:\xb, 0) {$b$};
+			
+		\end{axis}
+	\end{tikzpicture}
+\end{minipage}
+\end{center}
+\textbf{Aggiustare i grafici}. \\
+Discutiamo il primo caso ($f'(x) > 0$). Risulta: 
+\begin{align*}
+	\phi(a) &= a - mf(a) > a \quad \text{in quanto $m > 0$ e $f(a) < 0$} \\
+	\phi(b) &= b - mf(b) < b \quad \text{in quanto $m > 0$ e $f(b) > 0$} 
+\end{align*}
+In conclusione:
+\[
+a \leq x \leq b \Rightarrow a \leq \phi(x) \leq b
+\]
+\end{proof}
+\section{Metodo di Newton (o delle tangenti)}
+Definiamo questo metodo mediante due strategie diverse.
+\subsection{Approccio analitico}
+A partire da una stima iniziale $x_0$, sviluppiamo  $f(x)$ come polinomio di Taylor assestato al primo ordine in un intorno di $x_0$:
+\[
+f(x) = f(x_0) + f'(x_0)(x-x_0) + o(x - x_0)
+\]
+dove $o(x - x_0)$ denota un infinetisimo di ordine superiore al primo per $x \to x_0$:
+\[
+\lim\limits_{x \to x_0}\frac{o(x-x_0)}{x-x_0} = 0
+\]
+Se $x$ è vicino ad $x_0$, potremo trascurare l'infinitesimo $o(x-x_0)$ e scrivere 
+\[
+f(x) \approx f(x_0) + f'(x_0)(x-x_0)
+\]
+Anzichè risolvere $f(x) = 0$, risolveremo:
+\[
+f(x_0) + f'(x_0)(x-x_0) = 0
+\]
+Denotando con $x_1$ la soluzione, si ottiene:
+\[
+x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}
+\]
+Iterando la procedura si ottiene il metodo di Newton:
+\[
+\begin{cases}
+	x_0 \text{ assegnato}\\
+	x_n = x_{n-1} - \frac{f(x_{n-1})}{f'(x_{n-1})}
+\end{cases}
+\]
+Da cui, la funzione iteratrice è:
+\[
+\phi(x) = x - \frac{f(x)}{f'(x)}
+\]
+\subsection{Approccio geometrico}
+\textbf{Fare il grafico.}  \\
+L'equazione della retta tangente al grafico di $f$ nel punto di ascissa $x_0$, è:
+\[
+y - f(x_0) = f'(x_0)(x - x_0)
+\]
+Denotiamo con $x_1$ l'intercetta della retta con l'asse $x$. Ponendo $y = 0$, si ottiene:
+\[
+x_1 = x_0 - \frac{f(x_0)}{f'(x_0)}
+\]
+Iterando la procedura si ottiene il metodo di Newton. \\
+Studiamo la convergenza locale del metodo di Newton. Premettiamo la seguente definizione.
+\begin{definition}{\nmu Molteplicità di uno zero}{molteplicita_zero}
+	Sia $f \in C^d(B(\alpha, \delta))$ con $\alpha$ zero di $f$. \\
+	La molteplicità (o ordine) dello zero di $\alpha$ di $f$ è un intero $d$ tale che:
+	\[
+	f(\alpha) = f'(\alpha) = \dots = f^{(d-1)}(\alpha) = 0 \wedge f^{(d)}(\alpha) \neq 0
+	\]
+\end{definition}
+\paragraph{Significato analitico} Consideriamo lo sviluppo del polinomio di Taylor di $f$ in un intorno di $\alpha$:
+\[
+f(x) = f(\alpha) + f'(\alpha)(x-\alpha) + f''(\alpha)\frac{(x-\alpha)^2}{2!} + \dots + f^{(d-1)}(\alpha)\frac{(x-\alpha)^{d-1}}{(d-1)!} + f^{(d)}(\eta_x)\frac{(x-\alpha)^d}{d!}
+\]
+Poichè la molteplicità di $\alpha$ è $d$, risulta:
+\[
+f(x) = \frac{f^{(d)}(\eta_x)}{d!}(x-\alpha)^d
+\]
+con $\eta_x$ opportuno punto tra $x$ e $\alpha$. \\
+Poichè $f^{(d)}(\alpha) \neq 0$, per $x \approx \alpha$ anche $f^{(d)}(\eta_x) \neq 0$. Osserviamo che in un intorno di $\alpha$, $f(x)$ si comporta come
+\[
+f(x) \approx cost. (x-\alpha)^d
+\]
+e quindi
+\[
+f(x) = 0 \sim (x -\alpha)^d = 0
+\]
+\paragraph{Interpretazione geometrica}
+
 \end{document}
