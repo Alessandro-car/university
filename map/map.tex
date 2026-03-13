@@ -191,6 +191,27 @@
 	language=Ada
 }
 
+\lstdefinestyle{cppstyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{blue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	language=c++
+}
+
+
 \begin{document}
 	{
 		\let\cleardoublepage\clearpage
@@ -586,4 +607,428 @@
  		\item \textbf{Limiti imposti dal linguaggio di programmazione}. \\
  		Ad esempio, l'operatore di \textit{bubblesort} non modifica l'array passato in ingresso, ma ne restituisce uno ordinato, pertanto sarebbe più opportuno implementarlo ricorrendo ad un'astrazione di funzione. Tuttavia, non tutti i linguaggi di programmazione consentono di restituire come un tipo di dato complesso e quindi l'operatore \textit{bubblesort} dovrà essere realizzato mediante un'astrazione di procedura.
  	\end{itemize} 
+ 	\section{Astrazione di controllo}
+ 	L'astrazione di controllo si applica alla classe sintattica struttura di controllo. Le strutture di controllo definiscono l'ordine in cui le singole istruzioni o i gruppi di istruzioni devono essere eseguiti. \\
+ 	Il linguaggio macchina generalmente fornisce due semplici meccanismi per governare il flusso di controllo delle istruzioni singole: l'\textbf{elaborazione in sequenza} e il \textbf{salto}. \\
+ 	Nei linguaggi assemblativi le istruzioni da eseguire in sequenza sono scritte l'una dopo l'altra: il salto è rappresentato da un'istruzione di jump:
+ 	\[
+ 	\text{jump to <indirizzo simbolico o label>}
+ 	\]
+ 	L'indirizzo simbolico è comunque un dettaglio di scarsa importanza per il programmatore: quello che conta è poter indicare le prossime istruzioni da eseguire. Per questa ragione i linguaggi di alto livello hanno introdotto strutture di controllo astratte come la \textbf{selezione}:
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		if cond then S1
+ 		else S2	\end{lstlisting}
+ 	corrisponde a:
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		jump on <cond> to A
+ 		S2
+ 		jump to B
+ 		A: S1
+ 		B: ...\end{lstlisting}
+ 	Similmente sono state introdotte diverse strutture di controllo astratte per l'\textbf{itereazione}. Inoltre per conservare gli indirizzi di ritorno dalle chiamate di funzione/procedura si è tradotta nella possibilità di effettuare chiamate \textbf{ricorsive}. \\
+ 	Di particolare interesse è l'attuale tendenza a offrire strutture di controllo iterative per quei dati astratti che sono collezioni omogenee, come insiemi, liste, array, ecc., di valori. \\
+ 	La struttura di controllo iterativa ha due parametri, il dato astratto e la variabile alla quale assegnare un valore contenuto nel dato astratto. Il meccanismo di visita della collezione di valori è incapsulato nel dato astratto, che dispone di operazioni lecite per consentire l'iterazione sulla collezione di oggetti. 
+ 	\begin{example}{\nmu For-each in java}{for_each_java}
+ 		In Java è disponibile l'astrazione di controllo \textit{for-each}, che permette di iterare su una collezione. 
+ 		\begin{lstlisting}[style=javastyle]
+ 			LinkedList<Integer> list = new LinkedList<Integer>();
+ 			... // Inserimento elementi
+ 			for (Integer n : list) {
+ 				System.out.println(n);
+ 			}	\end{lstlisting} 
+ 	\end{example}
+ 	L'operazione messa a disposizione di \textit{LinkedList} per l'astrazione di controllo for-each è \textbf{iterator()}. \\
+ 	Se guardiamo alle strutture di controllo come espressioni che, quando valutate, definiscono l'ordine in cui eseguire dei comandi, possiamo specificare un'astrazione di controllo come segue:
+ 	\[
+ 	\text{control I(FP$_1; \dots; $FP$_n$) is S}
+ 	\]
+ 	dove $I$ è un identificatore di una nuova struttura di controllo, $FP_1;\dots;FP_n$ sono parametri formali, e $S$ è un'espressione di controllo che definisce un ordine di esecuzione. 
+ 	\begin{example}{\nmu Swap}{swap}
+ 		\begin{lstlisting}[style=pascalstyle]
+ 			control swap(boolean: cond, statement: S1, S2) is 
+ 				if cond then 
+ 					begin S1; S2 end 
+ 				else 
+ 					S2; S1
+ 				endif\end{lstlisting}
+ 	\end{example}
+ 	\begin{example}{\nmu Alt}{alt}
+ 		\begin{lstlisting}[style=pascalstyle]
+ 			control alt_execution(statement: S1, S2, S3) is
+ 				if abnormal(S1) then
+ 					S2
+ 				else 
+ 					S3
+ 				endif\end{lstlisting}
+ 				\textit{abnormal} è un predicato che ha in input un comando $S1$ e restituisce \textit{true} se l'esecuzione di $S1$ è terminata in modo anomalo, \textit{false} altrimenti.
+ 	\end{example}
+ 	I linguaggi di programmazione moderni mettono a disposizione dei meccanismi sofisticati per gestire le situazioni eccezionali come:
+ 	\begin{itemize}
+ 		\item errori aritmetici o di I/O;
+ 		\item fallimento di precondizioni;
+ 		\item condizioni imprecidibili.
+ 	\end{itemize}
+ 	Quando viene sollevata un'eccezione, essa dev'essere catturata e gestita. \\
+ 	Tipici approcci per localizzare il gestore dell'eccezione sono:
+ 	\begin{itemize}
+ 		\item cerca un gestore nel blocco (o sottoprogramma) corrente;
+ 		\item se non c'è, forza l'uscita dell'unità corrente e solleva l'eccezione nell'unità chiamante;
+ 		\item continua a risalire la gerarchia delle unità chiamanti finchè non trovi un gestore oppure non raggiungi il livello più alto, il main. 
+ 	\end{itemize}
+ 	Quando viene trovato il gestore e l'eccezione è trattata:
+ 	\begin{itemize}
+ 		\item si riparte dall'unità contenente il gestore, \textit{modello di terminazione}, come in Ada;
+ 		\item si ritorna ad eseguire il comando che ha generato l'eccezione, \textit{modello di ripresa}, come in PL/I. 
+ 	\end{itemize}
+ 	I linguaggi di programmazione sequenziale utilizzano la sequenza, la selezione e la ripetizione per definire un \textbf{ordinamento totale} sull'esecuzione dei comandi di un programma. \\
+ 	I linguaggi di programmazione paralleli utilizzano ulteriori costrutti del flusso di controllo, come \textit{fork, begin} o cicli \textit{for} paralleli, per introdurre in modo esplicito un \textit{ordinamento parziale} sull'esecuzione dei comandi.\\
+ 	Dato che il parallelismo è una forma di controllo della sequenza di esecuzione, l'astrazione di controllo è particolarmente importante nella programmazione parallela.
+ 	\section{Astrazione di selettore}
+ 	Un linguaggio di programmazione dispone di costrutti per poter accedere ad una variabile. Ad esempio in Pascal abbiamo:
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		var r: real;
+ 		r := r * r;
+ 		var vett: array[1..10] of char;
+ 		vett[i] := vett[i+1];
+ 	\end{lstlisting}
+ 	Lo stesso identificatore può essere usato sia come nome di un valore (legame dinamico fra identificatore e valore) e sia come un indirizzo (legame statico fra identificatore e locazione di memoria). Identicamente potremmo avere:
+ 	\begin{lstlisting}[style=pascalstyle]
+ 		type rec = record 
+ 			a: real,
+ 			b: real
+ 		end
+ 		var r: rec;
+ 		... 
+ 		r.b := r.a * 3;\end{lstlisting}
+	Un accesso a una variabile restituisce un \textit{riferimento} ad una variabile.\\
+	Tuttavia se osserviamo il seguente codice Pascal:
+	\begin{lstlisting}[style=pascalstyle]
+		type queue = ...;
+		var Aq: queue;
+		function first(q: queue): integer
+			// Restituisce il primo elemento della coda
+		i := first(Aq)\end{lstlisting}
+		Ci accorgiamo che la chiamata \textit{first(Aq)} può comparire solo alla destra di un'assegnazione, perchè le funzioni restituiscono solo valori, mentre a sinistra $first(Aq) := 0$ dovrebbe restituire riferimenti ad aree di memoria. \\
+		In Pascal abbiamo dei selettori predefiniti dal progettista del linguaggio:
+		\begin{itemize}
+			\item $F$\^{} è un riferimento ad un puntatore di $F$;
+			\item $V[E]$ è un riferimento ad un elemento del vettore di $V$;
+			\item $R.A$ è un riferimento ad un elemento di un record.
+		\end{itemize}
+		ma il programmatore non ha modo di definire un nuovo selettore. In altri termini, non c'è la possibilità di definire astrazioni di selettore, che restituiscano l'accesso a un'area di memoria. \\
+		In C++ invece, possiamo  definire astrazioni di selettore, infatti:
+		\begin{lstlisting}[style=cppstyle]
+			class Queue {
+				...
+				public:
+					static int& first(Queue*);
+			};
+			
+			Queue q*;
+			...
+			int i = first(q);
+			first(q) *= first(q);
+			first(q)++;\end{lstlisting} 
+			Una possibile implementazione è la seguente:
+			\begin{lstlisting}[style=cppstyle]
+				class Queue {
+					int items[100];
+					int front, roar;
+					public:
+						...
+						int& first(Queue* q) { return q->items[front] };
+				};\end{lstlisting}
+			\paragraph{Flessibilità dei linguaggi} L'espressività di un linguaggio di programmazione dipende direttamente da:
+			\begin{itemize}
+				\item I \textit{meccanismi di composizione}, ossia la definizione di operazioni complesse a partire da quelle semplici.
+				\item I \textit{meccanismi di controllo di sequenza}, ossia la possibilità di stabilire ordini di esecuzione in modo semplice.
+				\item I \textit{valori} che il linguaggio permette di rappresentare e manipolare dati.
+			\end{itemize}
+			I linguaggi che supportano:
+			\begin{itemize}
+				\item L'astrazione funzionale sono flessibili nei meccanismi di composizione;
+				\item L'astrazione di controllo sono flessibili nei meccanismi di controllo di sequenza;
+				\item L'astrazione dati sono flessibili nella definizione e manipolazione di nuovi valori.
+			\end{itemize}
+			\section{Astrazione dati}
+			\subsection{Tecniche di programmazione a supporto dell'astrazione dati}
+			Le teniche di programamzione a supporto dell'astrazione dati, che è una tecnica di progettazione del software, sono due:
+			\begin{itemize}
+				\item definizione di \textbf{tipi astratti}, cioè l'astrazione sulla classe sintattica tipo;
+				\item definizione di \textit{classi di oggetti}, cioè l'astrazione sulla dichiarazione di moduli dotati di stato locale.
+			\end{itemize}
+			In entrambi i casi occorre poter \textit{incapsulare} la rappresentazione del dato con le operazioni lecite. Tuttavia,
+			\begin{itemize}
+				\item nel tipo di dato astratto, il modulo rende visibile all'utilizzatore sia un identificatore di tipo che degli operatori;
+				\item nelle classi di oggetti, il modulo rende visibile all'utilizzatore solo gli operatori
+			\end{itemize}
+			Inoltre:
+			\begin{itemize}
+				\item nel tipo astratto $T$, i valori sono associati a variabili dichiate di tipo $T$;
+				\item nella classe di oggetti $C$, i valori sono associati a oggetti ottenuti per istanziazione della classe di oggetti  $C$.
+			\end{itemize}
+			\paragraph{Tipo concreto e tipo astratto} I linguaggi ad alto livello mettono a disposizione del programmatore un nutrito gruppo di tipi predefiniti, detti \textbf{concreti}. Essi si distinguono in \textit{primitivi} o \textit{semplici} (i valori associati al tipo sono atomici) e \textit{composti} o \textit{strutturati} (i cui valori sono ottenuti per composizione di valori più semplici). \\
+			Tuttavia un linguaggio di programmazione sarà tanto più espressivo quanto più semplice sarà per il programmatore definire dei suoi tipi di dato a partire dai tipi di dato concreti disponibili. I tipi definiti dall'utente, detti \textit{user defined types UDT}, sono anche detti \textbf{astratti}. \\
+			È bene ricordare che i tipi concreti sono messi a disposizione del linguaggio e tipi astratti sono definiti dall'utente. 
+			Ritornando all'astrazione di tipo, l'\textit{espressione di tipo}, detto anche \textit{tipo}, è il costrutto con cui alcuni linguaggi di programmazione consentono di definire un nuovo tipo. Ad esempio, in Pascal:
+			\begin{lstlisting}[style=pascalstyle]
+				type Person = record
+					name: packed array[1..20] of char;
+					age: integer;
+					height: real
+				end\end{lstlisting}
+			In questo caso si stabilisce esplicitamente una rappresentazione per i valori del tipo \textit{Person} e implicitamente gli operatori applicabili a valori di quel tipo. Gli operatori del tipo \textit{Person}, dovranno essere generici e non è possibile specificarli. \\
+			Una \textbf{astrazione di tipo}, o \textit{tipo astratto di dato} o semplicemente \textit{dato astratto}, ha un corpo costituito da una espressione di tipo. Quando è valutata, l'astrazione di tipo stabilisce sia una rappresentazione per un insieme di valori e sia le operazioni ad esse applicabili. \\
+			Analogamente a quanto detto per le altre astrazioni, l'astrazione di tipo potrà essere specificata come segue:
+			\[
+			\text{type I(FP$_1;\dots;$FP$_n$) is T}
+			\]
+			dove $I$ è un identificatore del nuovo tipo,  $FP_1;\dots;FP_n$ sono parametri formali e  $T$ è un'espressione di tipo che specificherà la rappresentazione dei tipi di dato $I$ e le operazioni ad esso applicabili. Analizziamo le astrazioni di tipo che alcuni lingauggi di programmazione (come C e Pascal) consentono di definire.
+			\begin{lstlisting}[style=pascalstyle]
+				type complex = record 
+					Re: real;
+					Im: real
+				end\end{lstlisting}
+			consente di:
+			\begin{enumerate}
+				\item stabilire che \textit{complex} è un identificatore di tipo;
+				\item associare una rappresentazione a \textit{complex} espressa mediante tipi concreti già disponibili nel linguaggio. 
+			\end{enumerate}
+			Le operazioni associate al nuovo tipo \textit{complex} sono tutte quelle che il linguaggio ha già previsto epr il tipo record, come assegnazione e selezione di campi. \\
+			I limiti di questa astrazione sono:
+			\begin{enumerate}
+				\item Il programmatore non può definire nuovi oepratori specifici da associare al tipo.
+				\item Violazione del requisito di protezione: l'utilizzatore è consapevole della rappresentazione del tipo \textit{complex}, sa che è un record e quali sono i campi, ed è in grado di operare mediante operatori non specifici del dato.
+				\item L'astrazione di tipo non è parametrizzata, la comunicazione con il contesto esterno non è ammessa.
+			\end{enumerate}
+			Quindi, abbiamo detto che il programmatore non può definire nuovi operatori specifici da associare al tipo. Questo problema può essere risolto mediante un costrutto di programmazione che permette di \textbf{incapsulare}:
+			\begin{enumerate}
+				\item le rappresentazioni del dato;
+				\item gli operatori leciti.
+			\end{enumerate}
+			Questo costrutto di programmazione è il \textbf{package}, ovvero \textit{un gruppo di componenti dichiarate, come tipi, costanti, variabili, funzioni e persino sotto moduli}. \\
+			Introduciamo quindi un costrutto package per supportare l'incapsulamento.
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\textwidth]{images/package}
+			\end{figure}
+			In Ada il modulo è chiamato package e si compone di due parti:
+			\begin{enumerate}
+				\item una \textbf{specification}, che interagisce con l'ambiente esterno: contiene le dichiarazioni di tipi, costanti, procedure e funzioni;
+				\item un \textbf{body}, che contiene, fra l'altro, l'implementazione di procedure e funzioni dichiarate nella specification, ed eventualemente una routine di inizializzazione del package.
+			\end{enumerate}
+			A sua volta la specficiation si articola in due sottoparti:
+			\begin{enumerate}
+				\item \textbf{visible}: le entità dichiarate in questa parte possono essere rese note ad altre unità di programma per mezzo della clausola \textit{use};
+				\item \textbf{private}: le entità dichiarate in questa parte non possono essere né esportate e né dichiarate nel corpo.
+			\end{enumerate}
+			La parte di specifica inizia con la parola chiave \textbf{package} seguita dall'identificatore del package e da \textbf{is}; seguono poi le dichiarazioni delle entità visibili e private.
+			\begin{lstlisting}[style=adastyle]
+				package Type_complex is 
+					type Complex is 
+						record 
+							RL, IM: Real;
+						end record;
+					I: constant Complex := (0.0, 1.0)
+					function "+"(x, y: Complex) return Complex
+					...
+				end Type_complex;\end{lstlisting}
+			Questo è un esempio di specifica di un package che realizza il tipo astratto Complex. In questo non c'è una parte privata nella specifica, sicchè un programma che fa uso di questo package può operare su variabili complesse mediante espressioni come la seguente:
+			\[
+			C.IM := C.IM + 1.0
+			\]
+			invece di ricorrere alla forma più astratta:
+			\[
+			C := C + 1;
+			\]
+			Per evitare il problema possiamo nascondere la struttura del tipo Complex nella parte privata. 
+			\begin{lstlisting}[style=adastyle]
+				package Type_complex is 
+					type Complex is private;
+					function "+"(x, y: Complex) return Complex;
+					...
+				private
+					type Complex is record
+						RL, IM: Real;
+					end record;
+					I: constant Complex := (0.0, 1.0)
+				end Type_complex; \end{lstlisting}
+			Avendo dichiarato il tipo Complex nella parte privata non è più possibile inizializzare la costante I nella parte pubblica, in quanto non è ancora nota la rappresentazione di Complex. \\
+			Anche il corpo del package incomincia con la parola package seguita però dalla parola body, dall'identificatore e da is. Nel corpo sono fornite le implementazioni delle procedure e funzioni dichiarate nella corrispondente specification.
+			\begin{lstlisting}[style=adastyle]
+				package body Type_complex is
+					function "+"(x, y: in Complex) return Complex is 
+						begin 
+							return (x.RL + y.RL, x.IM + y.IM);
+					end "+";
+					...
+					end Type_complex;\end{lstlisting}
+			Ovviamente la struttura del tipo Complex è visibile alla parte body del package, quindi si potrà accedere ai campi RL e IM dei record Complex. Il package potrà essere utilizzato come segue:
+			\begin{lstlisting}[style=adastyle]
+				with Type_complex; use Type_complex;
+				procedure main is 
+					cpx1, cpx2: Complex;
+					begin
+						...
+						cpx1 := cpx2 + I;
+						...
+					end main;\end{lstlisting}
+			Si osservi che sia nella specifica e sia nel corpo di Type\_complex	non c'è alcuna dichiarazione di variabili esterne a procedure e funzioni. Ciò vuol dire che questo package non è dotato di uno stato locale, cioè non definisce un oggetto. \\
+			Per questa ragione il corpo del package non necessita di un ''main``: non si deve inizializzare un oggetto. Il package può in ogni caso avere un proprio main. Esso verrà specificato dopo le varie procedure e funzioni e sarà compreso fra un begin e l'end del package.
+			\begin{lstlisting}[style=adastyle]
+				with Simple_io; use Simple_io;
+				package body Type_complex is 
+					function "+"(x, y: in Complex) return Complex is
+						begin
+							return(x.RL + y.RL, x.IM + y.IM);
+						end "+";
+					...
+					begin
+						put("Main of package Type_complex");
+					end Type_complex;\end{lstlisting}
+			L'esecuzione del main del package avverrà al momento in cui si importa il package mediante la clausola use. SI vedrà quindi visualizzare la frase ''Main of package Type\_complex``.
+			\begin{example}{\nmu Astrazione di tipo per realizzare il dato astratto Pila}{ada_pila}
+				La specification è la seguente:
+				\begin{lstlisting}[style=adastyle]
+					package Type_stack is 
+						type Stack is private
+						procedure push(s: in out Stack; x: in integer);
+						procedure pop(s: in out Stack);
+						procedure top(s: in Stack; x: out Integer);
+						function empty(s: in Stack) return Boolearn;
+					private
+						max: constant := 100;
+						type Stack is limited record
+							st:array(1..max) of Integer;
+								top: Integer range 0..max := 0;
+						end record;
+					end Type_stack;\end{lstlisting}
+				Il body è il seguente:
+				\begin{lstlisting}[style=adastyle]
+					procedure body Type_stack is 
+						procedure push(s: in out Stack; x: in Integer) is 
+							begin 
+								s.top := s.top + 1;
+								s.st(s.top) := x;
+							end push;
+						procedure pop(s: in out Stack) is
+							begin
+								s.top := s.top - 1;
+							end pop;
+						procedure top(s: in Stack; x: out Integer) is
+							begin
+								x := s.st(s.top);
+							end top;
+						function empty(s: in Stack) return Boolean is;
+							begin
+								return(s.top = 0);
+							end empty;
+					end Type_stack;\end{lstlisting}
+					Le specifiche del tipo astratto Pila prevedono anche un costruttore CreaPila, che non ha un corrispondente in questa definizione del tipo astratto Stack. La ragione è che si stanno utilizzando costruttori impliciti forniti nel linguaggio Ada, come la dichiarazione di una variabile di tipo Stack. Tuttavia se un costruttore dovesse essere parametrizzato sarà necessario prevedere un metodo.
+			\end{example}
+			In Ada, definendo un tipo come \textit{private} è possibile applicare su istanze di quel tipo tutti i metodi definiti nella parte pubblica della specifica, ma anche effettuare assegnazioni e confronti di (dis-)eguaglianza. Queste operazioni che il compilatore offre gratuitamente per un tipo privato devono necessariamente essere definite in modo generale, indipendentemente da come il tipo è poi definito. \\
+			Quindi saranno implementate semplicemente copiando o confrontando byte a byte le aree di memoria riservate a due dati dello stesso tipo dichiarato come privato. Questo, però, comporta dei problemi.
+			\begin{enumerate}
+				\item Le operazioni di assegnazione, confronto per eguaglianza e confronto per diseguaglianza, potrebbero non far parte della specifica di un dato astratto. Quindi potrebbe non essere corretto offrirle all'utilizzatore del tipo dichiarato come privato.
+				\item La semantica delle operazioni potrebbe essere diversa da quella stabilita dal compilatore.
+			\end{enumerate}
+			Ad esempio, consideriamo il seguente codice:
+			\begin{lstlisting}[style=adastyle]
+				with Type_stack; use Type_stack;
+				procedure main is 
+					st1, st2: Stack;
+					cmp: Boolean;
+				begin
+					push(st1, 1);
+					push(st2, 1);
+					push(st1, 2);
+					pop(st1);
+					cmp := st1 = st2;
+				end main;\end{lstlisting}
+			Il valore di cmp è False. Infatti i corrispondenti top dei record st1 e st2 sarebbero identici, mentre non avrebbero gli stessi vaolori i corrispondenti campi st. Eppure i due stack sarebbero identici seconda la specifica algebrica di \textit{equal(l, m)} data nel progetto. \\
+			Per evitare tutto ciò, è sufficiente dichiarare il tipo come \textbf{limited private}, che inibisce l'uso delle operazioni di assegnazione e confronto offerte per default dal compilatore. 
+			\begin{lstlisting}[style=adastyle]
+				package Type_stack is 
+					type Stack is limited private 
+					procedure push(s: in out Stack; x: in Integer);
+					procedure pop(s: in out Stack);
+					procedure top(s: in Stack; x: out Integer);
+					function empty(s: in Stack) return Boolean;
+				...\end{lstlisting}
+		In Ada è anche possibile definire \textbf{oggetti}, cioè moduli dotati di stato locale. 
+		\begin{example}{\nmu Oggetto stack}{stack_oggetto}
+			La specifica è la seguente.
+			\begin{lstlisting}[style=adastyle]
+				package Stack is 
+					procedure push(x: in Integer);
+					procedure pop;
+					procedure top(x: out Integer);
+					function empty return Boolean;
+				end Stack;\end{lstlisting}
+			Il body è il seguente.
+			\begin{lstlisting}[style=adastyle]
+				package body Stack is 
+					max: constant := 100;
+					type Table is array(1..max) of Intger;
+					st: Table;
+					top: Integer range 0..max := 0;
+				
+					procedure push(x: in Integer) is 
+					begin 
+						top := top + 1;
+						st(top) := x;
+					end push;
+					
+					procedure pop is
+					begin 
+						top := top + 1;
+					end pop;
+					
+					procedure top(x: out Integer) is
+					begin
+						x := st(top);
+					end top;
+					
+					function empty return Boolean is
+					begin
+						return (top = 0);
+					end empty;
+				end Stack;\end{lstlisting}
+		Si potrà quindi utilizzare l'oggetto Stack nel modo seguente:
+		\begin{lstlisting}[style=adastyle]
+			with Stack; use Stack;
+			procedure main is
+			begin 
+				...
+				push(1);
+				push(2);
+				pop
+				if empty then push(1);
+				...
+			end main;\end{lstlisting}
+		\end{example}
+		In generale, un oggetto è un insieme di variabili interne ad un modulo e manipolabili esternamente solo mediante gli operatori definiti nel modulo stesso. Da quanto visto finore, per poter definire più oggetti ``simili'', cioè con medesima rappresentazione e stesso insieme di operatori, si è costretti a definire tanti moduli quanti sono gli oggetti che si vogliono usare nel programma. Tutti questi moduli differiranno solo per l'identificatore del modulo, cioè l'\textbf{identificatore dell'oggetto}. \\
+		Per evitare l'inconveniente di dover duplicare un modulo si può pensare di definire un \textbf{package generico} che identifica una \textit{classe} di oggetti simili. I singoli oggetti sono poi ottenuti con il meccanismo di \textit{istanziazione} della classe. \\
+		In Ada un package che specifica e implementa un singolo oggetto può essere facilmente trasformato in un \textit{generic package}, che definisce una classe di oggetti, permettendo la parola \textit{generic} alla dichiarazione del modulo. 
+		\begin{lstlisting}[style=adastyle]
+			generic
+			package Stack
+				procedure push(x: in Integer);\end{lstlisting}
+		In questo modulo si definisce solo una \textit{matrice} degli oggetti da creare. Per ottenere i singoli oggetti dobbiamo \textit{istanziare} il generic package:
+		\begin{lstlisting}[style=adastyle]
+			package st1 is new Stack
+			package st2 is new Stack\end{lstlisting}
+		Queste due dichiarazioni sono processate in \textit{fase di precompilazione}. In particolare, per ogni occorrenza di istanziazione, si sostituisce la stringa dell'istanziazione con il comando di importazione di un package avente come nome quello dell'istanza, ad esempio with ST1; use ST1. \\
+		Si genera un package non generico utilizzando il generic package come matrice. Esso si ottiene rimuovendo la parola \textit{generic} e sostituendo il nome dell'istanza al posto del nome del package. Il package è poi compilato separatamente. \\
+		Nell'esempio specifico, la precompilazione genera due package distinti, che variano solo nel nome del package, cioè nell'\textit{identificatore dell'oggetto}. \\
+		\begin{note}{\nmu Osservazione sul generic package}{generic_package_oss}
+			Di seguito alcune osservazioni sul generic package.
+			\begin{enumerate}
+				\item Il package generico \textbf{non è compilabile separatamente} in quanto il nome del package non identifica un oggetto.
+				\item La generazione di package distinti, uno per ogni istanziazione, comporta la creazione di molteplici copie dello setsso codice e questo porta ad una \textbf{inefficienza di spazio}.
+				\item La creazione dei legami al compile-time garantisce \textbf{efficienza in tempo}, poichè non è necessario effettuare computazioni di legami al run-time.
+				\item L'ambiguità dovuta alle molteplici occorrenze di metodi con stesso identificatore richiede il ricorso, mel programma utilizzatore, alla notazione <identificatore di oggetto>.<nome metodo>, ad esempio ST1.push(10)
+			\end{enumerate}
+		\end{note}
+		\section{Astrazione nella dichiarazione di modulo}
 \end{document}
