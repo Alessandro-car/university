@@ -70,7 +70,7 @@
 {Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
 
 \newtcbtheorem[number within=chapter,use counter=lemma]{proposition}%
-{Proposition}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{prop}
+{Proposizione}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{prop}
 
 \newtcbtheorem[no counter]
 {note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
@@ -582,9 +582,9 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	Dimostriamo la prima proprietà. Si procede per induzione sull'indice $n$. Per $n=0$ l'asserto è vero in quanto, per definizione, sappiamo che $x_0 \in B(\alpha, \delta)$. \\
 	Supponiamo l'asserto vero per $x_{n-1} \in B(\alpha, \delta)$ e proviamolo per $n$. Risulta:
 	\begin{align*}
-		|x_n - \alpha| &= |\theta'(x_{n-1}) - \theta(\alpha)| \\
+		|x_n - \alpha| &= |\theta(x_{n-1}) - \theta(\alpha)| \\
 		& \text{ Per il teorema di Lagrange: } \\
-		&= |\theta'(\eta_{n-1})(x_{n-1}-\alpha)
+		&= |\theta'(\eta_{n-1})(x_{n-1}-\alpha)|
 	\end{align*}
 	dove $\eta_{n-1}$ è un opportuno punto tra $x_{n-1}$ e $\alpha$:
 	\begin{center}
@@ -620,7 +620,7 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	\end{center}
 	Osserviamo che $\eta_{n-1} \in B(\alpha, \delta) \Rightarrow |\theta'(\eta_{n-1}) < L$. Dunque:
 	\[
-	|x_n - \alpha| = |\theta(\eta_{n-1})|x_{n-1}-\alpha| < L|x_{n-1}-\alpha| < L\delta < \delta
+	|x_n - \alpha| = |\theta(\eta_{n-1})|\cdot |x_{n-1}-\alpha| < L|x_{n-1}-\alpha| < L\delta < \delta
 	\]
 	Dimostriamo la seconda proprietà. Abbiamo visto che $|x_n - \alpha| < L|x_{n-1} - \alpha|$. \\
 	Essendo $n$ generico, possiamo iterare:
@@ -878,7 +878,7 @@ Dovremo imporre $|\phi'(\alpha)| < 1$.
 \end{align*}
 Questa è la condizione per la convergenza locale.
 \paragraph{Convergenza globale} Per la convergenza globale si ha il seguente risultato.
-\begin{theorem}{\nmu Converngenza globale}{teorema_convergenza_globale}
+\begin{theorem}{\nmu Convergenza globale}{teorema_convergenza_globale}
 	Sia $f \in C^1([a, b])$ tale che:
 	\begin{enumerate}[label=(\alph*)]
 		\item $f(a)f(b) < 0$
@@ -888,7 +888,7 @@ Questa è la condizione per la convergenza locale.
 	Allora $f$ ammette un unico zero $\alpha \in (a,b)$ e il metodo della direzione costante converge globalmente ad $\alpha$ in tutto l'intervallo $[a, b]$. \\
 \end{theorem}
 \begin{proof}
-	Dalla (a) ricaviamo:
+	Dalla (c) ricaviamo:
 \begin{align*}
 	&0 < mf'(x) \leq 1 \\
 	&-1 \leq -mf'(x) < 0 \\
@@ -989,7 +989,7 @@ e quindi
 f(x) = 0 \sim (x -\alpha)^d = 0
 \]
 \paragraph{Interpretazione geometrica}
-Se $d = 1$ allora $f^{(d)} = 0 \wedge f'(\alpha) \neq 0$ \\
+Se $d = 1$ allora $f(\alpha) = 0 \wedge f'(\alpha) \neq 0$ \\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/zero_semplice}
@@ -1056,10 +1056,10 @@ Quindi, concludendo, il metodo di Newton è sempre localmente convergente, perta
 	\[
 	\phi(x) = x - \frac{f(x)}{f'(x)} \quad \phi'(x) = \frac{f(x) \cdot f''(x)}{[f'(x)]^2}
 	\]
-	Dall'enunciato del teorema, dovremo scegliere $x_0 \in (a, b]$. Facciamo innanzitutto vedere che $\phi((a, b]) \subset (a, b]$ \\
-	Poichè in $(a, b]$ risulta $\phi'(x) > 0$, ne consegue che $\phi$ è strettamente crescente in $(a, b]$, quindi:
+	Dall'enunciato del teorema, dovremo scegliere $x_0 \in (\alpha, b]$. Facciamo innanzitutto vedere che $\phi((\alpha, b]) \subset (\alpha, b]$ \\
+	Poichè in $(\alpha, b]$ risulta $\phi'(x) > 0$, ne consegue che $\phi$ è strettamente crescente in $(\alpha, b]$, quindi:
 	\[
-	a < x \leq b \Rightarrow \phi(a) < \phi(x) \leq \phi(b)
+	\alpha < x \leq b \Rightarrow \phi(\alpha) < \phi(x) \leq \phi(b)
 	\]
 	Ora:
 	\begin{align*}
@@ -1068,7 +1068,7 @@ Quindi, concludendo, il metodo di Newton è sempre localmente convergente, perta
 	\end{align*}
 	Abbiamo provato che $\alpha < \phi(x) < b$ \\
 	Facciamo infine vedere che $\{x_n\}$ converge ad $\alpha$ ed è una successione strettamente decrescente. \\
-	Dal punto precedente sappiamo che $x_n \in (a, b] \quad \forall n \geq 0$.
+	Dal punto precedente sappiamo che $x_n \in (\alpha, b] \quad \forall n \geq 0$.
 	\[
 	x_n = x_{n-1} - \frac{f(x_{n-1})}{f'(x_{n-1})} < x_{n-1}
 	\] 
@@ -1078,8 +1078,8 @@ Quindi, concludendo, il metodo di Newton è sempre localmente convergente, perta
 	\]
 	Poichè $\beta$ è punto fisso di $\phi$, necessariamente dovrà essere $\beta = \alpha$.
 \end{proof}
-\begin{corollary}
-	Nelle stesse ipotesi (a), (b) e (c) del teorema di \namerefl{th:newton_conv_globale}, se $x_0 \in [a, b]$ e $x_1 = \phi(x_0) \in [a, b]$, allora la successione $\{x_n\}$ ad $\alpha$.
+\begin{corollary}{}{}
+	Nelle stesse ipotesi (a), (b) e (c) del teorema di \namerefl{th:newton_conv_globale}, se $x_0 \in [a, b]$ e $x_1 = \phi(x_0) \in [a, b]$, allora la successione $\{x_n\}$ converge ad $\alpha$.
 \end{corollary}
 \begin{proof}
 	Facendo riferimento sempre al primo caso, se scegliamo $x_0 \in [a, \alpha)$, essendo $\phi'(x) < 0$ in $[a, \alpha)$ segue che $\phi(x)$ è strettamente decrescente e quindi:
@@ -1097,7 +1097,7 @@ L'ordine di convergenza è uno strumento che ci consente di stimare la velocità
 	\]
 	Si definisce \textit{ordine di convergenza} della successione $\{x_n\}$ un reale positivo $p > 0$ tale che esista e sia finito il seguente limite:
 	\[
-	\lim\limits_{n\to\infty}\frac{x_{n+1} - \alpha}{|x_n - \alpha|^p} = c
+	\lim\limits_{n\to\infty}\frac{|x_{n+1} - \alpha|}{|x_n - \alpha|^p} = c
 	\]
 	con $0 < c < +\infty$
 \end{definition}
@@ -1109,7 +1109,7 @@ da cui:
 \[
 |x_{n+1}-\alpha| \approx c \cdot  |x_n - \alpha|^p
 \]
-Tale uguaglianza relazione l'errore assoluto a un generico passo con l'errore assoluto al passo precedente e quindi esprime la legge con cui l'errore si riduce, per $n$ grande, ad ogni passo. Ne consegue che la riduzione dell'errore ad ogni passo sarà tanto maggiore:
+Tale uguaglianza relaziona l'errore assoluto a un generico passo con l'errore assoluto al passo precedente e quindi esprime la legge con cui l'errore si riduce, per $n$ grande, ad ogni passo. Ne consegue che la riduzione dell'errore ad ogni passo sarà tanto maggiore:
 \begin{itemize}
 	\item quanto più grande è il valore di $p$;
 	\item quanto più piccolo è il valore di $c$.
