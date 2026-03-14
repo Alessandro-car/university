@@ -69,6 +69,9 @@
 \newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
 {Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
 
+\newtcbtheorem[number within=chapter,use counter=lemma]{proposition}%
+{Proposition}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{prop}
+
 \newtcbtheorem[no counter]
 {note}{Nota}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{red!55},coltitle=black,fonttitle=\bfseries}{note}
 
@@ -841,60 +844,10 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 \end{exercise}
 \section{Metodo della direzione costante}
 Introduciamo questo metodo mediante la sua interpretazione geometrica:
-\begin{center}
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines = middle,
-			xlabel = {$x$},
-			ylabel = {$y$},
-			xmin = -0.5, xmax = 6,
-			ymin = -2, ymax = 10,
-			ticks = none,
-			axis line style={->, thick},
-			clip = false,
-			every axis x label/.style={at={(current axis.right of origin)}, anchor=north west},
-			every axis y label/.style={at={(current axis.above origin)}, anchor=south east}
-			]
-			% 1. Blue Curve: f(x) = 0.5x^2 - 2
-			\addplot[blue, thick, domain=0:5.2, samples=100] {0.5*x^2 - 2} 
-			node[pos=0.1, left, xshift=-2pt] {$y=f(x)$};
-			
-			% 2. The Root (alpha)
-			\fill[red] (axis cs:2,0) circle (2pt);
-			\node[below, red, xshift=-8pt] at (axis cs:2,0) {$\alpha$};
-			
-			% 3. First Iteration Point (x0, f(x0))
-			\def\xzero{4.5}
-			\def\yzero{8.125}
-			\draw[dashed, red, thick] (axis cs:\xzero, 0) -- (axis cs:\xzero, \yzero);
-			\fill[red] (axis cs:\xzero, \yzero) circle (2pt) 
-			node[right, black, xshift=3pt] {$(x_0, f(x_0))$};
-			\node[below, red] at (axis cs:\xzero, 0) {$x_0$};
-			
-			% --- FIRST TANGENT LINE (Solid Green) ---
-			% Starts at (x0, f(x0)) and hits the x-axis at x1
-			\addplot[green!70!black, thick, domain=2.5:5] {4.5*(x - 4.5) + 8.125};
-			
-			% 4. Point x1 (The intercept of the first tangent)
-			\def\xone{2.694}
-			\def\yone{1.63}
-			\draw[dashed, red, thick] (axis cs:\xone, 0) -- (axis cs:\xone, \yone);
-			\fill[red] (axis cs:\xone, \yone) circle (2pt) 
-			node[above left, black, font=\small] {$(x_1, f(x_1))$};
-			\node[below, red, yshift=-2pt] at (axis cs:\xone, 0) {$x_1$};
-			
-			% --- SECOND TANGENT LINE (Dashed Green) ---
-			% Starts at (x1, f(x1)) and hits the x-axis at x2
-			\addplot[green!70!black, thick, dashed, domain=1.9:3.2] {2.694*(x - 2.694) + 1.63};
-			
-			% 5. Point x2
-			\node[below, red, xshift=6pt] at (axis cs:2.08, 0) {$x_2$};
-			\fill[red] (axis cs:2.08, 0) circle (1.5pt);
-			
-		\end{axis}
-	\end{tikzpicture}
-\end{center}
-\textbf{Rivedere il grafico}. \\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/direzione_costante}
+\end{figure}
 A partire da una stima iniziale $x_0$ di $\alpha$, si considera la retta passante per il punto $(x_0, f(x_0))$ è di coefficiente angolare $\frac{1}{m}$ con $m \neq 0$. La sua equazione sarà: 
 \[
 y - f(x_0) = \frac{1}{m}(x - x_0)
@@ -954,78 +907,10 @@ Poichè $\phi'(x) \geq 0$, $\phi(x)$ è monotona crescente e quindi
 a \leq x \leq b \Rightarrow \phi(a)  \leq \phi(x) \leq \phi(b)
 \]
 Si possono presentare i due casi nelle due figure sottostanti:
-\begin{center}
-\begin{minipage}{0.48\textwidth}
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines = middle,
-			xmin = -1.5, xmax = 3.5,
-			ymin = -2, ymax = 4,
-			ticks = none,
-			axis line style={->, thick},
-			title={$f'(x) > 0$},
-			title style={at={(0,1)}, anchor=south west, blue}
-			]
-			% Increasing blue curve
-			\addplot[blue, thick, domain=-1:3, samples=100] {0.5*x^2 + x - 1.5};
-			
-			% Root alpha
-			\node[below right, red] at (axis cs:1, 0) {$\alpha$};
-			\fill[red] (axis cs:1,0) circle (1.5pt);
-			
-			% Interval a
-			\draw[dashed, red, thick] (axis cs:-1, 0) -- (axis cs:-1, -2);
-			\fill[red] (axis cs:-1, -2) circle (2pt);
-			\node[below left, red] at (axis cs:-1, 0) {$a$};
-			
-			% Interval b
-			\draw[dashed, red, thick] (axis cs:2.5, 0) -- (axis cs:2.5, 4.1);
-			\fill[red] (axis cs:2.5, 4.125) circle (2pt);
-			\node[below right, red] at (axis cs:2.5, 0) {$b$};
-		\end{axis}
-	\end{tikzpicture}
-\end{minipage}
-\hfill
-% --- RIGHT GRAPH (f'(x) < 0) ---
-\begin{minipage}{0.48\textwidth}
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines = middle,
-			xmin = -1.5, xmax = 4, % xmin set to -1.5 to show negative x-axis
-			ymin = -1.5, ymax = 4,
-			ticks = none,
-			axis line style={->, thick},
-			clip = false,
-			title={$f'(x) < 0$},
-			title style={at={(axis cs:-1,3.5)}, anchor=south west, blue, font=\large}
-			]
-			% 1. The Decreasing Curve (Blue)
-			% Adjusted function to cover negative x-values
-			\addplot[blue, thick, domain=-0.8:3.5, samples=100] {3.2*exp(-0.5*(x+0.5)) - 0.8};
-			
-			% 2. Root alpha
-			\fill[red] (axis cs:2.27,0) circle (1.5pt);
-			\node[below right, red, yshift=-2pt] at (axis cs:2.27, 0) {$\alpha$};
-			
-			% 3. Point a (Now at a negative x-coordinate)
-			\def\xa{-0.6}
-			\def\ya{3.23} 
-			\draw[dashed, red, thick] (axis cs:\xa, 0) -- (axis cs:\xa, \ya);
-			\fill[red] (axis cs:\xa, \ya) circle (2pt);
-			\node[below, red, yshift=-2pt] at (axis cs:\xa, 0) {$a$};
-			
-			% 4. Point b
-			\def\xb{3.2}
-			\def\yb{-0.28}
-			\draw[dashed, red, thick] (axis cs:\xb, 0) -- (axis cs:\xb, \yb);
-			\fill[red] (axis cs:\xb, \yb) circle (2pt);
-			\node[below, red, yshift=-2pt] at (axis cs:\xb, 0) {$b$};
-			
-		\end{axis}
-	\end{tikzpicture}
-\end{minipage}
-\end{center}
-\textbf{Aggiustare i grafici}. \\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/casi_direzione_costante}
+\end{figure}
 Discutiamo il primo caso ($f'(x) > 0$). Risulta: 
 \begin{align*}
 	\phi(a) &= a - mf(a) > a \quad \text{in quanto $m > 0$ e $f(a) < 0$} \\
@@ -1071,7 +956,10 @@ Da cui, la funzione iteratrice è:
 \phi(x) = x - \frac{f(x)}{f'(x)}
 \]
 \subsection{Approccio geometrico}
-\textbf{Fare il grafico.}  \\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/metodo_newton}
+\end{figure}
 L'equazione della retta tangente al grafico di $f$ nel punto di ascissa $x_0$, è:
 \[
 y - f(x_0) = f'(x_0)(x - x_0)
@@ -1107,5 +995,228 @@ e quindi
 f(x) = 0 \sim (x -\alpha)^d = 0
 \]
 \paragraph{Interpretazione geometrica}
-
+Se $d = 1$ allora $f^{(d)} = 0 \wedge f'(\alpha) \neq 0$ \\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/zero_semplice}
+\end{figure}
+In tal caso $\alpha$ si dice zero semplice e questo è il caso più frequente. \\
+Se $d = 2$ allora $f(\alpha) = f'(\alpha) = 0 \wedge f''(\alpha) \neq 0$ \\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/zero_doppio}
+\end{figure}
+In questo caso $\alpha$ si dice zero doppio. \\
+Se $d=3$ allora $f(\alpha) = f'(\alpha) = f''(\alpha) \wedge f'''(\alpha) \neq 0$ \\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/zero_triplo}
+\end{figure}
+Torniamo al metodo di Newton. 
+\[
+\phi(x) = x - \frac{f(x)}{f'(x)}
+\]
+La sua derivata prima è:
+\[
+\phi'(x) = 1 - \frac{[f'(x)]^2 - f(x) \cdot f''(x)}{[f'(x)]^2} = \frac{f(x) \cdot f''(x)}{[f'(x)]^2}
+\]
+Distinguiamo due casi:
+\begin{enumerate}
+	\item $\alpha$ zero semplice: $f(\alpha) = 0 \wedge f'(\alpha) \neq 0$ \\
+	Possiamo calcolare:
+	\[
+	\phi'(\alpha) = \frac{f(\alpha)\cdot f''(\alpha)}{[f'(\alpha)]^2} = 0
+	\]
+	Dal teorema di convergenza locale, concludiamo che il metodo di Newton è localmente convergente. 
+	\item $\alpha$ zero di molteplicità $d \geq 2$:
+	\[
+	f(\alpha) = f'(\alpha) = \dots = f^{(d-1)}(\alpha) = 0 \wedge f^{(d)}(\alpha) \neq 0
+	\]
+	$\phi'(x)$ non è definita in $\alpha$ poichè il denominatore si annulla. Tuttavia, è possibile dimostrare che:
+	\[
+	\lim\limits_{x \to \alpha} \phi'(x) = 1 - \frac{1}{d}
+	\]
+	Possiamo prolungare la $\phi'(x)$ per continuità in $\alpha$, ponendo, per definizione:
+	\[
+	\phi'(\alpha) = \lim\limits_{x\to\alpha}\phi'(\alpha) = 1 - \frac{1}{d}
+	\]
+	Anche in questo caso risulta che $|\phi'(\alpha)| < 1$ e otteniamo la convergenza locale. 
+\end{enumerate}
+Quindi, concludendo, il metodo di Newton è sempre localmente convergente, pertanto, studiamone la convergenza globale. 
+\begin{theorem}{\nmu Convergenza globale del metodo di Newton}{newton_conv_globale}
+	Sia $f \in C^2([a, b])$ tale che:
+	\begin{enumerate}[label=(\alph*)]
+		\item $f(a)\cdot f(b) < 0$ 
+		\item $f'(x) \neq 0 \quad \forall x \in [a, b]$
+		\item $f''(x) \neq 0 \quad \forall x \in [a, b]$
+	\end{enumerate}
+	Allora $f$ ammette un unico zero $\alpha \in (a, b)$. Inoltre, scelto $x_0 \in [a, b]$ tale che $f(x_0) \cdot f''(x) > 0$, il metodo di Newton genera una successione $\{x_n\}$ che converge ad $\alpha$ monotonicamente.
+\end{theorem}
+\begin{proof} L'esistenza e l'unicità dello zero $\alpha \in (a, b)$ di $f$ discende dalle ipotesi (a) e (b). \\
+	Si distinguono quattro casi schematizzati nei grafici sottostanti: \\
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{images/newton_cong_globale}
+	\end{figure}
+	Esaminiamo il primo caso, $f'(x) > 0$ e $f''(x) > 0$. Ricordiamo che:
+	\[
+	\phi(x) = x - \frac{f(x)}{f'(x)} \quad \phi'(x) = \frac{f(x) \cdot f''(x)}{[f'(x)]^2}
+	\]
+	Dall'enunciato del teorema, dovremo scegliere $x_0 \in (a, b]$. Facciamo innanzitutto vedere che $\phi((a, b]) \subset (a, b]$ \\
+	Poichè in $(a, b]$ risulta $\phi'(x) > 0$, ne consegue che $\phi$ è strettamente crescente in $(a, b]$, quindi:
+	\[
+	a < x \leq b \Rightarrow \phi(a) < \phi(x) \leq \phi(b)
+	\]
+	Ora:
+	\begin{align*}
+		\phi(\alpha) &= \alpha \\
+		\phi(b) &= b - \frac{f(b)}{f'(b)} < b \quad \text{in quanto} f(b) > 0\text{ e } f'(b) >0
+	\end{align*}
+	Abbiamo provato che $\alpha < \phi(x) < b$ \\
+	Facciamo infine vedere che $\{x_n\}$ converge ad $\alpha$ ed è una successione strettamente decrescente. \\
+	Dal punto precedente sappiamo che $x_n \in (a, b] \quad \forall n \geq 0$.
+	\[
+	x_n = x_{n-1} - \frac{f(x_{n-1})}{f'(x_{n-1})} < x_{n-1}
+	\] 
+	$\{x_n\}$ è strattamente decrescente e limitata inferiormente da $\alpha$. Dall'analisi ammetterà limite finito:
+	\[
+	\exists \lim\limits_{n\to\infty}x_n = \beta \geq \alpha
+	\]
+	Poichè $\beta$ è punto fisso di $\phi$, necessariamente dovrà essere $\beta = \alpha$.
+\end{proof}
+\begin{corollary}
+	Nelle stesse ipotesi (a), (b) e (c) del teorema di \namerefl{th:newton_conv_globale}, se $x_0 \in [a, b]$ e $x_1 = \phi(x_0) \in [a, b]$, allora la successione $\{x_n\}$ ad $\alpha$.
+\end{corollary}
+\begin{proof}
+	Facendo riferimento sempre al primo caso, se scegliamo $x_0 \in [a, \alpha)$, essendo $\phi'(x) < 0$ in $[a, \alpha)$ segue che $\phi(x)$ è strettamente decrescente e quindi:
+	\[
+	x_0 < \alpha \Rightarrow x_1  = \phi(x_0) > \phi(\alpha) = \alpha
+	\]
+	e quindi, dall'ipotesi $x_1 \in [a, b]$ segue che $x_1 \in (\alpha, b]$ e da questo punto in poi vale il teorema precedente. 
+\end{proof}
+\section{Ordine di convergenza} 
+L'ordine di convergenza è uno strumento che ci consente di stimare la velocità con cui una successione convergente tende al suo valore limite. Questo strumento ci consentirà di confrontare i metodi iterativi in base alla rapidità di convergenza delle successioni che essi generano. 
+\begin{definition}{\nmu Ordine di convergenza}{ordine_convergenza}
+	Sia $\{x_n\}$ una successione convergente ad $\alpha \in \mathbbm{R}$:
+	\[
+	\lim\limits_{n\to\infty}x_n = \alpha \in \mathbbm{R}
+	\]
+	Si definisce \textit{ordine di convergenza} della successione $\{x_n\}$ un reale positivo $p > 0$ tale che esista e sia finito il seguente limite:
+	\[
+	\lim\limits_{n\to\infty}\frac{x_{n+1} - \alpha}{|x_n - \alpha|^p} = c
+	\]
+	con $0 < c < +\infty$
+\end{definition}
+Analizziamone il significato. Per $n$ abbastanza grande possiamo scrivere:
+\[
+\frac{|x_{n+1} - \alpha|}{|x_n - \alpha|^p} \approx c
+\]
+da cui:
+\[
+|x_{n+1}-\alpha| \approx c \cdot  |x_n - \alpha|^p
+\]
+Tale uguaglianza relazione l'errore assoluto a un generico passo con l'errore assoluto al passo precedente e quindi esprime la legge con cui l'errore si riduce, per $n$ grande, ad ogni passo. Ne consegue che la riduzione dell'errore ad ogni passo sarà tanto maggiore:
+\begin{itemize}
+	\item quanto più grande è il valore di $p$;
+	\item quanto più piccolo è il valore di $c$.
+\end{itemize}
+La costante $c$ è detta \textit{costante asintotica di convergenza}. La convergenza si dice:
+\begin{itemize}
+	\item lineare se $p = 1$;
+	\item superlineare se $p > 1$;
+	\item quadratica se $p = 2$
+\end{itemize}
+\begin{note}{}{}
+	Se $p = 1$, necessariamente $0 < c < 1$. Infatti per $n$ grande, abbiamo:
+	\[
+	|x_{n+1}-\alpha| \simeq c|x_n-\alpha|
+	\]
+	Se $c >=1$, la distanza tra $x_n$ e $\alpha$ non si ridurrebbe al crescere di $n$, e ciò contraddice l'ipotesi che $x_n \to \alpha$
+\end{note}
+\begin{definition}{\nmu Ordine di convergenza di un metodo iterativo}{ordine_conv_iterativo}
+	Un metodo iterativo per la ricerca degli zeri di una funzione si dice di ordine $p$ se, applicato a una data classe di funzioni, genera successioni che convergono allo zero con ordine $p$.
+\end{definition}
+\begin{example}{}{}
+	Consideriamo due metodi iterativi one-step definiti dalle due iteratrici $\phi_1$ e $\phi_2$, e supponiamo che, applicati per la ricerca di uno zero $\alpha$ di una funzione $f$:
+	\[
+	\phi_1: p_1 =1 \text{ (convergenza lineare) e } c_1 = \frac{1}{10}
+	\]
+	\[
+	\phi_2: p_2 =2 \text{ (convergenza quaratica) e } c_2 = 10
+	\]
+	Stiamo avvantaggiando il primo metodo relativo al valore della costante asintotica in quanto:
+	\[
+	c_2 = 100c_1
+	\]
+	Ipotesi di lvaoro: scegliamo, per i due metodi, una condizione iniziale $x_0$ tale che:
+	\[
+	|x_0 - \alpha| = 10^{-2}
+	\]
+	e supponiamo di trovarci in un intorno abbastanza piccolo di $\alpha$, in modo tale che
+	\[
+	|x_{n+1} -\alpha| \approx c|x_n - \alpha|^p
+	\]
+	Generiamo le due successioni.
+	\begin{center}
+		\begin{tabular}{c|c|c}
+			$n$ & \textbf{Errore Assoluto} $\phi_1(x_n)$ & \textbf{Errore Assoluto} $\phi_2(x_n)$ \\ \hline
+			0 & $10^{-2}$ & $10^{-2}$ \\
+			1 & $\approx 10^{-3}$ & $\approx 10^{-3}$ \\
+			2 & $\approx 10^{-4}$ & $\approx 10^{-5}$ \\
+			3 & $\approx 10^{-5}$ & $\approx 10^{-9}$ \\
+			4 & $\approx 10^{-6}$ & $\approx 10^{-17}$ \\
+		\end{tabular}
+	\end{center}
+\end{example}
+\begin{note}{}{}
+	In caso di convergenza quadratica, se la costante asintotica $c \approx 1$, il numero di cifre significative dell'approssimazione allo zero $\alpha$, definitivamente raddoppia da un passo al successivo
+	\[
+	|x_{n+1}-\alpha|\approx c |x_n - \alpha|^2 \quad \text{ con } c \approx 1
+	\]
+	Se $\frac{|x_n-\alpha|}{|\alpha|} < 10^{-d}$, quindi $x_n$ contiene $d$ cifre significative corrette, abbiamo:
+	\[
+	\frac{|x_n-\alpha|}{|\alpha|} \approx \frac{|x_n - \alpha|^2}{|\alpha|} = |\alpha|\cdot\Bigg(\frac{|x_n-\alpha|}{|\alpha|}\Bigg)^2 < |\alpha|10^{-2d}
+	\]
+\end{note}
+La seguente proposizione ci fornisce un modo per  determinare l'ordine di convergenza $p$ di un metodo iterativo nel caso di metodi iterativi one-step. 
+\begin{proposition}{}{}
+	Sia $\phi \in C^p(B(\alpha, \delta))$, con $\alpha$ punto fisso di $\phi$, Sono equivalenti le seguenti due proposizioni
+	\begin{enumerate}[label=(\alph*)]
+		\item Il metodo iterativo one-step definito da $\phi$ ha ordine $p$.
+		\item $\phi'(\alpha)=\phi''(\alpha) = \dots = \phi^{(p-1)}(\alpha) = 0 \wedge \phi^{(p)}(\alpha) \neq 0$
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	Delle due implicazioni $(a) \Rightarrow (b)$ e $(b) \Rightarrow (a)$, mostreremo solo al seconda, che è la più importante. \\
+	$(b) \Rightarrow (a) \quad$ Consideriamo lo sviluppo di Taylor della funzione iteratrice $\phi$ in un intorno di $\alpha$:
+	\[
+	\phi(x) = \phi(\alpha) + \phi'(\alpha) + \frac{\phi''(\alpha)}{2!}(x-\alpha)^2 + \dots + \frac{\phi^{(p-1)}}{(p-1)!}(x-\alpha)^{p-1} + \frac{\phi^{(p)}(\eta_x)}{p!}(x-\alpha)^p
+	\]
+	Con $\eta_x$ opportuno punto tra $x$ e $\alpha$. \\
+	Dall'ipotesi $(b)$ possiamo semplificare come:
+	\[
+	\phi(x) = \phi(\alpha) + \frac{\phi^{(p)}(\eta_x)}{p!}(x-\alpha)^p
+	\]
+	Per la successione $\{x_n\}$ generata dal metodo possiamo scrivere:
+	\[
+	x_{n+1} - \alpha = \phi(x_n) - \phi(\alpha) = \frac{\phi^{(p)}(\eta_n)}{p!}(x_n - \alpha)^p
+	\]
+	dove $\eta_n$ è un opportuno punto tra $x_n$ e $\alpha$. \\
+	Si noti che, poichè $x_n \to \alpha$, anche $\eta_n \to \alpha$. Otteniamo che:
+	\begin{align*}
+		\lim\limits_{n\to\infty}\frac{|x_{n+1} - \alpha|}{|x_n - \alpha|^p} &= \lim\limits_{n\to\infty}\frac{|\phi^{(p)}(\eta_n)|}{p!} \\
+		&= \frac{1}{p!}|\phi^{(p)}(\lim\limits_{n\to\infty}\eta_n)| \\
+		&= \frac{1}{p!}|\phi^{(p)}(\alpha)|
+	\end{align*}
+\end{proof}
+\begin{note}{}{}
+	La costante asintotica di convergenza dei metodi one-step è:
+	\[
+	\frac{1}{p!}|\phi^{(p)}(\alpha)|
+	\]
+	In particolare, per $p =1$,
+	\[
+	c = |\phi'(\alpha)|
+	\]
+\end{note}
 \end{document}
