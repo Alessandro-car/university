@@ -1213,4 +1213,166 @@ La seguente proposizione ci fornisce un modo per  determinare l'ordine di conver
 	c = |\phi'(\alpha)|
 	\]
 \end{note}
+\subsection{Metodo della direzione costante}
+Ricordiamo che:
+\begin{align*}
+	\phi(x) &= x - mf(x) \\
+	\phi'(x) &= 1 - mf'(x) \\
+	\phi'(\alpha) = 1 - mf'(\alpha)
+\end{align*}
+Distinguiamo due casi:
+\begin{enumerate}
+	\item $m \neq \frac{1}{f'(\alpha)}$. Questo è il caso generale. Risulta $\phi'(\alpha) \neq 0$ e quindi l'ordine di convergenza è $p = 1$. 
+	\item $ m = \frac{1}{f'(\alpha)}$.  In questo caso eccezionale risulta $\phi'(\alpha) = 0$ e quindi la successione $\{x_n\}$ generata con questa scelta converge ad $\alpha$ con ordine $p = 2$. 
+\end{enumerate}
+L'ordine di convergenza del metodo della direzione costante è $p = 1$.
+\subsection{Metodo di Newton}
+Ricordiamo che:
+\begin{align*}
+\phi(x) &= x - \frac{f(x)}{f'(x)} \\
+\phi'(x) &= \frac{f(x) \cdot f''(x)}{[f'(x)]^2}
+\end{align*}
+Distinguiamo due casi:
+\begin{enumerate}
+	\item $\alpha$ zero semplice. In questo caso generale:
+	\[
+	\phi'(\alpha) = 0
+	\]
+	In generale, $\phi'(\alpha) = 0$, quindi il metodo di Newton, in presenza di zeri semplici, ha ordine $p = 2$.
+	\item $\alpha$ zero di molteplicità $d > 1$. In tal caso, avevamo provato che:
+	\[
+	\phi'(\alpha) = \lim\limits_{x\to\alpha}\phi'(x) = 1 - \frac{1}{d} \neq 0
+	\] 
+	In presenza di zeri multipli, la successione $\{x_n\}$ generata dal metodo di Newton converge ad $\alpha$ linearmente. 
+\end{enumerate}
+Quindi il vantaggio del metodo di Newton è che esso converge con ordine $p = 2$. Tuttavia, per la sua implementazione, occorre preventivamente calcolare la derivata prima di $f$. Ciò può essere oneroso se $f$ ha un'espressione complicata o addirittura impossibile se $f$ non è nota. Inoltre, il costo computazionale per iterata del metodo di Newton è:
+\[
+\frac{2\text{ valutazioni di funzione}}{\text{iterata}}
+\]
+quindi, ad esempio, costa il doppio rispetto al metodo della direzione costante. Si osservi che il numero di valutazioni di funzione è proporzionale al tempo di esecuzione sul calcolatore. Infine, la convergenza del metodo può rallentare molto se $x_n$ non è abbastanza vicino ad $\alpha$. In alcuni casi la regione di convergenza potrebbe essere molto piccola, il chè richiederebbe una stima iniziale $x_0$ molto buona.  \\
+Per questo, si introducono alcune varianti del metodo di Newton che possono risolvere uno o più degli svantaggi sopra elencati. Ne analizziamo due.
+\section{Metodo di Newton modificato}
+Il metodo di Newton modificato non è altro che il metodo della direzione costante con la seguente definizione del parametro $m$:
+\[
+m = \frac{1}{f'(x_0)}
+\]
+Il metodo di Newton modificato è:
+\[
+\begin{cases}
+	x_0 \text{ assegnato} \\
+	x_n = x_{n-1} - \frac{f(x_n)}{f'(x_0)} & n \geq 1
+\end{cases}
+\]
+La derivata prima di $f$ va calcolata solo nel punto iniziale. L'idea è che se $x_0 \approx \alpha$ allora $f'(x_0) \approx f'(\alpha)$ e quindi
+\[
+m = \frac{1}{f'(x_0)} \approx \frac{1}{f'(\alpha)}
+\] 
+Ricordiamo che per $m = \frac{1}{f'(\alpha)}$ la convergenza sarebbe quadratica. Nel nostro caso, il metodo diventa lineare, ma la costante asintotica è piccola:
+\[
+|\phi'(\alpha)| = |1 - mf'(\alpha)| = \Bigg|1 - \frac{f'(\alpha)}{f'(x_0)}\Bigg| \ll 1
+\]
+Il costo computazionale è pari a:
+\[
+\frac{\text{1 valutazione di funzione}}{\text{iterata}}
+\]
+\section{Metodo delle secanti}
+Il metodo delle secanti lo si ottiene dal metodo di Newton operando la seguente approssimazione della derivata prima di $f$ in $x_n$:
+\[
+f'(x_n) \approx \frac{f(x_n) - f(x_{n-1})}{x_n - x_{n-1}}
+\]
+Il metodo delle secanti è così definito:
+\[
+\begin{cases}
+	x_0, x_1 \text{ assegnati}, \\
+	x_{n+1} = x_n - \frac{f(x_n)}{\frac{f(x_n) - f(x_{n-1})}{x_n - x_{n-1}}}, & n \geq 1
+\end{cases}
+\]
+È un metodo a due passi. Si può dimostrare che il suo ordine è:
+\[
+p = \frac{1 + \sqrt{5}}{2}
+\]
+Si tratta di un metodo superlineare $1 < p < 2$. Il costo computazionale è:
+\[
+\frac{\text{1 valutazione di funzione}}{\text{iterata}}
+\]
+Vediamo il perchè di questo risultato.
+\paragraph{Interpretazione geometrica} 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/secanti_geometrico}
+\end{figure}
+Il punto $x_2$ lo si ottiene come intercetta della retta secante il grafico della funzione $f$ nei punti di ascissa $x_0$ e $x_1$. L'equazione di questa retta è:
+\[
+y - f(x_0) = \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x - x_0)
+\]
+\paragraph{Criteri di arresto}
+Poichè non possiamo calcolare gli infiniti elementi della successione $\{x_n\}$ ed inoltre, considerando che il calcolatore ha una precisione finita, arresteremo l'iterazione quando
+\[
+|x_n - \alpha| < tol
+\]
+dove tol è una tolleranza assegnata in input dall'utente. Un'analoga condizione possiamo scriverla per l'errore relativo e per l'errore misto. Per il momento consideriamo l'errore assoluto. Quando la condizione sopra scritta si realizza, il processo di iterazione ha termine e si considera l'ultimo elemento calcolato della successione quale approssimante di $\alpha$:
+\[
+x_n \approx \alpha
+\]
+Poichè $\alpha$ non è noto, la condizione di arresto non è una condizione operativa. Si possono seguire due strade:
+\begin{enumerate}
+	\item determinare una maggiorazione calcolabile dell'errore assoluto;
+	\item determinare una stima dell'errore assoluto. 
+\end{enumerate}
+\paragraph{Maggiorazione dell'errore assoluto} Consideriamo
+\begin{align*}
+x_{n+1} - x_n &= x_{n+1} - \alpha + \alpha - x_n \\
+&= \phi(x_n) - \phi(\alpha) - (x_n - \alpha) \\
+&= \phi'(\eta_n)(x_n - \alpha) - (x_n - \alpha) \\
+&= (\phi'(\eta_n) - 1)(x_n - \alpha)
+\end{align*}
+Poichè $\eta_n \to \alpha$ per $n \to \infty$ ciò implica che $|\phi'(\eta_n)| < 1$ per $n$ grande e quindi, per $n$ grande
+\[
+1 - \phi'(\eta_n) \geq 1 - |\phi'(\eta_n)| > 0
+\]
+Dalle uguaglianze precedenti ricaviamo:
+\[
+|x_n - \alpha| = \frac{1}{|1-\phi'(\eta_n)|}|x_{n+1} - x_n| \leq \frac{1}{1-|\phi'(\eta_n)|}|x_{n+1} - x_n|
+\]
+Se si riesce a determinare un intervallo $[a, b]$ tale che:
+\begin{itemize}
+	\item $\alpha \in (a, b)$ 
+	\item $|\phi'(x)| < 1$ in $[a, b]$
+\end{itemize}
+Denotando con $M = \max_{a \leq x \leq b}|\phi'(x)| < 1$ per $n$ grande $\eta_n \in (a, b)$ e quindi:
+\begin{align*}
+	|\phi'(\eta_n)| &\leq M \\
+	-|\phi'(\eta_n)| &\geq M \\
+	1 - |\phi'(\eta_n)| &\geq 1 - M \\
+	\frac{1}{1- |\phi'(\eta_n)|} &\leq \frac{1}{1- M}
+\end{align*}
+Sfruttando questa maggiorazione otteniamo
+\[
+|x_n - \alpha| \leq \frac{1}{1-M} |x_{n+1}-x_n|
+\]
+Abbiamo ottenuto due maggioranze valutabili dell'errore assoluto. Il criterio di arresto diventa
+\[
+\frac{1}{1-M}|x_{n+1} - x_n| < tol
+\]
+\paragraph{Stima dell'errore} Anzichè determinare una maggiorazione dell'errore, se ne determina una stima. In generale si sceglie:
+\[
+|x_n - \alpha| \approx C|x_{n+1}-x_n|
+\]
+$C$ è una costante solitamente fissata ad $1$ oppure $C > 1$. La scelta $C = 1$ è certamente appropriata per il metodo di Newton. Infatti sappiamo che, in presenza di zeri semplici, $\phi'(\alpha) = 0$; ciò significa che, per $n$ grande, $\phi'(\eta_n) \approx 0$ e quindi
+\[
+\frac{1}{1 - \phi'(\eta_n)} \approx 1
+\] 
+Scegliendo $C = 1$, il criterio di arresto si semplifica come:
+\[
+|x_{n+1}-x_n|  < tol
+\] 
+Per l'errore relativo, possiamo usare il seguente criterio di arresto:
+\[
+\frac{|x_{n+1}-x_n|}{|x_{n+1}|} < tol
+\]
+Infine, per l'errore misto:
+\[
+\frac{|x_{n+1}-x_n|}{1 + |x_{n+1}|} < tol
+\]
+\chapter{Richiami sui numeri misti}
 \end{document}
