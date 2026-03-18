@@ -1031,4 +1031,19 @@
 			\end{enumerate}
 		\end{note}
 		\section{Astrazione nella dichiarazione di modulo}
+		La precedente definizione di una classe corrisponde a una particolare forma di astrazione, quella della classe sintattica '\textit{\textbf{dichiarazione} di un modulo}'. \\
+		L'operazione di istanziazione corrisponde alla invocazione di questa astrazione ed ha l'effetto di creare legami. In particolare, si crea un legame fra
+		\begin{itemize}
+			\item identificatore dell'oggetto;
+			\item nome della classe.
+		\end{itemize}
+		Pertanto la definizione di una classe corrisponde a una particolare forma di \textit{astrazione generica}, cioè di astrazione applicata alla classe sintattica dichiarazione. \\
+		Si è già visto che un modulo può essere usato per incapsulare un \textit{tipo astratto} con gli operatori leciti. Vediamo se ha senso definire \textit{generic} un modulo di questa fatta e poi istanziarlo. \\
+		Riepilogando, se in fase di progettazione si identifica l'esigenza di un dato astratto, in fase realizzativa si può:
+		\begin{enumerate}
+			\item \textit{Definire un oggetto}: la scelta è appropriata nel caso in cui si necessita di una sola occorrenza del dato astratto;
+			\item \textit{Definire un tipo astratto}: l'astrazione riguarda la classe sintattica tipo;
+			\item \textit{Definire una classe}: l'astrazione riguarda la dichiarazione di un modulo (dotata di stato locale).
+		\end{enumerate}
+		In tutti i casi la rappresentazione del dato astratto viene nascosta e la manipolazione dei valori è resa possibile solo mediante operazioni fornite allo scopo. Tuttavia, ci sono delle differenza fra tipo astratto e classe di oggetti. 
 \end{document}
