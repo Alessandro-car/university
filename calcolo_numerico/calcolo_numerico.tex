@@ -1374,5 +1374,376 @@ Infine, per l'errore misto:
 \[
 \frac{|x_{n+1}-x_n|}{1 + |x_{n+1}|} < tol
 \]
-\chapter{Richiami sui numeri misti}
+\chapter{Richiami sui numeri complessi}
+\chapter{Aritmetica di macchina e analisi degli errori}
+\section{Considerazioni preliminari}
+Per la rappresentazione dei numeri reali si utilizza, solitamente, una notazione posizionale. Ad esempio:
+\[
+123.45 = 1\cdot 10^2 + 2 \cdot 10 + 3 \cdot 10^0 + 4 \cdot 10^{-1} + 5 \cdot 10^{-2}
+\]
+Più in generale, lavorando con una base $\beta \geq 2$:
+\[
+d_md_{m-1} - d_0.d_1d_2\dots d_n = d_n\beta^m + d_{m-1}\beta^{m-1} + \dots + d_0\beta^0 + d_1\beta^{-1} + \dots + d_n\beta^{-n}
+\]
+Consideriamo il seguente esempio.
+\begin{example}{}{}
+	Supponiamo che, per la memorizzazione dei numeri reali abbiamo a dispozione un campo di memoria costituito da 5 celle, ciacsuna delle quali può ospitare una cifra. Consideriamo il seguente esempio:
+	\[
+	x = 0.00123456
+	\]
+	Nel campo di memoria assegnato, il numero $x$ verrà rappresentato dalla sua approssimazione
+	\[
+	x_1 = 0.0012 \simeq x
+	\]
+	Considerando invece la rappresentazione normalizzata di $x$:
+	\[
+	x = 1.23456 \cdot 10^{-3}
+	\]
+	Utilizzando questa notazione, potremo dedicare una cella per la memorizzazione dell'esponente, ottendo così l'approssimazione
+	\[
+	x_2 = 1.234 \cdot 10^{-3}
+	\]
+	È evidente che $x_2$ risulta una migliore approssimazione di $x$ rispetto a $x_1$. Quindi, per la rappresentazione dei numeri reali converrà utilizzare la notazione normalizzata:
+	\[
+	x = \pm d_0.d1d_2\cdots\beta^p
+	\]
+	ove $d_0.d1_d2\cdots$ è la \textit{mantissa}, $\beta$ è la \textit{base} e $p$ è l'\textit{esponente}, il cui significato è:
+	\[
+	x = \pm \beta^p\sum_{i=0}^{\infty}d_i\beta^{-i}
+	\]
+	con $d_0 \neq 0$
+\end{example}
+\begin{theorem}{\nmu Rappresentazione in base}{rappr_base}
+	Sia $\beta \geq 2$ ove $\beta$ è un intero. Allora, ogni numero reale $x \in \mathbbm{R}$, $x \neq 0$ può esesre espresso in maniera univoca come
+	\[
+	x = \pm\beta^p \sum_{i=0}^{\infty}d_i\beta^{-i}
+	\]
+	dove:
+	\begin{itemize}
+		\item $\beta$ è la \textit{base della rappresentazione};
+		\item $p \in \mathbbm{Z}$ è l'\textit{esponente};
+		\item $\pm$ è il \textit{segno};
+		\item $0 \leq d_i \leq \beta - 1$, $i = 0,1, \dots$
+		\item $d_0 \neq 0$ detta \textit{condizione di normalizzazione};
+		\item le cifre $d_i$ non sono definitivamente uguali a $\beta - 1$.
+	\end{itemize}
+\end{theorem}
+\begin{note}{}{}
+	\begin{enumerate}
+		\item Abbiamo escluso lo zero poichè questo non ammette una notazione normalizzata.
+		\item L'ultima condizione impone che le cifre $d_i$ non siano uguali a $\beta - 1$ da un certo indice in poi. Tale condizione è importante per avere l'unicità della rappresentazione.  
+	\end{enumerate}
+\end{note}
+\begin{example}{}{}
+	In base $\beta = 10$, scegliamo il numero 
+	\begin{align*}
+		x &= 0.\overline{9} = 9.\overline{9} \cdot 10^{-1} \\
+		&= 10^{-1} \sum_{i=0}^{\infty}9 \cdot 10^{-i} = \frac{9}{10}\sum_{i=0}^{\infty}\Bigg(\frac{1}{10}\Bigg)^i \\
+		&= \frac{9}{10}\frac{1}{1-\frac{1}{10}} = 1
+	\end{align*}
+	In conclusione $0.\overline{9}$ e 1 rappresentano lo stesso  numero reale. Analogamente:
+	\[
+	1.23\overline{9} = 1.24
+	\]
+	Il calcolatore, disponendo di memoria finita, non può rappresentare correttamente gli infiniti numeri reali. Le difficoltà nascono da due impedimenti:
+	\begin{itemize}
+		\item il numero arbitriaramente elevato delle cifre $d_i$
+		\item l'esponente $p$ può variare da $-\infty$ a $+\infty$
+	\end{itemize}
+	Dovremo quindi fissare un numero massimo di cifre $d_i$ e una variabilità finita per l'esponente.
+\end{example}
+\section{Numeri di macchina}
+Sono quei numeri reali che il calcolatore è in grado di rappresentare correttamente. 
+\begin{definition}{\nmu Insieme dei numeri di macchina}{insieme_numeri_macchina}
+	Siano $\beta \geq 2$, $t \geq 0$, $M_1, M_2$ interi. \\
+	Si definisce insieme dei numeri di macchina in base $\beta$, con $t + 1$ cifre significative e range per l'esponente $p \in (M_1, M_2)$, il seguente sottoinsieme di $\mathbbm{R}$:
+	\[
+	\mathbbm{F} = \{ x \in \mathbbm{R} \mid x = \pm \beta^p\sum_{i=0}^{t}d_i\beta^{-i}\} \cup \{0\}
+	\] 
+	dove:
+	\begin{itemize}
+		\item $\beta$ è la base della rappresentazione;
+		\item $\pm$ è il segno;
+		\item $ 0 \leq d_i \leq \beta -1$, $d_0 \neq 0$
+		\item $p \in  (M_1, M_2)$
+	\end{itemize}
+\end{definition}
+Osserviamone alcune proprietà.
+	\begin{enumerate}
+		\item $card(\mathbbm{F}) < +\infty$, $\mathbbm{F}$ è un sottoinsieme finito di $\mathbbm{R}$.
+		\item Al fine di memorizzare numeri piccoli (con esponente negativo) e grandi (con esponente positivo), sceglieremo $M_1 < 0$ e $M_2 > 0$
+		\item Per la base $\beta$, i calcolatori utilizzano generalmente il sistema binario. \\
+		Questa scelta è suggerita dalla natura fisica dei dispositivi elettronici che memorizzano ed elaborano i dati. Essi possono assumere due stati fisici. Ad esempio:
+		\begin{itemize}
+			\item passaggio o meno di corrente attraverso una resistenza;
+			\item magnetizzazione o meno di un dispositivo magnetico.
+		\end{itemize}
+		\item Un vantaggio dell'uso del sistema binario è che, dovendo essere $d_i = 0, 1$, dalla condizione di normalizzazione:
+		\[
+		d_0 \neq 0 \Rightarrow d_0 = 1
+		\]
+		quindi è inutile memorizzare la cifra $d_0$ risparmiando così 1 bit.
+		\item I numeri di macchina sono disposti simmetricamente rispetto alla zero, tuttavia la loro distribuzione non è uniforme. Più in particolare consideriamo un generico numero di macchina positivo:
+		\[
+		a = \beta^p\sum_{i=0}^{t}d_i\beta^{-i}
+		\]
+		Il numero di macchina successivo, lo denotiamo con \textit{b}, lo si ottiene incremente di una unità l'ultima cifra $d_t$:
+		\begin{align*}
+			b &= a + \beta^p \cdot 0.0\dots1 \\
+			&= a + \beta^p\beta^{-t} = a + \beta^{p-t}
+		\end{align*}
+		da cui, la distanza tra due numeri di macchian consecutivi è
+		\[
+		b - a = \beta^{p-t}
+		\]
+		Notiamo che questa distanza dipende dalla grandezza del numero di macchina consdirato per la presenza dell'esponente $p$. Ne consegue che i numeri di macchina sono più densi vicino all'origine e si diradano man mano che ci allontaniamo dall'origine.
+		\item Utilizzando la notazione posizionale un numero di macchina non nulla ha l'espressione:
+		\[
+		x = \pm\beta^p(d_0.d1\dots d_t)
+		\]
+		Determiniamo il $\min{\mathbbm{F}_+^*}, \max{\mathbbm{F}_+^*}$ dove $\mathbbm{F}_+^*$ denota l'insieme dei numeri di macchina positivi. \\
+		Siano $\omega = \min{\mathbbm{F}_+^*}, \Omega = \max{\mathbbm{F}_+^*}$. \\
+		$\omega$ lo si ottiene minimizzando i valori dell'esponente $p$ e della mantissa. Pertanto:
+		\[
+		\omega = \beta^{M_1 + 1}1.0\dots0 = \beta^{M_1 + 1}
+		\]
+		Per determinare $\Omega$ premettiamo la seguente proprietà. Sia $z \neq 1$; risulta:
+		\begin{align*}
+		1 + z + \dots + z^t &= \frac{(1-z)(1+z+\dots+z^t)}{1-z} \\
+		&= \frac{1 + z + z^2 + \dots + z^t  - z -z^2 - \dots - z^{t + 1}}{1-z} \\
+		&= \frac{1 - z^{t+1}}{1-z}
+		\end{align*}
+		Questa è la formula di una progressione geometrica di ragione $z$. Passiamo al calcolo di $\Omega$:
+		\begin{align*}
+			\Omega &= \beta^{M_2 - 1}\sum_{i=0}^{t}(\beta -1)\beta^{-i} = \beta^{M_2 - 1}(\beta - 1)\sum_{i=0}^{t}(\beta^{-1})^i \\
+			&= \beta^{M_2 - 1}(\beta - 1)\frac{1 - \beta^{-t - 1}}{1 - \beta^{-1}} \\
+			&= \beta^{M_2}(1 - \beta^{-t - 1}) \text{ oppure } \beta^{M_2 - 1}(\beta - \beta^{-t})
+		\end{align*}
+	\end{enumerate}
+\section{Standard IEEE-754}
+Lo standard IEEE-754 è uno standard per l'implementazione dell'aritmetica di macchina sui calcolatori, al fine di rendere compativili i codici sulle varie piattaforme. Questo standard prevede le seguenti due modalità fondamentali:
+\begin{itemize}
+	\item Semplice (o singola) precisione;
+	\item Doppia precisione.
+\end{itemize}
+La doppia precisione è la modalità più frequentemente utilizzata. In ogni caso la base utilizzata è $\beta = 2$.
+\subsection{Semplice precisione}
+In semplice precisione, per la memorizzazione di un numero di macchina, viene predisposto un campo di memoria costituito da 32 bit così suddivisi:
+\begin{itemize}
+	\item 1 bit per il segno;
+	\item 8 bit per l'esponente;
+	\item 23 bit per la mantissa.
+\end{itemize}
+Il segno viene rappresentato mediante 0 per il più e 1 per il meno. \\
+Con un'esponente di 8 bit possiamo realizzare $2^8 = 256$ configurazioni distinte. Si sceglie:
+\[
+M_1 = -127 \quad M_2 = 128
+\]
+Anzichè memorizzare l'esponente con il suo segno, si applica una tecnica di traslazione (bias) in base alla quale viene memorizzata la cosiddetta \textit{caratteristica} $p^*$ che è relazionata all'esponente $p$ mediante l'equazione
+\[
+p^* = p - M_1 \iff p = p^* + M_1
+\]
+La seguente tabella chiarisce meglio i termini di questa relazione. \\
+\textbf{Fare tabella} \\
+La configurazione vuota $(p^* = 0)$ e quella piena $(p^* = 255)$ sono state lasciate libere. Esse sono utilizzate per altri scopi:
+\begin{itemize}
+	\item lo zero si rappresenta con caratteristica nulla e mantissa nulla.
+	\item la caratteristica piena serve per gestire le cosidette eccezioni previste dallo standard IEEE:
+	\begin{itemize}
+		\item $p^* = 255$ e mantissa nulla identificano il simbolo $+Inf$
+		\item $P^* = 255$ e mantissa non nulla identificano il simbolo $NaN$ 
+	\end{itemize}
+	Questi simboli sono l'output di alcune operazioni non consentite in aritmetica reale e il loro scopo è evitare l'arresto dell'esecuzione di un codice in corrispondenza di queste operazioni. Ad esempio:
+	\[
+	\frac{1}{0} = +Inf \quad \tan\frac{\pi}{2} = +Inf
+	\]
+	\[
+	\arctan(+Inf) = \frac{\pi}{2}
+	\]
+	\[
+	\frac{0}{0} = NaN; \quad Inf - Inf = NaN
+	\]
+	\[
+	1^{Inf} = Nan \quad \frac{Inf}{Inf} = Nan
+	\]
+	\item Scegliendo caratteristica nulla e mantissa non nulla, si identificano i cosidetti \textbf{numeri subnormali} o  non normalizzati. I numeri subnormali sono numeri non normalizzati, quindi con $d_0 = 0$ più piccoli ma molto prossimi a $\omega$. \\
+	Sono utilizzati per memorizzare numeri  reali più piccoli ma molto prossimi ad $\omega$ meglio di quanto non facciano lo zero e lo stesso $\omega$. \\
+	L'espressione generica di un numero subnormale è:
+	\[
+	\pm \beta^{M_1 + 1}0.d_1d_2\dots d_t
+	\]
+	Ad esempio, il più grande numero subnormale lo si ottiene scegliendo $d_1 = d_2 = \dots = d_t = \beta - 1$ \\
+	Il più piccolo numero subnormale positivo è: $\beta^{M_1 + 1 - t}$
+\end{itemize}
+\subsection{Doppia precisione}
+A ogni numero di macchina viene riservato un campo costituito da 64 bit così suddivisi:
+\begin{itemize}
+	\item 1 bit per il segno;
+	\item 11 bit per l'esponente;
+	\item 52 bit per la mantissa.
+\end{itemize}
+Per l'esponente $p$ si sceglie il seguente range:
+\[
+M_1 = -1023 \quad M_2 = 1024
+\]
+Ne consegue che, in doppia precisione:
+\[
+\omega = 2^{-1022} \approx 2.2 \cdot 10^{-308}
+\]
+\[
+\Omega = 2^{1024}(1 - 2^{-53}) \approx 1.7\cdot 10^{308}
+\]
+In doppia precisione, i numeri subnormali sono:
+\[
+\omega = 2^{-1022}\cdot 1.0\dots0
+\]
+\begin{align*}
+\text{subnormali } & 2^{-1022} \cdot 0.1\dots 1 \\
+& \vdots \\
+& 2^{-1022}\cdot 0.0\dots01 \\
+&= 2^{-1074}
+\end{align*}
+\begin{note}{}{}
+	I numeri subnormali hanno un numero di cifre significative minore di $t + 1$. In effetti la presenza degli zeri all'inizio della mantissa serve per perfezionare l'esponente permettendogli di assumere valori minori di $M_1 + 1$ a discapito di una perdita di accuratezza in termini di cifre significative. 
+\end{note}
+\section{Rappresentazione dei numeri reali mediante i numeri di macchina}
+Ogni numero reale verrà approssimato sul calcolatore mediante un opportuno numero di macchina. Occorre definire una funzione;
+\[
+fl: \mathbbm{R} \to \mathbbm{F}
+\]
+Distinguiamo i seguenti casi. Sia $x \in \mathbbm{R}$ e, senza ledere la generalità, supponiamo $x > 0$, sfruttando la simmetria di $\mathbbm{F}$. Possiamo scrivere:
+\[
+x = \beta^p\sum_{i=0}^{\infty}d_i\beta^{-i}
+\]
+\begin{enumerate}
+	\item $x\in\mathbbm{F}$. In tal caso, ovviamente, porremo $fl(x) = x$ \\
+	In altri termini,
+	\[
+	fl|_\mathbbm{F} = \text{identità}
+	\]
+	\item $p \geq M_2$. L'esponente di $x$ è più grande del numero esponente consentito in $\mathbbm{F}(M_2 - 1)$. Si genera una condizione di \textit{overflow} e si pone
+	\[
+	fl(x) = +Inf
+	\]
+	\item $p \leq M_1$. L'esponente di $x$ è più piccolo del minimo esponente consentito in $\mathbbm{F}(M_1 + 1)$. Si genera una condizione di \textit{underflow} e si pone
+	\[
+	fl(x) = \begin{cases}
+		\text{subnormale} & M_1 - t + 1 \leq p \leq M_1 \\
+		0 & p \leq M_1 - t
+	\end{cases}
+	\]
+	Ora analizziamo il caso più frequente.
+	\item $M_1 < p < M_2, x\in\mathbbm{F}$. Ciò significa che $\exists i > t$ tale che $d_i \neq 0$ \\
+	Si possono presentare due sottocasi
+	\begin{enumerate}
+		\item $x\in(\omega, \Omega)$
+		\item $p = M_2 - 1$, $d_0 = d_1 = \dots = d_t = \beta - 1$ e $\exists i > t \mid d_i \neq 0$
+	\end{enumerate}
+	Nel secondo sottocaso $x$ è subito a destra di $\Omega$. Nel seguito analizziamo il primo sottocaso: nel secondo si utilizzerà un ragionamento analogo. \\
+	Quindi supponiamo $x\in(\omega, \Omega)$ \\
+	In tal caso $x$ sarà composto tra  due numeri di macchina consecutivi, che denotiamo con $a$ e $b$. Evidentemente:
+	\[
+	a = \beta^p\sum_{i=0}^{t}d_i\beta^{-i} \quad b = a + \beta^{p - t}
+	\]
+	Lo standard IEEE contempla due tecniche. 
+	\paragraph{Tecnica del troncamento} \quad \\
+	\[
+	fl(x) = trn(x) = a
+	\]
+	\paragraph{Tecnica dell'arrotondamento} \quad \\
+	\[
+	fl(x) = \begin{cases}
+		a & x < \frac{a+b}{2} \\
+		b & x > \frac{a+b}{2}
+	\end{cases}
+	\]
+	Nel caso in cui $x = \frac{a+b}{2}$
+	\[
+	fl(x) = \begin{cases}
+		a & \text{se $d_t$ è pari} \\
+		b & \text{se $d_t$ è dispari}
+	\end{cases}
+	\]
+	In questo modo si evita di creare una direzione privilegiata (polarizzazione), mantenendo la simmetria della procedura. In particolare, in base $\beta = 2$, l'ultima relazione diventa
+	\[
+	fl(x) = \begin{cases}
+		a & d_t = 0 \\
+		b & d_t = 1
+	\end{cases}
+	\]
+\end{enumerate}
+\begin{note}{}{}
+	Nel secondo sottocaso, si ragiona in modo analogo scegliendo
+	\[
+	a = \Omega \quad b = a + \beta^{M_2 - 1 - t}
+	\]
+	Se $x > \frac{a+b}{2}$ si pone $fl(x) = +Inf$ \\
+	Se $x < \frac{a+b}{2}$ si pone $fl(x) = \Omega$ \\
+	Se $x = \frac{a+b}{2}$ e $\beta$ è pari: $fl(x) = +Inf$.
+\end{note}
+\section{Errori di rappresentazione}
+Gli errori di rappresentazione sono gli errori che si generano quando un numero reale viene approssimato da un numero di macchina. Anche qui analizziamo il caso $x > 0$. Supponiamo che non si incorra in condizioni di overflow o underflow e in particolare che $x\in[\omega, \Omega]$. Analizziamo, qui di seguito, gli errori assoluto e relativo in corrispondenza delle due tecniche di approssimazione: troncamento e arrotondamento. \\
+\subsection{Errore assoluto}
+Nella tecnica del troncamento:
+\[
+E_a = |fl(x) - x| = |a - x| < b - a = \beta^{p-t}
+\]
+Nella tecnica dell'arrotondamento:
+\[
+E_a = |arr(x) - x| \leq \frac{1}{2}\beta^{p-t}
+\]
+\begin{note}{}{}
+	L'errore assoluto dipende dalla grandezza di $x$, cioè dal suo esponente $p$.
+\end{note}
+\subsection{Errore relativo}
+\begin{note}{}{}
+	Notiamo che:
+	\[
+	x = \beta^p\cdot d_0.d_1\dots \geq \beta^p \cdot 1. 0\dots0 = \beta^p
+	\]
+	Passando ai reciproci:
+	\[
+	\frac{1}{x} \leq \frac{1}{\beta^p} = \beta^{-p}
+	\]
+\end{note}
+Con la tecnica del troncamento:
+\[
+E_r = \frac{|fl(x) - x|}{|x|} < \beta^{p-t}\cdot \beta^{-p} = \beta^{-t}
+\]
+Con la tecnica dell'arrotondamento:
+\[
+E_r = \frac{|arr(x) - x|}{|x|} \leq \frac{1}{2}\beta^{p-t}\beta^{-p} = \frac{1}{2}\beta^{-t}
+\]
+Osserviamo che l'uguaglianza potrebbe verificarsi quando, contemporaneamente
+\[
+\begin{cases}
+	|arr(x) - x| = \frac{1}{2}\beta^{p-t} \iff x = \frac{a+b}{2} \\
+	x = \beta^p
+\end{cases}
+\]
+Tuttavia, le due condizioni sono incompatibili perchè:
+\[
+\frac{a+b}{2} \notin \mathbbm{F} \quad \beta^p \in \mathbbm{F}
+\]
+In conclusione, possiamo scrivere:
+\[
+E_r < \frac{1}{2}\beta^{-t}
+\]
+\begin{note}{}{}
+	Nnel caso dell'errore relativo, la maggiorazione ottenuta è indipendente dalla grandezza del numero $x$. Ulteriormente, la maggiorazione ci dice che $fl(x)$ contiene almeno $t$ cifre significative corrette.
+\end{note}
+\begin{definition}{\nmu Precisione di macchina}{precisione_macchina}
+	Lavorando con l'arrotondamento, la quantità:
+	\[
+	u = \frac{1}{2}\beta^{-t}
+	\]
+	è detta \textit{precisione di macchina}. \\
+	
+	È la più piccola maggiorazione sull'erorre relativo in fase di rappresentazione dei numeri reali mediante i numeri di macchina.
+\end{definition}
+In doppia precisione:
+\[
+u = \frac{1}{2}2^{-52} = 2^{-53} \approx 1.1 \cdot 10^{-16}
+\]
+Ciò significa che, oeprando in doppia precisione, possiamo confidare in 15/16 cifre significative corrette.
 \end{document}
