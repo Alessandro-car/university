@@ -1047,4 +1047,32 @@
 		\end{enumerate}
 		In tutti i casi la rappresentazione del dato astratto viene nascosta e la manipolazione dei valori è resa possibile solo mediante operazioni fornite allo scopo. Tuttavia, ci sono delle differenza fra tipo astratto e classe di oggetti. 
 		\chapter{Paradigma Object Oriented}
+		\section{Gli oggetti}
+		Si deve osservare che nella programmazione imperativa è possibile definire degli oggetti, tuttavia
+		\begin{enumerate}
+			\item il loro utilizzo è legato all'auto disciplina dei programmatori e non viene in alcun modo forzato;
+			\item gli oggetti \textbf{non sono cittadini di prima classe}.
+		\end{enumerate}
+		Confrontando il paradigma orientato a oggetti rispetto a quello imperativo si può dire che esso costituisce:
+		\begin{enumerate}
+			\item Un'\textit{evoluzione} in quanto permette agli oggetti di essere cittadini di prima classe;
+			\item Una \textit{rivoluzione} in quanto gli oggetti assumono un ruolo \textbf{fondamentale} nella progettazione enella programmazione. L'information hiding e l'incapsulamento sono principi cardine nel paradigma orientato agli oggetti.
+		\end{enumerate}
+		Gli oggetti incapsulano uno \textit{stato} e un \textit{comportamento}. Lo stato è identificato dal contenuto di una certa area di memoria. Il comportamento è definito da una collezione di procedure e funzioni, detti \textit{metodi}, che possono operare sulla rappresentazione dell'area di memoria associata all'oggetto. \\
+		Da una prospettiva di progetto, gli oggetti modellano le \textit{entità} presenti nel dominio dell'applicazione. \\
+		\begin{example}{}{}
+			In un gioco elettronico che usa palla, si può pensare alla palla come un oggetto dotato di uno:
+			\begin{itemize}
+				\item \textbf{Stato}: dimensione, posizione in uno spazio di riferimento, ecc.
+				\item \textbf{Comportamento}: una palla può ``apparire'' o  ``scomparire'' dallo schermo, può moversi, rimbalzare, ecc.
+			\end{itemize}
+			Le variabili e i metodi definiti nell'oggetto ``palla'' stabiliscono lo stato e il comportamento che sono rilevanti all'uso della palla nel gioco elettronico.
+		\end{example}
+		\subsection{Identificatore di oggetto}
+		Un oggetto ha la sua \textit{identità}, cioè è riconoscibile indipendentemente dal suo stato corrente. Per questo ogni oggetto ha un \textit{identificatore di oggetto}, detto object identifier OID, che lo identifica univocmente. In alcuni contesti gli OID sono anche detti \textit{riferimenti}. \\
+		Un identificatore di oggetto è \textit{immutabile}, cioè non può essere modificato da una qualche operazione di programmazione. Cambiare l'OID di un oggetto equivale alla cancellazione dell'oggetto e alla creazione di un altro oggetto con lo stesso dato. \\
+		Normalmente gli OID sno assegnati in modo automatico agli oggetti, sicchè non hanno un significato nel mondo reale. In molti ambienti di programamzione object-oriented, l'OID corrisponde all'indirizzo dell'area di memoria che conserva lo stato dell'oggetto.
+		\section{Le classi}
+		Una \textit{classe} è la descrizione di una famiglia di oggetti che condividono la stessa struttura (gli attributi) e il medesimo comportamnto (operazioni). Nella programmazione OO \textit{ogni oggetto è un'istanza di una classe}, cioè \textit{un oggetto non può essere definito se non si definisce la classe di appartenenza}. Analogamente nella modellazione OO le \textit{istanze esistono in quanto ci sono le loro astrazioni}. \\
+		Idealmente una classe è una realizzazione di un dato astratto. Questo significa che i dettagli della realizzazione sono normalmente nascosti. \\
 \end{document}
