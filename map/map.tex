@@ -1046,33 +1046,629 @@
 			\item \textit{Definire una classe}: l'astrazione riguarda la dichiarazione di un modulo (dotata di stato locale).
 		\end{enumerate}
 		In tutti i casi la rappresentazione del dato astratto viene nascosta e la manipolazione dei valori è resa possibile solo mediante operazioni fornite allo scopo. Tuttavia, ci sono delle differenza fra tipo astratto e classe di oggetti. 
-		\chapter{Paradigma Object Oriented}
-		\section{Gli oggetti}
-		Si deve osservare che nella programmazione imperativa è possibile definire degli oggetti, tuttavia
-		\begin{enumerate}
-			\item il loro utilizzo è legato all'auto disciplina dei programmatori e non viene in alcun modo forzato;
-			\item gli oggetti \textbf{non sono cittadini di prima classe}.
-		\end{enumerate}
-		Confrontando il paradigma orientato a oggetti rispetto a quello imperativo si può dire che esso costituisce:
-		\begin{enumerate}
-			\item Un'\textit{evoluzione} in quanto permette agli oggetti di essere cittadini di prima classe;
-			\item Una \textit{rivoluzione} in quanto gli oggetti assumono un ruolo \textbf{fondamentale} nella progettazione enella programmazione. L'information hiding e l'incapsulamento sono principi cardine nel paradigma orientato agli oggetti.
-		\end{enumerate}
-		Gli oggetti incapsulano uno \textit{stato} e un \textit{comportamento}. Lo stato è identificato dal contenuto di una certa area di memoria. Il comportamento è definito da una collezione di procedure e funzioni, detti \textit{metodi}, che possono operare sulla rappresentazione dell'area di memoria associata all'oggetto. \\
-		Da una prospettiva di progetto, gli oggetti modellano le \textit{entità} presenti nel dominio dell'applicazione. \\
-		\begin{example}{}{}
-			In un gioco elettronico che usa palla, si può pensare alla palla come un oggetto dotato di uno:
+		\begin{itemize}
+			\item \textbf{Sintattica}: nel tipo astratto gli operatori hanno un parametro in più, relativo proprio al tipo che si sta definendo;
+			\item \textbf{Realizzativa}: nel caso del tipo astratto gli operatori sono definiti una sola volta, mentre nel caso della classe gli operatori sono definiti più volte, tante quante sono le istanze. Le diverse copie degli operatori agiranno su diversi dati in memoria centrale;
+			\item \textbf{Concettuale}: richiamando la suddivisione delle operazioni su un dato astratto in osservazioni e costruttori, si può dire che:
 			\begin{itemize}
-				\item \textbf{Stato}: dimensione, posizione in uno spazio di riferimento, ecc.
-				\item \textbf{Comportamento}: una palla può ``apparire'' o  ``scomparire'' dallo schermo, può moversi, rimbalzare, ecc.
+				\item il tipo astratto è organizzato intorno alle osservazioni. Ogni osservazione è implementata come un'operazione su una rappresentazione concreta derivata dai costruttori. Anche i costruttori sono implementati come operazioni che creano valori. La rappresentazione è condivisa dalle operazioni, ma è nascosta ai fruitori del tipo astratto.
+				\item La clase è organizzata intorno ai costruttori. Le osservazioni diventano metodi dei valori. Un oggetto è definito dalla combinazione di tutte le osservazioni possibili su di esso. 
 			\end{itemize}
-			Le variabili e i metodi definiti nell'oggetto ``palla'' stabiliscono lo stato e il comportamento che sono rilevanti all'uso della palla nel gioco elettronico.
-		\end{example}
-		\subsection{Identificatore di oggetto}
-		Un oggetto ha la sua \textit{identità}, cioè è riconoscibile indipendentemente dal suo stato corrente. Per questo ogni oggetto ha un \textit{identificatore di oggetto}, detto object identifier OID, che lo identifica univocmente. In alcuni contesti gli OID sono anche detti \textit{riferimenti}. \\
-		Un identificatore di oggetto è \textit{immutabile}, cioè non può essere modificato da una qualche operazione di programmazione. Cambiare l'OID di un oggetto equivale alla cancellazione dell'oggetto e alla creazione di un altro oggetto con lo stesso dato. \\
-		Normalmente gli OID sno assegnati in modo automatico agli oggetti, sicchè non hanno un significato nel mondo reale. In molti ambienti di programamzione object-oriented, l'OID corrisponde all'indirizzo dell'area di memoria che conserva lo stato dell'oggetto.
-		\section{Le classi}
-		Una \textit{classe} è la descrizione di una famiglia di oggetti che condividono la stessa struttura (gli attributi) e il medesimo comportamnto (operazioni). Nella programmazione OO \textit{ogni oggetto è un'istanza di una classe}, cioè \textit{un oggetto non può essere definito se non si definisce la classe di appartenenza}. Analogamente nella modellazione OO le \textit{istanze esistono in quanto ci sono le loro astrazioni}. \\
-		Idealmente una classe è una realizzazione di un dato astratto. Questo significa che i dettagli della realizzazione sono normalmente nascosti. \\
+		\end{itemize}
+			In breve, un tipo astratto di dato può essere inteso come un \textit{insieme con operazioni}, mentre le classi sono \textit{insiemi di operazioni}.
+			\subsection{Vantaggi del tipo astratto}
+			Nei linguaggi imperativi, i valori di un tipo astratto vengono trattati alla stregua dei valori di un tipo concreto, cioè sono cittadini di prima classe. Al contrario, i valori rappresentati mediante oggetti sono trattati come cittadini di terza classe in quanto:
+			\begin{itemize}
+				\item una procedura non può restituire l'istanza di un generic package;
+				\item non è possibile creare dinamicamente degli oggetti in quanto le istanze sono stabilite al momento della compilazione. 
+			\end{itemize}
+			I tipo astratti sono utili in tutti i paradigmi di programmazione, mentre gli oggetti, essendo variabili aggiornabili, si adattano bene solo a un paradigma di programmazione side-effecting. La notazione usata per chiamare un'operazione di un tipo astratto è più naturale perchè valori e variabili del tipo astratto sono argomenti espliciti. 
+			\subsection{Svantaggi del tipo astratto}
+			I vantaggi del tipo astratto sono i seguenti.
+			\begin{itemize}
+				\item \textbf{Scarsa estendibilità}: l'aggiunta di un nuovo costruttore comporta dei cambiamenti intrusivi nelle implementazioni esistenti degli operatori. Ogni operatore dovrà essere opportunamente rivisto in modo da prevedere il trattamento di rappresentazioni ottenute con nuovi costruttori. 
+				\begin{example}{}{}
+					Si vuole implementare il dato astratto \textit{geometricShape} la cui specifica algebrica è fornita di seguito:
+					\begin{center}
+					\begin{tabular}{|c|c|c|}
+						\hline
+						\multirow{2}{*}{\textit{\textbf{osservazioni}}} & \multicolumn{2}{c|}{\textit{\textbf{Costruttore di g}}} \\ \cline{2-3} 
+						& $square(x)$ & $circle(r)$ \\ \hline
+						$area(g)$ & $x^2$ & $\pi r^2$ \\ \hline
+					\end{tabular}
+					\end{center}
+					\begin{lstlisting}[style=adastyle]
+package geometricShape_type
+	type geometricShape is limited private
+	function square(x: real): geometricShape;
+	function circle(x: real): geometricShape;
+	function area(g: geometricShape): real;
+	private
+		type geometricShape = record
+			shape: char;
+			value: char;
+		end
+	end geometricShape_type;
+	package body geometricShape_type
+		function square(x: real): geometricShape
+		var g: geometricShape
+		begin
+			g.shape := 's';
+			g.value := x;
+			return g
+		end
+		
+		function circle(x: real): geometricShape
+		var g: geometricShape
+		begin
+			g.shape := 'c';
+			g.value := x;
+			return g
+		end
+		
+		function area(g: geometricShape): real
+		begin
+			if g.shape = 's' then return g.value * g.value;
+			else return 3.14 * g.value * g.value;
+		end
+	end geometricShape_type	\end{lstlisting}
+					Realizzando il dato astratto mediante \textit{classi} si possono definire due moduli generici, uno per ogni forma geometrica (o \textbf{costruttore}). 
+					\begin{lstlisting}[style=adastyle]
+generic package Circle
+	function area(): real;
+	procedure init(real);
+end Circle
+package body Circle
+	var raggio: real;
+	procedure init(x: real)
+	begin
+		raggio := x
+	end;
+	
+	function area(): real
+	begin
+		return 3.14 * raggio * raggio
+	end;
+end Circle
+
+generic package Square
+	function area(): real;
+	procedure init(real);
+end Square
+package body Square
+	var lato: real;
+	procedure init(x: real)
+	begin
+		lato := x
+	end;
+	
+	function area(): real
+	begin
+		return lato * lato
+	end;
+end Square\end{lstlisting}
+					Per utilizzare una forma geometrica si deve istanziare una delle due classi e invocare il metodo \textit{init}. \\
+					Se si estende la specifica del dato astratto in modo da considerare anche i rettangoli, tramite il costruttore \textit{rectangle(l, m)}, se abbiamo specificato un \textbf{tipo astratto}, siamo stati costretti a cambiare la rappresentazione in modo da memorizzare due valori e non uno.
+					\begin{lstlisting}[style=adastyle]
+type geometricShape = record
+	shape: char;
+	value: real;
+	value2: real
+end\end{lstlisting}
+				Inoltre dobbiamo aggiungere l'opportuno costruttore
+\begin{lstlisting}[style=adastyle]
+function rectangle(x, y: real): geometricShape
+var g: geometricShape
+begin
+	g.shape := 'r';
+	g.value := x;
+	g.value2 := y;
+	return g
+end
+function area(g: geometricShape): real
+begin
+	if g.shape = 's' then return g.value * g.value
+	else if g.shape = 'c' then return 3.14 * g.value * g.value
+	else return g.value * g.value2
+end\end{lstlisting}
+				Diversamente, avendo realizzato il dato astratto mediante classi basta aggiungere un'altra classe.
+\begin{lstlisting}[style=adastyle]
+generic package Rectangle
+	function area(): real;
+	procedure init(real, real);
+end
+package body Rectangle
+	var base, altezza: real;
+	procedure init(x, y: real)
+	begin 
+		base := x;
+		altezza := y;
+	end;
+	function area(): real
+	begin
+		return base * altezza
+	end;
+end Rectangle\end{lstlisting}
+Nella programmazione orientata a oggetti, per evitare la riscrittura di codice comune ad altre classi già definte è possibile ricorrere ai meccanismi di \textit{ereditarietà} tra le classi.
+\end{example}
+\end{itemize}
+\section{Astrazione generica}
+Il concetto di classe di oggetti va inquadrato in un tema più generale, quello dell'\textit{astrazione generica}. Il principio di astrazione suggerisce che si può astrarre anche sulla classe sintattica \textit{dichiarazione}, in quanto essa sottointende una computazione. In particolare la valutazione di una dichiarazione comporta la creazione di \textbf{legami} detti \textit{bindings}. \\
+Un'astrazione generica è un'astrazione su una dichiarazione, pertanto il corpo della dichiarazione di un'astrazione generica è a sua volta una dichiarazione. La chiamata di un'astrazione generica è detta \textbf{istanziazione} e produce dei legami elaborando la dichiarazione contenuta nel corpo dell'astrazione generica. \\
+Analogamente a quanto detto per le altre astrazioni, l'astrazione generica potrà essere specificata come segue:
+\[
+\text{generic I($FP_1; \dots; FP_n$) is D}
+\]
+dove \textit{I} è un identificatore dell'astrazione generica, $FP_1; \dots; FP_n$ sono parametri formali, e \textit{D} è una dichiarazione che, quando elaborata, produrrà dei legami. \textit{D} funge da \textit{matrice} dalla quale ricavare le dichiarazioni per istanziazione. Una dichiarazione D può essere:
+\begin{itemize}
+	\item la dichiarazione di un tipo;
+	\item la dichiarazione di un modulo;
+	\item la dichiarazione di una funzione;
+	\item la dichiarazione di una procedura;
+	\item \dots
+\end{itemize}
+Occorre pensare a dei meccanismi per poter distinguere le diverse dichiarazioni che si ottengono per istanziazione. Un modo è quello di specificare un diverso identificatore all'atto dell'istanziazione, come nel seguente esempio
+\[
+\text{A istantiation of I};
+\]
+Così, la seguente dichiarazione generica
+\begin{lstlisting}[style=adastyle]
+generic typeRxR is
+	typeRxR = record
+		x: real;
+		y: real
+	end;\end{lstlisting}
+potrà essere utilizzata come matrice per generare le dichiarazioni per i tipi \textit{Point2d} e \textit{Complex}:
+\begin{lstlisting}[style=adastyle]
+Point2D instantiation of typeRxR
+Complex instantiation of typeRxR\end{lstlisting}
+Si è visto un utilizzo dell'astrazione generica nella dichiarazione di moduli dotati di stato locale. Mediante l'operazione di istanziazione si ottengono diverse copie dell'oggetto che differiscono solo per il nome dell'identificatore. L'astrazione generica di un oggetto corrisponde al concetto di classe. 
+\subsection{Generic package in Ada}
+Il \textit{generic package} di Ada è una esemplificazione di astrazione generica. L'espressione:
+\[
+\text{package ST1 is new STACK}
+\]
+è un esempio di istanziazione generica. \\
+Le astrazioni generiche, come qualsiasi altra astrazione, possono essere parametrizzate.
+\begin{example}{}{}
+	Nel seguente esempio, viene definita una classe coda in Ada. La variabile \textbf{items} è un array di caratteri. Al fine di svincolare la definizione di classe da particolari costanti legate all'applicazione si dota l'astrazione generica del \textit{parametro formale} \textbf{capacity}, che è utilizzato per dimensionare l'array.  L'istanziazione deve consentire di specificare il parametro effettivo, che sarà un valore da associare al parametro formale. In Ada l'istanziazione sarà specificata come segue:
+\begin{lstlisting}[style=adastyle]
+package line_buffer is new queue_class(120);
+generic
+	capacity: Positive;
+package queue_class is 
+	procedure append(newitem: in Character);
+	procedure remove(olditem: out Character);
+end queue_class;
+package body queue_class is 
+	items: array(1..capacity) of Character;
+	size, front, rear: Integer range 0..capacity;
+	procedure append(newitem: in Character) is 
+	...;
+	procedure remove(olditem: out Character) is
+	...;
+begin
+...
+end queue_class;\end{lstlisting}
+\end{example}
+In principio, si può applicare l'astrazione generica a qualunque dichiarazione, incluso le procedure e le funzioni. Ad esempio, si potrebbe dichiarare una procedura \textbf{T\_swap} per scambiare dati di un tipo \textbf{T} predefinito:
+\begin{lstlisting}[style=adastyle]
+generic
+procedure T_swap(a, b: in out T);
+procedure T_swap(a, b: in out T) is
+	tmp: T;
+begin
+	tmp := a; 
+	a := b;
+	b := tmp;
+end T_swap;\end{lstlisting}
+e  ottenere diverse copie di essa per istanziazione:
+\begin{lstlisting}[style=adastyle]
+procedure swap1 is new T_swap
+procedure swap2 is new T_swap\end{lstlisting}
+In realtà è poco utile disporre di due funzioni identiche ma di nome diverso. Diversa sarebbe la situazione se potessimo dichiarare una generica procedure \textbf{T\_swap} che opera sui dati di tipo T qualunque, e potessimo specificare il tipo al momento dell'istanziazione. Per ottenere questo risultato necessitiamo di una particolare classe di parametri, quelli di tipo.
+\begin{lstlisting}[style=adastyle]
+generic
+	type T is private;
+	procedure T_swap(a, b: in out T);
+	procedure T_swap(a, b: in out T) is
+		tmp: T;
+	begin
+		tmp := a;
+		a := b;
+		b := tmp;
+	end T_swap;\end{lstlisting}
+La clausola \textit{generic} introduce un \textbf{parametro di tipo} e la dichiarazione che segue introduce la matrice di una procedura che scambia due dati di un tipo T generico. Le procedure effettive sono ottenute istanziando la procedura generica con i parametri di tipo effettivi da sostituire a T. 
+\begin{lstlisting}[style=adastyle]
+procedure int_swap is new T_swap(Integer);
+procedure str_swap is new T_swap(String);\end{lstlisting}
+In questo modo si è:
+\begin{itemize}
+	\item Svincolato la definizione dello scambio di due elementi da un fattore marginale, come il tipo degli elementi da scambiare;
+	\item Garantito comunque il \textbf{controllo statico dei tipi} fra parametri formali e parametri effettivi delle diverse procedure ottenute, e fra sorgente e destinazione di una assegnazione. 
+\end{itemize}
+L'uso dei parametri di tipo in astrazioni generiche offre un buon \textbf{compromesso} fra necessità di dover effettuare il controllo statico dei tipi e desiderio di definire componenti software riutilizzabili. \\
+I parametri di tipo possono essere utilizzati anche quando si definiscono delle classi, come indicato in questo esempio.
+\begin{lstlisting}[style=adastyle]
+generic
+	max: Positive;
+	type ITEM is private;
+package Stack is 
+	procedure push(x: in ITEM);
+	proceudre pop;
+	procedure top(x: out ITEM);
+	function empty return Boolean;
+end Stack;
+package body Stack is
+	type Table is array(1..max) of ITEM;
+	st: Table;
+	top: Integer range 0..max := 0;
+	procedure push(x: in ITEM) is
+	begin
+		top := top + 1;
+		st(top) := x;
+	end push;
+	procedure pop is
+	begin
+		top := top - 1;
+	end pop;
+	procedure top(x: out ITEM) is
+	begin
+		x := st(top);
+	end top;
+	function empty return Boolean is
+	begin
+		...\end{lstlisting}
+In questo caso per creare i singoli oggetti scriveremo:
+\begin{lstlisting}[style=adastyle]
+declare 
+	package STACK_INT is new STACK(10, INTEGER);
+	with STACK_INT; use STACK_INT;
+	package STACK_REAL is new STACK(10, REAL);
+	with STACK_REAL; use STACK_REAL;
+	A: real; B: Integer;
+begin
+	push(12); push(15.0); top(B); top(A)
+end\end{lstlisting}
+Si osservi che non è necessario utilizzare la notazione puntata in quanto push e top sono differenziate dal contesto (tipo di parametro effettivo passato). \\
+L'astrazione generica è quindi di supporto all'astrazione dati, in quanto permette di definire delle classi che sono invarianti ad alcuni tipi di dati necessari per definirle. Inoltre, l'astrazione generica, mediante i parametri di tipo, è applicabile a tipi astratti che possono essere così ugualmente svincolati dalla necessità di specificare il tipo degli elementi sui quali operare. \\
+Consideriamo, ad esemoio, di definire dei tipi astratti per una applicazione che usa:
+\begin{enumerate}
+	\item stack di interi;
+	\item stack di reali;
+	\item stack di un tipo astratto point3D
+\end{enumerate}
+Un modo di procedere sarebbe quello di scrivere una definizione separata per ciascuno dei tre tipi, ma, questo presenta degli svantaggi.
+\begin{enumerate}
+	\item \textbf{Codice duplicato} in quanto plausibilmente simile per tutte le definizioni;
+	\item \textbf{Sforzo di programmazione ridondante};
+	\item \textbf{Manutenzione complicata} poichè le modifiche, come l'aggiunta di un nuovo operatore, vanno plausibilmente effettuate in tutte le versioni.
+\end{enumerate}
+Una alternativa sarebbe quella di separare le proprietà di uno stack dalle proprietà dei loro elementi e questo è possibile farlo utilizzando i parametri di tipo. \\
+Se un'astrazione è parametrizzata rispetto a un valore, possiamo usare l'argomento valore anche se non sappiamo nulla al di fuori del suo tipo. Analogamente se un'astrazione è parametrizzata rispetto a una variabile, possiamo ispezionare e aggiornare la variabile argomento anche se non sappiamo nulla oltre il suo tipo. Ma quando si parametrizza rispetto al tipo la situazione cambia. Nell'esempio di T\_swap avevamo le assegnazioni:
+\begin{center}
+	tmp := a; \\
+	a := b; \\
+	b := tmp;
+\end{center}
+ma nessuno garantisce che l'assegnazione sia un'operazione valida per i dati di tipo T. \\
+In Ada, l'espressione ``\textit{type T is private}'' sottointende che l'assegnazione e i predicati = e $/=$ sono operazioni valide per il tipo effettivo denotato da T. 
+\subsection{Astrazione generica in C++}
+In C++ l'astrazione generica è supportata mediante i \textit{template}. Un template è del codice generico dotato di parametri che possono assumere valori specifici al momento della compilazione. Ad esempio, piuttosto che scrivere due classi, ListOfInts e ListOfStrings, si potrebbe scrivere una singola classe template:
+\begin{center}
+	template <class T> class List
+\end{center}
+dove il parametro di tipo T del template può essere rimpiazzato da un qualunque tipo quando il codice è compilato. Ciò è ottenuto mediante un'istanziazione del template:
+\begin{center}
+	List<int> I1; \\
+	List<string> h2; \\
+	List<int> I3;
+\end{center}
+Il compilatore genererà tre definizioni di classi, una per ogni istanziazione. In generale ogni istanziazione di un template prodcue una copia del codice template. La copia è creata in fase di precompilazione. \\
+Si distinguono due categorie di template in C++:
+\begin{enumerate}
+	\item \textbf{Template di classe}: definisce la struttura e le operazinoi per un insieme illimitato di tipi correlati. \\
+	Ad esempio, un template di classe Stack, potrebbe fornire una definizione comune per una pila di Int, di float, e cosi via.
+	\item \textbf{Template di funzione}: definisce un insieme illimitato di funzioni correlate. \\
+	Ad esempio, una famiglia di funzioni di ordinamento potrebbe essere dichiarata in questo modo:
+	\begin{lstlisting}[style=cppstyle]
+template <class T> void sort(vector<T>);\end{lstlisting}
+Una funzione generata da una template di funzione è chiamata \textbf{funzione template}.
+\end{enumerate}
+In C++ non è necessaria l'istanziazione esplicita dei template. Nell'esempio, saranno istanziate due funzioni
+\[
+\text{sort(vector<complex>)} \quad \text{sort(vector<int>)}
+\]
+Le diverse istanze sono generate sulla base dei tipi dei parametri effettivi delle chiamate a funzioni generiche. Nell'invocazione della funzione sort c'è ambiguità, in quanto la stessa funzione può avere parametri differenti, questo è un caso di \textbf{overloading}, ovvero di associazione dello stesso identificatore di funzione a realizzazioni differenti. Il compilatore risolve questa ambiguità sulla base del tipo degli argomenti effettivi.
+\paragraph{Template vs. Generics} \quad \\
+Nonostante la similarità sintattica, i template del C++ e le Generics di Java sono piuttosto differenti. La differenza è soprattutto nel modo in cui sono trattate dal compilatore. Il compilatore C++ genera del codice specifico per ogni istanziazione del template. Il compilatore Java introduce dei controlli al compile-time sulle classi generiche in modo da controllare  ai metodi della classe. Il codice della classe generica non è ricompilato.
+\chapter{Paradigma Object Oriented}
+\section{Gli oggetti}
+Si deve osservare che nella programmazione imperativa è possibile definire degli oggetti, tuttavia
+\begin{enumerate}
+	\item il loro utilizzo è legato all'auto disciplina dei programmatori e non viene in alcun modo forzato;
+	\item gli oggetti \textbf{non sono cittadini di prima classe}.
+\end{enumerate}
+Confrontando il paradigma orientato a oggetti rispetto a quello imperativo si può dire che esso costituisce:
+\begin{enumerate}
+	\item Un'\textit{evoluzione} in quanto permette agli oggetti di essere cittadini di prima classe;
+	\item Una \textit{rivoluzione} in quanto gli oggetti assumono un ruolo \textbf{fondamentale} nella progettazione enella programmazione. L'information hiding e l'incapsulamento sono principi cardine nel paradigma orientato agli oggetti.
+\end{enumerate}
+Gli oggetti incapsulano uno \textit{stato} e un \textit{comportamento}. Lo stato è identificato dal contenuto di una certa area di memoria. Il comportamento è definito da una collezione di procedure e funzioni, detti \textit{metodi}, che possono operare sulla rappresentazione dell'area di memoria associata all'oggetto. \\
+Da una prospettiva di progetto, gli oggetti modellano le \textit{entità} presenti nel dominio dell'applicazione. \\
+\begin{example}{}{}
+	In un gioco elettronico che usa palla, si può pensare alla palla come un oggetto dotato di uno:
+	\begin{itemize}
+		\item \textbf{Stato}: dimensione, posizione in uno spazio di riferimento, ecc.
+		\item \textbf{Comportamento}: una palla può ``apparire'' o  ``scomparire'' dallo schermo, può moversi, rimbalzare, ecc.
+	\end{itemize}
+	Le variabili e i metodi definiti nell'oggetto ``palla'' stabiliscono lo stato e il comportamento che sono rilevanti all'uso della palla nel gioco elettronico.
+\end{example}
+\subsection{Identificatore di oggetto}
+Un oggetto ha la sua \textit{identità}, cioè è riconoscibile indipendentemente dal suo stato corrente. Per questo ogni oggetto ha un \textit{identificatore di oggetto}, detto object identifier OID, che lo identifica univocmente. In alcuni contesti gli OID sono anche detti \textit{riferimenti}. \\
+Un identificatore di oggetto è \textit{immutabile}, cioè non può essere modificato da una qualche operazione di programmazione. Cambiare l'OID di un oggetto equivale alla cancellazione dell'oggetto e alla creazione di un altro oggetto con lo stesso dato. \\
+Normalmente gli OID sno assegnati in modo automatico agli oggetti, sicchè non hanno un significato nel mondo reale. In molti ambienti di programamzione object-oriented, l'OID corrisponde all'indirizzo dell'area di memoria che conserva lo stato dell'oggetto.\\
+Quasi mai il programmatore utilizza esplicitamente i riferimenti. Generalmente questi vengono legati a delle variabili e si fa riferimento agli oggetti mediante identificatori di variabile. Variabili distinte possono riferirsi al medesimo oggetto. In questo caso si hanno degli \textbf{alias}. 
+\begin{note}{}{}
+	La presenza degli alias non significa che un oggetto non è identificato univocamente, ma semplicemente che diversi identificatori di variabile sono stati legati al medesimo riferimento di oggetto. 
+\end{note}
+Lo stato di un oggetto può anche contenere il riferimento ad un altro oggetto. Si dice che un oggetto \textit{punta} ad un altro. Il puntamento è asimettrico. La simmetria è ottenuta mediante le reciprocità di puntamento. 
+\section{Le classi}
+Una \textit{classe} è la descrizione di una famiglia di oggetti che condividono la stessa struttura (gli attributi) e il medesimo comportamnto (operazioni). Nella programmazione OO \textit{ogni oggetto è un'istanza di una classe}, cioè \textit{un oggetto non può essere definito se non si definisce la classe di appartenenza}. Analogamente nella modellazione OO le \textit{istanze esistono in quanto ci sono le loro astrazioni}. \\
+Idealmente una classe è una realizzazione di un dato astratto. Questo significa che i dettagli della realizzazione sono normalmente nascosti. \\
+Ogni classe ha una doppia componente:
+\begin{enumerate}
+	\item \textbf{Una componente statica}, i dati, costituita da \textit{campi} o \textit{attributi} dotati di nome, che contengono un valore. I campi caratterizzano lo stato degli oggetti durante l'esecuzione del programma. \\
+	Gli attributi si distinguono in base al loro ambito d'azione, detto \textit{scope}:
+	\begin{itemize}
+		\item \textbf{Attributi d'istanza}: sono associati ad un'istanza e hanno un tempo di vita pari a quello dell'istanza alla quale sono associati;
+		\item \textbf{Attributi di classe}: sono associati alle classe e condivisi da tutte le istanze della classe. Il loro tempo di vita è lo stesso della classe. 
+	\end{itemize}
+	Gli attributi d'istanza contribuiscono a caratterizzare lo stato di ogni singolo oggetto, mentre gli attributi di classe contribuiscono a definire il fattore comune allo stato di tutti gli oggetti di una classe. 
+	\item \textbf{Una componente dinamica}, i metodi o  operazioni, che rappresentano il comportamento comune degli oggetti appartenenti alla classe, cioè i servizi che possono essere richiesti a un oggetto di una classe. I metodi manipolano gli attributi. \\
+	I metodi possono essere classificati:
+	\begin{itemize}
+		\item \textbf{Metodi costruttori}: sono invocati per creare (istanziare) gli oggett e inizializarli;
+		\item \textbf{Metodi di accesso}: restituiscono astrazioni significative dello stato di un oggetto;
+		\item \textbf{Metodi di trasformazione}: modificano lo stato di un oggetto;
+		\item \textbf{Metodi distruttori}: sono invocati quando si rimuovono gli oggetti dalla memoria.
+	\end{itemize}
+	I metodi di accesso e trasformazione possono essere distinti in:
+	\begin{enumerate}
+		\item \textbf{Metodi di istana}: operano su almeno un attributo di istanza, pertanto possono esesre invocati solo specificando l'istanza;
+		\item \textbf{Metodi di classe}: operano esclusivamente su attributi di classe, pertanto possono essere invocati specificando la classe. Si possono invocare metodi di classe anche quando non è stato creato alcun oggetto per quella classe. 
+	\end{enumerate}
+	In linea di principio, l'invocazione di un metodo di classe può avvenire anche specificando un oggetto, tuttavia ciò è sconsigliato perchè non evidenzia il fatto che si manipolano solo attributi di classe. \\
+	Invece, non è possibile invocare un metodo di istanza sulla classe. 
+\end{enumerate}
+\section{UML}
+In UML, Unified Modeling Language, un linguaggio visuale utilizzato per  definire, progettare, realizzare e documentare sistemi mediante un approccio object oriented. È un linguaggio di \textbf{rappresentazione dei sistemi} ed è \textbf{universale}: può rappresentare sistemi eterogenei per architettura, tecnologie, tipologia applicativa ecc. \\
+UML è di supporto alla progettazione di un nuovo sistema e alla documentazione di un sistema esistente. \\
+\subsection{Oggetti in UML}
+In UML un oggetto, o \textit{istanza}, è graficmaente rappresentato in questo modo:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/istanze_uml}
+\end{figure}
+È possibile indicare:
+\begin{itemize}
+	\item solo il nome (identificatore) dell'istanza;
+	\item nome dell'istanza e dell'astrazione (la classe) cui appartiene;
+	\item solo il nome dell'astrazione, qualora non si conosca a priori il nome dell'istanza;
+	\item un'istanza orfana, se non si conosce a priori la sua astrazione.
+\end{itemize}
+Lo stato di un oggetto può essere rappresentato in modo astratto:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/stato_uml}
+\end{figure}
+oppure indicando esplicitamente i valori assunti dagli attributi dell'oggetto
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/stato_uml2}
+\end{figure}
+\subsection{Le classi in UML}
+In UML una classe è resa graficamente mediante un rettangolo:
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		Cliente \\
+		\hline
+	\end{tabular}
+\end{center}
+Ogni classe deve avere un nome che la contraddistingue dalle altre. Questo può essere semplice o indicare un percorso.
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		java.awt.Rectangle \\
+		\hline
+	\end{tabular}
+\end{center}
+Graficamente gli attributi sono sotto il nome della classe.
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		Rettangolo \\
+		\hline 
+		base \\
+		altezza \\
+		\hline
+	\end{tabular}
+\end{center}
+Di un attrributo si può specificare l'insieme dei valori assunti (oggetti di una classe) e una eventuale inizializzazione.
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		Rettangolo \\
+		\hline 
+		base: real = 10 \\
+		altezza: real \\
+		\hline
+	\end{tabular}
+\end{center}
+Un attributo di classe, detto \textbf{statico} in UML, è indicato come sottolineato.
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		Rettangolo \\
+		\hline 
+		\underline{numRettangoli: integer = 0} \\
+		base \\
+		altezza \\
+		\hline
+	\end{tabular}
+\end{center}
+L'attributo \underline{numRettangoli} indica il numero di oggetti della classe Rettangoli che sono stati istanziati. È un attributo statico in quanto condiviso da tutte le istanze della classe Rettangoli. Esso è inizializzato a 0 e verosimilmente sarà incrementato dai costruttori della classe Rettangoli, mentre sarà decrementato dai distruttori. \\
+Gli attributi \textbf{derivati} sono quelli che possono essere calcolati partendo da altri attributi. UML prevede una rappresentazione specifica mediante una /.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/commento_uml}
+\end{figure}
+Il commento fa parte della notazione standard UML e in questo caso è utilizzato per indicare come si calcola l'attributo derivato length. \\
+I commenti possono essere aggiunti a qualunque elemento della notazione UML. \\
+In UML le operazioni sono indicate graficamente in una sezione al di sotto degli attributi:
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		Rettangolo \\
+		\hline 
+		Base: Float \\
+		Altezza: Float = 0 \\
+		\vdots \\
+		\hline 
+		move(to: Point) \\
+		draw() \\
+		height(): Float \\
+		\hline
+	\end{tabular}
+\end{center}
+Di una operazioni si può specificare la \textbf{segnatura}. \\
+Una classe può essere rappresentata a diversi livelli di dettaglio:
+\begin{itemize}
+	\item specificandone solo il nome;
+	\item specifandone gli attributi e i metodi.
+\end{itemize}
+I diversi livelli di dettaglio consentono a chi progetta/modella di attribuire maggiore o minore importanza a determinati fattori a seconda della vista del sistema che si sta considerando.
+\subsection{Gli stereotipi}
+Consideriamo la seguente classe.
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		Rettangolo \\
+		\hline 
+		<<costruttori>\\
+		rettangolo() \\
+		rettangolo(x: int; y: int; h: int; b: int) \\
+		<<accesso>>
+		vuoto(): boolean \\
+		\vdots \\
+		\hline
+	\end{tabular}
+\end{center}
+In questa classe si è fatto uso della notazione <<costruttori>> e <<accesso> e questi sono due tipici esempi di \textbf{stereotipi}. Gli stereotipi sono dei tipici \textit{meccanismi di estendibilità} di UML. Infatti essi estendono il vocabolario di UML, permettendo di creare nuovi blocci per la costruzione dei modelli, derivandoli da blocchi già esistenti ma rendendoli specifici per il particolare dominio. \\
+Nel precedente esempio è stato esteso il blocco ``operazioni'' in modo da poter distinguere le diverse tipologie di operazioni. Gli stereotipi sono identificabili perchè racchiusi da una coppia di caporali, << >>. 
+\subsection{Visibilità di attributi e metodi} Gli attributi e i metodi di una classe possono avere diversi livelli di \textit{visibilità}. Un elemento, attributo o metodo, ha visibilità \textbf{pubblica} quando può essere visto (utilizzato, invocato) da altre classi. Ha visibilità \textbf{privata} quando può essere visto solo dalla classe di appartenenza. \\ 
+Altri livelli di visibilità sono:
+\begin{itemize}
+	\item \textbf{protetta}: l'elemento è visibile all'interno del package e all'esterno solo ai discendenti della classe di appartenenza;
+	\item \textbf{package}: l'elemento è visibile solo agli elementi del package che contiene la classe in cui l'elemento è definito. 
+\end{itemize}
+UML consente di specificare i livelli di visibilità di attributi e metodi utilizzando la seguente notazione:
+\begin{itemize}
+	\item \textbf{public}: l'elemento è preceduto da un +;
+	\item \textbf{protected}: l'elemento è preceduto da un $\#$;
+	\item \textbf{private}: l'elemento è preceduto da un -;
+	\item \textbf{package}: l'elemento è preceduto da un ~
+\end{itemize}
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline 
+		Toolbar \\
+		\hline 
+		\# currentSelection: Tool \\
+		\# toolCount: Integer \\
+		\hline
+		+ pickItem() \\
+		\# check() \\
+		- compact() \\
+		\hline
+	\end{tabular}
+\end{center}
+\subsection{Molteplicità di classe}
+Con il termine \textbf{molteplicità di classe} si intende il numero di istanze che essa può avere. Generalmente non si pone un limite, tuttavia in alcuni casi è necessario indicare che la classe può avere una sola istanza, detta \textbf{classe singoletto}, o comunque un numero ben definito di istanze. \\
+UML impone che tale valore sia indicato in alto a destra nell'icona rappresentante la classe.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/molteplicita_classe}
+\end{figure}
+Per realizzare una classe singoletto, ad esempio
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/singoletto}
+\end{figure}
+basta rendere privati i costruttori della classe e dotando la classe di un attributo statico che è inizializzato all'unico oggetto di quella classe. Ovviamente, nessun metodo della classe singoletto invocherà il costruttore, nè potrà farlo un utente della classe. Inoltre può essere utile disporre di un metodo di classe che restituisce l'unica istanza memorizzata nella stessa classe singoletto. 
+\subsection{Molteplicità di un attributo}
+È possibile indicare la molteplicità anche per gli attributi, subito dopo il loro nome. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/molteplicita_attributo}
+\end{figure}
+Si è visto come è possibile specificare in UML le varia caratteristiche degli attributi di una classe. A riepilogo, mostriamo lo schema generale per la definizione di un attributo:
+\begin{center}
+	[visibilità] nome [molteplicità] [:tipo] [= valore iniziale] [{proprietà}]
+\end{center}
+Di seguito alcuni esempi.
+\begin{itemize}
+	\item origine \quad solo il nome;
+	\item + origine \quad visibilità e nome;
+	\item orgine: point \quad nome e tipo;
+	\item testa: *elemento \quad nome e tipo complesso;
+	\item nome[0..1]: String \quad nome, molteplicità e tipo;
+	\item origine: Point = (0, 0) \quad  nome, tipo e valore iniziale;
+	\item id: Integer {frozen} \quad nome, tipo e proprietà.
+\end{itemize}
+In UML esistono tre \textbf{proprietà} predefinite che possono essere utilizzate con gli attributi:
+\begin{itemize}
+	\item \textbf{changeable}: non vi sono restrizioni sulla modificabilità dell'attributo;
+	\item \textbf{addOnly}: per gli attributi con molteplicità maggiore di uno, i valori possono essere aggiunti, ma una volta creati, non possono essere più rimossi o modifcati;
+	\item \textbf{frozen}: il valore dell'attributo non può più essere modificato dopo che l'oggetto è stato inizializzato.
+\end{itemize}
+Nel caso in cui la proprietà non viene specificata si sottintende che assume valore \textit{changeable}. 
+\subsection{Schema per la definizione di un'operazione}
+Prima di definire lo schema per la definizione di un'operazione, è necessario sottolineare che UML distingue tra operazione e metodo:
+\begin{itemize}
+	\item un'\textbf{operazione} è un servizio che può essere richiesto alla classe;
+	\item un \textbf{metodo} è un'implementazione del servizio.
+\end{itemize}
+Infatti, possono anche esistere diversi metodi per la stessa operazione nei diversi livelli della gerarchia delle classi. \\
+Lo schema per la definizione di un'operazione è la seguente:
+\begin{center}
+	[visibilità] nome [(lista dei parametri)] [: valore di ritorno] [{proprietà}]
+\end{center}
+Di seguito alcuni esempi di definizioni lecite di operazione.
+\begin{itemize}
+	\item visualizza \quad solo il nome;
+	\item + visualizza \quad visibilità e nome;
+	\item set(n: Nome; s: String) \quad  nome e parametri;
+	\item getId(): Integer \quad nome e tipo del dato restituito;
+	\item riparti() {guarded} \quad nome e proprietà.
+\end{itemize}
+Ogni parametro riportato nella segnatura prende la forma:
+\begin{center}
+	[direzione] nome : tipo [= valore iniziale]
+\end{center}
+La direzione può assumere uno dei seguenti valori:
+\begin{itemize}
+	\item \textbf{in} \quad parametro di input, non può essere modificato;
+	\item \textbf{out} \quad parametro di output, può essere modificato per comunicare un'informazione al chiamante;
+	\item \textbf{inout} \quad parametro di input che comunque può essere modificato.
+\end{itemize}
+UML fornisce diverse proprietà predefinite per le operazioni.
+\begin{itemize}
+	\item \textbf{isQuery}: l'esecuzione dell'operazione lascia lo stato del sistema immutato, un'operazione con tale proprietà è quindi priva di \textit{side-effect};
+	\item \textbf{leaf}: l'operazione non può essere più specializzata (overriding) nelle sottoclassi;
+	\item \textbf{sequential}: i chiamanti (callers) di questo oggetto devono coordinarsi affinchè solo una volta richieda il servizio. Nel caso di sovrapposizione la semantica e l'integrità dell'oggetto \textbf{non sono garantite};
+	\item \textbf{guarded}: simile al caso precedente, in ogni istante un solo chiamante può usufruire del servizio, tuttavia, in questo caso, la sequenzialità del servizio è gestita dalla classe proprietaria del servizio stesso;
+	\item \textbf{concurrent}: la semantica e l'integrità dell'oggettom è garantita anche in caso di chiamate multiple.
+\end{itemize}
 \end{document}
