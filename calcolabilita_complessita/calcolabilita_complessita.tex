@@ -31,11 +31,11 @@
 \usepackage{pgfplots}
 \usepackage{calligra}
 \usepackage{subdepth}
-\usepackage{tikz}
 \usepackage{yhmath}
 \usepackage{accents}
 \usepackage{nicefrac}
 \usetikzlibrary{angles, quotes, patterns}
+\usetikzlibrary{automata, positioning, arrows}
 \usepackage{circledsteps}
 \date{}
 \author{Alessandro Carella}
@@ -128,13 +128,15 @@
 	language=Pascal
 }
 
-\lstdefinestyle{normalstyle}{
-	backgroundcolor=\color{backcolour},   
-	commentstyle=\color{codegreen},
-	keywordstyle=\color{blue}\bfseries,
+\definecolor{codeblue}{rgb}{0,0,0.8}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\lstdefinestyle{pseudocode}{
+	backgroundcolor=\color{white},
+	commentstyle=\color{codegray}\itshape,
+	keywordstyle=\color{codeblue}\bfseries,
 	numberstyle=\tiny\color{codegray},
-	stringstyle=\color{codepurple},
-	basicstyle=\ttfamily\footnotesize,
+	stringstyle=\color{red},
+	basicstyle=\ttfamily\small,
 	breakatwhitespace=false,         
 	breaklines=true,                 
 	captionpos=b,                    
@@ -145,6 +147,9 @@
 	showstringspaces=false,
 	showtabs=false,                  
 	tabsize=2,
+	frame=single,
+	% Define pseudocode-specific keywords
+	morekeywords={if, then, else, elif, endif, for, to, do, endfor, while, endwhile, return, function, procedure, foreach, and}
 }
 
 \begin{document}
@@ -418,4 +423,176 @@
 			\]
 		\end{enumerate}
 	\end{proof}
+	\section{Espressioni regolari}
+	Possiamo usare le operazioni regolari per costruire espressioni che descrivono linguaggi, che sono chiamate \textit{espressioni regolari}. Ad esempio:
+	\[
+	(0 \cup 1)0^*
+	\]
+	Il valore di un'espressione regolare è un linguaggio. In questo caso, il valore è il linguaggio che consiste di tutte le stringhe che ininziano con 0 o un 1 seguito da un qualsiasi numero di simboli uguali a 0. \\
+	\subsection{Definizione formale di espressione regolare}
+	\begin{definition}{\nmu Espressione regolare}{regex}
+		Diciamo che $R$ è un'\textit{espressione regolare} se $R$ è
+		\begin{enumerate}
+			\item $a$ per qualche $a$ nell'alfabeto $\sum$;
+			\item $\epsilon$;
+			\item $\emptyset$;
+			\item $(R_1 \cup R_2)$ dove $R_1$ ed $R_2$ sono espressioni regolari;
+			\item $(R_1 \circ R_2)$ dove $R_1$ ed $R_2$ sono espressioni regolari;
+			\item $(R_1)^*$ dove $R_1$ è un'espressione regolare.
+		\end{enumerate}
+	\end{definition}
+	È bene non confondere le espressioni regolari $\epsilon$ e $\emptyset$. L'espressione regolare $\epsilon$ rappresenta il linguaggio che contiene la sola stringa vuota, mentre $\emptyset$ rappresenta il linguaggio che non contiene alcuna stringa. \\
+	Inoltre, per comodità, usiamo $R^+$ come abbreviazione per $RR^*$ e possiamo scrivere $R^*$ come $R^+ \cup \epsilon$. \\
+	Quando vogliamo distinguere un'espressione regolare $R$ e il linguaggio che descrive, denotiamo con $L(R)$ il linguaggio di $R$. \\
+	Analizziamo alcune proprietà.
+	\begin{enumerate}
+		\item $a^*\emptyset = \emptyset$ \\
+		Concatenando l'insieme vuoto a un qualsiasi insieme si ottiene l'insieme vuoto. 
+		\item $\emptyset^* = \{\epsilon\}$ \\
+		L'operazione star concatena un numero qualsiasi di stringhe del linguaggio per ottenere una stringa nel risultato. Se il linguaggio è vuoto, l'operazione star può concatenare 0 stringhe, dando solo la stringa vuota. 
+		\item $R \cup \emptyset = R$ \\
+		Aggiungere il linguaggio vuoto a un qualsiasi altro linguaggio non lo cambia.
+		\item $R \circ \epsilon = R$ \\
+		Concatenare la stringa vuota a una qualsiasi stringa non la cambia. 
+	\end{enumerate}
+	Tuttavia, scambiare $\emptyset$ e $\epsilon$ nelle precedenti identità può far sì che le uguaglianze non siano vere.
+	\begin{enumerate}
+		\item $R\cup\epsilon$ può non essere uguale a $R$ \\
+		Per esempio, se $R = 0$, allora $L(R) = \{0\}$ ma $L(R \cup \epsilon) = \{0, e\}$.
+		\item $R \circ \emptyset$ può non essere uguale a $R$. \\
+		Per esempio, se $R = 0$, allora $L(R) = \{0\}$ ma $L(R \circ \emptyset) = \emptyset$  
+	\end{enumerate}
+	Le espressioni regolari sono un utile strumento nel progetto dei compilatori per i linguaggi di programmazione. Gli oggetti elementari in un linguaggio di programmazione, chiamati \textit{token}, come i nomi delle variabili e le costanti, possono esser e descritti con espressioni regolari. Ad esempio, una costante numerica può avere una parte decimale e/o un segno e può essere descritta come un elemento del linguaggio
+	\[
+	(+ \cup - \cup \epsilon)(D^+ \cup D^+.D^* \cup D^*.D^+)
+	\]
+	Una volta che la sintassi di un linguaggio di programmazione è stata descritta con un'espressione regolare in termini dei suoi token, dei sistemi automatici possono generare l'\textit{analizzatore lessicale}, la parte di un compilatore che elabora inizialmente il programma input. 
+	\subsection{Equivalenza con gli automi finiti}
+	Le espressioni regolari e gli automi finiti sono equivalenti rispetto alla loro potenza descrittiva. Ogni espressione regolare può essere trasformata in un automa finito che riconosce il linguaggio che essa descrive, e viceversa.
+	\begin{theorem}{}{}
+		Un linguaggio è regolare se e solo se qualche espressione regolare lo descrive.
+	\end{theorem}
+	Questo teorema deve essere dimostrato in entrambe le direzioni. Enunciamo e proviamo ciascuna direzione in un lemma separato.
+	\begin{lemma}{}{}
+		Se un linguaggio è descritto da un'espressione regolare, allora esso è regolare.
+	\end{lemma}
+	Supponiamo di avere un'espressione regolare $R$ che descrive un linguaggio $A$. Mostriamo come trasformare $R$ in un NFA che riconosce $A$. 
+	\begin{proof} 
+		Trasformiamo $R$ in un NFA $N$. Consideriamo i sei casi nella definizione di \namerefl{def:regex}.
+		\begin{enumerate}
+			\item $R = a$ per qualche $a \in \sum$. Allora $L(R) = \{a\}$ e il seguente NFA riconosce $L(R)$.
+			\begin{center}
+			\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
+				\node[state, initial, initial text=] (q_0)   {$q_0$}; 
+				\node[state, accepting]           (q_1) [right=of q_0] {$q_1$};
+				
+				\path[->] 
+				(q_0) edge  node {a} (q_1);
+			\end{tikzpicture}
+			\end{center}
+			Questa macchina soddisfa la definizione di NFA ma non quella di DFA perchè ha qualche stato con nessun arco uscente per ogni possibile simbolo di input. \\
+			Formalmente, $N = (\{q_0, q_1\}, \sum, \sigma, q_0, \{q_2\})$ dove descriviamo $\sigma$ dicendo che $\sigma(q_0, a) = \{q_2\}$ e $\sigma(r, b) = \emptyset$ per $r \neq q_1$ o $b \neq a$.
+			\item $R = \epsilon$. Allora $L(R) = \{\epsilon\}$ e il seguente NFA riconosce $L(R)$.
+			\begin{center}
+				\begin{tikzpicture}[shorten >= 1pt, node distance=2cm, on grid, auto]
+					\node[state, initial, accepting, initial text=](q_0) {$q_0$};
+				\end{tikzpicture}
+			\end{center}
+			Formalmente $N = (\{q_0\}, \sum, \sigma, q_0, \{q_0\})$, dove $\sigma(r, b) = \emptyset$ per ogni $r$ e $b$.
+			\item $R = \emptyset$. Allora $L(R) = \emptyset$ e il seguente NFA riconosce $L(R)$.
+			\begin{center}
+				\begin{tikzpicture}[shorten >= 1pt, node distance=2cm, on grid, auto]
+					\node[state, initial, initial text=](q_0) {$q_0$};
+				\end{tikzpicture}
+			\end{center}
+			Formalmente, $N = (\{q_0\}, \sum, \sigma, q_0, \emptyset)$ dove $\sigma(r, b) = \emptyset$ per ogni $r$ e $b$.
+			\item $R = R_1 \cup R_2$
+			\item $R = R_1 \circ R_2$
+			\item $R = R_1^*$
+ 		\end{enumerate}
+ 		Per gli ultimi tre casi, usiamo le costruzioni date nelle prove che la classe dei linguaggi regolari è chiusa rispetto alle operazioni regolari.
+	\end{proof}
+	Questo termina la prima parte del teorema dando la direzione più facile della condizione ``se e solo se''.
+	\begin{lemma}{}{reg_to_regex}
+		Se un linguaggio è regolare, allora è descritto da un'espressione regolare. 
+	\end{lemma}
+	Dobbiamo mostrare che se un linguaggio $A$ è regolare, allora un'espressione regolare lo descrive. Poichè $A$ è regolare, esso è accettato da un DFA. Descriviamo una procedurea per trasformare i DFA in espressioni regolari equivalenti. \\
+	Dividiamo quesat procedura in due parti, usando un nuovo tipo di automa finito chiamato \textit{automa finito non deterministico generalizzato}, GNFA. \\
+	Prima mostriamo come trasformare un DFA in un GNFA e poi come trasformare un GNFA in un'espressione regolare. \\
+	Gli automi finiti non deterministici generalizzati sono automi finiti non deterministici nei quali gli archi delle trasizioni possono avere espressioni regolari come etichette, invece che solo elementi dell'alfabeto o $\epsilon$. Un GNFA è non deterministico e quindi può avere diversi modi di elaborare la stessa stringa di input.\\
+	La figura seguente presenta un esempio di GNFA.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{images/gnfa}
+	\end{figure} 
+	Per comodità, richiediamo che i GNFA abbiano sempre una forma speciale che soddisfi le seguenti condizioni.
+	\begin{itemize}
+		\item Lo stato iniziale ha archi di transizione uscenti verso un qualsiasi altro stato ma nessun arco entrante proveniente da un qualsiasi altro stato.
+		\item Esiste un solo stato accettante, ed esso ha archi entranti provenienti da un qualsiasi altro stato ma nessun arco uscente verso un qualsiasi altro stato. Inoltre, lo stato accettante non è uguale allo stato iniziale. 
+		\item Eccetto che per lo stato iniziale e lo stato accettante, un arco va da ogni stato ad ogni altro stato e anche da ogni stato a sé stesso.
+	\end{itemize}
+	Possiamo facilmente trasfoarmare un DFA in un GNFA. Aggiungiamo semplicemente un nuovo stato iniziale con un $\epsilon$-arco che entra nel vecchio stato iniziale e un nuovo stato accettante con $\epsilon$-archi entranti, provenienti dai vecchi stati accettanti. Se alcuni archi hanno più etichette (o se ci sono più archi che collegano gli stessi due stati nella stessa direzione), sostituiamo ognuno di essi con un solo arco la cui etichetta è l'unione delle precedenti etichette. Infine, aggiungiamo archi con etichetta $\emptyset$ tra stati che non hanno archi. Quest'ultimo non cambierebbe il linguaggio riconosciuto perchè una transizione etichettata con $\emptyset$ non può mai essere usata. \\
+	Ora mostriamo come trasformare un GNFA in un'espressione regolare. Supponiamo che il GNFA abbia $k$ stati. Allora, poichè un GNFA deve avere uno stato iniziale e uno stato accettante ed essi devono essere diversi tra loro, sappiamo che $k \geq 2$. Se $k > 2$, costruiamo un GNFA equivalente con $k - 1$ stati. Questo passo può essere ripetuto sul nuovo GNFA fino a quando esso è ridotto a 2 stati. Se $k = 2$, il GNFA ha  un solo arco che va dallo stato iniziale allo stato accettante. L'etichetta di questo arco è l'espressione regolare equivalente. \\
+	Il passo cruciale è costruire un GNFA equivalente con uno stato in meno quando $k > 2$. Lo facciamo scegliendo uno stato, estraendolo dalla macchina, e modificando l resto in modo che sia riconosciuto lo stesso linguaggio. Ogni stato può essere scelto, purchè non sia lo stato iniziale o lo stato accettante. Chiamiamo $q_{rip}$ lo stato rimosso. \\
+	Dopo aver rimosso $q_{rip}$ modifichiamo la macchina cambiando le espressioni regolari che etichettano ciascuno dei restanti archi. Le nuove etichette controbilanciano l'assenza di $q_{rip}$ reintegrando le computazioni perse. La nuova etichetta che va da uno stato $q_i$ a uno stato $q_j$ è un'espressione regolare che descrive tutte le stringhe che porterebbero la macchina da $q_i$ a $q_j$ o direttamente o tramite $q_{rip}$. Analizziamo tale procedimento nella seguente figura.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{images/trasformazione_gnfa}
+	\end{figure}
+	Nella vecchia macchina, se 
+	\begin{enumerate}
+		\item $q_i$ va a $q_{rip}$ con un arco atichettato $R_1$;
+		\item $q_{rip}$ va in sè stesso con un arco etichettato $R_2$;
+		\item $q_{rip}$ va a $q_j$ con un arco etichettato $R_3$;
+		\item $q_i$ va a  $q_j$ con un arco etichettato $R_4$,
+	\end{enumerate}
+	allora nella nuova macchina, l'arco da $q_i$ a $q_j$ riceve l'etichetta
+	\[
+	(R_1)(R_2)^*(R_3) \cup (R_4)
+	\]
+	Facciamo questa modifica per ogni arco che va da un qualsiasi stato $q_i$ a un qualsiasi stato $q_j$, includendo il caso in cui $q_i = q_j$. La nuova macchina riconosceil linguaggio di partenza.
+	\begin{proof}
+		Formalizziamo quest'idea. In primo luogo, definiamo formalmente l'automa GNFA. Un GNFA è simile ad un automa finito non deterministico tranne che per la funzione di transizione, che ha la forma
+		\[
+		\delta: (Q - \{q_{accept}\}) \times (Q - \{q_{start}\}) \to R
+		\]
+		Il simbolo $R$ è la collezione di tutte le espressioni regolari sull'alfabeto $\sum$ e $q_{start}$ e $q_{accept}$ sono gli stati iniziale e accettante.  \\
+		Il dominio della funzione di transizione è $(Q - \{q_{accept}\}) \times (Q - \{q_{start}\})$ perchè un arco collega ogni stato a un qualsiasi altro stato, tranne che nessun arco è uscente da $q_{accept}$ o è entrante in $q_{start}$.
+	\end{proof}
+	\begin{definition}{\nmu Automa finito non deterministico generalizzato}{gnfa}
+		Un \textit{automa finito non deterministico generalizzato} è una quintupla $(Q, \sum, \delta, q_{start}, q_{accept})$, dove
+		\begin{enumerate}
+			\item $Q$ è l'insieme finito degli stati;
+			\item $\sum$ è l'alfabeto di input;
+			\item $\delta: (Q - \{q_{accept}\}) \times (Q - \{q_{start}\}) \to R$ è la funzione di transizione;
+			\item $q_{start}$ è lo stato iniziale;
+			\item $q_{accept}$ è lo stato accettante. 
+		\end{enumerate}
+	\end{definition}
+	Un GNFA accetta una stringa $w$ in $\sum^*$ se $w = w_1w_2\cdots w_k$, dove ogni $w_i$ è in $\sum^*$ ed esiste una sequenza di stati $q_0, q_1, \dots, q_k$ tale che
+	\begin{enumerate}
+		\item $q_0 = q_{start}$ è lo stato iniziale,
+		\item $q_k = q_{accept}$ è lo stato accettante e
+		\item per ogni $i$, risulta $w_i \in L(R_i)$, dove $R_i = \delta(q_{i-1}, q_i)$
+	\end{enumerate}
+	Torniamo alla dimostrazione del \ref{lem:reg_to_regex}, sia $M$ il DFA per il linguaggio $A$. Allora trasformiamo $M$ in un GNFA $G$ aggiungendo un nuovo stato iniziale un nuovo stato accettante e i necessari archi di transizione supplementari. Usiamo la procedura \texttt{CONVERT($G$)}, che prende un GNFA e restituisce un'espressione regolare equivalente. Questa procedura usa la \textit{ricorsione}. 
+	\begin{lstlisting}[style=pseudocode, mathescape=true]
+CONVERT(G):
+	if k = 2 then return R;
+	if k > 2 then scelto $q_{rip} \neq q_{accept}$ e $q_{start}$
+		CONVERT(G')
+	G'= (Q', $\sum$, $\delta$, $q_{start}$, $q_{accept}$)
+	Q' = Q - $\{q_{rip}\}$
+	foreach $q_i \in Q'-\{q_{accept}\}$ and  $q_j \in Q'-\{q_{start}\}$
+		$\delta'(q_i, q_j) = (R_1)(R_2)^*(R_3) \cup (R_4)$ 
+		$R_1 = \delta(q_i, q_{rip})$
+		$R_2 = \delta(q_{rip}, q_{rip})$
+		$R_3 = \delta(q_{rip}, q_j)$
+		$R_4 = \delta(q_i, q_j)$
+	endfor\end{lstlisting}
+	Analizziamo un esempio, iniziamo con un DFA con tre stati. I passi nella trasformazione sono mostrati nella figura seguente.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth]{images/convert_g}
+	\end{figure}
 \end{document}
