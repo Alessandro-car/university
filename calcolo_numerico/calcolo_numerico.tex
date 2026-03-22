@@ -35,6 +35,8 @@
 \usepackage{yhmath}
 \usepackage{accents}
 \usepackage{nicefrac}
+\usepackage{wasysym}
+\usepackage{stackengine}
 \usetikzlibrary{angles, quotes, patterns}
 \usepackage{circledsteps}
 \date{}
@@ -105,7 +107,11 @@
 \newcommand{\wbar}[1]{%
 	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
 }
-
+\newcommand{\circled}[1]{%
+	\begin{tikzpicture}[baseline=(char.base)]
+		\node[shape=circle, draw, inner sep=1.2pt, minimum size=1.5em] (char) {\small #1};
+	\end{tikzpicture}%
+}
 \begin{document}
 	{
 		\let\cleardoublepage\clearpage
@@ -1746,4 +1752,218 @@ In doppia precisione:
 u = \frac{1}{2}2^{-52} = 2^{-53} \approx 1.1 \cdot 10^{-16}
 \]
 Ciò significa che, oeprando in doppia precisione, possiamo confidare in 15/16 cifre significative corrette.
+\begin{note}{}{}
+	Un modo equivalente per esprimere il fatto che l'errore relativo è minore della precisione di macchina è il seguente. \\
+	Poniamo
+	\[
+	\epsilon = \frac{fl(x) - x}{x} \quad \text{ quindi } |\epsilon| < u
+	\]
+	Ricavando $fl(x)$:
+	\[
+	fl(x) = x(1 + \epsilon) \quad \text{ con } |\epsilon| < u
+	\]
+\end{note}
+\section{Operazioni di macchina}
+Consideriamo il seguente esempio.
+\begin{example}{}{}
+	Consideriamo un insieme di numeri di macchina in base $\beta = 10$ con $t = 1$ (due cifre significative). Dati i numeri di macchina:
+	\[
+	x_1 = 1.2 \cdot 10^0 \quad x_2 = 3.4 \cdot 10^{-1}
+	\]
+	determinare la somma:
+	\[
+	x_1 + x_2 = 
+	\begin{array}{r@{\quad}l}
+		1.2 \cdot 10^0 & + \\
+		0.34 \cdot 10^0 &  \\
+		\hline
+		1.54 \cdot 10^0 &
+	\end{array}
+	\]
+	Evidentemente $x_1 + x_2 \notin \mathbbm{F}$.
+\end{example}
+Questo esempio mostra che il calcolatore non può implementare le quattro operazioni elementari:
+\[
+op:\ +,\ -,\ *,\ /
+\]
+in modo esatto, ma dovrà approssimarle mediante altrettante operazioni di macchina
+\[
+\circled{op}:\ \circled{+},\ \circled{-},\ \circled{*},\ \circled{/}
+\]
+ove $op: \mathbbm{R} \times \mathbbm{R} \to \mathbbm{R}$, mentre \[
+\circled{op}: \mathbbm{F} \times \mathbbm{F} \to \mathbbm{F}
+\]
+Nell'esempio precedente, potremmo porre
+\[
+x_1\ \circled{+}\ x_2 = fl(x_1 + x_2) = arr(x_1 + x_2) = arr(1.54 \cdot 10^0) = 1.5 \cdot 10^0
+\]
+In fase di ogni singola operazione elementare, si richiederà la medesima accuratezza che si ottiene in fase di rappresentazione:
+\[
+\forall x_1, x_2 \in \mathbbm{F}: x_1\ \circled{op}\ x_2 = (x_1\ op\ x_2)(1 + \epsilon) \quad \text{ con }|\epsilon| < u
+\]
+Un'aritmetica che soddisfi questa proprietà è detta \textit{aritmetica floating-point} o in \textit{virgola mobile}. \\
+Ad esempio, è un'aritemtica floating-point quella che si ottiene ponendo:
+\[
+x_1\ \circled{op}\ x_2 = fl(x_1\ op\ x_2)
+\]
+\subsection{Proprietà dell'aritmetica di macchina}
+Le seguenti proprietà dell'artimetica reale continuano a valere per l'aritmetica di macchina.
+\begin{enumerate}
+	\item \textbf{Permanenza degli elementi neutri}. \\
+	$\forall x \in \mathbbm{F}$:
+	\begin{align*}
+	x\ \circled{+}\ 0 &= x \\
+	x\ \circled{*}\ 1 &= x 
+	\end{align*}
+	\item \textbf{Proprietà commutativa}. \\
+	$\forall x_1, x_2 \in \mathbbm{F}$:
+	\begin{align*}
+		x_1\ \circled{+}\ x_2 &= x_2\ \circled{+}\ x_1 \\
+		x_1\ \circled{*}\ x_2 &= x_2\ \circled{*}\ x_1
+	\end{align*}
+	\item \textbf{Legge di annulamento del prodotto}. \\
+	$\forall x_1, x_2 \in \mathbbm{F}$ se $x_1\ \circled{*}\ x_2$ non genera underflow oppure overflow:
+	\[
+	x_1\ \circled{*}\ x_2 = 0 \Rightarrow x_1 = 0 \vee x_2 = 0
+	\]
+\end{enumerate}
+Le seguenti proprietà non sono più valide in aritmetica di macchina.
+\begin{enumerate}
+	\item \textbf{Proprietà associativa}. \\
+	In generale, non è vero che $\forall x_1, x_2, x_3 \in \mathbbm{F}$:
+	\begin{align*}
+		(x_1\ \circled{+}\ x_2)\ \circled{+} x_3 &= x_1\ \circled{+}\ (x_2\ \circled{+}\ x_3) \\
+		(x_1\ \circled{*}\ x_2)\ \circled{*} x_3 &= x_1\ \circled{*}\ (x_2\ \circled{*}\ x_3)
+	\end{align*}
+	\begin{example}{\nmu Primo controesempio}{}
+		Consideriamo $\beta = 10$, $t = 1$ con arrotondamento, e i tre numeri di macchina:
+		\[
+		x_1 = 1.2 \cdot 10^0 \quad x_2 = 1.3 \cdot 10^{-1} \quad x_3 = 1.4 \cdot 10^{-1}
+		\]
+		Risulta:
+		\begin{align*}
+		x_1\ \circled{+}\ x_2 &= 
+		\begin{array}{r@{\quad}l}
+			1.2 \cdot 10^0 & \circled{+} \\
+			0.13 \cdot 10^0 &  \\
+			\hline
+			fl(1.33 \cdot 10^0) &
+		\end{array} \\
+		&= 1.3 \cdot 10^0 \\
+		(x_1\ \circled{+}\ x_2)\ \circled{+}\ x_3 &= \begin{array}{r@{\quad}l}
+			1.3 \cdot 10^0 & \circled{+} \\
+			0.14 \cdot 10^0 &  \\
+			\hline
+			fl(1.44 \cdot 10^0) &
+		\end{array} \\
+		&= 1.4 \cdot 10^0
+		\end{align*} 
+		Ora calcoliamo:
+		
+		\begin{align*}
+			x_2\ \circled{+}\ x_3 &= 
+			\begin{array}{r@{\quad}l}
+				0.13 \cdot 10^{0} & \circled{+} \\
+				0.14 \cdot 10^0 &  \\
+				\hline
+				fl(0.27 \cdot 10^0) &
+			\end{array} \\
+			&= 0.27 \cdot 10^0 \\
+			x_1\ \circled{+}\ (x_2\ \circled{+}\ x_3) &= \begin{array}{r@{\quad}l}
+				1.2 \cdot 10^0 & \circled{+} \\
+				0.27 \cdot 10^0 &  \\
+				\hline
+				fl(1.47 \cdot 10^0) &
+			\end{array} \\
+			&= 1.5 \cdot 10^0
+		\end{align*} 
+	\end{example}
+	\begin{example}{\nmu Secondo controesempio}{}
+		In doppia precisione, con arrotondamento, consideriamo i numeri di macchina:
+		\[
+		x_1 = 1 \cdot 2^0 \quad x_2 = 1.0\dots0 \cdot 2^{-53} \quad x_3 = x_2
+		\]
+		Calcoliamo:
+		\begin{align*}
+			x_1\ \circled{+}\ x_2 &= arr(1 + 2^{-53}) \\
+			&= arr(1.0\dots01) = 1 \cdot 2^0 \\
+			(x_1\ \circled{+}\ x_2)\ \circled{+}\ x_3 &= 1 \cdot 2^0 \circled{+} 1 \cdot 2^{-53} \\
+			&= 1 \cdot 2^0
+		\end{align*}
+		D'altra parte:
+		\begin{align*}
+		x_2\ \circled{+}\ x_3 &= 1 \cdot 2^{-53}\ \circled{+}\ 1 \cdot 2^{-53} \\
+		&= 1 \cdot 1 \cdot 2^{-52} \\
+		x_1\ \circled{+}\ (x_2\ \circled{+}\ x_3) &= arr(1.0\dots01) \\
+		&= 1.0\dots01 \cdot 2^0 \\
+		&= 1 + 2^{-52}
+		\end{align*}
+	\end{example}
+	\item \textbf{Proprietà distributiva della moltiplicazione rispetto all'addizione}. \\
+	In generale, non è vero che, $\forall x_1, x_2, x_3 \in \mathbbm{F}$:
+	\[
+	x_1\ \circled{*}\ (x_2\ \circled{+}\ x_3) = (x_1\ \circled{*}\ x_2)\ \circled{+}\ (x_1\ \circled{*}\ x_3)
+	\]
+	\item \textbf{Semplificazione}. \\
+	In generale, non è vero che, $\forall x_1, x_2, x_3 \in \mathbbm{F}$ con $x_2 \neq 0$:
+	\[
+	(x_1\ \circled{/}\ x_2)\ \circled{*}\ x_2 = x_1
+	\]
+	\[
+	x_1\ \circled{*}\ x_2 = x_3\ \circled{*}\ x_2 \Rightarrow x_1 = x_3
+	\]
+\end{enumerate}
+In ogni caso, tutte le proprietà dell'aritmetica reale continuano a valore in aritmetica di macchina a meno di errori dell'ordine della precisione di macchina. Ad esempio:
+\[
+(x_1\ \circled{/}\ x_2)\ \circled{*}\ x_2 = x_1(1 + \epsilon) \quad \text{ con } |\epsilon| < u
+\]
+Conseguentemente, per verificare se, in aritmetica di macchina, due numeri $x, y \in \mathbbm{F}$ sono uguali, bisogna evitare di utilizzare l'uguaglianza logica, ma è bene confrontare i due numeri in termini della loro distanza, ad esempio:
+\[
+|x - y| < tol
+\]
+dove $tol$ è un'accuretezza prefissata, ad esempio $tol = 10 \cdot u$.
+\section{Analisi degli errori}
+Abbiamo visto che gli errori relativi introdotto in fase di rappresentazione dei numeri reali mediante i numeri di macchina e in fase di elaborazione dei dati mediante le operazioni elementari sono dell'ordine della precisione di macchina. \\
+Tuttavia, ciò non garantisce che cambiando le due fasi, l'errore nel risultato di un'operazione sia anch'esso dell'ordine della precisione di macchina. Il seguente esempio chiarisce la questione.
+\begin{example}{}{}
+	Consideriamo $\beta = 10$, $t = 4$ e arrotondamento. Risolvere il seguente problema: \textit{determinare, in $\mathbbm{F}$, la differenza dei seguenti numeri reali}:
+	\[
+	x_1 = 1.23456 \cdot 10^0 \quad x_2 = 1.23456 \cdot 10^0
+	\]
+	\textit{e calcolare l'errore relativo nel risultato}. \\
+	Osserviamo che $x_1, x_2 \notin \mathbbm{F}$. Prima di tutto dovremo rappresentarli in $\mathbbm{F}$:
+	\begin{align*}
+		fl(x_1) &= 1.2346 \cdot 10^0;
+		fl(x_2) &= 1.2345 \cdot 10^0
+	\end{align*}
+	Effettuiamo la sottrazione in $\mathbbm{F}$:
+	\begin{align*}
+		fl(x_1)\ \circled{-}\ fl(x_2) &= 
+		\begin{array}{r@{\quad}l}
+			1.2346 \cdot 10^{0} & \circled{-} \\
+			1.2345 \cdot 10^0 &  \\
+			\hline
+			arr(0.0001 \cdot 10^0) &
+		\end{array} \\
+		&= arr(1.0000 \cdot 10^{-4}) \\
+		&= 1.0000 \cdot 10^{-4}
+	\end{align*}
+	Al fine di valutare l'errore, determiniamo il risultato teorico:
+	\[
+	x_1 - x_2 = 2 \cdot 10^{-5}
+	\]
+	Risulta quindi:
+	\begin{align*}
+		E_r &= \frac{|fl(x_1)\ \circled{-}\ fl(x_2) - (x_1 - x_2)|}{x_1 - x_2} \\
+		&= \frac{1 \cdot 10^{-4} - 2\cdot 10^{-5}}{2 \cdot 10^{5}} \\
+		&= \frac{10 \cdot 10^{-5} - 2 \cdot 10^{-5}}{2 \cdot 10^{-5}}\\
+		&= 4 \cdot 10^0
+	\end{align*}
+	Il risultato in $\mathbbm{F}$ contiene zero cifre significative corrette.
+\end{example}
+\begin{note}{}{}
+	In questo esempio, l'unica fonte di errore è quella in fase di rappresentazione: la sottrazione è esatta. \\
+	La precisione di macchina è $u = \frac{1}{2} \cdot 10^{-4}$ e, in effetti, $fl(x_1)$ e $fl(x_2)$ contengono 4 cifre significative corrette. Questo piccolo errore si amplifica a seguito della sottrazione portnado alla perdita di tutte le cifre significative nel risultato.
+\end{note}
+
 \end{document}
