@@ -20,3 +20,5 @@ libri/
 *.png
 *.gif
 *.sh
+*.fdb_latexmk
+*.fls

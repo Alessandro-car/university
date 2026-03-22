@@ -153,7 +153,7 @@ Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno 
 	Allora $f$ ammette un unico zero $\alpha$ in $(a, b)$:
 	\[
 	\exists ! \alpha \in (a, b) \mid f(\alpha) = 0
-	\] 
+	\]
 	In quanto se $f'(x)$ è sempre maggiore di zero allora $f$ è monotona crescente, altrimenti se $f'(x)$ è sempre minore di zero allora $f$ è monotona decrescente.
 \end{theorem}
 \paragraph{Metodo delle successive bisezioni} \quad \\
@@ -230,7 +230,7 @@ Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno 
 		0 \leq [f(\overline{a})]^2 &= \\
 		f(\overline{a})f(\overline{b}) \\
 		&= f(\lim\limits_{n\to\infty}a_n) f(\lim\limits_{n\to\infty}b_n) \\
-		&= \lim\limits_{n\to\infty}f(a_n) \lim\limits_{n\to\infty}f(b_n) \\ 
+		&= \lim\limits_{n\to\infty}f(a_n) \lim\limits_{n\to\infty}f(b_n) \\
 		&= \lim\limits_{n\to\infty}f(a_n)f(b_n) \leq 0
 	\end{align*}
 	Ne consegue che $f(\overline{a}) = 0 \Rightarrow \overline{a} = \alpha$. \\
@@ -268,7 +268,7 @@ Richiamiamo le seguenti definizioni.
 	\[
 	E_r = \frac{|x - \overline{x}|}{|x|} \quad \text{se } x \neq 0
 	\]
-	L'errore relativo scala l'errore assoluto della grandezza della quantità da approssimare. 
+	L'errore relativo scala l'errore assoluto della grandezza della quantità da approssimare.
 \end{definition}
 L'importanza dell'errore relativo è quella di fornirci un'informazione sul numero di cifre significative corrette contenute nell'approssimazione $\overline{x}$. Più precisamente, lavorando in base 10, se:
 \[
@@ -288,7 +288,7 @@ L'errore misto è utile sul calcolatore quando $|x| \approx 0$, per cui l'espres
 	\frac{|x-\overline{x}|}{|x|} & x \gg 1
 \end{cases}
 \]
-Torniamo a discutere i criteri di arresto del metodo delle successive bisezioni. Abbiamo già esaminato quello sull'errore assoluto. Vediamo come ottenere un criterio di arresto basato sull'errore relativo. Facciamo riferimento ai seguenti grafici: 
+Torniamo a discutere i criteri di arresto del metodo delle successive bisezioni. Abbiamo già esaminato quello sull'errore assoluto. Vediamo come ottenere un criterio di arresto basato sull'errore relativo. Facciamo riferimento ai seguenti grafici:
 \begin{figure}[H]
 	\centering
 	% --- Left Side: alpha > 0 ---
@@ -296,10 +296,10 @@ Torniamo a discutere i criteri di arresto del metodo delle successive bisezioni.
 		\centering
 		\begin{tikzpicture}[x=1.5cm]
 			\node at (1, 1) {\large \color{red} $\alpha > 0$};
-			
+
 			% Axis
 			\draw[thick, ->] (-0.5, 0) -- (2.5, 0);
-			
+
 			% Ticks and Labels
 			\draw[thick] (0, 0.1) -- (0, -0.1) node[below] {$0$};
 			\draw[blue, thick] (0.7, 0.1) -- (0.7, -0.1) node[below] {$a_n$};
@@ -313,10 +313,10 @@ Torniamo a discutere i criteri di arresto del metodo delle successive bisezioni.
 		\centering
 		\begin{tikzpicture}[x=1.5cm]
 			\node at (-1, 1) {\large \color{red} $\alpha < 0$};
-			
+
 			% Axis
 			\draw[thick, ->] (-2.5, 0) -- (0.5, 0);
-			
+
 			% Ticks and Labels
 			\draw[blue, thick] (-2.1, 0.1) -- (-2.1, -0.1) node[below] {$a_n$};
 			\draw[red, thick] (-1.4, 0.1) -- (-1.4, -0.1) node[below] {$\alpha$};
@@ -329,7 +329,7 @@ Poichè $\lim\limits_{n\to\infty}a_n = \lim\limits_{n\to\infty}b_n = \alpha$, pe
 \[
 a_n < \alpha \Rightarrow \frac{1}{\alpha} < \frac{1}{a_n}
 \]
-Per $\alpha < 0$: 
+Per $\alpha < 0$:
 \[
 \alpha < b_n \Rightarrow \frac{1}{-\alpha} < \frac{1}{-b_n} = \frac{1}{|\alpha|} < \frac{1}{|b_n|}
 \]
@@ -386,21 +386,21 @@ L'interpretazione geometrica è la seguente:
 		]
 		% Draw the line y = x (dashed)
 		\addplot [domain=-1:3.5, thick, dashed] {x} node[pos=1, right, blue] {$y=x$};
-		
+
 		% Draw the curve y = phi(x) crossing the y-axis
 		% Using an exponential function to match the visual curve and cross the axis
 		\addplot [domain=-0.8:4, thick, samples=100] {3*exp(-x/1.2)} node[pos=0.6, above right, blue] {$y = \phi(x)$};
-		
+
 		% Calculate intersection (Fixed Point alpha)
 		% For this specific function, intersection is approx at x = 1.15
 		\coordinate (alpha) at (axis cs:1.15, 1.15);
-		
+
 		% Vertical dashed line to alpha
 		\draw [red, dashed, thick] (alpha) -- (axis cs:1.15, 0) node[below] {$\alpha$};
-		
+
 		% Red dot at the intersection point
 		\fill [red] (alpha) circle (2pt);
-		
+
 	\end{axis}
 \end{tikzpicture}
 \end{center}
@@ -428,14 +428,14 @@ Sotto opportune ipotesi, che studieremo in seguito, si ha:
 \[
 \lim\limits_{n \to \infty} x_n = \alpha
 \]
-cioè, la successione $\{x_n\}$ converge a un punto fisso di $\theta$. 
+cioè, la successione $\{x_n\}$ converge a un punto fisso di $\theta$.
 \begin{example}{}{}
 	Consideriamo al funzione $f(x) = x - \cos x$ e abbiamo detto che:
 	\[
 	f(x) = 0 \iff x - \cos x = 0 \iff x = \cos x
 	\]
 	e quindi scegliamo $\theta(x) = \cos x$. \\
-	Partiamo da $x_0 = 0$ e calcoliamo la successione $\{x_n\}$: 
+	Partiamo da $x_0 = 0$ e calcoliamo la successione $\{x_n\}$:
 	\begin{align*}
 		x_0 &= 0 \\
 		x_1 &= \cos(x_0) = \cos(0) = 1 \\
@@ -447,13 +447,13 @@ cioè, la successione $\{x_n\}$ converge a un punto fisso di $\theta$.
 	\end{align*}
 \end{example}
 La successione $\{x_n\}$ è detta \textit{metodo one-step} (la costruzione dell'elemento $x_n$ dipende dall'elemento precedentemente calcolato $x_{n-1}$). \\
-La funzione $\theta$ è detta \textit{funzione iteratrice}. 
+La funzione $\theta$ è detta \textit{funzione iteratrice}.
 \begin{note}{}{}
 	Se $\theta$ è una funzione continua in $[a, b]$ ed esiste $\lim\limits_{n\to\infty}x_n = \alpha$, necessariamente $\alpha$ dovrà essere punto fisso di $\theta$. Infatti:
 	\begin{align*}
 		\alpha &= \lim\limits_{n\to\infty}x_n\\
 		&= \lim\limits_{n\to\infty}\theta(x_{n-1}) \\
-		&= \theta(\lim\limits_{n\to\infty}x_{n-1}) \\ 
+		&= \theta(\lim\limits_{n\to\infty}x_{n-1}) \\
 		&= \theta(\alpha)
 	\end{align*}
 \end{note}
@@ -484,38 +484,38 @@ C^k([a, b]) \subset C^{k-1}([a, b]) \subset \dots \subset C^1([a, b]) \subset C(
 	\]
 	\begin{center}
 		\begin{tikzpicture}
-			
+
 			% Draw the main horizontal axis
 			\draw[thick, ->] (-4,0) -- (4,0);
-			
+
 			% Define points
 			% alpha is at 0, x is at -1.5, delta is 3
 			\coordinate (A) at (0,0);      % centro alpha
 			\coordinate (X) at (-1.8,0);   % point x
 			\coordinate (L) at (-3,0);     % alpha - delta
 			\coordinate (R) at (3,0);      % alpha + delta
-			
+
 			% Blue hatched/shaded area (the interval)
 			\foreach \i in {-2.8,-2.5,...,2.8}
 			\draw[blue, thin] (\i-0.1, -0.1) -- (\i+0.1, 0.1);
-			
+
 			% Vertical markers for the boundaries and points
 			\draw[red, thick] (L) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$\alpha - \delta$};
 			\draw[red, thick] (R) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$\alpha + \delta$};
 			\draw[red, thick] (A) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$\alpha$};
 			\draw[thick] (X) -- ++(0,0.2) -- ++(0,-0.4) node[below, yshift=-2pt] {$x$};
-			
+
 			% Label "centro"
 			\node[red] at (0,-1.2) {centro};
 			\draw[red, ->] (0,-0.8) -- (0,-1);
-			
+
 			% Distance |x - alpha| with double arrow
 			\draw[<->] (-1.8, 0.5) -- (0, 0.5) node[midway, above] {$|x - \alpha|$};
-			
+
 			% Curly brace for "raggio delta"
-			\draw[decorate, decoration={brace, amplitude=10pt}, red, thick] 
+			\draw[decorate, decoration={brace, amplitude=10pt}, red, thick]
 			(0, 0.3) -- (3, 0.3) node[midway, above=12pt] {raggio $\delta$};
-			
+
 		\end{tikzpicture}
 	\end{center}
 \end{definition}
@@ -525,7 +525,7 @@ Vediamo di interpretare la scrittura $x \in B(\alpha, \delta)$:
 x \in B(\alpha, \delta) &\iff x \in (\alpha - \delta, \alpha + \delta) \\
 &\iff \alpha - \delta < x < \alpha + \delta \\
 &\iff -\delta < x - \alpha < \delta \\
-&\iff |x-\alpha| < \delta  
+&\iff |x-\alpha| < \delta
 \end{align*}
 ove $|x-\alpha|$ è la distanza di $x$ dal centro $\alpha$ e $\delta$ è il raggio. \\
 In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\alpha$ dell'intorno è minore del raggio $\delta$.
@@ -549,7 +549,7 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	Siano $\theta: [a, b] \to \mathbbm{R}$ e $\alpha$ punto fisso di $\theta$. \\
 	Il metodo iterativo one-step definito dalla funzione iteratrice $\theta$ è detto \textit{globalmente convergente} ad $\alpha$ in $[a, b]$ se, $\forall x_0 \in [a, b]$:
 	\begin{itemize}
-		\item $x_n \in [a, b], n \geq 0$ 
+		\item $x_n \in [a, b], n \geq 0$
 		\item $\lim\limits_{n\to\infty}x_n = \alpha$.
 	\end{itemize}
 \end{definition}
@@ -557,26 +557,26 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	La convergenza globale implica la convergenza locale.
 \end{note}
 \begin{theorem}{\nmu Condizione sufficiente per la convergenza locale}{condizione_convergenza_locale}
-	Siano $\theta \in C^1([a, b])$ e $\alpha$ punto fisso di $\theta$ in $(a, b)$. Allora, se $|\phi'(\alpha)| < 1$ il metodo one-step definito dalla funzione iteratrice $\theta$ risulta localmente convergente ad $\alpha$. 
+	Siano $\theta \in C^1([a, b])$ e $\alpha$ punto fisso di $\theta$ in $(a, b)$. Allora, se $|\phi'(\alpha)| < 1$ il metodo one-step definito dalla funzione iteratrice $\theta$ risulta localmente convergente ad $\alpha$.
 \end{theorem}
 \begin{proof} \quad \\
 	\begin{center}
 		\begin{tikzpicture}
-			
+
 			% Draw the main horizontal axis with arrow
 			\draw[thick, ->] (-1,0) -- (6,0);
-			
+
 			% Define points along the axis
 			% P1: |\phi'(\alpha)|, P2: L, P3: 1
 			\coordinate (P1) at (0.5, 0);
 			\coordinate (P2) at (3, 0);
 			\coordinate (P3) at (5, 0);
-			
+
 			% Vertical markers (ticks)
 			\draw[thick] (P1) -- ++(0,0.15) -- ++(0,-0.3) node[below=5pt] {$|\phi'(\alpha)|$};
 			\draw[thick] (P2) -- ++(0,0.15) -- ++(0,-0.3) node[below=5pt, red] {$L$};
 			\draw[thick] (P3) -- ++(0,0.15) -- ++(0,-0.3) node[below=5pt] {$1$};
-			
+
 		\end{tikzpicture}
 	\end{center}
 	Sia $0 < L < 1 \mid |\theta'(\alpha)| < L < 1$ \\
@@ -595,33 +595,33 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	dove $\eta_{n-1}$ è un opportuno punto tra $x_{n-1}$ e $\alpha$:
 	\begin{center}
 	\begin{tikzpicture}
-		
+
 		% Draw the main horizontal axis
 		\draw[thick, ->] (-5,0) -- (4,0);
-		
+
 		% Coordinates for points (adjusted spacing for the left side)
 		\coordinate (L)  at (-4.0, 0);   % alpha - delta
 		\coordinate (X)  at (-2.5, 0);   % x_{n-1}
 		\coordinate (Eta) at (-0.5, 0);  % eta_{n-1}
 		\coordinate (A)  at (1.2, 0);    % alpha
 		\coordinate (R)  at (3.5, 0);    % alpha + delta
-		
+
 		% Ticks and Labels
 		% Left boundary (alpha - delta)
 		\draw[cyan, thick] (L) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\alpha - \delta$};
-		
+
 		% x_{n-1}
 		\draw[cyan, thick] (X) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$x_{n-1}$};
-		
+
 		% eta_{n-1} (The Intermediate Point in Red)
 		\draw[red, thick] (Eta) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\eta_{n-1}$};
-		
+
 		% alpha (The center/fixed point)
 		\draw[cyan, thick] (A) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\alpha$};
-		
+
 		% Right boundary (alpha + delta)
 		\draw[cyan, thick] (R) -- ++(0,0.2) -- ++(0,-0.4) node[below=5pt] {$\alpha + \delta$};
-		
+
 	\end{tikzpicture}
 	\end{center}
 	Osserviamo che $\eta_{n-1} \in B(\alpha, \delta) \Rightarrow |\theta'(\eta_{n-1}) < L$. Dunque:
@@ -631,12 +631,12 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	Dimostriamo la seconda proprietà. Abbiamo visto che $|x_n - \alpha| < L|x_{n-1} - \alpha|$. \\
 	Essendo $n$ generico, possiamo iterare:
 	\[
-	|x_n - \alpha| < L|x_{n-1}-\alpha| < L^2|x_{n-2} - \alpha| < \dots < L^n|x_0 - \alpha| 
+	|x_n - \alpha| < L|x_{n-1}-\alpha| < L^2|x_{n-2} - \alpha| < \dots < L^n|x_0 - \alpha|
 	\]
 	e per $n \to \infty$ $L^n \simeq 0$. Quindi, in conclusione:
 	\[
 	0 \leq |x_n - \alpha| < L^n|x_0 - \alpha|
-	\]	
+	\]
 	Per il teorema dei due caraibinieri:
 	\[
 	\lim\limits_{n\to\infty}|x_n - \alpha| = 0 \Rightarrow \lim\limits_{n\to\infty}x_n = \alpha
@@ -654,10 +654,10 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 \begin{theorem}{\nmu Condizione sufficiente per la convergenza globale}{condizione_convergenza_globale}
 	Sia $\theta \in C^1([a, b])$ tale che:
 	\begin{itemize}
-		\item $\theta([a, b]) \subset [a, b]$ 
+		\item $\theta([a, b]) \subset [a, b]$
 		\item $|\theta'(x)| < 1, \forall x \in [a, b]$
 	\end{itemize}
-	Allora $\theta$ ammette un unico punto fisso $\alpha \in [a, b]$ e il metodo one-step definito dalla funzione iteratrice $\theta$ risulta essere globalmente convergente ad $\alpha$ nell'intervallo $[a, b]$. 
+	Allora $\theta$ ammette un unico punto fisso $\alpha \in [a, b]$ e il metodo one-step definito dalla funzione iteratrice $\theta$ risulta essere globalmente convergente ad $\alpha$ nell'intervallo $[a, b]$.
 \end{theorem}
 \begin{proof} \quad \\
 	Proviamo innanzitutto l'esistenza e l'unicità del punto fisso $\alpha$ di $\theta$. A tal fine consideriamo la seguente funzione ausiliaria $g(x)$:
@@ -670,7 +670,7 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	\]
 	cioè $g(x)$ è strettamente crescente in $[a, b]$. Inoltre:
 	\[
-	g(a) = a - \theta(a) \leq 0 
+	g(a) = a - \theta(a) \leq 0
 	\]
 	\[
 	g(b) = b - \theta(b) \geq 0
@@ -730,15 +730,15 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 				height=7cm,
 				title={Grafico di $y = \cos(x)$}
 				]
-				% La funzione cos in pgfplots accetta gradi di default, 
+				% La funzione cos in pgfplots accetta gradi di default,
 				% quindi usiamo deg(x) per convertire i radianti
 				\addplot [blue, thick] {cos(deg(x))};
-				
-			
+
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
-	Quindi, notiamo che per $0 \leq x \leq \frac{\pi}{2} \Rightarrow 0 \leq \cos x \leq 1 < \frac{\pi}{2}$, quindi la prima proprietà del teorema della \namerefl{th:condizione_convergenza_globale} è soddisfatta. Inoltre: 
+	Quindi, notiamo che per $0 \leq x \leq \frac{\pi}{2} \Rightarrow 0 \leq \cos x \leq 1 < \frac{\pi}{2}$, quindi la prima proprietà del teorema della \namerefl{th:condizione_convergenza_globale} è soddisfatta. Inoltre:
 	\[
 	|\theta'(x)| = |-\sin x| = \sin x
 	\]
@@ -793,7 +793,7 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 				\theta_1'(x) = \frac{3}{2}x^2 \geq \frac{3}{2} > 1 \quad \forall x \in [1, 3]
 				\]
 				per cui $\theta_1'(\alpha) > 1$. \\
-				Per cui il primo metodo non converge localmente e a maggior ragione non converge globalmente in $[1, 3]$. 
+				Per cui il primo metodo non converge localmente e a maggior ragione non converge globalmente in $[1, 3]$.
 				\item $\theta_2(x) = \sqrt[3]{2x + 5}$ da cui:
 				\[
 				\theta_2'(x) = \frac{1}{3}(2x + 5)^{-\frac{2}{3}}\cdot 2 = \frac{2}{3} \frac{1}{\sqrt[3]{(2x+5)^2}}
@@ -848,7 +848,7 @@ Introduciamo questo metodo mediante la sua interpretazione geometrica:
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/direzione_costante}
 \end{figure}
-A partire da una stima iniziale $x_0$ di $\alpha$, si considera la retta passante per il punto $(x_0, f(x_0))$ è di coefficiente angolare $\frac{1}{m}$ con $m \neq 0$. La sua equazione sarà: 
+A partire da una stima iniziale $x_0$ di $\alpha$, si considera la retta passante per il punto $(x_0, f(x_0))$ è di coefficiente angolare $\frac{1}{m}$ con $m \neq 0$. La sua equazione sarà:
 \[
 y - f(x_0) = \frac{1}{m}(x - x_0)
 \]
@@ -856,7 +856,7 @@ Definiamo $x_1$ come l'intercetta di questa retta con l'asse delle ascisse:
 \[
 \begin{cases}
 	y - f(x_0) = \frac{1}{m}(x - x_0) \\
-	y = 0	
+	y = 0
 \end{cases}
 \]
 da cui \[x_1 = x_0 - mf(x_0)\]
@@ -911,10 +911,10 @@ Si possono presentare i due casi nelle due figure sottostanti:
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/casi_direzione_costante}
 \end{figure}
-Discutiamo il primo caso ($f'(x) > 0$). Risulta: 
+Discutiamo il primo caso ($f'(x) > 0$). Risulta:
 \begin{align*}
 	\phi(a) &= a - mf(a) > a \quad \text{in quanto $m > 0$ e $f(a) < 0$} \\
-	\phi(b) &= b - mf(b) < b \quad \text{in quanto $m > 0$ e $f(b) > 0$} 
+	\phi(b) &= b - mf(b) < b \quad \text{in quanto $m > 0$ e $f(b) > 0$}
 \end{align*}
 In conclusione:
 \[
@@ -932,7 +932,7 @@ dove $o(x - x_0)$ denota un infinetisimo di ordine superiore al primo per $x \to
 \[
 \lim\limits_{x \to x_0}\frac{o(x-x_0)}{x-x_0} = 0
 \]
-Se $x$ è vicino ad $x_0$, potremo trascurare l'infinitesimo $o(x-x_0)$ e scrivere 
+Se $x$ è vicino ad $x_0$, potremo trascurare l'infinitesimo $o(x-x_0)$ e scrivere
 \[
 f(x) \approx f(x_0) + f'(x_0)(x-x_0)
 \]
@@ -1012,7 +1012,7 @@ Se $d=3$ allora $f(\alpha) = f'(\alpha) = f''(\alpha) \wedge f'''(\alpha) \neq 0
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/zero_triplo}
 \end{figure}
-Torniamo al metodo di Newton. 
+Torniamo al metodo di Newton.
 \[
 \phi(x) = x - \frac{f(x)}{f'(x)}
 \]
@@ -1027,7 +1027,7 @@ Distinguiamo due casi:
 	\[
 	\phi'(\alpha) = \frac{f(\alpha)\cdot f''(\alpha)}{[f'(\alpha)]^2} = 0
 	\]
-	Dal teorema di convergenza locale, concludiamo che il metodo di Newton è localmente convergente. 
+	Dal teorema di convergenza locale, concludiamo che il metodo di Newton è localmente convergente.
 	\item $\alpha$ zero di molteplicità $d \geq 2$:
 	\[
 	f(\alpha) = f'(\alpha) = \dots = f^{(d-1)}(\alpha) = 0 \wedge f^{(d)}(\alpha) \neq 0
@@ -1040,13 +1040,13 @@ Distinguiamo due casi:
 	\[
 	\phi'(\alpha) = \lim\limits_{x\to\alpha}\phi'(\alpha) = 1 - \frac{1}{d}
 	\]
-	Anche in questo caso risulta che $|\phi'(\alpha)| < 1$ e otteniamo la convergenza locale. 
+	Anche in questo caso risulta che $|\phi'(\alpha)| < 1$ e otteniamo la convergenza locale.
 \end{enumerate}
-Quindi, concludendo, il metodo di Newton è sempre localmente convergente, pertanto, studiamone la convergenza globale. 
+Quindi, concludendo, il metodo di Newton è sempre localmente convergente, pertanto, studiamone la convergenza globale.
 \begin{theorem}{\nmu Convergenza globale del metodo di Newton}{newton_conv_globale}
 	Sia $f \in C^2([a, b])$ tale che:
 	\begin{enumerate}[label=(\alph*)]
-		\item $f(a)\cdot f(b) < 0$ 
+		\item $f(a)\cdot f(b) < 0$
 		\item $f'(x) \neq 0 \quad \forall x \in [a, b]$
 		\item $f''(x) \neq 0 \quad \forall x \in [a, b]$
 	\end{enumerate}
@@ -1077,7 +1077,7 @@ Quindi, concludendo, il metodo di Newton è sempre localmente convergente, perta
 	Dal punto precedente sappiamo che $x_n \in (\alpha, b] \quad \forall n \geq 0$.
 	\[
 	x_n = x_{n-1} - \frac{f(x_{n-1})}{f'(x_{n-1})} < x_{n-1}
-	\] 
+	\]
 	$\{x_n\}$ è strattamente decrescente e limitata inferiormente da $\alpha$. Dall'analisi ammetterà limite finito:
 	\[
 	\exists \lim\limits_{n\to\infty}x_n = \beta \geq \alpha
@@ -1092,10 +1092,10 @@ Quindi, concludendo, il metodo di Newton è sempre localmente convergente, perta
 	\[
 	x_0 < \alpha \Rightarrow x_1  = \phi(x_0) > \phi(\alpha) = \alpha
 	\]
-	e quindi, dall'ipotesi $x_1 \in [a, b]$ segue che $x_1 \in (\alpha, b]$ e da questo punto in poi vale il teorema precedente. 
+	e quindi, dall'ipotesi $x_1 \in [a, b]$ segue che $x_1 \in (\alpha, b]$ e da questo punto in poi vale il teorema precedente.
 \end{proof}
-\section{Ordine di convergenza} 
-L'ordine di convergenza è uno strumento che ci consente di stimare la velocità con cui una successione convergente tende al suo valore limite. Questo strumento ci consentirà di confrontare i metodi iterativi in base alla rapidità di convergenza delle successioni che essi generano. 
+\section{Ordine di convergenza}
+L'ordine di convergenza è uno strumento che ci consente di stimare la velocità con cui una successione convergente tende al suo valore limite. Questo strumento ci consentirà di confrontare i metodi iterativi in base alla rapidità di convergenza delle successioni che essi generano.
 \begin{definition}{\nmu Ordine di convergenza}{ordine_convergenza}
 	Sia $\{x_n\}$ una successione convergente ad $\alpha \in \mathbbm{R}$:
 	\[
@@ -1178,7 +1178,7 @@ La costante $c$ è detta \textit{costante asintotica di convergenza}. La converg
 	\frac{|x_n-\alpha|}{|\alpha|} \approx \frac{|x_n - \alpha|^2}{|\alpha|} = |\alpha|\cdot\Bigg(\frac{|x_n-\alpha|}{|\alpha|}\Bigg)^2 < |\alpha|10^{-2d}
 	\]
 \end{note}
-La seguente proposizione ci fornisce un modo per  determinare l'ordine di convergenza $p$ di un metodo iterativo nel caso di metodi iterativi one-step. 
+La seguente proposizione ci fornisce un modo per  determinare l'ordine di convergenza $p$ di un metodo iterativo nel caso di metodi iterativi one-step.
 \begin{proposition}{}{}
 	Sia $\phi \in C^p(B(\alpha, \delta))$, con $\alpha$ punto fisso di $\phi$, Sono equivalenti le seguenti due proposizioni
 	\begin{enumerate}[label=(\alph*)]
@@ -1228,8 +1228,8 @@ Ricordiamo che:
 \end{align*}
 Distinguiamo due casi:
 \begin{enumerate}
-	\item $m \neq \frac{1}{f'(\alpha)}$. Questo è il caso generale. Risulta $\phi'(\alpha) \neq 0$ e quindi l'ordine di convergenza è $p = 1$. 
-	\item $ m = \frac{1}{f'(\alpha)}$.  In questo caso eccezionale risulta $\phi'(\alpha) = 0$ e quindi la successione $\{x_n\}$ generata con questa scelta converge ad $\alpha$ con ordine $p = 2$. 
+	\item $m \neq \frac{1}{f'(\alpha)}$. Questo è il caso generale. Risulta $\phi'(\alpha) \neq 0$ e quindi l'ordine di convergenza è $p = 1$.
+	\item $ m = \frac{1}{f'(\alpha)}$.  In questo caso eccezionale risulta $\phi'(\alpha) = 0$ e quindi la successione $\{x_n\}$ generata con questa scelta converge ad $\alpha$ con ordine $p = 2$.
 \end{enumerate}
 L'ordine di convergenza del metodo della direzione costante è $p = 1$.
 \subsection{Metodo di Newton}
@@ -1248,8 +1248,8 @@ Distinguiamo due casi:
 	\item $\alpha$ zero di molteplicità $d > 1$. In tal caso, avevamo provato che:
 	\[
 	\phi'(\alpha) = \lim\limits_{x\to\alpha}\phi'(x) = 1 - \frac{1}{d} \neq 0
-	\] 
-	In presenza di zeri multipli, la successione $\{x_n\}$ generata dal metodo di Newton converge ad $\alpha$ linearmente. 
+	\]
+	In presenza di zeri multipli, la successione $\{x_n\}$ generata dal metodo di Newton converge ad $\alpha$ linearmente.
 \end{enumerate}
 Quindi il vantaggio del metodo di Newton è che esso converge con ordine $p = 2$. Tuttavia, per la sua implementazione, occorre preventivamente calcolare la derivata prima di $f$. Ciò può essere oneroso se $f$ ha un'espressione complicata o addirittura impossibile se $f$ non è nota. Inoltre, il costo computazionale per iterata del metodo di Newton è:
 \[
@@ -1272,7 +1272,7 @@ Il metodo di Newton modificato è:
 La derivata prima di $f$ va calcolata solo nel punto iniziale. L'idea è che se $x_0 \approx \alpha$ allora $f'(x_0) \approx f'(\alpha)$ e quindi
 \[
 m = \frac{1}{f'(x_0)} \approx \frac{1}{f'(\alpha)}
-\] 
+\]
 Ricordiamo che per $m = \frac{1}{f'(\alpha)}$ la convergenza sarebbe quadratica. Nel nostro caso, il metodo diventa lineare, ma la costante asintotica è piccola:
 \[
 |\phi'(\alpha)| = |1 - mf'(\alpha)| = \Bigg|1 - \frac{f'(\alpha)}{f'(x_0)}\Bigg| \ll 1
@@ -1302,7 +1302,7 @@ Si tratta di un metodo superlineare $1 < p < 2$. Il costo computazionale è:
 \frac{\text{1 valutazione di funzione}}{\text{iterata}}
 \]
 Vediamo il perchè di questo risultato.
-\paragraph{Interpretazione geometrica} 
+\paragraph{Interpretazione geometrica}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/secanti_geometrico}
@@ -1323,7 +1323,7 @@ x_n \approx \alpha
 Poichè $\alpha$ non è noto, la condizione di arresto non è una condizione operativa. Si possono seguire due strade:
 \begin{enumerate}
 	\item determinare una maggiorazione calcolabile dell'errore assoluto;
-	\item determinare una stima dell'errore assoluto. 
+	\item determinare una stima dell'errore assoluto.
 \end{enumerate}
 \paragraph{Maggiorazione dell'errore assoluto} Consideriamo
 \begin{align*}
@@ -1342,7 +1342,7 @@ Dalle uguaglianze precedenti ricaviamo:
 \]
 Se si riesce a determinare un intervallo $[a, b]$ tale che:
 \begin{itemize}
-	\item $\alpha \in (a, b)$ 
+	\item $\alpha \in (a, b)$
 	\item $|\phi'(x)| < 1$ in $[a, b]$
 \end{itemize}
 Denotando con $M = \max_{a \leq x \leq b}|\phi'(x)| < 1$ per $n$ grande $\eta_n \in (a, b)$ e quindi:
@@ -1367,11 +1367,11 @@ Abbiamo ottenuto due maggioranze valutabili dell'errore assoluto. Il criterio di
 $C$ è una costante solitamente fissata ad $1$ oppure $C > 1$. La scelta $C = 1$ è certamente appropriata per il metodo di Newton. Infatti sappiamo che, in presenza di zeri semplici, $\phi'(\alpha) = 0$; ciò significa che, per $n$ grande, $\phi'(\eta_n) \approx 0$ e quindi
 \[
 \frac{1}{1 - \phi'(\eta_n)} \approx 1
-\] 
+\]
 Scegliendo $C = 1$, il criterio di arresto si semplifica come:
 \[
 |x_{n+1}-x_n|  < tol
-\] 
+\]
 Per l'errore relativo, possiamo usare il seguente criterio di arresto:
 \[
 \frac{|x_{n+1}-x_n|}{|x_{n+1}|} < tol
@@ -1437,11 +1437,11 @@ Consideriamo il seguente esempio.
 \begin{note}{}{}
 	\begin{enumerate}
 		\item Abbiamo escluso lo zero poichè questo non ammette una notazione normalizzata.
-		\item L'ultima condizione impone che le cifre $d_i$ non siano uguali a $\beta - 1$ da un certo indice in poi. Tale condizione è importante per avere l'unicità della rappresentazione.  
+		\item L'ultima condizione impone che le cifre $d_i$ non siano uguali a $\beta - 1$ da un certo indice in poi. Tale condizione è importante per avere l'unicità della rappresentazione.
 	\end{enumerate}
 \end{note}
 \begin{example}{}{}
-	In base $\beta = 10$, scegliamo il numero 
+	In base $\beta = 10$, scegliamo il numero
 	\begin{align*}
 		x &= 0.\overline{9} = 9.\overline{9} \cdot 10^{-1} \\
 		&= 10^{-1} \sum_{i=0}^{\infty}9 \cdot 10^{-i} = \frac{9}{10}\sum_{i=0}^{\infty}\Bigg(\frac{1}{10}\Bigg)^i \\
@@ -1459,13 +1459,13 @@ Consideriamo il seguente esempio.
 	Dovremo quindi fissare un numero massimo di cifre $d_i$ e una variabilità finita per l'esponente.
 \end{example}
 \section{Numeri di macchina}
-Sono quei numeri reali che il calcolatore è in grado di rappresentare correttamente. 
+Sono quei numeri reali che il calcolatore è in grado di rappresentare correttamente.
 \begin{definition}{\nmu Insieme dei numeri di macchina}{insieme_numeri_macchina}
 	Siano $\beta \geq 2$, $t \geq 0$, $M_1, M_2$ interi. \\
 	Si definisce insieme dei numeri di macchina in base $\beta$, con $t + 1$ cifre significative e range per l'esponente $p \in (M_1, M_2)$, il seguente sottoinsieme di $\mathbbm{R}$:
 	\[
 	\mathbbm{F} = \{ x \in \mathbbm{R} \mid x = \pm \beta^p\sum_{i=0}^{t}d_i\beta^{-i}\} \cup \{0\}
-	\] 
+	\]
 	dove:
 	\begin{itemize}
 		\item $\beta$ è la base della rappresentazione;
@@ -1557,7 +1557,7 @@ La configurazione vuota $(p^* = 0)$ e quella piena $(p^* = 255)$ sono state lasc
 	\item la caratteristica piena serve per gestire le cosidette eccezioni previste dallo standard IEEE:
 	\begin{itemize}
 		\item $p^* = 255$ e mantissa nulla identificano il simbolo $+Inf$
-		\item $P^* = 255$ e mantissa non nulla identificano il simbolo $NaN$ 
+		\item $P^* = 255$ e mantissa non nulla identificano il simbolo $NaN$
 	\end{itemize}
 	Questi simboli sono l'output di alcune operazioni non consentite in aritmetica reale e il loro scopo è evitare l'arresto dell'esecuzione di un codice in corrispondenza di queste operazioni. Ad esempio:
 	\[
@@ -1610,7 +1610,7 @@ In doppia precisione, i numeri subnormali sono:
 &= 2^{-1074}
 \end{align*}
 \begin{note}{}{}
-	I numeri subnormali hanno un numero di cifre significative minore di $t + 1$. In effetti la presenza degli zeri all'inizio della mantissa serve per perfezionare l'esponente permettendogli di assumere valori minori di $M_1 + 1$ a discapito di una perdita di accuratezza in termini di cifre significative. 
+	I numeri subnormali hanno un numero di cifre significative minore di $t + 1$. In effetti la presenza degli zeri all'inizio della mantissa serve per perfezionare l'esponente permettendogli di assumere valori minori di $M_1 + 1$ a discapito di una perdita di accuratezza in termini di cifre significative.
 \end{note}
 \section{Rappresentazione dei numeri reali mediante i numeri di macchina}
 Ogni numero reale verrà approssimato sul calcolatore mediante un opportuno numero di macchina. Occorre definire una funzione;
@@ -1651,7 +1651,7 @@ x = \beta^p\sum_{i=0}^{\infty}d_i\beta^{-i}
 	\[
 	a = \beta^p\sum_{i=0}^{t}d_i\beta^{-i} \quad b = a + \beta^{p - t}
 	\]
-	Lo standard IEEE contempla due tecniche. 
+	Lo standard IEEE contempla due tecniche.
 	\paragraph{Tecnica del troncamento} \quad \\
 	\[
 	fl(x) = trn(x) = a
@@ -1744,7 +1744,7 @@ E_r < \frac{1}{2}\beta^{-t}
 	u = \frac{1}{2}\beta^{-t}
 	\]
 	è detta \textit{precisione di macchina}. \\
-	
+
 	È la più piccola maggiorazione sull'erorre relativo in fase di rappresentazione dei numeri reali mediante i numeri di macchina.
 \end{definition}
 In doppia precisione:
@@ -1772,7 +1772,7 @@ Consideriamo il seguente esempio.
 	\]
 	determinare la somma:
 	\[
-	x_1 + x_2 = 
+	x_1 + x_2 =
 	\begin{array}{r@{\quad}l}
 		1.2 \cdot 10^0 & + \\
 		0.34 \cdot 10^0 &  \\
@@ -1813,7 +1813,7 @@ Le seguenti proprietà dell'artimetica reale continuano a valere per l'aritmetic
 	$\forall x \in \mathbbm{F}$:
 	\begin{align*}
 	x\ \circled{+}\ 0 &= x \\
-	x\ \circled{*}\ 1 &= x 
+	x\ \circled{*}\ 1 &= x
 	\end{align*}
 	\item \textbf{Proprietà commutativa}. \\
 	$\forall x_1, x_2 \in \mathbbm{F}$:
@@ -1842,7 +1842,7 @@ Le seguenti proprietà non sono più valide in aritmetica di macchina.
 		\]
 		Risulta:
 		\begin{align*}
-		x_1\ \circled{+}\ x_2 &= 
+		x_1\ \circled{+}\ x_2 &=
 		\begin{array}{r@{\quad}l}
 			1.2 \cdot 10^0 & \circled{+} \\
 			0.13 \cdot 10^0 &  \\
@@ -1857,11 +1857,11 @@ Le seguenti proprietà non sono più valide in aritmetica di macchina.
 			fl(1.44 \cdot 10^0) &
 		\end{array} \\
 		&= 1.4 \cdot 10^0
-		\end{align*} 
+		\end{align*}
 		Ora calcoliamo:
-		
+
 		\begin{align*}
-			x_2\ \circled{+}\ x_3 &= 
+			x_2\ \circled{+}\ x_3 &=
 			\begin{array}{r@{\quad}l}
 				0.13 \cdot 10^{0} & \circled{+} \\
 				0.14 \cdot 10^0 &  \\
@@ -1876,7 +1876,7 @@ Le seguenti proprietà non sono più valide in aritmetica di macchina.
 				fl(1.47 \cdot 10^0) &
 			\end{array} \\
 			&= 1.5 \cdot 10^0
-		\end{align*} 
+		\end{align*}
 	\end{example}
 	\begin{example}{\nmu Secondo controesempio}{}
 		In doppia precisione, con arrotondamento, consideriamo i numeri di macchina:
@@ -1938,7 +1938,7 @@ Tuttavia, ciò non garantisce che cambiando le due fasi, l'errore nel risultato 
 	\end{align*}
 	Effettuiamo la sottrazione in $\mathbbm{F}$:
 	\begin{align*}
-		fl(x_1)\ \circled{-}\ fl(x_2) &= 
+		fl(x_1)\ \circled{-}\ fl(x_2) &=
 		\begin{array}{r@{\quad}l}
 			1.2346 \cdot 10^{0} & \circled{-} \\
 			1.2345 \cdot 10^0 &  \\
@@ -1965,5 +1965,4 @@ Tuttavia, ciò non garantisce che cambiando le due fasi, l'errore nel risultato 
 	In questo esempio, l'unica fonte di errore è quella in fase di rappresentazione: la sottrazione è esatta. \\
 	La precisione di macchina è $u = \frac{1}{2} \cdot 10^{-4}$ e, in effetti, $fl(x_1)$ e $fl(x_2)$ contengono 4 cifre significative corrette. Questo piccolo errore si amplifica a seguito della sottrazione portnado alla perdita di tutte le cifre significative nel risultato.
 \end{note}
-
 \end{document}
