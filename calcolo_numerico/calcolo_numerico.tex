@@ -37,6 +37,7 @@
 \usepackage{nicefrac}
 \usepackage{wasysym}
 \usepackage{stackengine}
+\usepackage{tikz-cd}
 \usetikzlibrary{angles, quotes, patterns}
 \usepackage{circledsteps}
 \date{}
@@ -1965,4 +1966,313 @@ Tuttavia, ciò non garantisce che cambiando le due fasi, l'errore nel risultato 
 	In questo esempio, l'unica fonte di errore è quella in fase di rappresentazione: la sottrazione è esatta. \\
 	La precisione di macchina è $u = \frac{1}{2} \cdot 10^{-4}$ e, in effetti, $fl(x_1)$ e $fl(x_2)$ contengono 4 cifre significative corrette. Questo piccolo errore si amplifica a seguito della sottrazione portnado alla perdita di tutte le cifre significative nel risultato.
 \end{note}
+\section{Richiami su vettori e analisi}
+\subsection{Prodotto scalare tra due vettori}
+Consideriamo due vettori di $\mathbbm{R}^n$, cioè, insiemi dei vettori ad $n$ componenti. Sia:
+\begin{align*}
+\underline{x} &= \begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	\vdots \\
+	x_n
+\end{bmatrix} \quad \underline{y} = \begin{bmatrix}
+	y_1 \\
+	y_2 \\
+	\vdots \\
+	y_n
+\end{bmatrix}
+\end{align*}
+Per convenzione i vettori saranno matrici a una colonna; per riguardarli come vettori riga se ne considerà il trasposto:
+\begin{align*}
+	\underline{x}^T = [x_1, x_2, \dots, x_n]
+\end{align*}
+Si definisce il prodotto scalare tra \underline{x} e \underline{y}, il seguente numero reale:
+\begin{align*}
+\underline{x}^T\underline{y} &= [x_1, x_2, \dots, x_n]\begin{bmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{bmatrix} \\
+&= x_1y_1 + x_2y_2  + \dots + x_ny_n \\
+&= \sum_{i=1}^{n}x_iy_i
+\end{align*}
+Geometricamente coincide con:
+\[
+||\underline{x}||_2 \cdot ||\underline{y}||_2 \cdot \cos\alpha
+\]
+dove $||\underline{x}||_2$ e $||\underline{y}||_2$ rappresentano le lunghezze euclidee dei due vettori, mentre $\alpha$ è l'angolo che essi formano.
+\subsection{Derivate parziali}
+Le derivate parziali sono l'estensione delle derivate classiche al caso di funzioni a più variabili. \\
+Sia $f: \mathbbm{R}^n \to \mathbbm{R}$, funzione scalare ad $n$ variabili, ad esempio:
+\begin{align*}
+	f(x_1, x_2) &= x_1 + x_2 \\
+	f(x_1, x_2) &= x_1 \text{ op } x_2 \\
+	f(x_1, x_2, x_3) &= x_1 \cdot x_2^2 - x_2 \log x_3
+\end{align*}
+Si definisce derivata parziale di $f$ rispetto alla variabile $x_i$, il seguente limite se esiste finito:
+\begin{align*}
+	\frac{\partial f}{\partial x_i} &= \lim\limits_{h \to 0}\frac{f(x_1, \dots, x_i + h, \dots, x_n)-f(x_1, \dots, x_i, \dots, x_n)}{h}
+\end{align*}
+cioè è il limite del rapporto incrementale definito sulla variabile $x_i$ e lasciando fisse tutte le altre variabili. \\
+Operativamente, si effettua la derivata rispetto alla variabile $x_i$ assumendo che tutte le altre variabili siano delle costanti.
+\begin{example}{}{}
+Sia $f(x_1, x_2) = \frac{x_1}{x_2}$. \\
+Allora:
+\[
+\frac{\partial f}{\partial x_1} = \frac{1}{x_2} \quad \frac{\partial f}{\partial x_2} = -\frac{x_1}{x_2^2}
+\]
+Sia $f(x_1, x_2, x_3) = x_1\cdot x_2^2 - x_2 \log x_3$ \\
+Allora:
+\[
+\frac{\partial f}{\partial x_1} = x_2^2 \quad \frac{\partial f}{\partial x_2} = 2x_1x_2 - \log x_3 \quad \frac{\partial f}{\partial x_3} = -\frac{x_2}{x_3}
+\]
+\end{example}
+Il vettore contenente le derivate parziali di una funzione si chiama \textit{gradiente}. Esso individua la direzione di massima crescita della funzione. Si denota con il simbolo:
+\[
+\underline{\nabla} f(\underline{x}) = \begin{bmatrix}\frac{\partial f}{\partial x_1}(\underline{x}) \\ \frac{\partial f}{\partial x_2}(\underline{x}) \\ \vdots \\ \frac{\partial f}{\partial x_n}(\underline{x}) \end{bmatrix}
+\]
+Si osservi che, con $f$, anche:
+\[
+\frac{\partial f}{\partial x_i}: \mathbbm{R}^n \to \mathbbm{R}
+\]
+è una funzione scalare.
+\subsection{Sviluppo di Taylor arrestato al primo ordine per funzioni scalari}
+Ricordiamo che se $f: \mathbbm{R} \to \mathbbm{R}$ è sufficientemente regolare, possiamo considerare lo sviluppo di Taylor arrestato al primo ordine in un intorno di $x$:
+\[
+f(x + h) = f(x) + f'(x) \cdot h + o(h)
+\]
+Per $h$ piccolo, possiamo trascurare $o(h)$ e approssimare $f$ mediante la sua parte lineare:
+\[
+f(x + h) \simeq f(x) + f'(x) \cdot h
+\]
+Stiamo approssimando $f(x)$, in un intorno di $x$, mediante la retta tangente a $f$ nel punto $x$. \\
+Generalizziamo al caso di funzioni a più variabili:
+\[
+f: \mathbbm{R}^n \to \mathbbm{R}
+\]
+$f$ è una funzione a $n$ variabili $x_1, x_2, \dots, x_n$. \\
+Denoteremo con:
+\[
+\underline{x} = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n\end{bmatrix}
+\]
+Se $f$ è sufficientemente regolare, possiamo considerare lo sviluppo di Taylor arrestato al primo ordine in un intorno di $\underline{x}$:
+\[
+f(\underline{x} + \underline{h}) = f(\underline{x}) + \underline{\nabla}^Tf(\underline{x}) + o(\underline{h})
+\]
+Per $\underline{h}$ piccolo possiamo trascuare $o(\underline{h})$ e scrivere:
+\begin{align*}
+f(\underline{x} + \underline{h}) &\simeq f(\underline{x}) + \underline{\nabla}^Tf(\underline{x})\cdot \underline{h} \\
+&= f(\underline{x}) + \sum_{i=1}^{n}\frac{\partial f}{\partial x_i}(\underline{x}) \cdot h_i
+\end{align*}
+Per $n = 2$, stiamo approssimando la superficie descritta da $f$ mediante il piano tangente ad $f$ nel punto $\underline{x}$. \\
+Ci proponiamo da studiare il seguente problema da generalizzare l'esempio visto sopra.
+\begin{assignment}{}{}
+Data una funzione razionale:
+\[
+g: \mathbbm{R}^n \to \mathbbm{R}
+\]
+valutare questa funzione in artimetica di macchina e stimare l'errore che ne risulta.
+\end{assignment}
+Facciamo alcune osservazioni.
+\begin{enumerate}
+	\item Nel risolvere questo problema sul calcolatore distinguiamo due fasi. Il dato di input, un vettore \underline{x} di dato deve essere rappresentato nella memoria del calcolatore; i dati devono successivamente essere combinati mediante le operazioni descritte dall'espressione di $g$. \\
+	Nella prima fase si generano gli errori di rappresentazione; nella seconda fase si generano gli errori di arrotondamento durante i calcoli.
+	\item Abbiamo scelto $g$ quale funzione razionale (cioè rapporto di due polinomi) poichè le funzioni razionali sono tutte e sole le funzioni che possono essere valutate mediante una sequenza finita di operazioni elementari. \\
+	In effetti tutte le altre funzioni sono approssimate all'interno del calcolatore mediante opportune funzioni razionali. Un esempio di funzione razionale che a noi interesserà è:
+	\[
+	g(x_1, x_2) = x_1 \text{ op } x_2
+	\]
+	con $\text{op: } +, -, *, /$
+\end{enumerate}
+Il seguente diagramma riassiume le due fasi descritte sopra.
+\[
+\begin{tikzcd}[column sep=huge, row sep=huge]
+\underline{x} \in \mathbb{R}^n \arrow[r, "g"] \arrow[d, "\text{ERRORI DI}"' , "\text{RAPPRESENTAZIONE}"]
+& g(\underline{x}) \in \mathbb{R} \\
+fl(\underline{x}) = \underline{x} + \Delta \underline{x} \in \mathbb{F}^n \quad  \arrow[r, "\tilde{g}"', "\text{ERRORI NEI CALCOLI}"]
+& \quad \tilde{g}(\underline{x} + \Delta \underline{x}) \in \mathbb{F}
+\end{tikzcd}
+\]
+dove $\tilde{g}$ ha la medesima espressione di $g$ con l'unica differenza che le operazioni in essa definite sono operazioni di macchina.
+Ad esempio:
+\[
+g(x_1, x_2) = \frac{x_1}{x_2} \Rightarrow \tilde{g}(x_1, x_2) = x_1\ \circled{/}\ x_2
+\]
+Osserviamo che:
+\[
+fl(\underline{x}) = \begin{bmatrix}fl(x_1) \\ fl(x_2) \\ \vdots fl(x_n)\end{bmatrix} = \begin{bmatrix}x_1(1 + \epsilon_1) \\ x_2(1+\epsilon_2) \\ \vdots \\ x_n(1+\epsilon_n)\end{bmatrix}
+\]
+con $|\epsilon_i| < u$ con $i = 1, \dots, n$ \\
+Liberando dalle parentesi e dividendo in due vettori, si ottiene:
+\[
+fl(\underline{x}) = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n\end{bmatrix} + \begin{bmatrix}x_1\epsilon_1 \\ x_2\epsilon_2 \\ \vdots \\ x_n\epsilon_n\end{bmatrix}
+\]
+Introduciamo i seguenti errori.
+\paragraph{Errore totale}
+\[
+E_{TOT} = \frac{\tilde{g}(\underline{x} + \underline{\Delta}x) - g(\underline{x})}{g(\underline{x})}
+\]
+nell'ipotesi che $g(\underline{x}) \neq 0$.  È l'errore nel risultato che tiene conto di entrambe le fonti di errore prima descritte.
+\paragraph{Errore inerente}
+\[
+E_{IN} = \frac{g(\underline{x} + \underline{\Delta}x) - g(\underline{x})}{g(\underline{x})}
+\]
+È l'errore nel risultato che tiene conto unicamente degli errori di rappresentazione dei dati. In altri termini vengono trascurati gli errori nei calcoli cioè si ritiene che i calcolo vengano eseguiti esattamente.
+\paragraph{Errore algoritmico}
+\[
+E_{ALG} = \frac{\tilde{g}(\underline{x} + \underline{\Delta}x) - g(\underline{x} + \underline{\Delta}x)}{g(\underline{x} + \underline{\Delta}x)}
+\]
+È l'errore nel risultato che tiene conto univocamente dagli errori di arrotondamento introdotti dalle operazioni floating-point. Si lavora direttamente su dati che siano numeri di macchina. \\
+Sussiste la seguente relazione:
+\[
+E_{TOT} = E_{IN} + E_{ALG}(1 + E_{IN})
+\]
+Ne consegue che possiamo studiare indipendentemente i problemi più semplici da stimare $E_{IN}$ e $E_{ALG}$ per poi combinare i risultati e ottenere una stima di $E_{TOT}$. In particolare:
+\begin{itemize}
+	\item se $|E_{IN}| \ll 1$ e $|E_{ALG}| \ll 1$ lo sarà anche l'errore totale. In questo caso:
+	\[
+	E_{TOT} = E_{IN} + E_{ALG} + E_{ALG} \cdot E_{IN} \simeq E_{IN} + E_{ALG}
+	\]
+	In questo caso vale il principio di sovrapposizione.
+	\item Se $|E_{IN}| \gg 1$ oppure $|E_{ALG}| \gg 1$ potremo concludere che anche $|E_{TOT}| \gg 1$.
+\end{itemize}
+L'errore inerente studia il condizionamento di un problema. \\
+L'errore algoritmico studia la stabilità di un algoritmo.
+\subsection{Condizionamento di un problema}
+Studiare il condizionamento di un problema significa analizzare in che misura, piccole perturbazioni dei dati di input si riflettono nel risultato (dati di output). In particolare
+\begin{itemize}
+	\item un problema si dice ben condizionato se a piccole perturbazioni dei dati di input corrispondono piccole perturbazioni dei dati di output.
+	\item Un problema si dice malcondizionato se a piccole perturbazioni dei dati di input possono corrispondere grandi perturbazioni dei dati di output. L'effetto del malcondizionamento si traduce in una significativa perdita di cifre significative corrette.
+\end{itemize}
+\subsection{Stabilità di un algoritmo}
+	Per uno stesso problema possono essserci più tecniche risolutive, cioè più algoritmi.
+	\begin{itemize}
+		\item Un algortimo si dice stabile se la sequenza di operazioni di macchina che lo definisce non amplifica notevolemente l'errore nel risultato a causa dell'accumularsi degli errori di arrotondamento durante i calcoli. Viceversa, un algoritmo si dirà instabile.
+	\end{itemize}
+Studiamo ora il condizionamento delle operazioni elementari.
+\section{Condizionamento delle operazioni elementari}
+\subsection{Addizione}
+Sia $g(x_1, x_2) = x_1 + x_2$ con $x_1, x_2 > 0$ \\
+Per studiare il condizionamento dovremo valutare l'errore inerente.  A tal fine riprendiamo lo sviluppo di Taylor arrestato al primo ordine, trascurando gli infinitesimi di ordine superiore:
+\[
+g(\underline{x} + \underline{\Delta}x) \simeq g(\underline{x}) + \underline{\nabla}^Tg(\underline{x}) \cdot \underline{\Delta}x
+\]
+da cui:
+\begin{align*}
+	E_{IN} &= \frac{g(\underline{x} + \underline{\Delta x}) - g(\underline{x})}{g(\underline{x})} \simeq \frac{1}{g(\underline{x})} \cdot \underline{\nabla}^Tg(\underline{x})\cdot \underline{\Delta}x \\
+	&= \frac{1}{g(\underline{x})}\sum_{i=1}^{n}\frac{\partial g}{\partial x_i}(\underline{x})x_i\epsilon_i
+\end{align*}
+Portando  $\frac{1}{g(\underline{x})}$ dentro la somma:
+\[
+E_{IN} \simeq \sum_{i=1}^{n}\frac{x_i}{g(\underline{x})}\frac{\partial g}{\partial x_i}(\underline{x}) \cdot \epsilon_i
+\]
+Poniamo $k(x_i, g) = \frac{x_i}{g(\underline{x})}\frac{\partial g}{\partial x_i}(\underline{x})$, allora:
+\[
+E_{IN} = \sum_{i=1}^{n}k(x_i, g)\epsilon_i
+\]
+I coefficienti $k(x_i, g)$ prendono il nome di ``numeri di condizionamento'' o ``coefficienti di amplificazione''. Possiamo concludere che:
+\begin{itemize}
+	\item Se $|k(x_i, g)|$ non sono eccessivamente grandi, l'errore inerente sarà piccolo e il problema è ben condizionato.
+	\item viceversa, se $|k(x_i, g)| \gg 1$ per qualche $i$,  $|E_{IN}| \gg 1$ e il problema sarà mal condizionato.
+\end{itemize}
+Torniamo all'addizione $g(x_1, x_2) = x_1 + x_2$
+\begin{align*}
+	E_{IN} &= k(x_i, g)\epsilon_1 + k(x_2, g)\epsilon_2 \\
+&= \frac{x_1}{g(x_1, x_2)}\frac{\partial f}{\partial x_1}(x_1, x_2)\epsilon_1 + \frac{x_2}{g(x_1, x_2)}\frac{\partial g}{\partial x_2}(x_1, x_2) \epsilon_2 \\
+&= \frac{x_1}{x_1 + x_2} \cdot 1 \cdot \epsilon_1 + \frac{x_2}{x_1 + x_2}\cdot 1 \cdot \epsilon_2
+\end{align*}
+Passando ai valori assoluti e sfruttando la disuguaglianza triangolare $|a+b| \leq |a| + |b|$:
+\[
+|E_{IN}| \leq \frac{x_1}{x_1 + x_2}u + \frac{x_2}{x_1 + x_2}u = u
+\]
+Quindi, concludendo, l'addizione tra due numero dello stesso segno è sempre ben condizionato. Infatti l'errore inerente è maggiorato dalla precisione di macchina.
+\subsection{Sottrazione}
+Sia $g(x_1, x_2) = x_1 - x_2$ con $x_1, x_2 > 0$ \\
+L'errore inerente è pari a:
+\[
+E_{IN} = \frac{x_1}{x_1 - x_2}\cdot \epsilon_1 + \frac{x_2}{x_1 - x_2}\cdot (-1) \cdot \epsilon_2
+\]
+Non possiamo maggiorare $|k(x_i, g)|$ mediante una quantità indipendente da $x_1$ e $x_2$. In effetti:
+\[
+\lim\limits_{x_2 \to x_1} |k(x_i, g)| = +\infty
+\]
+Se $x_1$ e $x_2$ sono vicini, il problema diventa mal condizionato poichè l'$|E_{IN}|$ diventa grande. \\
+Concludendo, quindi, la sottrazione tra due numeri dello stesso segno è mal condizionato se i due numeri sono molto vicini tra loro. In questo caso si ha il cosidetto fenomeno di ``cancellazione numerica'' cioè perdita di cifre significative nel risultato.
+\subsection{Moltiplicazione}
+Sia $g(x_1, x_2) = x_1 * x_2$ con $x_1, x_2 \neq 0$ \\
+L'errore inerente è pari a:
+\[
+E_{IN} = \frac{x_1}{x_1 * x_2}x_2 \epsilon_1 + \frac{x_2}{x_1 * x_2}x_1\epsilon_2 = \epsilon_1 + \epsilon_2
+\]
+e passando ai valori assoluti:
+\[
+|E_{IN}| \leq |\epsilon_1| + |\epsilon_2| \leq 2u
+\]
+Concludendo, quindi, la moltiplicazione è sempre ben condizionata.
+\subsection{Divisione}
+Sia $g(x_1, x_2) = \frac{x_1}{x_2}$ con $x_1, x_2 \neq 0$ \\
+Si vede che $|E_{IN}| < 2u$ e quindi la divisione tra due numeri non nulli è sempre ben condizionata.
+\section{Stabilità di un algoritmo}
+Studiamo la stabilità di un algoritmo che effettua la somma di $n$ numeri di macchina positivi. \\
+Dati $x_1, x_2, \dots, x_n \in \mathbbm{F}$, determinare la somma in aritmetica di macchina e studiare l'errore algoritmico. Come algoritmo considereremo:
+\[
+\begin{cases}
+S_1 = x_1 \\
+S_i = S_{i-1} + x_i & i = 2, \dots, n
+\end{cases}
+\]
+È chiaro che:
+\[
+S_i = x_1 + x_2 + \dots + x_i
+\]
+e quindi:
+\[
+S_n = \sum_{i=1}^{n}x_i
+\]
+In aritmetica di macchina avremo:
+\[
+\begin{cases}\tilde{S_1} = x_1 \\
+\tilde{S_i} = \tilde{S}_{i-1}\ \circled{+}\ x_i & i = 2, \dots, n\end{cases}
+\]
+ovvero:
+\[
+\begin{cases}\tilde{S_1} = x_1(1 + \epsilon_1) \\
+\tilde{S_i} = (\tilde{S}_{i-1} + x_i)(1+\epsilon_i) & i = 2, \dots, n\end{cases}
+\]
+con $\epsilon_1 = 0$ e $|\epsilon_i| < u$ con $i = 2, \dots, n$ \\
+Possiamo scrivere
+\begin{align*}
+	\tilde{S}_n &= (\tilde{S}_{n-1} + x_n)(1 + \epsilon_n) \\
+	&= \tilde{S}_{n-1}(1+\epsilon_n) + x_n(1+\epsilon_n) \\
+	&= (\tilde{S}_{n-2} + x_{n-1})(1+\epsilon_{n-1})(1+\epsilon_n) + x_n(1+\epsilon_n) \\
+	&= \tilde{S}_{n-2}(1+\epsilon_{n-1})(1+\epsilon_n) + x_{n-1}(1+\epsilon_{n-1})(1+\epsilon_n) + x_n(1 + \epsilon_n) \\
+	&\vdots \\
+	\tilde{S}_n &= x_1(1+\epsilon_1)(1+\epsilon_2)\cdots(1+\epsilon_n) + \dots + x_n(1+\epsilon_n) \\
+	&= \sum_{i=1}^{n}\Bigg(x_i \cdot \prod_{k=i}^{n}(1+\epsilon_k)\Bigg)
+\end{align*}
+Studiamo il generico prodotto:
+\begin{align*}
+	\prod_{k=1}^{n}(1 + \epsilon_k) &= (1+\epsilon_i)(1+\epsilon_{i+1}) \cdots (1 + \epsilon_n) \\
+	&= 1 + \sum_{k=i}^{n} + o(u) \simeq 1 + \sum_{k=i}^{n}\epsilon_k \\
+	&= 1 + \delta_i, \text{ avendo posto } \delta_i = \sum_{k=1}^{n}\epsilon_k
+\end{align*}
+Possiamo osservare che:
+\begin{align*}
+	|\delta_i| \leq \sum_{k=i}^{n}|\epsilon_k| \leq u \sum_{k=i}^{n}1 \\
+	&= (n-i+1)u \leq nu
+\end{align*}
+Introduciamo l'approssimazione $\delta_i$ nell'espressione di $\tilde{S}_n$:
+\begin{align*}
+	\tilde{S}_n = \sum_{i=1}^{n}x_i(1 + \delta_i) = \underbrace{\sum_{i=1}^{n}x_i}_{S_n} + \sum_{i=1}^{n}x_i\delta_i
+\end{align*}
+da cui:
+\[
+E_{ALG} = \frac{\tilde{S}_n - S_n}{S_n} = \frac{1}{S_n}\sum_{i=1}^{n}x_i\delta_i
+\]
+Passando ai valori assoluti
+\[
+|E_{ALG}| \leq \frac{1}{S_n}\sum_{i=1}^{n}x_i|\delta_i| \leq nu
+\]
+Concludendo, quindi, l'errore cresce al più linearmente rispetto ad $n$ e quindi l'algoritmo è stabile. \\
+In generale, per un algoritmo generico, se l'errore algoritmico è maggiorato da un'espressione della forma
+\[
+|E_{ALG}| \leq p(n)u
+\]
+dove $n$ indica la dimensione del problema da risolvere e $p(n)$ denota un polinomio in $n$, l'algoritmo può ritenersi stabile se il grado di $p(n)$ è basso, ad esempio 1, 2, 3.
 \end{document}
