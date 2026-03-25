@@ -112,101 +112,101 @@
 \renewcommand{\arraystretch}{2}
 
 \lstdefinestyle{pascalstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	language=Pascal
 }
 
 \lstdefinestyle{javastyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries, % Java has many keywords; bold helps
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=4, % Java standard is usually 4 spaces
 	language=Java
 }
 
 \lstdefinestyle{mlstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen}\itshape, % ML comments often look better in italics
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2, % ML code is usually deeply nested; keep tabsize small
 	language=ML
 }
 
 \lstdefinestyle{adastyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=3, % 3 spaces is a common Ada convention
 	language=Ada
 }
 
 \lstdefinestyle{cppstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	language=c++
 }
@@ -223,7 +223,7 @@
 	Il termine astrazione sotto-intende:
 	\begin{itemize}
 		\item un \textbf{processo}: l'estrazione delle informazioni essenziali e rilevanti per un particolare scopo, ignorando il resto dell'informazione;
-		\item un'\textbf{entità}: una descrizione semplificata di un sistema che enfatizza alcuni dei dettagli o proprietà trascurandone altri. 
+		\item un'\textbf{entità}: una descrizione semplificata di un sistema che enfatizza alcuni dei dettagli o proprietà trascurandone altri.
 	\end{itemize}
 	In programmazione, l'astrazione allude alla distinzione che si fa tra:
 	\begin{itemize}
@@ -254,7 +254,7 @@
 	Queste specifiche semantiche sono dette \textbf{assiomatiche}. \\
 	Nell'esempio del fattoriale:
 	\begin{itemize}
-		\item \textbf{Precondizione}: $n \in \mathbbm{N}$ 
+		\item \textbf{Precondizione}: $n \in \mathbbm{N}$
 		\item \textbf{Postcondizione}: $fatt(n) = \begin{cases}
 			n(n-1)\cdots 2 \cdot 1 & n \geq 1\\
 			1 & n = 0
@@ -264,14 +264,14 @@
 		Un modulo ha in input un intero \textit{x} e un vettore \textbf{A} di \textit{n} interi e restituisce un intero \textit{p} e un vettore \textbf{B} di \textit{n} interi. \\
 		Siano date le seguenti:
 		\begin{itemize}
-			\item \textbf{Precondizione}: $\{n > 0\ \wedge\ \forall i \in [1, n]\ A[i] \in Z\}$ 
+			\item \textbf{Precondizione}: $\{n > 0\ \wedge\ \forall i \in [1, n]\ A[i] \in Z\}$
 			\item \textbf{Postcondizione}: $\{\forall i \in [1, n]\ \exists j \in [1, n]\ B[i] = A[j]\ \wedge\ \forall i \in [1, p-1]\ B[i] \leq x\ \wedge\ \forall i \in [p + 1, n]\ B[i] > x\}$
 		\end{itemize}
 		Questa è la specifica semantica del modulo dell'\textit{x partition del quick sort}
 	\end{exercise}
 	\subsection{Limiti dell'astrazione funzionale}
 	L'astrazione funzionale non permette di progettare, e quindi sviluppare, moduli software \textit{invarianti ai cambiamenti nei dati}, sono invariant solo ai cambiamenti nei processi di trasformazione che operano. \\
-	Questo rende difficoltosa la manutenzione delle soluzioni progettate ed è inappropriata per lo sviluppo di soluzioni a problemi complessi. 
+	Questo rende difficoltosa la manutenzione delle soluzioni progettate ed è inappropriata per lo sviluppo di soluzioni a problemi complessi.
 	\section{Astrazione dati}
 	Alla base dell'\textit{astrazione dati} c'è il principio che non \textit{non si può accedere direttamente alla rappresentazione di un dato, qualunque esso sia, ma solo attraverso un insieme di operazioni considerate lecite} e questo è detto \textbf{principio dell'astrazione dati}. \\
 	Un vantaggio dell'astrazione dati è che un cambiamento nella rappresentazione del dato si ripercuoterà solo sulle operazioni lecite, che potrebbero subire delle modifiche, mentre non inficerà il codice che utilizza il dato astratto.
@@ -321,14 +321,14 @@
  	Anche un'astrazione dati è costituita da una \textbf{specifica} e da una \textbf{realizzazione}:
  	\begin{itemize}
  		\item la \textbf{specifica} consente di descrivere un nuovo dato e gli operatori che ad esso sono applicabili;
- 		\item la \textbf{realizzazione} stabilisce come il nuovo dato e i nuovi operatori vengono ricondotti ai dati e agli operatori già disponibili. 
+ 		\item la \textbf{realizzazione} stabilisce come il nuovo dato e i nuovi operatori vengono ricondotti ai dati e agli operatori già disponibili.
  	\end{itemize}
  	Chi intende usare i nuovi dati con i nuovi operatori nella scrittura dei suoi programma sarà tenuto a conoscere la specifica dell'astrazione dei dati, ma potrà astrarre delle tecniche utilizzate per la realizzazione. \\
  	I linguaggi di specifica per astrazione dati più noti sono due:
  	\begin{enumerate}
  		\item il linugaggio logico-matematico usato nelle asserzioni, chiamate \textbf{specifiche assiomatiche};
  		\item il linguaggio dell'algebra usato nelle equazioni definite fra gli operatori specificati nel dato astratto, chiamate \textbf{specifiche algebriche}.
- 	\end{enumerate} 
+ 	\end{enumerate}
  	\subsection{Specifiche assiomatiche}
  	Un linguaggio formale per la specifica di un dato astratto è costituito dalla notazione logico-matematica delle \textbf{asserzioni}. In questo caso si parla di specifica assiomatica. \\
  	Una specifica assiomatica è composta da:
@@ -361,7 +361,7 @@
  	\begin{enumerate}
  		\item \textbf{Sintattica}: elenca i nomi del tipo, le sue operazioni e il tipo degli argomenti delle operazioni. Se un'operazione è una funzione allora è specificato il codominio della funzione;
  		\item \textbf{Semantica}: consiste di un insieme di equazioni algebriche che descrivono in modo indipendente dalla rappresentazione le proprietà delle operazioni;
- 		\item \textbf{Di restrizione}: stabilisce varie condizioni che devono essere soddisfatte o prima che siano applicate le operazioni o dopo che esse siano state completate. 
+ 		\item \textbf{Di restrizione}: stabilisce varie condizioni che devono essere soddisfatte o prima che siano applicate le operazioni o dopo che esse siano state completate.
  	\end{enumerate}
  	A volte si possono trovare le specifiche di restrizione in quelle semantiche.  \\
  	Uno degli aspetti più interessanti delle specifiche algebriche è la semplicità del linguaggio di specifica rispetto ai linguaggi di programmazione procedurale. Infatti, il linguaggio di specifica consiste di solo cinque primitive:
@@ -394,7 +394,7 @@
  				\item push(stack, item) $\to$ stack
  				\item pop(stack) $\to$ stack
  				\item top(stack) $\to$ item
- 				\item isnew(stack) $\to$ boolean 
+ 				\item isnew(stack) $\to$ boolean
  			\end{itemize}
  			Ogni insieme è detto un \textit{sort} dell'algebra eterogenea. I \textit{sort} item e boolean sono \textit{ausiliari} alla definizione di stack.
  			\item \textbf{Specifica semantica} \\
@@ -431,7 +431,7 @@
  	\begin{center}
 \ 	\begin{tabular}{|c|c|c|}
  		\hline
- 		\multirow{2}{*}{\textbf{\textit{osservazioni}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{stk'}}}} \\ \cline{2-3} 
+ 		\multirow{2}{*}{\textbf{\textit{osservazioni}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{stk'}}}} \\ \cline{2-3}
  		& \textit{newstack} & \textit{push(stk, i)} \\ \hline
  		\textit{pop(\textcolor{orange}{stk'})}           & error             & stk                   \\ \hline
  		\textit{top(\textcolor{orange}{stk'})}           & error             & i                     \\ \hline
@@ -444,7 +444,7 @@
  		\begin{center}
  			\begin{tabular}{|c|c|c|}
  				\hline
- 				\multirow{2}{*}{\textbf{\textit{Costruttore di \textcolor{orange}{m}}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{l}}}} \\ \cline{2-3} 
+ 				\multirow{2}{*}{\textbf{\textit{Costruttore di \textcolor{orange}{m}}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{l}}}} \\ \cline{2-3}
  				& \textit{newstack} & \textit{push(stk, i)} \\ \hline
  				\textit{newstack}                                                        & true              & false                 \\ \hline
  				\textit{push(stk', i')}                                                  & false             & \makecell{i=i' and \\ equal(stk,stk')} \\ \hline
@@ -455,7 +455,7 @@
  		\begin{center}
  			\begin{tabular}{|c|c|c|}
  				\hline
- 				\multirow{2}{*}{\textbf{\textit{osservazione}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{stk'}}}} \\ \cline{2-3} 
+ 				\multirow{2}{*}{\textbf{\textit{osservazione}}} & \multicolumn{2}{c|}{\textbf{\textit{Costruttore di \textcolor{orange}{stk'}}}} \\ \cline{2-3}
  				& \textit{newstack} & \textit{push(stk, i)} \\ \hline
  				\textit{equal(\textcolor{orange}{stk'},\textcolor{blue}{m})} & isnew(m) & \makecell{\textbf{not} isnew(m) \textbf{and} \\ i=top(m) \textbf{and} \\ equal(stk,pop(m))} \\ \hline
  			\end{tabular}
@@ -471,12 +471,12 @@
  				\item addq(queue, item) $\to$ queue
  				\item deleteq(queue) $\to$ queue
  				\item frontq(queue) $\to$ item
- 				\item isnewq(queue) $\to$ boolean 
+ 				\item isnewq(queue) $\to$ boolean
  			\end{itemize}
  			\item \textbf{Specifica semantica} \\
  			\quad declare \textit{q: queue}, \textit{i: item}
  			\begin{itemize}
- 				\item deleteq(addq(q, i)) = if isnewq(q) then newq else addq(deleteq(q), i) 
+ 				\item deleteq(addq(q, i)) = if isnewq(q) then newq else addq(deleteq(q), i)
  				\item frontq(addq(q, i)) = if isnewq(q) then i else frontq(q)
  				\item isnew(newq) = true
  				\item isnew(addq(q, i)) = false
@@ -553,17 +553,17 @@
  	Il corpo della funzione è sintatticamente un comando, ma semanticamente è un'espressione, questa funzione, infatti, può essere invocata solo alla destra di operazioni di assegnazione. \\
  	Non tutti i linguaggi di programmazione includono comandi nel corpo di funzioni, infatti, nel linguaggio funzionale ML la funzione vista prima diventa:
  	\begin{lstlisting}[style=mlstyle]
- 		function power(x: real; n: int) is 
+ 		function power(x: real; n: int) is
  			if n = 1 then x
  			else x *  power(x, n-1)
  	\end{lstlisting}
  	Nel corpo della funzione definita in ML compare un'espressione condizionale la cui valutazione non modifica lo stato del sistema. Il motivo per il quale altri linguaggi di programmazione, come Pascal, Ada, o altro, permettono di avere comandi nel corpo di funzione è quello di poter sfruttare la potenza espressiva dell'assegnazione e dell'\textit{iterazione} nella computazione di risultati. Diversamente saremmo costretti a esprimere ricorsivamente le espressioni da valutare. E la ricorsione, com'è noto, può essere fonte di inefficienze nell'uso delle risorse di calcolo. \\
  	Quindi, per ragioni di efficienza, molti linguaggi permettono di avere comandi nel corpo di funzioni e si lascia al programmatore il compito di utilizzare correttamente i comandi in modo da evitare che la funzione possa avere effetti collaterali, \textit{side effect}, oltre quello di calcolare un valore.  \\
- 	Le funzioni in quanto astrazioni di espressioni, possono comparire ovunque occorra un'espressione. Pertanto, esse compaiono alla destra di operazioni di assegnazioni, ma anche al posto di parametri effettivi nelle chiamate di altre funzioni, laddove il valore potrebbe essere calcolato mediante un'espressione. 
+ 	Le funzioni in quanto astrazioni di espressioni, possono comparire ovunque occorra un'espressione. Pertanto, esse compaiono alla destra di operazioni di assegnazioni, ma anche al posto di parametri effettivi nelle chiamate di altre funzioni, laddove il valore potrebbe essere calcolato mediante un'espressione.
  	\[
  	\text{y := f(y, power(x, 2))}
  	\]
- 	In molti linguaggi di programmazione è possibile definire dei parametri formali che sono riferimento ad una funzione. 
+ 	In molti linguaggi di programmazione è possibile definire dei parametri formali che sono riferimento ad una funzione.
  	\begin{lstlisting}[style=pascalstyle]
  		function sommatoria(function F(R: real; M: integer): real; X: real; N: integer) : real;
  			var I: integer;
@@ -586,7 +586,7 @@
  		\item \textit{Esprimibili}, se possono essere il risultato di un'espressione complessa;
  		\item \textit{Memorizzabili}, se possono essere memorizzati in una variabile.
  	\end{itemize}
- 	
+
  	\section{Astrazione di procedura}
  	Un'astrazione di procedura include un comando da eseguire, e quando chiamata, aggiornerà le variabili che rappresentano lo stato del sistema. Un'astrazione di procedura è specificata mediante una definizione di procedura, del tipo:
  	\[
@@ -606,7 +606,7 @@
  		\end{itemize}
  		\item \textbf{Limiti imposti dal linguaggio di programmazione}. \\
  		Ad esempio, l'operatore di \textit{bubblesort} non modifica l'array passato in ingresso, ma ne restituisce uno ordinato, pertanto sarebbe più opportuno implementarlo ricorrendo ad un'astrazione di funzione. Tuttavia, non tutti i linguaggi di programmazione consentono di restituire come un tipo di dato complesso e quindi l'operatore \textit{bubblesort} dovrà essere realizzato mediante un'astrazione di procedura.
- 	\end{itemize} 
+ 	\end{itemize}
  	\section{Astrazione di controllo}
  	L'astrazione di controllo si applica alla classe sintattica struttura di controllo. Le strutture di controllo definiscono l'ordine in cui le singole istruzioni o i gruppi di istruzioni devono essere eseguiti. \\
  	Il linguaggio macchina generalmente fornisce due semplici meccanismi per governare il flusso di controllo delle istruzioni singole: l'\textbf{elaborazione in sequenza} e il \textbf{salto}. \\
@@ -627,28 +627,28 @@
  		B: ...\end{lstlisting}
  	Similmente sono state introdotte diverse strutture di controllo astratte per l'\textbf{itereazione}. Inoltre per conservare gli indirizzi di ritorno dalle chiamate di funzione/procedura si è tradotta nella possibilità di effettuare chiamate \textbf{ricorsive}. \\
  	Di particolare interesse è l'attuale tendenza a offrire strutture di controllo iterative per quei dati astratti che sono collezioni omogenee, come insiemi, liste, array, ecc., di valori. \\
- 	La struttura di controllo iterativa ha due parametri, il dato astratto e la variabile alla quale assegnare un valore contenuto nel dato astratto. Il meccanismo di visita della collezione di valori è incapsulato nel dato astratto, che dispone di operazioni lecite per consentire l'iterazione sulla collezione di oggetti. 
+ 	La struttura di controllo iterativa ha due parametri, il dato astratto e la variabile alla quale assegnare un valore contenuto nel dato astratto. Il meccanismo di visita della collezione di valori è incapsulato nel dato astratto, che dispone di operazioni lecite per consentire l'iterazione sulla collezione di oggetti.
  	\begin{example}{\nmu For-each in java}{for_each_java}
- 		In Java è disponibile l'astrazione di controllo \textit{for-each}, che permette di iterare su una collezione. 
+ 		In Java è disponibile l'astrazione di controllo \textit{for-each}, che permette di iterare su una collezione.
  		\begin{lstlisting}[style=javastyle]
  			LinkedList<Integer> list = new LinkedList<Integer>();
  			... // Inserimento elementi
  			for (Integer n : list) {
  				System.out.println(n);
- 			}	\end{lstlisting} 
+ 			}	\end{lstlisting}
  	\end{example}
  	L'operazione messa a disposizione di \textit{LinkedList} per l'astrazione di controllo for-each è \textbf{iterator()}. \\
  	Se guardiamo alle strutture di controllo come espressioni che, quando valutate, definiscono l'ordine in cui eseguire dei comandi, possiamo specificare un'astrazione di controllo come segue:
  	\[
  	\text{control I(FP$_1; \dots; $FP$_n$) is S}
  	\]
- 	dove $I$ è un identificatore di una nuova struttura di controllo, $FP_1;\dots;FP_n$ sono parametri formali, e $S$ è un'espressione di controllo che definisce un ordine di esecuzione. 
+ 	dove $I$ è un identificatore di una nuova struttura di controllo, $FP_1;\dots;FP_n$ sono parametri formali, e $S$ è un'espressione di controllo che definisce un ordine di esecuzione.
  	\begin{example}{\nmu Swap}{swap}
  		\begin{lstlisting}[style=pascalstyle]
- 			control swap(boolean: cond, statement: S1, S2) is 
- 				if cond then 
- 					begin S1; S2 end 
- 				else 
+ 			control swap(boolean: cond, statement: S1, S2) is
+ 				if cond then
+ 					begin S1; S2 end
+ 				else
  					S2; S1
  				endif\end{lstlisting}
  	\end{example}
@@ -657,7 +657,7 @@
  			control alt_execution(statement: S1, S2, S3) is
  				if abnormal(S1) then
  					S2
- 				else 
+ 				else
  					S3
  				endif\end{lstlisting}
  				\textit{abnormal} è un predicato che ha in input un comando $S1$ e restituisce \textit{true} se l'esecuzione di $S1$ è terminata in modo anomalo, \textit{false} altrimenti.
@@ -673,12 +673,12 @@
  	\begin{itemize}
  		\item cerca un gestore nel blocco (o sottoprogramma) corrente;
  		\item se non c'è, forza l'uscita dell'unità corrente e solleva l'eccezione nell'unità chiamante;
- 		\item continua a risalire la gerarchia delle unità chiamanti finchè non trovi un gestore oppure non raggiungi il livello più alto, il main. 
+ 		\item continua a risalire la gerarchia delle unità chiamanti finchè non trovi un gestore oppure non raggiungi il livello più alto, il main.
  	\end{itemize}
  	Quando viene trovato il gestore e l'eccezione è trattata:
  	\begin{itemize}
  		\item si riparte dall'unità contenente il gestore, \textit{modello di terminazione}, come in Ada;
- 		\item si ritorna ad eseguire il comando che ha generato l'eccezione, \textit{modello di ripresa}, come in PL/I. 
+ 		\item si ritorna ad eseguire il comando che ha generato l'eccezione, \textit{modello di ripresa}, come in PL/I.
  	\end{itemize}
  	I linguaggi di programmazione sequenziale utilizzano la sequenza, la selezione e la ripetizione per definire un \textbf{ordinamento totale} sull'esecuzione dei comandi di un programma. \\
  	I linguaggi di programmazione paralleli utilizzano ulteriori costrutti del flusso di controllo, come \textit{fork, begin} o cicli \textit{for} paralleli, per introdurre in modo esplicito un \textit{ordinamento parziale} sull'esecuzione dei comandi.\\
@@ -693,12 +693,12 @@
  	\end{lstlisting}
  	Lo stesso identificatore può essere usato sia come nome di un valore (legame dinamico fra identificatore e valore) e sia come un indirizzo (legame statico fra identificatore e locazione di memoria). Identicamente potremmo avere:
  	\begin{lstlisting}[style=pascalstyle]
- 		type rec = record 
+ 		type rec = record
  			a: real,
  			b: real
  		end
  		var r: rec;
- 		... 
+ 		...
  		r.b := r.a * 3;\end{lstlisting}
 	Un accesso a una variabile restituisce un \textit{riferimento} ad una variabile.\\
 	Tuttavia se osserviamo il seguente codice Pascal:
@@ -723,12 +723,12 @@
 				public:
 					static int& first(Queue*);
 			};
-			
+
 			Queue q*;
 			...
 			int i = first(q);
 			first(q) *= first(q);
-			first(q)++;\end{lstlisting} 
+			first(q)++;\end{lstlisting}
 			Una possibile implementazione è la seguente:
 			\begin{lstlisting}[style=cppstyle]
 				class Queue {
@@ -769,7 +769,7 @@
 			\end{itemize}
 			\paragraph{Tipo concreto e tipo astratto} I linguaggi ad alto livello mettono a disposizione del programmatore un nutrito gruppo di tipi predefiniti, detti \textbf{concreti}. Essi si distinguono in \textit{primitivi} o \textit{semplici} (i valori associati al tipo sono atomici) e \textit{composti} o \textit{strutturati} (i cui valori sono ottenuti per composizione di valori più semplici). \\
 			Tuttavia un linguaggio di programmazione sarà tanto più espressivo quanto più semplice sarà per il programmatore definire dei suoi tipi di dato a partire dai tipi di dato concreti disponibili. I tipi definiti dall'utente, detti \textit{user defined types UDT}, sono anche detti \textbf{astratti}. \\
-			È bene ricordare che i tipi concreti sono messi a disposizione del linguaggio e tipi astratti sono definiti dall'utente. 
+			È bene ricordare che i tipi concreti sono messi a disposizione del linguaggio e tipi astratti sono definiti dall'utente.
 			Ritornando all'astrazione di tipo, l'\textit{espressione di tipo}, detto anche \textit{tipo}, è il costrutto con cui alcuni linguaggi di programmazione consentono di definire un nuovo tipo. Ad esempio, in Pascal:
 			\begin{lstlisting}[style=pascalstyle]
 				type Person = record
@@ -785,14 +785,14 @@
 			\]
 			dove $I$ è un identificatore del nuovo tipo,  $FP_1;\dots;FP_n$ sono parametri formali e  $T$ è un'espressione di tipo che specificherà la rappresentazione dei tipi di dato $I$ e le operazioni ad esso applicabili. Analizziamo le astrazioni di tipo che alcuni lingauggi di programmazione (come C e Pascal) consentono di definire.
 			\begin{lstlisting}[style=pascalstyle]
-				type complex = record 
+				type complex = record
 					Re: real;
 					Im: real
 				end\end{lstlisting}
 			consente di:
 			\begin{enumerate}
 				\item stabilire che \textit{complex} è un identificatore di tipo;
-				\item associare una rappresentazione a \textit{complex} espressa mediante tipi concreti già disponibili nel linguaggio. 
+				\item associare una rappresentazione a \textit{complex} espressa mediante tipi concreti già disponibili nel linguaggio.
 			\end{enumerate}
 			Le operazioni associate al nuovo tipo \textit{complex} sono tutte quelle che il linguaggio ha già previsto epr il tipo record, come assegnazione e selezione di campi. \\
 			I limiti di questa astrazione sono:
@@ -824,9 +824,9 @@
 			\end{enumerate}
 			La parte di specifica inizia con la parola chiave \textbf{package} seguita dall'identificatore del package e da \textbf{is}; seguono poi le dichiarazioni delle entità visibili e private.
 			\begin{lstlisting}[style=adastyle]
-				package Type_complex is 
-					type Complex is 
-						record 
+				package Type_complex is
+					type Complex is
+						record
 							RL, IM: Real;
 						end record;
 					I: constant Complex := (0.0, 1.0)
@@ -841,9 +841,9 @@
 			\[
 			C := C + 1;
 			\]
-			Per evitare il problema possiamo nascondere la struttura del tipo Complex nella parte privata. 
+			Per evitare il problema possiamo nascondere la struttura del tipo Complex nella parte privata.
 			\begin{lstlisting}[style=adastyle]
-				package Type_complex is 
+				package Type_complex is
 					type Complex is private;
 					function "+"(x, y: Complex) return Complex;
 					...
@@ -857,8 +857,8 @@
 			Anche il corpo del package incomincia con la parola package seguita però dalla parola body, dall'identificatore e da is. Nel corpo sono fornite le implementazioni delle procedure e funzioni dichiarate nella corrispondente specification.
 			\begin{lstlisting}[style=adastyle]
 				package body Type_complex is
-					function "+"(x, y: in Complex) return Complex is 
-						begin 
+					function "+"(x, y: in Complex) return Complex is
+						begin
 							return (x.RL + y.RL, x.IM + y.IM);
 					end "+";
 					...
@@ -866,7 +866,7 @@
 			Ovviamente la struttura del tipo Complex è visibile alla parte body del package, quindi si potrà accedere ai campi RL e IM dei record Complex. Il package potrà essere utilizzato come segue:
 			\begin{lstlisting}[style=adastyle]
 				with Type_complex; use Type_complex;
-				procedure main is 
+				procedure main is
 					cpx1, cpx2: Complex;
 					begin
 						...
@@ -877,7 +877,7 @@
 			Per questa ragione il corpo del package non necessita di un ''main``: non si deve inizializzare un oggetto. Il package può in ogni caso avere un proprio main. Esso verrà specificato dopo le varie procedure e funzioni e sarà compreso fra un begin e l'end del package.
 			\begin{lstlisting}[style=adastyle]
 				with Simple_io; use Simple_io;
-				package body Type_complex is 
+				package body Type_complex is
 					function "+"(x, y: in Complex) return Complex is
 						begin
 							return(x.RL + y.RL, x.IM + y.IM);
@@ -890,7 +890,7 @@
 			\begin{example}{\nmu Astrazione di tipo per realizzare il dato astratto Pila}{ada_pila}
 				La specification è la seguente:
 				\begin{lstlisting}[style=adastyle]
-					package Type_stack is 
+					package Type_stack is
 						type Stack is private
 						procedure push(s: in out Stack; x: in integer);
 						procedure pop(s: in out Stack);
@@ -905,9 +905,9 @@
 					end Type_stack;\end{lstlisting}
 				Il body è il seguente:
 				\begin{lstlisting}[style=adastyle]
-					procedure body Type_stack is 
-						procedure push(s: in out Stack; x: in Integer) is 
-							begin 
+					procedure body Type_stack is
+						procedure push(s: in out Stack; x: in Integer) is
+							begin
 								s.top := s.top + 1;
 								s.st(s.top) := x;
 							end push;
@@ -935,7 +935,7 @@
 			Ad esempio, consideriamo il seguente codice:
 			\begin{lstlisting}[style=adastyle]
 				with Type_stack; use Type_stack;
-				procedure main is 
+				procedure main is
 					st1, st2: Stack;
 					cmp: Boolean;
 				begin
@@ -946,20 +946,20 @@
 					cmp := st1 = st2;
 				end main;\end{lstlisting}
 			Il valore di cmp è False. Infatti i corrispondenti top dei record st1 e st2 sarebbero identici, mentre non avrebbero gli stessi vaolori i corrispondenti campi st. Eppure i due stack sarebbero identici seconda la specifica algebrica di \textit{equal(l, m)} data nel progetto. \\
-			Per evitare tutto ciò, è sufficiente dichiarare il tipo come \textbf{limited private}, che inibisce l'uso delle operazioni di assegnazione e confronto offerte per default dal compilatore. 
+			Per evitare tutto ciò, è sufficiente dichiarare il tipo come \textbf{limited private}, che inibisce l'uso delle operazioni di assegnazione e confronto offerte per default dal compilatore.
 			\begin{lstlisting}[style=adastyle]
-				package Type_stack is 
-					type Stack is limited private 
+				package Type_stack is
+					type Stack is limited private
 					procedure push(s: in out Stack; x: in Integer);
 					procedure pop(s: in out Stack);
 					procedure top(s: in Stack; x: out Integer);
 					function empty(s: in Stack) return Boolean;
 				...\end{lstlisting}
-		In Ada è anche possibile definire \textbf{oggetti}, cioè moduli dotati di stato locale. 
+		In Ada è anche possibile definire \textbf{oggetti}, cioè moduli dotati di stato locale.
 		\begin{example}{\nmu Oggetto stack}{stack_oggetto}
 			La specifica è la seguente.
 			\begin{lstlisting}[style=adastyle]
-				package Stack is 
+				package Stack is
 					procedure push(x: in Integer);
 					procedure pop;
 					procedure top(x: out Integer);
@@ -967,28 +967,28 @@
 				end Stack;\end{lstlisting}
 			Il body è il seguente.
 			\begin{lstlisting}[style=adastyle]
-				package body Stack is 
+				package body Stack is
 					max: constant := 100;
 					type Table is array(1..max) of Intger;
 					st: Table;
 					top: Integer range 0..max := 0;
-				
-					procedure push(x: in Integer) is 
-					begin 
+
+					procedure push(x: in Integer) is
+					begin
 						top := top + 1;
 						st(top) := x;
 					end push;
-					
+
 					procedure pop is
-					begin 
+					begin
 						top := top + 1;
 					end pop;
-					
+
 					procedure top(x: out Integer) is
 					begin
 						x := st(top);
 					end top;
-					
+
 					function empty return Boolean is
 					begin
 						return (top = 0);
@@ -998,7 +998,7 @@
 		\begin{lstlisting}[style=adastyle]
 			with Stack; use Stack;
 			procedure main is
-			begin 
+			begin
 				...
 				push(1);
 				push(2);
@@ -1009,7 +1009,7 @@
 		\end{example}
 		In generale, un oggetto è un insieme di variabili interne ad un modulo e manipolabili esternamente solo mediante gli operatori definiti nel modulo stesso. Da quanto visto finore, per poter definire più oggetti ``simili'', cioè con medesima rappresentazione e stesso insieme di operatori, si è costretti a definire tanti moduli quanti sono gli oggetti che si vogliono usare nel programma. Tutti questi moduli differiranno solo per l'identificatore del modulo, cioè l'\textbf{identificatore dell'oggetto}. \\
 		Per evitare l'inconveniente di dover duplicare un modulo si può pensare di definire un \textbf{package generico} che identifica una \textit{classe} di oggetti simili. I singoli oggetti sono poi ottenuti con il meccanismo di \textit{istanziazione} della classe. \\
-		In Ada un package che specifica e implementa un singolo oggetto può essere facilmente trasformato in un \textit{generic package}, che definisce una classe di oggetti, permettendo la parola \textit{generic} alla dichiarazione del modulo. 
+		In Ada un package che specifica e implementa un singolo oggetto può essere facilmente trasformato in un \textit{generic package}, che definisce una classe di oggetti, permettendo la parola \textit{generic} alla dichiarazione del modulo.
 		\begin{lstlisting}[style=adastyle]
 			generic
 			package Stack
@@ -1045,14 +1045,14 @@
 			\item \textit{Definire un tipo astratto}: l'astrazione riguarda la classe sintattica tipo;
 			\item \textit{Definire una classe}: l'astrazione riguarda la dichiarazione di un modulo (dotata di stato locale).
 		\end{enumerate}
-		In tutti i casi la rappresentazione del dato astratto viene nascosta e la manipolazione dei valori è resa possibile solo mediante operazioni fornite allo scopo. Tuttavia, ci sono delle differenza fra tipo astratto e classe di oggetti. 
+		In tutti i casi la rappresentazione del dato astratto viene nascosta e la manipolazione dei valori è resa possibile solo mediante operazioni fornite allo scopo. Tuttavia, ci sono delle differenza fra tipo astratto e classe di oggetti.
 		\begin{itemize}
 			\item \textbf{Sintattica}: nel tipo astratto gli operatori hanno un parametro in più, relativo proprio al tipo che si sta definendo;
 			\item \textbf{Realizzativa}: nel caso del tipo astratto gli operatori sono definiti una sola volta, mentre nel caso della classe gli operatori sono definiti più volte, tante quante sono le istanze. Le diverse copie degli operatori agiranno su diversi dati in memoria centrale;
 			\item \textbf{Concettuale}: richiamando la suddivisione delle operazioni su un dato astratto in osservazioni e costruttori, si può dire che:
 			\begin{itemize}
 				\item il tipo astratto è organizzato intorno alle osservazioni. Ogni osservazione è implementata come un'operazione su una rappresentazione concreta derivata dai costruttori. Anche i costruttori sono implementati come operazioni che creano valori. La rappresentazione è condivisa dalle operazioni, ma è nascosta ai fruitori del tipo astratto.
-				\item La clase è organizzata intorno ai costruttori. Le osservazioni diventano metodi dei valori. Un oggetto è definito dalla combinazione di tutte le osservazioni possibili su di esso. 
+				\item La clase è organizzata intorno ai costruttori. Le osservazioni diventano metodi dei valori. Un oggetto è definito dalla combinazione di tutte le osservazioni possibili su di esso.
 			\end{itemize}
 		\end{itemize}
 			In breve, un tipo astratto di dato può essere inteso come un \textit{insieme con operazioni}, mentre le classi sono \textit{insiemi di operazioni}.
@@ -1060,19 +1060,19 @@
 			Nei linguaggi imperativi, i valori di un tipo astratto vengono trattati alla stregua dei valori di un tipo concreto, cioè sono cittadini di prima classe. Al contrario, i valori rappresentati mediante oggetti sono trattati come cittadini di terza classe in quanto:
 			\begin{itemize}
 				\item una procedura non può restituire l'istanza di un generic package;
-				\item non è possibile creare dinamicamente degli oggetti in quanto le istanze sono stabilite al momento della compilazione. 
+				\item non è possibile creare dinamicamente degli oggetti in quanto le istanze sono stabilite al momento della compilazione.
 			\end{itemize}
-			I tipo astratti sono utili in tutti i paradigmi di programmazione, mentre gli oggetti, essendo variabili aggiornabili, si adattano bene solo a un paradigma di programmazione side-effecting. La notazione usata per chiamare un'operazione di un tipo astratto è più naturale perchè valori e variabili del tipo astratto sono argomenti espliciti. 
+			I tipo astratti sono utili in tutti i paradigmi di programmazione, mentre gli oggetti, essendo variabili aggiornabili, si adattano bene solo a un paradigma di programmazione side-effecting. La notazione usata per chiamare un'operazione di un tipo astratto è più naturale perchè valori e variabili del tipo astratto sono argomenti espliciti.
 			\subsection{Svantaggi del tipo astratto}
 			I vantaggi del tipo astratto sono i seguenti.
 			\begin{itemize}
-				\item \textbf{Scarsa estendibilità}: l'aggiunta di un nuovo costruttore comporta dei cambiamenti intrusivi nelle implementazioni esistenti degli operatori. Ogni operatore dovrà essere opportunamente rivisto in modo da prevedere il trattamento di rappresentazioni ottenute con nuovi costruttori. 
+				\item \textbf{Scarsa estendibilità}: l'aggiunta di un nuovo costruttore comporta dei cambiamenti intrusivi nelle implementazioni esistenti degli operatori. Ogni operatore dovrà essere opportunamente rivisto in modo da prevedere il trattamento di rappresentazioni ottenute con nuovi costruttori.
 				\begin{example}{}{}
 					Si vuole implementare il dato astratto \textit{geometricShape} la cui specifica algebrica è fornita di seguito:
 					\begin{center}
 					\begin{tabular}{|c|c|c|}
 						\hline
-						\multirow{2}{*}{\textit{\textbf{osservazioni}}} & \multicolumn{2}{c|}{\textit{\textbf{Costruttore di g}}} \\ \cline{2-3} 
+						\multirow{2}{*}{\textit{\textbf{osservazioni}}} & \multicolumn{2}{c|}{\textit{\textbf{Costruttore di g}}} \\ \cline{2-3}
 						& $square(x)$ & $circle(r)$ \\ \hline
 						$area(g)$ & $x^2$ & $\pi r^2$ \\ \hline
 					\end{tabular}
@@ -1097,7 +1097,7 @@ package geometricShape_type
 			g.value := x;
 			return g
 		end
-		
+
 		function circle(x: real): geometricShape
 		var g: geometricShape
 		begin
@@ -1105,14 +1105,14 @@ package geometricShape_type
 			g.value := x;
 			return g
 		end
-		
+
 		function area(g: geometricShape): real
 		begin
 			if g.shape = 's' then return g.value * g.value;
 			else return 3.14 * g.value * g.value;
 		end
 	end geometricShape_type	\end{lstlisting}
-					Realizzando il dato astratto mediante \textit{classi} si possono definire due moduli generici, uno per ogni forma geometrica (o \textbf{costruttore}). 
+					Realizzando il dato astratto mediante \textit{classi} si possono definire due moduli generici, uno per ogni forma geometrica (o \textbf{costruttore}).
 					\begin{lstlisting}[style=adastyle]
 generic package Circle
 	function area(): real;
@@ -1124,7 +1124,7 @@ package body Circle
 	begin
 		raggio := x
 	end;
-	
+
 	function area(): real
 	begin
 		return 3.14 * raggio * raggio
@@ -1141,7 +1141,7 @@ package body Square
 	begin
 		lato := x
 	end;
-	
+
 	function area(): real
 	begin
 		return lato * lato
@@ -1180,7 +1180,7 @@ end
 package body Rectangle
 	var base, altezza: real;
 	procedure init(x, y: real)
-	begin 
+	begin
 		base := x;
 		altezza := y;
 	end;
@@ -1222,7 +1222,7 @@ potrà essere utilizzata come matrice per generare le dichiarazioni per i tipi \
 \begin{lstlisting}[style=adastyle]
 Point2D instantiation of typeRxR
 Complex instantiation of typeRxR\end{lstlisting}
-Si è visto un utilizzo dell'astrazione generica nella dichiarazione di moduli dotati di stato locale. Mediante l'operazione di istanziazione si ottengono diverse copie dell'oggetto che differiscono solo per il nome dell'identificatore. L'astrazione generica di un oggetto corrisponde al concetto di classe. 
+Si è visto un utilizzo dell'astrazione generica nella dichiarazione di moduli dotati di stato locale. Mediante l'operazione di istanziazione si ottengono diverse copie dell'oggetto che differiscono solo per il nome dell'identificatore. L'astrazione generica di un oggetto corrisponde al concetto di classe.
 \subsection{Generic package in Ada}
 Il \textit{generic package} di Ada è una esemplificazione di astrazione generica. L'espressione:
 \[
@@ -1236,14 +1236,14 @@ Le astrazioni generiche, come qualsiasi altra astrazione, possono essere paramet
 package line_buffer is new queue_class(120);
 generic
 	capacity: Positive;
-package queue_class is 
+package queue_class is
 	procedure append(newitem: in Character);
 	procedure remove(olditem: out Character);
 end queue_class;
-package body queue_class is 
+package body queue_class is
 	items: array(1..capacity) of Character;
 	size, front, rear: Integer range 0..capacity;
-	procedure append(newitem: in Character) is 
+	procedure append(newitem: in Character) is
 	...;
 	procedure remove(olditem: out Character) is
 	...;
@@ -1258,7 +1258,7 @@ procedure T_swap(a, b: in out T);
 procedure T_swap(a, b: in out T) is
 	tmp: T;
 begin
-	tmp := a; 
+	tmp := a;
 	a := b;
 	b := tmp;
 end T_swap;\end{lstlisting}
@@ -1278,14 +1278,14 @@ generic
 		a := b;
 		b := tmp;
 	end T_swap;\end{lstlisting}
-La clausola \textit{generic} introduce un \textbf{parametro di tipo} e la dichiarazione che segue introduce la matrice di una procedura che scambia due dati di un tipo T generico. Le procedure effettive sono ottenute istanziando la procedura generica con i parametri di tipo effettivi da sostituire a T. 
+La clausola \textit{generic} introduce un \textbf{parametro di tipo} e la dichiarazione che segue introduce la matrice di una procedura che scambia due dati di un tipo T generico. Le procedure effettive sono ottenute istanziando la procedura generica con i parametri di tipo effettivi da sostituire a T.
 \begin{lstlisting}[style=adastyle]
 procedure int_swap is new T_swap(Integer);
 procedure str_swap is new T_swap(String);\end{lstlisting}
 In questo modo si è:
 \begin{itemize}
 	\item Svincolato la definizione dello scambio di due elementi da un fattore marginale, come il tipo degli elementi da scambiare;
-	\item Garantito comunque il \textbf{controllo statico dei tipi} fra parametri formali e parametri effettivi delle diverse procedure ottenute, e fra sorgente e destinazione di una assegnazione. 
+	\item Garantito comunque il \textbf{controllo statico dei tipi} fra parametri formali e parametri effettivi delle diverse procedure ottenute, e fra sorgente e destinazione di una assegnazione.
 \end{itemize}
 L'uso dei parametri di tipo in astrazioni generiche offre un buon \textbf{compromesso} fra necessità di dover effettuare il controllo statico dei tipi e desiderio di definire componenti software riutilizzabili. \\
 I parametri di tipo possono essere utilizzati anche quando si definiscono delle classi, come indicato in questo esempio.
@@ -1293,7 +1293,7 @@ I parametri di tipo possono essere utilizzati anche quando si definiscono delle 
 generic
 	max: Positive;
 	type ITEM is private;
-package Stack is 
+package Stack is
 	procedure push(x: in ITEM);
 	proceudre pop;
 	procedure top(x: out ITEM);
@@ -1321,7 +1321,7 @@ package body Stack is
 		...\end{lstlisting}
 In questo caso per creare i singoli oggetti scriveremo:
 \begin{lstlisting}[style=adastyle]
-declare 
+declare
 	package STACK_INT is new STACK(10, INTEGER);
 	with STACK_INT; use STACK_INT;
 	package STACK_REAL is new STACK(10, REAL);
@@ -1352,7 +1352,7 @@ Se un'astrazione è parametrizzata rispetto a un valore, possiamo usare l'argome
 	b := tmp;
 \end{center}
 ma nessuno garantisce che l'assegnazione sia un'operazione valida per i dati di tipo T. \\
-In Ada, l'espressione ``\textit{type T is private}'' sottointende che l'assegnazione e i predicati = e $/=$ sono operazioni valide per il tipo effettivo denotato da T. 
+In Ada, l'espressione ``\textit{type T is private}'' sottointende che l'assegnazione e i predicati = e $/=$ sono operazioni valide per il tipo effettivo denotato da T.
 \subsection{Astrazione generica in C++}
 In C++ l'astrazione generica è supportata mediante i \textit{template}. Un template è del codice generico dotato di parametri che possono assumere valori specifici al momento della compilazione. Ad esempio, piuttosto che scrivere due classi, ListOfInts e ListOfStrings, si potrebbe scrivere una singola classe template:
 \begin{center}
@@ -1408,11 +1408,11 @@ Da una prospettiva di progetto, gli oggetti modellano le \textit{entità} presen
 Un oggetto ha la sua \textit{identità}, cioè è riconoscibile indipendentemente dal suo stato corrente. Per questo ogni oggetto ha un \textit{identificatore di oggetto}, detto object identifier OID, che lo identifica univocmente. In alcuni contesti gli OID sono anche detti \textit{riferimenti}. \\
 Un identificatore di oggetto è \textit{immutabile}, cioè non può essere modificato da una qualche operazione di programmazione. Cambiare l'OID di un oggetto equivale alla cancellazione dell'oggetto e alla creazione di un altro oggetto con lo stesso dato. \\
 Normalmente gli OID sno assegnati in modo automatico agli oggetti, sicchè non hanno un significato nel mondo reale. In molti ambienti di programamzione object-oriented, l'OID corrisponde all'indirizzo dell'area di memoria che conserva lo stato dell'oggetto.\\
-Quasi mai il programmatore utilizza esplicitamente i riferimenti. Generalmente questi vengono legati a delle variabili e si fa riferimento agli oggetti mediante identificatori di variabile. Variabili distinte possono riferirsi al medesimo oggetto. In questo caso si hanno degli \textbf{alias}. 
+Quasi mai il programmatore utilizza esplicitamente i riferimenti. Generalmente questi vengono legati a delle variabili e si fa riferimento agli oggetti mediante identificatori di variabile. Variabili distinte possono riferirsi al medesimo oggetto. In questo caso si hanno degli \textbf{alias}.
 \begin{note}{}{}
-	La presenza degli alias non significa che un oggetto non è identificato univocamente, ma semplicemente che diversi identificatori di variabile sono stati legati al medesimo riferimento di oggetto. 
+	La presenza degli alias non significa che un oggetto non è identificato univocamente, ma semplicemente che diversi identificatori di variabile sono stati legati al medesimo riferimento di oggetto.
 \end{note}
-Lo stato di un oggetto può anche contenere il riferimento ad un altro oggetto. Si dice che un oggetto \textit{punta} ad un altro. Il puntamento è asimettrico. La simmetria è ottenuta mediante le reciprocità di puntamento. 
+Lo stato di un oggetto può anche contenere il riferimento ad un altro oggetto. Si dice che un oggetto \textit{punta} ad un altro. Il puntamento è asimettrico. La simmetria è ottenuta mediante le reciprocità di puntamento.
 \section{Le classi}
 Una \textit{classe} è la descrizione di una famiglia di oggetti che condividono la stessa struttura (gli attributi) e il medesimo comportamnto (operazioni). Nella programmazione OO \textit{ogni oggetto è un'istanza di una classe}, cioè \textit{un oggetto non può essere definito se non si definisce la classe di appartenenza}. Analogamente nella modellazione OO le \textit{istanze esistono in quanto ci sono le loro astrazioni}. \\
 Idealmente una classe è una realizzazione di un dato astratto. Questo significa che i dettagli della realizzazione sono normalmente nascosti. \\
@@ -1422,9 +1422,9 @@ Ogni classe ha una doppia componente:
 	Gli attributi si distinguono in base al loro ambito d'azione, detto \textit{scope}:
 	\begin{itemize}
 		\item \textbf{Attributi d'istanza}: sono associati ad un'istanza e hanno un tempo di vita pari a quello dell'istanza alla quale sono associati;
-		\item \textbf{Attributi di classe}: sono associati alle classe e condivisi da tutte le istanze della classe. Il loro tempo di vita è lo stesso della classe. 
+		\item \textbf{Attributi di classe}: sono associati alle classe e condivisi da tutte le istanze della classe. Il loro tempo di vita è lo stesso della classe.
 	\end{itemize}
-	Gli attributi d'istanza contribuiscono a caratterizzare lo stato di ogni singolo oggetto, mentre gli attributi di classe contribuiscono a definire il fattore comune allo stato di tutti gli oggetti di una classe. 
+	Gli attributi d'istanza contribuiscono a caratterizzare lo stato di ogni singolo oggetto, mentre gli attributi di classe contribuiscono a definire il fattore comune allo stato di tutti gli oggetti di una classe.
 	\item \textbf{Una componente dinamica}, i metodi o  operazioni, che rappresentano il comportamento comune degli oggetti appartenenti alla classe, cioè i servizi che possono essere richiesti a un oggetto di una classe. I metodi manipolano gli attributi. \\
 	I metodi possono essere classificati:
 	\begin{itemize}
@@ -1436,10 +1436,10 @@ Ogni classe ha una doppia componente:
 	I metodi di accesso e trasformazione possono essere distinti in:
 	\begin{enumerate}
 		\item \textbf{Metodi di istana}: operano su almeno un attributo di istanza, pertanto possono esesre invocati solo specificando l'istanza;
-		\item \textbf{Metodi di classe}: operano esclusivamente su attributi di classe, pertanto possono essere invocati specificando la classe. Si possono invocare metodi di classe anche quando non è stato creato alcun oggetto per quella classe. 
+		\item \textbf{Metodi di classe}: operano esclusivamente su attributi di classe, pertanto possono essere invocati specificando la classe. Si possono invocare metodi di classe anche quando non è stato creato alcun oggetto per quella classe.
 	\end{enumerate}
 	In linea di principio, l'invocazione di un metodo di classe può avvenire anche specificando un oggetto, tuttavia ciò è sconsigliato perchè non evidenzia il fatto che si manipolano solo attributi di classe. \\
-	Invece, non è possibile invocare un metodo di istanza sulla classe. 
+	Invece, non è possibile invocare un metodo di istanza sulla classe.
 \end{enumerate}
 \section{UML}
 In UML, Unified Modeling Language, un linguaggio visuale utilizzato per  definire, progettare, realizzare e documentare sistemi mediante un approccio object oriented. È un linguaggio di \textbf{rappresentazione dei sistemi} ed è \textbf{universale}: può rappresentare sistemi eterogenei per architettura, tecnologie, tipologia applicativa ecc. \\
@@ -1489,7 +1489,7 @@ Graficamente gli attributi sono sotto il nome della classe.
 	\begin{tabular}{|c|}
 		\hline
 		Rettangolo \\
-		\hline 
+		\hline
 		base \\
 		altezza \\
 		\hline
@@ -1500,7 +1500,7 @@ Di un attrributo si può specificare l'insieme dei valori assunti (oggetti di un
 	\begin{tabular}{|c|}
 		\hline
 		Rettangolo \\
-		\hline 
+		\hline
 		base: real = 10 \\
 		altezza: real \\
 		\hline
@@ -1511,7 +1511,7 @@ Un attributo di classe, detto \textbf{statico} in UML, è indicato come sottolin
 	\begin{tabular}{|c|}
 		\hline
 		Rettangolo \\
-		\hline 
+		\hline
 		\underline{numRettangoli: integer = 0} \\
 		base \\
 		altezza \\
@@ -1531,11 +1531,11 @@ In UML le operazioni sono indicate graficamente in una sezione al di sotto degli
 	\begin{tabular}{|c|}
 		\hline
 		Rettangolo \\
-		\hline 
+		\hline
 		Base: Float \\
 		Altezza: Float = 0 \\
 		\vdots \\
-		\hline 
+		\hline
 		move(to: Point) \\
 		draw() \\
 		height(): Float \\
@@ -1555,7 +1555,7 @@ Consideriamo la seguente classe.
 	\begin{tabular}{|c|}
 		\hline
 		Rettangolo \\
-		\hline 
+		\hline
 		<<costruttori>\\
 		rettangolo() \\
 		rettangolo(x: int; y: int; h: int; b: int) \\
@@ -1566,12 +1566,12 @@ Consideriamo la seguente classe.
 	\end{tabular}
 \end{center}
 In questa classe si è fatto uso della notazione <<costruttori>> e <<accesso> e questi sono due tipici esempi di \textbf{stereotipi}. Gli stereotipi sono dei tipici \textit{meccanismi di estendibilità} di UML. Infatti essi estendono il vocabolario di UML, permettendo di creare nuovi blocci per la costruzione dei modelli, derivandoli da blocchi già esistenti ma rendendoli specifici per il particolare dominio. \\
-Nel precedente esempio è stato esteso il blocco ``operazioni'' in modo da poter distinguere le diverse tipologie di operazioni. Gli stereotipi sono identificabili perchè racchiusi da una coppia di caporali, << >>. 
-\subsection{Visibilità di attributi e metodi} Gli attributi e i metodi di una classe possono avere diversi livelli di \textit{visibilità}. Un elemento, attributo o metodo, ha visibilità \textbf{pubblica} quando può essere visto (utilizzato, invocato) da altre classi. Ha visibilità \textbf{privata} quando può essere visto solo dalla classe di appartenenza. \\ 
+Nel precedente esempio è stato esteso il blocco ``operazioni'' in modo da poter distinguere le diverse tipologie di operazioni. Gli stereotipi sono identificabili perchè racchiusi da una coppia di caporali, << >>.
+\subsection{Visibilità di attributi e metodi} Gli attributi e i metodi di una classe possono avere diversi livelli di \textit{visibilità}. Un elemento, attributo o metodo, ha visibilità \textbf{pubblica} quando può essere visto (utilizzato, invocato) da altre classi. Ha visibilità \textbf{privata} quando può essere visto solo dalla classe di appartenenza. \\
 Altri livelli di visibilità sono:
 \begin{itemize}
 	\item \textbf{protetta}: l'elemento è visibile all'interno del package e all'esterno solo ai discendenti della classe di appartenenza;
-	\item \textbf{package}: l'elemento è visibile solo agli elementi del package che contiene la classe in cui l'elemento è definito. 
+	\item \textbf{package}: l'elemento è visibile solo agli elementi del package che contiene la classe in cui l'elemento è definito.
 \end{itemize}
 UML consente di specificare i livelli di visibilità di attributi e metodi utilizzando la seguente notazione:
 \begin{itemize}
@@ -1582,9 +1582,9 @@ UML consente di specificare i livelli di visibilità di attributi e metodi utili
 \end{itemize}
 \begin{center}
 	\begin{tabular}{|c|}
-		\hline 
+		\hline
 		Toolbar \\
-		\hline 
+		\hline
 		\# currentSelection: Tool \\
 		\# toolCount: Integer \\
 		\hline
@@ -1606,9 +1606,9 @@ Per realizzare una classe singoletto, ad esempio
 	\centering
 	\includegraphics[width=0.7\textwidth]{images/singoletto}
 \end{figure}
-basta rendere privati i costruttori della classe e dotando la classe di un attributo statico che è inizializzato all'unico oggetto di quella classe. Ovviamente, nessun metodo della classe singoletto invocherà il costruttore, nè potrà farlo un utente della classe. Inoltre può essere utile disporre di un metodo di classe che restituisce l'unica istanza memorizzata nella stessa classe singoletto. 
+basta rendere privati i costruttori della classe e dotando la classe di un attributo statico che è inizializzato all'unico oggetto di quella classe. Ovviamente, nessun metodo della classe singoletto invocherà il costruttore, nè potrà farlo un utente della classe. Inoltre può essere utile disporre di un metodo di classe che restituisce l'unica istanza memorizzata nella stessa classe singoletto.
 \subsection{Molteplicità di un attributo}
-È possibile indicare la molteplicità anche per gli attributi, subito dopo il loro nome. 
+È possibile indicare la molteplicità anche per gli attributi, subito dopo il loro nome.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{images/molteplicita_attributo}
@@ -1633,7 +1633,7 @@ In UML esistono tre \textbf{proprietà} predefinite che possono essere utilizzat
 	\item \textbf{addOnly}: per gli attributi con molteplicità maggiore di uno, i valori possono essere aggiunti, ma una volta creati, non possono essere più rimossi o modifcati;
 	\item \textbf{frozen}: il valore dell'attributo non può più essere modificato dopo che l'oggetto è stato inizializzato.
 \end{itemize}
-Nel caso in cui la proprietà non viene specificata si sottintende che assume valore \textit{changeable}. 
+Nel caso in cui la proprietà non viene specificata si sottintende che assume valore \textit{changeable}.
 \subsection{Schema per la definizione di un'operazione}
 Prima di definire lo schema per la definizione di un'operazione, è necessario sottolineare che UML distingue tra operazione e metodo:
 \begin{itemize}
@@ -1671,4 +1671,216 @@ UML fornisce diverse proprietà predefinite per le operazioni.
 	\item \textbf{guarded}: simile al caso precedente, in ogni istante un solo chiamante può usufruire del servizio, tuttavia, in questo caso, la sequenzialità del servizio è gestita dalla classe proprietaria del servizio stesso;
 	\item \textbf{concurrent}: la semantica e l'integrità dell'oggettom è garantita anche in caso di chiamate multiple.
 \end{itemize}
+\section{Classi attive}
+Le ultime tre proprietà sono rilevanti solo in classi \textit{attive}, cioè in classi i cui oggetti sono attivi. \\
+Un oggetto è attivo se esso ha un thread e può far partire un thread concorrente. Una classe attiva è simile ad una classe con l'eccezione che le sue istanze rappresentano elementi il cui comportamento è concorrente con gli altri. \\
+Essa è mostrata con bordi raddopiati.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{images/classi_attive}
+\end{figure}
+\section{Classi template}
+Una classe \textit{template} definisce una faiglia di classi parametrizzate (con parametro di tipo). Non è possibile usare direttamente una classe template. È necessario prima specificare il tipo (operazione di istanziazione). In Java, una classe template corrisponde ad una classe generica.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+public class ArrayList<E>
+\end{lstlisting}
+In UML:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{images/classe_template}
+\end{figure}
+Si potrebbe voler istanziare questo template per creare una lista di clienti.
+\begin{lstlisting}[style=javastyle]
+ArrayList<Customer> elenco_clienti;
+\end{lstlisting}
+L'istanziazione di una classe template può essere effettuate in due modi:
+\begin{enumerate}
+\item Implicitamente, dichiarando una classe il cui nome esplicita i parametri;
+\item Esplicitamente, mediante una dipendenza stereotipata <<bind>>
+\end{enumerate}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/istanziazione_template}
+\end{figure}
+\end{example}
+\section{Individuazione delle responsabilità}
+In una buona modellazione OO di un sistema software è necessario stabilire le responsabilità da attribuire a ciascuna classe individuata. \\
+UML consente di modellare le responsabilità in due modi.
+\begin{enumerate}
+	\item specificandole all'interno della classe:
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{images/responsabilita1}
+		\end{center}
+	\end{figure}
+	\item utilizzando delle note:
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.55\textwidth]{images/responsabilita2}
+		\end{center}
+	\end{figure}
+\end{enumerate}
+\section{La relazione Instance-Of}
+Fra un oggetto e una classe esiste una relazione ``\textit{instance of}'' che specifica che un oggetto è un'istanza di una classe. In UML questa relazione è resa con lo stereoptipo <<instanceOf>>. \\
+Le seguenti notazioni grafiche sono semanticamente equivalenti ma cambia il livello di dettaglio. \\
+La prima è la seguente:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/instanceOf2}
+	\end{center}
+\end{figure}
+In alternativa,
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/instanceOf1}
+	\end{center}
+\end{figure}
+\section{Ereditarietà: una relazione fra classi}
+Nella progettazione e programmazione OO una relazione fondamentale è quella esistente fra le classi: \textit{la relazione di ereditarietà (inheritance)}. \\
+Una classe è considerata come \textit{repertorio di conoscenze} a partire dalla quale è possibile definire classi più specifiche, che completano le conoscenze della loro classe madre. \\
+Una \textit{sottoclasse} è dunque, una \textbf{specializzazione} della descrizione di una classe, detta la sua superclasse, della quale essa mutua (parte di) gli attributi e i metodi. \\
+Concettualmente è come se le informazioni della superclasse fossero ricopiate nella sottoclasse. A libello fisico, comunque, le duplicazioni sono evitate. \\
+Ci sono diverse forme di ereditarietà. Ne riportiamo alcune.
+\subsection{Erediterietà per estensione}
+La sottoclasse introduce delle caratteristiche (attributi e metodi) non presenti nella superclasse e non applicabili a istanze della superclasse. La visibilità (pubblica, protetta, private e package) degli attributi degli attributi e delle operazioni ereditate dalla superclasse non è modificata.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/ereditarieta_estensione}
+	\end{center}
+\end{figure}
+\begin{note}{}{}
+È bene notare che la superclasse non conosce le classi figlie.
+\end{note}
+La specializzazione per estensione permette di sviluppare del codice estendibile. Allorquando si dovesse avvertire la necessità di aggiungere ulteriori funzioni, occorrerà individuare le classi interessate e derivare da queste nuove classi alle quali verranno aggiunti gli attributi e i metodi necessari per implementare le nuove funzioni.
+\subsection{Ereditarietà per variazione funzionale}
+Si ridefiniscono alcune caratteristiche (metodi) della superclasse quando quelle ereditate si rivelano inadeguate per l'insieme di oggetti descritti dalla sottoclasse. \\
+La ridefinizione, detta \textbf{overriding}, del metodo ereditato riguarda solo l'implementazione e non la segnatura. \\
+Ogni richiesta di esecuzione del metodo ridefinito da parte di un oggetto della sottoclasse, farà riferimento alla nuova implementazione fornita nella sottoclasse. \\
+Analizziamo il seguente esempio.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/ereditarieta_funzionale}
+	\end{center}
+\end{figure}
+Nella classe \textit{ContoCorrente} il metodo \textit{preleva} controlla che il conto non vada in rosso. Il metodo preleva della classe \textit{ContoCorrenteConFido} ridefinisce quello della superclasse per controllare che il prelievo non vada oltre il fido concesso. \\
+Se si applicano delle modifiche al corpo della funzione \textit{preleva} nella superclasse, la modifica non viene apportata automaticamente anche alla classe \textit{ContoCorrenteConFido}. \\
+La \textbf{ridefinizione non è incrementale}, quindi i cambiamenti nel metodo originale devono essere riportati anche nei metodi ridefiniti. Purtroppo non c'è garanzia che questo accada e si possono introdurre degli errori. \\
+Anche nell'ereditarietà per variazione funzionale, la visibilità degli attributi e delle operazioni ereditate della superclasse non è modificata. Osserviamo, inoltre, che la variazione funzionale attiene solo le operazioni di accesso e trasformazione di una classe e non i costruttori degli oggetti.
+\subsection{Principio di sostituibilità}
+Data una dichiarazione di una variabile o di un parametro il cui tipo è dichiarato come X, una qualunque istanza di una classe che è discendente di X può essere usato come valore effettivo senza violare la semantica della dichiarazione e il suo uso. \\
+In altri termini, l'istanza di un discendente può essere sostituita all'istanza di un ascendente. \\
+Il principio di sostituibilità è legato al \textit{polimorfismo di inclusione}, nella programmazione orientata agli oggetti. \\
+La conseguenza del principio di sostituibilità è che una \textit{sottoclasse non può rimuovere o rinunciare a proprietà/metodi della superclasse}. Altrimenti un'istanza della sottoclasse non sarà sostituibile in una situazione in cui si dichiara l'uso delle istanze della superclasse. \\
+In effetti, preservando la visibilità degli attributi e dei metodi ereditati, così come accade nelle tre forme di ereditarietà viste, si garantisce che gli oggetti della sottoclasse offrano quanto meno gli stessi servizi degli oggetti della superclasse. \\
+Pertanto, il principio di sostituibilità, o \textit{polimorfismo di inclusione}, è compatatibile con l'ereditarietà per estensione e variazione funzionale.
+\subsection{Ereditarietà e relazione ``is\_a''}
+Nell'ereditarietà per estensione o per variazione funzioale, la relazione di ereditarietà fra classi corrisponde a una relazione di \textit{generalizzazione} o detta \textit{is\_a}. Ciò perchè ogni istanza di una classe derivata da una classe base va considerata come (è anche) un'istanza della classe base.
+\subsection{Ereditarietà di implementazione}
+La sottoclasse utilizza il codice della superclasse per implementare l'astrazione associata.
+\begin{example}{}{}
+Una classe \textit{Vettore} mette a disposizione una rappresentazione di un vettore, un costruttore, un metodo di accesso e uno di trasformazione. \\
+Una classe \textit{Pila} può essere definita come sottoclasse di \textit{Vettore}, in modo da potersi basare sulla rappresentazione del vettore per poter rappresentare una pila. Si dice che la realizzazione del dato astratto \textit{Pila} è delegata a quella del vettore. Se si cambia la rappresentazione del vettore si cambia anche quella della pila. \\
+Grazie all'ereditarietà per implementazione, la realizzazione degli operatori \textit{push, pop, top} previsti per una pila può basarsi sugli operatori messi a disposizione dalla classe \textit{Vettore}. \\
+Si noti bene che la \textit{Pila} ha un diverso insieme di operatori rispetto a quelli del \textit{Vettore}. L'ereditarietà riguarda solo la realizzazione del vettore e l'implementazione dei metodi, non l'\textbf{interfaccia} della classe. \\
+Pertanto, l'ereditarietà di implementazione comporta la modifica alla visibilità delle caratteristiche ereditate.
+\end{example}
+L'erediterietà a base privata, supportata dal C++ e da Ada-95, permette di rendere privati gli attributi e gli operatori pubblici ereditati. \\
+Visibilità con \textit{erediterietà a base pubblica}:
+\begin{table}
+	\begin{center}
+		\begin{tabular}[c]{|l|l|l|}
+			\hline
+			\multicolumn{1}{|c|}{\textbf{Base/Derivata}} &
+			\multicolumn{1}{c|}{\textbf{Visibile ai clienti}} &
+			\multicolumn{1}{c|}{\textbf{Visibile alla sottoclasse}} \\
+			\hline
+			Public Spec. & Si & Si \\
+			\hline
+			Private Spec. & No & No \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+Visibilità con \textit{ereditarietà a base privata}:
+\begin{table}
+	\begin{center}
+		\begin{tabular}[c]{|l|l|l|}
+			\hline
+			\multicolumn{1}{|c|}{\textbf{Base/Derivata}} &
+			\multicolumn{1}{c|}{\textbf{Visibile ai clienti}} &
+			\multicolumn{1}{c|}{\textbf{Visibile alla sottoclasse}} \\
+			\hline
+			Public Spec. & No & Si \\
+			\hline
+			Private Spec. & No & No \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+In UML l'ereditarietà di implementazione è indicata utilizzando lo stesso simbolo della generalizzazione, ma specificando a fianco lo stereotipo <<implementation>>.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/ereditarieta_implementazione}
+	\end{center}
+\end{figure}
+L'ereditarietà di implementazione \textbf{non è compatibile} con il principio di sostituibilità. \\
+Pertanto se la classe Y eredita solo l'implementazione della classe X, non si può riutilizzare su istanze di Y tutto il codice in cui si dichiarano e utilizzano dati di classe X, in quanto non vale il polimorfismo di inclusione. \\
+L'ereditarietà di implementazione permette un riuso parziale del codice, pertanto secondo alcuni andrebbe bandita. Altri, invece, sostengono che questa forma di ereditarietà, insieme a molte altre incompatibili con il principio di sostituibilità, sono comunque teoricamente legittime e praticamente indispensabili.
+\\
+Tornando al concetto di ereditarietà, nella progettazione di una classe si possono combinare diverse forme di ereditarietà. Analizziamo il seguente esempio.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/esempio_ereditarieta}
+	\end{center}
+\end{figure}
+In questo esempio, si ha ereditarietà per estensione (si aggiunge il metodo \textit{impostaFido}) e per variazione funzionale (si ridefinisce il metodo \textit{preleva}).
+\subection{Proprietà della relazione di generalizzazione}
+La rappresentazione della relazione di generalizzazione fra un insieme di classi definisce un \textit{grafo di ereditarietà} che è un \textit{grafo orientato aciclico}. \\
+La relazione di generalizzazione è transitiva e antisimmetrica. \\
+La transitività comporta che le caratteristiche delle classi superiori sono ereditate dalle classi inferiori. \\
+L'antisimmetria definisce una direzione di attraversamento del grafo di ereditarietà che porta dalla sottoclasse alla superclasse. \\
+Partendo da una classe C e seguendo la direzione che porta al genitore, si trovano tutte le classi \textit{antenate}, che per estensione sono chiamate superclassi di C. Seguendo la direzione opposta si trovano tutte le classi \textit{discendenti} di C. \\
+Il grafo di ereditarietà è il seguente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/grafo_ereditarieta}
+	\end{center}
+\end{figure}
+Ogni classe C ha il proprio grafo di ereditarietà $G(C)$ che è una restrizione del grafo di erediterietà completo alle sole superclassi della classe in esame.
+\subsection{Ereditarietà singola}
+In questo caso specifico, il grafo è in realtà un albero: ogni classe ha una sola superclasse diretta. Si dice che l'ereditarietà è \textit{semplice} o \textit{singola}. \\
+In questo caso il grafo di ereditarietà $G(C)$ di una classe C è una catena di antenati. Gli elementi della catena sono ordinati secondo una relazione d'ordine totale. \\
+Poichè un metodo può essere ridefinito in più classi si pone il seguente problema. \textit{Sia dato un metodo \textbf{m}, eventualemente ereditato, della classe $C_1$. Da quale classe $C_2 \in G(C_1)$ si eredita \textbf{m}?} \\
+Come prima cosa si determina la catena di antenati di $C_1$ e, successivamente, si ricerca la prima occorrenza della (ri-)definizione di \textbf{m} a partire dall'estremità $C_1$ della catena.
+\subsection{Ereditarietà multipla}
+Una classe può avere più superclassi. In questo caso si parla di erediterietà multipla.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/ereditarieta_multipla}
+	\end{center}
+\end{figure}
+In questo esempio, la classe \textit{Orologio} necessita dei servizi messi a disposizione sia da \textit{Data} che da \textit{Tempo}. In più ne implementa degli altri. \\
+Il grafo di ereditarietà non è più un albero. Data una classe $C, G(C)$ non è più una catena ma un grafo aciclico orientato. L'ordine fra le classi in $G(C)$ è parziale.  \\
+Anche nell'ereditarietà multipla un metodo può essere ridefinito in diverse classi e si pone il seguente problema. \textit{Sia dato un metodo \textbf{m}, eventualemente ereditato, della classe $C_1$. Da quale classe $C_2 \in G(C_1)$ si eredita \textbf{m}?} \\
+Analizziamo il seguente esempio.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/ereditarieta_multipla2}
+	\end{center}
+\end{figure}
+Se $C_1 = A$ c'è un conflitto fra le diverse definizioni di $m$ in $B$ e $D$, entrambe ereditabili. Il conflitto può essere facilmente risolto in questo caso. Si considera una qualunque \textit{linearizzazione} del grafo $G(C_1)$. Si possono avere due casi:
+\[
+A \to B \to C \to D
+\]
+oppure,
+\[
+A \to C \to B \to D
+\]
+In entrambi i casi, $B$ precede $D$, il che significa che il metodo $m$ è ereditato da $B$. Il metodo $m$ di $B$ èquello più specifico e maschera quello omonimo di $D$. \\
+Le due linearizzazioni definite prima, non aiutano a scegliere. Esistono dei criteri euristici per gestire queste situazioni conflittuali:
+\begin{enumerate}
+	\item La molteplicità dell'ereditarietà. \\
+	\item La modularità.
+\end{enumerate}
 \end{document}
