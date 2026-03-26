@@ -36,8 +36,11 @@
 \usepackage{accents}
 \usepackage{nicefrac}
 \usepackage{multirow}
+\usepackage{parskip}
 \usetikzlibrary{angles, quotes, patterns}
+\usetikzlibrary{arrows.meta, shapes.multipart, positioning}
 \usepackage{circledsteps}
+\pgfplotsset{compat=1.18}
 \date{}
 \author{Alessandro Carella}
 \title{Metodi avanzati di programmazione}
@@ -248,7 +251,7 @@
 		1 & n=0
 	\end{cases}
 	\]
-	Come la trasformazione è calcolata o realizzata non è noto al fruitore del modulo. \\
+	Come la trasformazione è calcolata o realizzata non è noto al fruitore del modulo.
 	\subsection{Specifiche semantiche}
 	Un modo per specificare la semantica di un modulo è quello di esprimere, mediante due \textit{predicati}, la relazione che lega i dati di ingresso e ai dati di uscita: se il primo predicato, detto \textit{precondizione}, è vero sui dati di ingresso e se il programma termina su quei dati, allora il secondo, detto \textit{postcondizione}, è vero sui dati di uscita. \\
 	Queste specifiche semantiche sono dette \textbf{assiomatiche}. \\
@@ -276,7 +279,8 @@
 	Alla base dell'\textit{astrazione dati} c'è il principio che non \textit{non si può accedere direttamente alla rappresentazione di un dato, qualunque esso sia, ma solo attraverso un insieme di operazioni considerate lecite} e questo è detto \textbf{principio dell'astrazione dati}. \\
 	Un vantaggio dell'astrazione dati è che un cambiamento nella rappresentazione del dato si ripercuoterà solo sulle operazioni lecite, che potrebbero subire delle modifiche, mentre non inficerà il codice che utilizza il dato astratto.
 	\subsection{Information Hiding}
-	In generale un principio di astrazione suggerisce di \textit{occultare l'informazione}, l'\textbf{information hiding}, sulla rappresentazione del dato sia perchè non necessaria al fruitore dell'entità astratta e sia perchè la sua rivelazione creerebbe delle inutili dipendenze che comprometterebbero l'invarianza ai cambiamenti. \\
+	In generale un principio di astrazione suggerisce di \textit{occultare l'informazione}, l'\textbf{information hiding}, sulla rappresentazione del dato sia perchè non necessaria al fruitore dell'entità astratta e sia perchè la sua rivelazione creerebbe delle inutili dipendenze che comprometterebbero l'invarianza ai cambiamenti.
+
 	Il principio dell'astrazione funzionale suggerisce di occultare i dettagli del processo di trasformazione. Il principio dell'astrazione dati identifica nella rappresentazione del dato l'informazione da nascondere.
 	\subsection{Incapsulamento}
 	L'\textbf{incapsulamento} è una tecnica di progettazione consistente nell'impachettare una collezione di entità, creandone una barriera concettuale. Come l'astrazione, l'incapsulamento sottintende:
@@ -405,7 +409,7 @@
  				\item isnew(newstack) = true
  				\item isnew(push(stk, i)) = false
  			\end{itemize}
- 			\item \textbf{Specifica di restrizione} \\
+ 			\item \textbf{Specifica di restrizione}
  			\begin{itemize}
  				\item pop(newstack) = error
  				\item top(newstack) = error
@@ -481,7 +485,7 @@
  				\item isnew(newq) = true
  				\item isnew(addq(q, i)) = false
  			\end{itemize}
- 			\item \textbf{Specifica di restrizione} \\
+ 			\item \textbf{Specifica di restrizione}
  			\begin{itemize}
  				\item deleteq(newq) = error
  				\item frontq(newq) = error
@@ -531,12 +535,15 @@
  	\[
  	\text{function I(FP$_1$; $\dots$; FP$_n$) is E}
  	\]
- 	dove $I$ è un identificatore, FP$_1$; $\dots$; FP$_n$ sono parametri formali ed $E$ è l'espressione da valutare. \\
- 	In questo modo si lega $I$ ad un'entità, l'astrazione di funzione, che ha la proprietà di dare un risultato ogni qualvolta che è chiamata con argomenti appropriati. \\
+ 	dove $I$ è un identificatore, FP$_1$; $\dots$; FP$_n$ sono parametri formali ed $E$ è l'espressione da valutare.
+
+ 	In questo modo si lega $I$ ad un'entità, l'astrazione di funzione, che ha la proprietà di dare un risultato ogni qualvolta che è chiamata con argomenti appropriati.
+
  	Una chiamata di funzione, $I(AP_1; \dots; AP_n)$ dove i parametri effettivi, $AP_1; \dots; AP_n$ determinano gli argomenti, ha due punti di vista:
  	\begin{enumerate}
  		\item Punto di vista dell'\textit{utente}: la chiamata di una funzione trasforma gli argomenti in un risultato;
- 		\item Punto di vista dell'\textit{implementatore}: la chiamata valuta \textit{E}, avendo precedentemente vincolato i parametri formali agli argomenti corrispondenti. \\
+ 		\item Punto di vista dell'\textit{implementatore}: la chiamata valuta \textit{E}, avendo precedentemente vincolato i parametri formali agli argomenti corrispondenti.
+
  		L'algoritmo codificato in \textit{E} è di interesse per l'implementatore.
  	\end{enumerate}
  	\subsection{Anomalie di progetto dei linguaggi}
@@ -1020,7 +1027,7 @@
 			package st2 is new Stack\end{lstlisting}
 		Queste due dichiarazioni sono processate in \textit{fase di precompilazione}. In particolare, per ogni occorrenza di istanziazione, si sostituisce la stringa dell'istanziazione con il comando di importazione di un package avente come nome quello dell'istanza, ad esempio with ST1; use ST1. \\
 		Si genera un package non generico utilizzando il generic package come matrice. Esso si ottiene rimuovendo la parola \textit{generic} e sostituendo il nome dell'istanza al posto del nome del package. Il package è poi compilato separatamente. \\
-		Nell'esempio specifico, la precompilazione genera due package distinti, che variano solo nel nome del package, cioè nell'\textit{identificatore dell'oggetto}. \\
+		Nell'esempio specifico, la precompilazione genera due package distinti, che variano solo nel nome del package, cioè nell'\textit{identificatore dell'oggetto}.
 		\begin{note}{\nmu Osservazione sul generic package}{generic_package_oss}
 			Di seguito alcune osservazioni sul generic package.
 			\begin{enumerate}
@@ -1395,7 +1402,7 @@ Confrontando il paradigma orientato a oggetti rispetto a quello imperativo si pu
 	\item Una \textit{rivoluzione} in quanto gli oggetti assumono un ruolo \textbf{fondamentale} nella progettazione enella programmazione. L'information hiding e l'incapsulamento sono principi cardine nel paradigma orientato agli oggetti.
 \end{enumerate}
 Gli oggetti incapsulano uno \textit{stato} e un \textit{comportamento}. Lo stato è identificato dal contenuto di una certa area di memoria. Il comportamento è definito da una collezione di procedure e funzioni, detti \textit{metodi}, che possono operare sulla rappresentazione dell'area di memoria associata all'oggetto. \\
-Da una prospettiva di progetto, gli oggetti modellano le \textit{entità} presenti nel dominio dell'applicazione. \\
+Da una prospettiva di progetto, gli oggetti modellano le \textit{entità} presenti nel dominio dell'applicazione.
 \begin{example}{}{}
 	In un gioco elettronico che usa palla, si può pensare alla palla come un oggetto dotato di uno:
 	\begin{itemize}
@@ -1835,7 +1842,7 @@ Tornando al concetto di ereditarietà, nella progettazione di una classe si poss
 	\end{center}
 \end{figure}
 In questo esempio, si ha ereditarietà per estensione (si aggiunge il metodo \textit{impostaFido}) e per variazione funzionale (si ridefinisce il metodo \textit{preleva}).
-\subection{Proprietà della relazione di generalizzazione}
+\subsection{Proprietà della relazione di generalizzazione}
 La rappresentazione della relazione di generalizzazione fra un insieme di classi definisce un \textit{grafo di ereditarietà} che è un \textit{grafo orientato aciclico}. \\
 La relazione di generalizzazione è transitiva e antisimmetrica. \\
 La transitività comporta che le caratteristiche delle classi superiori sono ereditate dalle classi inferiori. \\
@@ -1878,9 +1885,252 @@ oppure,
 A \to C \to B \to D
 \]
 In entrambi i casi, $B$ precede $D$, il che significa che il metodo $m$ è ereditato da $B$. Il metodo $m$ di $B$ èquello più specifico e maschera quello omonimo di $D$. \\
+Consideriamo, invece, il seguente schema.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/ereditarieta_multipla3}
+	\end{center}
+\end{figure}
+
 Le due linearizzazioni definite prima, non aiutano a scegliere. Esistono dei criteri euristici per gestire queste situazioni conflittuali:
 \begin{enumerate}
 	\item La molteplicità dell'ereditarietà. \\
-	\item La modularità.
+	Nel definire che $A$ deriva dalle due superclassi occorrerà elencarle in un qualche ordine:
+	\[
+	A \to B, C \text{ piuttosto che } A \to C, B
+	\]
+	L'ordine delle classi è considerato per risolvere il conflitto. Questo significa che l'ordine delle classi è utilizzato per preferire una delle due linearizzazioni. Tuttavia questo principio può essere in contraddizione con quello che indica di preferire l'eredità da classi più specifiche. \\
+	Ad esempio:
+	\[
+	A \to B, C \quad C \to B, D
+	\]
+	Se $m$ è definito in $B$ e in $C$ si dovrebbe preferire $C$ in quanto $C$ precede sempre $B$ nelle linearizzazioni:
+	\[
+	A \to C \to B \to D
+	\]
+	\item La modularità. \\
+	Si può scomporre un grafo di ereditarietà in moduli che corrispondono ai diversi punti di vista sull'oggetto. \\
+	Le linearizzazioni non devono mescolare i diversi sottografi associati ai moduli (non ci sono relazioni di ereditarietà tra classi appartenenti a moduli diversi). Anche in questo caso potrebbero esserci contraddizioni (da risolvere specificando l'ordinamento dei moduli).
 \end{enumerate}
+Queste contraddizioni mettono in evidenza le difficoltà che si incontrano a dare una semantica a un metodo quando si permette l'ereditarietà multipla. I diversi principi per gestire le situazioni conflittuali non sono universalmente accettati. La risoluzione dei conflitti, in realtà, non può essere efficace se non si prende in considerazione le conoscenze specifiche legate all'applicazione. \\
+Per questo molti sconsigliano l'ereditarietà multipla, in quanto i benefici sono pochi mentre i problemi legati a una semantica ben definita sono molti.
+\subsection{Ereditarietà: la visibilità protetta}
+La relazione di ereditarietà introduce un ulteriore livello di visibilità: quella \textit{protetta (protected)}. Una caratteristica, un attributo o un metodo, con visibilità protetta può essere vista solo da una classe e da tutte le classi del package e dalle classi discendenti (anche in altri package). \\
+Consideriamo il seguente esempio.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{images/visibilita_protetta}
+	\end{center}
+\end{figure}
+In questo esempio la classe \textit{ContoCorrenteConFido} potrà accedere al dato saldo, mentre ciò non sarà permesso ad altre classi dislocate in altri package che non ereditano da \textit{ContoCorrente}.
+\section{Classi astratte}
+Se in programmazione object-oriented non può esistere un oggetto senza che sia stata creata la classe di appartenenza, è invece possibile che esistano classi per le quali non è possbiile generare delle istanze. Esse sono chiamate \textit{classi astratte}. \\
+Una classe astratta \textbf{può essere} una classe non completamente specificata. In particolare, non è definito il metodo corrispondente ad un'operazione, si dice che il metodo è \textit{astratto}. \\
+Una classe astratta non può essere istanziata perchè il comportamento dei suoi oggetti non sarebbe completamente definito. La relazione di ereditarietà riguarda anche le classi astratte.  \\
+In UML, la notazione di una classe astratta è la seguente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/classi_astratte}
+	\end{center}
+\end{figure}
+In questo esempio, la classe degli strumenti musicali è astratta perchè non possiamo definire il metodo \textit{play}. Il metodo \textit{play} è implementato nelle sottoclassi degli strumenti a fiato, degli strumenti a percussione, e dei cordati. Il metodo \textit{what} è invece \textbf{concreto} (è implementato) e restituisce il nome della classe. Esso è ridefinito in ogni classe. \\
+Le classi astratte sono strumenti per fattorizzare proprietà comuni tra classi simili e poterle organizzare in una gerarchia di ereditarietà. Non potremo mai creare oggetti a partire da una classe astratta, ma possiamo servircene per dare una radice comune a un insieme di classi che condividono le stesse proprietà e poter quindi sfruttare il polimorfismo di inclusione e il binding dinamico. \\
+Le classi atratte fungono da \textbf{serbatoi di ereditarietà}. \\
+Consideriamo il seguente esempio.
+\begin{center}
+\begin{tikzpicture}[
+    font=\sffamily,
+    % Define the style for the UML Class boxes
+    umlclass/.style={
+        draw,
+        rectangle split,
+        rectangle split parts=3,
+        inner sep=5pt,
+        minimum width=4cm,
+        align=left
+    },
+    % Style for the blue labels
+    labelstyle/.style={blue, font=\sffamily\small}
+]
+
+    % Upper Class: Letter
+    \node [umlclass] (letter) {
+        \textbf{Letter}
+        \nodepart{second}
+        body: String \\
+        cursor: Integer
+        \nodepart{third}
+        getNextSentence (): String \\
+        resetCursor ()
+    };
+
+    % Lower Class: EncryptedLetter
+    \node [umlclass, below=2cm of letter] (encrypted) {
+        \textbf{EncryptedLetter}
+        \nodepart{second}
+        encoding: CodeKey
+        \nodepart{third}
+        getNextSentence (): String
+    };
+
+    % Inheritance Arrow (Hollow Triangle)
+    \draw [-{Triangle[open, length=10pt, width=10pt]}] (encrypted.north) -- (letter.south);
+
+    % Blue Annotations
+    \node [labelstyle, anchor=east, xshift=-0.5cm] at (letter.north west) {concrete class};
+    \node [labelstyle, anchor=west, xshift=0.3cm] at (letter.three east) {$\leftarrow$ concrete operation};
+
+    \node [labelstyle, anchor=east, xshift=-0.5cm] at (encrypted.north west) {concrete class};
+    \node [labelstyle, anchor=west, xshift=0.3cm] at (encrypted.three east) {$\leftarrow$ concrete (overridden) operation};
+\end{tikzpicture}
+\end{center}
+La classe \textit{Letter} ha un metodo che restituisce la frase suggessiva da leggere e l'operazione \textit{resetCursor} che riporta all'inizio del testo. La sottoclasse \textit{EncryptedLetter} rappresenta una lettera crittografata. Il metodo \textit{getNextSentence} è stato sovrascritto perchè il testo dev'essere decrittato prima di essere restituito. \\
+L'implementazione dell'operazione \textit{getNextSentence} è completamente diversa da quella ereditata. Il problema è che il progettista di \textit{EncryptedLetter} non ha alcuna informazione per comprendere quale metodo di \textit{Letter} dev'essere sovrascritto.  \\
+Pertanto, tramite l'utilizzo di classi astratte, si ottiene:
+\begin{center}
+\begin{tikzpicture}[
+    font=\sffamily,
+    % Style for the UML Class boxes
+    umlclass/.style={
+        draw,
+        rectangle split,
+        rectangle split parts=3,
+        inner sep=5pt,
+        minimum width=4.5cm, % Slightly wider for better text fit
+        align=left,
+        fill=white
+    },
+    % Style for the blue labels
+    labelstyle/.style={blue, font=\sffamily\scriptsize},
+    % Style for inheritance arrows
+    inheritance/.style={-{Triangle[open, length=10pt, width=10pt]}}
+]
+
+    % --- Top Level: Letter (Abstract) ---
+    % Placed at (0,0) as the center point
+    \node [umlclass] (letter) at (0,0) {
+        \textit{\textbf{Letter}}
+        \nodepart{second}
+        body: String \\
+        cursor: Integer
+        \nodepart{third}
+        \textit{getNextSentence (): String} \\
+        resetCursor ()
+    };
+
+    % --- Bottom Level: Subclasses (Symmetrically Placed) ---
+    % EncryptedLetter 3.5cm to the left, 3.5cm down
+    \node [umlclass] (encrypted) at (-3.5, -4) {
+        \textbf{EncryptedLetter}
+        \nodepart{second}
+        encoding: CodeKey
+        \nodepart{third}
+        getNextSentence (): String
+    };
+
+    % NonEncryptedLetter 3.5cm to the right, 3.5cm down
+    \node [umlclass] (nonencrypted) at (3.5, -4) {
+        \textbf{NonEncryptedLetter}
+        \nodepart{second}
+        \vphantom{encoding: CodeKey} % Hidden text to keep box heights equal
+        \nodepart{third}
+        getNextSentence (): String
+    };
+
+    % --- Inheritance Arrows (Drawn to the bottom of parent) ---
+    \draw [inheritance] (encrypted.north) -- (letter.south);
+    \draw [inheritance] (nonencrypted.north) -- (letter.south);
+
+    % --- Blue Annotations ---
+
+    % Abstract Labels (Left/Right of Letter)
+    \node [labelstyle, anchor=east] at ([xshift=-0.5cm]letter.north west) {abstract class};
+    \node [labelstyle, anchor=west] at ([xshift=0.5cm]letter.three east) {$\leftarrow$ abstract operation};
+    \node [labelstyle, anchor=west] at ([xshift=0.5cm, yshift=-0.4cm]letter.three east) {$\leftarrow$ concrete (nonoverridden) operation};
+
+    % Concrete Class Labels
+    \node [labelstyle, anchor=east] at ([xshift=-0.3cm]encrypted.north west) {concrete class};
+    \node [labelstyle, anchor=west] at ([xshift=0.3cm]nonencrypted.north east) {concrete class};
+
+    % Bottom Label (Centered between subclasses)
+    \node [labelstyle] (bottomlabel) at (0, -7.5) {concrete (nonoverridden) operation};
+    \draw [blue, -{Stealth}] (bottomlabel.west) to [out=180, in=-90] (encrypted.three south);
+    \draw [blue, -{Stealth}] (bottomlabel.east) to [out=0, in=-90] (nonencrypted.three south);
+
+\end{tikzpicture}
+\end{center}
+Se il metodo \textit{getNextSentence} di \textit{Letter} fosse astratto il progettista verrebbe informato della necessità di ridefinire il metodo. La classe astratta \textit{Letter} fattorizza i metodi concreti comuni alle sue sottoclassi, come \textit{resetCursor}.
+\section{Classi finali}
+Una classe è detta finale, \textit{final}, o foglia (\textit{leaf}), quando non può essere ulteriormente specializzata, e quindi non può essere modificata. Si definisce una classe foglia quando il comportamento della classe dev'essere ben stabilito per ragioni di \textbf{affidabilità}. \\
+La dichiarazione di una classe foglia permette anche la generazione di codice ottimizzato in quanto facilita l'espansione in linea del codice, che è impossibile nel caso di metodi sovrascrivibili nelle sottoclassi. \\
+Il seguente diagramma UML riassume tutte le notazioni utilizzate per classi.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{images/class_diagram}
+	\end{center}
+\end{figure}
+\section{Interfacce}
+Un'interfaccia è la descrizione del comportamento degli oggetti senza specificarne un'implementazione. Essa è una collezione di \textbf{operazioni}, cioè di servizi che possono essere richiesti, priva di informazioni sulle implementazioni dei servizi (i metodi). \\
+Similmente ad una classe, un'interfaccia può avere un qualsiasi numero di operazioni. \\
+Diversamente da una classe, un'interfaccia non specifica una struttura (non saranno inclusi attributi, se non statici) e non fornisce un'implementazione (non saranno quindi specificati i metodi che implementano le operazioni). \\
+Un'interfaccia è simile a una classe astratta i cui metodi sono tutti astratti e non dispone di attributi. \\
+Nella sua rappresentazione più generale, un'interfaccia è rappresentata mediante l'utilizzo di un cerchio, sopprimendo la visualizzazione delle operazioni. Tuttavia, se lo si ritiene importante per la compresione del modello, è possibile modellare un'interfaccia come una classe stereotipata.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/interfaccia}
+	\end{center}
+\end{figure}
+\subsection{Relazione di realizzazione}
+Una o più classi possono realizzare/implementare le operazioni indicate in un'interfaccia. La relazione che si stabilisce fra un'interfaccia e una classe che la implementa è detta \textit{relazione di realizzazione}. In UML è indicata con una freccia trattegiata.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/relazione_interfaccia}
+	\end{center}
+\end{figure}
+La relazione di realizzazione si presenta come un valido strumento per scindere la specifica di un ``contratto'' (cosa una classe deve implementare) e la sua implementazione (come si rendono i servizi del contratto). \\
+La relazione di realizzazione unisce il ``cosa'' (indicato nell'interfaccia) al ``come'' (indicato nella classe).
+\begin{example}{}{}
+L'interfaccia \textit{java.lang.Comparable} specifica una sola operazione: \textit{public int compareTo(Object o)} che prende un oggetto generico \textit{Object} come argomento e restituisce un valore negativo se l'argomento è più piccolo dell'oggetto corrente, zero se è uguale e un valore positivo se è maggiore. \\
+Una qualunque classe che implementa questa interfaccia deve fornire un'implementazione per \textit{compareTo}.
+\end{example}
+Le interfacce servono a \textit{disaccopiare la definizione delle operazioni dalla loro implementazione}. Per poter usare un certo oggetto è sufficiente conoscere la sua interfaccia: non serve conoscere l'implementazione. \\
+Ad esempio, il metodo \textit{sort} della classe \textit{Arrays}, che ordine un array di oggetti utilizzando lá goritmo di ordinamento per fusioni successive (mergesort), necessita solo di sapere che gli elementi dell'array offrono il servizio \textit{compareTo}, in modo da poterli confrontare. Non serve sapere ``come'' si realizza il servizio, cioè come sono effettivamente confrontati gli oggetti. Si crea così una dipendenza di implementazione fra la classe \textit{Arrays} e l'interfaccia \textit{Comparable}. \\
+UML permette di rappresentare in modo compatto le seguenti relazioni:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/relazione_interfaccia2}
+	\end{center}
+\end{figure}
+attraverso la notazione:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/relazione_int_compatta}
+	\end{center}
+\end{figure}
+\subsection{Ereditarietà}
+Anche le interfacce possono ereditare altre interfacce. Poichè non ci sono implementazioni, la relazione di ereditarietà è una relazione di generalizzazione ``$is\_a$''.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/interfaccia_ereditarieta}
+	\end{center}
+\end{figure}
+Poichè non si considerano le implementazioni delle operazioni, l'ereditarietà multipla su interfacce non pone problemi di conflitto di realizzazione. Per questo alcuni linguaggi di programmazione, come Java, permettono l'ereditarietà singola sulle classi mentre permettono l'ereditarietà multipla sulle interfacce. \\
+Questo distingue le classi astratte (per le quali l'ereditarietà multipla può porre dei problemi riguardo ai metodi implementati) dalle interfacce. \\
+\subsection{Realizzazione di più interfacce}
+Poichè non possono sorgere problemi di conflitto di realizzazione, è permesso a una classe di realizzare piu interfacce, per di più non correlate da una relazione di generalizzazione. \\
+Ad esempio, una classe \textit{Person} può implementare due interfacce:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/interfacce_multiple}
+	\end{center}
+\end{figure}
+In questo modo tutto il codice scritto per \textit{Candidate} e \textit{Employee} può essere utilizzato su oggetti di classe \textit{Person}.
+\subsection{Realizzazioni multiple di un interfaccia}
+Infine, più classi possono implementare la stessa interfaccia. È questo il caso  di un'interfaccia definita per dati astratti molto utilizzati nello sviluppo del software, come pile, code, liste, alberi e grafi, per i quali sono possibili molteplici realizzazioni che variano per l'efficienza degli operatori.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/realizzazioni_multiple_int}
+	\end{center}
+\end{figure}
+Il codice applicativo che intende fare uso di una pila dichiarerà delle variabili di tipo \textit{Pila}, svincolandosi dalla specifica realizzazione. Questa sarà specificata solo al momento della inizializzazione della variabile. Si garantisce così una forte invarianza ai cambiamento delle realizzazioni di una pila.
 \end{document}
