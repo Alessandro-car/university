@@ -145,7 +145,7 @@ Richiamiamo dall'analisi i seguenti risultati.
 	\]
 	cioè $f$ ammette almeno uno zero $\alpha \in (a, b)$.
 \end{theorem}
-Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno zero di $f$, tuttavia non ne assicura l'unicità. Per ottenere l'unicità potremmo assumere ulteriormente che $f$ sia strettamente monotona. \\
+Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno zero di $f$, tuttavia non ne assicura l'unicità. Per ottenere l'unicità potremmo assumere ulteriormente che $f$ sia strettamente monotona.
 \begin{theorem}{\nmu Esistenza e unicità dello zero}{unicita_zero}
 	Sia $f: [a, b] \to \mathbbm{R}$, derivabile in $[a, b]$ e tale che:
 	\[
@@ -226,7 +226,7 @@ Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno 
 		&= \dots = \lim\limits_{n\to\infty}\frac{1}{2^{n}}(b-a) \\
 		&= 0
 	\end{align*}
-	Proviamo ora che $\overline{a} (= \overline{b}) = \alpha$. \\
+	Proviamo ora che $\overline{a} (= \overline{b}) = \alpha$.
 	\begin{align*}
 		0 \leq [f(\overline{a})]^2 &= \\
 		f(\overline{a})f(\overline{b}) \\
@@ -234,7 +234,8 @@ Il teorema di Bolzano esprime una condizione sufficiente per l'esistenza di uno 
 		&= \lim\limits_{n\to\infty}f(a_n) \lim\limits_{n\to\infty}f(b_n) \\
 		&= \lim\limits_{n\to\infty}f(a_n)f(b_n) \leq 0
 	\end{align*}
-	Ne consegue che $f(\overline{a}) = 0 \Rightarrow \overline{a} = \alpha$. \\
+	Ne consegue che $f(\overline{a}) = 0 \Rightarrow \overline{a} = \alpha$.
+
 	Occorre infine provare che anche $\{c_n\}$ tende ad $\alpha$. Essendo $\{c_n\}$ la successione dei punti medi, avremo:
 	\[
 	a_n < c_n < b_n
@@ -275,7 +276,7 @@ L'importanza dell'errore relativo è quella di fornirci un'informazione sul nume
 \[
 \frac{|x-\overline{x}|}{|x|} < \frac{1}{2} \cdot 10^{-d}
 \]
-allora l'approsimazione $\overline{x}$ conterrà almeno $d$ cifre significative corrette. Questo significa che gli arrotondamenti di $x$ e $\overline{x}$ a $d$ cifre significative coincidono. \\
+allora l'approsimazione $\overline{x}$ conterrà almeno $d$ cifre significative corrette. Questo significa che gli arrotondamenti di $x$ e $\overline{x}$ a $d$ cifre significative coincidono.
 \begin{definition}{\nmu Errore misto}{errore_misto}
 	Siano $x \in \mathbbm{R}$ una quantità teorica e $\overline{x}$ una sua approssimazione. Definiamo l'errore misto come:
 	\[
@@ -547,7 +548,8 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 	Nel caso di convergenza locale si richiede che $x_0$ dia una stima sufficientemente buona di $\alpha$.
 \end{note}
 \begin{definition}{\nmu Convergenza globale}{convergenza_globale}
-	Siano $\theta: [a, b] \to \mathbbm{R}$ e $\alpha$ punto fisso di $\theta$. \\
+	Siano $\theta: [a, b] \to \mathbbm{R}$ e $\alpha$ punto fisso di $\theta$.
+
 	Il metodo iterativo one-step definito dalla funzione iteratrice $\theta$ è detto \textit{globalmente convergente} ad $\alpha$ in $[a, b]$ se, $\forall x_0 \in [a, b]$:
 	\begin{itemize}
 		\item $x_n \in [a, b], n \geq 0$
@@ -780,8 +782,9 @@ In conclusione: $x \in B(\alpha, \delta) \iff$ la distanza di $x$ dal centro $\a
 			\theta_2(x) = \sqrt[3]{2x + 5}
 			\]
 		\end{enumerate}
-		Studiare la convergenza locale e globale dei due metodi definiti da $\theta_1(x)$ e $\theta_2(x)$. \\
-		La risoluzione è la seguente. \\
+		Studiare la convergenza locale e globale dei due metodi definiti da $\theta_1(x)$ e $\theta_2(x)$.
+
+		La risoluzione è la seguente.
 		\begin{enumerate}
 			\item $f(1) = 1^3 - 2 \cdot 1 - 5 = -6 < 0$ \\
 			$f(3) = 3^3 - 2 \cdot 3 - 5 = 16 > 0$ \\
@@ -2275,4 +2278,137 @@ In generale, per un algoritmo generico, se l'errore algoritmico è maggiorato da
 |E_{ALG}| \leq p(n)u
 \]
 dove $n$ indica la dimensione del problema da risolvere e $p(n)$ denota un polinomio in $n$, l'algoritmo può ritenersi stabile se il grado di $p(n)$ è basso, ad esempio 1, 2, 3.
+\chapter{Matrici e sistemi lineari}
+\begin{definition}{\nmu Matrice reale}{matrice_reale}
+	Dati due interi positivi $m$ ed $n$, una matrice $A$ reale $m \times n$ è un array bidimensionale avente  $m$ righe ed $n$ colonne così definito:
+	\[
+	A = \begin{pmatrix}
+		a_{11} & a_{12} & \cdots & \cdots & a_{1n} \\
+		a_{21} & a_{22} & \cdots & \cdots & a_{2n} \\
+		\vdots & \vdots & & & \vdots \\
+		a_{m1} & a_{m2} & \cdots & \cdots & a_{mn}
+	\end{pmatrix}
+	\]
+	Più formalmente possiamo dire che una matrice è un'applicazione
+	\[
+	A: \{1, 2, \dots, m\} \times {1, 2, \dots, n} \to \mathbbm{R}
+	\]
+	tale che $A(i, j) = a_{ij} \in \mathbbm{R}$.
+\end{definition}
+Una matrice verrà solitamente denotata con le lettere minuscole, ad esempio la scrittura:
+\[
+A = \{a_{ij}\} \text{ ovvero } A = \{a_{ij}\} \quad i = 1, \dots, m \quad j = 1, \dots, n
+\]
+denoterà una matrice ad $m$ righe ed $n$ colonne il cui generico elemento è $a_{ij}$. Denotiamo con $\mathbbm{R}^{m \times n}$ l'insieme delle matrici con $m$ righe ed $n$ colonne.
+
+Analizziamo alcuni casi.
+\begin{enumerate}
+	\item Se $m = n$, la matrice è detta \textit{quadrata} di dimensione $n$, altrimenti è detta \textit{rettangolare}.
+	\item Se $m=n=1$, la matrice si riduce ad un unico elemento e dunque coincide con uno scalare: $A = (a_{11})$
+	\item Se $m = 1$, la matrice possidere un'unica riga, pertanto si riduce ad un vettore riga: $A = \begin{pmatrix}
+		a_{11} & a_{12} & \cdots & a_{1n})
+	\end{pmatrix}$
+	\item Se $n=1$, la matrice possiede un'unica colonna, pertanto si riduce ad un vettore colonna: \[A = \begin{pmatrix}
+		a_{11} \\
+		a_{21} \\
+		\vdots \\
+		a_{m1}
+	\end{pmatrix} \equiv  \begin{pmatrix}
+		a_{11} & a_{21} & \cdots & a_{m1}
+	\end{pmatrix}^T\]
+	\item La matrice $m \times n$ i cui elementi sono tutti nulli si chiama matrice nulla e si denota con $0_{m \times n}$ o più semplicemente con 0.
+	\item Si chiama diagonale principale di una matrice quadrata di dimensione $n$, il vettore:
+	\[
+	diag(A)= \begin{pmatrix}
+		a_{11} & a_{21} & \cdots & a_{nn}
+	\end{pmatrix}^T
+	\]
+	\item Si chiama matrice identica, ogni matrice quadrata aventi elementi diagonali uguali ad 1 ed elementi extra-diagonali nulli:
+	\[
+	I = \begin{pmatrix}
+		1 & 0 & \cdots & \cdots & 0 \\
+		0 & 1 & \cdots & \cdots & 0 \\
+		\vdots & \vdots & & & \vdots \\
+		0 & 0 & \cdots & \cdots & 1
+	\end{pmatrix}
+	\]
+\end{enumerate}
+Vediamo alcune proprietà delle matrici quadrate.
+\begin{enumerate}
+	\item Una matrice quadrata è diagonale se tutti i suoi elementi extra-diagonali sono nulli:
+	\[
+	a_{ij} = 0, \forall i, j = 1, \dots, n \text{ con } i \neq j
+	\]
+	\item Una matrice quadrata è triangolare inferiore se tutti i suoi elementi al di sopra della diagonale principale sono nulli:
+	\[
+	a_{ij} = 0 \quad \forall i < j
+	\]
+	\item Una matrice quadrata è triangolare superiore se tutti i suoi elementi al di sotto della diagonale principale sono nulli:
+	\[
+	a_{ij} = 0 \quad \forall i > j
+	\]
+\end{enumerate}
+\section{Operazioni tra matrici}
+\subsection{Addizione}
+\begin{definition}{\nmu Addizione tra matrici}{add_matrici}
+	Se $A = \{a_{ij}\}$ e $B = \{b_{ij}\}$ sono matrici $m \times n$ si definisce somma tra $A$ e $B$ la matrice
+	\[
+	A+B = \{a_{ij} + b_{ij}\} \in \mathbbm{R}^{m\times n}
+	\]
+	Si osservi che:
+	\[
+	+: \mathbbm{R}^{m\times n} \times \mathbbm{R}^{m\times n} \to \mathbbm{R}^{m\times n}
+	\]
+\end{definition}
+Vediamo alcune proprietà dell'addizione.
+\begin{enumerate}
+	\item \textbf{Commutativa}: $\forall A, B \in \mathbbm{R}^{m\times n}$:
+	\[
+	A + B = B + A
+	\]
+	\item \textbf{Associatività}: $\forall A, B, C \in \mathbbm{R}^{m \times n}$
+	\[
+	(A+B)+C = A + (B+C)
+	\]
+	\item \textbf{Esistenza dell'elemento neutro}: $\forall A \in \mathbbm{R}^{m\times n}$:
+	\[
+	A + 0 = 0 + A = A
+	\]
+	\item \textbf{Esistenza del simmetrico}: $\forall A \in \mathbbm{R}^{m\times n} \exists B \in \mathbbm{R}^{m\times n} \mid A + B = 0$.
+
+	L'opposto di $A$ si denota con $-A$.
+\end{enumerate}
+\begin{note}{}{}
+Il gruppo $(\mathbbm{R}^{m\times n}, +)$ è un gruppo abeliano.
+\end{note}
+\subsection{Moltiplicazione di uno scalare per una matrice}
+\begin{definition}{\nmu Moltiplicazione di uno scalare per una matrice}{scalare_matrice}
+	Se $A = \{a_{ij}\} \in \mathbbm{R}^{m\times n}$ e $\lambda \in \mathbbm{R}$, si definisce prodotto di $\lambda$ per $A$ la matrice:
+	\[
+	\lambda \cdot A = \{\lambda a_{ij}\} \in \mathbbm{R}^{m\times n}
+	\]
+	L'applicazione:
+	\[
+	\cdot: \mathbbm{R} \times \mathbbm{R}^{m\times n} \to \mathbbm{R}^{m\times n}
+	\]
+	è una legge di composizione esterna.
+\end{definition}
+Elenchiamone alcune proprietà.
+
+Per ogni $\lambda, \mu \in \mathbbm{R}$ e $\forall A, B \in \mathbbm{R}^{m\times n}$ risulta:
+\begin{enumerate}
+	\item $\lambda \cdot (\mu \cdot A) = (\lambda\mu)\cdot A$;
+	\item $(\lambda + \mu)\cdot A = \lambda \cdot A + \mu \cdot A$;
+	\item $\lambda \cdot (A + B) = \lambda \cdot A + \lambda \cdot B$;
+	\item $1 \cdot A = A$
+\end{enumerate}
+Per semplicità si scriverà $\lambda A$ in luogo di $\lambda \cdot A$.
+\subsection{Trasposta di una matrice}
+Se $A \in \mathbbm{R}^{m\times n}$, la trasposta di $A$, denotata con $A^T$, è la matrice ottenuta da $A$ scambiando le righe con le colonne, ovvero:
+\[
+A^T = \{a_{ji}\} \quad 1 = 1, \dots, m \quad j = 1, \dots, n
+\]
+Pertanto $A^T \in \mathbbm{R}^{n\times m}$.
+\subsection{Sottomatrici o matrici estratte}
+Se $A = \{a_{ij}\} \in \mathbbm{R}^{m\times n}$, una sottomatrice di $A$ è una matrice ottenuta sopprimendo in $A$ un certo numero di righe e di colonne.
 \end{document}
