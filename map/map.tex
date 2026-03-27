@@ -2133,4 +2133,366 @@ Infine, più classi possono implementare la stessa interfaccia. È questo il cas
 	\end{center}
 \end{figure}
 Il codice applicativo che intende fare uso di una pila dichiarerà delle variabili di tipo \textit{Pila}, svincolandosi dalla specifica realizzazione. Questa sarà specificata solo al momento della inizializzazione della variabile. Si garantisce così una forte invarianza ai cambiamento delle realizzazioni di una pila.
+\section{Aggregazione di oggetti}
+L'ereditarietà offre molti vantaggi, ma non tutti gli oggetti si ottengono bene derivandoli da altri oggetti. Spesso un oggetto è ottenuto \textit{aggreagando} altri oggetti.
+\begin{example}{}{}
+Ricorrendo all'ereditarietà multipla è allettante definire una classe \textit{Automobile} partendo da classi \textit{Carrozzeria, Sedile, Ruota} e \textit{Motore}. Si tratta di un errore concettuale poichè l'ereditarietà multipla permette di definire due oggetti per fusione e non per composizione. Un'automobile è composta da una carrozzeria, da un motore, da sedili e da ruote; ma il suo comportamento non è in alcun caso l'unione dei comportamenti di queste differenti parti.
+\end{example}
+Nell'esempio specifico, sembrerebbe che il ricorso all'ereditarietà di implementazione sia la soluzione. L'ereditarietà di implementazione permette il riuso della sola implementazione ma non dei comportamenti. Ma neanche questa forma di ereditarietà è adatta allo scopo. Infatti, ereditando dalla classe \textit{Ruota} si ha la possibilità di rappresentare e manipolare una sola ruota, mentre un'automobile ha quattro ruote.
+
+Una \textit{composizione di oggetti} può essere rappresentata permettendo alle variabili di istanza di una classe di puntare a oggetti di altre classi. Infatti si era detto che:
+\begin{center}
+	\textit{Lo stato di un oggetto può anche contenere il riferimento ad un altro oggetto. Si dice che un oggetto punta ad un altro. Il puntamento è asimettrico.}
+\end{center}
+Si possono stabilire legami con più istnze di una classe che descrive un componente (per esempio, più ruote).
+
+La relazione che si stabilisce in questo modo fra le classi detta di \textbf{aggregazione} o \textbf{composizione} (o relazione ``$has\_a$'').
+
+Essa è quindi un'altra possibile relazione fra le classi, diversa dall'ereditarietà (e della generalizzazione o ` `$is\_a$'').
+
+Una classe $A$ si dice essere in relazione di aggregazione con una classe $B$ quando alcune istanze di $B$ contribuiscono a formare una parte delle istanze di $A$.
+
+L'aggregazione è, come l'ereditarietà, una relazione asimmetrica.
+\subsection{Notazione in UML}
+In UML l'aggregazione è resa mediante una linea piena e un piccolo rombo dalla parte del contenitore.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/aggregazione_oggetti}
+	\end{center}
+\end{figure}
+La \textbf{molteplicità} consente di indicare quanti oggetti possono essere aggregati.
+
+\subsection{Utilizzo dell'aggregazione}
+L'utilizzo dell'aggregazione è suggerito nelle seguenti situazioni.
+\begin{enumerate}
+	\item \textbf{Contenimento fisico:} la pagine di un libro.
+	\item \textbf{Appartenenza} (membership): il giocatore di una squadra di calcio.
+	\item \textbf{Composizione funzionale}: le ruote di un'automobile.
+\end{enumerate}
+Si deve osservare che l'aggregazione \textbf{non implica una dipendenza esistenziale}: un'automobile può essere distrutta ma alcune sue parti possono essere riutilizzate. Una squadra di calcio può fallire, ma i suoi giocatori non vengono ``soppressi''.
+
+\section{La composizione}
+Le aggregazioni sono associazioni deboli fra parti e intero. Questo significa che le parti possono esistere senza l'intero.
+
+Un'associazione forte fra parti e intero è detta \textbf{composizione} e si rappresenta in UML mediante un rombo pieno. La composizione comporta una \textbf{dipendenza esistenziale}, in quanto le parti non esistono senza il contenitore Ciò presuppone che:
+\begin{enumerate}
+	\item Creazione e distruzione delle parti avvengano nel contenitore.
+	\item I componenti non siano parti di altri oggetti.
+\end{enumerate}
+In questi esempi, la vista delle ``parti'' che compongono l'``intero'' dipende dalla vita dell'intero stesso:
+\begin{enumerate}
+	\item i dipartimenti non esisterebbero se non esistesse la società;
+	\item il tempo di vita dei diversi oggetti grafici d'interazione dipende da quello della finestra che li contiene.
+\end{enumerate}
+Consideriamo il seguente diagramma.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/composizione}
+	\end{center}
+\end{figure}
+Un'istanza di \textit{Punto} può essere parte di un poligono oppure il centro di un cerchio, ma non entrambe le cose. Questa è  detta \textbf{regola di non condivisione}: benchè una classe possa essere componenente di molte altre classi, ogni sua istanza può essere componente di un solo oggetto.
+
+Un diagramma delle classi può mostrare più classi di potenziali possessori di oggetti componenti, ma ogni sua istanza di componente deve appartenere a un solo oggetto possessore. Questa regola è caratterizzante della composizione.
+
+La composizione fra classi stabilita in fase di progettazione offre delle informazioni importanti al programmatore che andrà a implementare le classi. Ad esempio, se il programmatore utilizzerà C++ farà si che gli oggetti componenti finiscano nello stack e non nell'heap, non userà puntatori/new.
+
+Se utilizza il Java, che pone tutto nell'heap, si preoccuperà di allocare i componenti nella classe contenitore e di non passaere mai all'esterno della classe il riferimento ai componenti, in modo da impedirne la condivisione con oggetti di altre classi. Quindi, il componente sarà privato e non ci sarà alcun metodo che restituisce il suo riferimento.
+\subsection{Differenze tra ereditarietà e aggregazione}
+In molti casi è possibile associare due classi mediante ereditarietà o aggregazione/composizione e la sua scelta non è imemdiata come negli esempi visti precedentemente.
+\begin{example}{}{}
+Si supponga di disporre di una classe \textit{Data} e di una classe \textit{Tempo}, che rappresentano e manipolano, rispettivamente, date e istanti di tempo. Volendo definire una nuova classe \textit{Orologio} per rappresentare sia le date che gli istanti di tempo, si può:
+\begin{enumerate}
+	\item derivare \textit{Orologio} da \textit{Data} e \textit{Tempo}, se l'ereditarietà multipla è permessa.
+	\item Comporre \textit{Orologio} con le due classi.
+\end{enumerate}
+Sono anche possibili soluzioni ibride (ereditarietà da una classe e composizione con l'altra).
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/differenze_ereditarieta_aggregazione}
+	\end{center}
+\end{figure}
+
+Vediamo le differenze tra le due soluzioni sopra elencate.
+\begin{itemize}
+	\item Nell'ereditarietà, ogni oggetto o della classe \textit{Orologio} contiene tutti i campi definiti nelle classi \textit{Data} e \textit{Tempo} e può accedervi direttamente.
+	\item Nell'aggregazione/composizione, ogni oggetto della classe \textit{Orologio} contiene due campi di tipi \textit{Data} e \textit{Tempo} rispettivamente. Per accedere all'informazione sul giorno occorrerà invocare un metodo (per esempio \textit{day()}) sull'oggetto $D$.
+	\item Se l'ereditarietà corrisponde a una relazione di generalizzazione ($is\_a$) vale il polimorfismo di inclusione, cioè ogni oggetto di \textit{Orologio} è utilizzabile come un'istanza di \textit{Data} e \textit{Tempo}, mentre questo non è vero nel caso della composizione.
+\end{itemize}
+Le scelte di progetto sono totalmente diverse.
+\begin{itemize}
+	\item L'ereditarietà permette di poter ``dimenticare'' il fatto che \textbf{gg} è definito nella classe \textit{Data} e di utilizzarlo direttamente come campo di \textit{Orologio}. Questa caratteristica della derivazione è particolarmente utile se si vogliono utilizzare più derivazioni successive e creare vere e proprie gerarchie di classi.In questo caso non è necessario conoscere a quale livello della gerarchia è definito un dato campo, ma è possibile utilizzarlo direttamente come se fosse un elemento della classe stessa.
+	\item L'ereditarietà permette di riutilizzare tutti i metldi delle varie classi che operano su oggetti delle classi \textit{Data} e \textit{Tempo}.
+
+	Consideriamo il seguente schema.
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{images/differenze_ereditarieta_aggregazione2}
+		\end{center}
+	\end{figure}
+	\textit{Agenda} ha due metodi che possono operare anche su istanze di \textit{Orologio}. Il codice dei metodi polimorfi \textit{move} è riutilizzabile per istanze di \textit{Orologio}.
+\end{itemize}
+\end{example}
+Il meccanismo di aggragazione/composizione è generalmente usato quando si vogliono utilizzare i servizi di una classe predefinita ma non la sua interfaccia. L'ereditarietà di implementaziome, qualora non dovesse essere permessa da un linguaggio di programmazione, potrebbe essere resa da una relazione di aggregazione/composizione.
+\section{Raggruppare classi}
+La mole di classi aumenta in modo considerevole all'aumentare della complessità del sistema da modellare. È importante, quindi, organizzare tali classi in gruppi separati al fine di rendere più facilmente individuabili, e quindiaccessibili, le singole parti che compongono il nostro sistema.
+
+I \textit{package} sono un meccanismo generale per organizzare le classi in gruppi. In UML un package è rappresentato come segue:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/package_uml}
+	\end{center}
+\end{figure}
+In genere i package si usano per riunire classi, ma nella notazione UML essi possono includere qualsiasi costrutto UML e possono essere persino eterogenei, ad esempio, possono contenere classi e interfacce.
+
+È consentito mostrare il contenuto di un package sia testualmente sia graficamente:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/contenuto_package}
+	\end{center}
+\end{figure}
+Un package definisce un \textbf{namespace} (spazio degli identificatori) per i suoi elementi. Questo significa che ogni classe di un package di classi deve avere un nome distinto all'interno del package che la racchiude. Il nome completo, o \textbf{qualificato}, della classe sarà ottenuto indicando prima il nome del package che la contiene mediante una notazione $::$, ad esempio, $People::ProfessorInformation$.
+
+Elementi della stessa specie, inseriti all'interno di uno stesso package, devono avere necessariamente nomi differenti. In generale è possibile avere nomi uguali per elementi di tipo differente. Ad esempio è possibile avere una classe o interfaccia \textit{Cliente} e un package \textit{Cliente}, ma non due classi \textit{Cliente}, due interfacce \textit{Cliente} o una classe \textit{Cliente} e un'interfaccia \textit{Cliente}.
+
+È possibile avere nomi uguali per elementi della stessa spiecie se sono inseriti in package differenti.
+
+Per evitare la necessità di utilizzare nomi qualificati, un package può importare gli elementi o il contenuto di un altro package nel proprio namespace. Un elemento nel package che importa può quindi riferirsi a un elemento importato come se esso fosse definito direttamente nel package. L'import di un package viene ottenuto stereotipando la relazione di dipendenza.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/import_package}
+	\end{center}
+\end{figure}
+\begin{note}{}{}
+La relazione di importazione non è transitiva. Se $A$ importa $B$ e $B$ importa $C$, allora $A$ può usare gli elementi di $B$ e $B$ può usare gli elementi di $C$, ma non è detto che $A$ possa usare gli elementi di $C$, a meno ch e $A$ non importi anche $C$.
+
+Se c'è conflitto di nomi in due elementi importati, nessuno dei due elementi è aggiunto al namespace.
+
+Se il nome di un elemento importato è in conflitto con il nome di un elemento definito localmente a un package, il nome dell'elemento interno ha precedenza sul nome importato ha precedenza sul nome importato che non viene aggiunto al namespace, che sarà raggiungibile mediante qualificazione.
+\end{note}
+I package possono essere innestati senza alcun limite di profondità, anche se tale possibilità deve comunque essere utilizzata con parsimonia se non si vuole compromettere la leggibilità del modello.
+
+Un package innestato ha accesso a tutti gli elementi contenuti direttamente nei pakcage esterni, senza necessità di importazione.
+
+Si può anche specificare la \textbf{visibilità} degli elementi di un package:
+\begin{itemize}
+	\item \textbf{public (+)} sono visibili ad altri elementi del package stesso, a uno dei package innestati o a package che li importano;
+	\item \textbf{private (-)} non sono visibili all'esterno del package.
+\end{itemize}
+\begin{example}{}{}
+Consideriamo il seguente schema.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/visibilita_schema}
+	\end{center}
+\end{figure}
+Il package $P$ importa il package $Q$. Le classi $K$ e $L$ nel package $P$ possono usare $M$ come nome di classe senza qualificarlo poichè $M$ è pubblica, ma non possono vedere la classe $N$, in quanto privata. Le classi $M$ e $N$ nel package $Q$ possono usare il nome qualificato $P::K$ per referenziare la classe pubblica $K$ nel package $P$, ma non possono vedere in alcun modo la classe $L$.
+\end{example}
+\section{Classi interne}
+Una classe interna, chiamata \textit{inner class}, è una classe la cui dichiarazione si trova all'interno di un'altra classe ospite, detta \textit{top level class}.
+
+Le classi interne sono identificate da un nome al parti delle classi top level. Una classe interna può essere privata. In tal caso non è visibile all'esterno della classe ospite. (In Java, una classe top level non può mai essere privata).
+
+La inner class può accedere a tutti i metodi e i campi della classe ospitante, mentre la classe ospitante può vedere solo la parte pubblica della inner class. Un oggetto di classe inner non può esistere se non esiste un oggetto della classe ospitante. Inoltre, una classe interma non può avere campi statici.
+
+UML non ha una notazione standard per le classi interne. Tuttavia, si è suggerita la seguente notazione.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/inner_class}
+	\end{center}
+\end{figure}
+\section{Il polimorfismo}
+Con il termine polimorfismo si intende la possibilità di associare a un'operazione diverse realizzazioni, chiamati \textit{morfismi}. Il concetto di polimorfismo è stato definito in vari modi. Stratchey ha distinto due tipi principali di polimorfismo.
+\begin{itemize}
+	\item \textbf{Polimorfismo parametrico}: è ottenuto quando una funzione lavora uniformemente su una gamma di tipi. Questi tipi normalmente esibiscono una qualche struttura comune.
+	\item \textbf{Polimorfismo ad hoc}: è ottenuto quando una funzione lavora, o sembra lavorare, su tipi differenti (che potrebbero non esibire una struttura comune) e potrebbe comportarsi in modo scorrelato per ciascuno di essi.
+\end{itemize}
+Una classificazione più raffina dei diversi meccanismi di polimorfismo è data da Cardelli e Wegner.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{images/polimorfismo_cardelli}
+	\end{center}
+\end{figure}
+La classificazione di Cardelli e Wegner introduce una nuova forma di polimorfismo, quello \textit{per inclusione}, al fine di modellare i concetti di sottotipo e di ereditarietà. Il polimorfismo per inclusione e parametrico sono classificati come due sottocategorie del \textit{polimorfismo universale}, che è posto in contrasto al polimorfismo non unversale o ad hoc.
+
+L'idea di polimorfismo universale è quella di poter operare su un numero infinito di tipi, a patto che essi rispettino alcuni vincoli.
+\begin{itemize}
+	\item \textbf{Universale}:
+	\begin{itemize}
+		\item Il polimorfismo è su un numero potenzialmente illimitato di tipi.
+		\item I diversi morfismi sono generati automaticamente.
+		\item C'è una base unificante, comune a tutti i diversi morfismi che può assuere l'entità polimorfa.
+	\end{itemize}
+	\item \textbf{Ad hoc}:
+	\begin{itemize}
+		\item Il polimorfismo è su un numero finito di tipi, spesso pochissimi.
+		\item I diversi morfismi sono generati in modo manuale o semimanuale.
+		\item Non c'è una base comuni a tutti i morfismi, al di là delle intenzioni del progettista.
+	\end{itemize}
+\end{itemize}
+\subsection{La coercizione}
+La \textit{coercizione} è il meccanismo di conversione implicita operata da un compilatore per applicare un operatore definito per oggetti tipo $T_1$ anche a oggetti di tipo $T_2$.
+
+Ad esempio, l'operatore $+$, $3.14 + 5$,  è definito per valori reali, ma lo si può usare su un insieme di tipi più grande di quello per il quale è stato definito. Senza coercizione, avremmo un errore di tipo.
+
+Altri esempi di coercizione sono, in Java, l'autoboxing di un $int$ in un $Integer$ e l'unboxing di un $Integer$ in un $int$.
+
+Le coercizioni possono essere stabilite staticamente, inserendole automaticamente fra gli argomenti e le funzioni al momento della compilazione, oppure potrebbero essere determinate dinamicamente da test al run-time sugli argomenti. La coercizione è la forma di polimorfismo più semplice. Essa opera a un livello \textit{semantico}, cioè cambiando la rappresentazione del dato.
+
+Pascal e Ada supportano questa modalità di polimorfismo. Tuttavia, in questi linguaggi di polimorfismo è più un'eccezione che la regola. Pertanto sono considerati per lo pìu monomorfi.
+\subsection{L'overloading}
+Si ha polimorfismo per \textit{overloading} quando si usa lo stesso identificatore per metodi differenti e si ricorre a informazione di contesto per decidere quale metodo è denotato da una particolare occorrenza dell'identificatore. La disambiguazione necessaria per una corretta compilazione si basa sultipo degli argomenti del metodom o sulla classe dell'oggetto a cui si richiede il servizio.
+
+Possiamo immaginare che una pre-compilazione del programma potrebbe disambiguiare ed elimare l'overloading dando nomi differenti a metodi differenti. In questo senso, l'overloading è gisuto una conveniente abbreviazione \textit{sintattica}.
+
+L'overloading è presente nella maggior parte dei linguaggi, anche imperativi, dove gli operatori aritmetici $+, *, -$ ecc. sono applicabili a più di un tipo. Ad esempio, in Pascal, l'operatore +, se applicato a 2 interi genera un'istruzione \textit{add} fra interi, mentre se applicato a 2 numeri reali genera un'istruzione \textit{add} fra floating point.
+
+In Ada, come in C++, è possibile ridefinire alcuni operatori, ad esempio l'operatore +, per operare su tipi/classi definite dall'utente. Ad esempio, l'operatore +, può essere ridefinito per numeri complessi, rappresentabili mediante un record.
+
+Un esempio di overloading di operatori in C++.
+\begin{lstlisting}[style=cppstyle]
+class Rational {
+	public: Rational(double);
+	const Rational& operator+(const Rational& other);
+	...
+};\end{lstlisting}
+
+Un esempio di overloading di funzioni in C++.
+\begin{lstlisting}[style=cppstyle]
+double max(double d1, double d2);
+char max(char c1, char c2);
+char* max(char* c1, char* c2);
+const char* max(const char* c1, const char* s2);\end{lstlisting}
+
+L'overloading può efficacemente interagire con la coercizione. Ad esempio, l'operatore + può essere definito per due interi e due reali, ragione per cui le espressioni:
+\[
+3+ 4
+\]
+\[
+3.0 + 4.0
+\]
+non causano errore.
+
+Combinando l'overloading di + con il meccanismo di coercizione, non avremo errore di tipo anche nei seguenti casi:
+\[
+3 + 4.0
+\]
+\[
+3.0 + 4
+\]
+nel paradigma a oggetti si ha overloading anche nel caso di funzioni con medesimo nome ma definite in classi non correlate gerarchicamente. Ad esempio, consideriamo il seguente schema.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/overloading}
+	\end{center}
+\end{figure}
+In questo esempio l'informazione di contesto utilizzata per disambiguare è la classe di appartenenza dell'istanza sulla quale si invoca il metodo stampa. Questo polimorfismo è \textbf{meno potente} di quello universale, perchè l'unicità del nome del metodo nasconde una molteplicità di implementazioni.
+\subsection{Il polimorfismo parametrico}
+Nel polimorfismo parametrico, una funzione polimorfa ha un parametro di tipo esplcito o implicito, che determina il tipo dell'argomento per ciascuna applicazione della funzione. Le funzioni che esibiscono il polimorfismo parametrico sono anche dette \textbf{funzioni generiche}.
+
+Una funzione generica può lavorare su argomenti di molti tipi, generalmente esibendo lo stesso comportamento indipendentemente dal tipo dell'argomento.
+
+Le funzioni \textit{generic} dell'Ada ma anche le funzioni \textit{template} del C++ sono un esempio di funzioni generiche.
+\begin{lstlisting}[style=cppstyle]
+template <class T> void sort(vector<T>);
+
+vector<complex> cv(100);
+vector<int> c1(200);
+void f(vector<complex> &cv, vector<int> &ci) {
+	sort(cv);
+	sort(ci);
+}\end{lstlisting}
+Si deve osservare che il polimorfismo parametrico di Ada, ma anche di C++, è \textit{sintattico}, dal momento che un'istanziazione generica è effettuata al momento della compilazione sulla base dei tipi effettivi che devono essere determinabili al compile-time. Pertanto, le procedure generica di Ada o di C++, possono essere considerate delle abbreviazioni per insiemi di procedure monomorfe. Rispetto al polimorfismo parametrico propriamente inteso, esse hanno il vantaggio che si può generare del codice ottimizzato per forme di inout differenti.
+
+Al contrario, nei veri sistemi polimorfici, il codice è generato \textbf{una sola volta} per ogni procedura generica, come avviene in Java.
+\subsection{Il polimorfismo di inclusione}
+Il polimorfismo di inclusione, nasce da una relazione di inclusioen fra insiemi di valori. L'inclusione di insiemi di valori è tipico dei \textit{sottotipi}.
+
+Ad esempio, in Pascal, ogni valore di un subrange di intero può essere usato nel contesto di un intero. Tuttavia, il polimorfismo di inclusione non è necessariamente legato ai sottotipi.
+
+Degli esempi di polimorfismo per inclusione built-in sono:
+\begin{itemize}
+	\item Pascal: il valore Nil appartiene a tutti i tipi puntatore.
+	\item C: Il valore 0 è polimorfo. Appartiene a tutti i tipi puntatore.
+	\item C++: Il tipo void* è un supertipo di tutti i tipi puntatore. Un qualunque puntatore può essere assegnato a un void*.
+\end{itemize}
+Nella programmazione orientata a oggetti, si ha polimorfismo per inclusione se un oggetto appartiene a una classe e a tutte le sue superclassi. Esso si manifesta in almeno due modi:
+\begin{itemize}
+	\item Si può assegnare un oggetto di una qualsiasi sottoclasse di una classe C a una variabile definita di classe C.
+	\item Una funzione che opera su un oggetto di classe C può essere applicata anche a oggetti di classe C', sottoclasse di C.
+\end{itemize}
+Questi due utilizzi del polimorfismo di inclusione sono limitamente interessanti. Non a caso, essi non sono molto dissimili dall'utilizzo che permette il concetto di sottotipo anche nella programmazione imperativa.
+\paragraph{Il legame statico/dinamico}
+L'utilizzo più interessante si ha quando le invocazioni dei metodi su oggetti di classe diverse produce un comportamento differente, anche se la definzione della funzione è unica. Ciò dipende dal tipo di legame statico/dinamico fra identificatore di funzione e relativa realizzazione.
+
+Nella maggior parte dei linguaggi di programmazione la visibilità degli identificatori e dei legami dei nomi alle dichiarazioni è determinata al momento della compilazione. Si parla di \textbf{ambito d'azione statico}.
+
+Nell'ambito d'azione \textbf{dinamico}, il legame fra l'uso di un identificatore e la sua dichiarazione dipende dall'ordine di esecuzione, e così è differito al momento dell'esecuzione.
+
+Si consideri il seguente programma Pascal.
+\begin{lstlisting}[style=pascalstyle]
+program dynamic(input, output);
+var x: integer;
+	procedure A;
+	begin
+		...; write(x); ...
+		end; {A}
+	procedure B;
+	var x: real;
+		begin
+			...; A; ...
+		end; {B}
+begin
+	...; B; ...; A; ...
+end {dynamic}
+\end{lstlisting}
+Poichè il Pascal adotta la regola dell'ambito statico, l'uso della variabile $x$ in $A$ è legato alla variabile itera $x$ nel programma principale. Questo permette di tradurre la $write(x)$ semplicmente in una chiamata a funzione di libreria I/O per la scrittura degli interi.
+
+Tuttavia, se il legame nome-dichiarazione fosse dinamico, l'uso di $x$ in $A$ sarebbe vincolato dalla dichiarazione di $x$ più recente. Pertanto, quando la procedura $A $ è chiamata dalla procedura $B$, l'uso di $x$ in $A$ viene vincolato dalla dichiarazione della variabile reale $x$ nella procedura $B$, mentre quando $A$ è chiamata nel programma principale, l'uso di $x$ sarebbe vincolato alla dichiarazione della variabile intera $x$ nel programma principale.
+\paragraph{Legame e tipizzazione}
+Con un dynamic-binding, la traduzione della chiamata $write(x)$ può essere determinata solo al run-time. Questo non vuol dire che il controllo del tipo non possa essere effettuato, ma solo che viene ritardato al  momento dell'esecuzione, quando è noto il tipo al quale $x$ è vincolato.
+
+Si osservi che con lo static-binding il legame dei nomi ai tipi è anch'esso fissato al momento della compilazione.
+
+Nella programmazione orietata a oggetti il legame fra nome di funzione e sua realizzazione può essere determinato al run-time. Si consideri il seguente esempio.
+\begin{lstlisting}[style=cppstyle]
+class A{
+	public: void f() { cout << "A"; }
+};
+class B : public A {
+	public: void f() { cout << "B"; } // Overriding
+};
+
+class Tester {
+	public void someF(A a){ a.f(); ... }
+};
+
+A obj1;
+Tester obj2;
+...
+obj1 = new B();
+obj2 = new Tester();
+ob2.someF(obj1);
+...
+\end{lstlisting}
+Il comportamento di someF() diepnde da quando si effettua il legame fra l'identificatore di funzione $f$ in $someF$ e la sua implementazione. In C++ è possibile definire la funzione $f$ come \textbf{virtuale}. Questo significa che il legame deve essere dinamico e quindi verrà stampata una B. Diversamente, il legame sarebbe statico e verrebbe stampata una A. La selezione del metodo, nel caso di funzioni virtuali, avviene al run-time.
+
+Combinando polimorfismo di inclusione con legame dinamico si hanno i vantaggi di \textbf{estendibilità} del codice.
+
+C++ è un esempio di linguaggio dove la tipizzazione è statica, ma il legame può essere dinamico (\textit{statically-typed dynamic binding}). Il legame si riferisce a nome di funzione con la sua realizzazione.
+
+Lo stesso dicasi per il Java. Ma in questo linguaggio, il legame dinamico è la regola, non l'eccezione. Solo nei metodi final/static il legame nome di funzione con la sua realizzazione diventa statico.
+
+Consideriamo il seguente codice
+\begin{lstlisting}[style=cppstyle]
+void f(int) { cout << "int"; }
+void f(char) { cout << "char"; }
+void f(char*) { cout << "char*"; }
+
+g() {
+	f(0);
+}
+\end{lstlisting}
+Questa codice combina overloading, coercizione e polimorfismo di inclusione. Il compilatore C++ associa al valore 0 il tipo int, quindi la funzione $g$ stampa $int$. Anche lo 0 può essere visto come carattere, ma l'associazione di tipo diretta tra 0 e int, ha precedenza rispetto alla coercizione con char o char*.
+
+Diversi linguaggi di programmazione OO proibiscono la ridefinizione dei metodi e la coercizione per evitare questi problemi.
 \end{document}
