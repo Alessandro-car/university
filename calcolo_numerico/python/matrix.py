@@ -46,7 +46,6 @@ def det(mat):
     if len(mat) == 2:
         return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
     val = 0;
-    rem_col = 0;
     remaining_rows = arange(1, len(mat));
     for col in range(len(mat)):
         sign = (-1) ** col;
@@ -55,6 +54,33 @@ def det(mat):
         val += sign * mat[0][col] * det(sub_mat);
     return val;
 
+def cofactor_mat(mat):
+    new_m = empty((len(mat), len(mat)));
+    for i in range(len(mat)):
+        remaining_rows = [r for r in range(len(mat)) if r != i];
+        for j in range(len(mat)):
+            sign = (-1) ** (i + j);
+            remaining_cols = [c for c in range(len(mat)) if c != j];
+            sub_mat = submatrix(mat, remaining_rows, remaining_cols);
+            new_m[i][j] = sign * det(sub_mat);
+    return new_m;
+
+def scalar_prod(mat, scalar):
+    new_m = empty((len(mat), len(mat)));
+    for i in range(len(mat)):
+        for j in range(len(mat)):
+            new_m[i][j] = mat[i][j] * scalar;
+    return new_m;
+
+def agg(mat):
+    return matT(cofactor_mat(mat));
+
+def inverse(mat):
+    m_det = det(mat);
+    if m_det == 0:
+        print("The inverse exists only if the determinant is not zero!");
+        return;
+    return scalar_prod(agg(mat), 1 / m_det);
 
 def main():
     mat1 = array([[1, 2, 3], [-1, 0, 1], [3, 1, -2]]);
@@ -65,6 +91,8 @@ def main():
     print(product(mat1, mat2));
     print(det(mat1));
     print(det(mat2));
+    print(inverse(mat1));
+
 if __name__ == '__main__':
     main();
 
