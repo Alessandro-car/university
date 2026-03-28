@@ -19,9 +19,9 @@ def matT(mat):
 
 def submatrix(mat, rows, cols):
     new_m = empty((len(rows), len(cols)));
-    for row in rows:
-        for col in cols:
-            new_m[row % len(rows)][col % len(cols)] = mat[row][col];
+    for i, row in enumerate(rows):
+        for j, col in enumerate(cols):
+            new_m[i][j] = mat[row][col];
     return new_m;
 
 def product(mat1, mat2):
@@ -37,6 +37,23 @@ def product(mat1, mat2):
             new_m[i][j] = el;
     return new_m;
 
+def det(mat):
+    if (len(mat) != len(mat[0])):
+        print("The matrix must be square.");
+        return;
+    if len(mat) == 1:
+        return mat[0][0];
+    if len(mat) == 2:
+        return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+    val = 0;
+    rem_col = 0;
+    remaining_rows = arange(1, len(mat));
+    for col in range(len(mat)):
+        sign = (-1) ** col;
+        remaining_cols = [c for c in range(len(mat)) if c != col];
+        sub_mat = submatrix(mat, remaining_rows, remaining_cols);
+        val += sign * mat[0][col] * det(sub_mat);
+    return val;
 
 
 def main():
@@ -44,8 +61,10 @@ def main():
     mat2 = array([[1, 0, 1], [-1, -2, 0], [3, -4, 3]]);
     print(sum(mat1, mat2));
     print(matT(mat1));
-    print(submatrix(mat1, arange(len(mat1)), [len(mat1[0]) - 2]));
+    print(submatrix(mat1, arange(len(mat1)), [0, 2]));
     print(product(mat1, mat2));
+    print(det(mat1));
+    print(det(mat2));
 if __name__ == '__main__':
     main();
 
