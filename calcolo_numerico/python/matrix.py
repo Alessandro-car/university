@@ -82,6 +82,39 @@ def inverse(mat):
         return;
     return scalar_prod(agg(mat), 1 / m_det);
 
+def get_ax(mat, x):
+    if (len(mat[0]) != len(x)):
+        print("The number of columns of the matrix and the length of the vector must be equal");
+        return;
+    ax = empty(len(mat));
+    for i in range(len(mat)):
+        el = 0;
+        for j in range(len(x)):
+            el += mat[i][j] * x[j];
+        ax[i] = el;
+    return ax;
+
+def max(mat):
+    val = {};
+    max = 0;
+    for i in range(len(mat)):
+        for j in range(len(mat[i])):
+            if mat[i][j] > max:
+                max = mat[i][j];
+                val = {"val": max, "row": i, "col": j};
+    return val
+
+def min(mat):
+    val = {};
+    min = mat[0][0];
+    for i in range(len(mat)):
+        for j in range(len(mat[i])):
+            if mat[i][j] < min:
+                min = mat[i][j];
+                val = {"val": min, "row": i, "col": j};
+    return val;
+
+
 def main():
     mat1 = array([[1, 2, 3], [-1, 0, 1], [3, 1, -2]]);
     mat2 = array([[1, 0, 1], [-1, -2, 0], [3, -4, 3]]);
@@ -92,6 +125,11 @@ def main():
     print(det(mat1));
     print(det(mat2));
     print(inverse(mat1));
+    print(get_ax(mat1, [3, 4, 5]));
+    print(max(mat1));
+    print(max(mat2));
+    print(min(mat1));
+    print(min(mat2));
 
 if __name__ == '__main__':
     main();
