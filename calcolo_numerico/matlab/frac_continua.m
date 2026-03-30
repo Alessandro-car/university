@@ -8,4 +8,4 @@ function x = frac_continua(a, index)
     else
         x = a(index) + (1 / (frac_continua(a, index + 1)));
     end
-    
+

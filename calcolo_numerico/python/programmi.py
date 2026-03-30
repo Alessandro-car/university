@@ -26,7 +26,7 @@ def inverti(s):
         s[i] = s[len(s) - i - 1]
         s[len(s) - i - 1] = tmp
     return "".join(s)
-        
+
 def mcd(m, n):
     if n == m:
         return m
