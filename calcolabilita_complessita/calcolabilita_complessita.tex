@@ -109,21 +109,21 @@
 }
 
 \lstdefinestyle{pascalstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	language=Pascal
 }
@@ -137,15 +137,15 @@
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{red},
 	basicstyle=\ttfamily\small,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	frame=single,
 	% Define pseudocode-specific keywords
@@ -199,7 +199,7 @@
 	Nel nostro esempio, sia:
 	\[
 	A = \{w \mid w \text{ contiene almeno un 1 e un numero pari di 0 segue l'ultimo 1}\}
-	\] 
+	\]
 	\paragraph{Definizione formale di computazione} \quad \\
 	Finora abbiamo descritto gli automi finiti informalmente, usando diagrammi di stato, e con una definizione formale, come una quintupla. La descrizione informale è più facile da comprendere all'inizio, ma la definizione formale è più utile per rendere la notazione precisa, risolvendo ogni ambiguità. \\
 	Facciamo lo stesso per la computazione di un automa finito. \\
@@ -208,13 +208,13 @@
 		\item $r_0 = q_0$;
 		\item $\delta(r_i, w_{i+1}) = r_{i+1}$ per $i = 0, \dots, n - 1$;
 		\item $r_n \in F$.
-	\end{enumerate} 
+	\end{enumerate}
 	La prima condizione afferma che la macchina inizia nello stato inziale. La seconda condizione afferma che la macchina passa da stato a stato in base alla funzione di transizione. La terza condizione afferma che la macchina accetta il suo input se termina la lettura in uno stato accettante. Diciamo che $M$ \textit{riconosce il linguaggio A} se $A = \{w \mid M \text{ accetta } w\}$.
 	\begin{definition}{\nmu Linguaggio regolare}{linguaggio_regolare}
-		Un linguaggio è chiamato un \textit{linguaggio regolare} se un automa finito lo riconosce. 
+		Un linguaggio è chiamato un \textit{linguaggio regolare} se un automa finito lo riconosce.
 	\end{definition}
 	\paragraph{Le operazioni regolari} \quad \\
-	Dopo aver introdotto e definito gli automi finiti e i linguaggi regolari, iniziamo a studiarne le proprietà. In aritmetica, gli oggetti di base sono i numeri e gli strumenti sono le operazioni per trattarli, come $+$ e $\times$. Nella teoria della computazione, gli oggetti sono i linguaggi e gli strumenti includono operzioni specificatamente progettate per trattarli. Definiamo tre operazioni sui linguaggi, chiamate \textit{operazioni regolari}, e le usiamo per studiare le proprietà dei linguaggi regolari. 
+	Dopo aver introdotto e definito gli automi finiti e i linguaggi regolari, iniziamo a studiarne le proprietà. In aritmetica, gli oggetti di base sono i numeri e gli strumenti sono le operazioni per trattarli, come $+$ e $\times$. Nella teoria della computazione, gli oggetti sono i linguaggi e gli strumenti includono operzioni specificatamente progettate per trattarli. Definiamo tre operazioni sui linguaggi, chiamate \textit{operazioni regolari}, e le usiamo per studiare le proprietà dei linguaggi regolari.
 	\begin{definition}{\nmu Operazioni regolari}{operazioni_regolari}
 		Siano $A$ e $B$ linguaggi. Definiamo le operazioni regolari \textit{unione, concatenazione} e \textit{star} come segue:
 		\begin{itemize}
@@ -222,7 +222,7 @@
 			\item \textbf{Concatenazione:} $A \circ B = \{xy \mid x \in A \text{ e } y \in B\}$
 			\item \textbf{Star}: $A^* = \{x1x2\dots x_k \mid k \geq 0 \text{ e ogni } x_i \in A\}$
 		\end{itemize}
-	\end{definition} 
+	\end{definition}
 	\begin{example}{}{}
 		Sia $\sum$ l'alfabeto standard a 26 lettere $\{a, b, \dots, z\}$. Se $A = \{good,\ bad\}$ e $B = \{boy,\ girl\}$, allora:
 		\begin{align*}
@@ -232,12 +232,12 @@
 		\end{align*}
 	\end{example}
 	Sia $\mathbbm{N} = \{1, 2, 3, \dots\}$ l'insieme dei numeri naturali. Quando diciamo che $\mathbbm{N}$ è \textit{chiuso rispetto alla moltiplicazione}, intediamo che per ogni $x$ e per ogni $y$ in $\mathbbm{N}$, il prodotto $x \times y \in \mathbbm{N}$. Invece $\mathbbm{N}$ non è chiuso rispetto alla divisione, poichè $1$ e $2$ sono in $\mathbbm{M}$ ma $\sfrac{1}{2} \notin \mathbbm{N}$.  \\
-	In generale, una classe di oggetti è \textit{chiusa} rispetto a un'operazione se l'applicazione di questa operazioni a elementi della classe restituisce un oggetto ancora nella classe. Mostriamo che la classe dei linguaggi regolari è chiusa rispetto a tutte e tre le operazioni regolari. 
+	In generale, una classe di oggetti è \textit{chiusa} rispetto a un'operazione se l'applicazione di questa operazioni a elementi della classe restituisce un oggetto ancora nella classe. Mostriamo che la classe dei linguaggi regolari è chiusa rispetto a tutte e tre le operazioni regolari.
 	\begin{theorem}{\nmu Chiusura unione}{unione_chiusura}
 		La classe dei linguaggi regolari è chiusa rispetto all'operazioni di unione. \\
-		In altre parole, se $A_1$ e $A_2$ sono linguaggi regolari, lo è anche $A_1 \cup A_2$. 
-	\end{theorem} 
-	Quindi, abbiamo due linguaggi regolari, $A_1$ e $A_2$, e vogliamo mostrare che anche $A_1 \cup A_2$ è regolare. Poichè $A_1$ e $A_2$ sono regolari, sappiamo che sono riconosciuti da degli automi finiti. Quindi per provare che $A_1 \cup A_2$ è regolare, dobbiamo esibire un automa finito, $M$, che riconosce $A_1 \cup A_2$. 
+		In altre parole, se $A_1$ e $A_2$ sono linguaggi regolari, lo è anche $A_1 \cup A_2$.
+	\end{theorem}
+	Quindi, abbiamo due linguaggi regolari, $A_1$ e $A_2$, e vogliamo mostrare che anche $A_1 \cup A_2$ è regolare. Poichè $A_1$ e $A_2$ sono regolari, sappiamo che sono riconosciuti da degli automi finiti. Quindi per provare che $A_1 \cup A_2$ è regolare, dobbiamo esibire un automa finito, $M$, che riconosce $A_1 \cup A_2$.
 	\begin{proof}
 		Supponiamo che $M_1$ riconosca $A_1$, dove $M_1 = (Q_1, \sum, \delta_1, q_1, F_1)$ ed $M_2$ riconosca $A_2$, dove $M_2 = (Q_2, \sum, \delta_2, q_2, F_2)$. \\
 		Costruiamo $M$ che riconosce $A_1 \cup A_2$ dove $M = (Q, \sum, \delta, q_0, F)$.
@@ -256,13 +256,13 @@
 			\]
 			Questa espressione è uguale a $F=(F_1 \times Q_2) \cup (Q_1 \times F_2)$
 		\end{enumerate}
-	\end{proof}  
-	Abbiamo mostrato che l'unione di due linguaggi regolari è regolare, provanto che la classe dei linguaggi regolari è chiusa rispetto all'operazione di unione. Ora mostriamo che la classe dei linguaggi regolari è chiusa rispetto all'operazione di concatenazione. 
+	\end{proof}
+	Abbiamo mostrato che l'unione di due linguaggi regolari è regolare, provanto che la classe dei linguaggi regolari è chiusa rispetto all'operazione di unione. Ora mostriamo che la classe dei linguaggi regolari è chiusa rispetto all'operazione di concatenazione.
 	\begin{theorem}{\nmu Chiusura concatenazione}{chiusura_contenazione}
 		La classe dei linguaggi regolari è chiusa rispetto all'operazione di concatenazione. \\
 		In altre parole, se $A_1$ e $A_2$ sono linguaggi regolari, allora lo è anche $A_1 \circ A_2$.
 	\end{theorem}
-	Per provare questo teorema, possiamo iniziare con gli automi finiti $M_1$ ed $M_2$ che riconoscono i linguaggi regolari $A_1$ ed $A_2$. Ma ora, invece di costruire $M$ che accetta l'input se $M_1$ o $M_2$ lo accetta, esso deve accettare se il suo input può essere diviso in due parti, tali che $M_1$ accetta la prima parte ed $M_2$ accetta la seconda parte. Il problema è che $M$ non sa dividere il suo input. Per risolvere questo problema, introduciamo una tecnica chiamata \textit{non determinismo}. 
+	Per provare questo teorema, possiamo iniziare con gli automi finiti $M_1$ ed $M_2$ che riconoscono i linguaggi regolari $A_1$ ed $A_2$. Ma ora, invece di costruire $M$ che accetta l'input se $M_1$ o $M_2$ lo accetta, esso deve accettare se il suo input può essere diviso in due parti, tali che $M_1$ accetta la prima parte ed $M_2$ accetta la seconda parte. Il problema è che $M$ non sa dividere il suo input. Per risolvere questo problema, introduciamo una tecnica chiamata \textit{non determinismo}.
 	\section{Non determinismo}
 	Negli esempi visti precedentemente, ogni passo di una computazione seguiva univocamente dal passo precedente. Quando la macchina è in un dato stato e legge il simbolo di input successivo, sappiamo qual è lo stato successivo, esso è univocamente determinato. In questo caso parliamo di computazione \textit{deterministica}. In una macchina \textit{non deterministica}, possono esistere diverse scelta per lo stato successivo in ogni punto. \\
 	Il non determinismo è una generalizzazione del determinismo, quindi ogni automa finito deterministico è automaticamente un automa finito non deterministico. \\
@@ -281,7 +281,7 @@
 		\caption{La computazione dell'automa precedente su 010110}
 	\end{figure}
 	\paragraph{Definizione formale di automa finito non deterministico} \quad \\
-	La definizione formale di automa finito non deterministico è simile a quella di automa finito deterministico. Essi differiscono nel tipo di funzione di transizione. In un DFA, la funzione di transizione prende uno stato e un simbolo di input e produce lo stato successivo. In un NFA, la funzione di transizione prende uno stato e un simbolo di input o \textit{la stringa vuota} e produce l'\textit{insieme dei possibili stati successivi}. 
+	La definizione formale di automa finito non deterministico è simile a quella di automa finito deterministico. Essi differiscono nel tipo di funzione di transizione. In un DFA, la funzione di transizione prende uno stato e un simbolo di input e produce lo stato successivo. In un NFA, la funzione di transizione prende uno stato e un simbolo di input o \textit{la stringa vuota} e produce l'\textit{insieme dei possibili stati successivi}.
 	\begin{definition}{\nmu Automa finito non deterministico}{automa_non_deterministico}
 		Un \textit{automa finito non deterministico} è una quintupla $(Q, \sum, \delta, q_0, F)$ dove
 		\begin{enumerate}
@@ -322,15 +322,15 @@
 		\item $r_{i+1} \in \delta(r_i, y_{i+1})$ per $i = 0, \dots, m-1$
 		\item $r_m \in F$
 	\end{enumerate}
-	\paragraph{Equivalenza tra gli NFA e i DFA} Gli automi finiti deterministici e quelli non deterministici riconoscono la stessa classe di linguaggi. Diciamo che due macchine sono \textit{equivalenti} se esse riconoscono lo stesso linguaggio. 
+	\paragraph{Equivalenza tra gli NFA e i DFA} Gli automi finiti deterministici e quelli non deterministici riconoscono la stessa classe di linguaggi. Diciamo che due macchine sono \textit{equivalenti} se esse riconoscono lo stesso linguaggio.
 	\begin{theorem}{\nmu Equivalenza NFA e DFA}{equivalenza_automi}
 		Per ogni automa finito non deterministico esiste un automa finito deterministico equivalente.
 	\end{theorem}
-	Se un linguaggio è riconosciuto da un NFA, allora dobbiamo mostrare l'esistenza di un DFA che lo riconosce. L'idea è trasformare l'NFA in un DFA equivalente che simula l'NFA. 
+	Se un linguaggio è riconosciuto da un NFA, allora dobbiamo mostrare l'esistenza di un DFA che lo riconosce. L'idea è trasformare l'NFA in un DFA equivalente che simula l'NFA.
 	\begin{proof} Sia $N = (Q, \sum, \delta, q_0, F)$ l'NFA che riconosce un linguaggio $A$. Costruiamo un DFA $M = (Q', \sum, \delta',q_0', F')$ che riconosce $A$. Prima di fare la costruzione completa, consideriamo inizialmente il caso più semplice in cui $N$ non ha $\epsilon-$archi.
 		\begin{enumerate}
 			\item $Q'=\mathscr{P}(Q)$ \\
-			Ogni stato di $M$ è un insieme di stati di $N$. 
+			Ogni stato di $M$ è un insieme di stati di $N$.
 			\item Per $R \in Q'$ e $a\in\sum$, sia $\delta'(R, a) = \{q \in Q \mid q \in \delta(r, a)\}$ per qualche $r \in R$ \\
 			Se $R$ è uno stato di $M$, esso è anche un insieme di stati di $N$. Qunado  $M$ legge un simbolo $a$ nello stato $R$. Poichè da ogni stato si può andare in un insieme di stati, prendiamo l'unione di tutti questi insiemi. Un altro modo per scrivere quest'espressione è:
 			\[
@@ -353,9 +353,9 @@
 	\begin{corollary}{}{}
 		Un linguaggio è regolare se e solo se qualche automa finito non deterministico lo riconosce.
 	\end{corollary}
-	Una direzione della condizione ``se e solo se'' afferma che unn linguaggio è regolare se qualche NFA lo riconosce. Tuttavia, abbiamo dismostrato che ogni NFA può essere trasformato in un DFA. Conseguentemente, se un NFA riconosce un linguaggio, lo fa anche qualche DFA, e quindi il linguaggio regolare. L'altra direzione della condizione ``se e solo se'' afferma che un linguaggio è regolare solo se qualche NFA lo riconosce. Questa condizione è vera perchè un linguaggio regolare ha un DFA che lo riconosce e un DFA è anche un NFA. 
+	Una direzione della condizione ``se e solo se'' afferma che unn linguaggio è regolare se qualche NFA lo riconosce. Tuttavia, abbiamo dismostrato che ogni NFA può essere trasformato in un DFA. Conseguentemente, se un NFA riconosce un linguaggio, lo fa anche qualche DFA, e quindi il linguaggio regolare. L'altra direzione della condizione ``se e solo se'' afferma che un linguaggio è regolare solo se qualche NFA lo riconosce. Questa condizione è vera perchè un linguaggio regolare ha un DFA che lo riconosce e un DFA è anche un NFA.
 	\paragraph{Chiusura rispetto alle operazioni regolari} \quad \\
-	Torniamo alla chiusura della classe dei linguaggi regolari rispetto alle operazioni regolari. Dobbiamo provare che l'unione, la concatenazione e lo star di linguaggi regolari sono ancora regolari. 
+	Torniamo alla chiusura della classe dei linguaggi regolari rispetto alle operazioni regolari. Dobbiamo provare che l'unione, la concatenazione e lo star di linguaggi regolari sono ancora regolari.
 	\begin{theorem}{}{}
 		La classe dei linguaggi regolari è chiusa rispetto all'operazione di unione.
 	\end{theorem}
@@ -364,7 +364,7 @@
 		Sia $N_1 = (Q_1, \sum, \delta_1, q_1, F)$ che riconosce $A_1$ ed $N_2 = (Q_2, \sum, \delta_2, q_2, F_2)$ che riconosce $A_2$. \\
 		Costruiamo $N = (Q, \sum, \delta, q_0, F)$ per riconoscere $A_1\cup A_2$.
 		\begin{enumerate}
-			\item $Q = \{q_0\} \cup Q_1 \cup Q_2$ 
+			\item $Q = \{q_0\} \cup Q_1 \cup Q_2$
 			\item Lo stato $q_0$ è lo stato inziale di \textit{N}
 			\item L'insieme degli stati accettanti è $F = F_1 \cup F_2$
 			\item Definiamo $\delta$ in modo che per ogni $q \in Q$ e $a \in \sum_\epsilon$
@@ -375,7 +375,7 @@
 				\{q_1, q_2\} & q = q_0 \text{ e } a = \epsilon \\
 				\emptyset & q = q_0 \text{ e } a \neq \epsilon
 			\end{cases}
-			\] 
+			\]
 		\end{enumerate}
 	\end{proof}
 	\begin{theorem}
@@ -395,7 +395,7 @@
 				\delta_1(q, a) & q \in Q_1 \text{ e } q \notin F_1 \\
 				\delta_1(q, a) & q \in F_1 \text{ e } a \neq \epsilon \\
 				\delta_1(q, a) \cup \{q_2\} & q \in F_1 \text{ e } a = \epsilon \\
-				\delta_2(q, a) & q \in Q_2 
+				\delta_2(q, a) & q \in Q_2
 			\end{cases}
 			\]
 		\end{enumerate}
@@ -409,8 +409,8 @@
 		Costruiamo $N = (Q, \sum, \delta, q_0, F)$ per riconoscere $A_1^*$.
 		\begin{enumerate}
 			\item $Q = \{q_0\} \cup Q_1$
-			\item Lo stato $q_0$ è il nuovo stato iniziale. 
-			\item $F = \{q_0\} \cup F_1$ 
+			\item Lo stato $q_0$ è il nuovo stato iniziale.
+			\item $F = \{q_0\} \cup F_1$
 			\item Definiamo $\delta$ in modo che per ogni $q \in Q$ e ogni $a \in \sum_\epsilon$
 			\[
 			\delta(q, a) = \begin{cases}
@@ -447,26 +447,26 @@
 	Analizziamo alcune proprietà.
 	\begin{enumerate}
 		\item $a^*\emptyset = \emptyset$ \\
-		Concatenando l'insieme vuoto a un qualsiasi insieme si ottiene l'insieme vuoto. 
+		Concatenando l'insieme vuoto a un qualsiasi insieme si ottiene l'insieme vuoto.
 		\item $\emptyset^* = \{\epsilon\}$ \\
-		L'operazione star concatena un numero qualsiasi di stringhe del linguaggio per ottenere una stringa nel risultato. Se il linguaggio è vuoto, l'operazione star può concatenare 0 stringhe, dando solo la stringa vuota. 
+		L'operazione star concatena un numero qualsiasi di stringhe del linguaggio per ottenere una stringa nel risultato. Se il linguaggio è vuoto, l'operazione star può concatenare 0 stringhe, dando solo la stringa vuota.
 		\item $R \cup \emptyset = R$ \\
 		Aggiungere il linguaggio vuoto a un qualsiasi altro linguaggio non lo cambia.
 		\item $R \circ \epsilon = R$ \\
-		Concatenare la stringa vuota a una qualsiasi stringa non la cambia. 
+		Concatenare la stringa vuota a una qualsiasi stringa non la cambia.
 	\end{enumerate}
 	Tuttavia, scambiare $\emptyset$ e $\epsilon$ nelle precedenti identità può far sì che le uguaglianze non siano vere.
 	\begin{enumerate}
 		\item $R\cup\epsilon$ può non essere uguale a $R$ \\
 		Per esempio, se $R = 0$, allora $L(R) = \{0\}$ ma $L(R \cup \epsilon) = \{0, e\}$.
 		\item $R \circ \emptyset$ può non essere uguale a $R$. \\
-		Per esempio, se $R = 0$, allora $L(R) = \{0\}$ ma $L(R \circ \emptyset) = \emptyset$  
+		Per esempio, se $R = 0$, allora $L(R) = \{0\}$ ma $L(R \circ \emptyset) = \emptyset$
 	\end{enumerate}
 	Le espressioni regolari sono un utile strumento nel progetto dei compilatori per i linguaggi di programmazione. Gli oggetti elementari in un linguaggio di programmazione, chiamati \textit{token}, come i nomi delle variabili e le costanti, possono esser e descritti con espressioni regolari. Ad esempio, una costante numerica può avere una parte decimale e/o un segno e può essere descritta come un elemento del linguaggio
 	\[
 	(+ \cup - \cup \epsilon)(D^+ \cup D^+.D^* \cup D^*.D^+)
 	\]
-	Una volta che la sintassi di un linguaggio di programmazione è stata descritta con un'espressione regolare in termini dei suoi token, dei sistemi automatici possono generare l'\textit{analizzatore lessicale}, la parte di un compilatore che elabora inizialmente il programma input. 
+	Una volta che la sintassi di un linguaggio di programmazione è stata descritta con un'espressione regolare in termini dei suoi token, dei sistemi automatici possono generare l'\textit{analizzatore lessicale}, la parte di un compilatore che elabora inizialmente il programma input.
 	\subsection{Equivalenza con gli automi finiti}
 	Le espressioni regolari e gli automi finiti sono equivalenti rispetto alla loro potenza descrittiva. Ogni espressione regolare può essere trasformata in un automa finito che riconosce il linguaggio che essa descrive, e viceversa.
 	\begin{theorem}{}{}
@@ -476,17 +476,17 @@
 	\begin{lemma}{}{}
 		Se un linguaggio è descritto da un'espressione regolare, allora esso è regolare.
 	\end{lemma}
-	Supponiamo di avere un'espressione regolare $R$ che descrive un linguaggio $A$. Mostriamo come trasformare $R$ in un NFA che riconosce $A$. 
-	\begin{proof} 
+	Supponiamo di avere un'espressione regolare $R$ che descrive un linguaggio $A$. Mostriamo come trasformare $R$ in un NFA che riconosce $A$.
+	\begin{proof}
 		Trasformiamo $R$ in un NFA $N$. Consideriamo i sei casi nella definizione di \namerefl{def:regex}.
 		\begin{enumerate}
 			\item $R = a$ per qualche $a \in \sum$. Allora $L(R) = \{a\}$ e il seguente NFA riconosce $L(R)$.
 			\begin{center}
-			\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
-				\node[state, initial, initial text=] (q_0)   {$q_0$}; 
+			\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto]
+				\node[state, initial, initial text=] (q_0)   {$q_0$};
 				\node[state, accepting]           (q_1) [right=of q_0] {$q_1$};
-				
-				\path[->] 
+
+				\path[->]
 				(q_0) edge  node {a} (q_1);
 			\end{tikzpicture}
 			\end{center}
@@ -514,7 +514,7 @@
 	\end{proof}
 	Questo termina la prima parte del teorema dando la direzione più facile della condizione ``se e solo se''.
 	\begin{lemma}{}{reg_to_regex}
-		Se un linguaggio è regolare, allora è descritto da un'espressione regolare. 
+		Se un linguaggio è regolare, allora è descritto da un'espressione regolare.
 	\end{lemma}
 	Dobbiamo mostrare che se un linguaggio $A$ è regolare, allora un'espressione regolare lo descrive. Poichè $A$ è regolare, esso è accettato da un DFA. Descriviamo una procedurea per trasformare i DFA in espressioni regolari equivalenti. \\
 	Dividiamo quesat procedura in due parti, usando un nuovo tipo di automa finito chiamato \textit{automa finito non deterministico generalizzato}, GNFA. \\
@@ -524,11 +524,11 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\textwidth]{images/gnfa}
-	\end{figure} 
+	\end{figure}
 	Per comodità, richiediamo che i GNFA abbiano sempre una forma speciale che soddisfi le seguenti condizioni.
 	\begin{itemize}
 		\item Lo stato iniziale ha archi di transizione uscenti verso un qualsiasi altro stato ma nessun arco entrante proveniente da un qualsiasi altro stato.
-		\item Esiste un solo stato accettante, ed esso ha archi entranti provenienti da un qualsiasi altro stato ma nessun arco uscente verso un qualsiasi altro stato. Inoltre, lo stato accettante non è uguale allo stato iniziale. 
+		\item Esiste un solo stato accettante, ed esso ha archi entranti provenienti da un qualsiasi altro stato ma nessun arco uscente verso un qualsiasi altro stato. Inoltre, lo stato accettante non è uguale allo stato iniziale.
 		\item Eccetto che per lo stato iniziale e lo stato accettante, un arco va da ogni stato ad ogni altro stato e anche da ogni stato a sé stesso.
 	\end{itemize}
 	Possiamo facilmente trasfoarmare un DFA in un GNFA. Aggiungiamo semplicemente un nuovo stato iniziale con un $\epsilon$-arco che entra nel vecchio stato iniziale e un nuovo stato accettante con $\epsilon$-archi entranti, provenienti dai vecchi stati accettanti. Se alcuni archi hanno più etichette (o se ci sono più archi che collegano gli stessi due stati nella stessa direzione), sostituiamo ognuno di essi con un solo arco la cui etichetta è l'unione delle precedenti etichette. Infine, aggiungiamo archi con etichetta $\emptyset$ tra stati che non hanno archi. Quest'ultimo non cambierebbe il linguaggio riconosciuto perchè una transizione etichettata con $\emptyset$ non può mai essere usata. \\
@@ -539,7 +539,7 @@
 		\centering
 		\includegraphics[width=1.0\textwidth]{images/trasformazione_gnfa}
 	\end{figure}
-	Nella vecchia macchina, se 
+	Nella vecchia macchina, se
 	\begin{enumerate}
 		\item $q_i$ va a $q_{rip}$ con un arco atichettato $R_1$;
 		\item $q_{rip}$ va in sè stesso con un arco etichettato $R_2$;
@@ -566,7 +566,7 @@
 			\item $\sum$ è l'alfabeto di input;
 			\item $\delta: (Q - \{q_{accept}\}) \times (Q - \{q_{start}\}) \to R$ è la funzione di transizione;
 			\item $q_{start}$ è lo stato iniziale;
-			\item $q_{accept}$ è lo stato accettante. 
+			\item $q_{accept}$ è lo stato accettante.
 		\end{enumerate}
 	\end{definition}
 	Un GNFA accetta una stringa $w$ in $\sum^*$ se $w = w_1w_2\cdots w_k$, dove ogni $w_i$ è in $\sum^*$ ed esiste una sequenza di stati $q_0, q_1, \dots, q_k$ tale che
@@ -575,7 +575,7 @@
 		\item $q_k = q_{accept}$ è lo stato accettante e
 		\item per ogni $i$, risulta $w_i \in L(R_i)$, dove $R_i = \delta(q_{i-1}, q_i)$
 	\end{enumerate}
-	Torniamo alla dimostrazione del \ref{lem:reg_to_regex}, sia $M$ il DFA per il linguaggio $A$. Allora trasformiamo $M$ in un GNFA $G$ aggiungendo un nuovo stato iniziale un nuovo stato accettante e i necessari archi di transizione supplementari. Usiamo la procedura \texttt{CONVERT($G$)}, che prende un GNFA e restituisce un'espressione regolare equivalente. Questa procedura usa la \textit{ricorsione}. 
+	Torniamo alla dimostrazione del \ref{lem:reg_to_regex}, sia $M$ il DFA per il linguaggio $A$. Allora trasformiamo $M$ in un GNFA $G$ aggiungendo un nuovo stato iniziale un nuovo stato accettante e i necessari archi di transizione supplementari. Usiamo la procedura \texttt{CONVERT($G$)}, che prende un GNFA e restituisce un'espressione regolare equivalente. Questa procedura usa la \textit{ricorsione}.
 	\begin{lstlisting}[style=pseudocode, mathescape=true]
 CONVERT(G):
 	if k = 2 then return R;
@@ -584,7 +584,7 @@ CONVERT(G):
 	G'= (Q', $\sum$, $\delta$, $q_{start}$, $q_{accept}$)
 	Q' = Q - $\{q_{rip}\}$
 	foreach $q_i \in Q'-\{q_{accept}\}$ and  $q_j \in Q'-\{q_{start}\}$
-		$\delta'(q_i, q_j) = (R_1)(R_2)^*(R_3) \cup (R_4)$ 
+		$\delta'(q_i, q_j) = (R_1)(R_2)^*(R_3) \cup (R_4)$
 		$R_1 = \delta(q_i, q_{rip})$
 		$R_2 = \delta(q_{rip}, q_{rip})$
 		$R_3 = \delta(q_{rip}, q_j)$
@@ -595,4 +595,73 @@ CONVERT(G):
 		\centering
 		\includegraphics[width=0.7\textwidth]{images/convert_g}
 	\end{figure}
+	\section{Linguaggi non regolari}
+	In questa sezione, mostriamo come provare che alcuni linguaggi non possono essere riconosciuti da alcun automa finito. Consideriamo il linguaggio $B = \{0^n1^n \mid n \geq 0\}$. Se cerchiamo di trovare un DFA che riconosca $B$, scopriamo che la macchina sembra aver bisogno di ricordare quanti simboli uguali a 0 ha visto fin quando legge l'input. Poichè il numero di simboli uguali a 0 non è limitato, la macchina dovrà tenere traccia di un numero infinito di possibilità. Ma non può farlo con un numbero finito di stati.
+
+
+	Non è detto che se un linguaggio sembra richiedere memoria non limitata allora è un linguaggio non regolare. Per esempio, consideriamo i due linguaggi sull'alfabeto $\sum = \{0, 1\}$:
+	\begin{itemize}
+		\item $C = \{w \mid w \text{ ha lo stesso numeri di simboli uguali a 0 e simboli uguali a 1}\}$
+		\item $D = \{w \mid w \text{ ha un numero uguale di occorrenze di 01 e 10 come sottostringhe}\}$
+	\end{itemize}
+	A prima vista, una macchina che riconosce sembra aver bisogno di contare in ciascun caso,, e quindi nessuno dei due linguaggi sembra essere regolare.
+
+	Sappiamo che $C$ non è regolare, ma $D$ è regolare.
+	\subsection{Il pumping lemma per i linguaggi regolari}
+	La tecnica per provare la regolarità deriva da un teorema sui linguaggi regolari, chiamato il \textit{pumping lemma}. Questo teorema afferma che tutti i linguaggi regolari hanno una proprietà speciale. Se noi possiamo mostrare che un linguaggio non ha questa proprietà, siamo sicuri che esso non è regolare. La proprietà afferma che tutte le stringhe nel linguaggio possono essere ``replicate'' se la loro lunghezza raggiunge almeno uno specifico valore speciale, chiamato la \textit{lunghezza del pumping}.
+	\begin{theorem}{\nmu Pumping lemma per linguaggi regolari}{pumping_lemma_regolari}
+		Se $A$ è un linguaggio regolare, allora esiste $p$ (lunghezza del pumping) tale che se $s$ è una qualsiasi stringa in $A$ di lunghezza almeno $p$, allora $s$ può essere divisa in tre parti, $s = xyz$, soddisfacenti le seguenti condizioni:
+		\begin{enumerate}
+			\item $\forall i \geq 0,\ xy^iz \in A$
+			\item $|y| > 0$
+			\item $|xy| \leq p$
+		\end{enumerate}
+	\end{theorem}
+	Sia $M = (Q, \sum, \delta, q_1, F)$ un DFA che riconosce $A$. Assegniamo alla lunghezza del pumping  $p$ il numero degli stati di $M$. Mostriamo che per ogni stringa $s$ in $A$ di lunghezza almeno $p$ può essere divisa nelle tre parti $xyz$, soddisfacenti le tre condizioni.
+
+	Se $s \in A$ ha lunghezza almeno $p$, consideriamo la sequenza di stati che $M$ attraversa nella computazione con input $s$. Inizia con lo stato inziale $q_1$, poi va per esempio in $q_3$, poi in $q_{20}$, e così via, finche raggiunge la fine di $s$ nello stato $q_{13}$. Se $s$ è in $A$, sappiamo che $M$ accetta $s$, quindi $q_{13}$ è uno stato accettante. Se supponiamo che $n$ sia la lunghezza di $s$, la sequenza di stati $q_1q_3q_{20}\dots q_{13}$ ha lunghezza $n + 1$. Poichè $n$ è almeno $p$, sappiamo che $n+1 > p$, il numero di stati di $M$. Quindi, la sequenza deve contenere uno stato che si ripete. Questo risultato è un esempio del \textit{principio della piccionaia}.
+
+	Di seguito viene mostrato un esempio di un DFA con uno stato che si ripete.
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.6\textwidth]{images/stato_ripetuto}
+		\end{center}
+	\end{figure}
+	Ora dividiamo $s$ nelle tre componenti $x, y$ e $z$. La componente $x$ è la parte di $s$ che compare prima di $q_9$, la componente $y$ è la parte tra le due occorrenze di $q_9$ e la componente $z$ è la parte restante di $s$,che viene dopo la seconda occorrenza di $q_9$.
+
+	Vediamo perchè questa suddivisione di $s$ soddisfa le tre condizioni. Supponiamo di eseguire $M$ sull'input $xyyz$. Sappiamo che $x$ porta $M$ da $q_1$ a $q_9$, e poi il primo $y$ lo riporta da $q_9$ a $q_9$, come fa il secondo $y$ e poi $z$ lo porta in $q_{13}$ che accetta $xyyz$ in quanto stato accettante. Analogamente, esso accetterà $xy^iz\ \forall i > 0$.
+
+	Per verificare la condizione 2, vediamo che $|y| > 0$, poichè era la parte di $s$ tra due diverse occorrenze dello stato $q_9$. Per ottenere la condizione 3, ci assicuriamo che $q_9$ sia la prima ripetizione nella sequenza. Per il principio della piccionaia, i primi $p + 1$ stati nella sequenza devono contere una ripetizione. Quindi $|xy| \leq p$.
+	\begin{proof}
+		Sia $M = (Q, \sum, \delta, q_1, F)$ un DFA che riconosce $A$ e sia $p$ il numero di stati di $M$.
+
+		Sia $s = s_1s_2\dots s_n$ una stringa in $A$ di lunghezza $n$, dove $n \geq p$. Sia $r_1, \dots, r_{n+1}$ la sequenza di stati attraversati da $M$ mentra elabora $s$, quindi $r_{i+1} =\delta(r_i, s_i)$ per $1 \leq i \leq n$. Questa sequenza ha lunghezza $n+1$, che è almeno $p +1$. Due stati tra i primi $p+1$ elementi nella sequenza devono essere lo stesso stato, per il principio della piccionaia. Chiamiamo il primo di questi $r_j$ e il secondo $r_l$. Poichè $r_l$ si presenta tra le prime $p+1$ posizione in una sequenza che inizia in $r_1$, abbiamo $l \leq p + 1$. Ora sia $x = s_1\dots s_{j-1}$, $y=s_j\dots s_{l-1}$ e $z=s_l\dots s_n$.
+
+		Poichè $x$ porta $M$ da $r_1$ a $r_j$, $y$ porta $M$ da $r_j$ a $r_j$ e $z$ porta $M$ da $r_j$ a $r_{n+1}$, che è uno stato accettante, $M$ deve accettare $xy^iz$ per $i \geq 0$. Sappiamo che $j \neq l$, perciò $|y| > 0$ e $l \leq p + 1$, perciò $|xy| \leq p$. Quindi tutte le condizioni del pumping lemma sono rispettate.
+	\end{proof}
+	Per usare il pumping lemma per provare che un linguaggio $B$ non è regolare, in primo luogo si assuma che $B$ sia regolare per ottenere una contraddizione. Poi si usi il pumping lemma per assicurare l'esistenza di una lunghezza del pumping $p$ tale che tutte le stringhe di lunghezza maggiore o uguale a $p$ in $B$ possano essere iterate. In seguito, si trovi una stringa $s$ in $B$ che ha una lunghezza maggiore o uguale a $p$, ma che non può essere iterata. Infine, si dimostri che $s$ non può essere iterata considerando tutit i modi di dividere $s$ in $x, y$ e $z$ e, per ogni tale divisione, trovando un valore $i$ tale che $xy^iz\notin B$.
+	\begin{example}{}{}
+	Sia $B = \{0^n1^n \mid n \geq 0\}$. Usiamo il pumping lemma per provare che $B$ non è regolare.
+
+	Assumiamo che $B$ sia regolare. Sia $p$ la lunghezza del pumping data dal pumping lemma. Scegliamo $s = 0^p1^p$. Poichè $s \in B$ ed $|s| \geq p$, il pumping lemma assicura che $s$ può essere divisa in tre parti, $s = xyz$, tali che per ogni $i \geq 0$ la stringa $xy^iz \in B$. Consideriamo tre casi per mostrare che questo risultato è impossibile.
+		\begin{enumerate}
+			\item La stringa $y$ consiste solo di simboli uguali a 0. In questo caso, la stringa $xyyz$ ha più simboli uguali a 0 che simboli uguali a 1 e quindi non è un elemento di $B$, violando la condizione 1 del pumping lemma.
+			\item La stringa $y$ consiste solo di simboli uguali a $1$. Anche questo caso porta ad una contraddizione.
+			\item La stringa $y$ consiste solo di simboli uguali a 0 che di simboli uguali a 1. In questo caso, la stringa $xyyz$ può avere lo stesso numero di simboli uguali a 0 e simboli uguali a 1, ma essi non saranno nell'ordine corretto, con qualche 1 prima di qualche 0. Quindi non è un elemento di $B$, il che è una contraddizione.
+		\end{enumerate}
+	\end{example}
+
+	Pertando una contraddizione è inevitabile se assumiamo che $B$ sia regolare, quindi $B$ non è regolare.
+
+	\begin{example}{}{}
+	Sia $C = \{w \mid w \text{ ha lo stesso numero di simboli uguali a 0 e simboli uguali a 1}\}$. Usiamo il pumping lemma per mostrare che $C$ non è regolare.
+
+	Assumiamo al contrario che $C$ sia regolare. Sia $p$ la lunghezza del pumping data dal pumping lemma. Sia $s$ la stringa $0^p1^p$. Poichè $s \in C$ che ha lunghezza maggiore di $p$, il pumping lemma assicura che $s$ può essere divisa in tre parti, $s = xyz$, tali che per ogni $i \geq 0$ la stringa $xy^iz \in C$. Se prendiamo $x$ e $z$ uguali alla stringa vuota e $y$ uguale alla stringa $0^p1^p$, allora $xy^iz$ ha sempre lo stesso numero di simboli uguali a 0 e simboli uguali a 1 e quindi è in $C$.
+
+	Qui la condizione 3 del pumping lemma è utile. Essa stabilisce che quando iteriamo $s$, essa deve essere divisa in modo che $|xy| \leq p$. Questa restrizione sul modo in cui $s$ può essere divisa rende più facile mostrare che la stringa $s = 0^p1^p$ che abbiamo scelto non può essere iterata. Se $|xy| \leq p$, allora $y$ deve consistere solo di simboli uguali a 0, perciò $xyyz \notin C$. Quindi, $s$ non può essere iterata.
+
+	Scegliere la stringa $s$ in questo esempio richiede più attenzione. Se avessimo scelto $s = (01)^p$, avremmo avuto dei problemi perchè abbiamo bisogno di una stringa che \textbf{non può essere iterata} e quella stringa può essere iterata, perfino prendendo in considerazione la condizione 3.
+
+	Un metodo alternativo per provare che $C$ non è regolare segue dal fatot che sappiamo che $B$ non è regolare. Se $C$ fosse regolare, anche $C \cap 0^*1^*$ sarebbe regolare. Questo perchè il linguaggio $0^*1^*$ è regolare e la classe dei linguaggi regolari è chiusa rispetto all'intersezione.
+	\end{example}
 \end{document}
