@@ -97,6 +97,11 @@
 \newtcbtheorem[number within=chapter,use counter=theorem]{theorem}%
 {Teorema}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black},coltitle=black,fonttitle=\bfseries, separator sign={:\hspace{0.5em}}}{th}
 
+\newtcbtheorem[number within=chapter,use counter=lemma]{proposition}%
+{Proposizione}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{prop}
+
+
+
 \tcolorboxenvironment{proof}{blanker,breakable,left=5mm,before skip=10pt,after skip=10pt,borderline west={2.5mm}{0pt}{cyan!55!black}}
 \newcommand{\namerefl}[1]{%
 	\bgroup
@@ -664,4 +669,452 @@ CONVERT(G):
 
 	Un metodo alternativo per provare che $C$ non è regolare segue dal fatot che sappiamo che $B$ non è regolare. Se $C$ fosse regolare, anche $C \cap 0^*1^*$ sarebbe regolare. Questo perchè il linguaggio $0^*1^*$ è regolare e la classe dei linguaggi regolari è chiusa rispetto all'intersezione.
 	\end{example}
+\chapter{Linguaggi context-free}
+\section{Grammatiche context-free}
+Un esempio di grammatica context-free, che chiamiamo $G_1$, è il seguente:
+\begin{align*}
+	A &\to 0A1 \\
+	B &\to B \\
+	B &\to \#
+\end{align*}
+Una grammatica consiste di un insieme di \textit{regole di sostituzione}, anche chiamate \textit{produzioni}. Tutte le stringhe generate da una grammatica costituiscono il \textit{linguaggio della grammatica}. Denoteremo con $L(G_1)$ il linguaggio della grammatica $G_1$.
+
+Ogni linguaggio che può essere generato da una grammatica context-free è chiamato un \textit{linguaggio context-free} (CFL).
+\begin{definition}{\nmu Grammatica context-free}{context_free_grammar}
+	Una \textit{grammatica context-free} è una quadrupla ($V, \Sigma, R, S$), dove
+	\begin{enumerate}
+		\item $V$ è un insieme finito i cui elementi sono chiamati \textit{variabili},
+		\item $\Sigma$ è un insieme finito, disgiunto da $V$, i cui elementi sono chiamati \textit{terminali},
+		\item $R$ è un insieme finito di \textit{regole}, dove ciascuna regola è una variabile e una stringa di variabili e terminali,
+		\item $S \in V$ è la variabile iniziale.
+	\end{enumerate}
+\end{definition}
+Se $u, v$ e $w$ sono stringhe di variabili e terminali e $A \to w$ è una regola della grammatica, diciamo che $uAv$ \textit{produce} $uwv$, e lo denotiamo con $uAv \Rightarrow uwv$. Diciamo che $u$ \textit{deriva} $v$, e lo denotiamo con $u \overset{*}{\Rightarrow} v$, se $u = v$ o se esiste una sequenza $u_1, u_2, \dots, u_k$ con $k \geq 0$ e
+\[
+u \Rightarrow u_1 \Rightarrow u_2 \Rightarrow \dots \Rightarrow u_k \Rightarrow v.
+\]
+Il \textit{linguaggio della grammatica} è $\{w \in \Sigma^* \mid S \overset{*}{\Rightarrow} w\}$
+
+\subsection{Ambiguità}
+Qualche volta una grammatica può generare la stessa strigna in più modi diversi. Una tale stringa avrà diversi alberi sintattici e quindi diversi significati. Questo risultato può essere indesiderabile per alcune applicazioni, come i linguaggi di programmazione, dove un programma dovrebbe avere un'unica interpretazione.
+
+Se una grammatica genera la stessa stringa in più modi diversi, diciamo che la stringa è derivata \textit{ambiguamente} in quella grammatica. Se una grammatica genera alcune stringhe ambiguamente, diciamo che la grammatica è \textit{ambigua}.
+
+Per esempio, consideriamo la grammatica $G_5$:
+\[
+\big\langle EXPR \big\rangle \to \big\langle EXPR \big\rangle + \big\langle EXPR \big\rangle \mid \big\langle EXPR \big\rangle \times \big\langle EXPR \big\rangle \mid \big(\big\langle EXPR \big\rangle\big) \mid a
+\]
+Questa grammatica genera la stringa $a+a\times a$ ambiguamente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/grammatica_ambigua}
+	\end{center}
+\end{figure}
+Questa grammatica non tiene conto delle usuai regole di precedenza e quindi può raggruppare $+$ prima di $\times$ o viceversa. Al contrario la seguente grammatica $G_4$ genera esattamente lo stesso linguaggio, ma ogni stringa generata ha un solo albero sintattico. $G_4 = (V, \Sigma, R, \langle EXPR \rangle)$ ove $V = \{\langle EXPR\rangle, \langle TERM \rangle, \langle FACTOR\rangle \}$ e $\Sigma = \{a, +, \times, (, )\}$. Le regole sono
+\begin{align*}
+	\big\langle EXPR \big\rangle &\to \big\langle EXPR \big\rangle + \big\langle TERM \big\rangle \mid \big\langle TERM \big\rangle \\
+	\big\langle TERM \big\rangle &\to \big\langle TERM \big\rangle \times \big\langle FACTOR \big\rangle \mid \big\langle FACTOR \big\rangle \\
+	\big\langle FACTOR \big\rangle &\to \big(\big\langle EXPR \big\rangle\big) \mid a
+\end{align*}
+Quando diciamo che una grammatica genera ambiguamente una stringa, intendiamo che la stringa ha due diversi alberi sintattici, non due differenti derivazioni. Due derivazioni possono differire solo nell'ordine in cui esse sostituiscono le variabili ma non nella loro struttura complessiva. Una derivazione di una stringa $w$ in una grammatica $G$ è una \textit{derivazione a sinitra} se a ogni passo la variabile sostituita è quella che si trova più a sinistra.
+\begin{definition}{\nmu Grammatica ambigua}{grammatica_ambigua}
+	Una stringa $w$ è derivata \textit{ambiguamente} in una grammatica context-free $G$ se essa ha due o più diverse derivazioni a sinistra. Una grammatica $G$ è \textit{ambigua} se essa genera qualche stringa ambiguamente.
+\end{definition}
+Quando abbiamo una grammatica ambigua, possiamo trovare una grammatica non ambigua che genera lo stesso linguaggio. Tuttavia, alcuni linguaggi context-free possono essere generati solo da grammatiche ambigue. Tali linguaggi sono chiamati \textit{inerentemente ambigui}.
+\subsection{Forma normale di Chomsky}
+\begin{definition}{\nmu Forma normale di Chomsky}{forma_normale_chomsky}
+	Una grammatica context-free è in \textit{forma normale di Chomsky} se ogni regola è della forma
+	\begin{align*}
+		A &\to BC \\
+		A &\to a
+	\end{align*}
+	dove $a$ è un terminale e $A, B$ e $C$ sono variabili qualsiasi tanne che $B$ e $C$ non possono essere la variabile iniziale.
+
+	Inoltre, permettiamo la regola $S \to \epsilon$, dove $S$ è la variabile iniziale.
+\end{definition}
+\begin{theorem}{}{}
+	Ogni linguaggio context-free è generato da una grammatica context-free in forma normale di Chomsky.
+\end{theorem}
+Possiamo trasformare ogni grammatica  $G$ in forma normale di Chomsky. La trasformazione ha diversi passi nei quali le regole che violano le condizioni sono rimpiazzate con regole equivalenti che sono adeguate. Innanzitutto, aggiungiamo una nuova variabile iniziale. Poi, eliminiamo tutte le $\epsilon$-regole della forma $A \to \epsilon$. Eliminiamo anche tutte le \textit{regole unitarie} della forma $A \to B$. In entrambi i casi, modifichiamo la grammatica in modo da essere sicuri che generi ancora lo stesso linguaggio. Infine, trasformiamo le restanti regole nella forma adeguata.
+\begin{proof}
+	In primo luogo, aggiungiamo una nuova variabile $S_0$ e la regola $S_0 \to S$, dove $S$ era la variabile iniziale di partenza. Questo cambiamento garantisce che la variabile iniziale non compare sul lato destro di una regola.
+
+	In secondo luogo, ci occupiamo di tutte le $\epsilon$-regole. Eliminiamo una $\epsilon$-regole $A \to \epsilon$, dove $A$ non è la variabile iniziale. Poi, per ogni occorrenza di $A$ sul lato destro di una regola, aggiungiamo una nuova regola con quell'occorrenza cancellata. In altre parole, se $R \to uAv$ è una regola in cui $u$ e $v$ sono stringhe di variabili e terminali, aggiungiamo la regola $R \to uv$. Facciamo questo per ogni \textit{occorrenza} di $A$, in modo che la regola $R \to uAvAw$ faccia sì che vengano aggiunte $R \to uvAw, R \to uAvw$ ed $R \to uvw$. Se abbiamo la regola $R\ to A$, aggiungiamo $R \to \epsilon$ a meno che non avevamo precedentemente rimosso la regola $R \to \epsilon$.
+
+	Inoltre, ci occupiamo delle regole unitarie. Eliminiamo una regola unitaria $A \to B$. Poi, per ogni regola $B \to u$, aggiungiamo la regola $A \to u$ a meno che questa non sia una regola unitaria precedentemente cancellata.
+
+	Infine, trasformiamo tutte le restanti regole nella forma appropriata. Rimpiazziamo ogni regola $A \to u_1u_2\dots u_k$, dove $k \geq 3$ e ciascun $u_i$ è una variabile o un simbolo terminale, con le regole $A \to u_1A_1$, $A_1 \to u_2A_2$,  $A_2 \to u_3A_3, \dots$ e $A_{k-2} \to u_{k-1}u_k$. Le $A_i$ sono nuove variabili. Rimpiazziamo ogni terminale $u_i$ nelle precedenti regole con la nuova variabile $U_i$ e aggiungiamo la regola $U_i \to u_i$.
+\end{proof}
+\begin{example}{}{}
+Consideriamo la seguente CFG $G_6$ e trasformiamola in forma normale di Chomsky usando la procedura di conversione appena fornita.
+\begin{enumerate}
+	\item La CFG iniziale $G_6$ è mostrata di seguente. Il risultato dell'applicazione del primo passo è mostrato sotto.
+	\begin{align*}
+		S &\to ASA \mid aB \\
+		A &\to B \mid S \\
+		B &\to b \mid \epsilon
+	\end{align*}
+	che diventa
+	\begin{align*}
+		S_0 &\to S \\
+		S &\to ASA \mid aB \\
+		A &\to B \mid S \\
+		B &\to b \mid \epsilon
+	\end{align*}
+	\item Eliminiamo le $\epsilon$-regole $B \to \epsilon$.
+	\begin{align*}
+		S_0 &\to S \\
+		S &\to ASA \mid aB \mid a \\
+		A &\to B \mid S \mid \epsilon  \\
+		B &\to b \mid \epsilon
+	\end{align*}
+	Eliminando la regola $A \to \epsilon$ otteniamo:
+	\begin{align*}
+		S_0 &\to S \\
+		S &\to ASA \mid aB \mid a \mid SA \mid AS \mid S \\
+		A &\to B \mid S \mid \epsilon \\
+		B &\to b
+	\end{align*}
+	\item Eliminiamo la regola unitaria $S \to S$.
+	\begin{align*}
+		S_0 &\to S \\
+		S &\to ASA \mid aB \mid a \mid SA \mid AS \\
+		A &\to B \mid S \mid \epsilon \\
+		B &\to b
+	\end{align*}
+	Eliminiamo la regola unitaria $S_0 \to S$.
+	\begin{align*}
+		S_0 &\to ASA \mid aB \mid a \mid SA \mid AS \\
+		S &\to ASA \mid aB \mid a \mid SA \mid AS \\
+		A &\to B \mid S \mid \epsilon \\
+		B &\to b
+	\end{align*}
+	Eliminiamo le regole unitarie $A \to B$ e $A \to S$.
+	\begin{align*}
+		S_0 &\to ASA \mid aB \mid a \mid SA \mid AS \\
+		S &\to ASA \mid aB \mid a \mid SA \mid AS \\
+		A &\to b \mid ASA \mid aB \mid a \mid SA \mid AS \\
+		B &\to b
+	\end{align*}
+	\item Trasforiamo le rimanenti regole nella forma corretta, aggiungendo variabii e regole supplementari.
+	\begin{align*}
+		S_0 &\to AA_1 \mid UB \mid a \mid SA \mid AS \\
+		S &\to AA_1 \mid UB \mid a \mid SA \mid AS \\
+		A &\to b \mid AA_1 \mid UB \mid a \mid SA \mid AS \\
+		A_1 &\to SA \\
+		U &\to a \\
+		B &\to b
+	\end{align*}
+\end{enumerate}
+\end{example}
+La CNF è utile per risolvere alcuni problemi dei linguaggi context-free, ad esempio il cosidetto \textit{membership problem} ed è anche utile per provare che alcuni linguaggi sono decidibili.
+\subsection{Membership problem}
+Il membership problem viene risolto mediante l'algoritmo CYK che permette di stabilire se una stringa $w$ appartiene ad una data grammatica $G = (V, \Sigma, P, S)$.
+
+L'algoritmo CYK è un algortimo di programmazione dinamica in quanto la soluzione al problema $[i, j]$ è costruita dalla combinazione della soluzione al problema $[i, k]$ e la soluzione al problema $[k, j]$.
+
+La grammatica deve essere in CNF in quanto ogni problema è suddiviso in due sottoroblemi e non di più, per limitare la complessità.
+
+Viene usata una tecnica chiamata ``\textit{table-filling algorithm}''. Viene costruita una tabella triangolare ove per ogni $X_{i, j}$, $i$ rappresenta la lunghezza della stringa e $j$ l'indice di partenza.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/cyk}
+	\end{center}
+\end{figure}
+\begin{example}{}{}
+Sia $G$ la grammatica context-free in CNF con le seguenti regole:
+\begin{align*}
+	S &\to AB \mid BC \\
+	A &\to BA \mid a \\
+	B &\to CC \mid b \\
+	C &\to AB \mid a
+\end{align*}
+e sia $w = baaba$.
+\begin{center}
+\begin{tabular}{ccccc}
+\cline{1-1}
+\multicolumn{1}{|c|}{} &  &  &  & \\ \cline{1-2}
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{} &  &  & \\ \cline{1-3}
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \\ \cline{1-4}
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & \\ \cline{1-5}
+\multicolumn{1}{|c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} \\ \hline
+\rule{0pt}{15pt} b & a & a & b & a
+\end{tabular}
+\end{center}
+Adesso troviamo:
+\begin{align*}
+	X_{2, 1} &= (X_{1,1}, X_{1,2}) \to \{B\}\{A, C\} = \{BA, BC\} \\
+	X_{2, 2} &= (X_{1,2}, X_{1,3}) \to \{A,C\}\{A, C\} = \{AA, AC, CA, CC\} \\
+	X_{2, 3} &= (X_{1,3}, X_{1,4}) \to \{A, C\}\{B\} = \{AB, CB\} \\
+	X_{2, 4} &= (X_{1,4}, X_{1,5}) \to \{B\}\{A, C\} = \{BA, BC\} \\
+\end{align*}
+Quindi, dobbiamo trovare le regole che producono $BA$ e $BC$, $AA, AC, CA, CC$ e così via.
+\begin{center}
+\begin{tabular}{ccccc}
+\cline{1-1}
+\multicolumn{1}{|c|}{} &  &  &  & \\ \cline{1-2}
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{} &  &  & \\ \cline{1-3}
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \\ \cline{1-4}
+\multicolumn{1}{|c|}{$\{S, A\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{S, C\}$} & \multicolumn{1}{c|}{$\{S, A\}$} & \\ \cline{1-5}
+\multicolumn{1}{|c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} \\ \hline
+\rule{0pt}{15pt} b & a & a & b & a
+\end{tabular}
+\end{center}
+Adesso troviamo:
+\begin{align*}
+	X_{3, 1} &= (X_{1,1}, X_{2,2}), (X_{2, 1}, X_{1, 3}) \to \{B\}\{B\} \cup \{S, A\}\{A, C\} = \{BB, SA, SC, AA, AC\} \\
+	X_{3, 2} &= (X_{1,2}, X_{2,3}), (X_{2, 2}, X_{1, 4}) \to \{A, C\}\{S, C\} \cup \{B\}\{B\} = \{AS, AC, CS, CC, BB\} \\
+	X_{3, 3} &= (X_{1,3}, X_{2,4}), (X_{2, 3}, X_{1, 5}) \to \{A, C\}\{S, A\} \cup \{S, C\}\{A, C\} = \{AS, AA, CS, CA, SA, SC, CA, CC\} \\
+	\end{align*}
+Quindi, dobbiamo trovare le regole che producono $BB, SA, SC, AA$ e così via.
+\begin{center}
+\begin{tabular}{ccccc}
+\cline{1-1}
+\multicolumn{1}{|c|}{} &  &  &  & \\ \cline{1-2}
+\multicolumn{1}{|c|}{} & \multicolumn{1}{c|}{} &  &  & \\ \cline{1-3}
+\multicolumn{1}{|c|}{$\emptyset$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{B\}$} &  & \\ \cline{1-4}
+\multicolumn{1}{|c|}{$\{S, A\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{S, C\}$} & \multicolumn{1}{c|}{$\{S, A\}$} & \\ \cline{1-5}
+\multicolumn{1}{|c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} \\ \hline
+\rule{0pt}{15pt} b & a & a & b & a
+\end{tabular}
+\end{center}
+Adesso troviamo:
+\begin{align*}
+	X_{4, 1} &= (X_{1,1}, X_{3, 2}), (X_{2, 1}, X_{2, 3}), (X_{3, 1}, X_{1, 4}) = \{BB, SS, SC, AS, AC, B\} \\
+	X_{4, 2} &= (X_{1,2}, X_{3, 3}), (X_{2, 2}, X_{2, 4}), (X_{3, 2}, X_{1, 5}) = \{AB, CB, BS, BA, BC\}
+\end{align*}
+\begin{center}
+\begin{tabular}{ccccc}
+\cline{1-1}
+\multicolumn{1}{|c|}{$\{S, A, C\}$} &  &  &  & \\ \cline{1-2}
+\multicolumn{1}{|c|}{$\emptyset$} & \multicolumn{1}{c|}{$\{S, A, C\}$} &  &  & \\ \cline{1-3}
+\multicolumn{1}{|c|}{$\emptyset$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{B\}$} &  & \\ \cline{1-4}
+\multicolumn{1}{|c|}{$\{S, A\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{S, C\}$} & \multicolumn{1}{c|}{$\{S, A\}$} & \\ \cline{1-5}
+\multicolumn{1}{|c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{A, C\}$} & \multicolumn{1}{c|}{$\{B\}$} & \multicolumn{1}{c|}{$\{A, C\}$} \\ \hline
+\rule{0pt}{15pt} b & a & a & b & a
+\end{tabular}
+\end{center}
+
+\end{example}
+\section{Automi a pila}
+Gli \textit{automi a pila (pushdown automata)} sono come gli automi finiti non deterministici ma hanno una componente in più chiamata \textit{pila (stack)}. La pila fornisce memoria aggiuntiva oltre alla quantità finita di essa disponibile nel controllo. La pila consente a tali automi di riconoscere alcuni linguaggi non regolari.
+
+Gli automi a pila sono computazionalmente equivalenti alle grammatiche context-free. Questa equivalenza è utile poichè essa ci dà due alternativa per provare che un linguaggio è context-free. La figura seguente è una rappresentazione schematica di un automa finito. Il controllo rappresenta gli stati e la funzione di transizione, il nastro contiene la stringa di input, e la freccia rappresenta la testina sull'input, che indica il successivo simbolo di input da leggere.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/schema_pda}
+	\end{center}
+\end{figure}
+Un PDA può scrivere simnoli nella pila e rileggerli in seguito. Scrivere un simbolo ``spinge giù'' tutti gli altri simnoli nella pila. In un qualunque momento il simbolo sulla cima (\textit{top}) della pila può essere letto e rimosso. I rimanenti simboli allora ritornano più in alto. L'operazione di scrivere un simbolo dalla pila è spesso chiamata \textit{push}, quella di eliminare un simbolo dalla pila è spesso chiamata \textit{pop}.
+
+Una pila è molto importante perchè può mantenere una quantità non limitata di informazioni. Ricordiamo che un automa finito non può riconoscere il linguaggio $\{0^n1^n \mid n \geq 0\}$ poichè non può memorizzare numeri molto grandi nella sua memoria finita. Un PDA è in grado di riconoscere questo linguaggio poichè può usare la sua pila per memorizzare il numero di simboli uguali a 0 che ha visto.
+
+Gli automi a pila possono essere non deterministici. Automi a pila non deterministici e deterministici non sono computazionalmente equivalenti. Gli automi a pila non deterministici riconoscono alcuni linguaggi che nessun automa a pila deterministico può riconoscere. Gli automi a pila non deterministici sono computazionalmente equivalenti alle gramamtiche contex-free.
+\subsection{Definizione formale di automa a pila}
+La definizione di automa a pila è simile a quella di un automa finito, tranne che per la pila. La macchina può usare differenti alfabeti per il suo input e la sua pila, quindi ora specifichiamo sia un alfabeto di input $\Sigma$ sia un alfabeto di pila $\Gamma$.
+
+Nel cuore di ogni definizione di automa c'è la funzione di transizione, che descrive il suo comportamento. Ricordiamo che $\Sigma_\epsilon = \Sigma \cup \{\epsilon\}$ e  $\Gamma_\epsilon = \Gamma \cup \{\epsilon\}$. Il dominio della funzione di transizione è $Q \times \Sigma_\epsilon \times \Gamma_\epsilon$. Quindi lo stato corrente, il prossimo simbolo di input letto, e il simbolo sulla cima della pula determinano la mossa seguente di un automa a pila. L'uno o l'altro simbolo può essere $\epsilon$, il che determina che la macchina si muove senza leggere un simbolo di input o senza leggere un simbolo dalla pila.
+
+Per quanto riguarda il codominio della funzione di transizione, dobbiamo considerare cosa può fare l'automa quando è in una specifica situazione. Esso può trovarsi in un nuovo stato ed eventualmente scrivere un simbolo sulla cima della pila. La funzione $\delta$ può indicare quest'azione restituendo un elemento di $Q$ insieme a un elemento di $\Gamma_\epsilon$, cioè un elemento di $Q \times \Gamma_\epsilon$.  Poichè permettiamo il non determinismo in questo modello, una situazione può avere diverse mosse successive lecite. La funzione di transizione ingloba il non determinismo nel modo usuale, restituendo un insieme di elementi di $Q \times \Gamma_\epsilon$, cioè un elemento di $\mathcal{P}(Q \times \Gamma_\epsilon)$. QUindi la funzione di transizione $\delta$ assume la forma: $\delta: Q \times \Gamma_\epsilon \to \mathcal{P}(Q \times \Gamma_\epsilon)$
+\begin{definition}{\nmu Automa a pila}{pda}
+	Un \textit{automa a pila} è una sestupla $(Q, \Sigma, \Gamma, \delta, q_0, F)$ dove, $Q, \Sigma, \Gamma$ ed $F$ sono tutti insiemi finiti, e
+	\begin{enumerate}
+		\item $Q$ è l'insieme degli stati,
+		\item $\Sigma$ è l'alfabeto dell'input,
+		\item $\Gamma$ è l'alfabeto della pila,
+		\item $\delta: Q \times \Sigma_\epsilon \times \Gamma_\epsilon \to \mathcal{P}(Q \times \Gamma_\epsilon)$ è la funzione di transizione,
+		\item $q_0 \in Q$ è lo stato iniziale,
+		\item $F \subseteq Q$ è l'insieme degli stati accettanti.
+	\end{enumerate}
+\end{definition}
+Un automa a pila $M = (Q, \Sigma, \Gamma, \delta, q_0, F)$ computa nel seguente modo. Accetta un input $w$ se $w$ può essere scritto come $w = w_1w_2\dots w_m$ dove ciascun $w_i \in \Sigma_\epsilon$  ed esistono sequenze di stati $r_0, r_1, \dots, r_m \in Q$ e di stringhe $s_0, s_1, \dots, s_m \in \Gamma^*$ che soddisfano le tre condizioni seguenti. Le stringhe $s_i$ rappresentano la sequenza del contenuto della pila che $M$ ha su un ramo accettante della computazione.
+\begin{enumerate}
+	\item $r_0 = q_0$ e $s_0 = \epsilon$. Questa condizione significa che $M$ inizia correttamente, nello stato iniziale e con una pila vuota.
+	\item Per $i = 0, \dots, m-1$ abbiamo $(r_{i+1}, b) \in \delta(r_i, w_{i+1}, a)$ dove $s_i = at$ ed $s_{i+1} = bt$ per qualche $a, b \in \Gamma_\epsilon$ e $t \in \Gamma^*$. Questa condizione afferma che $M$ si muove correttamente in base allo stato, al simbolo di pila, e al prossimo simbolo in input.
+	\item $r_m \in F$. Questa condizione afferma che alla fine dell'input $M$ si trova in uno stato accettante.
+\end{enumerate}
+\begin{example}{}{}
+Quello che segue è la descrizione formale del PDA che riconosce il linguaggio $\{0^n1^n \mid n \geq 0\}$. Sia $M_1$ la sestupla $(Q, \Sigma, \Gamma, \delta, q_1, F)$, dove
+\begin{itemize}
+	\item $Q = \{q_1, q_2, q_3, q_4\}$
+	\item $\Sigma = \{0, 1\}$
+	\item $\Gamma = \{0, \$\}$
+	\item $F = \{q_1, q_4\}$
+\end{itemize}
+L'automa è il seguente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/esempio_pda}
+	\end{center}
+\end{figure}
+\end{example}
+La definizione di un PDA non contiene alcun meccanismo esplicito per permettere al PDA di controllare se la pila è vuota. Questo PDA è in grado di ottenere lo stesso effetto inserendo inzialmente un simbolo speciale $\$$ nella pila. Allora, nel caso in cui veda il \$ di nuovo, sa che la pila è di fatto vuota.
+
+Analogamente, i PDA non possono controllare esplicitamente se hanno raggiunto la fine della stringa di input. Questo PDA è in grado di ottenere lo stesso risultato poichè lo stato accettante potrebbe essere eventualmente raggiunto solo quando la macchina è alla fine dell'input. Quindi possiamo assumere che i PDA possono controllare la fine dell'input e sappiamo che possiamo implementarlo nello stesso modo.
+\begin{example}{}{}
+Questo esempio illustra un PDA che riconosce il linguaggio:
+\[
+\{a^ib^jc^k \mid i, j, k \geq 0 \text{ e }i=j \text{ oppure }i=k\}
+\]
+Informalmente, il PDA per questo linguaggio opera dapprima leggendo e inserendo le \textit{a} nella pila. Quando le \textit{a} sono terminate, la macchina le ha tutte nella pila, quindi può abbinarle con le $b$ o con le $c$. Quest'operazione è complicata in qaunto la macchina non sa se far corrispondere le $a$ con le $b$ o con le $c$. In questo caso il non determinismo risulta utile.
+
+Usando il non determinismo, il PDA può ipotizzare di far corrispondere le $a$ con le $b$ o con le $c$. Il PDA è il seguente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/esempio2_pda}
+	\end{center}
+\end{figure}
+\end{example}
+\begin{example}{}{}
+In questo esempio diamo un PDA $M_3$ che riconosce il linguaggio $\{ww^R \mid w \in \{0, 1\}^*\}$.
+
+Il PDA inizia inserendo nella pila i simboli letti. In qualunque momento ipotizza non deterministicamente di aver raggiunto la prima metà della stringa e quindi cambia azione, eliminando dalla pila un simbolo per ciascun simbolo letto, se essi coincidono. Se essi coincidono sempre e la pila si suota nello stesso momento in cui l'input è terminato, accetta; altrimenti rifiuta.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/esempio3_pda}
+	\end{center}
+\end{figure}
+\end{example}
+\subsection{Equivalenza con le grammatiche context-free}
+Le grammatiche context-free e i PDA sono computazionalmente equivalenti e entrambi sono in grado di descrivere la classe dei linguaggi context-free.
+\begin{theorem}{\nmu Equivalenza delle CFG con i PDA}{pda_cfg_equ}
+	Un linguaggio è context free se e solo se esiste un automa a pila che lo riconosce.
+\end{theorem}
+Per i teoremi ``se e solo se'', abbiamo due enunciati da provare, nelle due direzioni.
+\begin{lemma}{}{}
+Se un linguaggio è context-free, allora esiste un automa a pila che lo riconosce.
+\end{lemma}
+Sia $A$ un CFL. Dalla definizione sappiamo che esiste una CFG, $G$, che genera $A$. Mostriamo come trasformare $G$  in un PDA equivalente, che chiamiamo $P$.
+
+Il PDA $P$ che ora descriviamo, opererà accettando il suo input $w$, se $G$ genera tale input, determinando se esiste una derivazione per $w$. Noi progettiamo $P$ in modo che possa stabilire una serie di sostituzioni che usano le regole di $G$ possa condurre dalla variabile iniziale a $w$.
+
+Una delle difficoltà nell'esaminare se esiste una derivazione per $w$ consiste nel capire quali sostituzioni fare. Il non determinismo di un PDA gli consente di ipotizzare la sequenza di sostituzioni giuste. In ogni passo della derivazione, una delle regole per una particolare variabile è scelta non deterministicamente e usata per sostituire quella variabile. Il PDA $P$ inizia scrivendo la variabile iniziale sulla sua pila. Esso passa attraverso una serie di stringhe intermedie, facendo una sostituzione dietro l'altra. Infine può giungere a una stringa che contiene solo simboli terminali, il che significa che usato la grammatica per derivare una stringa. Allora $P$ accetta se questa stringa è identica alla stringa che ha ricevuto in input.
+
+Implementare questa strategia su un PDA richeide un'idea supplementare. Dobbiamo capire come il PDA immagazzina le stringhe intermedie quandi passa dall'una all'altra. Usare semplicemente la pila per immagazzinare ciascuna stringa intermedia è allettante. Tuttavia non funziona del tutto poichè il PDA ha bisogno di torvare le variabili nelle stringhe intermedie e fare sostituzioni. Il PDA può accedere solo al simbolo sulla cima della pila e questo potrebbe essere uns imnolo terminale e non una variabile. Il modo per aggirare questo problema è mantere solo parte della stringa intermedia sulla pila: i simboli che iniziano con la prima variabile nella stringa intermedia.  Tutti i simboli terminali che compaiono prima della prima variabile sono subito abbinati con i simboli nella stringa di input.
+
+La fugura seguente mostra il PDA $P$.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/cfg_to_pda}
+	\end{center}
+\end{figure}
+Quello che segue è una descrizione informale di $P$.
+\begin{enumerate}
+	\item Inserisce il simbolo marcatore \$ e la variabile iniziale sulla pila.
+	\item Ripete i seguenti passi.
+	\begin{enumerate}[label=(\alph*)]
+		\item Se sulla cima della pila c'è il simbolo di una variabile $A$, sceglie non deterministicamente una delle regole per $A$ e sostituisce $A$ con la stringa sul lato destro della regola.
+		\item Se sulla cima della pila c'è un simbolo terminale $a$, legge il simbolo seguente dall'input e lo confronta con $a$. Se essi sono uguali, ripete. Se essi non sono uguali, rifiuta su questo ramo del non determinismo.
+		\item Se sulla cima della pila c'è il simbolo \$, entra nello stato accettante. In questo modo accetta l'input se esso è stato completamente letto.
+	\end{enumerate}
+\end{enumerate}
+\begin{proof}
+	Ora diamo i dettagli formali della costruzione del PDA $P = (Q, \Sigma, \Gamma, \delta, q_{start}, F)$. Per rendere più chiara la costruzione, usiamo una notazione abbreviata per la funzione di transizione. Questa notazione fornisce un modo per scrivere un'intera stringa sulla pila in un passo della macchina. Possiamo simulare quest'azione introducendo stati aggiuntivi per scrivere la stringa un simbolo alla volta.
+
+	Siano $q$ ed $r$ stati del PDA e siano $a \in \Sigma_\epsilon$ ed $s \in \Gamma_\epsilon$. Supponiamo di volere che il PDA vada da $q$ ad $r$ quando legge $a$ ed elimina $s$. Inoltre, vogliamo che esso inserisca l'intera stringa $u = u_1 \cdots u_l$ sulla pila simultaneamente. Possiamo eseguire quest'azione introducendo nuovi stati $q_1, \dots, q_{l-1}$ e definendo la funzione di transizione come segue:
+	\begin{align*}
+		\delta(q, a, s) &\text{ contiene } (q_1, u_l), \\
+		\delta(q_1, \epsilon, \epsilon) &= \{(q_2, u_{l-1})\}, \\
+		\delta(q_2, \epsilon, \epsilon) &= \{(q_3, u_{l-2})\}, \\
+		\vdots \\
+		\delta(q_{l-1}, \epsilon, \epsilon) &= \{(r, u_1)\}
+	\end{align*}
+	Useremo la notazione $(r, u) \in \delta(q, a, s)$ per denotare che quando $q$ è lo stato in cui si trova l'automa, $a$ è il prossimo simbolo di input ed  $s$ è il simbolo sulla cima della pila, il PDA può leggere $a$ ed eliminare $s$, poi inserire la stringa $u$ nella pila e passare nello stato $r$. La figura seguente ne mostra la realizzazione.
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.6\textwidth]{images/costruzione_pda}
+		\end{center}
+		\caption{Implementazione dell'abbreviazione $(r, xyz) \in \delta(q, a, s)$}
+	\end{figure}
+	Gli stati di $P$ sono $Q = \{q_{start}, q_{loop}, q_{accept}\} \cup E$, dove $E$ è l'insieme degli stati necessari per realizzare l'abbreviazione appena descritta. Lo stato iniziale è $q_{start}$. L'unico stato accettante è $q_{accept}$.
+
+	La funzione di transizione è definita come segue. Cominciamo inizializzando la pila inserendo i simboli \$ e $S$, realizzando cosi ìl passo 1 nella descrizione informale: $\delta(q_{start}, \epsilon, \epsilon) = \{(q_{loop}, S\$)\}$. Poi aggiungiamo le transizioni per il ciclo principale del passo 2.
+
+	In primo luogo, trattiamo il caso (a) in cui la cima della pila contiene una variabile. Poniamo $\delta(q_{loop}, \epsilon, A) = \{(q_{loop}, w) \mid \text{ dove } A \to w \text{ è una regola in } R\}$.
+
+	In secondo luogo, trattiamo il caso (b) in cui la cima della pila contiene un terminale. Poniamo $\delta(q_{loop}, a, a) = \{(q_{loop}, \epsilon)\}$.
+
+	Infine, trattiamo il caso (c) in cui il marcatore scelto per indicare la pila vuota \$ è sulla cima della pila. Poniamo $\delta(q_{loop}, \epsilon, \$) = \{(q_{accept}, \epsilon)\}$.
+
+	Il diagramma di stato è mostrato nella seguente figura.
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.7\textwidth]{images/diagramma_stato_pda}
+		\end{center}
+	\end{figure}
+\end{proof}
+
+\begin{example}{}{}
+Costruiamo un un PDA $P_1$ dalla seguente CFG $G$.
+\begin{align*}
+	S &\to aTb \mid b \\
+	T &\to Ta \mid \epsilon
+\end{align*}
+La funzione di transizione è mostrata nel diagramma seguente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/applicazione_lemma}
+	\end{center}
+\end{figure}
+\end{example}
+Ora dimostriamo la direzione inversa del teorema \namerefl{th:pda_cfg_equ}. Per la direzione diretta, abbiamo dato una procedura per trasformare una CFG in PDA. Ora vogliamo dare una procedura per andare nella direzione opposta: trasformare un PDA in una CFG. Progettiamo la grammatica per simulare l'automa. Questo compito è impegnativo perchè ``programmare'' un automa è più facile che ``programmare'' una grammatica.
+\begin{lemma}{}{}
+Se un linguaggio è riconosciuto da un automa a pila, allora esso è context-free.
+\end{lemma}
+Abbiamo un PDA $P$ e vogliamo costruire una CFG $G$ che genera tutte le stringhe che $P$ accetta. In altre parole,  $G$ dovrebbe generare una strigna se quella stringa fa andare il PDA dal suo stato iniziale a uno stato accettante.
+
+Per raggiungere questo risultato, progettiamo una grammatica che fa un pò in più. Per ciascuna coppia di stati $p$ e $q$ in $P$, la grammatica avrà una variabile $A_{pq}$. Questa variabile genera tutte le stringhe che possano portare $P$ da $p$ con pila vuota a $q$ con pila vuota. Si osservi che tale stringhe possono anche condurre $P$ da $p$ a $q$, indipendentemente dal contenuto della pila in $p$, lasciando la pila in $q$ nella stessa condizione in cui era in $p$.
+Innanzitutto, semplifichiamo il nostro compito modificando leggermente $P$ per munirlo delle seguenti tre caratteristiche.
+\begin{enumerate}
+	\item Ha un unico stato accettante, $q_{accept}$.
+	\item Svuota la sua pila prima di accettare.
+	\item Ciascuna transizione inserisce un simbolo sulla pila o ne elimina uno dalla pila, ma non fa entrambe le azioni contemporaneamente.
+\end{enumerate}
+Dare a $P$ le caratteristiche 1 e 2 è facile. Per munirlo della caratteristica 3, sostituiamo ciascun transizione che contemporaneamente elimina ed inserisce simnoli con una sequenza di due transizioni che attraversa un nuovo stato, e sostituiamo ogni transizione che non elimina nè inserisce simnoli con una sequenza di due transizioni che inserisce e poi elimina un simbolo arbitrario della pila.
+
+Per progettare $G$ in modo che $A_{pq}$ generi tutte le stringhe che portano $P$ da $p$ a $q$, iniziando e terminando con una pila vuota, dobbiamo capire come $P$ agisce su queste stringhe. Per ognuna di tali stringhe $x$, la prima possa di $P$ su $x$ deve essere un push, poichè ogni mossa è un push o un pop e $P$ non può eliminare da una pila vuota. Analogamente, l'ultima mossa su $x$ deve essere un pop perchè alla fine la pila deve essere vuota.
+
+Durante la computazione di $P$ su $x$ si presentano due eventualità. O il simnolo eliminato alla fine è il simbolo che era stato inserito all'inizio, oppure no. Nel primo caso, la pila potrebbe essere vuota solo all'inizio e alla fine della computazione di $P$ su $x$. Altrimenti, il simbolo inizialmente inserito deve essere stato eliminato in qualche punto prima della fine di $x$ e quindi la pila si svuota in questo punto. Simuliamo la prima possibilità con la regola $A_{pq} \to aA_{rs}b$, dove $a$ è l'input letto nella prima mossa, $b$ è l'input letto nell'ultima mossa, $r$ è lo stato che segue $p$ ed $s$ è lo stato che precede $q$. Simuliamo la seconda possibilità con la regola $A_{pq} \to A_{pr}A_{rq}$ dove $r$ è lo stato in cui la pila diventa vuota.
+\begin{proof}
+	Sia $P = (Q, \Sigma, \Gamma, \delta, q_0, \{q_{accept}\})$ e costruiamo $G$. L'insieme delle variabili di $G$ è $\{A_{pq} \mid p, q \in Q\}$. La variabile iniziale è  $A_{q_0, q_{accept}}$. Ora descriviamo le regole di $G$ nei seguenti tre punti.
+	\begin{enumerate}
+		\item $\forall p, q, r, s \in Q, u \in \Gamma$ e $a, b \in \Sigma_\epsilon$, se $\delta(p, a, \epsilon)$ contiene $(r, u)$ e $\delta(s, b, u)$ contiene $(q, \epsilon)$, poni la regola $A_{pq} \to aA_{rs}b$ in $G$
+		\item $\forall p, q, r \in Q$ poni la regola $A_{pq} \to A_{pr}A_{rq}$ in $G$
+		\item Infne, $\forall p \in Q$ poni la regola $A_{pp} \to \epsilon$ in $G$.
+	\end{enumerate}
+	Ora proviamo che questa costruzione funziona dimostrando che $A_{pq}$ genera $x$ se e solo se $x$ porta $P$ da $p$ con la pila vuota a $q$ con la pila vuota. Consideriamo ogni direzione di ``se e solo se'' come un enunciato separato.
+	\begin{proposition}{}{}
+		Se $A_{pq}$ genera $x$, allora $x$ può portare $P$ da $p$ con pila vuota a  $q$ con la pila vuota.
+	\end{proposition}
+	Dimostriamo questo enunciato per induzione sul numero dei passi nella derivazione di $x$ da $A_{pq}$.
+	\textbf{Base}: La derivazione è in un solo passo.
+
+	Una derivazione in un solo passo deve usare una regola il cui lato destro non contenga variabili. Le uniche regole in $G$ con nessuna variabile sul lato destro sono $A_{pp} \to \epsilon$. Ovviamente, l'input $\epsilon$ porta $P$ da $p$ con la pila vuota a $p$ con la pila vuota e quindi la base è dimostrata.
+
+	\textbf{Passo induttivo}: Assumiamo che l'enunciato sia vero per le derivazioni di lunghezza al più $k$, dove $k \geq 1$, e proviamo che esso è vero per le derivazioni di lunghezza $k + 1$.
+
+	Supponiamo che $A_{pq} \overset{*}{\Rightarrow} x$ in $k + 1$ passi. Il primo passo in questa derivazione è $A_{pq} \Rightarrow aA_{rs}b$ oppure $A_{pq} \Rightarrow A_{pr}A_{rq}$. Trattiamo questi due casi separatamente.
+
+	Nel primo caso, consideriamo la parte $y$ di $x$ che $A_{rs}$ genera, quindi $x = ayb$. Poichè $A_{rs} \overset{*}{\Rightarrow} y$ in $k$ passi, l'ipotesi induttiva ci dice che $P$ può andare da $r$ con la pila vuota a $s$ con la pila vuota. Poichè $A_{pq} \to aA_{rs}b$ è una regola di $G$, $\delta(p, a, \epsilon)$ contiene $(r, u)$ e $\delta(s, b, u)$ contiene $(q, \epsilon)$, per qualche simbolo di pila $u$. Quindi, se $P$ inizia in $p$ con la pila vuota, dopo aver letto $a$ può andare nello stato $r$ e inserire $u$ in cima alla pila. Poi, la lettura della stringa $y$ può portarlo in $s$ e lasciare $u$ sulla pila. In segutio dopo aver letto $b$ può andare nello stato $q$ ed eliminare $u$ dalla pila. Pertanto, $x$ può portare $P$ da $p$ con la pila vuota  a $q$ con la pila vuota.
+
+	Nel secondo caso, consideriamo le parti $y$ e $z$ di $x$ che  $A_{pr}$ e $A_{rq}$ rispettivamente generano, qhindi $x = yz$. Poichè $A_{pr} \overset{*}{\Rightarrow} y$ in al più $k$ passi e $A_{rq} \overset{*}{\Rightarrow} z$ in al più $k$ passi, l'ipotesi induttiva ci dice che $y$ può portare $P$ da $p$ a $r$ e $z$ può portare $P$ da $r$ a $q$, con la pila vuota all'inizio e alla fine della computazione. Quindi $x$ può portare $P$ da $p$ con la pila vuota a $q$ con la pila vuota. Questo completa la prova del passo induttivo.
+	\begin{proposition}{}{}
+	Se $x$ può portare $P$ da $p$ con la pila vuota a $q$ con la pila vuota, $A_{pq}$ genera $x$.
+	\end{proposition}
+	Dimostriamo questo enunciato per induzione sul numero dei passo nella computazione di $P$ da $p$ a $q$ con pile vuote sull'input $x$.
+
+	\textbf{Base}: La computazione è in 0 passi.
+
+	Se una computazione è in 0 passi, essa inizia e termina nello stesso stato $p$. Quindi dobbiamo mostrare che $A_{pp} \overset{*}{\Rightarrow} x$. $P$ non può leggere alcun carattere in 0 passi, quindi $x = \epsilon$. Per costruzione, $G$ ha la regola $A_{pp} \to \epsilon$, perciò la base è dimostrata.
+
+	\textbf{Passo induttivo}: Assumiamo l'enunciato vero per le computzioni di lunghezza al più $k$, dove $k \geq 0$, e dimostriamo che è vero per le computazioni di lunghezza $k + 1$.
+
+	Supponiamo che $P$ abbia una computazione dove $x$ porta da $p$ a $q$ con pile vuote in $k + 1$ passi. O la pila è vuota solo all'inizio e alla fine di questa computazione oppure essa si svuota anche altrove.
+
+	Nel primo caso, il simbolo che è stato inserito nella prima mossa deve essere lo stesso simbolo che è stato rimosso dall'ultima mossa. Chiamiamo $u$ questo simbolo. Sia $a$ il simbolo di input letto nella prima mossa, $b$ il simbolo di input letto nell'ultima mossa, $r$ lo stato dopo la prima mossa ed $s$ lo stato prima dell'ultima mossa. Allora $\delta(p, a, \epsilon)$ contiene $(r, u)$ e $\delta(s, b, u)$ contiene $(q, \epsilon)$ e quindi la regola $A_{pq} \to aA_{rs}b \in G$.
+
+	Sia $y$ la parte di $x$ senza $a$ e $b$, quindi $x = ayb$. L'input $y$ può portare $P$ da $r$ a $s$ senza toccare il simbolo $u$ che è sulla cima della pila e quindi $P$ può andare da $r$ con pila vuota a $s$ con pila vuota sull'input $y$. Abbiamo eliminato il primo e l'ultimo passo dei $k + 1$ passi della computazione iniziale su $x$, perciò la computazione su $y$ ha $k - 1$ passi. Quindi l'ipotesi induttiva ci dice che $A_{rs} \overset{*}{\Rightarrow} y$. Allora $A_{pq} \overset{*}{\Rightarrow} x$.
+
+	Nel secondo caso, sia $r$ uno stato in cui la pila si svuota oltre che all'inizio o alla fine della computazione su $x$. Allora le parti della computazione da $p$ ad $r$ e da $r$ a $q$ contengono al più $k$ passi. Sia $y$ l'input letto nella prima parte e sia $z$ l'input letto nella seconda parte. L'ipotesi induttiva ci dice che $A_{pr} \overset{*}{\Rightarrow} y$ e $A_{rq} \overset{*}{\Rightarrow} z$. Poichè la regola $A_{pq} \to A_{pr}A_{rq}$ è in $G$, $A_{pq} \overset{*}{\Rightarrow} x$ e la dimostrazione è completata.
+\end{proof}
 \end{document}
