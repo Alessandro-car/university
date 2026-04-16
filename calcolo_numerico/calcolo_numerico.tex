@@ -2711,4 +2711,194 @@ Detta $A_i$ la matrice che si ottiene sostituendo in $A$ la $i$-esima colonna co
 \[
 x_i = \displaystyle\frac{det(A_i)}{det(A)} \quad i=1, \dots, n
 \]
+\section{Sistemi triangolari}
+\begin{definition}{\nmu Sistema triangolare}{sistema_triangoalare}
+	Un sistema lineare si dice \textit{triangolare} se la matrice dei coefficienti è triangolare.
+\end{definition}
+I sistemi triangolari si risolvono facilmente mediante gli algoritmi di sostituzione all'indietro, se triangolare superiore, e in avanti, se triangolare inferiore.
+\subsection{Sistemi triangolari superiori}
+Un sistema triangolare superiore si presenta nella seguente forma:
+\[
+\left\{
+\begin{array}{r@{\mskip\thickmuskip}c@{\mskip\thickmuskip}c@{\mskip\thickmuskip}c@{\mskip\thickmuskip}c@{\mskip\thickmuskip}l}
+a_{11}x_1 & + a_{12}x_2 & + \dots & + \dots & + a_{1n}x_n & = b_1 \\
+          & \phantom{+}a_{22}x_2   & + \dots & + \dots & + a_{2n}x_n & = b_2 \\
+          &             & \ddots  &         & \vdots      & \vdots \\
+          &             &         & \phantom{+}a_{ii}x_i & + a_{in}x_n & = b_i \\
+          &             &         &           & \ddots      & \vdots \\
+          &             &         &           &\phantom{+} a_{nn}x_n   & = b_n
+\end{array}
+\right.
+\]
+Consideriamo la seguente ipotesim di lavoro:
+\[
+\text{det}(A) \neq 0
+\]
+\begin{note}{}{}
+Essendo $A$ triangolare superiore, il determinante è pari a:
+\[
+\text{det}(A) = a_{11} \cdot a_{22} \cdots a_{nn}
+\]
+Quindi
+\[
+\text{det}(A) \neq 0 \iff a_{ii} \neq 0 \quad i = 1, \dots, n
+\]
+Cioè gli elementi diagonali sono non nulli.
+\end{note}
+Per risolvere questo sistema, cominciamo con l'osservare che l'ultima equazione contiene la sola incognita $x_n$. Dunque ricaviamo:
+\[
+x_n = \frac{b_n}{a_n}
+\]
+Osserviamo poi che la penultima equazione è:
+\[
+a_{n-1, n-1}x_{n-1} + a_{n-1,n}x_n = b_{n-1}
+\]
+Essendo $x_n$ nota, quest'equazione conterrà la sola incognita $x_{n-1}$. Quindi ricaviamo:
+\[
+x_{n-1} = \frac{b_{n-1} - a_{n-1, n}x_n}{a_{n-1, n-1}}
+\]
+Si procede a ritroso. Dalla $i$-esima equazione $a_{ii}x_i + a_{i, i+1}x_{i+1} + \dots + a_{in}x_n = b_i$ avendo già calcolato  $x_{i+1}, x_{i+2}, \dots, x_n$. Ricaviamo:
+\[
+x_i = \frac{b_i - \displaystyle\sum_{j=i+1}^{n}a_{ij}x_j}{a_{ii}}
+\]
+Quindi, l'\textbf{algoritmo di sostituzione all'indietro} è il seguente. Per $i = n, \dots, 1$ otteniamo:
+\[
+x_i = \frac{b_i - \displaystyle\sum_{j=i+1}^{n}a_{ij}x_j}{a_{ii}}
+\]
+\paragraph{Costo computazionale} Fissiamo l'indice $i$:
+\begin{align*}
+	\text{molt / div.} & \quad n - i + 1 \\
+	\text{add / sottr} & \quad n - i
+\end{align*}
+Consegue che:
+\begin{align*}
+C_{m/d} &= \displaystyle\sum_{i=1}^{n}(n-i+1) \\
+&\underset{k=n-i+1}{=}\displaystyle\sum_{k=1}^{n}k  \\
+&= \displaystyle\frac{n(n+1)}{2} \\
+&= \displaystyle\frac{n^2}{2} + \displaystyle\frac{n}{2} = \displaystyle\frac{n^2}{2} + O(n)
+\end{align*}
+ove $O(n)$ può essere trascurato per $n$ grande.
+
+Consideriamo la seguente notazione.
+\[
+O(n^p) \text{ denota un polinomio di grado al più $p$ in $n$}
+\]
+Calcoliamo il costo delle addizioni/sottrazioni.
+\begin{align*}
+	C_{a/2} &= \displaystyle\sum_{i=1}^{n}(n-i) = \displaystyle\frac{n^2}{2} + O(n)
+\end{align*}
+Quindi il costo totale è:
+\[
+C_{TOT} = n^2 + O(n) \text{ floating point operations}
+\]
+\subsection{Algoritmo di sostituzione in avanti}
+Questo algoritmo viene applicato per la risoluzione di un sistema triangolare inferiore.
+\[
+\begin{cases}
+  a_{11}x_1 = b_1 \\
+  \vdots \quad \ddots \\
+  a_{i1}x_1 + \dots + a_{ii}x_i = b_i \\
+  \vdots \quad \quad \quad \quad \ddots \\
+  a_{n1}x_1 + \dots + \dots + a_{nn}x_n = b_n
+\end{cases}
+\]
+Per $i = 1, \dots, n$ la soluzione di un'incognita è data da:
+\[
+x_i = \displaystyle\frac{b_i - \displaystyle\sum_{j=1}^{i-1}a_{ij}x_j}{a_{ii}}
+\]
+Ove il costo computazionale totale è:
+\[
+C_{TOT} = n^2 + O(n) \text{ floating point operations}
+\]
+\subsection{Proprietà delle matrici triangolari}
+Siano $A$ e $B$ due matrici triangolari inferiori. Valgono le seguenti proprietà.
+\begin{itemize}
+	\item $A \cdot B$ è triangolare inferiore.
+	\item Se $A$ è invertibile ($a_{ii} \neq 0, \forall i = 1, \dots, n$) allora $A^{-1}$ è triangolare inferiore.
+\end{itemize}
+\begin{note}{}{}
+In altre parole, l'insieme delle matrici triagolari inferiori è chiuso rispetto alle operazioni di moltiplicazione e di inversione.
+\end{note}
+\begin{definition}{\nmu Matrice triangolare speciale}{matrice_triangolare_speciale}
+	Una matrice triangolare si dice \textit{speciale} se i suoi elementi diagonali sono uguali a 1.
+\end{definition}
+Naturalmente il suo determinante sarà pari a 1.
+
+Le proprietà sopra elencate si estendono a:
+\begin{itemize}
+	\item matrici triangolari superiori;
+	\item matrici triangolari speciali.
+\end{itemize}
+Ricordiamo un'ulteriore proprietà che riguarda l'inversa di un prodotto.
+\begin{itemize}
+	\item Siano $A$ e $B$ due matrici quadrate invertibili. Allora il loro prodotto è ancora invertibile e risulta:
+	\[
+	(AB)^{-1} = B^{-1}A^{-1}
+	\]
+	Inoltre:
+	\[
+	\text{det}(AB) = \text{det}(A)\text{det}(B)
+	\]
+\end{itemize}
+\section{Fattorizzazione LU di una matrice}
+\begin{definition}{\nmu Matrice fattorizzabile in forma LU}{fattorizzazione_LU}
+	Una matrice quadrata $A$ di dimensione $n$ si dice \textit{fattorizzabile in forma }LU, se possiamo riguardare $A$ come prodotto di due matrici;
+	\[
+	A = L \cdot U
+	\]
+	ove:
+	\begin{itemize}
+		\item $L$ è una matrice triangolare inferiore speciale;
+		\item $U$ è una matrice triangolare superiore.
+	\end{itemize}
+\end{definition}
+Cominciamo col discutere l'unicità della fattorizzazione LU.
+\begin{proposition}{\nmu Unicità della fattorizzazione LU}{fatt_LU_unico}
+	Sia $A$ una matrice quadrata invertibile. Allora, se $A$ è fattorizzabile in forma LU, la fattorizzazione è unica.
+\end{proposition}
+\begin{proof} Siano:
+\[
+A = L_1 \cdot U_1 = L_2 \cdot U_2
+\]
+due fattorizzazioni LU di $A$. Vogliamo provare che:
+\[
+L_1 = L_2 \text{ e } U_1 = U_2
+\]
+Da $L_1 \cdot U_1 = L_2 \cdot U_2$ premoltipichiamo ambo i membri per $L_1^{-1}$
+\[
+\underset{\text{matrice identica}}{\underbrace{{L_{1}^{-1} \cdot L_1}}} \cdot U_1 = L_1^{-1}\cdot L_2 \cdot U_2
+\]
+Per ipotesi $\text{det}(A) \neq 0$. Ma:
+\[
+0 \neq \text{det}(A) = \begin{cases}
+	\text{det}(L_1 \cdot U_1) = \text{det}(U_1) \\
+	\text{det}(L_2 \cdot U_2) = \text{det}(U_2)
+\end{cases}
+\]
+Quindi $U_2$ è invertibile. Moltiplicando a destra per $U_2^{-1}$ otteniamo:
+\[
+U_1 \cdot U_2^{-1} = L_1^{-1}L_2
+\]
+Per le proprietà viste in precedenza:
+\begin{align*}
+	&U_2^{-1} \text{ è triangolare superiore} \\
+	&U_1 \cdot U_2^{-1} \text{ è triangolare superiore} \\
+	&L_1^{-1} \text{ è triangolare inferiore speciale} \\
+	&L_1^{-1}L_2 \text{ è triangolare inferiore speciale}
+\end{align*}
+In definitiva, al primo membro abbiamo una triangolare superiore, mentre, al secondo membro, una triangolare inferiore speciale.
+
+Graficamente:
+\[
+U_1 \cdot U_2^{-1} = L_1^{-1} \cdot L_2
+\]
+(Fare grafico)
+
+Ne consegue che i due membri dovranno necessariamente coincidere con la matrice identica:
+\begin{align*}
+	U_1U_2^{-1} &= I \Rightarrow U_1U_2^{-1} \cdot U_2 = I \cdot U_2 \Rightarrow U_1 = U_2 \\
+	L_1^{-1}L_2 &= I \Rightarrow L_1 \cdot L_1^{-1}L_2 = L_1 I \Rightarrow L_1 = L_2
+\end{align*}
+\end{proof}
+Per poter provare l'esistenza, faremo uso delle ``matrici elementari di Gauss''.
 \end{document}
