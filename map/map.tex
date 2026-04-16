@@ -2495,4 +2495,102 @@ g() {
 Questa codice combina overloading, coercizione e polimorfismo di inclusione. Il compilatore C++ associa al valore 0 il tipo int, quindi la funzione $g$ stampa $int$. Anche lo 0 può essere visto come carattere, ma l'associazione di tipo diretta tra 0 e int, ha precedenza rispetto alla coercizione con char o char*.
 
 Diversi linguaggi di programmazione OO proibiscono la ridefinizione dei metodi e la coercizione per evitare questi problemi.
+
+\chapter{Il linguaggio Java}
+Il linguaggio Java presenta diverse peculiarità che possiamo riassumere nel seguente elenco.
+\begin{itemize}
+	\item Semplicità.
+	\item Object-Oriented.
+	\item Solidità.
+	\item Multi-threading.
+	\item Indipendenza dall'architettura.
+	\item Interpretazione con elevate prestazioni.
+	\item Possibilità di lavorare in modo distribuite.
+	\item Dinamicità.
+\end{itemize}
+\section{Indipendenza dall'architettura}
+Un programma Java può essere eseguito su architetture diverse. Esiste un'indipendenza a livello di:
+\begin{itemize}
+	\item \textit{codice sorgente}: tipi di dati primtivi completamente specificati, ordine di valutazione delle espressioni rigorsamente definito.
+	\item \textit{bytecode}: un programma Java viene compilato in un codice intermedio detto \textbf{bytecode}. I file di codice intermedio sono interpretati dalla \textit{Java Virtual Machine (JVM)}. È sufficiente implementare una JVM specifica per ogni piattaforma, senza per questo dover modificare il bytecode.
+\end{itemize}
+L'implementazione della JVM non è a carico dell'utente. La JVM è pertanto un'emulazione software di un'architettura hardware ideale in grado di eseguire bytecode in Java.
+\section{Interpretazione con elevate prestazioni}
+Il bytecode può essere interpretato su qualsiasi sistema che offre una Java Virtual Machine. Altri sistemi interpretati come Basic e Perl presentano deficiti di prestazioni insormontabili. Pur avendo delle prestazioni inferiori ai linguaggi direttamente compilati, il bytecode di Java è stato progettato in modo tale da poter essere tradotto senza difficoltà in codice macchina nativo garantendo così delle prestazioni abbastanza elevate.
+
+I sistemi run-time Java che eseguono questa ottimizzazione ``just in time'' o ``on-fly'' non perdono nessuno dei vantaggi offerti dal codice indipendente da piattaforma e allo stesso tempo hanno delle buone prestazioni.
+\begin{note}{}{}
+	La compilazione just-in-time è oggetto di ricerca. I compilatori convenzionali sono pensati per produrre codice altamente ottimizzato \textbf{senza prestare attenzione al tempo di compilazione}.
+\end{note}
+
+\section{Ambienti di sviluppo: JDK}
+Esistono diversi ambienti di sviluppo per Java, il primo, denominato \textit{Java Development Kit (JDK)} e messo a disposizione dalla Sun, è il più diffuso. Ogni altro ambiente di sviluppo per Java aggiunge funzionalità, nuovi tool, nuove classi, pur avendo come piattaforma base un Java Development Kit.
+
+Un tool fornito dalla JDM è la tecnologia \textit{Java Archive (Jar)}, un formato file indipendente dalla piattaforma che aggrega più file in un singolo package.
+
+Sun struttura la piattaforma Java in due edizioni:
+\begin{itemize}
+	\item Java Runtime Environment (JRE);
+	\item Java Software Development Kit (Java SDK).
+\end{itemize}
+La prima è rivolta a utenti di applicazioni Java, la seconda è rivolta agli sviluppatori di applicazioni Java.
+
+La JRE permette di eseguire applicazioni Java per cui non include il compilatore e altre componenti di svilippo.
+
+La Java SDK mette a disposizione degli sviluppatori il compilatore, le librerire, i sorgenti, le specifiche API e, in generale, tutto quanto è necessario per lo sviluppo di applicazioni Java.
+
+L'edizione SDK si distingue in:
+\begin{itemize}
+	\item Java 2 Standard Edition J2SE;
+	\item Java 2 Enterprise Edition J2EE;
+	\item Java 2 Micro Edition J2ME.
+\end{itemize}
+La prima rappresenta la piattaforma Java standard e include tutti gli applciativi e le librerie per lo sviluppo di applicazioni desktop, applet e client-server.
+
+Gli strumenti di base presenti nel JDK sono:
+\begin{itemize}
+	\item \textbf{javac} che è il compilatore Java;
+	item \textbf{java} che è l'interprete Java.
+\end{itemize}
+\section{Oggetti in Java}
+Ogni linguaggio di programmazione ha i propri mezzi per manipolare i dati. Il programmatore deve essere costantemente consapevole del tipo di manipolazione che si sta effettuando. In particolare, trattando gli oggetti siamo interessati a sapere se \textit{si sta manipolando direttamente un oggetto, o si sta trattando qualche tipo di rappresentazione indiretta (un puntatore in C o C++) che dev'essere assoggettata a una qualche sintassi specifica}.
+
+In C++ sono possibili entrambi i casi. Tutto ciò è semplificato in Java. In Java tutto viene trattato come oggetto in modo tale da avere una sintassi consistente da usare in ogni situazione. Sebbene ciò sia sempre vero, l'identificatore che si va a manipolare è in realtà il \textit{riferimento} ad un oggetto. Questo comporta che \textit{quando si ha un riferimento, non è detto che ci sia necessariamente un oggetto ad esso legato}.
+\begin{example}{}{}
+Se abbiamo bisogno di una stringa allora si può creare un riferimento del tipo:
+\[
+\text{String box};
+\]
+Se a questo punto si vuole mandare un messaggio a box si otterrà un errore al run-time perchè non abbiamo inizializzato la stringa
+\[
+\text{String box = ``abcd''};
+\]
+Una volta creato un riferimento, è possibile connetterlo ad un nuovo oggetto mediante l'operatore \textbf{new}.
+\[
+\text{String box = new String(``abcd'')}
+\]
+che oltre a creare un nuovo oggetto di tipo String, indica anche ``come'' crare l'oggetto in questione.
+\end{example}
+\section{Tipi primitivi}
+In Java abbiamo una grande varietà di tipi predefiniti ai quali si aggiungono quelli che è possibile creare da sé. In Java i tipi primiti godono di un trattamento particolare.
+
+Ciò è dovuto al fatto che la creazione mediante l'operatore \textit{new} non è molto efficiente, visto che viene allocata nell'\textit{heap}.
+
+Per i tipi primitivi, Java si affida all'approccio C/C++ in cui viene creata una variabile (contenente il valore assegnato) memorizzata nello \textit{stack}, anzichè un riferimento ad essa come avviene con l'operatore \textit{new}.
+
+Lo \textit{stack} si serve di uno stack pointer per allocare e rilasciare memoria. Ciò ne fa un modo estremamente veloce ed efficiente per allocare memoria secondo solo ai registri. Il compilatore deve sapere, mentre alloca il programma, l'esatta dimensione e tempo di vita di tutti i dati contenuti nello stack in modo da generare il codice per gestire lo stack pointer. Questo vincolo limita la flessibilità dei programmi, così accade che mentre i riferimenti agli oggetti sono nello stack, gli oggetti non possono esservi memorizzati.
+
+La \textit{heap} è una memoria generale dove vivono gli oggetti Java. Quando si crea un oggetto con l'operatore \textit{new}, viene allocata memoria nell'heap a run time. Non si ha il vincolo posto sullo stack, ma il prezzo da pagare per la maggiore flessibilità è la quantità di tempo necessaria per l'allocazione.
+
+Il progetto del linguaggio Java definisce la dimensione di ogni tipo primitivo e tale dimensione non varia da un tipo di piattaforma ad un'altra garantendo in tal modo la portabilità.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/primitive_data_types}
+	\end{center}
+\end{figure}
+
+Tutti i tipi numeri sono con segno, detti \textbf{signed}. I tipi unsigned del C/C++ non sono supportati. La dimensione del tipo \textit{boolean} non è esplicitamente definita. È specificato che deve solo contenere valori letterali \textit{true} o \textit{false}.
+
+I tipi di dati primitivi possono avere una classe \textit{wrapper} associata per poter avere oggetti corrispondenti allocati nell'heap.
 \end{document}
