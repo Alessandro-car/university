@@ -1117,4 +1117,49 @@ Durante la computazione di $P$ su $x$ si presentano due eventualità. O il simno
 
 	Nel secondo caso, sia $r$ uno stato in cui la pila si svuota oltre che all'inizio o alla fine della computazione su $x$. Allora le parti della computazione da $p$ ad $r$ e da $r$ a $q$ contengono al più $k$ passi. Sia $y$ l'input letto nella prima parte e sia $z$ l'input letto nella seconda parte. L'ipotesi induttiva ci dice che $A_{pr} \overset{*}{\Rightarrow} y$ e $A_{rq} \overset{*}{\Rightarrow} z$. Poichè la regola $A_{pq} \to A_{pr}A_{rq}$ è in $G$, $A_{pq} \overset{*}{\Rightarrow} x$ e la dimostrazione è completata.
 \end{proof}
+\section{Linguaggi non context-free}
+In questa sezione presentiamo una tecnica per dimostrare che alcuni linguaggi non sono context-free. Precedentemente, per dimostrare che un linguaggio non era regolare, abbiamo utilizzato il pumping lemma. A questo punto presentiamo un pumping lemma simile per i linguaggi context-free. Esso stabilisce che per ogni linguaggio context-free esiste un particolare valore chiamato la \textit{lunghezza del pumping} tale che tutte le stringhe più lunghe nel linguaggio possono essere iterate. Questa volta il significato di iterazione è più complesso.
+\subsection{Il pumping lemma per i linguaggi context-free}
+\begin{theorem}{\nmu Il pumping lemma per i linguaggi context-free}{pumping_lemma_cf}
+Se $A$ è un linguaggio context-free, allora esiste un numero $p$ (lunghezza del pumping) tale che, se $s$ è qualsiasi stringa in $A$ di lunghezza almeno $p$, allora $s$ può essere divisa in cinque parti $s = uvxyz$ che soddisfano le condizioni.
+\begin{enumerate}
+	\item $\forall i \geq 0, uv^ixy^iz \in A$
+	\item $|vy| > 0$
+	\item $|vxy| \leq p$
+\end{enumerate}
+Quando $s$ è divisa in $uvxyz$, la condizione 2 afferma che $v$ oppure $y$ non è la stringa vuota. Altrimenti il teorema sarebbe banalmente vero. La condizione 3 afferma che le parti $v, x$ e $y$ insieme hanno lunghezza al più $p$. Questa condizione tecnica a volte è utile per dimostrare che alcuni linguaggi non sono context-free.
+\end{theorem}
+Sia $A$ un CFL e sia $G$ una CFG che lo genera. Dobbiamo dimostrare che ogni stringa sufficientemente lunga $s$ in $A$ può essere iterata e restare in $A$. L'idea dietro questa strategia è semplice.
+
+Sia  $s$ una stringa molto lunga in $A$. Poichè $s$ è in $A$, essa è derivabile da $G$ e quindi ha un albero sintattico. L'albero sintattico per $s$ deve essere molto alto perchè $s$ è molto lunga. Cioè l'albero sintattico deve contenere un cammino lungo dalla variabile alla radice dell'albero a uno dei simboli terminali su una foglia. Per il principio della piccionaia, qualche simnolo di variabile $R$ si deve ripetere in questo cammino lungo. Come mostra la figura seguente, questa ripetizione ci permette di sostituire il sottoalbero sotto la seconda occorrenza di $R$ con il sottoalbero sotto la prima occorrenza di $R$ e ottenere ancora un albero sintattico consentito. Pertanto, possiamo dividere $s$ in  cinque parti $uvxyz$ e possiamo replicare il secondo e il quarto pezzo e ottenere una stringa ancora nel linguaggio. In altre parole, $uv^ixy^iz$ è in $A$ per ogni $i \geq 0$.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/pumping_lemma_cf}
+	\end{center}
+\end{figure}
+\begin{proof}
+Sia $G$ una CFG per il CFL $A$. Sia $b$ il massimo numero di simboli nel lato destro di una regola (assumiamo che sia almeno 2). Sappiamo che, in ogni albero sintattico costruito usando questa grammatica, un nodo non può avere più di $b$ figli. In altre parole, ci sono al più  $b$ foglie in un passo dalla variabile inziaile; ci sono al più $b^2$ foglie in 2 passi dalla variabile iniziale; e ci sono al più $b^h$ foglie in $h$ passi dalla variabile inziiale. Quindi, se l'altezza dell'albero sintattico è al più $h$, la lunghezza della stringa generata è al più $b^h$. Viceversa, se una stringa generata ha lunghezza maggiore o uguale $b^h + 1$, ciascuno dei suoi alberi sintattici deve avere un'altezza maggiore o uguale a $h + 1$.
+
+Sia $|V|$ il numero delle variabili in $G$. Poniamo $p$, la lunghezza del pumping, uguale a $b^{|V| + 1}$. Ora se $s$ è una stringa in $A$ e la sua lunghezza è maggiore o uguale a  $p$, il suo albero sintattico deve avere altezza maggiore o uguale a $|V| + 1$, poichè $b^{|V| + 1} \geq b^{|V|} + 1$.
+
+Per vedere come iterare tale stringa $s$, sia  $\tau$ uno dei suoi alberi sintattici. Se $s$ ha diversi alberi sintattici, scegliamo un albero sintattico $\tau$ che abbia il più piccolo numero di nodi. Sappiamo che $\tau$ deve avere altezza maggiore o uguale a $|V| + 1$, quindi il suo cammino più lungo dalla radice a una foglia ha lunghezza almeno $|V| + 1$. Questo cammino ha almeno $|V| + 2$ nodi; uno etichettato da un terminale, gli altri etichettati da variabili. Quindi questo cammino ha almeno $|V| + 1$ variabili. Poichè $G$ ha solo $|V|$ variabili, qualche variabile $R$ è presente più di una volta su questo cammino. Per un itilizzo successivo, scegliamo $R$ in modo che una variabile che si ripete tra le $|V| + 1$ variabili più in basso su questo cammino.
+
+Dividiamo $s$ in $uvxyz$. Ogni occorrenza di $R$ ha un sottoalbero sotto essa che genera una parte della stringa $s$. L'occorrenza più in alto di $R$ ha un sottoalbero più grande e genera $vxy$, mentre l'occorrenza più in basso genera solo $x$ come sottoalbero più piccolo. Entrambi questi sottoalberi sono generati dalla stessa variabile, quindi possiamo sostituire l'uno con l'altro e ottener ancora un albero sintattico corretto. Sostituire ripetutamente il più piccolo con il più grande fornisce gli alberi sintattici per le stringhe $uv^ixy^iz$ per ogni $i > 1$. Sostiuire il più grande con il più piccolo genera la stringa $uxz$. Questo dimostra la condizione 1 del pumping lemma. Dimostriamo le condizioni 2 e 3.
+
+Per ottenere la condizione 2, dobbiamo essere sicuri che $v$ e $y$ non sono entrambe $\epsilon$. Se lo fossero, l'albero sintattico ottenuto sostituendo il più piccolo sottoalbero al più grande avrebbe meno nodi di $\tau$ e genererebbe ancora $s$. Questo non è possibile perchè abbiamo scelto $\tau$ in modo che sia un albero sintattico per $s$ con il più piccolo numero di nodi. Questa è la ragione per aver selezionato così $\tau$.
+
+Per ottenere la condizione 3, dobbiamo essere sicuri che $vxy$ ha lunghezza al più $p$. Nell'albero sintattico per $s$ l'occorrenza più in alto di $R$ genera $vxy$. Abbiamo scelto $R$ in modo che entrambe le occorrenze di essa cadano nelle $|V| + 1$ variabili più in basso del cammino e abbiamo scelto il più lungo cammino nell'albero sintattico, in modo che il sottoalbero in cui $R$ genera $vxy$ sia alto al più $|V| + 1$. Un albero con questa altezza può generare una stringa di lunghezza al più $b^{|V| + 1} = p$
+\end{proof}
+\begin{example}{}{}
+Usiamo il pumping lemma per mostrare che il linguaggio $B = \{a^nb^nc^n \mid n \geq 0\}$ non è context-free.
+
+Assumiamo che $B$ sia un CFL e giungiamo a una contraddizione. Sia $p$ la lunghezza del pumping per $B$ la cui esistenza è garantita dal pumping lemma. Scegliamo la stringa $s = a^pb^pc^p$. Ovviamente $s$ è un elemento di $B$ e di lunghezza almeno $p$. Il pumping lemma afferma che $s$ può essere iterata, ma noi mostriamo che non può esserlo. In altre parole, mostriamo che, non importa come dividiamo $s$ in $uvxyz$, una delle tre condizioni del pumping lemma è violata.
+
+In primo luogo, la condizione 2 stabilisce che $v$ o $y$ non è vuota. Allora consideriamo due casi, a seconda che le sottostringhe $v$ e $y$ contengano più di un tipo di simbolo dell'alfabeto o no.
+\begin{enumerate}
+	\item Quando entrambe $v$ e $y$ contengono solo un tipo di simboli dell'alfabero, $v$ non contiene entrambi i simboli $a$ e $b$ o entrambi i simboli $b$ e $c$ e lo stesso vale per $y$. In questo caso, la stringa $uv^2xy^2z$ non può contenere lo stesso numero di $a, b$ e $c$. Quindi, essa non può essere un elemento di $B$. Abbiamo raggiunto la contraddizione.
+	\item Quando $v$ o $y$ contengono più di un tipo di simbolo, $uv^2xy^2z$ può contenere un equal numero dei tre simboli dell'alfabeto ma non nell'ordine corretto. Perciò essa non può essere un elemento di $B$ e si verifica un assurdo.
+\end{enumerate}
+Uno di questi casi deve verificarsi. Poichè entrambi i casi conducono a un assurdo, la contraddizione è inevitabile. Quindi l'assunzione che $B$ sia un CFL deve essere falsa. Pertanto abbiamo provato che $B$ non è CFL.
+\end{example}
 \end{document}
