@@ -2593,4 +2593,904 @@ Il progetto del linguaggio Java definisce la dimensione di ogni tipo primitivo e
 Tutti i tipi numeri sono con segno, detti \textbf{signed}. I tipi unsigned del C/C++ non sono supportati. La dimensione del tipo \textit{boolean} non è esplicitamente definita. È specificato che deve solo contenere valori letterali \textit{true} o \textit{false}.
 
 I tipi di dati primitivi possono avere una classe \textit{wrapper} associata per poter avere oggetti corrispondenti allocati nell'heap.
+\section{Numeri ad alta precisione}
+Java include due classi per l'aritmetica ad alta precisione:
+\begin{itemize}
+	\item \textit{BigInteger}: supporta gli interi a ``arbitrary-precision'' ovvero è possibile rappresentare accuratamente valori integrali di qualsiasi dimensione, senza perdita di informazione durante le operazioni.
+	\item \textit{BigDecimal}: supporta numeri decimali in notazione fixed-point a ``arbitrary-precision''. Possono essere utilizzati per accurati calcoli monetari.
+\end{itemize}
+Entrambe possiedono dei metodi analoghi agli operatori disponibili per i tipi primitivi \texttt{int} e \texttt{float}.
+\section{Variabili in Java}
+In Java esistono tre tipi di variabili:
+\begin{enumerate}
+	\item \textit{variabili di istanza}: definiscono gli attributi e lo stato di un oggetto;
+	\item \textit{variabili di classe}: definiscono gli attributi e lo stato di una classe (si dichiarano con \texttt{static})
+	\item \textit{variabili locali}: utilizzate nella definizione dei metodi.
+\end{enumerate}
+La dichiarazione di una variabile in Java presenta la seguente forma:
+\[
+\texttt{DICHIARAZIONE = TIPO + NOME}
+\]
+ove:
+\begin{itemize}
+	\item \texttt{NOME}:
+	\begin{itemize}
+		\item può iniziare con una lettera, trattino, segno di sottolineatura, \$;
+		\item non può cominciare con una cifra;
+	\end{itemize}
+	\item \texttt{TIPO}:
+	\begin{itemize}
+		\item uno tra gli otto tipi primitivi;
+		\item nome di una classe o interfaccia;
+		\item un array.
+	\end{itemize}
+\end{itemize}
+All'atto di una dichiarazione è anche possibile provvedere alla inizializzazione della variabile.
+\section{Creazione di nuovi tipi di dato}
+Se in Java tutto può essere considerato un oggetto, per rappresentare il fatto che un insieme di oggetti sono accomunati dalle medesime caratteristiche e comportamenti si utilizza il concetto di \textit{classe} della programmazione object-oriented.
+
+In Java per definire una classe è usata la parola chiave \texttt{class} seguita dal nome della classe.
+\begin{example}{\nmu Creazione di una classe in Java}{creazione_classe}
+\begin{lstlisting}[style=javastyle]
+class Box {
+	double width;
+	double height;
+	double depth;
+}
+\end{lstlisting}
+\end{example}
+\begin{note}{}{}
+Una dichiarazione \texttt{class} non crea l'oggetto ma introduce un nuovo tipo, un modello. Per avere l'oggetto dobbiamo usare l'operatore \textbf{new}. Ad esempio:
+\begin{center}
+	\begin{lstlisting}[style=javastyle]
+	Box a = new Box()\end{lstlisting}
+\end{center}
+Dove \textit{a} è un riferimento ad un oggetto della classe \textit{Box} ovvero \textit{a è un'istanza della classe Box}
+\end{note}
+Quando si definisce una classe è possibile specificare:
+\begin{itemize}
+		\item \textit{Componente dati} o \textit{attributi}, per definire lo \textbf{stato} di un oggetto;
+		\item \textit{Componente funzioni} o \textit{metodi} per definire il \textbf{comportamento} di un oggetto.
+\end{itemize}
+Le \textit{componenenti dati} possono essere tipi primitivi oppure dei riferimenti ad altri oggetti. Se la componente dato è un tipo primitivo allora può essere inizializzata direttamente nel punto di definizione all'interno della classe. Nel caso in cui la componente dato non è un tipo primitivo deve essere necessariamente inizializzata attraverso un metodo apposito chiamato \textbf{costruttore}.
+\begin{example}{\nmu Uso del costruttore}{uso_costruttore}
+\begin{lstlisting}[style=javastyle]
+class DataOnly {
+	int i;
+	float f;
+	boolean b;
+}
+...
+/* dot notation: uso dell'oggetto */
+DataOnly mydate = new DataOnly()
+mydate.i = 47;
+mydate.f = 1.1f;
+mydate.b = false;
+...\end{lstlisting}
+\end{example}
+Quando un tipo di dato primitivo è membro di una classe Java ci assicura la sua inizializzazione ad un valore di default nel caso non venga inizializzato dall'utente.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/valori_default_dati}
+	\end{center}
+\end{figure}
+Se la variabile è locale, Java non la inizializza ad un valore di default pertanto la mancata inizializzazione verrà segnalata come errore nel momento della compilazione.
+
+I metodi in Java sono dei messaggi che permettono agli oggetti di comunicare fra loro. Un metodo in Java deve essere necessariamente definito in una classe, \textbf{non esistono metodi stand-alone}. Lo schema per la definizione di un metodo Java è il seguente
+\begin{lstlisting}[style=javastyle]
+tipo_risultato NomeMetodo(/*lista di argomenti*/) {
+	/* corpo del metodo */
+	return espression;
+}\end{lstlisting}
+ove:
+\begin{itemize}
+	\item \texttt{tipo\_risultato}: indica il tipo primitivo o la classe dell'oggetto restituito dal metodo;
+	\item \texttt{lista di argomenti}: lista dei tipi e dei nomi passati al metodo. I parametri di tipo oggetto sono passati per riferimento mentre quelli di tipo primitivo sono passati per valore.
+	\item \texttt{return}: è una parola chiave utilizzata per la restituzione del valore elaborato. Se il tipo da restituire è \texttt{void} allora \texttt{return} ha solo la funzione di uscire dal metodo.
+\end{itemize}
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+class Prova {
+	boolean flag() { return true; }
+	float logBaseNaturale() { return 2.718f; }
+	void non_fa_nulla() { return; }
+	void non_fa_nulla2() { }
+	...
+	boolean flag = false;
+	Prova objProva = new Prova();
+	/* flag = false */
+	flag = objProva.flag();
+	/* flag = true */
+}
+\end{lstlisting}
+\end{example}
+Un metodo è identificato univocamente dal suo nome e dalla lista di argomenti. Un metodo può essere chiamato solo per un oggetto che deve essere a sua volta capace di eseguirne la chiamata. Quando il tipo di ritorno è \texttt{void}, la parola chiave \texttt{return} è usata solo per uscire dal metodo, tuttavia non è necessaria nel caso in cui si esca solo dalla fine del metodo.
+
+\paragraph{Costruttori} Prima di poter essere usati, gli oggetti devono essere creati ovvero \textit{inizializzati}. Ciò è fatto attraverso un particolare metodo della classe chiamato \textbf{costruttore}. Java infatti richiama automaticamente (con l'operatore \texttt{new}) il rispettivo costruttore non appena l'oggetto è stato creato e prima che tale oggetto sia a disposizione dell'utente.
+
+Analogamente al C++, anche in Java il costruttore assume il nome della classe a cui appartiene. Se abbiamo una classe priva di costruttore, il compilatore Java ne crea uno in maniera automatica.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+class Rock {
+	Rock() {
+		System.out.println("Creating Rock");
+	}
+}
+
+public class SimpleConstructor {
+	public static void main(String[] args) {
+		for (int i = 0; i < 10; i++) {
+			new Rock();
+		}
+	}
+}
+\end{lstlisting}
+\end{example}
+Quando si crea l'oggetto Rock, viene allocata memoria e richiamato il rispettivo costruttore. L'effetto è quello di stampare su console la stringa ``creating Rock''.
+
+Un costruttore può avere anche degli argomenti.
+\begin{example}{\nmu Costruttore con argomenti}{costruttore_argomenti}
+\begin{lstlisting}[style=javastyle]
+class Rock2 {
+	Rock2(int i) {
+		System.out.println("Creating Rock number " + i);
+	}
+}
+
+public class SimpleConstructor2 {
+	public static void main(String[] args) {
+		for(int i = 0; i < 10; i++) {
+			new Rock2(i);
+		}
+	}
+}
+}
+\end{lstlisting}
+\end{example}
+\paragraph{Distruttori} A differenza del C++, in Java non si riscontra il concetto di \textbf{distruttore} di oggetti, per la presenza di un metodo ordinario per ripulire la memoria chiamato \textit{garbage collector}.
+\section{Overloading dei metodi}
+L'overloading dei metodi è essenziale per permettere a metodi che hanno lo stesso nome di essere usati con differenti tipi di argomento in modo tale da supportare il polimorfismo. È indispensabile usare l'overloading nella definizione dei costruttori in quanto il nome è protetto. Sebbene tale funzionalità sia obbligatoria per i costruttori, generalmente conviene utilizzarla anche nella definizione dei metodi comuni.
+\begin{example}{\nmu Utilizzo dell'overloading}{utilizzo_overloading}
+\begin{lstlisting}[style=javastyle]
+// Demonstration of both constructor and ordinary method overloading.
+import java.util.*;
+class Tree {
+	int height;
+	Tree() {
+		System.out.println("Planning a seedling");
+		height = 0;
+	}
+	Tree(int i) {
+		System.out.println("Creating new Three that is " + i + " feet tall");
+		height = i;
+	}
+
+	void info() {
+		System.out.println("Tree is " + height + " feet tall");
+	}
+
+	void info(String s) {
+		System.out.println(s + ": Tree is " + height + " feet tall");
+	}
+}
+
+public class Overloading {
+	public static void main(String[] args) {
+		for (int i = 0; i < 5; i++) {
+			Tree t = new Tree(i);
+			t.info();
+			t.info("overloaded method");
+		}
+		// Overloaded constructor
+		new Tree();
+	}
+}
+\end{lstlisting}
+\end{example}
+\subsection{La parola chiave \texttt{this}}
+La parola chiave \texttt{this} è usata all'interno di un metodo per mantenere il riferimento all'oggetto in uso corrente. La parola chiave \texttt{this} è anche utilizzata per risolvere i conflitti di nome che potrebbero verificarsi tra variabili di istanza e variabili locali. Se \texttt{this} si trova in un costruttore ed ha una lista di argomenti di input, effettua una chiamata esplicita al costruttore che corrisponde a quella data lista di parametri.
+\begin{example}{\nmu Il significato di \texttt{this}}{utilizzo_this}
+\begin{lstlisting}[style=javastyle]
+public class Flower {
+	int petalCount = 0;
+	String s = new String("null");
+	Flower(int petals) {
+		petalCount = petals;
+		System.out.println("Construtor w/ int arg only, petalCount = " + petalCount);
+	}
+	...
+	Flower(String s, int petals) {
+		this(petals);
+		// !this(s); // Can't call two!
+		this.s = s;
+		System.out.println("String & int args");
+	}
+	Flower() {
+		this("hi", 47);
+		System.out.println("default constructor (no args)");
+	}
+
+	void prn(String s, int petals) {
+		this.s = s;
+		System.out.println(s + petals);
+	}
+
+	public static void main(String args[]) {
+		Flower a = new Flower(2);
+		Flower b = new Flower("seconda", 2);
+		a.prn("a: ", 2);
+		b.prn("b: ", 3);
+		...
+	}
+}
+\end{lstlisting}
+\end{example}
+\section{File e classi Java}
+Un file contiene codice sorgente Java, detto comunemente \textit{unità di compilazione} o \textit{unità di traduzione}, deve sempre avere estensione \textit{.java}.
+
+Esso può contenere più definizioni di classi \textbf{ma solo una può essere public}. Tale classe deve avere lo stesso nome del file (rispettando le maiuscole ma escludendo l'estensione .java). Pertanto se il file contiene il programma principale di un'applicazione, questo dovrà necessariamente essere il main della classe public. Le altre classi sono \textbf{nascoste} al mondo esterno perchè si intendono solo di supporto alla classe public.
+
+Quando si compila un file Java si otterrà in output un file (contenente esattamente lo stesso nome ma con estensione \textit{.class}) per ogni classe presente nel file \textit{.java}. Un programma funzionante è praticamente un insieme di file \textit{.class} che possono essere ``impacchettati'' e eventualmente compressi in un JAR file (usando l'applicazione \textbf{jar} fornita insieme al JDK). Sarà compito dell'interprete Java occuparsi del ritrovamento, caricamento e interpretazione di questi file.
+
+\subsection{Creazione dei package} Come già osservato, per raggruppare delle classi Java è possibile ricorrere alla loro inclusione in un unico file. In alternativa, Java permette di raggruppare delle classi mediante clausola \texttt{package}. Ad esempio, per raggruppare un insieme di classi in un package denominato \texttt{mypackage} basterà inserire la clausola:
+\[
+\texttt{package mypackage;}
+\]
+all'inizio di ogni file Java contenente le classi da raggruppare.
+\begin{note}{}{}
+Per convenzione, i nomi dei package si definiscono con le lettere minuscolo.
+\end{note}
+I package predefiniti della JDK sono:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/package_jdk}
+	\end{center}
+\end{figure}
+Per importare un'intera libreria predefinita di Java si usa la clausola \texttt{import}. Ad esempio:
+\[
+\texttt{import java.util.*;}
+\]
+Volendo invece importare solo una classe della libreria, ad esempio \textit{ArrayList}, si dovrebbe scrivere:
+\[
+\texttt{import java.util.ArrayList;}
+\]
+Se all'interno del codice ci si vuole riferire a tale classe, occorre specificare solo \textit{ArrayList} se si è precedentemente importato il package altrimenti si deve indicare l'intero percorso \texttt{java.util.ArrayList;}
+\begin{note}{}{}
+Le classi del package \texttt{java.lang} sono automaticamente rese disponibili durante la scrittura di un programma, cioè esse sono importate automaticamente.
+\end{note}
+\subsection{Lo spazio dei nomi delle classi}
+La ragione alla base della scelta di importare i package è fornire un meccanismo di gestione dello ``spazio dei nomi delle classi''. Sappiamo che i nomi di tutti i membri delle classi sono isolati gli uni dagli altri. Un metodo \texttt{f()} della classe $A$ non entrerà mai in conflitto con un metodo \texttt{f()} (avnete la stessa lista di argomenti) della classe $B$. A distinguerli sarà l'oggetto sul quale sono invocati. Come possiamo ottenere un risultato simile per i nomi delle classi? Questo problema è particolarmente avvertito per quelle applicazioni che possono essere ottenute via Web. Infatti, può accadere facilmente che si abbia un ``conflitto di nomi'' fra classi prese automaticamente da Internet e classi disponibili localmente. La soluzione sta appunto nel concetto di package.
+
+Per esempio, si supponga di aver creato un package di un solo file \texttt{MyClass.java}. Questo significa che ci deve essere un'unica classe public in quel file e che il nome della classe dev'essere \texttt{MyClass}
+\begin{lstlisting}[style=javastyle]
+package mypackage;
+public class MyClass {
+// ...
+\end{lstlisting}
+Se qualcuno volesse usare \texttt{MyClass} nel proprio programma potrebbe usare il nome in modo completamente specificato
+\begin{lstlisting}[style=javastyle]
+mypackage.MyClass m = new mypackage.MyClass();
+\end{lstlisting}
+La clausola \texttt{import} può rendere ciò più semplice:
+\begin{lstlisting}[style=javastyle]
+import mypackage.*;
+// ...
+MyClass m = new MyClass();
+\end{lstlisting}
+\subsection{Package e cartelle}
+Poichè un package si compone di più file \textit{.class} è preferibile organizzarli in una cartella distinta, sfruttando l'organizzazione gerarchica in cartelle disponibile nei moderni sistemi operativi. Questa soluzione risolve altri due problemi:
+\begin{enumerate}
+	\item la creazione di nomi dei package unici (poichè associati alla cartella) e
+	\item il ritrovamento di quelle classi che potrebbero essere disperse in qualche cartella imprecisata.
+\end{enumerate}
+Questo è ottenuto codificando il percorso della locazione del file \textit{.class} nel nome del package.
+
+L'interpreta Java procede nell'ordine seguente:
+\begin{enumerate}
+	\item trova la variabile d'ambiente CLASSPATH (impostata manualmente oppure attraverso i tool Java-based sulla macchina parametro - cp dell'interprete). CLASSPATH contiene una o più cartelle che sono usate come root per la ricerca dei file \textit{.class}
+	\item partendo dalla root, prende il nome del package e sostituisce ogni punto con uno slash per generare un nome di percorso per la root del CLASSPATH (in modo tale che \texttt{package mypackage.util} diventi \texttt{mypackage\\util} dipendentemente dal sistema operativo)
+	\item Concantena la stringa ottenuta ai percorsi contenuti nel CLASSPATH dove accede per cercare il file \textit{.class} con il nome corrispondente alla classe che si sta cercando di creare.
+\end{enumerate}
+	Abbiamo appena visto che per realizzare una libreria si può ricorrere al costrutto package del Java. Ma come si realizza effettivamente il concetto di ``information hiding''? Per chiarire questo aspetto occorre speigare il concetto di \textbf{modificatore} (o \textbf{specificatore}) \textbf{di accesso}, che si applica tanto alle proprietà di una classe (dati e funzioni membro) quanto alle classi stesse.
+\section{I modificatori di accesso in Java}
+I modificatori di accesso in Java sono i seguenti:
+\begin{itemize}
+	\item public;
+	\item private;
+	\item firendly (o package access);
+	\item protected.
+\end{itemize}
+Questi modificatori vanno inseriti subito prima della definizione di ogni membro della classe (sia esso funzione o dato) in modo che ciascun modificatore controlla l'accesso ad un solo membro.
+
+Questo è diverso da quello che accade in C++ in cui un modificatore controllava l'accesso di tutti i membri che seguivano fino a che non si indicava un altro modificatore diverso.
+\subsection{Il modificatore di accesso \texttt{friendly}}
+Se non si indica alcun modificatore per un determinato membro, Java gli assegna un accesso di default che non è rappresentato da alcuna parola chiave sebbene ci si riferisce ad esso come \texttt{friendly} o \texttt{package access}. Ciò significa che tutte le classi del package corrente hanno accesso al membro friendly che invece appare come private alle classi fuori dal package. Di conseguenza si dice che questi elementi hanno un \texttt{package access}. L'accesso friendly permette di raggruppare insieme delle classi correlate in un package cosicché possano facilmente interagire tra loro. In Java il codice di un package non può autonomamente accedere a quello di un altro.
+
+Il solo modo di concedere l'accesso ad un membro è:
+\begin{itemize}
+	\item rendere il membro public in modo che tutti da qualsiasi parte possono accedervi;
+	\item rendere il membro friendly non specificando alcun modificatore e inserire le altre classi nello stesso package in modo tale che queste possano accedervi;
+	\item una sottoclasse può accedere, oltre ai membri pubblici, ai membri protected delle superclassi e ai  friendly di un'altra classe solo se le due classi sono nello stesso package;
+	\item nel caso di membri dato, fornendo dei metodi ``accesso/mutator'' (noti anche come metodi ``get/set'') che leggono e cambiano il valore.
+\end{itemize}
+Se i file sorgente Java non importano alcun package particolare e risiedono nella stessa cartella sono implicitamente trattati come un ``package di default'' per quella cartella e pertanto sono \textit{friendly} tra loro (se non viene specificato alcun modificatore di accesso).
+
+\subsection{Il modificatore di accessso \texttt{public}}
+Se un membro della classe è preceduto dalla parola chiave \texttt{public}, significa che è accessibile a chiunque.
+\begin{example}{\nmu Utilizzo del modificatore di acesso \texttt{public}}{utilizzo_public}
+\begin{lstlisting}[style=javastyle]
+// Creare una libreria
+package c05.dessert;
+public class Cookie {
+	public Cookie() {
+		System.out.println("Cookie constructor");
+	}
+	void bite() { System.out.println("bite"); }
+}
+
+// Usa la liberira
+import c05.dessert.*;
+public class Dinner {
+	public Dinner() {
+		System.out.println("Dinner constructor");
+	}
+
+	public static void main(String[] args) {
+		Cookie x = new Cookie();
+		// !x.bite(); // Non si puo' accedere
+	}
+}
+\end{lstlisting}
+\end{example}
+\subsection{Il modificatore di accesso private}
+La parola chiave \texttt{private} è usata per rendere il membro accessibile solo dai metodi della classe in cui è stato dichiarato. Visto che un package potrebbe essere creato da più programmatori, rendendo alcuni membri (metodi o attributi) della propria classe private si ha la certezza che le eventuali modifiche che potrebbero riguardare la classe non andranno a coinvolgere le altre classi presenti nel package.
+\begin{example}{\nmu Utilizzo del modificatore di accesso \texttt{private}}{utilizzo_private}
+\begin{lstlisting}[style=javastyle]
+// Dimostrazione di dichiarazioni private.
+class Sundae {
+	private Sundae() {}
+	static Sundae makeASundae() {
+		return new Sundae();
+	}
+}
+
+public class IceCream {
+	public static void main(String[] args) {
+		// ! Sundae x = new Sundae();
+		Sundae x = Sundae.makeASundae();
+	}
+}
+\end{lstlisting}
+\end{example}
+Potrebbero essere resi private tutti quei metodi che fungono solo da supporto per quella classe in modo tale da impedirne l'uso accidentale all'interno del package e di conseguenza proibire la modifica o l'eliminazione del metodo. Discorso analogo vale per gli attributi private delle classi. Se non si hanno particolari esigenze, si dovrebbero rendere private tutti i membri dato della classe.
+
+L'uso del private è importante specialmente nel multithreading.
+\subsection{Il modificatore di accesso protected}
+Se un metodo o un attributo sono preceduti dalla parola chiave \texttt{protected}, significa che tali caratteristiche sono accssibili sia nella classe in cui sono stati dichiarati che in una qualsiasi sottoclasse della stessa in qualunque package sia, nelle classi che sono nello stesso package della classe in cui è stata dichiarata.
+
+Per esprimere la relazione di ereditarietà tra una sottoclasse e la classe base, Java introduce la parola chiave \texttt{extends}. Pertanto per indicare che una classe eredita metodi e attributi da una classe esistente si dirà che la nuova classe estende una classe esistente.
+\begin{example}{\nmu Utilizzo del modificatore di accesso \texttt{protected}}{utilizzo_protected}
+\begin{lstlisting}[style=javastyle]
+// La parola chiave protected
+package example;
+import java.util.*;
+public class A {
+	private int i;
+	protected int read() { return i; }
+	protected void set(int ii) { i = ii; }
+	public A(int ii) { i = ii; }
+	public int value(int m) { return m * i; }
+}
+
+package example2;
+import example.A;
+public class B extends A {
+	private int j;
+	public B(int jj) { super(jj); j = jj; }
+	public void change(int x) { set(x); }
+}
+\end{lstlisting}
+\end{example}
+Se si crea un nuovo package e si eredita da una classe in un altro package, i soli membri accessibili sono quelli pubblici del pacchetto originale e quelli protected della classe base.
+
+Invece, i membri precedeuti dalla parola chiave \texttt{final} non possono essere estesi ovvero non possono essere ridefiniti nelle sottoclassi.
+\subsection{Accesso alle classi}
+In Java i modificatori di accesso sono utilizzati anche per determinare quali classi nella libreria sono accessibili agli utenti di quella libreria. Poichè un'unita di compilazione può appartenere ad un singolo package, tutte le classi in una singola unità di compilazione sono automaticamente \textit{friendly} tra loro. Se si vuole che la classe sia accessibile al programmatore bisogna dichiararla \textit{public} nel seguente modo:
+\begin{lstlisting}[style=javastyle]
+public class MyClass {
+	// body
+}
+\end{lstlisting}
+\begin{note}{}{}
+Si nota che una classe non può essere dichiarata private o protected.
+\end{note}
+Se si vuole che nessuno possa accedere alla classe si possono rendere i costruttori private.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+// Classe privata mediante i costruttori privati
+
+class Soup {
+	private Soup() {}
+	// Permette la creazione mediante un metodo di classe
+	public static Soup makeSoup() {
+		return new Soup();
+	}
+
+	/*
+	Crea un oggetto e restituisce un riferimento su richiesta.
+	Un esempio di classe "singoletto"
+	*/
+
+	private static Soup ps1 = new Soup();
+	public static Soup access() {
+		return ps1;
+	}
+
+	public void f() {}
+}
+
+class Sandwich {
+	// Uso di Lunch
+	void f() { new Lunch(); }
+}
+
+public class Lunch {
+	void test() {
+		// Can'to do this! Private constructor:
+		// ! Soup priv1 = new Soup();
+		Soup priv2 = Soup.makeSoup();
+		Sandwich f1 = new Sandwich();
+		Soup.access().f();
+	}
+}
+\end{lstlisting}
+\end{example}
+\section{Le interfacce}
+Spesso ci si riferisce al controllo dell'accesso come \textit{implementation hiding}. Il wrapping di dati e metodi nelle classi in aggiunta all'implementation hiding viene chiamato \textbf{incapsulamento}. Il risultato di quest'operazione è un tipo di dato fornito di caratteristiche e comportamento. Il controllo dell'accesso permette essenzialmente di:
+\begin{itemize}
+	\item stabilire cosa possono e non possono fare i programmatori utente;
+	\item separare l'interfaccia dall'implementazione.
+\end{itemize}
+Attraverso la parola chiave \texttt{interface} Java permette di astrarre completamente un'interfaccia dalla relativa implementazione specificando che \textbf{cosa} una classe deve fare ma non \textbf{come} deve farlo. Esse forniscono dei \textit{template} degli schemi per la definizione delle classi.
+
+Le interfacce sono simili alle classi ma privi di variabili di istanza e i loro metodi sono privi di corpo. Per implementare un'interfaccia, una classe deve reare l'insieme dei metodi definiti in tale interfaccia con ampia libertà di implementazione.
+
+Le interfacce aggiungono gran parte delle funzionalità necessarie per molte applicazioni, che solitamente utilizzerebbero invece l'ereditarietà multipla in C++.
+\begin{example}{\nmu Interfaccia}{uso_interfaccia}
+\begin{lstlisting}[style=javastyle]
+access interface InterfaceName {
+	returnType NameOfMethod1(argument-list);
+	returnType NameOfMethod2(argument-list);
+	// ...
+	returnType NameOfMethodN(argument-list);
+	final static type finalNameVar1 = value;
+	final static type finalNameVar2 = value;
+	// ...
+	final static type finalNameVarN = value;
+}
+\end{lstlisting}
+\end{example}
+\texttt{access} può essere public oppure può essere l'accesso di default per cui l'interfaccia è disponibile solo nel pacchetto in cui è definita. I metodi specificati in un'interfaccia sono sempre considerati public, e quindi vanno implementati come public.
+
+I metodi dichiarati sono privi di corpo ovvero sono astratti. Toccherà alla classe che implementerà l'interfaccia, definire i rispettivi metodi. Le variabili possono essere indicate nella dichiarazione di interefaccia e sono implicitamente \textit{final} e \textit{static} (non possono essere modificate dalla classe di implementazione) e devono essere inizializzate ad un valore costante.
+
+Se l'interfaccia viene dichiarata \textit{public} allora anche tutti i metodi e le variabili sono considerate implicitametne \textit{public.}
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+public interface drive {
+	void firstgear();
+	void secondgear();
+	void thirdgear();
+}
+\end{lstlisting}
+Affinchè una o più classi possoano implementare un'interfaccia, Java mette a disposizione la parola chiave \texttt{implements}.
+
+La sintassi generale è la seguente:
+\begin{lstlisting}[style=javastyle]
+	access class ClassName [extends BaseClass] [implements interface1[, interface2, ... ]]
+	{
+		// body
+	};
+\end{lstlisting}
+\end{example}
+I metodi che implementano un'interfaccia devono essere dichiarti \textit{public} e inoltre devono corrispondere esattametne a quelli dichiarati nella definizione dell'interfaccia.
+\section{Il riuso delle classi in Java}
+Una delle caratteristiche principali di Java è la possibilità di riusare il codice. Anzichè creare delle classi completamente nuove si possono usare delle classi esistenti che sono già implementate e testate. Esistono due modi di procedere.
+\begin{enumerate}
+	\item Nel primo modo semplicemente si creano oggetti per la classe esistente all'interno della nuova classe. Questa modalità è chiamata \textbf{composizione} perchè la nuova classe è composta di oggetti delle classi esistenti in modo tale che si riusa la funzionalità del codice.
+	\item Il secondo approccio si basa sul meccanismo di \textbf{ereditarietà}, uno dei principi fondamentali della programmazione OO.
+\end{enumerate}
+\subsection{Il meccanismo di composizione}
+Tale meccanismo è molto diffuso. Come già detto consiste nell'inserire i riferimenti agli oggetti in una nuova classe. Si può notare che mentre i tipi primitivi sono automaticamente inizializzati a 0, i riferimenti agli oggetti sono inizializzati a \texttt{null}. Il compilatore, infatti, non deve creare degli oggetti di default altrimenti si potrebbero avere costi computazionali aggiuntivi indesiderati.
+\begin{lstlisting}[style=javastyle]
+class WaterSource {
+	private String s;
+	WaterSource() {
+		System.out.println("WaterSource()");
+		s = new String("Constructed");
+	}
+
+	public String toString() { return s; }
+}
+
+public class SprinklerSystem {
+	private String valve1, valve2, valve3, valve4;
+	WaterSource source;
+	int i;
+	float f;
+	void print();
+	System.out.println("valve1 = " + valve1);
+	System.out.println("valve2 = " + valve2);
+	System.out.println("valve3 = " + valve3);
+	System.out.println("valve4 = " + valve4);
+	System.out.println("i = " + i);
+	System.out.println("f = " + f);
+	System.out.println("source = " + source);
+}
+
+public static void main(String[] args) {
+	SprinklerSystem x = new SprinklerSystem();
+	x.print();
+}
+\end{lstlisting}
+Se si vuole un riferimento inizializzato, si può fare nei seguenti punti:
+\begin{itemize}
+	\item nel punto in cui gli oggetti sono definiti, quindi saranno sempre inizializzati immediatamente appena è richiamato il costruttore;
+	\item nel costruttore della classe;
+	\item giusto prima di quando si ha bisogno di usare l'oggetto. Questo approccio è spesso chiamato \textit{lazy initialization}. Esso può ridurre i costi aggiuntivi in situazioni dove l'oggetto non deve essere creato molte volte.
+\end{itemize}
+\begin{lstlisting}[style=javastyle]
+class Soap {
+	private String s;
+	Soap() {
+		System.out.println("Soap()");
+		s = new String("Constructed");
+	}
+	public String toString() {
+		return s;
+	}
+}
+
+public class Bath {
+	private String s1 = new String("Happy"), s2 = "Happy", s3, s4;
+	Soap castille;
+	int i; float toy;
+	Bath() {
+		System.out.println("Inside Bath()");
+		s3 = new String("Joy"); i = 47; toy = 3.14f;
+		castille = new Soap();
+	}
+
+	void print() {
+		if (s4 == null) s4 = new String("Joy");
+		System.out.println("s1 = " + s1);
+		System.out.println("s2 = " + s2);
+		System.out.println("s3 = " + s3);
+		System.out.println("s4 = " + s4);
+		System.out.println("i = " + i);
+		System.out.println("toy = " + toy);
+		System.out.println("castille = " + castille);
+	}
+
+	public static void main(String[] args) {
+		Bath b = new Bath();
+		b.print();
+	}
+}
+\end{lstlisting}
+\subsection{Il meccanismo di ereditarietà}
+L'ereditarietà è uno dei concetti fondamentali di Java (e di tutti i linguaggi objected-oriented in generale). Esso entra in gioco ogni qualvolta che si crea una classe perchè ogni classe in Java eredita dalla classe standard di root \textit{Object} (a meno di esplicitarne una in particolare).
+
+Per indicare che una classe eredita i membri da un'altra classe (chiamata \textbf{classe base}) si è già detto che Java mette a disposizione la parola chiave \texttt{extends}.
+\begin{lstlisting}[style=javastyle]
+class Cleanser {
+	private String s = new String("Cleanser");
+	public void append(String a) { s += a; }
+	public void dilute() { append("dilute()"); }
+	public void apply() { append("apply()"); }
+	public void scrub { append("scrub()"); }
+	public void print() { System.out.println(s); }
+	public static void main(String[] args) {
+		Cleanser x = new Cleanser();
+		x.dilute(); x.apply(); x.scrub();
+		x.print();
+	}
+}
+
+public class Detergent extends Cleanser {
+	public void scrub() {
+		append("Detergent.scrub()");
+		super.scrub();
+	}
+
+	public void foam() { append("foam()"); }
+	public static void main(String[] args) {
+		Detergent x = new Detergent();
+		x.dilute();
+		x.apply();
+		x.scrub();
+		x.foam();
+		x.print();
+		System.out.println("Testing base class: ");
+		Cleanser.main(args);
+	}
+}
+\end{lstlisting}
+Si può notare che le classi \textit{Cleanser} e \textit{Detergent} hanno entrambe un main. Ciò può essere fatto per testare il codice di ogni singola classe. Quando da linea di coamndo si vorrà lanciare il metodo \textit{main} della classe \textit{Cleanser} si digiterà: \texttt{java Cleanser}.
+
+Se si vorrà invocare il metodo \textit{main} della classe \textit{Detergent} si digiterà: \texttt{java Detergent}.
+
+Inoltre si può notare che la classe \textit{Detergent} ha impostato dei metodi nella sua interfaccia: \textit{append(), dilute(), apply(), scrub()} e \textit{print()}.
+
+Ciò è dovuto al fatto che \textit{Detergent} è derivata da \textit{Cleanser} quindi prende automaticamente tutti i metodi della sua interfaccia anceh se questi non sono definiti esplicitamente in \textit{Detergent}. Si può pensare all'ereditarietà come ad una sorta di riuso dell'interfaccia. È possibile \textbf{ridefinire (override)} i metodi ereditati dalla classe base. In tal caso se volessimo richiamare dalla sottoclasse in metodo \textit{scrub()} definito nella classe base, dobbiamo utilizzare la parola chiave \texttt{super} che si riferisce alla superclasse da cui è stata derivata la claasse corrente.
+
+È sempre possibile definire nella classe derivata dei nuovi membri, non esistenti nella classe base.
+\paragraph{Inizializzazione della classe di base} Quando si crea un oggetto di una classe derivata, esso contiene al suo interno un \textit{sotto-oggetto} della classe di base. Questo sotto-oggetto è identico a quello che si avrebbe se istanziassimo la classe base.
+
+Pertanto è importante che il sotto-oggetto sia inizializzato correttamente attraverso l'invocazione del costruttore della classe base che possiede la conoscenza e privilegi opportuni per farlo. Java inserisce automaticamente la chiamata al costruttore della classe base nel costruttore della classe derivata.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+class Art {
+	Art() {
+		System.out.println("Art constructor");
+	}
+}
+
+class Drawing extends Art {
+	Drawing() {
+		System.out.println("Drawing constructor");
+	}
+}
+
+public class Cartoon extends Drawing {
+	Cartoon() {
+		System.out.println("Cartoon Constructor");
+	}
+
+	public static void main(String[] args) {
+		Cartoon x = new Cartoon();
+	}
+}
+\end{lstlisting}
+L'output sarà:
+\begin{center}
+Art constructor
+
+Drawing constructor
+
+Cartoon constructor
+\end{center}
+\end{example}
+Si può notare come le chiamate avvengano ``dall'esterno verso l'interno'' ovvero a partire dalla radice della gerarchia di ereditarietà fino ad arrivare alla chiamata dell'ultimo costruttore. L'oggetto istanza della classe base viene creato prima di quello della sottoclasse. Anche se non si crea un costruttore per la classe \textit{Cartoon}, il compilatore ne prevedrà uno di default (a zero argomenti) che invocherà il costruttore della classe base. Questa aggiunta non si ha se l'utente specifica un qualche costruttore.
+
+Se il costruttore della classe vase ha degli argomenti in input allora bisogna esplicitare nella sua invocazione la lista di tali argomenti attraverso l'uso della parola chiave \texttt{super}.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+class Game {
+	Game(int i) {
+		System.out.println("Game constructor");
+	}
+}
+
+class BoardGame extends Game {
+	BoardGame(int i) {
+		super(i);
+		System.out.println("BoardGame constructor");
+	}
+}
+
+public class Chess extends BoardGame {
+	Chess() {
+		super(11);
+		System.out.println("Chess constructor");
+	}
+
+	public static void main(String[] args) {
+		Chess x = new Chess();
+	}
+}
+\end{lstlisting}
+Se non ci fosse la chiamata al costruttore della classe base in \textit{BoardGame()}, il compilatore non troverebbe il costruttore \textit{Game()}, segnalando un errore. La chiamata al costruttore della classe base, deve essere la prima cosa da fare nel costruttore della classe derivata, altrimenti si verifica un errore di compilazione.
+\end{example}
+Nella maggior parte dei casi l'approccio per ereditarietà e per composizione verrano usati insieme.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+class Plate {
+	Plate(int i) {
+		System.out.prinltn("Plate constructor");
+	}
+}
+
+class DinnerPlate extends Plate {
+	DinnerPlate(int i) {
+		super(i);
+		System.out.println("DinnerPlate constructor");
+	}
+}
+
+class Utensil {
+	Utensil(int i) {
+		System.out.println("Utensil constructor");
+	}
+}
+
+class Spoon extends Utensil {
+	Spoon(int i) {
+		super(i)
+		System.out.println("Spoon constructor");
+	}
+}
+
+class Fork extends Utensil {
+	Fork(int i) {
+		super(i);
+		System.out.println("Fork constructor");
+	}
+}
+
+class Knife extends Utensil {
+	Knife(int i) {
+		super(i);
+		System.out.println("Knife constructor");
+	}
+}
+
+class Custom {
+	Custom(int i) {
+		System.out.println("Custom constructor");
+	}
+}
+
+public class PlaceSetting extends Custom {
+	Spoon sp;
+	Fork frk;
+	Knife kn;
+	DinnerPlate pn;
+	PlaceSetting(int i) {
+		super(i + 1);
+		sp = new Spoon(i + 2);
+		frk = new Fork(i + 3);
+		kn = new Knife(i + 4);
+		pl = new DinnerPlate(i + 5);
+		System.out.println("PlaceSetting constructor");
+	}
+
+	public static void main(String[] args) {
+		PlaceSetting x = new PlaceSetting(9);
+	}
+}
+\end{lstlisting}
+\end{example}
+
+\section{La parola chiave \texttt{final}}
+La parola chiave \texttt{final} ha un significato leggermente differente a seconda del contesto in cui viene inserita. Si applica ai dati, ai metodi e alle classi.
+\subsection{\texttt{final} applicato ai dati}
+Molti linguaggi di programmazione hanno un modo particolare per indicare al compilatore che un dato è ``costante''. Una costante è utile per due ragioni:
+\begin{itemize}
+	\item può essere una costante a tempo di compilazione che non cambierà mai;
+	\item può essere un valore inizializzato a run-time che non si vuole più cambiare in seguito.
+\end{itemize}
+Nel primo caso il compilatore userà subito il valore della costante nei calcoli in cui è richiesta in modo da eliminare alcuni sovraccarichi di lavoro a run-time. In Java le costanti di questo genere devono essere di \textbf{tipo primitivo} e sono espresse usando la parola chiave \texttt{final}. Inoltre deve essere assegnato loro un valore al momento della definizione.
+
+Quando si usa \texttt{final} con i \textbf{riferimenti} agli oggetti cambiano leggermente le cose, infatti mentre con i tipi primitiv \texttt{final} rende il valore costante, con i riferimenti agli oggetti accade che rende i \textbf{riferimenti costanti}. Ciò significa che se si è inizializzato un riferimento ad un oggetto, esso non può più essere modificato sebbene l'oggetto stesso possa esserlo. Java, infatti, non fornisce un modo per rendere degli oggetti (array inclusi) costanti.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+class Value {
+	int i = 1;
+}
+
+public class FinalData {
+	final int i1 = 9;
+	static final int VAL_TWO = 99;
+	public static final int VAL_THREE = 39;
+	// Costanti al run-time:
+	final int i4 = (int)(Math.random() * 20);
+	static final int i5 = (int)(Math.random() * 20);
+	Value v1 = new Value();
+	final Value v2 = new Value();
+	static final Value v3 = new Value();
+	final int[] a = {1, 2, 3, 4, 5, 6};
+	public void print(String id) {
+		System.out.println(id + ": i4 = " + i4 + ", i5 = " + i5);
+	}
+
+	public static void main(String[] args) {
+		FinalData fd1 = new FinalData();
+		// !fd1.i1++; //Errore: valore non modificabile
+		fd1.v2.i++;
+		fd1.v1 = new Value();
+		for (int i = 0; i < fd1.a.length(); i++) {
+			fd1.a[i]++; // L'oggetto non e' costante
+		}
+		// ! fd1.v2 = new Value(); // Il riferimento e' costante
+		// ! fd1.v3 = new Value(); // Il riferimento e' costante
+		// ! fd1.a = new int[3];
+
+		fd1.print("fd1");
+	}
+}
+\end{lstlisting}
+Si fa notare che i tipi primitivi preceduti da \texttt{final} e \texttt{static} insieme, con valori costanti, hanno per convenzione nomi con lettere maiuscole e parole separate da underscore.
+\end{example}
+Java permette la creazione di \textit{blank final} che sono dati dichiarati come \textit{final} senza un valore inziale. Questi devono essere inizializzati esplicitamente prima di essere utilizzati nelle classi e assicurano una maggiore flessibilità nell'uso di \texttt{final} visto che, per esempio, ora è possibile avere un valore diverso per ogni oggetto pur mantenendo le caratteristiche fornite da \texttt{final}.
+\begin{lstlisting}[style=javastyle]
+class Poppet {}
+
+class BlankFinal {
+	final int i = 0;
+	final int j; // Final vuoto
+	final Poppet p; // Riferimento final vuoto
+	// Gli attributi final vuoti devono essere inizializzati nel costruttore
+	BlankFinal() {
+		j = 1;
+		p = new Poppet();
+	}
+
+	BlankFinal(int x) {
+		j = x;
+		p = new Poppet();
+	}
+
+	public static void main(String[] args) {
+		BlankFinal bf = new BlankFinal();
+	}
+}
+\end{lstlisting}
+Java permette di rendere \texttt{final} gli argomenti di un metodo. Ciò significa che all'interno del metodo non si possono cambiare i riferimenti a cui gli argomenti puntano.
+\begin{lstlisting}[style=javastyle]
+class Gizmo {
+	public void spin() {}
+}
+
+public class FinalArguments {
+	void with(final Gizmo g) {
+		// !g = new Gizmo(); // Illegale -- g e' fianl
+	}
+
+	void without(Gizmo g) {
+		g = new Gizmo()  // OK -- g non e' final
+		g.spin();
+	}
+}
+
+// void f(final int i ) { i++; }  // Non modificabile
+
+// Si puo' solo leggere un final di tipo primitivo
+int g(final int i) { return i + 1; }
+
+public static void main(String[] args) {
+	FinalArguments bf = new FinalArguments();
+	bf.without(null);
+	bf.with(null);
+}
+\end{lstlisting}
+\subsection{\texttt{final} applicato ai metodi}
+Ci sono due ragioni per dichiarare \texttt{final} dei metodi:
+\begin{itemize}
+	\item impedire alle classi derivate di cambiare il significato del metodo ereditato;
+	\item i metodi \texttt{final} sono più efficienti perchè si permette al compilatore di effettuare ogni chiamata al metodo come una chiamata \textit{inline}
+\end{itemize}
+I metodi private sono implicitamente final perchè non è possibile accedere ad un metodo private ne sovrascriverlo. Pertanto se si aggiunge final ad un metodo private non si associa alcun significato extra.
+\subsection{\texttt{final} applicato alle classi}
+Quando si dichiara un'intera classe \texttt{final}, si specifica che non si desidera derivare delle classi da quella corrente. In altre parole si vuole, per questioni di sicurezza o altro, che non sia possibile specializzare tale classe. Alternativametne si ptorebbe desiderare che le attività in cui sono coinvolti gli oggetti di tale classe siano più efficienti possibili.
+\begin{lstlisting}[style=javastyle]
+class SmallBrain {}
+final class Dinosaur {
+	int i = 7;
+	int j = 1;
+	SmallBrain x = new SmallBrain();
+	void f() {}
+}
+
+// ! Una classe Further estende Dinosaur {}
+// errore: Non si puo' estendere una classe final
+public class Jurassic {
+	public static void main(String[] args) {
+		Dinosaur n = new Dinosaur();
+		n.f();
+		n.i = 40;
+		n.j++;
+	}
+}
+\end{lstlisting}
 \end{document}
