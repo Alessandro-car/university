@@ -896,6 +896,141 @@ Adesso troviamo:
 \end{center}
 
 \end{example}
+\subsection{Proprietà dei linguaggi context-free}
+\begin{theorem}{\nmu Chiusura rispetto all'operazione di unione}{cfl_unione}
+	I linguaggi context-free sono chiusi rispetto all'operazione di unione.
+\end{theorem}
+Se $L_1$ e $L_2$ sono linguaggi context-free allora $L_1 \cup L_2$ è context-free.
+\begin{example}{}{}
+Sia $L_1 = \{a^nb^n\}$ e sia $L_2 = \{ww^R\}$ ove le grammatiche sono rispettivamente:
+\begin{align*}
+	S_1 &\to aS_1b \mid \lambda \\
+	S_2 &\to aS_2a \mid bS_2b \mid \lambda
+\end{align*}
+e l'unione è:
+\[
+S \to S_1 \mid S_2
+\]
+\end{example}
+\begin{theorem}{\nmu Chiusura rispetto all'operazione di concatenazione}{cfl_concatenazione}
+	I linguaggi context-free sono chiusi rispetto all'operazione di concatenazione.
+\end{theorem}
+Se $L_1$ e $L_2$ sono linguaggi context-free allora $L_1L_2$ è context-free.
+\begin{example}{}{}
+Sia $L_1 = \{a^nb^n\}$ e sia $L_2 = \{ww^R\}$ ove le grammatiche sono rispettivamente:
+\begin{align*}
+	S_1 &\to aS_1b \mid \lambda \\
+	S_2 &\to aS_2a \mid bS_2b \mid \lambda
+\end{align*}
+e la concatenazione è:
+\[
+S \to S_1S_2
+\]
+\end{example}
+\begin{theorem}{\nmu Chiusura rispetto all'operazione $*$}{cfl_star}
+	I linguaggi context-free sono chiusi rispetto all'operazione $*$.
+\end{theorem}
+Se $L$ è un linguaggio context-free allora $L^*$ è context-free.
+\begin{example}{}{}
+Sia $L = \{a^nb^n\}$ ove le grammatica è:
+\begin{align*}
+	S &\to aSb \mid \lambda
+\end{align*}
+e la grammatica di $L^*$ è:
+\begin{align*}
+S_1 &\to SS_1 \mid \lambda \\
+S \to aSb \mid \lambda
+\end{align*}
+\end{example}
+I linguaggi context-free invece \textbf{non} sono chiusi rispetto all'operazione di intersezione.
+\begin{example}{}{}
+Sia $L_1 = \{a^nb^nc^m\}$ e sia $L_2 = \{a^nb^mc^m\}$ ove le grammatiche sono rispettivamente:
+\begin{align*}
+	S &\to AC \\
+	A &\to aAb \mid \lambda \\
+	C &\to cC \mid \lambda
+\end{align*}
+e
+\begin{align*}
+	S &\to AB \\
+	A &\to aA \mid \lambda \\
+	B &\to bBc \mid \lambda
+\end{align*}
+L'intersezione è $L_1 \cap L_2 = \{a^nb^nc^n\}$ che non è context-free.
+\end{example}
+Inoltre, i linguaggi context-free \textbf{non} sono chiusi rispetto all'operazione di complemento.
+\begin{example}{}{}
+Sia $L_1 = \{a^nb^nc^m\}$ e sia $L_2 = \{a^nb^mc^m\}$ ove le grammatiche sono rispettivamente:
+\begin{align*}
+	S &\to AC \\
+	A &\to aAb \mid \lambda \\
+	C &\to cC \mid \lambda
+\end{align*}
+e
+\begin{align*}
+	S &\to AB \\
+	A &\to aA \mid \lambda \\
+	B &\to bBc \mid \lambda
+\end{align*}
+Il complemento è pari a:
+\[
+\overline{\overline{L_1} \cup \overline{L_2}} = L_1 \cap L_2 = \{a^nb^nc^n\}
+\]
+che non è context-free.
+\end{example}
+\paragraph{Intersezione tra linguaggi context-free e linguaggi regolari}
+\begin{theorem}{}{}
+L'intersezione tra linguaggi context-free e linguaggi regolari è un linguaggio context-free.
+\end{theorem}
+Se $L_1$ è un linguaggio context-free e $L_2$ è un linguaggio regolare allora $L_1 \cap L_2$ è context-free.
+Il linguaggio $L_1$ è riconosciuto da un PDA e il linguaggio $L_2$ è riconosciuto da un DFA. Quindi vogliamo costruire un PDA che riconosce $L_1 \cap L_2$.
+
+Il PDA per $M_1$ è il seguente:
+\begin{center}
+\begin{tikzpicture}[>=stealth, node distance=3cm, on grid, auto]
+	\node[state] (q1) {$q_1$};
+	\node[state] (q2) [right=of q1] {$q_2$};
+
+	\draw[->] (q1) -- node[above=0.1cm] {\large $a, b / c$} (q2);
+\end{tikzpicture}
+\end{center}
+
+Il DFA per $L_2$ è il seguente:
+\begin{center}
+\begin{tikzpicture}[>=stealth, node distance=3cm, on grid, auto]
+	\node[state] (p1) {$p_1$};
+	\node[state] (p2) [right=of p1] {$p_2$};
+
+	\draw[->] (p1) -- node[above=0.1cm] {\large $a$} (p2);
+\end{tikzpicture}
+\end{center}
+e il PDA per $L_1 \cap L_2$ è  il seguente:
+\begin{center}
+\begin{tikzpicture}[>=stealth, node distance=3cm, on grid, auto]
+	\node[state] (q1) {$q_1, p_1$};
+	\node[state] (q2) [right=of q1] {$q_2, p_2$};
+
+	\draw[->] (q1) -- node[above=0.1cm] {\large $a, b / c$} (q2);
+\end{tikzpicture}
+\end{center}
+Per gli stati iniziali invece, se $q_0$ è lo stato iniziale del PDA che riconosce $L_1$ e $p_0$ è lo stato iniziale del DFA che riconosce $L_2$ allora lo stato iniziale del PDA che riconosce $L_1 \cap L_2$ è:
+\begin{center}
+\begin{tikzpicture}[>=stealth, node distance=3cm, on grid, auto]
+	\node[state, initial, initial text=] (q0p0) {$q_0, p_0$};
+\end{tikzpicture}
+\end{center}
+Per gli stati finali, invece, se $q_1$ è uno stato finale del PDA che riconosce $L_1$ e $p_1$ e $p_2$ sono stati finali del DFA che riconosce $L_2$ allora gli stati finali del PDA che riconosce $L_1 \cap L_2$ sono:
+\begin{center}
+\begin{tikzpicture}[>=stealth, node distance=3cm, on grid, auto]
+	\node[state, accepting] (s1) {$q_1, p_1$};
+	\node[state, accepting] (s2) [right=of s1] {$q_1, p_2$};
+\end{tikzpicture}
+\end{center}
+Il PDA $M$ che riconosce $L_1 \cap L_2$ simula in parallelo il PDA $M_1$ che riconosce $L_1$ e  il DFA $M_2$ che riconosce $L_2$ e accetta una stringa solo se $M_1$ accetta la stringa e $M_2$ accetta la stringa, ovvero:
+\[
+L(M) = L(M_1) \cap L(M_2)
+\]
+Quindi, dato che $M$ è PDA, $L_1 \cap L_2$ è context-free.
 \section{Automi a pila}
 Gli \textit{automi a pila (pushdown automata)} sono come gli automi finiti non deterministici ma hanno una componente in più chiamata \textit{pila (stack)}. La pila fornisce memoria aggiuntiva oltre alla quantità finita di essa disponibile nel controllo. La pila consente a tali automi di riconoscere alcuni linguaggi non regolari.
 
@@ -1162,4 +1297,61 @@ In primo luogo, la condizione 2 stabilisce che $v$ o $y$ non è vuota. Allora co
 \end{enumerate}
 Uno di questi casi deve verificarsi. Poichè entrambi i casi conducono a un assurdo, la contraddizione è inevitabile. Quindi l'assunzione che $B$ sia un CFL deve essere falsa. Pertanto abbiamo provato che $B$ non è CFL.
 \end{example}
+\section{Linguaggi context-free deterministici}
+Come abbiamo detto precedentemente, gli automi finiti deterministici e gli automi finiti non deterministici sono equivalenti dal punto di vista del potere riconoscitivo di linguaggi. Invece gli automi a pila non deterministici sono più potenti della loro controparte deterministica. Ci sono linguaggi context-free che non possono essere riconosciuti da automi a pila deterministici ma da automi a pila non deterministici.
+
+I linguaggi che sono riconosciuti da automi a pila deterministici (DPDA) sono chiamati linguaggi context-free deterministici (DCFL). Questa sottoclasse dei linguaggi context-free è importante per le applicazioni, come il progetto di parser nei compilatori per i linguaggi di programmazione. Nel definire un DPDA, ci atteniamo al principio base del determinismo: in ogni passo della sua computazione, il DPDA ha al più un modo di procedere in base alla sua funzione di transizione. Definire i DPDA è più complicato che definire i DFA perchè i DPDA possono leggere un simbolo di input senza eliminare un simbolo dalla pila e vicevrsa. Di conseguenza, permettiamo $\epsilon$-mosse nella funzione di transizione di un DPDA. Queste $\epsilon$-mosse assumono due forme: \textit{mosse $\epsilon$-input} che corrispondono a  $\delta(q, \epsilon, x)$ e \textit{mosse $\epsilon$-pila} che corrispondono a $\delta(q, a, \epsilon)$. Una mossa può assumere entrambe le forme con $\delta(q, \epsilon, \epsilon)$. Se un DPDA può fare una $\epsilon$-mossa in una certa situazione, gli è vietato fare una mossa in quella stessa situazione che comporta elaborare un simnbolo invece di $\epsilon$.
+
+La definzione formale è la seguente.
+\begin{definition}{\nmu Automa a pila deterministico}{dpda}
+	Un \textit{automa a pila deterministico} è una sestupla $(Q, \Sigma, \Gamma, \delta, q_0, F)$ dove $Q, \Sigma, \Gamma$ ed $F$ sono tutti insiemi finiti e
+	\begin{enumerate}
+		\item $Q$ è l'insieme degli stati,
+		\item $\Sigma$ è l'alfabeto dell'input,
+		\item $\Gamma$ è l'alfabeto della pila,
+		\item $\delta: Q \times \Sigma_\epsilon \times \Gamma_\epsilon \to (Q \times \Gamma_\epsilon) \cup \{\emptyset\}$ è la funzione di transizione,
+		\item $q_0 \in Q$ è lo stato inziale ed
+		\item $F \subseteq Q$ è l'insieme degli stati accettanti.
+	\end{enumerate}
+	La funzione di transizione $\delta$ deve soddisfare la seguente condizione. $\forall q \in Q, a \in \Sigma$ e $x \in \Gamma$, esattamente uno dei valori
+	\[
+	\delta(q, a, x), \delta(q, a, \epsilon), \delta(q, \epsilon, x) \text{ e } \delta(q, \epsilon, \epsilon)
+	\]
+	è diverso dal $\emptyset$.
+\end{definition}
+La funzione di transizione può dare in uscita una singola mossa della forma $(r, y)$ o può indicare nessuna azione dando in uscita $\emptyset$.
+
+Un DPDA ha esattamente una mossa lecita in ogni situazione in cui la sua pila non è vuota. Se la pila è vuota, un DPDA può fare mosse solo se la funzione di transizione specifica una mossa che elimina $\epsilon$. Altrimenti, il DPDA non ha mosse lecite ed esso rifiuta senza leggere il resto dell'input.
+
+Il linguaggio di un DPDA è chiamato un \textit{linguaggio context-free deterministico}.
+\begin{lemma}{}{dpda_eq}
+Ogni DPDA ha un DPDA equivalente che legge sempre l'intera stringa di input.
+\end{lemma}
+Un DPDA può non riuscire a leggere tutta la stringa di input se prova a eliminare simboli da una pila vuota o se effettua una sequenza infinita di mosse $\epsilon$-input.  Chiamiamo la prima situazione \textit{hanging} e la seconda situazione \textit{looping}. Risolviamo il problema dell'hanging inizializzando la pila con un simbolo speciale. Se questo simbolo è in seguito eliminato dalla pila prima della fine dell'input, il DPDA legge fino alla fine dell'input e rifiuta.
+
+Risolviamo il problema del looping identificando le situazioni di looping, cioè quelle da cui nessun ulteriore simbolo è più letto, e riprogrammando il DPDA in modo che sso legga e rifiuti l'input invece di essere in looping. Dobbiamo sistemare queste modifiche per risolvere il caso in cui l'hanging o il looping si presente sull'ultimo simbolo dell'input. Se il DPDA entra in uno stato accettante in un qualsiasi momento dopo che ha letto l'ultimo simbolo, il DPDA modificato accetta invece di rifiutare.
+\begin{proof}
+Sia $P = (Q, \Sigma, \Gamma, \delta, q_0, F)$ un DPDA. Innanzitutto aggiungiamo un nuovo stato iniziale $q_{start}$, un ulteriore stato accettante $q_{accept}$, un nuovo stato $q_{reject}$, e anche altri nuovi stati come descritto nel seguito.
+
+Eseguiamo le seguenti variazioni per ogni $r \in Q, a \in \Sigma_\epsilon$ e $x, y \in \Gamma_\epsilon$.
+
+In primo luogo modifichiamo $P$ in modo che, non appena entra in uno stato accettante, resta in stati accettanti fino a quando non legge il simbolo di input successivo. Aggiungiamo un nuovo stato accettante $q_a$ per ogni $q \in Q$. Per ogni $q \in Q$, se $\delta(q, \epsilon, x) = (r, y)$, poniamo $\delta(q_a, \epsilon, x) = (r_a, y)$ e poi se $q \in F$, modifichiamo anche $\delta$ ponendo $\delta(q, \epsilon, x) = (r_a, y)$. Per ogni $q \in Q$ e $a \in \Gamma$, se $\delta(q, a, x) = (r, y)$ poniamo $\delta(q_a, a, x) = (r, y)$. Sia $F'$ l'insieme dei nuovi e vecchi stati accettanti.
+
+Poi, modifichiamo $P$ in modo che rifiuti quando prova a eliminare simboli da una pila vuota, inizializzando la pila con un nuovo simbolo speciale \$. Se successivamente $P$ rileva \$ in uno stato non accettante, entra in $q_{reject}$ e scandisce l'input fino alla fine. Se $P$ rileva \$ in uno stato accettante, entra in $q_{accept}$. In seguito, se resta input non letto, entra in $q_{reject}$ e scandisce l'input fino alla fine. Formalmente, poniamo $\delta(q_{start}, \epsilon, \epsilon) = (q_0, \$)$. Per $x \in\Gamma$ e $\delta(q, a, x) \neq \emptyset$, se $q \notin F'$ allora poniamo $\delta(q, a, \$) = (q_{reject}, \epsilon)$, e se $q \in F'$ allora poniamo $\delta(q, a, \$) = (q_{accept}, \epsilon)$. Per $a \in \Sigma$, poniamo $\delta(q_{reject}, a, \epsilon) = (q_{reject}, \epsilon)$ e $\delta(q_{accept}, a, \epsilon) = (q_{reject}, \epsilon)$.
+
+Infine, modifichiamo $P$ in modo che rifiuti invece di fare una sequenza infinita di mosse $\epsilon$-input prima della fine dell'input. Per ogni $q \in Q$ e $x \in \Gamma$, chiamiamo $(q, x)$ una \textit{situazione di looping} se, quando $P$ è nello stato $q$ con $x \in \Gamma$ sulla cima della pila, non elima mai nulla sotto $x$ e non legge mai un simbolo di input. Diciamo che la situazione è di looping è \textit{accettante} se $P$ entra in uno stato accettante durante le sue mosse successive, altrimenti, essa è di \textit{rifiuto}. Se $(q, x)$ è una situazione di looping accettante, poniamo $\delta(q, \epsilon, x) = (q_{accept}, \epsilon)$, mentre se $(q, x)$ è una situazione di looping di rifiuto, poniamo $\delta(q, \epsilon, x) = (q_{reject}, \epsilon)$.
+\end{proof}
+
+\subsection{Proprietà dei DCFL}
+Esamineremo proprietà di chiusura e di non chiusura della classe dei DCFL e le useremo per esibire un CFL che non è un DCFL.
+\begin{theorem}{}{}
+	La classe dei DCFL è chiusa rispetto al complemento.
+\end{theorem}
+Scambiando gli stati accettanti e non accettanti di un DFA si ottiene un nuovo DFA che riconosce il complemento del linguaggio. La stessa strategia funzione per i DPDA tranne che per un problema. Il DPDA può accettare il suo input entrando sia in stati accettanti che in stati non accettanti in una sequenza di mosse alla fine della stringa di input. Scambiando stati accettanti e non accettanti l'automa modificato accetterebbe ancora in questo caso. Risolviamo questo problema modifcando il DPDA in modo da limitare quando si può presentare l'accettazione. Per ogni simbolo di input, il DPDA modificato può entrare in uno stato accettante solo quando è sul punto di leggere il simbolo seguente. In altre parole, solo gli stati ``di lettura'', stati in cui viene sempre letto un simbolo di input, possono essere stati accettanti.
+\begin{proof}
+	Modifichiamo $P$ come descritto nella prova del \ref{lem:dpda_eq} e sia $(Q, \Sigma, \Gamma, \delta, q_0, F)$ la macchina risultante. Questa macchina legge sempre l'intera stringa di input. Inoltre, una volta entrata in uno stato accettante, restsa in stati accettanti fino a quando legge il successivo simbolo di input.
+
+	Abbiamo bisogno di identificare gli stati di lettura. Se il DPDA nello stato $q$ legge un simbolo di input $a \in \Sigma$ senza eliminare simboli dalla pila, cioè $\delta(q, a, \epsilon) \neq \emptyset$, allora $q$ sarà uno stato di lettura. Invece, se esso legge e rimuove anche un simbolo dalla pila, la decisione di lettura può dipendere solo dal simbolo eliminato, quindi dividiamo questo passo in due: una rimozione e poi una lettura. Quindi se $\delta(q, a, x) = (r, y)$ con $a \in\Sigma$ e $x \in \Gamma$, aggiungiamo un nuovo stato $q_x$ e modifichiamo $\delta$ ponendo $\delta(q, \epsilon, x) = (q_x, \epsilon)$ e $\delta(q_x, a, \epsilon) = (r, y)$. Definiamo $q_x$ come uno stato di lettura. Gli stati $q_x$ non eliminano mai simboli dalla pila, quindi la loro azione è indipendente dal contenuto della pila. Definiamo $q_x$ come uno stato accettante se $q \in F$. Infine, togliamo il ruolo di stato accettante a ogni stato che non è uno stato di lettura. Il DPDA modificato è equivalente a  $P$, ma esso entra al più una volta in uno stato accettante per ogni simbolo di input, quando è in procinto di leggere il simbolo seguente. Ora, scambiamo accettazione e non accettazione tra questi stati di lettura. Il DPDA risultante riconosce il linguaggio complemento.
+\end{proof}
+Questo teorema implica che alcuni CFL non sono DCFL. Ogni CFL il cui complemento non è un CFL non è un DCFL. Quindi $A = \{a^ib^jc^k \mid  i\neq j \text{ o } j \neq k \text{ con } i,j,k \geq 0\}$ è un CFL ma non un DCFL. Altrimenti $\overline{A}$ sarebbe un CFL.
 \end{document}
