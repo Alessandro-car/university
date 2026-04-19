@@ -3493,4 +3493,219 @@ public class Jurassic {
 	}
 }
 \end{lstlisting}
+\section{Polimorfismo}
+Il polimorfismo è un altro caposaldo della programmazione OO. Esso fornisce un'altra dimensione di separazione dell'interfaccia dall'implementazione per dividere il \textit{cosa} dal  \textit{come}. Pertanto, il polimorfismo permette di migliorare l'organizzazione del codice e la sua leggibilità, oltre alla creazione di programmi estensibili.
+\subsection{Upcasting}
+Per spiegare il polimorfismo per inclusione, tipico della programmazione orientata a oggetti, dobbiamo rifarci al concetto di upcasting. L'\textit{upcasting} è un meccanismo che permette di prendere un riferimento ad un oggetto e trattarlo come riferimento al suo tipo base.
+\begin{lstlisting}[style=javastyle]
+// upcasting
+class Note {
+	private int value;
+	private Note(int val) { value = val; }
+	public static final Note {
+		MIDDLE_C = new Note(0);
+		C_SHARP = new Note(1);
+		B_FLAT = new Note(2);
+	}
+}
+
+class Instrument {
+	public void play(Note n) { System.out.println("Instrument.play()"); }
+}
+
+class Wind extends Instrument {
+	// Refine interface method:
+	public void play(Note n) { System.out.println("Wind.play()"); }
+}
+
+public class Music {
+	public static void tune(Instrument i) { i.play(Note.MIDDLE_C); }
+	public static void main(String[] args) {
+		Wind flute = new Wind();
+		tune(flute); // Upcasting as Wind extends Instrument
+		tune(new Instrument())
+	}
+}
+\end{lstlisting}
+\subsection{Binding}
+Il \textit{binding} è il meccanismo di collegamento di un'invocazione di metodo al corpo del metodo. Se il binding viene eseguito prima che il programma sia lanciato (dal compilatore o da un linker) allora è denominato \textbf{early binding} o \textit{static binding}. Nei linguaggi procedurali, come il C, non esistevano delle opzioni di binding differenti perchè, per default, avevano solo l'early binding.
+\begin{example}{}{}
+\begin{lstlisting}[style=javastyle]
+public static void tune(Intrument i) {
+	// ...
+	i.play(Note.MIDDLE_C);
+}
+\end{lstlisting}
+Se Java supportasse solo l'early binding, come farebbe il compilatore a sapere che tipo di oggetto tra \textit{Wind}, \textit{Brass} e \textit{Stringed} il metodo potrebbe avere in input a run-time?
+\end{example}
+Se Java supportasse solo l'early binding, come farebbe il compilatore a sapere che tipo di oggetto tra \textit{Wind}, \textit{Brass} e \textit{Stringed} il metodo potrebbe avere in input a run-time?
+
+La soluzione la troviamo nel cosiddetto \textbf{late binding} o \textit{binding dinamico}. Quando un linguaggio supporta il late binding, ci deve essere un meccanismo che determina a run-time il tipo dell'oggetto passato e selezionare di conseguenza il metodo appropriato. Il meccanismo di late-binding varia da linguaggio a linguaggio. In Java tale meccanismo è impostato per default a meno che non si dichiara esplicitamente un metodo con la parola chiave \texttt{final}. Il compilatore genera del codice più efficiente per i metodi dichiarati \texttt{final} anhe se nella maggior parte dei casi conviene usarlo solo per una decisione di progetto anzichè per migliorare le prestazioni del programma.
+
+Un'altra eccezione è rappresentata dai metodi \texttt{static} per i quali vale il binding statico.
+\begin{lstlisting}[style=javastyle]
+class Base {
+	public static String whoAmI() {
+		return "classe base";
+	}
+}
+
+class Derived extends Base {
+	public static String whoAmI() {
+		return "classe derivata";
+	}
+
+	public static void main(String[] args) {
+		Base prova = new Derived();
+		System.out.println(prova.whoAmI());
+	}
+}
+\end{lstlisting}
+In questo caso il programma risponde con ``classe base'' in quanto la variabile \textit{prova} è stata dichiarata di tipo \textit{Base} anche se viene chiamato il costruttore della classe \textit{Derived}.
+
+Per comprendere meglio le potenzialità offerte dal polimorfismo mediante il binding dinamico consideriamo il seguente esempio:
+\begin{lstlisting}[style=javastyle]
+Shape s = new Circle();
+\end{lstlisting}
+L'oggetto \textit{Circle} è creato e il suo riferimento viene associato immediatamente a \textit{Shape} (ciò è possibile perchè la classe \textit{Circle} è derivata). Eseguendo \texttt{s.draw()} ci aspestteremo di invocare il metodo \texttt{draw()} definito all'interno della classe \textit{Shape}, in realtà viene invocato il metodo \texttt{draw()} della classe \textit{Circle}. La classe base \textit{Shape} stabilisce un'interfaccia comune per le classi derivate che a loro volta ridefiniscono i metodi fornendo un unico comportamento per ogni specifico tipo di figura geometrica. Il fatto di aver generato automaticamente le figure sta ad evidenziare che il compilatore non è a conoscenza del tipo di oggetto che viene passato ai metodi. Il codice è il seguente:
+\begin{lstlisting}[style=javastyle]
+class Shape {
+	void draw() {}
+	void erase() {}
+}
+
+class Circle extends Shape {
+	void draw {
+		System.out.println("Circle.draw()");
+	}
+
+	void erase {
+		System.out.println("Circle.erase()");
+	}
+}
+
+class Square extends Shape {
+	void draw {
+		System.out.println("Square.draw()");
+	}
+
+	void erase {
+		System.out.println("Square.erase()");
+	}
+}
+
+class Triangle extends Shape {
+	void draw {
+		System.out.println("Triangle.draw()");
+	}
+
+	void erase {
+		System.out.println("Triangle.erase()");
+	}
+}
+
+public class Shapes {
+	public static Shape randShape() {
+		switch((int) (Math.random() * 3)) {
+			default:
+			case 0:
+				return new Circle();
+			case 1:
+				return new Square();
+			case 2:
+				return new Triangle();
+		}
+	}
+
+	public static void main(String[] args) {
+		Shape[] s = new Shape[9];
+		for (int i = 0; i < s.length; i++)
+			s[i] = randShape();
+		for (int i = 0; i < s.length; i++)
+			s[i].draw();
+	}
+}
+\end{lstlisting}
+\subsection{Classi e metodi astratti}
+In alcune situazioni, si ptorebbe desiderare solo l'interfaccia di una classe base senza fornire l'implementazione dei metodi. Nell'esempio relativo agli strumenti musicali la classe base \textit{Instrument} aveva dei \textit{metodi fittizzi} perchè il suo scopo è quello di creare un'\textit{interfaccia comune} per tutte le sue sottoclassi. Quindi lo scopo di un'interfaccia comune è quello di esprimere cosa è in comune alle classi derivate. In tal caso la classe \textit{Instrument} viene chiamata \textbf{classe astratta}.
+
+Quando si definisce una classe astratta, tutti i metodi delle classi da essa derivate, la cui dichiarazione corrisponde con quelli della classe astratta, sono invocati mediante il meccanismo del binding dinamico. Visto che una classe astratta esprime solo l'interfaccia e non una particolare implementazione, ha senso non istanziarla. Java fornisce la parola chiave \texttt{abstract} per indicare che una classe o un metodo sono astratti.
+
+Un metodo astratto è incompleto: è comunque dichiarato ma è privo di corpo. La sintassi per la dichiarazione di un metodo astratto è la seguente:
+\begin{lstlisting}[style=javastyle]
+abstract typeResult MethodName();
+\end{lstlisting}
+Se una classe contiene uno o più metodi astratti allora tale classe deve essere indicata con \texttt{abstract}, altrimenti viene segnalato un errore di compilazione. Il compilatore si preoccupa di segnalare degli errori se si tenta di istanziare una classe dichiarata \texttt{abstract}.
+
+Per ogni sottoclasse di una classe astratta devo ridefinirne i metodi per tutti i metodi astratti, altrimenti le classi derivate saranno considerate astratte e il compilatore richiederà che siano dichiarate come \texttt{abstract}. È possibile anche avere classi astratte che non contengono alcun metodo astratto (per esempio classi di cui non si desidera alcuna istanza).
+\begin{example}{}{}
+Se consideriamo la definizione della classe \textit{Instrument} alla luce di quello appena visto, avremo:
+\begin{lstlisting}[style=javastyle]
+abstract class Instrument {
+	int i;
+	public abstract void play();
+	public String what() { return "Instrument"; }
+	public abstract void adjust();
+}
+\end{lstlisting}
+\end{example}
+\begin{note}{}{}
+Usando classi e metodi astratti si rende più esplicita l'astrazione di una classe.
+\end{note}
+\subsection{Costruttori e polimorfismo}
+Cosa accade se all'interno di un costruttore si ha una chiamata ad un metodo (con binding dinamico) dell'oggetto costruito? Quando si invoca definito con binding dinamico in un costruttore si potrebbero avere degli effetti strani e indesiderati.
+
+Consideriamo il seguente codice.
+\begin{lstlisting}[style=javastyle]
+abstract class Glyph {
+	abstract void draw();
+	Glyph() {
+		System.out.println("Glyph() before draw()");
+		draw();
+		System.out.println("Glyph() after draw()");
+	}
+}
+
+class RoundGlyph extends Glyph {
+	int radius = 1;
+	RoundGlyph(int r) {
+		radius = r;
+		System.out.println("RoundGlyph.RoundGlyph(), radius = " + radius);
+	}
+
+	void draw() {
+		System.out.println("RoundGlyph.draw(), radius = " + radius);
+	}
+}
+
+public class PolyConstructors {
+	public static void main(String[] args) {
+		new RoundGlyph(5);
+	}
+}
+\end{lstlisting}
+L'output del programma è il seguente:
+\begin{center}
+Glyph() before draw()
+
+RoundGlyph.draw(), radius = 0
+
+Glyph() after draw()
+
+RoundGlyph.RoundGlyph(), radius = 5
+\end{center}
+Qunado il costruttore di \textit{Glyph} invoca il metodo \textit{draw()}, il valore di \textit{radius} non è quello inizializzato ma 0. Il processo di inizializzazione che si è avuto è il seguente:
+\begin{enumerate}
+	\item la memoria allocata per l'oggetto è inizializzata a zero binario prima che accada tutto il resto;
+	\item sono invocati i costruttori della classe base. A questo punto è invocato il metodo ridefinito \textit{draw()} (in realtà prima che il costruttore di \textit{RoundGluph} sia chiamato) che scopre il valore di \textit{radius} uguale a 0 (dovuto al passo precedente).
+	\item I membri sono inzializzati nell'ordine di dichiarazione;
+	\item è invocato il corpo del costruttore della classe derivata.
+\end{enumerate}
+\begin{note}{}{}
+Attenzioe nell'invocazione dei metodi all'interno dei costruttori. Gli unici metodi sicuri da chiamare nei costruttori sono quelli dichiarati \textit{final} o (\textit{private}) nella classe base. Questi metodi non possono essere ridefiniti e non possono riservare alcun tipo di sorpresa.
+\end{note}
+\subsection{Ereditarietà e finalizzazione}
+Quando si usa la composizione per creare una nuova classe non ci si deve preoccupare della finalizzazione dei membri degli oggetti in tale classe. Ogni membro è un oggetto indipendente e viene trattato dal \textit{garbage collector} e finalizzato analogamente agli altri oggetti. Con l'ereditarietà è necessario ridefinire il metodo \texttt{finalize()} nella classe derivata se si ha bisogno di compiere qualche particolare operazione prima che parti il garbage collector.
+
+È importante ricordare che bisogna sempre invocare il metodo \texttt{finalize()} della classe base altrimenti questa non sarà finalizzata.
 \end{document}
