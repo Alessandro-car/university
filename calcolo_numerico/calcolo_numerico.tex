@@ -55,6 +55,30 @@
 	urlcolor=darkred
 }
 
+\definecolor{codeblue}{rgb}{0,0,0.8}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\lstdefinestyle{pseudocode}{
+	backgroundcolor=\color{white},
+	commentstyle=\color{codegray}\itshape,
+	keywordstyle=\color{codeblue}\bfseries,
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{red},
+	basicstyle=\ttfamily\small,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	frame=single,
+	% Define pseudocode-specific keywords
+	morekeywords={if, then, else, elif, endif, for, to, do, endfor, while, endwhile, return, function, procedure, foreach, and}
+}
+
 \newcounter{theorem}
 \newcounter{lemma}
 \newcounter{corollary}
@@ -2913,4 +2937,522 @@ Ne consegue che i due membri dovranno necessariamente coincidere con la matrice 
 \end{align*}
 \end{proof}
 Per poter provare l'esistenza, faremo uso delle ``matrici elementari di Gauss''.
+\begin{definition}{\nmu Matrice elementare di Gauss}{matrice_elementare_gauss}
+	Per $k = 1, \dots, n-1$, si definisce $k$-esima matrice elementare di Gauss, la seguente matrice triangolare inferiore speciale:
+	\[
+	L_k = \begin{pmatrix}
+1 & & & & \\
+& \ddots & & & \\
+& & 1 & & \\
+& & m_{k+1, k} & \ddots & \\
+& & \vdots & & \\
+& & m_{n, k} & & 1
+\end{pmatrix}
+	\]
+	$L_k$ coincide con la matrice identica con l'aggiunta di elementi eventualmente non nulli in colonna $k$-esima al di sotto dell'elemento diagonale:
+	\[
+	m_{ik} \quad i = k+1, \dots, n
+	\]
+	ove $m_{ik}$ sono detti moltiplicatori di Gauss.
+\end{definition}
+Vediamo alcune proprietà delle matrici elementari di Gauss. Introduciamo i vettori:
+\[
+\underline{m}_k = \begin{pmatrix}
+	0 \\
+	\vdots \\
+	0 \\
+	m_{k+1, k} \\
+	\vdots \\
+	m_{i, k} \\
+	\vdots \\
+	m_{n, k}
+\end{pmatrix} \quad \underline{l}_k = \begin{pmatrix}
+	0 \\
+	\vdots \\
+	0 \\
+	1 \\
+	0 \\
+	\vdots \\
+	0
+\end{pmatrix}
+\]
+Allora:
+\[
+L_k = I + \underline{m}_k\underline{l}_k^T
+\]
+\begin{note}{}{}
+\begin{align*}
+\underline{m}_k\underline{l}_k^T &= \begin{pmatrix}
+	0 \\
+	\vdots \\
+	0 \\
+	m_{k+1, k} \\
+	\vdots \\
+	m_{i, k} \\
+	\vdots \\
+	m_{n, k}
+\end{pmatrix}\begin{pmatrix}
+	0 & \dots & 0 & 1 & 0 & \dots & 0
+\end{pmatrix} \\
+&= \begin{pmatrix}
+	0 & 0 & \cdots & \cdots & \cdots & 0 \\
+	\vdots \\
+	0 & 0 & \cdots & \cdots & \cdots & 0 \\
+	\vdots & \cdots & \cdots & m_{k+1, k} & \cdots & \vdots \\
+	\vdots & \cdots & \cdots & m_{i, k} & \cdots & \vdots \\
+	\vdots & \cdots & \cdots & m_{n, k} & \cdots & \vdots
+\end{pmatrix}
+\end{align*}
+\end{note}
+Ricordiamo che se $\underline{a}, \underline{b} \in \mathbbm{R}^n$ (vettori colonna), allora il prodotto scalare è pari a:
+\[
+\underline{a}^T\underline{b} = \sum_{i=1}^{n}a_ib_i
+\]
+Il prodotto esterno, invece, è pari a:
+\[
+\underline{a}\underline{b}^T = \begin{pmatrix}
+	a_1b_1 & a_1b_2 & \cdots & a_1b_n \\
+	a_2b_1 & a_2b_2 & \cdots & a_2b_n \\
+	\vdots \\
+	\vdots \\
+	a_nb_1 & a_nb_2 & \cdots  & a_nb_n
+\end{pmatrix}
+\]
+Quindi $\underline{m}_k\underline{l}_k^T$ è un prodotto esterno.
+
+La matrice elementare di Gauss gode anche della proprietà di \textbf{esistenza dell'inversa} in quanto $L_k$ è una matrice triangolare inferiore speciale e pertanto $\text{det}(L_k) = 1$. Inoltre, l'inversa di $L_k$ è:
+\begin{align*}
+L_k^{-1} &= I - \underline{m}_k\underline{l}_k^T  \\
+&= \begin{pmatrix}
+	1  \\
+	& \ddots \\
+	& & 1 \\
+	& & -m_{k+1, k} & 1 \\
+	& & \vdots & & \ddots \\
+	& & -m_{i, k} & & & 1 \\
+	& & \vdots & & & & \ddots \\
+	& & -m_{n, k} & & & & & 1
+\end{pmatrix}
+\end{align*}
+Infatti, verifichiamo che:
+\[
+(I + \underline{m}_l\underline{l}_k^T)(I - \underline{m}_k\underline{l}_k^T) = I
+\]
+Risulta
+\begin{align*}
+	(I + \underline{m}_l\underline{l}_k^T)(I - \underline{m}_k\underline{l}_k^T) &= \\
+	&= I - \underline{m}_k\underline{l}_k^T + \underline{m}_k\underline{l}_k^T - (\underline{m}_k\underline{l}_k^T)(\underline{m}_k\underline{l}_k^T) \\
+	&= I - \underline{m}_k(\underline{l}_k^T\underline{m}_k)\underline{l}_k^T \\
+	&= I - (\underline{l}_k^T\underline{m}_k)\underline{m}_k\underline{l}_k^T \\
+	&= I - \begin{pmatrix}
+		0 & 0 & \cdots & 0 & 1 & 0 & \cdots & 0
+	\end{pmatrix}\begin{pmatrix}
+		0  \\
+		0  \\
+		\vdots \\
+		0 \\
+		m_{k+1, k} \\
+		\vdots \\
+		m_{n, k}
+	\end{pmatrix} \\
+	&= I
+\end{align*}
+In conclusione, l'inversa di una matrice elementare di Gauss è ancora una matrice elementare di Gauss, ottenuta cambiando il segno dei moltiplicatori.
+
+La matrice elementare di Gauss gode anche della proprietà del \textbf{prodotto}. Siano $L_r$ e $L_s$ due matrici elementari di Gauss, con $r < s$. Allora:
+\[
+L_r \cdot L_s = I + \underline{m}_r\underline{l}_r^T + \underline{m}_s\underline{l}_s^T
+\]
+Cioè:
+\[
+L_r\cdot L_s = \begin{pmatrix}
+	1 \\
+	& \ddots \\
+	& & 1 \\
+	& & m_{r+1, r} & 1 \\
+	& & \vdots & & \ddots \\
+	& & \vdots & & & 1 \\
+	& & \vdots & & & m_{s+1, s} & 1 \\
+	&  & \vdots & & & \vdots & & \ddots \\
+	&  & m_{n, r} & & & m_{n, s} & & & 1
+\end{pmatrix}
+\]
+Il prodotto è la sovrapposizione dei due singoli fattori.
+\begin{proof} Osserviamo che:
+\begin{align*}
+l_r^T \underline{m}_s &= \begin{pmatrix}
+	0 & \cdots & 0 & \underset{\text{elemento 2}}{\underbrace{1}} & 0 & \cdots & 0
+\end{pmatrix}\begin{pmatrix}
+	0 \\
+	\vdots \\
+	0 \\
+	m_{s+1, s} \\
+	\vdots \\
+	m_{n, s}
+\end{pmatrix} \\
+&= 0 \quad \forall 2 \leq s
+\end{align*}
+\begin{align*}
+L_r \cdot L_s &= (I + \underline{m}_r\underline{l}_r^T)(I + \underline{m}_s\underline{l}_s^T) \\
+&= I + \underline{m}_r\underline{l}_r^T + \underline{m}_s\underline{l}_s^T + (\underline{m}_r\underline{l}_r^T)(\underline{m}_s\underline{l}_s^T) \\
+&= I + \underline{m}_r\underline{l}_r^T + \underline{m}_s\underline{l}_s^T + \underline{m}_r(\underline{l}_r^T\underline{m}_s)\underline{l}_s^T \\
+&= I + \underline{m}_r\underline{l}_r^T + \underline{m}_s\underline{l}_s^T
+\end{align*}
+\end{proof}
+Durante la dimostrazione dell'esistenza della fattorizzazione LU, faremo uso della seguente proprietà.
+
+Consideriamo due matrici così partizionate:
+\[
+A = \begin{pmatrix}
+	A_{11} & 0 \\
+	A_{21} & A_{22}
+\end{pmatrix} \quad B = \begin{pmatrix}
+	B_{11} & B_{12} \\
+	B_{21} & B_{22}
+\end{pmatrix}
+\]
+ove $A_{11}$ e $B_{11}$ sono blocchi quadrati $k \times k$ che abbiamo chiamato ``sottomatrici principali di testa di ordine $k$''. Facendo il prodotto riga per colonna a blocchi:
+\[
+AB = \begin{pmatrix}
+	A_{11}B_{11} & A_{11}B_{12} \\
+	A_{21}B_{11} + A_{22}B_{21} & A_{21}B_{12} + A_{22}B_{22}
+\end{pmatrix}
+\]
+La sottomatrice principale di testa di $AB$ è $A_{11}B_{11}$.
+\begin{theorem}{\nmu Esistenza e unicità della fattorizzazione LU}{esistenza_fattorizzazione_lu}
+	Sia $A \in \mathbbm{R}^{n \times n}$ e supponiamo che i minori principali di testa di $A$ sono non nulli:
+	\[
+	\text{det}(A_{kk}) \neq 0 \quad k = 1, \dots, n
+	\]
+	ove $A_{kk}$ è la sottomatrice principale di testa di ordine $k$.
+
+	Allora:
+	\[
+	\exists ! L \text{ triangolare inferiore speciale}
+	\]
+	\[
+	\exists ! U \text{ triangolare superiore}
+	\]
+	tali che:
+	\[
+	A = LU
+	\]
+\end{theorem}
+\begin{proof}
+	La dimostrazione è \textit{costruttiva}, cioè induce un algoritmo che può essere implementato sul calcolatore.
+
+	Definiremo una sequenza finita di matrici:
+	\[
+	A_1, A_2, \dots, A_n
+	\]
+	tali che $A_1 = A$  e $A_n = U$.
+
+	Gli elementi di $A_k$ verrano denotati con $a^{(k)}_{ij}: A_k = \{a^{(k)}_{ij}\}$.
+
+	Si procedere per induzione finita: descriviamo il primo passo e, in seguito, partendo da alcune ipotesi di induzione, descriveremo il generico passo $k$.
+
+	\begin{enumerate}
+		\item \textbf{Passo 1}: $A_1 \to A_2$
+
+		Sappiamo che $A_1 = \{a^(1)_{ij}\} = A = \{a_{ij}\}$.
+
+		Poniamo:
+		\[
+		A_2 = L_1 \cdot A_1
+		\]
+		con $L_1$ matrice elementare di Gauss. Sceglieremo i moltiplicatori di Gauss di $L_1, (m_{i1}, i = 2, \dots, n)$, in modo da annullare in $A_2$ tutti gli elementi della prima colonna dalla seconda riga in poi:
+		\[
+		\begin{cases}
+		a^{(2)}_{i1} = 0 \\
+		i = 2, \dots, n
+		\end{cases} \quad A_2 = \begin{pmatrix}
+			* & * & \cdots & * \\
+			0 & * & \cdots & * \\
+			\vdots \\
+			0 & * &  \cdots  & *
+		\end{pmatrix}
+		\]
+		Inoltre, abbiamo detto che $A_2 = L_1 \cdot A_1$ allora:
+		\[
+		A_2 = \begin{pmatrix}
+			1  \\
+			m_{21} & 1 \\
+			\vdots \\
+			m_{i1} & \cdots & 1 \\
+			\vdots \\
+			m_{n1} & \cdots & \cdots & 1
+		\end{pmatrix}\begin{pmatrix}
+			a^{(1)}_{11} & \cdots & a^{(1)}_{1j} & \cdots & a^{(1)}_{1n} \\
+			\vdots  \\
+			a^{(1)}_{i1} & \cdots & a^{(1)}_{ij} & \cdots & a^{(1)}_{in} \\
+			\vdots \\
+			a^{(1)}_{n1} & \cdots & a^{(1)}_{nj} & \cdots & a^{(1)}_{nn} \\
+		\end{pmatrix}
+		\]
+		Adesso per $i = 2, \dots, n$:
+		\begin{align*}
+			a^{(2)}_{i1} &= \text{(riga $i$-esima di $L_1$)(prima colonna di $A_1$)} \\
+			&= m_{i1}a^{(1)}_{11} + a^{(1)}_{11}
+		\end{align*}
+		Adesso poniamo $a^{(2)}_{i1} = 0$
+		\[
+		a^{(2)}_{i1} = 0 \iff \begin{cases}
+			m_{i1} = -\dfrac{a^{(1)}_{i1}}{a^{(1)}_{11}} \\
+			i = 2, \dots, n
+		\end{cases}
+		\]
+		Osserviamo che $a^{(1)}_{11} \neq 0$ poichè è il minore principale di testa di ordine 1.
+
+		Osserviamo anche che la prima riga di $A_2$ coincide con la prima riga di $A_1$.
+
+		I restanti elementi di $A_2$ saranno:
+		\[
+		\begin{cases}
+			a^{(2)}_{ij} = a^{(1)}_{ij} + m_{i1} + a_{1j}^{(1)}\\
+			i, j = 2, \dots, n
+		\end{cases}
+		\]
+		Ora descriviamo il passo $k$, che costruisce la matrice $A_{k+1}$ a partire dalla matrice $A_k$ con la seguente \textbf{ipotesi di induzione}: \textit{la matrice $A_k$ ha nulli tutti gli elementi delle prime $k-1$ colonne al di sotto della diagonale}.
+		\item \textbf{Passo $k$}: $A_k \to A_{k + 1}$
+
+		Si pone: $A_{k+1} = L_kA_k$
+
+		Scegliamo i moltiplicatori di $L_k\ (m_{ik}, i = k+1, \dots, n)$ in modo da annullare in $A_{k+1}$ gli elementi della $k$-esima colonna al di sotto della diagonale:
+		\[
+		\begin{cases}
+			a_{ik}^{(k+1)} = 0\\
+			i = k + 1, \dots, n
+		\end{cases}
+		\]
+		\[
+		A_{k+1} = \begin{pmatrix}
+			1 \\
+			& 1 \\
+			& m_{k+1, k} & 1 \\
+			& \vdots \\
+			& m_{ik} & \cdots & 1 \\
+			& \vdots \\
+			& m_{nk} & \cdots & \cdots & 1
+		\end{pmatrix}\begin{pmatrix}
+			a^{(1)}_{11} & \cdots & a^{(1)}_{1i} & \cdots & a^{(1)}_{1n} \\
+			0 & a^{(2)}_{22} & \cdots & \cdots & a^{(2)}_{2n} \\
+			 &  & a^{(k)}_{kk} & \cdots & a^{(k)}_{kn} \\
+			 & & \vdots & & \vdots \\
+			 &  & a^{(k)}_{ik} & \cdots & a^{(k)}_{in} \\
+			 & & \vdots &  & \vdots \\
+			 &  & a^{(k)}_{nk} & \cdots & a^{(k)}_{nn}
+		\end{pmatrix}
+		\]
+		Per $i = k+1, \dots, n$:
+		\begin{align*}
+			a^{(k+1)}_{ik} &= \text{(riga $i$-esima di $L_k$)(colonna $k$ di $A_k$)} \\
+			&= m_{ik}a^{(k)}_{kk} + a^{(k)}_{ik}
+		\end{align*}
+		Quindi:
+		\[
+		a^{(k+1)}_{ik} = 0 \iff \begin{cases}
+			m_{ik} = -\dfrac{a^{(k)_{ik}}}{a^{(kk)}_{kk}} \\
+			i = k+1, \dots, n
+		\end{cases}
+		\]
+		Occorre provare che $a^{(k)}_{kk} \neq 0$. Sappiamo che:
+		\begin{align*}
+		A_k &= L_{k-1}A_{k-1} = L_{k-1}L_{k-2}A_{k-2} \\
+		&= \dots = \underset{\text{triang. inf. speciale}\ \equiv\ \tilde{L}}{\underbrace{L_{k-1}L_{k-2} \cdots L_1}}A \\
+		&= \tilde{L}A = \begin{pmatrix}
+			\tilde{L}_{11} & 0 \\
+			\tilde{L}_{21} & \tilde{L}_{22}
+		\end{pmatrix}\begin{pmatrix}
+			A_{kk} & * \\
+			* & *
+		\end{pmatrix} \\
+		&= \begin{pmatrix}
+			\tilde{L}_{11}A_{kk} & * \\
+			* & *
+		\end{pmatrix}
+		\end{align*}
+		Quindi il minore principale di testa di ordine $k$ di $A_k$ a primo membro coincide con il minore principale di testa della matrice a secondo membro ovvero:
+		\[
+		a^{(1)}_{11} \cdot a^{(2)}_{22} \cdots a^{(k)}_{kk} = \text{det}(\tilde{L}_{11}A_{kk}) = \text{det}(A_{kk})
+		\]
+		Per ipotesi, det$(A_{kk}) \neq 0$. Ne consegue che $a^{(k)}_{kk} \neq 0$.
+
+		Osserviamo che le prime $k$ righe e le prime $k-1$ colonne della matrice $A_{k+1}$ rimangono immutate. Determiniamo i rimanenti elementi della matrice $A_{k+1}$:
+		\begin{align*}
+			&\text{per } i = k + 1, \dots, n \\
+			&\quad \text{per } j = k+1, \dots, n \\
+			&\quad \quad a^{(k+1)}_{ij} = a^{(k)}_{ij} + m_{ik}a^{(k)}_{kj}
+		\end{align*}
+		Quindi $A_{k+1}$ ha la forma richiesta: elementi nulli nelle prime $k$ colonne al di sotto della diagonale principale. Al passo $n-1$ definiremo:
+		\[
+		A_n = L_{n-1}A_{n-1}
+		\]
+		Evidentemente, $A_n$ sarà triangolare superiore. Vediamo come $A_n$ è relazionata alla matrice di partenza $A$.
+
+		Risulta:
+		\begin{align*}
+			A_n &= L_{n-1}A_{n-1} = L_{n-1}L_{n-2}A_{n-2} \\
+			&= \dots = (L_{n-1}L_{n-2} \cdots L_1)A
+		\end{align*}
+		Ricaviamo la matrice $A$:
+		\begin{align*}
+			A &= (L_{n-1}L_{n-2}\cdots L_1)^{-1}A_n  \\
+			&= (L_1^{-1}L_{2}^{-1}\cdots L_{n-1}^{-1})A_n
+		\end{align*}
+		Poniamo:
+		\begin{align*}
+			U &= A_n &\text{ triangolare superiore} \\
+			L &= L_1^{-1}L_2^{-1}\cdots L_{n-1}^{-1} &\text{ triangolare inferiore speciale}
+		\end{align*}
+		In particolare, risulta:
+		\[
+		L = \begin{pmatrix}
+			1 \\
+			-m_{21} & 1 \\
+			-m_{31} & -m_{32} & \ddots \\
+			\vdots & & & \ddots\\
+			-m_{n1} & -m_{n2} & \cdots & -m_{n, n-1} & 1
+		\end{pmatrix}
+		\]
+		Abbiamo provato che
+		\[
+		A = LU
+		\]
+		L'unicità era stat precedentemente dimostrata.
+	\end{enumerate}
+\end{proof}
+\subsection{Costo computazionale}
+Riprendiamo l'algoritmo:
+\begin{lstlisting}[style=pseudocode, mathescape=true]
+	for k in (1, n-1):
+		for i in (k+1, n)
+			$m_ik = -\dfrac{a^{(k)}_{kk}}{a^{(k)}_{kk}}$
+			for j in (k+1, n)
+				$a^{(k+1)}_{ij} = a^{(k)}_{ij} + m_{ik}a^{(k)}_{kj}$
+\end{lstlisting}
+Fissato il passo $k$, sono necessarie:
+\begin{itemize}
+	\item $(n-k)^2$ add/sottr
+	\item $(n-k)^2$ molt. e  $(n-k)$ divisioni
+\end{itemize}
+Pertanto:
+\[
+C_{add/sottr} = \sum_{k=1}^{n-1}(n-k)^2
+\]
+effettuiamo il cambiamento di variabili:
+\[
+s = n - k
+\]
+La $k$ varia tra 1 e $n-1$, l'indice $s$ varierà tra $n-1$ e 1, quindi:
+\[
+C_{add/sottr} = \sum_{s=1}^{n-1}s^2
+\]
+e sappiamo che:
+\[
+\sum_{i=1}^{n}i^2 = \dfrac{n(n+1)(2n+1)}{6} = \dfrac{n^3}{3} + O(n^2)
+\]
+Allora:
+\[
+C_{add/sottr} = \dfrac{(n-1)n(2n-1)}{6}=\dfrac{n^3}{3} + O(n^2)
+\]
+Analogamente:
+\[
+C_{molt/div} = \dfrac{n^3}{3} + O(n^2)
+\]
+In conclusione:
+\[
+C_{TOT} = \frac{2}{3}n^3 + O(n^2) \text{ flops}
+\]
+\begin{note}{}{}
+Consideriamo il ciclo più interno dell'algoritmo:
+\begin{lstlisting}[style=pseudocode, mathescape=true]
+for j in (k+1, n)
+	$a_{ij}^{(k+1)} = a_{ij}^{(k)} + m_{ik}a_{kj}^{(k)}$
+\end{lstlisting}
+Può essere scritto in forma vettoriale come segue:
+\[
+A_{k+1}(i, k+1: n) = A_k(i, k+1:n) + m_{ik}A_k(k, k+1:n)
+\]
+In altri termini, la nuova riga $i$-esima è la combinazione lineare della vecchia riga $i$-esima con la riga $k$-esima.
+\end{note}
+\begin{assignment}{}{}
+Determinare la fattorizzazione LU della matrice:
+\[
+A = \begin{pmatrix}
+	2 & 1 & 0 & -1 \\
+	-2 & -2 & 1 & -1 \\
+	4 & 2 & -1 & -1 \\
+	0 & 2 & -3 & 2
+\end{pmatrix}
+\]
+Sfruttare il risultato per calcolare il determinante di $A$.
+\begin{exercise}{}{}
+Poniamo $A_1 = A$ e determiniamo la matrice $A_2$.
+\[
+A_1 = \begin{pmatrix}
+	2 & 1 & 0 & -1 \\
+	-2 & -2 & 1 & -1 \\
+	4 & 2 & -1 & -1 \\
+	0 & 2 & -3 & 2
+\end{pmatrix}
+\]
+Inoltre, calcoliamo i moltiplicatori di Gauss di $L_1$:
+\begin{align*}
+	m_{21} &= -\dfrac{a_{21}}{a_{11}} = 1 \\
+	m_{31} &= -\dfrac{a_{31}}{a_{11}} = -2 \\
+	m_{41} &= -\dfrac{a_{41}}{a_{11}} = 0
+\end{align*}
+Calcoliamo $A_2$:
+\[
+A_2 = \begin{pmatrix}
+	2 & 1 & 0 & -1 \\
+	0 & -1 & 1 & -2 \\
+	0 & 0 & -1 & 1 \\
+	0 & 2 & -3 & 2
+\end{pmatrix}
+\]
+ove la seconda nuova riga è uguale alla vecchia seconda riga + $m_{21} *$ la prima riga. La terza nuova riga è uguale alla vecchia terza riga + $m_{31} *$ la prima riga e così via per le altre righe.
+
+Da $A_2$ troviamo i moltiplicatori di Gauss di $L_2$:
+\begin{align*}
+	m_{32} &= -\dfrac{a_{32}}{a_{22}} = 0 \\
+	m_{42} &= -\dfrac{a_{42}}{a_{22}} = 2
+\end{align*}
+Calcoliamo $A_3$ partendo da $A_2$:
+\[
+A_3 = \begin{pmatrix}
+	2 & 1 & 0 & -1 \\
+	0 & -1 & 1 & -2 \\
+	0 & 0 & -1 & 1 \\
+	0 & 0 & -1 & -2
+\end{pmatrix}
+\]
+Da $A_3$ ricaviamo i moltiplicatori di Gauss per $L_3$:
+\[
+m_{43} = -\dfrac{a_{43}}{a_{33}} = -1
+\]
+Da $A_3$ ricaviamo $U = A_4$:
+\[
+U = A_4 = \begin{pmatrix}
+	2 & 1 & 0 & -1 \\
+	0 & -1 & 1 & -2 \\
+	0 & 0 & -1 & 1 \\
+	0 & 0 & 0 & -3
+\end{pmatrix}
+\]
+Inoltre:
+\[
+L = \begin{pmatrix}
+	1 \\
+	-1 & 1\\
+	2 & 0 & 1\\
+	0 & -2 & 1 & 1
+\end{pmatrix}
+\]
+Calcoliamo il determinante di $A$:
+\[
+\text{det}(A) = \text{det}(LU) = \text{det}(L)\text{det}(U) = 1 \cdot \text{det}(U) = 2 \cdot (-1) \cdot (-1) \cdot (-3) = -6
+\]
+\end{exercise}
+\end{assignment}
 \end{document}
