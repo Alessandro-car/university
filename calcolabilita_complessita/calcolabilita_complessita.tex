@@ -163,6 +163,7 @@
 		\maketitle
 		\tableofcontents
 	}
+	\part{Automi e linguaggi}
 	\chapter{Automi e linguaggi}
 	\section{Automi finiti}
 	Gli automi finiti sono un buon modello per computer una quantità estremamente di memoria che permette di fare molte cose utili. Il sistema di controllo per una porta automatica è un esempio di tale dispositivo. \\
@@ -1354,4 +1355,111 @@ Scambiando gli stati accettanti e non accettanti di un DFA si ottiene un nuovo D
 	Abbiamo bisogno di identificare gli stati di lettura. Se il DPDA nello stato $q$ legge un simbolo di input $a \in \Sigma$ senza eliminare simboli dalla pila, cioè $\delta(q, a, \epsilon) \neq \emptyset$, allora $q$ sarà uno stato di lettura. Invece, se esso legge e rimuove anche un simbolo dalla pila, la decisione di lettura può dipendere solo dal simbolo eliminato, quindi dividiamo questo passo in due: una rimozione e poi una lettura. Quindi se $\delta(q, a, x) = (r, y)$ con $a \in\Sigma$ e $x \in \Gamma$, aggiungiamo un nuovo stato $q_x$ e modifichiamo $\delta$ ponendo $\delta(q, \epsilon, x) = (q_x, \epsilon)$ e $\delta(q_x, a, \epsilon) = (r, y)$. Definiamo $q_x$ come uno stato di lettura. Gli stati $q_x$ non eliminano mai simboli dalla pila, quindi la loro azione è indipendente dal contenuto della pila. Definiamo $q_x$ come uno stato accettante se $q \in F$. Infine, togliamo il ruolo di stato accettante a ogni stato che non è uno stato di lettura. Il DPDA modificato è equivalente a  $P$, ma esso entra al più una volta in uno stato accettante per ogni simbolo di input, quando è in procinto di leggere il simbolo seguente. Ora, scambiamo accettazione e non accettazione tra questi stati di lettura. Il DPDA risultante riconosce il linguaggio complemento.
 \end{proof}
 Questo teorema implica che alcuni CFL non sono DCFL. Ogni CFL il cui complemento non è un CFL non è un DCFL. Quindi $A = \{a^ib^jc^k \mid  i\neq j \text{ o } j \neq k \text{ con } i,j,k \geq 0\}$ è un CFL ma non un DCFL. Altrimenti $\overline{A}$ sarebbe un CFL.
+
+\part{Teoria della computabilità}
+\chapter{La tesi di Church-Turing}
+\section{Macchine di Turing}
+	La \textit{macchina di Turing} è simile ad un automa finito, ma con una memoria illimitata e senza restrizioni, una macchina di Turing è un modello molto più preciso di un computer. Una macchina di Turing può fare tutto ciò che può fare un computer reale.
+
+	Una macchina di Turing utilizza un nastro infinito come propria memoria illimitata. Ha una testina che è in grado di leggere e scrivere simboli ed è libera di muoversi lungo il nastro. Inizialmente il nastro contiene solo la stringa di input e tutto il resto è vuoto. Se la macchina deve memorizzare un'informazione la può scrivere sul nastro. Per leggere l'informazione che ha scritto, la macchina può spostare la testina su di essa.
+
+	Il seguente eleco riassume le differenze tra automi finiti e macchine di Turing.
+	\begin{enumerate}
+		\item Una macchina di Turing può sia scrivere che leggere sul nastro.
+		\item La testina di lettura-scrittura può moversi sia verso sinistra che verso destra.
+		\item Il nastro è infinito.
+		\item Gli stati speciali di accettazione e rifiuto hanno effetto immediato.
+	\end{enumerate}
+\subsection{Definizione formale di macchina di Turing}
+Il cuore della funzione di una macchina di Turing è la funzione di transizione $\delta$ perchè essa ci dice come la macchina effettua un passo. Per una macchina di Turing, $\delta$ prende la forma $Q \times \Gamma \to Q \times \Gamma \times \{L, R\}$. Cioè, quando la macchina occupa un certo stato $q$ e la testa punta alla casella del nastor contenente un simbolo $a$, e se $\delta(q, a) = (r, b, L)$, la macchina di Turing scrive il simbolo $b$ al post di $a$, e passa nello stato $r$. La terza componente è $L$ oppure $R$ ed indica se la testa si sposta verso sinistra o verso destra dopo la scrittura.
+\begin{definition}{\nmu Macchina di Turing}{mdt}
+Una \textit{macchina di Turing} e una 7-upla, $(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})$, dove $Q, \Sigma, \Gamma$ sono tutti insiemi finiti e
+\begin{enumerate}
+	\item $Q$ è l'insieme degli stati,
+	\item $\Sigma$ è l'alfabeto di input non contenente il simbolo \textbf{blank} $\sqcup$,
+	\item $\Gamma$ è l'alfabeto del nastro, con $\sqcup \in \Gamma$ e $\Sigma \subseteq \Gamma$,
+	\item $\delta: Q \times \Gamma \to Q \times \Gamma \times \{L, R\}$ è la funzione di transizione,
+	\item $q_0 \in Q$ è lo stato iniziale,
+	\item $q_{accept} \in Q$ è lo stato di accetazione e
+	\item $q_{reject}$ è lo stato di rifiuto, con $q_{accept} \neq q_{reject}$.
+\end{enumerate}
+\end{definition}
+Una macchina di Turing computa nel seguente modo. Inizialmente $M$ riceve il suo input $w = w_1w_2\dots w_n \in \Sigma^*$ sulle $n$ celle più a sinistra del nastro, mentre il resto del nastro è vuoto, contiene solo simboli blank. La testina parte dalla posizione più a sinistra del nastro. Quando $M$ inizia la computazione, questa procede secondo le regole descritte dalla funzione di transizione. Se $M$ tenta di spostare la testina a sinistra quando si trova all'estremità sinistra del nastro, allora la testina rimane nello stesso posto per quella mossa, anche se la funzione di transizione indica $L$. La computazione prosegue fino a quando la macchina raggiunge lo stato di accettazione oppure di rifiuto, a tal punto si ferma. Se nessuno dei due stati viene raggiunto, $M$ va avanti per sempre. Durante la computazione di una macchina di Turing, si verificano cambiamenti dello stato corrente, del contenuto corrente del nastro, e della posizione corrente della testina. Un'impostazione di questi tre elementi è chimata una \textbf{configurazione} della macchina di Turing. Vediamo come sono rappresentate le configurazioni. Per uno stato $q$ e  due stringhe $u$ e $v$ sull'alfabeto $\Gamma$ del nastro, scriviamo $uqv$ per indicare la configurazione, dove lo stato corrente è $q$, il contenuto del nastro è $uv$ e la posizione attuale della testa è il primo simbolo di $v$. Dopo l'ultimo simbolo di $v$, il nastro contiene solo simboli $\sqcup$. Per esempio, $1011q_701111$ rappresenta la configurazione in cui il nastro contiene $101101111$, lo stato corrente è $q_7$ e la testina è posizionata sul secondo 0.
+
+Si dice che la configurazione $C_1$ \textit{produce} $C_2$ se la macchina di Turing può passare da $C_1$ a $C_2$ in un unico passo. Supponiamo di avere $a, b$ e $c$ in $\Gamma$, così come $u$ e $v$ in $\Gamma^*$ e gli stati $q_i$ e $q_j$. In tal caso $uaq_ibv$ e $uq_jacv$ sono due configurazioni. Diciamo che
+\[
+uaq_ibv \text{ produce } uq_jacv
+\]
+se nella funzione di transizione $\delta(q_i, b) = (q_j, c, L)$. Per uno spostamento a destra, diciamo che
+\[
+uaq_ibv \text{ produce } uacq_jv
+\]
+se $\delta(q_i, b) = \delta(q_j, c, R)$.
+
+La \textit{configurazione iniziale} di $M$ su input $w$ è la configurazione $q_0w$ che indica che la macchina è nello stato inziale $q_0$ con la testina nella posizione più a sinistra sul nastro. In una \textit{configurazione di accettazione} lo stato della configurazione è $q_{accept}$. In una \textit{configurazione di rifiuto} lo stato della configurazione è $q_{reject}$. Le configurazioni di accettazione e rifiuto sono \textit{configurazioni di arresto} e non producono ulteriori configurazioni.
+
+L'insieme di stringhe che $M$ accetta rappresenta il \textit{linguaggio di M}, o \textit{il linguaggio riconosciuto da M}, denotato con $L(M)$.
+\begin{definition}{\nmu Linguaggio Turing-riconoscibile}{turing_riconoscibile}
+Un linguaggio si dice \textit{Turing-riconoscibile} se esiste una amcchian di Turing che lo riconosce.
+\end{definition}
+Quando attiviamo una macchina di Turing su un input, tre risultati sono possibili. La macchina può \textit{accettare, rifiutare} oppure andare in \textit{loop}. Per \textit{loop} si intende semplicemente che la macchina non si ferma. Un ciclo, comporta un comporta  un comportamento semplice o complesso che non porta ad uno stato di arresto. Una macchian di Turing $M$ può non accetare un input sia raggiungendo lo stato $q_{reject}$ e rifiutando oppure andando in loop. A volte è difficile distinguere una macchina in loop o una macchina che ci sta impiegando molto tempo. Per questo motivo si preferiscono macchine di Turing che si fermano su ogni singolo input; macchine che non ciclano mai. Una tale macchina è detta \textit{decisore} perchè prende in ogni caso una decisione.
+\begin{definition}{\nmu Linguaggio Turing-decidibile}{turing_decidibile}
+	Un linguaggio si dice \textit{Turing-decidibile} o semplicemente \textit{decidibile} se esiste una macchian di Turing che lo decide.
+\end{definition}
+\subsection{Esempi di macchine di Turing}
+\begin{example}{}{}
+In questo esempio descriviamo una macchina di Turing $M_2$ che decide $A = \{0^{2^n} \mid n \geq 0\}$.
+
+$M_2 =$ ``su input $w$:
+\begin{enumerate}
+	\item Muove la testina da sinista a destra, cancellando ogni secondo 0.
+	\item Se al passo 1, il nastro conteneva un solo 0, accetta.
+	\item Se al passo 1, il nastro conteneva più di un singolo 0 ed il loro numero era dispari, rifiuta.
+	\item Riporta la testa all'estremità sinistra del nastro.
+	\item Va al passo 1. ''
+\end{enumerate}
+Ogni iterazione del passo 1 dimezza il numero di 0. Quando la macchina si muove lungo il nastro nel passo 1, ricorda se il numero di 0 è pari o dispari. Se tale numero è dispari e maggiore di 1, il numero di 0 iniziale in input non poteva essere una potenza di 2. Pertanto la macchina, su questa istanza, rifiuta. Tuttavia, se il numero di 0 è 1, il numero iniziale doveva essere potenza di 2. Quindi, in questo caso la macchina accetta. La descrizione formale di $M_2 = (Q, \Sigma, \Gamma, \delta, q_1, q_{accept}, q_{reject})$ è la seguente.
+\begin{itemize}
+	\item $Q = \{q_1, q_2, q_3, q_4, q_5, q_{accept}, q_{reject}\}$
+	\item $\Sigma = \{0\}$
+	\item $\Gamma = \{0, x, \sqcup\}$
+	\item $\delta$ è descritto mediante un diagramma di stato.
+	\item Gli stati iniziale, di accettazione e di rifiuto sono rispettivamente $q_1, q_{accept}$ e $q_{reject}$.
+\end{itemize}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/mdt_exe1}
+	\end{center}
+\end{figure}
+In questo diagramma di stato, nella transizione da $q_1$ a $q_2$ compare l'etichetta $0 \to \sqcup, R$. Questa etichetta indica che quando siamo nello stato $q_1$ e la testina legge 0, la macchina si porta nello stato $q_2$, scrive $\sqcup$ e sposta la testina a destra. Per chiarezza utilizziamo l'abbreviazione $0 \to R$ per indicare la transizione da $q_3$ a $q_4$, il che significa che la macchina si sposta verso destra durante la lettura di 0 quando si trova nello stato $q_3$ ma non modifica il nastro.
+
+Questa macchina inizia scrivendo un simbolo blank sullo 0 più a sinistra del nastro in modo da poter identificare l'estrema sinistra del nastro del passo 4. Diamo un esempio di esecuzione di questa macchina su input 0000. La configurazione iniziale è $q_10000$. La sequenza delle configurazioni della macchina è la seguente.
+\begin{center}
+\begin{tabular}{lll}
+$q_10000$ & $\sqcup q_5x0x\sqcup$ & $\sqcup x q_5xx\sqcup$ \\
+$\sqcup q_2000$ & $q_5\sqcup x 0 x \sqcup$ & $\sqcup q_5 xxx \sqcup$ \\
+$\sqcup x q_3 00$ & $\sqcup q_2 x 0 x \sqcup$ & $q_5\sqcup xxx\sqcup$ \\
+$\sqcup x 0 q_4 0$ & $\sqcup x q_2 0 x \sqcup$ & $\sqcup q_2 xxx \sqcup$\\
+$\sqcup x0xq_3\sqcup$ & $\sqcup xxq_3x\sqcup$ & $\sqcup xq_2xx\sqcup$ \\
+$\sqcup x0q_5x\sqcup$ & $\sqcup xxxq_3\sqcup$ & $\sqcup xxq_2x\sqcup$ \\
+$\sqcup x q_50x\sqcup$ & $\sqcup xxq_5x\sqcup$ & $\sqcup xxxq_2\sqcup$ \\
+& & $\sqcup xxx\sqcup q_{accept}$
+\end{tabular}
+\end{center}
+\end{example}
+\begin{example}{}{}
+In questo esempio viene descritta formalmente la macchina di Turing $M_1 = (Q, \Sigma, \Gamma, \delta, q_1, q_{accept}, q_{reject})$ per il linguaggio $B = \{w\#w \mid w \in \{0, 1\}^*\}$.
+\begin{itemize}
+	\item $Q = \{q_1, \dots, q_8, q_{accept}, q_{reject}\}$
+	\item $\Sigma = \{0, 1, \#\}$ e $\Gamma = \{0, 1, \#, x, \sqcup\}$
+	\item Descriviamo $\delta$ mediante il diagramma di stato.
+	\item Gli stati iniziale, di accetazione e di rifiuto sono rispettivamente $q_1, q_{accept}, q_{reject}$
+\end{itemize}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/mdt_exe2}
+	\end{center}
+\end{figure}
+L'etichetta $0, 1 \to R$ sulla transizione che va da $q_3$ a se stesso. Tale etichetta significa che la macchina rimane in $q_3$ ed effettua una mossa a destra quando legge uno 0 oppure un 1 nello stato $q_3$. Non cambia il simbolo sul nastro. La fase 1 è attuata mediante gli stati da $q_1$ a $q_7$, e la fase 2 degli stati rimanenti.
+\end{example}
 \end{document}
