@@ -1462,4 +1462,76 @@ In questo esempio viene descritta formalmente la macchina di Turing $M_1 = (Q, \
 \end{figure}
 L'etichetta $0, 1 \to R$ sulla transizione che va da $q_3$ a se stesso. Tale etichetta significa che la macchina rimane in $q_3$ ed effettua una mossa a destra quando legge uno 0 oppure un 1 nello stato $q_3$. Non cambia il simbolo sul nastro. La fase 1 è attuata mediante gli stati da $q_1$ a $q_7$, e la fase 2 degli stati rimanenti.
 \end{example}
+\section{Varianti di macchine di Turing}
+Esistono diverse alternative delle macchine di Turing, comprese le versioni multinastro o non deterministiche. Sono dette \textit{varianti} del modello macchina di Turing. Il modello originale e le sue ragionevoli varianti hanno tutti lo stesso potere computazionale, quindi, riconoscono la stessa classe di linguaggi. Chiamiamo \textit{robustezza} questa invarianza ad alcune variazioni nella definizione. Per illustrare la robustezza del modello di macchina di Turing cerchiamo di variare il tipo di funzione transizione consentito. Nella definizione di \namerefl{def:mdt} data precedentemente, la funzione di transizione forza la testina a spostarsi verso sinistra o destra ad ogni passo; la testina non può semplicemente restare ferma. Supponiamo di aver permesso alla macchina di Turing la capacità di restare ferma. La funzione di transizione avrebbe allora la forma: $\delta: Q \times \Gamma \to Q \times \Gamma \times \{L, R, S\}$.
+\subsection{Macchina di Turing multinastro}
+Una \textit{macchina di Turing multinastro} è come una normale macchina di Turing con vari nastri. Ogni nastro ha la sua testina per la lettura e la scrittura. Inizialmente l'input si trova sul nastro 1, mentre gli altri nastri sono vuoti. La funzione di transizione viene modificata per consentire la lettura, la scrittura e lo spostamento della testina contemporaneamente su alcuni o tutti i nastri. Formalmente,
+\[
+\delta: Q \times \Gamma^k \to Q \times \Gamma^k  \times \{L, R, S\}^k
+\]
+dove $k$ è il numero di nastri. L'espressione
+\[
+\delta(q_i, a_1, \dots, a_k) = (q_j, b_1, \dots, b_k, L, R, \dots, L)
+\]
+significa che, se la macchina si trova nello stato $q_i$ e le testine da 1 a $k$ leggono i simboli da $a_1$ ad $a_k$, la macchina va nello stato $q_j$, scrive i simboli da $b_1$ a $b_k$ e muove ogni testina a sinistra o a destra, o la fa restare ferma, come specificato.
+\begin{theorem}{\nmu Equivalenza con le macchine di Turing multinastro}{equiv_multinastro}
+	Per ogni macchina di Turing multinastro esiste una macchina di Turing a nastro singolo equivalente.
+\end{theorem}
+\begin{proof}
+	Mostriamo come convertire una macchina di Turing multinastro $M$ in una $TM$ $S$ equivalente a nastro singolo. L'idea chiave è quella di mostrare come simulare $M$ con $S$. Supponiamo  che $M$ abbia $k$ nastri. Allora $S$ simula l'effetto di $k$ nastri memorizzando le loro informazioni sul suo singolo nastro. Essa utilizza il nuovo simbolo $\#$ come delimitatore per separare i contenuti dei diversi nastri. Oltre al contenuto dei nastri, $S$ deve tenere traccia delle posizioni delle testine. Lo fa scrivendo un simbolo con un punto sopra per contrassegnare la posizione cui si troverebbe la testina di quel nastro. I simboli del nastro puntati sono semplicemente simboli nuovi che sono statia ggiunti all'alfabeto del nastro.
+
+	$S = $ ``Su input $w = w_1\dots w_n$:
+	\begin{enumerate}
+		\item Inizialmente $S$ mette il suo nastro nel formato che rappresenta tutti i $k$ nastri di $M$. Il nastro formattato contiene:
+		\[
+		\#\overset{\cdot}{w_1}w_2 \dots w_n\#\overset{\cdot}{\sqcup}\#\overset{\cdot}{\sqcup}\# \dots \#
+		\]
+		\item Per simulare una singola mossa, $S$ scansione il suo nastro dal primo $\#$, che segna l'estremità sinistra, al $(k+1)$ \#, che segna l'estremità di destra, per determinare i simboli puntati dalle testine virtuali. Successivamente $S$ fa un secondo passaggio per aggiornare i nastri in accordo alla funzione di transizione di $M$.
+		\item Se in qualsiasi momento $S$ sposta una delle testine virtuali a destra su un \#, questa azione significa che $M$ ha spostato la testina corrispondente sulla part di nastro vuota non letta in precedenza. Quindi $S$ scrive un simbolo blank in questa cella del nastro e sposta il contenuto del nastro, da questa cella fino al simbolo \# più a destra, di un'unità a destra.
+
+		Poi prosegue la simulazione come prima''.
+	\end{enumerate}
+\end{proof}
+\begin{corollary}{}{}
+	Un linguaggio è Turing-riconoscibile se e solo se qualche macchine di Turing multinastro lo riconosce.
+\end{corollary}
+\begin{proof}
+Un linguaggio Turing-riconoscibile è riconosciuto da una macchina di Turing ordinaria, che è un caso particolare di una macchina di Turing multinastro. Questo prova un verso di questo corollario. L'altro verso segue dal teorema di \namerefl{th:equiv_multinastro}.
+\end{proof}
+\subsection{Macchina di Turing non deterministica}
+In una macchina di Turing non deterministica, in un qualsiasi punto della computazione la macchina può procedere effettuando varie scelte. La funzione di transizione di una macchina di Turing non determinitica è della forma:
+\[
+\delta: Q \times \Gamma \to \mathcal{P}(Q \times \Gamma \times \{L, R\})
+\]
+La computazione di una macchina di Turing non deterministica è un albero i cui rami corrispondono alle diverse scelte possibili previste per la macchina.
+\begin{theorem}{\nmu Equivalenza con le macchine di Turing non deterministiche}{equiv_mdt_non_det}
+	Per ogni macchina di Turing non deterministica esiste una macchian di Turing deterministica equivalente.
+\end{theorem}
+Possiamo simulare qualsiasi TM non deterministica $N$ con una TM deterministica $D$. L'idea di base della simulazione consiste nel provare tutte le possibili scelte che può fare $N$ durante la sua computazione non deterministica. Se $D$ trova lo stato di accettazione su qualsiasi di questi rami, allora $D$ accetta. Altrimenti, la simulazione di $D$ non terminerà. Possiamo guardare la computazione di $N$ su un input $w$ come ad un albero. Ogni ramo rappresenta una scelta non deterministica. Ogni nodo dell'albero è una configurazione di $N$. La TM $D$ esplora quest'albero alla ricerca di una configurazione di accettazione. Non conviene fare esplorare a $D$ utilizzando una depth-first search in quanto $D$ potrebbe rimanere per sempre ad esplorare un eventuale cammino infinito e non trovare una configurazione accettante in quel cammino. Quindi $D$ deve esplorare l'albero secondo l'algoritmo di ricerca breadth-first search. Questo metodo garantisce che $D$ visita ogni nodo dell'albero finchè non incontra una configurazione di accettazione.
+\begin{proof}
+La TM $D$ deterministica che simula ha tre nastri. Dal teorema di \namerefl{th:equiv_multinastro}, questa disposizione equivale ad avere un singolo nastro. La macchina $D$ utilizza i suoi tre nastri in maniera particolare, come illustrato nella seguente figura. Il nastro 1 contiene sempre la stringa di input e non viene mai modificato. Il nastro 2 mantiene solo una copia del nastro di $N$ corrispondente a qualche diramazione della sua computazione non deterministica. Il nastro 3 tiene traccia della posizione di $D$ nell'albero delle computazioni di $N$.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/mdt_non_det}
+	\end{center}
+\end{figure}
+Consideriamo la rappresentazione dei dati sul nastro 3. Ogni nodo dell'albero può avere al massimo $b$ figli, dove $b$ è la dimensione del più grande insieme di scelte possibili date dalla funzione di transizione di $N$. Ad ogni nodo della struttura assegniamo un indirizzo che è una stringa sull'alfabeto $\Gamma_b = \{1, 2, \dots, b\}$. Assegniamo l'indirizzo 231 al nodo a cui si arriva partendo dalla radice, spostandosi al suo secondo figlio, spostandosi ancora da tale nodo al suo terzo figlio ed infine spostandosi al primo figlio di quest'ultimo nodo. Ogni simbolo della stringa ci dice quale deve essere la scelta successiva, durante la simulazione di un passo in una ramificazione di una computazione non deterministica di $N$. A volte un simbolo può non corrispondere ad una scelta se sono disponibili troppe poche scelte per una configurazione. In tal caso l'indirizzo non è valido e non corrisponde a nessun nodo. Il nastro 3 contiene una stringa su $\Gamma_b$. Essa rappresenta la ramificazione della computazione di $N$ dalla radice al nodo indirizzato da tale stringa, a meno che l'indirizzo non sia valido. La stringa vuota è l'indirizzo della radice dell'albero. Descriviamo ora $D$.
+\begin{enumerate}
+	\item Inizialmente il nastro 1 contiene l'input $w$ e i nastri 2 e 3 sono vuoti.
+	\item Copia il nastro 1 sul nastro 2 ed inizializza la stringa sul nastro 3 a $\epsilon$.
+	\item Utilizza il nastro 2 per simulare $N$ con input $w$ su una ramificazione della sua computazione non deterministica. Prima di ogni passo di $N$, consulta il simbolo successivo sul nastro 3 per determinare quale scelta fare tra quelle consentite della funzione di transizione di $n$. Se non rimangono più simboli sul nastro 3 o se questa scelta detrministica non è valida, interrompre questo cammino andando alla fase 4. Va alla fase 4 anche quando si verifica una configurazione di rifiuto. Se incontra una configurazione di accettazione, allora accetta l'input.
+	\item Sostituisce la stringa sul nastro 3 con la stringa successiva rispetto all'ordine sulle stringhe. Simula la ramificazione successiva della computazione di $N$ andando al passo 2.
+\end{enumerate}
+\end{proof}
+\begin{corollary}{}{}
+Un linguaggio è Turing-riconoscibile se e solo se esiste una macchina di Turing non deterministica che lo riconosce.
+\end{corollary}
+\begin{proof}
+Qualsiasi TM deterministica è automaticamente una TM non deterministica e quindi una direzione di questo teorema è già dimostrata. L'altra direzione segue dal teorema di \namerefl{th:equiv_mdt_non_det}.
+\end{proof}
+Possiamo semplificare la dimostrazione del teorema di \namerefl{th:equiv_mdt_non_det} in modo che se $N$ si ferma sempre su tutte le ramificazioni durante la computazione, $D$ si ferma sempre. Chiameremo una macchina non deterministica \textit{decisore} se tutte le ramificazioni si fermano su ogni input.
+\begin{corollary}{}{}
+Un linguaggio è decidibile se e solo se esiste una macchina di Turing non deterministica che lo decide.
+\end{corollary}
+\subsection{Enumeratori}
 \end{document}
