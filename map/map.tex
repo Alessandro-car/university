@@ -3708,4 +3708,296 @@ Attenzioe nell'invocazione dei metodi all'interno dei costruttori. Gli unici met
 Quando si usa la composizione per creare una nuova classe non ci si deve preoccupare della finalizzazione dei membri degli oggetti in tale classe. Ogni membro è un oggetto indipendente e viene trattato dal \textit{garbage collector} e finalizzato analogamente agli altri oggetti. Con l'ereditarietà è necessario ridefinire il metodo \texttt{finalize()} nella classe derivata se si ha bisogno di compiere qualche particolare operazione prima che parti il garbage collector.
 
 È importante ricordare che bisogna sempre invocare il metodo \texttt{finalize()} della classe base altrimenti questa non sarà finalizzata.
+\section{Passaggio di parametri e inizializzazione di oggetti}
+In Java il passaggio dei parametri è per valore (all'atto della chiamata di un metodo viene creata una copia del parametro attuale che è assegnata al parametro formale).
+\begin{lstlisting}[style=javastyle]
+public class PassReferences {
+	static void f(int i) {
+		i++;
+		System.out.println(i);
+	}
+
+	public static void main(String[]  args) {
+		int x = 0;
+		System.out.println(x);
+		f(x);
+		System.out.println(x);
+	}
+}
+\end{lstlisting}
+Questo programma stampa:
+\begin{align*}
+	&0 \\
+	&1 \\
+	&0
+\end{align*}
+\begin{lstlisting}[style=javastyle]
+class Index {
+	int i;
+}
+
+public class PassReferences {
+	static void f(Index index) {
+		index.i++;
+		System.out.println(index.i);
+	}
+
+	public static void main(String[] args) {
+		Index x = new Index();
+		System.out.println(x.i);
+		f(x);
+		System.out.println(x.i);
+	}
+}
+\end{lstlisting}
+Questo programma stampa:
+\begin{align*}
+	&0 \\
+	&1 \\
+	&1
+\end{align*}
+
+\subsection{Clonazione di oggetti}
+In Java è possibile \textit{clonare} un oggetto ovvero farne una copia locale attraverso il metodo \textit{clone()}. Questo metodo definito \texttt{protected} nella classe base \textit{Object} può essere usato all'interno della sottoclasse. Il metodo \textit{clone()} genera un \textit{Object} a cui deve essere applicato il casting al proprio tipo. Anche se \textit{clone()} è definito \texttt{protected} nella classe base \textit{Object}, non tutte le classi Java sono clonabili. Se si vuole rendere una classe clonabile bisogna aggiungere del codice specifico. In particolare è necessario:
+\begin{itemize}
+	\item che la classe implementi l'\textit{interfaccia Cloneable} (che non definisce alcun metodo);
+	\item creare un proprio metodo \textit{clone()} per la classe rendondolo \texttt{public}.
+\end{itemize}
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+
+class MyObject implements Cloneable {
+	private int i;
+	MyObject(int ii) { i = ii; }
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch(CloneNotSupportedException e) {
+			System.err.println("MyObject can't clone");
+		}
+		return o;
+	}
+
+	public String toString() { return Integer.toString(i); }
+}
+
+public class LocalCopy {
+	static MyObject g(MyObject v) {
+		v.i++;
+		return v;
+	}
+
+	static MyObject f(MyObject v) {
+		v = (MyObject) v.clone();
+		v.i++;
+		return v;
+	}
+
+	public static void main(String[] args) {
+		MyObject a = new MyObject(11);
+		MyObject b = g(a);
+		System.out.println("b = " + b);
+		MyObject d = f(b);
+		System.out.println("d = " + d);
+		System.out.println("b = " + b);
+	}
+}
+\end{lstlisting}
+Questo programma stampa:
+\begin{align*}
+	b &= 12 \\
+	d &= 13 \\
+	b &= 12
+\end{align*}
+Anche le classi che vengono coinvolte nella composizione devono essere Cloneable.
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+
+class MyObject implements Cloneable {
+	private int i;
+	MyObject(int ii) { i = ii; }
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch (CloneNotSupportedException e) {}
+
+		return o;
+	}
+}
+
+class MyObject2 implements Cloneable {
+	private MyObject i;
+	MyObject(MyObject ii) { i = ii; }
+	public Object clone() {
+		Object o = null;
+		try {
+			o = super.clone();
+		} catch(CloneNotSupportedException e) {}
+		return o;
+	}
+}
+\end{lstlisting}
+\subsection{Classi a sola lettura}
+Java permette di crare delle classi a sola-lettura i cui oggetti sono immutabili. Infatti, si possono definire classi prive di metodi che causano il cambiamento dello stato interno degli oggetti ed evitare così il problema dell'aliasing. Esempi di classe \textit{read-only} sono le classi ``wrapper'' della libreria standard di Java per tutti i tipi primitivi.
+Ad esempio:
+\begin{lstlisting}[style=javastyle]
+// The Integer class cannot be changed
+import java.util.*;
+public class ImmutableInteger {
+	public static void main(String[] args) {
+		Integer v[] = new Integer[10];
+		for (int i = 0; i < 10; i++)
+			v[i] = new Integer(i);
+		for (int i = 0; i < 10; i++)
+			v[i]++;		// equal to v[i] = new Integer(v[i] + 1);
+	}
+}
+\end{lstlisting}
+	Inoltre è possibile anche creare delle classi read-only proprie. Tutti i dati sono \textit{private} e nessuno dei metodi \textit{public} modifica tali dati. La creazione di una classe immutabile, pur essendo una soluzione elegante, può causare frequenti attivazioni del garbage collector oltre ad avere un costo aggiuntivo dovuto alla creazione di nuovi oggetti. Questo problema è particolare sentito per esempio per la classe \textit{String}.
+
+	La soluzione consiste nel creare una classe simile ma modificabile e saltare da una all'altra a seconda delle esigenze.
+\begin{lstlisting}[style=javastyle]
+// Gli oggetti che non possono essere modificati sono immuni agli effetti di alias
+public class Immutable1 {
+	private int data;
+	public Immutable(int init) { data = init; }
+	public int read() { return data; }
+	public boolean nonzero() { return data != 0; }
+	public Immutable1 quadruple() { return new Immutablei(data * 4); }
+	static void f(Immutable i1) {
+		Immutable quad = i1.quadruple();
+		System.out.println("i1 = " + i1.read());
+		System.out.println("quad = " + quad.read());
+	}
+
+	public static void main(String[] args) {
+		Immutable1 x = Immutable1(47);
+		System.out.println("x = " + x.read());
+		f(x);
+		x = x.quadruple().quadruple().quadruple().quadruple();
+		System.out.println("x = " + x.read());
+	}
+}
+\end{lstlisting}
+La classe \textit{Immutable2} contiene metodi che mantengono gli oggetti immutati, producendo nuovi oggetti qualvotla che è necessaria una modifica di stato. Viceversa \textit{Mutable} contiene metodi che modificano gli oggetti passati ai metodi \textit{add()} e \textit{multiply()}. I metodi statici \textit{modify1()} e \textit{modify2()} producono gli stessi risultati. Tuttavia mentre il primo chiede la creazione di 4 oggetti, il secondo richiede la creazione di solo due oggetti.
+\begin{lstlisting}[style=javastyle]
+class Mutable {
+	private int data;
+	public Mutable(int init) { data = init; }
+	public Mutable add(int x) {
+		data += x;
+		return this;
+	}
+
+	public Mutable multiply(int x) {
+		data *= x;
+		return this;
+	}
+
+	public Immutable2 makeImmutable2() {
+		return new Immutable2(data);
+	}
+}
+
+public class Immutable2 {
+	private int data;
+	public Immutable2(int init) { data = init; }
+	public int read() { return data; }
+	public boolean nonzero() { return data != 0; }
+	public Immutable2 add(int x) { return new Immutable2(data + x); }
+	public Immutable2 multiply(int x) { return new Immutable2(data * x); }
+	Mutable makeMutable() { return new Mutable(data); }
+	public static Immutable2 modify1(Immutable2 y) {
+		Immutable2 val = y.add(12);
+		val = val.multiply(3);
+		val = val.add(11);
+		val = val.multiply(2);
+		return val;
+	}
+
+	public static Immutable2 modify2(Immutable2 y) {
+		Mutable m = y.makeMutable();
+		m.add(12).multiply(3).add(11).multiply(2);
+		return m.makeImmutable2();
+	}
+}
+
+public class MainClass {
+	public static void main(String[] args) {
+		Immutable i2 = new Immutable2(47);
+		Immutable r1 = modify(i2);
+		Immutable r2 = modify(i2);
+		System.out.println("i2 = " + i2.read());
+		System.out.println("r1 = " + r1.read());
+		System.out.println("r2 = " + r2.read());
+	}
+}
+\end{lstlisting}
+Come già osservato, l'immutabilità di una classe può causare dei problemi di inefficienza.
+\begin{example}{\nmu Concatenazione di stringhe}{conc_string}
+\begin{lstlisting}[style=javastyle]
+String s = "abc" + foo + "def" + Integer.toString(47);
+\end{lstlisting}
+La soluzione al problema consiste nell'uso di un ``compagno di classe'' che sia mutevole.
+
+Per \textit{String} il compagno di classe pensato dai progettisti Java si chiama \textit{StringBuffer}. Il compilatore crea automaticamente un oggetto \textit{StringBuffer} per valutare certe espressioni, come quelle degli operatori + e += della classe \textit{String}.
+\end{example}
+\subsection{Inizializzazione dei membri}
+Java garantisce che alcune variabili siano inizializzate coerentemente prima di essere usate. In particolare, vengono inizializzate tutte le variabili di istanza e di classe. Se sono di tipo primitivo viene assegnato un valore di default. Se sono il riferimento a un oggetto viene assegnato valore \texttt{null}. Per variabili locali a un metodo viene segnalato un errore al momento della compilazione.
+
+Un membro di tipo dato può essere inizializzato attraverso il valore restituito da un metodo. L'ordine di inizilizzazione è determinato dall'ordine in cui le variabili sono definite nella classe.
+\begin{lstlisting}[style=javastyle]
+class Measurement {
+	Depth o = new Depth();
+	boolean b = true;
+	// ....
+}
+class CInit {
+	int i = f();
+	int j = g(i);
+	int f() { return 5; }
+	itn g(int a) { return a + 1; }
+}
+\end{lstlisting}
+Non possiamo mai avere, però, una situazione di questo tipo.
+\begin{lstlisting}[style=javastyle]
+class CInit {
+	int j = g(i);
+	int i = f();
+	// ...
+	int f() { return 5; }
+	int g(int a) { return a + 1; }
+}
+\end{lstlisting}
+Un array in java è una sequenza di elementi (oggetti o tipi primitivi) dello stesso tipo impacchettati insieme e identificati da un unico nome.
+
+Un array in Java si definisce nel seguente modo:
+\[
+\texttt{int[] a1} \text{ oppure } \texttt{int a1[]}
+\]
+L'inizializzazione per gli array può avvenire in qualsiasi punto del codice ed avviene nel seguente modo:
+\[
+int[] a1 = \{1, 2, 3, 4, 5\}
+\]
+È possibile anche inizializzare gli array in altri modi senza però rispettare la compatibilità con le versioni precedenti del JDK.
+
+Ogni array ha un membro intrinseco, \texttt{length}, a cui possiamo accedere (ma non modificare) che indica il numero di elementi presenti nell'array. In Java si contano gli elementi di un array a partire da 0 pertanto l'ultimo elemento di un array avrà sempre posizioni \texttt{length - 1}.
+\begin{lstlisting}[style=javastyle]
+public class ArrayInit {
+	public static void main(String[] args) {
+		Integer[] a = {
+			new Integer(1),
+			new Integer(2),
+			new Integer(3),
+		};
+
+		Integer[] b = new Integer[3];
+		b[0] = new Integer(1);
+		b[1] = new Integer(2);
+		b[2] = new Integer(3);
+	}
+}
+\end{lstlisting}
 \end{document}
