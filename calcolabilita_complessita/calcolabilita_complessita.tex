@@ -1534,4 +1534,66 @@ Possiamo semplificare la dimostrazione del teorema di \namerefl{th:equiv_mdt_non
 Un linguaggio è decidibile se e solo se esiste una macchina di Turing non deterministica che lo decide.
 \end{corollary}
 \subsection{Enumeratori}
+Per indicare un linguaggio Turing-riconoscibile è possibile anche utilizzare l'espressione \textit{linguaggio ricorsivamente enumerabile} per indicare un linguaggio Turing-riconoscibile. QUesto termine deriva da una macchina di Turing chiamata \textit{enumeratore}. Un enumeratore è una macchina di Turing con una stampante collegata. La macchina di Turing può utilizzare tale stampante come dispositivo di output per stampare stringhe. Ogni volta che la macchina di Turing vuole aggiungere una stringa alla lista, invia la stringa alla stampante.
+
+Un enumeratore $E$ inizia con un nastro di input vuoto. Se l'enumeratore non si ferma, esso può stampare un elenco infinito di stringhe. Il linguaggio enumerato da $E$ è la collezione di tutte le stringhe del linguaggio in qualsiasi ordine, eventualmente anche con ripetizioni.
+\begin{theorem}{\nmu Equivalenza con gli enumeratori}{equiv_enumeratori}
+	Un linguaggio è Turing-riconoscibile se e solo se esiste un enumeratore che lo enumera.
+\end{theorem}
+\begin{proof}
+	Come prima cosa, dimostriamo che se abbiamo un enumeratore $E$ che enumera un linguaggio $A$, allora esiste una TM $M$ che riconosce $A$. La TM $M$ funziona come segue.
+
+	$M = $ `` Su input $w$:
+	\begin{enumerate}
+		\item Esegue $E$. Ogni volta che $E$ genera una stringa, la confronta con $w$.
+		\item Se $w$ appare nell'output di $E$, accetta.''
+	\end{enumerate}
+	$M$ accetta quelle stringhe che compaiono sulla lista di $E$. Ora occupiamoci dell'altra direzione. Se la TM $M$ riconosce un linguaggio $A$, possiamo costruire il seguente enumeratore $E$ per $A$. Sia $s_1, s_2, \dots$ una lista di tutte possibili stringhe in $\Sigma^*$.
+
+	$E = $ ``Ignora l'input.
+	\begin{enumerate}
+		\item Ripete i seguenti passi per $i = 1, 2, \dots$
+		\item Esegue $M$ per $i$ passi su ogni input $s_1, s_2, \dots, s_i$.
+		\item Se una qualche computazione accetta, stampa la corrispondente $s_j$.
+	\end{enumerate}
+
+	Se $M$ accetta una particolare stringa $s$, alla fine $s$ apparirà nella lista generata da $E$. In realtà, essa apparirà nella lista un numero infinito di volte, perchè $M$ ritorna all'inizio su ogni stringa per ogni ripetizione del passo 1.
+
+	Questa procedura fa sì che $M$ lavori in parallelo su tutte le possibili stringhe di input.
+\end{proof}
+\section{La definizione di algoritmo}
+Parlando in maniera informale, un \textit{algoritmo} è un insieme di istruzioni semplici per l'esecuzione di un certo compito. Gli algoritmi svolgono anche un ruolo importante in matematica. Anche se gli algoritmi hanno avuto una lunga storia nel campo della matematica, la nozione di algoritmo non è stat formalizzata con precisione fino al ventesimo secolo.
+\subsection{I problemi di Hilbert}
+Nel 1900, il matematico David Hilbert al Congresso Internazionale dei Matematici a Parigi, identificò 23 problemi matematici da risolvere per il secolo successivo. Il decimo problema riguardava gli algoritmi.
+
+Prima di descrivere il problema, introduciamo i polinomi. Un \textit{polinomio} è una somma di termini, dove ogni termine è il prodotto di alcune variabili ed una costante, chiamata \textit{coefficiente}.
+
+Una \textit{radice} di un polinomio è un'assegnazione di valori alle sue variabili per cui il valore del polinomio è 0.
+
+Il decimo problema di Hilbert consiste nell'ideare un algoritmo per verificare se un polinomio abbia o meno una radice intera (ovvero le radici sono tutte numeri interi). Hilbert non usò il termine algoritmo, piuttosto ``un processo in base al quale esso può essere determinato da un numero finito di operazioni''. Hilbert ha chiesto esplicitamente che fosse ``progettato'' un algoritmo.
+
+Non esiste un algoritmo per questo problema; si tratta di un problema non risolvibile algoritmicamente. Per poter provare che un algoritmo non esiste è necessario avere una definizione di algortimo chiara. La definizione è arrivata nel 1936 da parte di Alonzo Church ed Alan Turing.
+
+Church utilizzò un sistema di notazione detto $\lambda$-calcolo per definire gli algoritmi. Turing lo fece con le sue macchine. È stato dimostrato che queste definizioni sono equivalenti. Questa connessione è chiamata \textbf{tesi di Church-Turing}.
+
+La tesi di Church-Turing fornisce la definizione di algoritmo necessaria per risolvere il decimo problema di Hilbert.
+
+Riscriviamo il decimo problema di Hilbert nella nostra teminologia.
+\[
+D = \{p \mid p \text{ è un polinomio avente radice intera}\}
+\]
+Il decimo problema di Hilbert chiede se l'insieme $D$ è decidibile. La riposta è negativa. Di contro possiamo dimostrare che $D$ è Turing-riconoscibile. Prima di fare ciò, consideriamo un problema più semplice. Si tratta di un analogo del decimo problema di Hilbert per i polinomi che hanno un'unica variabile, come per esemio $4x^3 - 2x^2 + x - 7$. Sia:
+\[
+D_1 = \{p \mid p \text{ è un polinomio su $x$ avente una radice intera}\}
+\]
+
+Ecco una TM $M_1$ che riconosce $D_1$:
+
+$M_1 = $ ``Su input $<p>$: dove $p$ è un polinomio sulla variabile $x$.
+\begin{enumerate}
+	\item Valuta $p$ con $x$ posta successivamente ai valori 0, 1, -2, 2, -2, 3, -3, $\dots$ . Se in un qualsiasi momento la valutazione del polinomio 1e 0, accetta''.
+\end{enumerate}
+Se $p$ ha una radice intera, $M_1$ ad un certo punto la trova e accetta. Se $p$ non ha radice intera, $M_1$ sarà in esecuzione per sempre. Nel caso di più variabili, possiamo presentare una TM $M$ simile che riconosce $D$. Ora $M$ considera tutte le possibili impstazioni delle variabili con valori interi.
+
+Sia $M_1$ che $M$ sono riconoscitori, ma non decisori. Possiamo convertire $M_1$ in un decisore per $D_1$, perchè possiamo calcolare dei limiti all'intervallo dei valroi in cui possono trovarsi le radici di un polinomio a singola variabile e limitare la ricerca a questo intervallo di valori. Se non si trova una radice all'interno di questi limiti, la macchian rifiuta. Il teorema Matijaseviùc mostra che non è possibile calcolare limiti analoghi per polinomi a più variabili.
 \end{document}
