@@ -3386,6 +3386,7 @@ A = \begin{pmatrix}
 \end{pmatrix}
 \]
 Sfruttare il risultato per calcolare il determinante di $A$.
+\end{assignment}
 \begin{exercise}{}{}
 Poniamo $A_1 = A$ e determiniamo la matrice $A_2$.
 \[
@@ -3454,5 +3455,340 @@ Calcoliamo il determinante di $A$:
 \text{det}(A) = \text{det}(LU) = \text{det}(L)\text{det}(U) = 1 \cdot \text{det}(U) = 2 \cdot (-1) \cdot (-1) \cdot (-3) = -6
 \]
 \end{exercise}
+\subsection{Alcune applicazioni della fattorizzazione LU}
+\paragraph{Calcolo del determinante di una matrice} Come visto nell'esempio precedente, avendo determinato la fatt. LU di una matrice $A$, risulta:
+\begin{align*}
+\text{det}(A) &= \text{det}(LU) = \text{det}(L)\text{det}(U) \\
+&= 1 \cdot \text{det}(U) = u_{11} \cdot u_{22} \cdot u_{nn} \\
+&= \prod_{i=1}^{n}u_{ii}
+\end{align*}
+\paragraph{Risoluzione di un sistema lineare}
+Al fine di risolvere il sistema lineare:
+\[
+A\underline{x} = \underline{b}
+\]
+determiniamo, preliminarmente, la fattorizzazione LU di $A$:
+\[
+A = LU
+\]
+Il sistema lineare diventa:
+\[
+LU\underline{x} = \underline{b}
+\]
+Introduciamo un nuovo vettore incognito:
+\[
+\underline{y} = U\underline{x}
+\]
+il sistema di partenza si trasforma in una coppia di sistemi:
+\[
+\begin{cases}
+	L\underline{y} = \underline{b}, &\text{sistema triangolare inferiore}\\
+	U\underline{x} = \underline{y} &\text{sistema triangolare superiore}
+\end{cases}
+\]
+\begin{itemize}
+	\item Dal primo sistema ricaviamo l'incognita $\underline{y}$ mediante l'algoritmo di sostituzione in avanti.
+	\item Dal secondo sistema ricaveremo poi la $\underline{x}$ mediante l'algoritmo di sostituzione all'indietro.
+\end{itemize}
+Questi due algoritmi hanno un costo complessivo di $2n^2$ flops e quindi trascurabile rispetto all'algoritmo di fattorizzazione LU, per $n$ grande.
+\paragraph{Algoritmo di eliminazione di Gauss} È possibile trasformare un sistema lineare $A\underline{x} = \underline{b}$ in uno equivalente $U\underline{x} = \underline{y}$ durante l'esecuzione dell'algoritmo che fattorizza $A$ in forma LU. Infatti, posto:
+\[
+A_1 = A \text{ e } b_1 = b
+\]
+ripetiamo i passi della fattorizzazione LU coinvolgendo anche il termine noto.
+\begin{enumerate}
+	\item \textbf{Passo 1:} Poniamo:
+	\[
+	A_1 \underline{x} = \underline{b}_1
+	\]
+	premoltipichiamo ambo i membri per $L_1$:
+	\[
+	L_1A_1\underline{x} = L_1\underline{b}_1
+	\]
+	ove $L_1$ è la stessa matrice definita al primo passo della fattorizzazione LU.
+
+	Si pone: $A_2 = L_1A_1$ e $b_2=L_1b_1$
+	\item \textbf{Passo k:} al passo precedente abbiamo ottenuto:
+	\[
+	A_k\underline{x} = \underline{b}_k
+	\]
+	dove $L_k$ è la medesima matrice elementare di Gauss introdotto al $k$-esimo passo della fattorizzazione LU. Quindi si pone:
+	\[
+	A_{k+1} = L_kA_k \text{ e } b_{k+1}=L_kb_k
+	\]
+	All'ultimo passo $(n-1)$ avremo così ottenuto il sistema equivalente
+	\[
+	A_n\underline{x} = \underline{b}_n
+	\]
+	mostriamo che questo sistema lineare è proprio $U\underline{x} = \underline{y}$ discusso precedentemente.
+	\begin{itemize}
+		\item Ovviamente $A_n = U$ (avendo ripetuto, sulla matrice $A$, i passi della fattorizzazione LU).
+		\item \begin{align*}
+			\underline{b}_n &= L_{n-1}\underline{b}_{n-1} \\
+			&= \dots = L_{n-1}L_{n-2}\cdots L_1\underline{b}_1 \\
+			&= L^{-1}b
+		\end{align*}
+		infatti $L = L_1^{-1}L_2^{-1}\cdots L_{n-1}^{-1}$.
+
+		Quindi $\underline{b}_n$ è proprio la soluzione del sistema lineare $L\underline{y} = \underline{b}$, quindi $\underline{b}_n \equiv \underline{y}$
+	\end{itemize}
+\end{enumerate}
+Dato un sistema lineare $A\underline{x} = \underline{b}$, la matrice $[A, \underline{b}]$ è detta ``matrice completa''.
+\begin{exercise}{}{}
+\begin{assignment}{}{}
+Risolvere  il seguente sistema lineare:
+\[
+\begin{cases}
+\begin{array}{rcrcrcrcr}
+  x_1 & - & 2x_2 &   &      & + &  x_4 & = & -1 \\
+ -x_1 & + &  x_2 & + & 2x_3 &   &      & = &  0 \\
+ 2x_1 & - & 3x_2 &   &      & + & 2x_4 & = &  1 \\
+ -x_1 & + & 2x_2 &   &      & - & 2x_4 & = &  2
+\end{array}
+\end{cases}
+\]
 \end{assignment}
+Applichiamo l'algoritmo di eliminazione di Gauss alla matrice completa:
+\[
+[A_1 \mid b_1] = \left[
+\begin{array}{cccc|r}
+  1 & -2 & 0 &  1 & -1 \\
+ -1 &  1 & 2 &  0 &  0 \\
+  2 & -3 & 0 &  2 &  1 \\
+ -1 &  2 & 0 & -2 &  2
+\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss $L_1$ sono:
+\begin{align*}
+	m_{21} &= -\dfrac{a^{(1)}_{21}}{a^{(1)}_{11}} = 1 \\
+	m_{31} &= -\dfrac{a^{(1)}_{31}}{a^{(1)}_{11}} = -2 \\
+	m_{41} &= -\dfrac{a^{(1)}_{41}}{a^{(1)}_{11}} = 1 \\
+\end{align*}
+Adesso calcoliamo la matrice completa $[A_2 \mid b_2]$:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{cccc|r}
+  1 & -2 & 0 &  1 & -1 \\
+  0 & -1 & 2 &  1 & -1 \\
+  0 & 1 & 0 &  0 &  3 \\
+ 	0 & 0 & 0 & -1 &  1
+\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss di $L_2$ sono:
+\begin{align*}
+	m_{32} &= -\dfrac{a^{(2)}_{32}}{a^{(2)}_{22}} = 1 \\
+	m_{42} &= -\dfrac{a^{(2)}_{42}}{a^{(2)}_{22}} = 1
+\end{align*}
+Adesso calcoliamo la matrice completa $[A_3 \mid b_3]$:
+\[
+[A_3 \mid b_3] = \left[
+\begin{array}{cccc|r}
+  1 & -2 & 0 &  1 & -1 \\
+  0 & -1 & 2 &  1 & -1 \\
+  0 & 0 & 2 &  1 &  2 \\
+ 	0 & 0 & 0 & -1 &  1
+\end{array}
+\right]
+\]
+ove notiamo che $[A_4 \mid b_4] = [A_3 \mid b_3]$ perchè l'elemento al di sotto di $a^{(3)}_{33}$ è già pari a 0.
+
+Abbiamo così ottenuto il seguente sistema triangolare superiore equivalente a quelo di partenza:
+\[
+\begin{cases}
+\begin{array}{rcrcrcrcr}
+  x_1 & - & 2x_2 &   &      & + &  x_4 & = & -1 \\
+  & - &  x_2 & + & 2x_3 & +  & x_4     & = & -1 \\
+  &  &  &  + &  2x_3    & + & 2x_4 & = &  2 \\
+  &  &  &   &      & - & x_4 & = &  1
+\end{array}
+\end{cases}
+\]
+Applichiamo l'algoritmo di sostituzione all'indietro:
+\begin{align*}
+	x_4 &= -1 \\
+	x_3 &= \frac{3}{2} \\
+	x_2 &= 2x_3 + x_4 + 1 = 2\cdot \frac{3}{2} -1 + 1 = 3 \\
+	x_1 &= 2x_2 - x_4 -1 = 6
+\end{align*}
+La soluzione è:
+\[
+\underline{x} = \begin{pmatrix}
+	6 \\
+	3 \\
+	\frac{3}{2} \\
+	-1
+\end{pmatrix}
+\]
+\end{exercise}
+\begin{exercise}{}{}
+\begin{assignment}{}{}
+Utilizzare l'algortimo di eliminazione di Gauss per risolvere il seguente sistema lineare:
+\[
+\begin{cases}
+\begin{array}{rcrcrcr}
+  x_1 & - & 2x_2 & +  & 3x_3 & = & 1 \\
+ -x_1 & + & 2x_2 & + & x_3 &  = &  0 \\
+ 2x_1 & - & x_2 &  - & x_3     & = &  -1
+\end{array}
+\end{cases}
+\]
+\end{assignment}
+La matrice completa $[A_1 \mid b_1]$ è:
+\[
+[A_1 \mid b_1] = \left[
+\begin{array}{ccc|r}
+  1 & -2 & 3  & -1 \\
+  1 & 2 & 1  & 0 \\
+  2 & -1 & -1 &  -1
+\end{array}
+\right]
+\]
+ove i moltiplicatori di Gauss della matrice $L_1$ sono:
+\begin{align*}
+	m_{21} &= -\dfrac{a^{(1)}_{21}}{a^{(1)}_{11}} = 1 \\
+	m_{31} &= -\dfrac{a^{(1)}_{31}}{a^{(1)}_{11}} = -2
+\end{align*}
+Calcoliamo la matrice completa $[A_2 \mid b_2]$:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{ccc|r}
+  1 & -2 & 3  & -1 \\
+  0 & 0 & 4  & 1 \\
+  0 & 3 & -7 &  -3
+\end{array}
+\right]
+\]
+Adesso notiamo che il moltiplicatore di Gauss per la matrice $L_2$ è pari a:
+\[
+m_{23} = -\dfrac{a^{(2)}_{23}}{a^{(2)}_{22}} = -\dfrac{3}{0}
+\]
+Abbiamo quindi un elemento pivotale nullo, e infatti, il minore principale di testa di ordine 2 è:
+\[
+\text{det}\begin{pmatrix}
+	1 & -2 \\
+	-1 & 2
+\end{pmatrix} = 0
+\]
+ma $\text{det}(A) \neq 0$ e quindi la soluzione esiste ed è unica, ma l'algoritmo di eliminazione finora esposto non ci consente di calcolarla.
+\begin{note}{}{}
+Evidentemente, se permutiamo le equazioni di un sistema lineare, la soluzione non cambia. Pertanto, nell'esempio precedente, possiamo scambiare la seconda riga con la terza.
+\end{note}
+Così facendo, si ottiene:
+\[
+[A'_2 \mid b'_2] = \left[
+\begin{array}{ccc|r}
+  1 & -2 & 3  & -1 \\
+  0 & 3 & -7  & -3 \\
+  0 & 0 & 4 &  1
+\end{array}
+\right]
+\]
+e notiamo che $[A_3 \mid b_3] = [A'_2 \mid b'_2]$ in quanto l'elemento sottostante all'elemento $a^{(2)}_{22}$ è pari a 0.
+
+Si procede con la risoluzione del sistema triangolare superiore:
+\[
+\begin{cases}
+\begin{array}{rcrcrcr}
+  x_1 & - & 2x_2 & +  & 3x_3 & = & 1 \\
+  &  & 3x_2 & - & 7x_3 &  = &  -3 \\
+  &  &  &   & 4x_3     & = &  1
+\end{array}
+\end{cases}
+\]
+\end{exercise}
+La tecnica che effettua lo scambio della riga a cui appartiene un eventuale elemento pivotale nullo con una riga sottostante è detta \textit{tecnica del pivot}.
+
+È possibile dimostrare che, se al passo $k$, l'elemento pivotale $a^{(k)}_{kk} = 0$, certamente esiste un elemento non nullo nella colonna $k$-esima al di sotto di $a^{(k)}_{kk}$, nell'ipotesi che la matrice $A$ non sia singolare.
+\begin{note}{\nmu Tecnica del massimo pivot parziale}{massimo_pivot}
+Quando lavoriamo \textbf{sul calcolatore}, conviene effettuare un eventuale scambio di righe anche quando l'elemento pivotale non risultasse nullo.
+
+In particolare, al passo $k$ si determina un indice $s \in \{k, \dots, n\}$
+\[
+\lvert a^{(s)}_{sk} \rvert = \max_{k \leq i \leq n}\lvert a^{(k)}_{ik} \rvert
+\]
+Individuiamo, cioè, l'elemento di massimo modulo tra:
+\[
+\begin{pmatrix}
+	a^{(k)}_{kk} \\
+	a^{(k)}_{k+1, k} \\
+	\vdots \\
+	a^{(k)}_{nk} \\
+\end{pmatrix}
+\]
+e $s$ è l'indice di riga di appartenenza dell'elemento di massimo modulo
+\begin{itemize}
+	\item Se $s = k$ \textbf{non si effettuano scambi di riga}
+	\item Se $s > k$ \textbf{si scambia la riga $k$ con la riga $s$}.
+\end{itemize}
+Tale tecnica, denominata \textit{tecnica del massimo pivot parziale}, rende più stabile l'algoritmo di eliminazione di Gauss.
+
+Inoltre, è bene notare che, se lavoriamo in $\mathbbm{R}$ (anzichè in $\mathbbm{F}$) possiamo effettuare lo scambio solo se necessario.
+\end{note}
+\paragraph{Fattorizzazione LU con tecnica del pivot} La tecnica del pivot o del massimo pivot parziale può essere applicata anche per la fattorizzazione di una matrice in forma LU.
+
+Definiamo una matrice di permutazione. Una \textit{matrice di permutazione} è una matrice $P$ ottenuta permutando un certo numero di righe o colonne della matrice identica $I$.
+\begin{example}{}{}
+Determinare le matrici di permutazione di dimensione $n = 3$.
+\begin{align*}
+P_1 &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}; &
+P_2 &= \begin{bmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix} \\[10pt]
+P_3 &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix}; &
+P_4 &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 1 & 0 \end{bmatrix} \\[10pt]
+P_5 &= \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \end{bmatrix}; &
+P_6 &= \begin{bmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix}
+\end{align*}
+In generale, esisteranno $n!$ matrici di permutazione di dimensione $n$.
+\end{example}
+\begin{note}{}{}
+Siano date
+\begin{itemize}
+	\item $A$ una matrice generica $n \times n$
+	\item $P$ una matrice di permutazione.
+\end{itemize}
+Allora:
+\begin{itemize}
+	\item Premoltiplicare una matrice $A$ per una matrice di permutazione $P$ ha l'effetto di permutare le righe di $A$ secondo quanto descritto dalla matrice $P$. Ad esempio, se:
+	\[
+	P = \begin{pmatrix}
+		0 & 0 & 1 \\
+		1 & 0 & 0 \\
+		0 & 1 & 0
+	\end{pmatrix} \text{ e } A = \begin{pmatrix}
+		a_{11} & a_{12} & a_{13} \\
+		a_{21} & a_{22} & a_{23} \\
+		a_{31} & a_{32} & a_{33}
+	\end{pmatrix}
+	\]
+	Genera:
+	\[
+	PA = \begin{pmatrix}
+		a_{31} & a_{32} & a_{33} \\
+		a_{11} & a_{12} & a_{13} \\
+		a_{21} & a_{22} & a_{23}
+	\end{pmatrix}
+	\]
+	\item Analogamente l'azione del prodotto $AP$ è quella di permutare le colonne di $A$.
+\end{itemize}
+\end{note}
+Analizziamo una proprietà. Se $P$ è una matrice di permutazione, allora $P$ è non singolare e risulta:
+\[
+P^{-1} = P^T
+\]
+\begin{theorem}{\nmu Fattorizzazione LU con pivot}{fatt_lu_pivot}
+	Sia $A$ una matrice quadrata di dimensione $n$.
+
+	Allora:
+	\begin{align*}
+		&\exists P \text{ matrice di permutazione} \\
+		&\exists L \text{ matrice triangolare inferiore speciale} \\
+		&\exists U \text{ matrice triangolare superiore}
+	\end{align*}
+	tali che
+	\[
+	PA = LU
+	\]
+\end{theorem}
+
 \end{document}
