@@ -273,10 +273,12 @@
 		Questa è la specifica semantica del modulo dell'\textit{x partition del quick sort}
 	\end{exercise}
 	\subsection{Limiti dell'astrazione funzionale}
-	L'astrazione funzionale non permette di progettare, e quindi sviluppare, moduli software \textit{invarianti ai cambiamenti nei dati}, sono invariant solo ai cambiamenti nei processi di trasformazione che operano. \\
+	L'astrazione funzionale non permette di progettare, e quindi sviluppare, moduli software \textit{invarianti ai cambiamenti nei dati}, sono invariant solo ai cambiamenti nei processi di trasformazione che operano.
+
 	Questo rende difficoltosa la manutenzione delle soluzioni progettate ed è inappropriata per lo sviluppo di soluzioni a problemi complessi.
 	\section{Astrazione dati}
-	Alla base dell'\textit{astrazione dati} c'è il principio che non \textit{non si può accedere direttamente alla rappresentazione di un dato, qualunque esso sia, ma solo attraverso un insieme di operazioni considerate lecite} e questo è detto \textbf{principio dell'astrazione dati}. \\
+	Alla base dell'\textit{astrazione dati} c'è il principio che non \textit{non si può accedere direttamente alla rappresentazione di un dato, qualunque esso sia, ma solo attraverso un insieme di operazioni considerate lecite} e questo è detto \textbf{principio dell'astrazione dati}.
+
 	Un vantaggio dell'astrazione dati è che un cambiamento nella rappresentazione del dato si ripercuoterà solo sulle operazioni lecite, che potrebbero subire delle modifiche, mentre non inficerà il codice che utilizza il dato astratto.
 	\subsection{Information Hiding}
 	In generale un principio di astrazione suggerisce di \textit{occultare l'informazione}, l'\textbf{information hiding}, sulla rappresentazione del dato sia perchè non necessaria al fruitore dell'entità astratta e sia perchè la sua rivelazione creerebbe delle inutili dipendenze che comprometterebbero l'invarianza ai cambiamenti.
@@ -1445,12 +1447,15 @@ Ogni classe ha una doppia componente:
 		\item \textbf{Metodi di istana}: operano su almeno un attributo di istanza, pertanto possono esesre invocati solo specificando l'istanza;
 		\item \textbf{Metodi di classe}: operano esclusivamente su attributi di classe, pertanto possono essere invocati specificando la classe. Si possono invocare metodi di classe anche quando non è stato creato alcun oggetto per quella classe.
 	\end{enumerate}
-	In linea di principio, l'invocazione di un metodo di classe può avvenire anche specificando un oggetto, tuttavia ciò è sconsigliato perchè non evidenzia il fatto che si manipolano solo attributi di classe. \\
+	In linea di principio, l'invocazione di un metodo di classe può avvenire anche specificando un oggetto, tuttavia ciò è sconsigliato perchè non evidenzia il fatto che si manipolano solo attributi di classe.
+
 	Invece, non è possibile invocare un metodo di istanza sulla classe.
 \end{enumerate}
 \section{UML}
-In UML, Unified Modeling Language, un linguaggio visuale utilizzato per  definire, progettare, realizzare e documentare sistemi mediante un approccio object oriented. È un linguaggio di \textbf{rappresentazione dei sistemi} ed è \textbf{universale}: può rappresentare sistemi eterogenei per architettura, tecnologie, tipologia applicativa ecc. \\
-UML è di supporto alla progettazione di un nuovo sistema e alla documentazione di un sistema esistente. \\
+In UML, Unified Modeling Language, un linguaggio visuale utilizzato per  definire, progettare, realizzare e documentare sistemi mediante un approccio object oriented. È un linguaggio di \textbf{rappresentazione dei sistemi} ed è \textbf{universale}: può rappresentare sistemi eterogenei per architettura, tecnologie, tipologia applicativa ecc.
+
+UML è di supporto alla progettazione di un nuovo sistema e alla documentazione di un sistema esistente.
+
 \subsection{Oggetti in UML}
 In UML un oggetto, o \textit{istanza}, è graficmaente rappresentato in questo modo:
 \begin{figure}[H]
@@ -1924,18 +1929,24 @@ Consideriamo il seguente esempio.
 \end{figure}
 In questo esempio la classe \textit{ContoCorrenteConFido} potrà accedere al dato saldo, mentre ciò non sarà permesso ad altre classi dislocate in altri package che non ereditano da \textit{ContoCorrente}.
 \section{Classi astratte}
-Se in programmazione object-oriented non può esistere un oggetto senza che sia stata creata la classe di appartenenza, è invece possibile che esistano classi per le quali non è possbiile generare delle istanze. Esse sono chiamate \textit{classi astratte}. \\
-Una classe astratta \textbf{può essere} una classe non completamente specificata. In particolare, non è definito il metodo corrispondente ad un'operazione, si dice che il metodo è \textit{astratto}. \\
-Una classe astratta non può essere istanziata perchè il comportamento dei suoi oggetti non sarebbe completamente definito. La relazione di ereditarietà riguarda anche le classi astratte.  \\
+Se in programmazione object-oriented non può esistere un oggetto senza che sia stata creata la classe di appartenenza, è invece possibile che esistano classi per le quali non è possbiile generare delle istanze. Esse sono chiamate \textit{classi astratte}.
+
+Una classe astratta \textbf{può essere} una classe non completamente specificata. In particolare, non è definito il metodo corrispondente ad un'operazione, si dice che il metodo è \textit{astratto}.
+
+Una classe astratta non può essere istanziata perchè il comportamento dei suoi oggetti non sarebbe completamente definito. La relazione di ereditarietà riguarda anche le classi astratte.
+
 In UML, la notazione di una classe astratta è la seguente.
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{images/classi_astratte}
 	\end{center}
 \end{figure}
-In questo esempio, la classe degli strumenti musicali è astratta perchè non possiamo definire il metodo \textit{play}. Il metodo \textit{play} è implementato nelle sottoclassi degli strumenti a fiato, degli strumenti a percussione, e dei cordati. Il metodo \textit{what} è invece \textbf{concreto} (è implementato) e restituisce il nome della classe. Esso è ridefinito in ogni classe. \\
-Le classi astratte sono strumenti per fattorizzare proprietà comuni tra classi simili e poterle organizzare in una gerarchia di ereditarietà. Non potremo mai creare oggetti a partire da una classe astratta, ma possiamo servircene per dare una radice comune a un insieme di classi che condividono le stesse proprietà e poter quindi sfruttare il polimorfismo di inclusione e il binding dinamico. \\
-Le classi atratte fungono da \textbf{serbatoi di ereditarietà}. \\
+In questo esempio, la classe degli strumenti musicali è astratta perchè non possiamo definire il metodo \textit{play}. Il metodo \textit{play} è implementato nelle sottoclassi degli strumenti a fiato, degli strumenti a percussione, e dei cordati. Il metodo \textit{what} è invece \textbf{concreto} (è implementato) e restituisce il nome della classe. Esso è ridefinito in ogni classe.
+
+Le classi astratte sono strumenti per fattorizzare proprietà comuni tra classi simili e poterle organizzare in una gerarchia di ereditarietà. Non potremo mai creare oggetti a partire da una classe astratta, ma possiamo servircene per dare una radice comune a un insieme di classi che condividono le stesse proprietà e poter quindi sfruttare il polimorfismo di inclusione e il binding dinamico.
+
+Le classi atratte fungono da \textbf{serbatoi di ereditarietà}.
+
 Consideriamo il seguente esempio.
 \begin{center}
 \begin{tikzpicture}[
@@ -4000,4 +4011,134 @@ public class ArrayInit {
 	}
 }
 \end{lstlisting}
+\section{Trattamento delle eccezioni}
+\subsection{Il trattamento degli errori}
+Non tutti gli errori presenti in un programma possono essere rilevati in compilazione. Quando si verifica una condizione anormale in una sequenza di codice al momento dell'esecuzione si dice che si è verificata un'\textit{eccezione}. Nei linguaggi di programmazione che non sopportano la gestione delle eccezioni, gli errori devono essere controllati e gestiti manualmente dal programamtore a costo di notevoli sforzi. Ciò avviene solitamente mediante l'utilizzo di codici di errore.
+
+Java supporta la gestione degli errori, rifacendosi al modello C++ che a sua volta si basa sul modello di Ada. Una \textbf{condizione eccezionale} è un problema che impedisce la regolare esecuzione del programma, ovvero l'eleaborazione non può continuare perchè non si hanno abbastanza informazioni per trattare il problema nel contesto corrente. Per gestire un'eccezione si potrebbe uscire dal contesto corrente relegando il tutto ad un contesto più alto. L'uscita dal contesot corrente corrisponde al \textbf{sollevamento di un'eccezione}.
+
+Quando si solleva un'eccezione vengono eseguite le seguenti operazioni:
+\begin{enumerate}
+	\item viene creato l'\textit{oggetto eccezione} come un qualsiasi oggetto Java (nella memoria heap tramite l'operatore \textit{new});
+	\item il flusso di esecuzione corrente viene interrotto e il riferimento all'oggetto eccezione viene \textbf{espulso} dal contesto corrente;
+	\item il meccanismo di \textit{gestione delle eccezioni} rileva la situazione e comincia a cercare il punto opportuno dove far proseguire l'esecuzione del programma.
+\end{enumerate}
+
+Il punto opportuno da cui far riprendere l'esecuzione del programma si chiama \textit{gestiore dell'eccezione}. Esso ha il compito di recuperare la situazione in modo tale che il programma possa o cercare qualche linea di esecuzione alternativa o semplicemente continuare.  La sezione di codice che potrebbe generare delle eccezioni e che è seguita dal codice per il loro trattamento, è chiamata \textit{zona protetta} o \textbf{guarded zone}.
+
+\paragraph{Modello a terminazione o ripresa?} Supportata da Java e C++: si presusppone che l'errore è talmente critico da non poter ritornare al punto in cui è stata sollevata l'eccezione. Si riprende l'esecuzione dall'istruzione successiva al gestore dell'eccezione.
+\subsection{Sollevare un'eccezione}
+Per lanciare un'eccezione in modo esplicito si utilizza l'istruzione \texttt{throw}. La sua sintassi generale è la seguente:
+\begin{lstlisting}[style=javastyle]
+throw ThrowableInstance;
+\end{lstlisting}
+dove \textit{ThrowableInstance} è istanza della classe \textit{Throwable} o istanza di una sua sottoclasse. Un semplice caso di sollevamento di eccezione potrebbe essere il passaggio di un riferimento ad un oggetto non ancora inizializzato.
+\begin{lstlisting}[style=javastyle]
+String t = null;
+if (t == null) throw new NullPointerException();
+System.out.println("hello");
+\end{lstlisting}
+dove \textit{NullPointerException} è una classe predefinita di eccezioni.
+
+Esistono due costruttori per tutte le eccezioni standard:
+\begin{itemize}
+	\item un costruttore di default;
+	\item costruttore che un argomento di tipo stringa in input.
+	\begin{lstlisting}[style=javastyle]
+	if (t == null)
+		throw new NullPointerException("t == null");
+	\end{lstlisting}
+\end{itemize}
+\subsection{Catturare un eccezione}
+Se un metodo solleva un'eccezione, questa deve essere in qualche modo \textit{catturata} e \textit{trattata}. Per catturare l'eccezione si può impostare un blocco speciale chiamato \textit{try block} in cui si inserisce la sezione di codice che potrebbe generare l'eccezione. La sintassi del \textit{try block} è la seguente:
+\begin{lstlisting}[style=javastyle]
+try {
+	// Code that might generate exceptions
+}
+\end{lstlisting}
+
+Il gestore dell'eccezione segue il blocco \textit{try} ed è introdotto dalla parola chiave \texttt{catch}. Poichè un blocco \textit{try} si potrebbero sollvare più eccezioni di tipo differente, al blocco \textit{try} è possibile far seguire diverse clausole \textit{catch}, una per ogni tipo di eccezione che si vuole gestire. La sintassi è la seguente:
+\begin{lstlisting}[style=javastyle]
+try {
+	// Code that might generate exceptions
+	ist1();
+	ist2();
+	System.out.println("ok");
+} catch (Type1 id1) {
+	// Handle exceptions of Type1
+} catch (Type1 id1) {
+	// Handle exceptions of Type1
+}
+
+System.out.println("hello");
+\end{lstlisting}
+Ogni proposizione \texttt{catch} è come un piccolo metodo che ha come argomento un tipo particolare. Gli identificatori ($id1$, $id2$ e così via) possono essere usati all'interno del gestore come se fossero argomenti di metodi. Anche se l'identificatore non viene utilizzato all'interno del blocco, deve essere sempre indicato. I gestori devono essere inseriti subito dopo il \textit{try block}. Quando viene sollevata un'eccezione vengono seguiti i seguenti passi.
+\begin{enumerate}
+	\item Il meccanismo di gestione cerca il primo gestore il cui tipo di argomento corrisponde con il tipo dell'eccezione sollevata.
+	\item Quindi entra nel blocco del rispettivo \texttt{catch} e l'eccezione viene gestita.
+	\item La ricerca dei gestori termina quando il blocco \texttt{catch} è eseguito
+\end{enumerate}
+
+Dopo la gestione dell'eccezione si passa ad eseguire la prima istruzione dopo l'ultimo blocco \texttt{catch}. Si noti che in questo caso  non si ha bisogno di alcuna istruzione supplementare (come il \texttt{break} nello \texttt{switch}) per evitare che le restanti \texttt{catch} siano eseguite. Il gestore è \textbf{unico}, sebbene all'interno del \textit{try block} diverse invocazioni di metodi potrebbero generare la stessa eccezione.
+
+È possibile avere blocchi try annidati.
+\begin{lstlisting}[style=javastyle]
+try { // Istruzioni
+	try { // Istruzioni
+
+	} catch (A a1) { // Gestore A }
+} catch (B b1) { // Gestore B }
+\end{lstlisting}
+Più in generale i blocchi \textit{try} potranno essere annidati ma in metodi differenti.
+\begin{lstlisting}[style=javastyle]
+void external_mthd() {
+	// Istruzioni
+	try {
+		// Istruzioni
+	} catch (B b1) { // Gestore B }
+}
+
+void internal_mthd() {
+	// Istruzioni
+	try {
+		// Istruzioni
+	} catch (A a1) { // gestore A }
+}
+\end{lstlisting}
+Se un'eccezione non viene intercettata e gestita quando si verifica, il controllo viene immediatamente restituito al metodo che invocato il metodo che l'ha prodotta. Si può progettare il software in modo che l'eccezione sia intercettata e gestita al livello più esterno, ma se non viene gestita neppure qui, il controllo passa al metodo che lo ha invocato e così via.
+
+La \textit{propagazione delle eccezioni} continua finchè l'eccezione non viene intercettata e gestita, oppure fino a quando non si esce dal metodo main, nel qual caso termina il programma e si produce il messaggio d'errore relativo all'eccezione.
+
+È possibile anche pensare a un gestore che catturi qualsiasi eccezione. Per fare cio si cattura la classe base delle eccezioni \textit{Exception}
+\begin{lstlisting}[style=javastyle]
+catch (Exception e) {
+	System.err.println("Caught an exception");
+}
+\end{lstlisting}
+È consigliabile inserire questo gestore solo alla fine della lista degli altri gestori di eccezioni specifiche.
+\subsection{La parola chiave \texttt{finally}}
+L'istruzione \texttt{try} può avere una clausola \texttt{finally} opzionale: essa definisce una sezione di codice che viene eseguita indipendentemente da come si sia usciti dal \textit{try block}. Spesso viene usata per garantire il rilascio della memoria o di altre risorse a prescindere da quello che accade nel \textit{try block}. Se non si verificano eccezioni, le istruzioni nella clausola \texttt{finally} vengono eseguite dopo che si è completato il \textit{try block}. Se si verifica un'eccezione nel \textit{try block}, il controllo passa alla clausola \texttt{catch} appropriata e poi alla clausola \texttt{finally}.
+
+La clausola \texttt{finally} se presente, dev'esser posta dopo tutte le clausole \texttt{catch}.
+\begin{lstlisting}[style=javastyle]
+try {
+	// Istruzioni
+} catch (A a1) { // Gestore A
+} catch (B b1) { // Gestore B
+} catch (C c1) { // Gestore C
+} finally {
+	// Activities that happen every time
+}
+\end{lstlisting}
+Un \textit{try block} non deve essere necessariamente seguito da una clausola \texttt{catch}: se non ci sono, si può usare solo il blocco \texttt{final}. Ad esempio:
+\begin{lstlisting}[style=javastyle]
+try {
+	System.out.println(Inger.parseInt(numString));
+} catch (NumberFormatException exception) {
+	System.out.println("Eccezione intercettata");
+} finally {
+	System.out.println("Fatto");
+}
+\end{lstlisting}
+\subsection{La clausola \texttt{throws}}
 \end{document}
