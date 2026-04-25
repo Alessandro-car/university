@@ -17,6 +17,7 @@ libri/
 *.docx
 *.jpg
 *.jpeg
+*.webp
 *.png
 *.gif
 *.sh
