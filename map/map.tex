@@ -4140,5 +4140,77 @@ try {
 	System.out.println("Fatto");
 }
 \end{lstlisting}
-\subsection{La clausola \texttt{throws}}
+\subsection{La clausola \texttt{throws}} Java fornisce anche una sintassi che permette di indicare quali sono le eccezioni sollevate da un metodo in modo tale che il programmatore possa gestirle. Se un metodo può provare un'eccezione che non è in grado di gestire, deve generalmente specificare questo comportamento in modo tale che i metodi chiamati si preparino a questa eccezione. A tale scopo si utilizza la clausola \texttt{throws} nella dichiarazione del metodo che elenca i tipi di eccezione che un metodo dovrebbe sollevare.
+
+Questa sintassi viene chiamata \textit{descrizione dell'eccezione} o \textbf{exception specification} e fa parte della dichiarazione del metodo subito dopo la lista degli argomenti.
+\begin{lstlisting}[style=javastyle]
+type MethodName(argumentList) throws exceptionList
+{
+	// body
+}
+\end{lstlisting}
+Java garantisce la verifica in compilazione della corretta gestione delle eccezioni. In questo differisce dal C++ che permette la cattura delle violazioni delle descrizioni delle eccezioni solo in esecuzione.
+
+Tutti i tipi di eccezione in Java sono derivati dalla classe \textit{Throwable}. Da \textit{Throwable} sono derivate due sottoclassi che portano a due gerarchie di ereditarietà distinte. La prima fa capo alla classe \textit{Exception} utilizzata per le \textbf{condizioni eccezionali} che i programmi utente dovrebbero catturare. Da questa classe saranno poi derivate tutte le sottoclassi relative alle eccezioni personalizzate.
+
+L'altro ramo della gerarchia è capeggiata dalla classe \textit{Error} che definisce le eccezioni da catturare in \textbf{circostanze normali} del programma. Questo tipo di eccezione viene utilizzata al run-time per indicare errori che interessano l'esecuzione del programma come ad esempio il messaggio di overflow dello stack. Java definisce diverse classi di eccezioni all'interno del package \textit{java.lang} che viene implicitamente importato in tutti i programmi.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{images/throwable_class2}
+	\end{center}
+\end{figure}
+Le eccezioni più generali sono quelle derivate da \textit{RuntimeException}. In Java queste eccezioni non devono essere inserite nell'elenco \texttt{throws} del metodo. Inoltre, sono definite eccezioni non controllate perchè il compilatore non controlla se un metodo gestisce o lancia queste eccezioni.
+
+Il pacchetto \textit{java.lang} contiene anche delle eccezioni che devono essere necessariamente nell'elenco \textit{throws} del metodo se tale metodo è in grado di generare una di queste eccezioni e non la gestisce. Questo tipo di eccezioni sono chiamate \textbf{eccezioni controllate}. In generale, è indispensabile elencare nella clausola \texttt{throws} le eccezioni sollevabili in un metodo e non gestite, escluse quelle di tipo \textit{RuntimeException} e rispettive sottoclassi.
+
+\paragraph{La creazione di eccezioni personalizzate} Oltre alle eccezioni presenti nel package \textit{java.lang} sono disponibili altri tipi di eccezioni correlate alle diverse librerie di classi. Java permette di creare delle eccezioni personalizzate che servono a coprire i casi in cui non sono previste nelle librerie standard. Per creare una nuova eccezione si cerca di derivarla da una già esistente che un significato analogo. Ad esempio:
+\begin{lstlisting}[style=javastyle]
+class MyException extends Exception {
+	public MyException() {}
+	public MyException(String msg) { super(msg); }
+}
+
+public class FullConstructors {
+	public static void f() throws MyException {
+		System.out.println("Throwing MyException from f()");
+		throws new MyException();
+	}
+
+	public static void g() throws MyException {
+		System.out.println("Throwing MyException from g()");
+		throw new MyException("Originated in g()");
+	}
+
+	public static void main(String[] args) {
+		try {
+			f();
+		} catch (MyException e) {
+			e.printStackTrace(System.err);
+		}
+		try {
+			g();
+		} catch (MyException e) {
+			e.printStackTrace(System.err);
+		}
+	}
+}
+\end{lstlisting}
+L'output di questo programma è il seguente:
+\begin{center}
+	Throwing MyException from f();
+
+	MyException
+
+	at FullConstructors.f(FullConstructors.java:16)
+
+	at FullConstructors.main(FullConstructors.java:24)
+
+	Throwing MyException from g()
+
+	MyException: Originated in g()
+
+	at FullConstructors.g(FullConstructors.java:20)
+
+	at FullConstructors.main(FullConstructors.java:29)
+\end{center}
 \end{document}
