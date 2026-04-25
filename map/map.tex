@@ -4213,4 +4213,218 @@ L'output di questo programma è il seguente:
 
 	at FullConstructors.main(FullConstructors.java:29)
 \end{center}
+\section{I contenitori}
+In Java è disponibile il tipo predefinito \textit{array}, a cui si aggiungono delle librerie che introducono un ragionevole insieme di \textit{classi contenitore}, dette \textit{container class}. Tali classi sono spesso chiamate anche \textit{collection} sebbene in Java 2 il nome \textbf{\textit{Collection}} sta ad indicare un particolare sottoinsieme di librerie.
+\subsection{Array in Java}
+Ci sono due caratteristiche che distinguono gli array dagli altri tipi di contenitori:
+\begin{enumerate}
+	\item Efficienza.
+	\item Tipo.
+\end{enumerate}
+L'array è il modo più efficiente che Java fornisce per memorizzare ed accedere direttamente ad una sequenza di oggetti (intesi come riferimenti ad oggetti). Il prezzo di qeusta efficienza è quello di avere una dimensione predefinita che non può essere modificata durante il proprio ciclo di vita. Come alternativa, Java fornisce la classe \textit{ArrayList} che però paga la maggiore flessibilità con la minore efficienza.
+
+Rispetto ad un contenitore generico, l'array contiene \textbf{un solo tipo specifico di oggetto}. È conveniente usare gli array quando si vuole guadagnare in termini di efficienza e controllo sul tipo di oggetti. Negli altri casi, infatti, potrebbero risultare un po' restrittivi. L'unico membro accessibile di un array è \textit{length} che dice il numero di oggetti contenuti nell'array mentre la sintassi `[]' è l'unico modo per accedere all'oggetto di un array.
+
+In Java se si superano i confini specificati per un'istanza di array (o di classe contenitore), viene generata un'eccezione a run-time. Al contrario, in C++ l'operatore `[]' non effettua alcun controllo sui limiti del contenitore.
+
+A differenza degli array, le classi contenitore possono contenere solo \textit{riferimenti ad oggetti}. Si aggira questo limite ricordando che in Java sono disponibili delle classi ``wrapper'' come \textit{Integer}, \textit{Double}, etc. che permettono di inserire dei valori primitivi in un contenitore. Tuttavia, si sottolinea che è più efficiente e semplice creare un array di tipi primitivi anzichè un contenitore di classi ``wrapper''.
+
+In C/C++ non è possibile restiture un intero array ma solo un puntatore all'array (con tutti i problemi dovuti al fenomeno di \textit{memory leak}). Java utilizza lo stesso approccio restituendo, però, un array di riferimenti agli oggetti senza alcuna preoccupazione sulla dimensione.
+
+Java include nella sua libreria \textit{java.util}, la classe \textit{Arrays} che contiene un insieme di metodi stastici che supporano le funzioni di utilità per gli array.
+\begin{lstlisting}[style=javastyle]
+public class Arrays {
+	// Suppresses default constructors,
+	// ensuring non-istantiability.
+	private Arrays() {}
+}
+\end{lstlisting}
+Non ci sono altri costruttori, quindi tutti i metidi definiti devono essere di classe per poter garantire l'utilizzabilità di \textit{Arrays}.
+
+Ci sono quattro funzioni di base:
+\begin{itemize}
+	\item \textit{equals()}: confronta per uguaglianza due array;
+	\item \textit{fill()}: riempie un array con un valore;
+	\item \textit{sort()}: ordina un array;
+	\item \textit{binarySearch()}: ritrova un elemento in array ordinato.
+\end{itemize}
+Tutti questi metodi sono overloaded per tutti i tipi primitiv e gli oggetti di classe \textit{Object}.
+
+Ai metodi elencati prima si aggiunge \textit{asList()} che prende degli array e li inserisce in un altro contenitore chiamato \textit{List}.
+
+\paragraph{Copia di un array}
+La libreria standard di Java fornisce un metodo \textit{static}, \textit{System.arraycopy()}, che effettua la copia di un array più velocemente del classico \textit{for}. Questo metodo è overloaded per trattare tutti i tipi.
+
+Gli argomenti del metodo \textit{arraycopy()} sono:
+\begin{itemize}
+	\item l'array sorgente;
+	\item l'indirizzo dell'array sorgente da cui iniziare la copia;
+	\item l'array di destinazione;
+	\item l'indirizzo dell'array di destinazione dove inizia la copia;
+	\item il numero di elementi da copiare.
+\end{itemize}
+Se si violano i confini dell'array, verrà sollevata un'eccezione. Nel seguente esempio si mostra come possono essere copiati sia tipi primitivi che oggetti.
+\begin{lstlisting}[style=javastyle]
+// Esempio di uso di System.arraycopy()
+import com.prova.util.*;
+import java.util.*;
+public class CopyingArrays {
+	public static void main(String[] args) {
+		int[] i = new int[25];
+		int[] j = new int[25];
+		Arrays.fill(i, 47);
+		Arrays.fill(j, 99);
+		System.arraycopy(i, 0, j, 0, i.length);
+		in[] k = new int[10];
+		Arrays.fill(k, 103);
+		System.arraycopy(i, 0, k, 0, k.length);
+		Arrays.fill(k, 103);
+		System.arraycopy(k, 0, i, 0, k.length);
+		Integer[] u = new Integer[10];
+		Integer[] v = new Integer[5];
+		Arrays.fill(u, new Integer(47));
+		Arrays.fill(v, new Integer(99));
+		System.arraycopy(v, 0, u, u.length / 2, v.length);
+	}
+}
+\end{lstlisting}
+Si ricorda che nel caso degli oggetti sono duplicati solo i riferimenti agli oggetti, non c'è alcuna duplicazione degli oggetti stessi, detta \textit{shallow copy}.  Per effettuare la \textit{deep copy} invece bisogna effettuare la clinazione.
+\paragraph{Confronto di array} La classe Arrays fornisce il metodo \textit{equals()} overloaded per tutti i tipi primitivi e per gli oggetti \textit{Object}. Questo metodo confronta i corrispondenti elementi di due array e restituisce \textit{true} se i due array sono uguali.
+\begin{lstlisting}[style=javastyle]
+public static boolean equals(long[] a, long[] a2) {
+	if (a == a2)
+		return true;
+	if (a == null || a2 == null)
+		return false;
+	int length = a.length;
+	if (a2.length != length)
+		return false;
+	for (int i = 0; i < length; i++)
+		if (a[i] != a2[i])
+			return false;
+	return true;
+}
+
+public static boolean equals(char[] a, char[] a2) {
+ // Body
+}
+
+...
+
+public static boolean equals(Object[] a, Object[] a2) {
+	if (a == a2)
+		return true;
+	if (a == null || a2 = null)
+		return false;
+	int length = a.length;
+	if (a2.length != length)
+		return false;
+	for (int i = 0; i < length; i++) {
+		Object o1 = a[i];
+		Object o2 = a2[i];
+		if (!(o1 == null ? o2 == null : o1.equals(o2)))
+			return false;
+	}
+	return true;
+}
+\end{lstlisting}
+Il confronto di uguaglianza per array di oggetti si basa sui contenuti mediante \textit{Object.equals()}. La classe \textit{Object} implementa \textit{equals} nel modo più restrittivo ($x == y$), mentre la classe \textit{String} lo ridefinisce in modo da effettuare un confronto fra stringhe. Il polimorfismo del metodo fa il resto.
+\paragraph{Comparazione degli elementi di un array}
+L'approccio di Java è basato sulla tecnica del \textit{callback}, per cui la parte del codice che varia da caso a caso è incapsulata all'interno della rispettiva classe mentre la parte di codice che resta invarianta richiamerà il codice che cambia.
+
+Nell'ordinamento:
+\begin{itemize}
+	\item \textbf{Parte invariante}: algoritmo di ordinamento (a bolle, quicksort, mergesort, etc.). Incluso nella classe \textit{Arrays}.
+	\item \textbf{Parte variabile}: confronto di due istanze di una classe, Incluso nel codice della classe di appartenenza.
+\end{itemize}
+\begin{example}{\nmu Parte invariante}{parte_invariante}
+\begin{lstlisting}[style=javastyle]
+public static void sort(Object[] a) {
+	Object[] aux = (Object[]) a.clone();
+	mergeSort(aux, a, 0, a.length);
+}
+
+private static void mergeSort(Object[] src, Object[] dest, int low, int high) {
+	int length = high - low;
+
+	if (length < 7) {
+		for (int i = low; i < high; i++) {
+			for (int j = i; j > low && dest[j-1] >= dest[j]; j--)
+				swap(dest, j, j-1);
+		}
+		return;
+	}
+
+	int mid = (low + high) / 2;
+	mergeSort(dest, src, low, mid);
+	mergeSort(dest, src, mid, high);
+	// If list is already sorted, just copy from src to dest. This is an optimization.
+	if (src[mid - 1] <= src[mid]) {
+		System.arraycopy(src, low, dest, low, length);
+		return;
+	}
+
+	// Merge sorted halves (now in src) into dest
+	for (int i = low, p = low, q = mid; i < high; i++) {
+		if (q >= high || p < mid && src[p] <= src[q])
+			dest[i] = src[p++];
+		else
+			dest[i] = src[q++];
+	}
+}
+\end{lstlisting}
+\end{example}
+In Java 2 ci sono due modi per offrire funzionalità di confronto. Il primo è attraverso il metodo di confronto naturale che viene comunicato alla classe mediante l'implementazione dell'interfaccia \textit{java.lang.Comparable}. Questa semplice interaccia è fornita da un singolo metodo,
+\[
+\textit{public int compareTo(Object o)}
+\]
+che prende un oggetto generico \textit{Object} come argomento e restituisce un valore negativo se l'argomento è più piccolo dell'oggetto corrente, zero se è uguale e un valore positivo se è maggiore.
+
+Ad esempio:
+\begin{lstlisting}[style=javastyle]
+class Studente implements Comparable {
+	int matricola;
+	int numeroEsami;
+	String cognome;
+	String nome;
+	Studente(int matricola, int numeroEsami, String cognome, String nome) {
+		this.matricola = matricola;
+		this.numeroEsami = numeroEsami;
+		this.cognome = cognome;
+		this.nome = nome;
+	}
+
+	pubic int compareTo(Object o) {
+		Studente s = (Studente) o;
+		if (s.numeroEsami == numeroEsami)
+			return 0;
+		else if (s.numeroEsami < numeroEsami)
+			return -1;
+		else
+			return 1;
+	}
+}
+\end{lstlisting}
+Se volessimo ordinare $s$ in base al cognome, allora si procede nel seguente modo:
+\begin{lstlisting}[style=javastyle]
+class StudenteComp implements Comparator {
+	public int compare(Object o1, Object o2) {
+		Studente s1 = (Studente) o1;
+		Studente s2 = (Studente) o2;
+		return s1.cognome.compareTo(s2.cognome);
+	}
+}
+\end{lstlisting}
+Lo stesso approccio si utilizza se volessimo ordinare $s$ in base alla matricola.
+
+Il secondo modo è quello di creare una classe che implementa l'interfaccia \textit{Comparator} che ha due metodi:
+\[
+\textit{public int compare(Object o1, Object o2)}
+\]
+\[
+\textit{public boolean equals(Object obj)}
+\]
+Il metodo \textit{compare} deve restituire un valore intero negativo, nullo o positivo a seconda del risultato del confronto.
+\subsection{I contenitori}
+
 \end{document}
