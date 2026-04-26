@@ -4426,5 +4426,275 @@ Il secondo modo è quello di creare una classe che implementa l'interfaccia \tex
 \]
 Il metodo \textit{compare} deve restituire un valore intero negativo, nullo o positivo a seconda del risultato del confronto.
 \subsection{I contenitori}
+I contenitori di Java 2 si basano su due distinti concetti:
+\begin{itemize}
+	\item \textbf{\textit{Collection}}: un gruppo di \textit{singoli} elementi a cui spesso sono applicati dei vincoli (ad esempio un oggetto di \textit{List} deve contenere elementi in una particolare sequenza o una classe \textit{Set} non può contenere elementi duplicati).
+	\item \textbf{\textit{Map}}: un gruppo di \textit{coppie} ``chiave-oggetto valore''.
+\end{itemize}
+La distinzione tra le due categorie di contenitori in Java è quindi basata sul numero di elementi contenuti in ogni locazione del contenitore.
 
+La categoria \textit{Collection} contiene un elemento in ogni locazione. Essa include il tipo \textit{List} che contiene un gruppo di elementi in una particolare sequenza e il tipo \textit{Set} che permette solo l'aggiunta di un elemento di un dato tipo.
+
+L'\textit{ArrayList} è un tipo \textit{List} e \textit{HashSet} è un tipo di \textit{Set}. Per aggiungere elementi a qualsiasi \textit{Collection} si usa il metodo \textit{add()}. Per quanto riguarda il riempimento di un contenitore, si può usare il metodo \textit{fill()} anche se solo per il tipo \textit{List}.
+
+	La categoria dei contenitori \textit{Map} contiene coppie di chiave-valore come se fosse una piccola tabella di un database relazionale. Se si ha un contenitore \textit{Map} che associa le regioni italiane con i rispettivi capoluoghi di ergione e si vuole conosce il capoluogo di regione della Puglai vi si accede come se si avesse un array indicizzato (i contenitori \textit{Map} sono chiamati anche \textit{array associativi}). Per aggiungere degli elementi ad un \textit{Map} si usa il metodo \textit{put()} che acquisisce in input una chiave ed un valore come argomenti. Un contenitore \textit{Map} può restituire
+	\begin{enumerate}
+		\item un \textit{Set} contenente tutte le sue chiavi,
+		\item una \textit{Collection} contenente tutti i suoi valori,
+		\item un \textit{Set} di coppie.
+	\end{enumerate}
+	I contenitori \textit{Map}, come gli array, possono essere facilmente estesi a dimensioni multiple senza l'aggiunta di nuovi concetti ma semplicemente creando un \textit{Map} i cui valori sono a loro volta dei \textit{Map}.
+	\paragraph{Visualizzare i Contenitori}
+	A differenza degli array, che consentono la stampa di un elemento alla volta in un ciclo for, i contenitori si possono visualizzare con facilità.
+	\begin{lstlisting}[style=javastyle]
+	import java.util.*;
+	public class PrintingContainers {
+		static Collection fill(Collection c) {
+			c.add("dog");
+			c.add("dog");
+			c.add("cat");
+			return c;
+		}
+
+		static Map fill(Map m) {
+			m.put("dog", "Bosco");
+			m.put("dog", "Spot");
+			m.put("cat", "Rags");
+			return m;
+		}
+
+		public static void main(String[] args) {
+			System.out.println(fill(new ArrayList()));
+			System.out.println(fill(new HashSet()));
+			System.out.println(fill(new HashMap()));
+		}
+	}
+	\end{lstlisting}
+	Per l'esempio precedente avevamo il seguente output:
+	\begin{center}
+	[dog, dog, cat]
+
+	[cat, dog]
+
+	\{cat = Rags, dog = Spot\}
+	\end{center}
+	\paragraph{Svantaggi dei Contenitori} Quando si usano i contenitori Java si perde l'informazione relativa al tipo di oggetto che si inserisce in essi. Ciò porta alle seguenti considerazioni:
+	\begin{itemize}
+		\item non essendoci controllo sul tipo degli oggetti inclusi nel contenitore, non è possibile essere sicuri di avere dei contenitori di oggetti omogenei;
+		\item l'unica cosa che il contenitore conosce è che contiene dei riferimenti ad oggetti, pertanto è necessario effettuare un cast al tipo corretto prima di utilizzarli.
+	\end{itemize}
+	Se in un contenitore di riferimenti ad oggetti di tipo ``cerchio'' si inserisce un oggetto di tipo ``quadrato'', nel momento in cui si andranno a manipolare gli oggetti del contenitore trattandoli tutti come ``cerchio'' verrà sollevata un'eccezione a run-time. L'identificazione al run-time del tipo è comunque possibile in Java.
+	\begin{lstlisting}[style=javastyle]
+	public class Cat {
+		private int catNumber;
+		Cat(int i) { catNumber = i; }
+		void print() {
+			System.out.println("Cat #" + catNumber);
+		}
+	}
+
+	public class Dog {
+		private int dogNumber;
+		Dog(int i) { dogNumber = i; }
+		void print() {
+			System.out.println("Dog #" + dogNumber);
+		}
+	}
+
+	import java.util.*;
+	public class CatsAndDogs {
+		public static void main(String[] args) {
+			ArrayList cats = new ArrayList();
+			for (int i = 0; i < 7; i++)
+				cats.add(new Cat(i));
+
+			cats.add(new Dog(7));
+			for (int i = 0; i < cats.size(); i++)
+				((Cat)cats.get(i)).print();
+			// La presenza del tipo Dog viene rilevata a run-time.
+		}
+	}
+	\end{lstlisting}
+\subsection{Iteratori} Un \textit{iteratore} è un oggetto che si muove attarverso una sequenza di oggetti e ne seleziona uno qualsiasi senza che il programmatore sia a conoscenza della struttura sottostante della sequenza. Ad ogni contenitore si può chiedere, mediante il metodo \textit{iterator()}, di generare un opportuno iteratore, che altro non è che un'istanz di una classe che implementa l'interfaccia \textit{Iterator}. L'interfaccia \textit{Iterator} di Java permette di:
+\begin{enumerate}
+	\item restituire il \textbf{primo} elemento della sequenza sulla prima chiamata del metodo \textit{next()};
+	\item prendere l'oggetto \textbf{successivo} nella sequenza con l'invocazione del metodo \textit{next()};
+	\item verificare se ci sono altri oggetti nella sequenza con \textit{hasNext()};
+	\item rimuovere l'ultimo elemento restituito dall'iteratore con il metodo \textit{remove()}.
+\end{enumerate}
+Un esempio di iteratore è il seguente.
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+public class CatsAndDogs2 {
+	public static void main(String[] args) {
+		ArrayList cats = new ArrayList();
+		for (int i = 0; i < 7; i++)
+			cats.add(new Cat(i));
+		Iterator e = cats.iterator();
+		while(e.hasNext())
+			((Cat)e.next()).print();
+	}
+}
+\end{lstlisting}
+\subsection{Funzionalità di List}
+L'interfaccia \textit{List} mantiene gli elementi nell'ordine in cui sono inseriti. Fornisce metodi per l'inserimento e l'eliminazione dei suoi elementi. Una \textit{List} produrrà un \textit{ListIterator} che potrà spostarsi nella lista in entrambe le direzioni al suo interno. Per specializzare il comportamento di \textit{List} sono disponibili le sottoclassi:
+\begin{itemize}
+	\item \textbf{ArrayList}. È una \textit{List} implementata con un array. Permette un accesso rapido agli elementi ma risulta lento nell'inserire o rimuovere gli elementi al centro del contenitore.
+
+	\textit{ListIterator} dovrebbe essere utilizzato solo per accedere agli elementi e non per il loro inserimento ed eliminazione.
+	\item \textbf{LinkedList}. Fornisce un ottimo accesso sequenziale con inserimenti ed eliminazioni poco costosi dal centro delle \textit{List}. Risulta relativamente lenta negli accessi diretti. Supporta i metodi \textit{addFirst(), addLast(), getFirst(), getLast(), removeFirst()} e \textit{removeLast()} che gli permettono di essere usata come uno stack o una coda.
+\end{itemize}
+	\subsection{Funzionalità di Set} L'interfaccia \textit{Set} ha esattamente la stessa interfaccia di \textit{Collection} così non abbiamo funzionalità extra come per i tipi \textit{List}. Un \textit{Set} contiene solo un'istanza di ogni valore dell'oggetto. L'interfaccia \textit{Set} non garantisce l'ordine degli oggetti inseriti. L'univocità degli elementi è stabilita mediante il metodo \textit{equals()}. Classi che implementano l'interfaccia \textit{Set} sono:
+	\begin{itemize}
+		\item \textbf{HashSet}. È utilizzato per \textit{Set} che richiedono tempi di accesso più brevi. Per gli oggetti si definisce un metodo \textit{hashCode()}.
+		\begin{lstlisting}[style=javastyle]
+class Studente {
+	private int matricola;
+	private String cognome;
+	Studente(int matricola, String cognome) {
+		this.matricola = matricola;
+		this.cognome = cognome;
+	}
+
+	public boolean equals(Object o) {
+		return ((Studente) o).getMatricola() == matricola;
+	}
+
+	int getMatricola() { return matricola; }
+
+	public int hashCode() {
+		return new Integer(matricola).hashCode();
+	}
+
+	public String toString() { return cognome; }
+
+}
+
+import java.util.HashSet;
+class Tester {
+	public static void main(String[] args) {
+		HashSet s = new HashSet();
+		s.add(new Studente(1, "Bianchi"));
+		s.add(new Studente(2, "Rossi"));
+		s.add(new Studente(1, "Verde")); // Non viene inserito perche' la matricola 1 e' gia presente
+		System.out.println(s);
+	}
+}
+		\end{lstlisting}
+			\item \textbf{TreeSet}. È un \textit{Set} ordinato attraverso un albero. In tal modo si può estrarre una sequenza ordinata da un \textit{Set}.
+	\end{itemize}
+	Pur accettando l'inserimento di valori duplicati, si può notare che quando il contenuto del \textit{Set} viene visualizzato si vede che essi non sono stati considerati. I \textbf{\textit{Set ordinati}} aggiungono funzionalità nuove, rispetto ai \textit{Set} comuni, che permettono di gestire l'ordinamento degli elementi inseriti.
+\subsection{Funzionalità di Map} L'interfaccia \textit{Map} permette di acceder agli oggetti di un contenitore attraverso un altro oggetto. A tale scopo abbiamo i seguenti metodi:
+\begin{itemize}
+	\item \textit{put(Object key, Object value)}: aggiunge un valore e lo associa con una chiave;
+	\item \textit{get(Object key)}: restituisce il valore corrispondente alla chiave;
+	\item \textit{containsKey(Object key), containsValue(Object key)}: verifica se \textit{Map} contiene un valore o una chiave.
+\end{itemize}
+La libreria standard di Java include deu tipi differenti di Map: \textbf{HashMap} e \textbf{TreeMap}. Entrambe le classi hanno la stessa interfaccia ma si distinguono per efficienza.
+\begin{itemize}
+	\item \textbf{HashMap} garantisce elevate prestazioni per la ricerca di una chiave perchè è un'implementazione basta sulla tabella hash. Infatti ogni oggetto Java può produrre un codice hash (di tipo \textit{int}) attraverso il metodo \textit{hashCode()} definito nella classe \textit{Object}. \textit{HashMap} utilizza tale codice per effettuare una ricerca efficiente sugli elementi.
+
+	Il metodo \textit{HashCode()} usa per default l'indirizzo dell'oggetto per poter generare il valore intero. Può quindi accadere che oggetti differenti per indirizzo, ma identici per valore, siano indicizzati in modo diverso.
+\begin{lstlisting}[style=javastyle]
+public class ObjectHashCode {
+	public static void main(String[] args) {
+		System.out.println((new Object()).hashCode());
+		System.out.println((new Object()).hashCode());
+	}
+}
+\end{lstlisting}
+Per risolvere il problema si può sovrascrivere il metodo \textit{hashCode()} per la classe di oggetti chiave da memorizzare in una Map. QUesto è quello che avviene per \textit{String} o \textit{Integer}.
+	\item \textbf{TreeMap}. Le coppie chiave-valore sono ordinate (attraverso i metodi dell'interfaccia \textit{Comparable}). \textit{TreeMap} dispone di un metodo \textit{subMap()} che restituisce una porzione dell'albero costruito per mantenere ordinati gli oggetti.
+\end{itemize}
+Vediamo un semplice esempio di \textit{HashMap}.
+\begin{lstlisting}[style=javastyle]
+class Studente {
+	private int matricola;
+	private String cognome;
+	Studente(int matricola, String cognome) {
+		this.matricola = matricola;
+		this.cognome = cognome;
+	}
+
+	public boolean equals(Object o) {
+		return ((Studente) o).getMatricola() == matricola;
+	}
+
+	int getMatricola() { return matricola; }
+
+	public int HashCode() {
+		Integer i = new Integer(matricola);
+		return i.hashCode();
+	}
+
+	public String toString() { return cognome; }
+}
+
+class Counter {
+	private int = 1;
+	Counter(int i) { this.i = i; }
+	public String toString() {
+		return Integer.toString(i);
+	}
+}
+
+import java.util.*;
+
+class Statistics {
+	public static void main(String[] args) {
+		HashMap hm = new HashMap();
+		hm.put(new Studente(1, "Bianchi"), new Counter(1));
+		hm.put(new Studente(2, "Rossi"), new Counter(2));
+		hm.put(new Studente(2, "Verde"), new Counter(3));
+		hm.put(new Studente(3, "Bianchi"), new Counter(4));
+	}
+}
+\end{lstlisting}
+L'output di questo codice è il seguente:
+\begin{center}
+\{Bianchi=1, Rossi=3, Bianchi=4\}
+\end{center}
+Con un TreeMap invece:
+\begin{lstlisting}[style=javastyle]
+class Studente implements Comaparable {
+	private int matricola;
+	private String cognome;
+	Studente(int matricola, String cognome) {
+		this.matricola = matricola;
+		this.cognome = cognome;
+	}
+
+	int getMatricola() { return matricola; }
+
+	public int compareTo(Object o) {
+		Studente s = (Studente) o;
+		Integer i = new Integer(s.matricola);
+		Integer m = new Integer(matricola);
+		return m.compareTo(i);
+	}
+
+	public String toString() { return cognome; }
+}
+
+class Counter {
+	private int = 1;
+	Counter(int i) { this.i = i; }
+	public String toString() {
+		return Integer.toString(i);
+	}
+}
+
+
+
+import java.util.*;
+class Statistics {
+	public static void main(String[] args) {
+		TreeMap tm = new TreeMap();
+		tm.put(new Studente(1, "Bianchi"), new Counter(1));
+		tm.put(new Studente(2, "Rossi"), new Counter(2));
+		tm.put(new Studente(2, "Verde"), new Counter(3));
+		tm.put(new Studente(3, "Bianchi"), new Counter(4));
+	}
+}
+\end{lstlisting}
 \end{document}
