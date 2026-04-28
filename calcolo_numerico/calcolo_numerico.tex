@@ -3988,4 +3988,854 @@ AA^{-1} &= I \\
 \end{bmatrix}
 \end{align*}
 \end{exercise}
+\section{Riduzione a scalini di una matrice}
+\begin{definition}{\nmu Rando di una matrice}{rango_matrice}
+	Il \textit{rango} di una matrice $A$ è l'ordine massimo dei minori non nulli estraibili da $A$.
+\end{definition}
+\begin{example}{}{}
+Data la matrice:
+\[
+A = \begin{pmatrix}
+	0 & 1 & -2 \\
+	0 & -1 & 2
+\end{pmatrix}
+\]
+Essendo elementi non nulli, rank$(A) \geq 1$.
+
+Vediamo se $A$ amette minori di ordine 2 non nulli. I minori di ordine 2 sono:
+\begin{align*}
+	\text{det}\left(\begin{bmatrix}
+		0 & 1 \\
+		0 & -1
+	\end{bmatrix}\right) &= 0 \\
+	\text{det}\left(\begin{bmatrix}
+		0 & -2 \\
+		0 & 2
+	\end{bmatrix}\right) &= 0 \\
+	\text{det}\left(\begin{bmatrix}
+		1 & -2 \\
+		-1 & 2
+	\end{bmatrix}\right) &= 0
+\end{align*}
+Quindi il rando di $A$ è:
+\[
+\text{rank}(A) = 1
+\]
+\end{example}
+\subsection{Proprietà del rango di una matrice} Sia $A_{m\times n}$.
+\begin{enumerate}
+	\item rank$(A) \leq \min\{m, n\}$
+	\item rank$(0)$ = 0
+
+	Per convenzione, porremo:
+	\[
+	\text{rank}([\ ]) = 0
+	\]
+	\item Se $A$ è una matrice quadrata, di dimensione $n$ allora $A$ è non singolare $\iff \text{rank}(A) = n$
+	\item rank$(A) = p\iff \exists$ un minore di ordine $p$ non nullo e tutti i minori di ordine $> p$ sono nulli.
+	\item Permutando le righe o le colonne di una matrice, il suo rango non cambia:
+	\[
+	\text{rank}(PA) = \text{rank}(PA) = \text{rank}(A)
+	\]
+	ove $P$ è una qualsiasi matrice di permutazione.
+	\item Aggiungendo a una riga di $A$ una combinazione linare di altre righe, il rango rimane invariato. Risultato analogo per le colonne.
+\end{enumerate}
+\subsection{Matrici ridotte a scalini}
+\begin{definition}{\nmu Matrice ridotta a scalini}{mat_scalini}
+Una matrice si dice \textit{ridotta a scalini} se il primo elemento non nullo di ciascuna riga si trova a destra del primo elemento non nullo della riga precedente.
+\end{definition}
+\begin{example}{}{}
+Sia la matrice:
+\[A = \begin{bmatrix}
+	1 & -2 & 3 & 0 & 1 \\
+	0 & 2 & 1 & -3 & 4\\
+	0 & 0 & 0 & 1 & -2 \\
+	0 & 0 & 0 & 0 & 0
+\end{bmatrix}\]
+La matrice $A$ è ridotta a scalini.
+\end{example}
+I primi elementi non nulli di ciascuna riga sono detti \textit{elementi pivotali}. Le colonne corrispondenti sono dette \textit{colonne pivotali}. Le rimanenti colonne sono dette \textit{colonne libere}.
+\begin{note}{}{}
+Consideriamo la seguente matrice ridotta a scalini:
+\[
+A = \begin{bmatrix}
+	1 & -2 & 3 & 0 \\
+	0 & 0 & 1 & 2 \\
+	0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0
+\end{bmatrix}
+\]
+Evidentemente il rango di una matrice ridotta a scalini coincide con il numero di elementi (o di colonne) pivotali o, equivalentemente, il numero di righe non nulle.
+
+Infatti, detto $p$ il numero di elementi pivotali, la sottomatrice quadrata di dimensione $p$ triangolare superiore avente come elementi diagonali gli elementi pivotali è certamente non singolare.
+
+Inoltre, ogni altra sottomatrice quadrata di dimensione maggiore di $p$ conterrebbe almeno una riga nulla e quindi sarebbe singolare.
+
+Nell'esempio precedente possiamo concludere:
+\[
+\text{rank}(A) = 2
+\]
+e la sottomatrice di dimensione 2 non singolare è:
+\[
+\begin{bmatrix}
+	1 & 3 \\
+	0 & 1
+\end{bmatrix}
+\]
+\end{note}
+L'algoritmo di fattorizzazione LU (con pivot) può essere opportunamente modificato in modo da ridurre una generica matrice $A$ a scalini. Introduciamo questa variante mediante un esempio.
+\begin{example}{\nmu Riduzione a scalini di una matrice con fattorizzazione LU}{fatt_LU_scalini}
+Data la matrice:
+\[
+A = \begin{bmatrix}
+	1 & -2 & -3 & 0 & 1 & 0 \\
+	-2 & 4 & 6 & 0 & -1 & 2 \\
+	1 & 0 & 1 & -2 & 1 & 0 \\
+	0 & -2 & -4 & 2 & 2 & 1
+\end{bmatrix}
+\]
+ove sappiamo che $A_1 = A$ e i moltiplicatori della matrice di Gauss $L_1$ sono:
+\begin{align*}
+	m_{21} &= 2 \\
+	m_{31} &= -1 \\
+	m_{41} &= 0
+\end{align*}
+La matrice $A_2$ è la seguente:
+\[
+A_2 = \begin{bmatrix}
+	1 & -2 & -3 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 2 \\
+	0 & 2 & 4 & -2 & 0 & 0 \\
+	0 & -2 & -4 & 2 & 2 & 1
+\end{bmatrix}
+\]
+Scambiando seconda e terza riga otteniamo:
+\[
+A_2' = \begin{bmatrix}
+	1 & -2 & -3 & 0 & 1 & 0 \\
+	0 & 2 & 4 & -2 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 2 \\
+	0 & -2 & -4 & 2 & 2 & 1
+\end{bmatrix}
+\]
+ove i moltiplicatori della matrice di Gauss $L_2$ sono:
+\begin{align*}
+m_{32} &= 0 \\
+m_{42} &= 1
+\end{align*}
+La matrice $A_3$ è la seguente:
+\[
+A_3 = \begin{bmatrix}
+	1 & -2 & -3 & 0 & 1 & 0 \\
+	0 & 2 & 4 & -2 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 2 \\
+	0 & 0 & 0 & 0 & 2 & 1
+\end{bmatrix}
+\]
+ove i moltiplicatori della matrice di Gauss $L_3$ sono:
+Se, a un certo passo, incontriamo un elemento pivotale nullo e sono nulli tutti gli elementi sottostanti, il nuovo elemento pivotale si dovrà cercare subito a destra dell'elemento pivotale corrente. Adesso il moltiplicatore della matrice di Gauss $L_3$ è il seguente:
+\[
+-\dfrac{m_{45}}{m_{35}} = -2
+\]
+La matrice $A_4$ è la seguente:
+\[
+A_4 = \begin{bmatrix}
+	1 & -2 & -3 & 0 & 1 & 0 \\
+	0 & 2 & 4 & -2 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 2 \\
+	0 & 0 & 0 & 0 & 0 & -3
+\end{bmatrix}
+\]
+ove $A_4$ è una matrice ridotta a scalini.
+\end{example}
+\begin{theorem}{}{}
+	Sia $A$ una matrice generica $m \times n$.
+
+	Allora:
+	\begin{align*}
+		\exists P&\ m \times n \text{ di permutazione} \\
+		\exists L&\ m \times m \text{ triangolare inferiore speciale} \\
+		\exists U&\ m \times n \text{ ridotta a scalini}.
+	\end{align*}
+	tali che:
+	\[
+	PA = LU
+	\]
+\end{theorem}
+Negli esercizi e nelle applicazioni è spesso inutile costruire esplicitamente le matrici $P$ e $L$.
+\begin{note}{}{}
+Siano:
+\begin{itemize}
+	\item $L\ m \times n$ triangolare inferiore speciale;
+	\item $B\ m \times n$ matrice generica
+\end{itemize}
+Consideriamo il prodotto $LB$
+\[
+\begin{bmatrix}
+	1 & 0 & 0 & 0 \\
+	l_{21} & 1 & 0 & 0 \\
+	l_{31} & l_{32} & 1 & 0 \\
+	l_{41} & l_{42} & l_{43} & 1
+\end{bmatrix}\begin{bmatrix}
+	b_{11} & b_{12} & \cdots & b_{1n} \\
+	b_{21} & b_{22} & \cdots & b_{2n} \\
+	b_{31} & b_{32} & \cdots & b_{3n} \\
+	b_{41} & b_{42} & \cdots & b_{4n}
+\end{bmatrix}
+\]
+\begin{itemize}
+	\item La prima riga di $LB$ rimane inalterata;
+	\item Seconda riga di $LB$ = (seconda riga di $B$) + $l_{21} \cdot (\text{prima riga di }B)$
+	\item Terza riga di $LB$ = (terza riga di $B)$ + $l_{31}(\text{prima riga di }B) + l_{32}(\text{seconda riga di }B)$
+\end{itemize}
+In generale, la $i-$esima riga di $LB$ si ottiene sommando alla $i$-esima riga di $B$ una combinazione lineare di altre righe di $B$.
+
+In base alla proprietà $6)$ vista precedentemente possiamo quindi concludere che:
+\[
+\text{rank}(LB) = \text{rank}(B)
+\]
+Inoltre, dalla proprietà $5)$ segue che:
+\[
+\text{rank}(PA) = \text{rank}(A)
+\]
+se $P$ è una matrice di permutazione.
+
+In conclusione, possiamo dedurre il seguente risultato. Con riferimento alla fattorizzazione LU vista nel teorema precedente, si ottiene:
+\begin{align*}
+	rank(A) &= rank(PA) \\
+	&= rank(LU) \\
+	&= rank(U)
+\end{align*}
+Da quest'osservazione, possiamo facilemente calcolare il rango di una generica matrice, una volta che l'abbiamo ridotta a scalini. Nell'esempio precedente:
+\[
+rank(A) = 4
+\]
+\end{note}
+\subsection{Risoluzione di sistemi lineari generici}
+Consideriamo un sistema lineare di $m$ equazioni in $n$ incognite:
+\[
+\begin{cases}
+	a_{11}x_1 + a_{12}x_2 + \dots + a_{1n}x_n = b_1 \\
+	\vdots \\
+	a_{m1}x_1 + a_{m2}x_2 + \dots + a_{mn}x_n = b_n
+\end{cases}
+\]
+Se introduciamo:
+\[
+A=  \{a_{ij}\} \quad i= 1, \dots, m \quad j = 1,  \dots, n
+\]
+\[
+\underline{b} = \begin{bmatrix}
+	b_1 \\
+	\vdots \\
+	b_m
+\end{bmatrix}
+\]
+\[
+\underline{x} = \begin{bmatrix}
+	x_1 \\
+	\vdots \\
+	x_n
+\end{bmatrix}
+\]
+Il sistema lineare si scrive in forma compatta:
+\[
+A\underline{x}=  \underline{b}
+\]
+L'algoritmo di eliminazione di Gauss, con la variante precedentemente introdotta, può essere utilizzato per:
+\begin{enumerate}
+	\item Stabilire la compatibilità del sistema lineare, ovvero se ammette soluzioni.
+	\item Determinare le soluzioni di un sistema lineare compatibile.
+\end{enumerate}
+Ricordiamo, ulteriormente, che due sistemi lineari si dicono \textit{equivalenti} se ammettono lo stesso insieme di soluzioni.
+
+L'algoritmo di eliminazione trasforma un sistema lineare $A\underline{x} = \underline{b}$ in uno equivalente $U\underline{x} = \underline{c}$ dove $U$ è una matrice ridotta a scalini.
+\begin{example}{}{}
+Dato il sistema lineare:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcr}
+	x_1 & + & x_2 & - & 2x_3 & = & 0 \\
+	x_1 & - & x_2 & + & x_3 & = 1 \\
+	2x_1 & & & - & x_3 & = & 0
+	\end{array}
+\end{cases}
+\]
+Consideriamo la matrice completa e riduciamola a scalini:
+\[
+[A_1 \mid b_1] = \left[
+\begin{array}{rrr|c}
+1 & 1 & -2 & 0 \\
+1 & -1 & 1 & 1 \\
+2 & 0 & -1 & 0
+\end{array}
+\right]
+\]
+Ove i moltiplicatori della matrice di Gauss $L_1$ sono:
+\begin{align*}
+m_{12} &= -1 \\
+m_{13} &= -2
+\end{align*}
+Calcoliamo la matrice completa $[A_2 \mid b_2]$:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{rrr|c}
+1 & 1 & -2 & 0 \\
+0 & -2 & 3 & 1 \\
+0 & -2 & 3 & 0
+\end{array}
+\right]
+\]
+ove i moltiplicatori delle matrice di Gauss $L_2$ sono:
+\[
+m_{23} = -1
+\]
+Calcoliamo la matrice completa $[A_3 \mid b_3]$:
+\[
+[A_3 \mid b_3] = \left[
+\begin{array}{rrr|c}
+1 & 1 & -2 & 0 \\
+0 & -2 & 3 & 1 \\
+0 & 0 & 0 & -1
+\end{array}
+\right]
+\]
+Abbiamo ottenuto il sistema equivalente:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcr}
+	x_1 & + & x_2 & - & 2x_3 & = & 0 \\
+	& - & 2x_2 & + & 3x_3 & = & 1 \\
+	& & & & 0 & = & 1
+	\end{array}
+\end{cases}
+\]
+che è impossibile, quindi il sistema non è compatibile.
+
+Osserviamo che:
+\[
+rank(A) = 2
+\]
+\[
+rank([A \mid b]) = 3
+\]
+Evidentemente, il fatto che il rango della matrice completa sia superiore al rango della matrice dei coefficienti comporta, dopo l'algortimo di riduzione a scalini, la comparsa di un'equazione della forma:
+\[
+0 = a \quad a \neq 0
+\]
+che è un'equazione impossibile.
+\end{example}
+\begin{example}{}{}
+Dato il sistema lineare:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcr}
+	x_1 & + & x_2 & - & 2x_3 & = & 0 \\
+	x_1 & - & x_2 & + & x_3 & = & 1 \\
+	2x_1 & & & - & x_3 & = & 1
+	\end{array}
+\end{cases}
+\]
+Calcoliamo la matrice completa $[A_1 \mid b_1]$:
+\[
+[A_1 \mid b_1] = \left[
+	\begin{array}{rrr|c}
+	1 & 1 & - 2 & 0 \\
+	1 & -1 & 1 & 1 \\
+	2 & 0 & -1 & 1
+	\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice $L_1$ sono:
+\begin{align*}
+	m_{12} &= -1 \\
+	m_{13} &= -2
+\end{align*}
+La matrice completa $[A_2 \mid b_2]$ sono:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{rrr|c}
+1 & 1 & -2 & 0 \\
+0 & -2 & 3 & 1 \\
+0 & -2 & -3 & 1
+\end{array}
+\right]
+\]
+ove i moltiplicatori delle matrice $L_2$ sono:
+\[
+m_{23} = -1
+\]
+La matrice completa $[A_3 \mid b_3]$ sono:
+\[
+[A_3 \mid b_3] = \left[
+\begin{array}{rrr|c}
+1 & 1 & -2 & 0 \\
+0 & -2 & 3 & 1 \\
+0 & 0 & 0 & 0
+\end{array}
+\right]
+\]
+Il sistema lineare equivalente è:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcr}
+	x_1 & + & x_2 & - & 2x_3 & = & 0 \\
+	& - & 2x_2 & + & 3x_3 & = & 1 \\
+	& & & & 0 & = & 0
+	\end{array}
+\end{cases}
+\]
+$0=0$ è un'identità sempre verificata. Se rimuoviamo quest'ultima ottieniamo un sistema equivalente a quello di partenza con 2 equazioni e 3 incognite.
+
+Si procedere parametrizzando le incognite relative alle colonne libere (incognite libere). Nel nostro caso la terza colonna è libera e conseguentemente parametrizziamo $x_3$. Ciò significa riguardare $x_3$ non più come incognita ma come parametro:
+\[
+x_3 = h \quad \text{h parametro reale}
+\]
+Otteniamo il sistema triangolare superiore:
+\[
+\begin{cases}
+	\begin{array}{rcrcr}
+	x_1 & + & x_2 & = & 2h \\
+	& - & 2x_2 & = & 1 - 3h
+	\end{array}
+\end{cases}
+\]
+Si procede con l'algoritmo di sostituzione all'indietro:
+\begin{align*}
+x_2 &= -\frac{1}{2} + \frac{3}{2}h \\
+x_1 &= 2h - x_2 = 2h + \frac{1}{2} - \frac{3}{2}h = \frac{1}{2} + \frac{1}{2}h
+\end{align*}
+Le soluzioni sono infinite e dipendono dal parametro $h$:
+\[
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3
+\end{bmatrix} = \begin{bmatrix}
+	\sfrac{1}{2} \\
+	-\sfrac{1}{2} \\
+	0
+\end{bmatrix} + h \begin{bmatrix}
+	\sfrac{1}{2} \\
+	\sfrac{3}{2} \\
+	1
+\end{bmatrix}
+\]
+Osserviamo che, in questo caso:
+\[
+rank(A) = rank([A \mid b]) = 2 (< 3)
+\]
+mentre il numero delle incognite è pari a 3.
+
+Quindi, in conclusione, la comparsa di un singolo parametro consegue dal fatto che:
+\[
+\#\text{incognite} - rank(A) = 1
+\]
+Diremo che il sistema ammette
+\[
+\infty^1 \text{ soluzione}
+\]
+se le soluzioni sono infinite e dipendono da un solo parametro.
+\end{example}
+\begin{example}{\nmu Sistema sovradeterminato}{sistema_sovradeterminato}
+Dato il sistema lineare:
+\[
+\begin{cases}
+	\begin{array}{rcrcr}
+	2x_1 & - & x_2 & = & 1 \\
+	x_1 & + & 3x_2 & = & 11 \\
+	x_1 & - & 4x_2 & = & -10 \\
+	4x_1 & - & 2x_2 & = & 2
+	\end{array}
+\end{cases}
+\]
+La matrice completa $[A_1 \mid b_1]$ è:
+\[
+[A_1 \mid b_1] = \left[
+	\begin{array}{rr|c}
+	2 & -1 & 1 \\
+	1 & 3 & 11 \\
+	1 & -4 & -10 \\
+	4 & -2 & 2
+	\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss $L_1$ sono:
+\begin{align*}
+	m_{12} &= -\sfrac{1}{2} \\
+	m_{13} &= -\sfrac{1}{2} \\
+	m_{14} &= -2
+\end{align*}
+La matrice completa $[A_2 \mid b_2]$ è:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{rr|c}
+2 & -1 & 1 \\
+0 & \sfrac{7}{2} & \sfrac{21}{2} \\
+0 & -\sfrac{7}{2} & -\sfrac{21}{2} \\
+0 & 0 & 0
+\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss $L_2$ sono:
+\begin{align*}
+	m_{23} &= 1 \\
+	m_{24} &= 0
+\end{align*}
+La matrice completa $[A_3 \mid b_3]$ è:
+\[
+[A_3 \mid b_3] = \left[
+\begin{array}{rr|c}
+2 & -1 & 1 \\
+0 & \sfrac{7}{2} & \sfrac{21}{2} \\
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{array}
+\right]
+\]
+quindi abbiamo due equazioni d'identità. Il sistema equivalente è:
+\[
+\begin{cases}
+	\begin{array}{rcrcr}
+	2x_1 & - & x_2 & = & 1 \\
+	& & \frac{7}{2}x_2 & = & \frac{21}{2}
+	\end{array}
+\end{cases} \Rightarrow \begin{cases}
+	x_1 = 2 \\
+	x_2 = 3
+\end{cases}
+\]
+La soluzione è unica:
+\[
+\begin{bmatrix}
+	x_1 \\
+	x_2
+\end{bmatrix} = \begin{bmatrix}
+	2 \\
+	3
+\end{bmatrix}
+\]
+Osserviamo che:
+\[
+rank(A) = rank([A\mid b]) = 2
+\]
+e
+\[
+\#\text{incognite} - rank(A) = 0  \Rightarrow \infty^0 = 1 \text{ soluzione}
+\]
+\end{example}
+\begin{example}{\nmu Sistema sottodeterminato}{sistema_sottodeterminato}
+Sia il sistema lineare:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcrcr}
+	x_1 & + & 2x_2 & & & - & x_4 & = & 0 \\
+	2x_1 & + & x_2 & + & x_3 & & & = & 3
+	\end{array}
+\end{cases}
+\]
+La matrice completa $[A_1 \mid b_1]$ è la seguente:
+\[
+[A_1 \mid b_1] = \left[
+\begin{array}{rrrr|c}
+1 & 2 & 0 & -1 & 0 \\
+2 & 1 & 1 & 0 & 3
+\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss $L_1$ sono:
+\[
+m_{12} = -2
+\]
+La matrice completa $[A_2 \mid b_2]$ è la seguente.
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{rrrr|c}
+1 & 2 & 0 & -1 & 0 \\
+0 & -3 & 1 & 2 & 3
+\end{array}
+\right]
+\]
+Parametrizziamo le incognite corrispondenti alle colonne libere:
+\[
+x_3 = h; \quad x_4 = k \quad h,k \in \mathbbm{R}
+\]
+Il sistema equivalente è:
+\[
+\begin{cases}
+	\begin{array}{rcrcr}
+	x_1 & + & 2x_2 & = k \\
+	& - & 3x_2 & = & 3 - h - 2k
+	\end{array}
+\end{cases}
+\]
+ove:
+\begin{align*}
+x_2 &= -1 + \frac{1}{3}h + \frac{2}{3}k \\
+x_1 &= -2x_2 + k = -2 - \frac{2}{3}h - \frac{4}{3}k + k \\
+&= -2 - \frac{2}{3}h - \frac{1}{3}k
+\end{align*}
+\[
+\begin{bmatrix}
+	x_1 \\
+	x_2 \\
+	x_3 \\
+	x_4
+\end{bmatrix} = \begin{bmatrix}
+	-2 \\
+	-1 \\
+	0 \\
+	0
+\end{bmatrix} + \frac{h}{3}\begin{bmatrix}
+	-2 \\
+	1 \\
+	3 \\
+	0
+\end{bmatrix} + \frac{k}{3}\begin{bmatrix}
+	-1 \\
+	2 \\
+	0 \\
+	3
+\end{bmatrix}
+\]
+L'insieme delle soluzioni è infinito e dipende da due parametri. Ci sono $\infty^2$ soluzioni.
+
+Osserviamo che:
+\[
+rank(A) = rank([A\mid b]) = 2
+\]
+\end{example}
+\begin{theorem}{\nmu Teorema di Rouché-Capelli}{rouche_capelli}
+	Consideriamo il sistema lineare:
+	\begin{align}
+	A\underline{x} = \underline{b}
+	\end{align}
+	di $m$ equazioni ed $n$ incognite.
+
+	La condizione necessaria e sufficiente affinchè il sistema (4.2) sia compatibile è che la matrice dei coefficienti $A$ e la matrice dei coefficienti $[A \mid b]$ ammettono lo stesso rango:
+	\begin{align}
+	rank(A) = rank([A\mid b])
+	\end{align}
+	Supponendo che la $(4.3)$ sia vera e denotato con $p$ il $rank(A)$, il sistema $(4.2)$ ammette $\infty^{n-p}$ soluzioni, cioè ammette infinite soluzioni dipendenti da $n-p$ parametri.
+\end{theorem}
+\begin{proof} Si riduce la matrice completa $[A\mid b]$ a scalini, ottenendo il sistema equivalente $[U \mid c]$.
+
+La tesi discende dalla discussione fatta nel corso degli esempi precedenti.
+\end{proof}
+
+\begin{example}{}{}
+Risolvere il sistema:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcrcr}
+	x & - & y & & & + & 2t & = & 1 \\
+	& & y & + & z & - & t & = & 1 \\
+	x & -  & 2y & - & z & + & 2t & = & 0
+	\end{array}
+\end{cases}
+\]
+Scriviamo la matrice completa e riduciamola a scalini:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{rrrr|c}
+1 & -1 & 0 & 1 & 1 \\
+0 & 1 & 1 & -1 & 1 \\
+1 & -2 & -1 & 2 & 0
+\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss $L_1$ sono:
+\begin{align*}
+	m_{12} &= 0\\
+	m_{13} &= -1
+\end{align*}
+La matrice completa $[A_2 \mid b_2]$ sono:
+\[
+[A_2 \mid b_2] = \left[
+\begin{array}{rrrr|c}
+1 & -1 & 0 & 1 & 1 \\
+0 & 1 & 1 & -1 & 1 \\
+0 & -1 & -1 & 1 & -1
+\end{array}
+\right]
+\]
+ove i moltiplicatori della matrice di Gauss $L_2$ sono:
+\[
+m_{23} = 1
+\]
+La matrice completa $[A_3 \mid b_3]$ è la seguente:
+\[
+[A_3 \mid b_3] = \left[
+\begin{array}{rrrr|c}
+1 & -1 & 0 & 1 & 1 \\
+0 & 1 & 1 & -1 & 1 \\
+0 & 0 & 0 & 0 & 0
+\end{array}
+\right]
+\]
+Osserviamo che:
+\[
+rank(A) = rank([A \mid b]) = 2
+\]
+Allora il sistema è compatibile e ammette $\infty^{4-2} = \infty^2$ soluzioni. Determiniamole.
+
+Abbiamo ottenuto il sistema equivalente:
+\[
+\begin{cases}
+	\begin{array}{rcrcrcrcr}
+	x & - & y & & & + & t & = & 1 \\
+	& & y & + & z & - & t & = & 1
+	\end{array}
+\end{cases}
+\]
+Parametrizziamo le incognite $z$ e $t$ che sono quelle relative alle colonne libere:
+\[
+z = h; \quad t = k \quad h, k \in \mathbbm{R}
+\]
+\[
+\begin{cases}
+	\begin{array}{rcrcr}
+	x & - & y & = & 1 - k \\
+	& & y & = & 1 - h + k
+	\end{array}
+\end{cases}
+\]
+Quindi:
+\begin{align*}
+	y &= 1 - h + k \\
+	x &= y + 1 - k = 1 - h + k + 1 - k = 2 - h
+\end{align*}
+Le soluzioni sono:
+\[
+\begin{bmatrix}
+	x \\
+	y \\
+	z \\
+	t
+\end{bmatrix} = \begin{bmatrix}
+	2 \\
+	1 \\
+	0 \\
+	0
+\end{bmatrix} + h \begin{bmatrix}
+	-1 \\
+	-1 \\
+	1 \\
+	0
+\end{bmatrix} + k \begin{bmatrix}
+	0 \\
+	1 \\
+	0 \\
+	1
+\end{bmatrix}
+\]
+\end{example}
+
+\begin{exercise}{}{}
+\begin{assignment}{}{}
+Scrivere una funzione Python/MatLab che in input una matrice $A$ generica e, in output, la ridotta a scalini di $A$.
+\end{assignment}
+\end{exercise}
+
+\begin{exercise}{}{}
+\begin{assignment}{}{}
+Scrivere una funzione in Python/MatLab che ha in input una matrice generica $A$ e, in output, il rango di $A$. Questa funzione dovrà far uso della funzione al punto precedente.
+\end{assignment}
+\end{exercise}
+\chapter{Spazi lineari}
+\begin{definition}{\nmu Spazio vettoriale}{spazio_vettoriale}
+	Siano $V$ un insieme e:
+	\begin{itemize}
+		\item $+: V \times V \to V$ legge di composizione interna o binaria;
+		\item $\cdot: \mathbbm{R} \times V \to V$ \text{legge di composizione esterna}
+	\end{itemize}
+	La terna $(V, +, \cdot)$ è detta \textit{spazio vettoriale}  se verifica le seguenti proprietà:
+	\begin{enumerate}
+		\item $(V, +)$ è un gruppo abeliano;
+		\item $\forall \alpha, \beta \in \mathbbm{R}, \forall v \in V: (\alpha + \beta) \cdot v = \alpha v + \beta v$;
+		\item $\forall \alpha, \beta \in \mathbbm{R}, \forall v \in V: \alpha(\beta v) = (\alpha\beta)v$;
+		\item $\forall v \in V: 1v = v$
+	\end{enumerate}
+\end{definition}
+Siano le seguenti proprietà:
+\begin{enumerate}
+	\item $\alpha v = 0 \iff \alpha = 0$ oppure $v = 0$
+	\item $(-\alpha) v = \alpha(-v)$
+\end{enumerate}
+Seguono alcuni esempi di spazi lineari.
+\begin{enumerate}
+	\item $V = \mathbbm{R}$ oppure $V = \mathbbm{C}$
+	\item $V = \mathbbm{R}^n$ oppure $V = \mathbbm{C}^n$.
+
+	Se $\mathbf{x} = [x_1, \dots, x_n]^T$ e $\mathbf{y} = [y_1, \dots, y_n]^T$ allora:
+	\[
+	\mathbf{x + y} = [x_1 + y_1, \dots, x_n + y_n]^T
+	\]
+	e
+	\[
+	\alpha \cdot \mathbf{x} = [\alpha x_1, \dots, \alpha x_n]^T
+	\]
+	\item $V = \mathbbm{R}^{m\times n}$ oppure $V = \mathbbm{C}^{m\times n}$.
+
+	Se $A = \{a_{ij}\}$ e $B = \{b_{ij}\}$ allora:
+	\[
+	A+B = \{a_{ij} + b_{ij}\}
+	\]
+	e
+	\[
+	\alpha A = \{\alpha a_{ij}\}
+	\]
+	\item $V = C([a, b])$ (insieme delle funzioni continue nell'intervallo $[a, b]$)
+
+	È uno spazio vettoriale munito delle seguenti leggi di composizione:
+	\[
+	f, g \in C([a, b]): f+g = x \mapsto f(x) + g(x)
+	\]
+	\[
+	\alpha \in \mathbbm{R}, f \in C([a, b]): \alpha f = x \mapsto \alpha f(x)
+	\]
+	\item $V = C^k([a,b])$ (insieme delle funzioni derivabili $k$ volte nell'intervallo $[a, b]$) è uno spazio vettoriale munito delle stesse leggi di composizione viste sopra.
+	\item $V = P_n$ (insieme dei polinomi di grado al più $n$).
+
+	Se $p(x) = a_0 + a_1x + \dots + a_x x^n$ e $q(x) = b_0 + b_1x + \dots + b_n x^n$ allora:
+	\[
+	p(x) + q(x) = (a_0 + b_0) + (a_1 + b_1)x + \dots + (a_n + b_n)x^n
+	\]
+	e
+	\[
+	\alpha p(x) = \alpha a_0 + \alpha a_1x + \dots + \alpha a_nx^n
+	\]
+\end{enumerate}
+\begin{definition}{\nmu Combinazione lineare di vettori}{combinazione_vettori}
+	Siano $v_1, v_2, \dots, v_n \in V$ con $V$ spazio vettoriale. Si definisce \textit{combinazione lineare di tali vettori} ogni elemento $v$ di $V$ della forma:
+	\[
+	v = \alpha_1v_1 + \alpha_2v_2 + \dots + a_nv_n = \displaystyle\sum_{i=1}^{n}\alpha_iv_i
+	\]
+\end{definition}
+\begin{note}{}{}
+Scegliamo $V = \mathbbm{R}^m$. Considerata la matrice $A = [v_1, v_2, \dots, v_n]$ le cui colonne sono i vettori $v_i$ ed il vettore colonna $\mathbf{x} = [\alpha_1, \dots, \alpha_n]^T$ allora evidentemente:
+\[
+\displaystyle\sum_{i=1}^{n}a_iv_i = A\mathbf{x}
+\]
+\end{note}
+\begin{definition}{\nmu Lineare dipendenza}{lineare_dipendenza}
+	I vettori $v_1, \dots, v_n \in V$ si dicono \textit{linearmente dipendenti} se esiste una combinazione lineare nulla dei vettori $v_i$ con coefficienti non tutti nulli:
+	\[
+	\exists \alpha_1, \dots, \alpha_n \in \mathbbm{R} \text{ non tutti nulli, tale che} \displaystyle\sum_{i=1}^{n}a_iv_i = 0
+	\]
+\end{definition}
+\begin{definition}{\nmu Lineare indipendenza}{lineare_indipendenza}
+	I vettori $v_1, \dots, v_n \in V$ si dicono \textit{linearmente indipendenti} se  non sono linearmente dipendenti, cioè:
+	\[
+	\displaystyle\sum_{i=1}^{n}a_iv_i = 0 \iff a_1 = a_2,\dots,a_n = 0
+	\]
+\end{definition}
+Consideriamo il caso $V = \mathbbm{R}^m$.
+\begin{theorem}{}{}
+	Sono equivalenti le seguenti proposizioni:
+	\begin{enumerate}
+		\item $v_1, \dots, v_n \in \mathbbm{R}^m$ sono linearmente indipendenti;
+		\item $rank([v_1, \dots, v_n]) = n \equiv \text(num colonne della matrice)$.
+	\end{enumerate}
+\end{theorem}
 \end{document}
