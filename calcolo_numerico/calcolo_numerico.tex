@@ -84,7 +84,9 @@
 \newcounter{corollary}
 \newcounter{definition}
 \newcounter{exercise}
+\newcounter{proposition}
 
+\labelformat{proposition}{proposizione #1}
 \labelformat{theorem}{teorema #1}
 \labelformat{lemma}{lemma #1}
 \labelformat{corollary}{corollario #1}
@@ -95,6 +97,7 @@
 
 \newtcbtheorem[number within=chapter,use counter=lemma]{lemma}%
 {Lemma}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{lem}
+
 
 \newtcbtheorem[number within=chapter,use counter=lemma]{proposition}%
 {Proposizione}{arc=1mm,outer arc=1mm,colframe=cyan!55!black,fonttitle=\scshape,lefttitle=1mm,separator sign dash,description font=\bfseries,description delimiters={\flqq}{\frqq}}{prop}
@@ -4831,11 +4834,162 @@ Scegliamo $V = \mathbbm{R}^m$. Considerata la matrice $A = [v_1, v_2, \dots, v_n
 	\]
 \end{definition}
 Consideriamo il caso $V = \mathbbm{R}^m$.
-\begin{theorem}{}{}
+\begin{proposition}{}{}
 	Sono equivalenti le seguenti proposizioni:
 	\begin{enumerate}
 		\item $v_1, \dots, v_n \in \mathbbm{R}^m$ sono linearmente indipendenti;
-		\item $rank([v_1, \dots, v_n]) = n \equiv \text(num colonne della matrice)$.
+		\item $rank([v_1, \dots, v_n]) = n \equiv \text{(num colonne della matrice)}$.
 	\end{enumerate}
+\end{proposition}
+\section{Base di uno spazio vettoriale}
+\begin{definition}{\nmu Sistema di generatori}{sistema_generatori}
+	I vettori $v_1, v_2, \dots, v_n \in V$ costituiscono un \textit{sistema di generatori} di $V$ se ogni elemento dello spazio $V$ può esprimersi come combinazione lineare dei vettori $v_i$, cioè:
+	\[
+	\forall v \in V\ \exists \alpha_1, \alpha_2, \dots, \alpha_n \in \mathbbm{R} \mid v = \displaystyle\sum_{i=1}^{n}\alpha_iv_i
+	\]
+	ovvero, equivalentemente:
+	\[
+	V = \{\displaystyle\sum_{i=1}^{n}\alpha_i v_i, \text{al variare di }\alpha_i \in \mathbbm{R}\}
+	\]
+\end{definition}
+\begin{definition}{\nmu Base di uno spazio vettoriale}{base_spazio_vet}
+	Un insieme di vettori $v_1, v_2, \dots, v_n \in V$ costituisce una \textit{base di V} se verifica le seguenti proprietà:
+	\begin{enumerate}
+		\item $v_i, i = 1, \dots, n$ sono linearmente indipendenti;
+		\item $v_i, i = 1, \dots, n$ formano un sistema di generatori.
+	\end{enumerate}
+\end{definition}
+\subsection{Proprietà delle basi}
+\begin{theorem}{}{}
+	Ogni spazio vettoriale $V$ ammette una base. Due basi di uno stesso spazio vettoriale $V$ hanno stesso numero di elementi (finito o infinito) che prende il nome di dimensione dello spazio vettoriale $V$ e si indica con:
+	\[
+	dim(V)
+	\]
 \end{theorem}
+\begin{proposition}{}{}
+Sono equivalenti le seguenti proposizioni:
+\begin{enumerate}
+	\item $v_1, v_2, \dots, v_n$ costituiscono una base di $V$;
+	\item ogni elemento di $V$ può esprimersi in maniera univoca come combinazione lineare dei $v_i$, cioè:
+	\[
+	\forall v \in V\ \exists! \alpha_1, \alpha_2, \dots, \alpha_n \in \mathbbm{R} \mid v = \displaystyle\sum_{i=1}^{n}\alpha_iv_i
+	\]
+\end{enumerate}
+\end{proposition}
+Per la dimostrazione si vedano gli appunti della relativa lezione.
+
+Seguono alcuni esempi di basi di spazi vettoriali:
+\begin{itemize}
+	\item $\mathbbm{R}^n$ ha dimensione $n$. La base canonica di $\mathbbm{R}^n$ è:
+	\[
+	\mathbf{e}_1 = \begin{pmatrix}
+		1 \\
+		0 \\
+		\vdots \\
+		0
+	\end{pmatrix}, \mathbf{e}_2 = \begin{pmatrix}
+		0 \\
+		1 \\
+		\vdots \\
+		0
+	\end{pmatrix}, \dots, \mathbf{e}_n = \begin{pmatrix}
+		0 \\
+		0 \\
+		\vdots \\
+		1
+	\end{pmatrix}
+	\]
+	che sono le colonne della matrice identica $I$.
+	\item Lo spazio vettoriale $P_n$ dei polinomi di grado al più $n$ ha dimensione $n+1$. Infatti un polinomio di grado $n$:
+	\[
+	p(x) = a_9 + a_1x + \dots + a_nx^n
+	\]
+	non è altro che una combinazione lineare delle potenze:
+	\[
+	x^0, x, x^2, \dots, x^n
+	\]
+	cioè la base delle potenze.
+\end{itemize}
+\begin{exercise}{}{}
+\begin{assignment}{}{}
+Dimostrare la seguente proprietà:
+\begin{proposition}{}{}
+Sono equivalenti le due proposizioni:
+\begin{enumerate}
+	\item $v_1, v_2, \dots, v_n \in \mathbbm{R}^m$ costituiscono un sistema di generatori di $\mathbbm{R}^m$
+	\item $rank([v_1, \dots, v_n]) = m \equiv $(num di righe della matrice).
+\end{enumerate}
+\end{proposition}
+\end{assignment}
+È conveniente riformulare il problema in termini algebrici. Porre $A = [v_1, \dots, v_n], x = [\alpha_1, \dots, \alpha_n]^T$. Ricordando che $Ax$ è la generica combinazione lineare dei vettori $v_i$, si ha che $v_1, v_2, \dots, v_n$ costituiscono un sistema di generatori di $\mathbbm{R}^m$ se e solo se il sistema lineare $Ax = v$, dove $v$ è un generico vettore di $\mathbbm{R}^m$, risulta sempre compatibile. Applicare quindi il \namerefl{th:rouche_capelli}.
+
+Dalla proposizione segue che, essendo il rango di una matrice $\leq$ al minimo tra le sue dimensioni, una condizione necessaria perchè valga la $1.$ è che $n \geq m$. Quindi, ad esempio, due vettori di $\mathbbm{R}^3$  non potrammo mai generare $\mathbbm{R}^3$.
+\end{exercise}
+\section{Norme su spazi vettoriali}
+\begin{definition}{\nmu Norme su spazi vettoriali}{norme_spazi_vet}
+	Sia $V$ uno spazio vettoriale reale. Si dice norma un'applicazione:
+	\[
+	\left|\left|\cdot\right|\right|: V \to \mathbbm{R}
+	\]
+	che verifica le seguenti proprietà, dette \textit{assiomi di norma}:
+	\begin{enumerate}
+		\item $\forall v \in V: \left\|v\right\| \geq 0$ e $\left\| v\right\| = 0 \iff v = 0$
+		\item $\forall v \in V, \forall \lambda \in \mathbbm{R}$: $\left\| \lambda v\right\| =  \left\| \lambda\right\|\left\| v\right\|$
+		\item $\forall u, v \in V$: $ \left\| u + v\right\| \leq  \left\| u\right\| + \left\| v\right\| $
+
+		Questa proprietà è detta \textit{disuguaglianza triangolare}.
+	\end{enumerate}
+	La coppia $(V,  \left\| \cdot\right\|)$ è detta \textit{spazio normato}.
+\end{definition}
+Ogni norma induce canonicamente una distanza. Se $u, v \in V$:
+\[
+d(u, v) = \left\| u-v\right\|
+\]
+\subsection{Norme su vettori}
+Sia $\mathbf{x} = [x_1, x_2, \dots, x_n]^T$ un vettore.
+\begin{itemize}
+	\item La norma $ \left\| \cdot \right\|_2$ è detta \textit{norma 2} o \textit{norma euclidea}.
+	\[
+ \left\| \mathbf{x}\right\|_2 = \sqrt{\displaystyle\sum_{i=1}^{n}x_i^2} = \sqrt{\mathbf{x}^T\mathbf{x}}
+	\]
+	\item La norma $\left\| \cdot \right\|_1$ è detta \textit{norma 1}:
+	\[
+	\left\|\mathbf{x}\right\|_1 = \displaystyle\sum_{i=1}^{n}\left| x_i\right|
+	\]
+	\item La norma $\left\| \cdot \right\|_\infty$ è detta \textit{norma infinito}:
+	\[
+	\left\|\mathbf{x}\right\|_\infty = \max_{i = 1,\dots, n}\left| x_i\right|
+	\]
+\end{itemize}
+\subsection{Norme su matrici}
+Ogni norma vettoriale induce una norma matriciale. Sia $\mathbf{A} = \{a_{ij}\}$ una matrice con $m$ righe ed $n$ colonne e consideriamo una norma su vettori $\left\|\cdot\right\|$. La norma matriciale indotta è così definita:
+\[
+\left\|A\right\| = \max_{x\in\mathbbm{R}^n, x\neq0} \dfrac{\left\|A\mathbf{x}\right\|}{\left\|\mathbf{x}\right\|}
+\]
+In effetti si può dimostrare che tale quantità risulta finita, e l'applicazione
+\[
+A \in \mathbbm{R}^{m\times n} \mapsto \left\|A\right\| \in \mathbbm{R}
+\]
+che alla matrice $A$ associa lo scalare $\left\|A\right\|$ soddisfa gli assiomi di norma.
+
+Piuttosto che calcolare il massimo, è possibile descrivere una norma matriciale indotta in termini dei suoi elementi:
+\begin{align*}
+	\left\|A\right\|_\infty &= \max_{x\in\mathbbm{R}^n, x\neq 0} \dfrac{\left\|A\mathbf{x}\right\|_\infty}{\left\|\mathbf{x}\right\|_\infty} = \max_{i=1,\dots, m}\displaystyle\sum_{j=1}^{n}\left| a_{ij}\right|
+ 	\left\|A\right\|_1 &= \max_{x\in\mathbbm{R}^n, x\neq 0} \dfrac{\left\|A\mathbf{x}\right\|_1}{\left\|\mathbf{x}\right\|_1} = \max_{j=1, \dots, n}\displaystyle\sum_{i=1}^{m}\left| a_{ij} \right|
+	\left\|A\right\|_2 &= \sqrt{\rho(A^TA)}
+\end{align*}
+dove $\rho$ denota il raggio spettrale di una matrice quadrata (ovvero il massimo tra i moduli dei suoi autovettori).
+
+\subsection{Proprietà delle matrici indotte}
+\begin{itemize}
+	\item $\forall \mathbf{x}$ vettore: $\left\| A\mathbf{x}\right\| \leq \left\|A\right\|\left\|\mathbf{x}\right\|$
+
+	Questa proprietà è detta \textit{proprietà di compatibilità}.
+	\item $\forall A, B: \left\|AB\right\| \leq \left\|A\right\|\left\|B\right\|$
+
+	Questa proprietà è detta \textit{disuguaglianza di Schwartz}.
+	\item $\left\|I\right\| = 1$
+	\item Se $Q$ è una matrice unitaria, cioè $Q^TQ = I$, allora $\left\|Q\right\|_2 = 1$
+\end{itemize}
+\section{Condizionamento dei sistemi lineari}
 \end{document}
