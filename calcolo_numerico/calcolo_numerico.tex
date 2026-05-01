@@ -4992,4 +4992,116 @@ dove $\rho$ denota il raggio spettrale di una matrice quadrata (ovvero il massim
 	\item Se $Q$ è una matrice unitaria, cioè $Q^TQ = I$, allora $\left\|Q\right\|_2 = 1$
 \end{itemize}
 \section{Condizionamento dei sistemi lineari}
+Si consideri il sistema lineare di $n$ equazioni in $n$ incognite:
+\[
+A\mathbf{x} = \mathbf{b}
+\]
+Sappiamo che il sistema ammette un'unica soluzione se $det(A) \neq 0$. Possiamo pensare a questo sistema come ad un problema i cui dati di input sono la matrice dei coefficienti $A$ ed il vettore dei termini noti $\mathbf{b}$ ed il cui dato di output è il vettore soluzione $\mathbf{x}$.
+
+Nel risolvere questo sistema sul calcolatore non otterremo, in generale, la soluzione esatta: ciò è dovuto al fatto che il calcolatore, disponendo di memoria finita, fa uso di un'aritmetica di macchina (o finita) che differirà dall'aritmetica reale. In particolare, in fase di immissione dei dati, i coefficienti reali $a_{ij}$ e $b_i$ verranno rappresentati mediante numeri di macchina e conseguentemente si potrebbero generare degli errori di rappresentazione.
+
+Il calcolatore risolverà un sistema perturbato della forma:
+\[
+(A + \delta A)(\mathbf{x} + \delta \mathbf{x}) = \mathbf{b} + \delta \mathbf{b}
+\]
+dove:
+\begin{itemize}
+	\item $\delta A$ è una matrice di perturbazione;
+	\item $\delta\mathbf{b}$ è un vettore di perturbazione;
+	\item $\mathbf{x}$ è la soluzione del sistema non perturbato $(\mathbf{x} = A^{-1}\mathbf{b})$
+	\item $\delta\mathbf{x}$ è la perturbazione indotta sul risultato a causa delle perturbazioni in input $(\delta A \text{ e } \delta\mathbf{b})$
+\end{itemize}
+Studiare il condizionamento di un problema significa analizzare in che misura le perturbazioni sui dati in input incidono sul risultato. Nel nostro caso occorrerà relazionare l'errore relativo in output con gli errori relativi in input:
+\[
+\dfrac{\left\|\delta\mathbf{x}\right\|}{\left\|\mathbf{x}\right\|} \sim \dfrac{\left\|\delta A\right\|}{\left\|A\right\|}, \dfrac{\left\|\delta\mathbf{b}\right\|}{\left\|\mathbf{b}\right\|}
+\]
+avendo supposto $\mathbf{b} \neq 0$.
+\begin{note}{}{}
+$\left\|\delta\mathbf{x}\right\|$ è la distanza tra la soluzione del sistema perturbato e quella del sistema non perturbato.
+\end{note}
+Determineremo tale relazione nel caso più semplice in cui la perturbazione è introdotta solo sul vettore dei termini noti.
+\[
+\begin{cases}
+	\begin{array}{rcrcrcrc}
+	A\mathbf{x} & + & A\delta\mathbf{x} & = & \mathbf{b} & + & \delta\mathbf{b} & \text{sistema perturbato} \\
+	A\mathbf{x} &  &  & = & \mathbf{b} & & & \text{sistema non perturbato}
+	\end{array}
+\end{cases}
+\]
+Sottraendo membro a membro otteniamo:
+\[
+A\delta\mathbf{x} = \delta\mathbf{b} \Rightarrow \delta\mathbf{x} = A^{-1}\delta\mathbf{b}
+\]
+Passando alle norme:
+\[
+\left\|\delta\mathbf{x}\right\| = \left\|A^{-1}\delta\mathbf{b}\right\| \leq \left\|A^{-1}\right\|\left\|\delta\mathbf{b}\right\|
+\]
+Inoltre da $A\mathbf{x} = \mathbf{b}$, passando alle norme si ottiene:
+\[
+\left\|\mathbf{b}\right\| = \left\|A\mathbf{x}\right\| \leq \left\|A\right\|\left\|\mathbf{x}\right\| \Rightarrow \dfrac{1}{\left\|\mathbf{x}\right\|} \leq \dfrac{\left\|A\right\|}{\left\|\mathbf{b}\right\|}
+\]
+Combinando le due disuguaglianze ottenute, ricaviamo:
+\[
+\dfrac{\left\|\delta\mathbf{x}\right\|}{\left\|\mathbf{x}\right\|} \leq \left\|A\right\|\left\|A^{-1}\right\|\dfrac{\left\|\delta\mathbf{b}\right\|}{\left\|\mathbf{b}\right\|}
+\]
+La quantità:
+\[
+\mu(A) = \left\|A\right\|\left\|A^{-1}\right\|
+\]
+è detta \textit{numero di condizionamento} della matrice $A$. Quindi:
+\[
+\dfrac{\left\|\delta\mathbf{x}\right\|}{\left\|\mathbf{x}\right\|} \leq \mu(A)\dfrac{\left\|\delta\mathbf{b}\right\|}{\left\|\mathbf{b}\right\|}
+\]
+$\mu(A)$ rappresenta il \textit{coefficiente di amplificazione} dell'errore in input:
+\begin{itemize}
+	\item se $\mu(A)$ è moderatamente piccolo, il sistema sarà ben condizionato;
+	\item se $\mu(A)$ è grande, il sistema sarà mal condizionato, ovvero le piccole perturbazioni in input possono generare grandi errori in output.
+\end{itemize}
+\begin{note}{}{}
+$\mu(A) \geq 1$. Infatti:
+\[
+1 = \left\|I\right\| = \left\|AA^{-1}\right\| \leq \left\|A\right\|\left\|A^{-1}\right\| = \mu(A)
+\]
+\end{note}
+\begin{example}{\nmu Esempio di sistema mal condizionato}{sistema_mal_condizionato}
+Dato il seguente sistema:
+\[
+\begin{cases}
+	(1-\epsilon)x_1 - 2x_2 = 1 \\
+	-x_1 + (2+\epsilon)x_2 = \sqrt{3}
+\end{cases}
+\]
+con $\epsilon$ parametro reale che faremo tendere a 0.
+
+Si studi il condizionamento del sistema al variare di $\epsilon$.
+\begin{note}{}{}
+\[
+A^{-1} = \dfrac{1}{det(A)}agg(A)
+\]
+quindi se $det(A) \simeq 0$, $\left\|A^{-1}\right\| \gg 1 \Rightarrow \mu(A) \gg 1$
+\end{note}
+Graficamente otteniamo questo:
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/mal_condizionato}
+	\end{center}
+\end{figure}
+\end{example}
+\section{Sottospazi}
+\begin{definition}{\nmu Sottospazi}{sottospazi}
+	Siano $(V, +, \cdot)$ uno spazio vettoriale ed $S \subset V$.
+
+	Si dirà che $S$ è un \textit{sottospazio vettoriale} di $V$ se, munito delle due leggi di composizione $+$ e $\cdot$, $S$ risulta uno spazio vettoriale.
+\end{definition}
+\begin{note}{}{}
+In pratica $S \subset V$ sarà un sottospazio vettoriale se:
+\begin{enumerate}
+	\item $\forall u, v \in S$: $u + v \in S$ (ovvero $S$ è stabile rispetto a $+$)
+	\item $\forall \lambda \in \mathbbm{R}, \forall v \in S:$ $\lambda \cdot v \in S$ (ovvero  $S$ è stabile rispetto a $\cdot$).
+\end{enumerate}
+La 1. e 2. in forma compatta si scriveranno:
+\[
+S+S \subset S, \quad \mathbbm{R} \cdot S \subset S
+\]
+\end{note}
 \end{document}
