@@ -5104,4 +5104,275 @@ La 1. e 2. in forma compatta si scriveranno:
 S+S \subset S, \quad \mathbbm{R} \cdot S \subset S
 \]
 \end{note}
+\chapter{Interpolazione polinomiale}
+Definiamo il problema.
+
+Siano dati $n + 1$ punti nel piano cartesiano:
+\[
+(x_i, y_i) \quad i = 0, \dots, n
+\]
+Determinare un polinomio $p_n(x)$, di grado al più $n$, il cui grafico passi per i punti assegnati, ovvero:
+\begin{align}
+	p_n(x_i) = y_i \quad i = 0, \dots, n
+\end{align}
+Mostriamo che, nelle ipotesi di ascisse $x_i$ distinte, il polinomio che verifica $(1)$ esiste ed è unico. In tal caso, chiamiamo:
+\[
+p_n(x) \quad \textit{polinomio interpolente}
+\]
+e le condizioni:
+\[
+\begin{cases}
+	p_n(x_i) = y_i \\
+	i = 0, \dots, n
+\end{cases} \quad \textit{condizioni di interpolazione}
+\]
+e le ascisse $x_i$ sono dette \textit{nodi}.
+\begin{proposition}{}{}
+Siano $(x_i, y_i) \in \mathbbm{R}^2, i = 0, \dots, n$ con nodi distinti: $x_i \neq x_j$ se $i \neq j$.
+
+Allora esiste ed è unico il polinomio $p_n(x)$ di grado al più $n$ che soddisfa le condizioni di interpolazione.
+\[
+p_n(x_i) = y_i \quad i = 0, \dots, n
+\]
+\end{proposition}
+\begin{proof}
+	Consideriamo il generico polinomio di grado al più  $n$ scritto lungo la base delle potenze:
+	\[
+	p_n(x) = a_0 + a_1x + \dots + a_nx^n
+	\]
+	e imponiamo le condizioni di interpolazione:
+	\[
+	\begin{cases}
+		a_0 + x_0a_1 + x_0^2a_2 + \dots + x_0^na_n = y_0 \\
+		a_0 + x_1a_1 + x_1^2a_2 + \dots + x_1^na_n = y_1 \\
+		\vdots \\
+		a_0 + x_na_1 + x_n^2a_2 + \dots + x_n^na_n = y_n
+	\end{cases}
+	\]
+	Abbiamo ottenuto un sistema lineare di $n + 1$ equazioni nelle $n + 1$ incognite
+	\[
+	a_0, a_1, \dots, a_n
+	\]
+	La matrice dei coefficienti risulta:
+	\[
+	V = \begin{bmatrix}
+		1 & x_0 & x_0^2 & \cdots & x_0^n \\
+		1 & x_1 & x_1^2 & \cdots & x_1^n \\
+		\vdots \\
+		1 & x_n & x_n^2 & \cdots & x_n^n
+	\end{bmatrix}
+	\]
+	$V$ è detta matrice di \textit{Vadermande}.
+
+	Si può dimostrare che
+	\[
+	det(V) = \prod_{i > j}(x_i - x_j)
+	\]
+	Essendo i nodi distinti, osserviamo che $det(V) \neq 0$.
+
+	Quindi il sistema lineare ammetterà soluzione unica.
+\end{proof}
+Purtroppo la matrice di Vandermande diventa mal condizionata anche per valori non grandi di $n$ e lo si può verificare in python mediante la funzione:
+\[
+linalg.cond
+\]
+Al fine di risolvere questo problema di mal condizionamento è possibile scrivere il polinomio $p_n(x)$ lungo una base diversa dalla base della potenza. In letteratura si utilizzano le seguenti basi:
+\begin{itemize}
+	\item \textit{base di Lagrange};
+	\item \textit{base di Newton}.
+\end{itemize}
+Discuteremo unicamente l'approccio che usa la base di Lagrange.
+\section{Polinomi di Lagrange}
+\begin{definition}{\nmu Polinomi di Lagrange}{pol_lagrange}
+	Siano dati i nodi distinti dell'intervallo $[a, b]: x_0, x_1, \dots, x_n$.
+
+	Per $k = 0, \dots, n$ si definisce $k$-esimo polinomio cardinale di Lagrange, il seguente polinomio di grado $n$:
+	\[
+	L_k(x) = \dfrac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})\cdots(x - x_n)}{(x_k - x_0)(x_k - x_1)\cdots(x_k - x_{k-1})\cdots(x_k - x_n)}
+	\]
+	In forma compatta:
+	\[
+	L_k(x) = \prod_{i=0, i \neq k}^{n}\dfrac{x - x_i}{x_k - x_i}
+	\]
+\end{definition}
+\begin{proposition}{}{}
+$\{L_k(x)\}_{k=0,\dots, n}$ sono linearmente indipendenti (visti come elementi dello spazio vettoriale $\prod_n$, spazio dei polinomi di grado al più $n$).
+\end{proposition}
+\begin{proof}
+	Consideriamo una combinazione lineare nulla dei polinomi $L_k(x)$:
+	\begin{align}
+	\displaystyle\sum_{k=0}^{n}\alpha_k L_k(x) = 0 \quad \forall x \in [a,b]
+	\end{align}
+	Vogliamo provare che $\alpha_0=\alpha_1 = \dots=\alpha_n = 0$.
+
+	Premettiamo al seguente proprietà:
+	\[
+	\forall i = 0, \dots, n \quad L_k(x_i) = \begin{cases}
+		0, &\text{ se } i \neq k \\
+		1 &\text{ se } i  = k
+	\end{cases}
+	\]
+	Ricordando la definizione del simbolo di Kronecker:
+	\[
+	\delta_{ik} = \begin{cases}
+		0, &\text{ se }i \neq k\\
+		1 &\text{ se }i=k
+	\end{cases}
+	\]
+	risulta quindi:
+	\[
+	L_k(x_i) = \delta_{ik}
+	\]
+	Valutiamo ora l'espressione (1) nel nodo $x_i$: $x = x_i$
+	\[
+	0 = \displaystyle\sum_{k=0}^{n}\alpha_kL_k(x_i) = \displaystyle\sum_{k=0}^{n}\alpha_k \delta_{ik} = \alpha_i\delta_{ii} = \alpha_i
+	\]
+\end{proof}
+Essendo $dim(\prod_n) = n+1$, ne consegue che $\{L_k(x)\}_{k=0,\dots, n}$ formano una base di $\prod_n$.
+
+\section{Polimomio interpolante di Lagrange}
+Dal risultato precedente, possiamo esprimere un generico polinomio $p_n \in \prod_n$ come combinazione linare degli elementi della base $\{L_k(x)\}$:
+\[
+p_n(x) = \alpha_0 L_0(x) + \alpha_1L_1(x) + \dots + \alpha_nL_n(x) = \displaystyle\sum_{k=0}^{n}\alpha_kL_k(x)
+\]
+Imponiamo le condizioni di interpolazione:
+\[
+p_n(x_i) = y_i \quad i = 0, \dots, n
+\]
+Risulta:
+\[
+y_i = p_n(x_i) = \displaystyle\sum_{k=0}^{n}\alpha_kL_k(x_i) = \displaystyle\sum_{k=0}^{n}\alpha_k \delta_{ik} = \alpha_i
+\]
+Quindi il polinomio interpolante è:
+\[
+p_n(x) = \displaystyle\sum_{k=0}^{n}L_k(x)y_k
+\]
+e questo prende il nome di \textit{polinomio interpolante di Lagrange}.
+
+Per le sua costruzione non è richiesta la risoluzione di un sistema lineare.
+\begin{example}{}{}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/pol_interpolante_lagrange}
+	\end{center}
+\end{figure}
+L'equazione della retta passante per i due punti è:
+\[
+y = L_0(x)y_0 + L_1(x)y_1 = \dfrac{x - x_1}{x_0 - x_1}y_0 + \dfrac{x - x_0}{x_1 - x_0}y_1
+\]
+\end{example}
+\begin{example}{}{}
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{images/esempio_2_interpolazione}
+		\end{center}
+	\end{figure}
+	L'equazione della retta è la seguente:
+	\[
+	y = L_0(x)y_0 + L_1(x)y_1 + L_2(x)y_2
+	\]
+\end{example}
+\section{Interpolazione di una funzione mediante polinomio}
+Il polinomio interpolante può essere utilizzato per approssimare una funzione all'interno di un intervallo $[a, b]$.
+
+Sia $f: [a, b] \to \mathbbm{R}$ e siano $x_0, x_1, \dots, x_n$ nodi distinti di $[a, b]$.
+
+Il polinomio che interpola la funzione $f$ nei nodi $x_i$ è il seguente:
+\[
+p_n(x) = \displaystyle\sum_{k=0}^{n}L_k(x)f(x_k)
+\]
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/interpolazione_funzione}
+	\end{center}
+\end{figure}
+Supponiamo di lavorare con $n + 1$ nodi equidistanti dell'intervallo $[a, b]$:
+\[
+h = \dfrac{b-a}{n} \quad \begin{cases}
+	x_i = a + ih, \\
+	i = 0, \dots, n
+\end{cases}
+\]
+(quindi $x_0 = a, x_1 = a+h, x_2 = a + 2h, \dots, x_n = b$).
+
+Purtroppo, non è detto, in generale, che:
+\[
+\lim\limits_{n\to\infty}p_n(x) = f(x)
+\]
+Studiamo ora l'errore che si commette quando una funzione è approssimata da un polinomio interpolante.
+\begin{definition}{\nmu Norma infinito}{norma_inf}
+	La \textit{norma infinito (o assoluta)} nello spazio vettoriale $C([a, b])$ è così definita:
+	\[
+	\left\|f\right\|_{\infty} = \max_{a \leq x \leq b}\left| f(x)\right|
+	\]
+\end{definition}
+Tale norma induce la distanza:
+	\[
+	d(f, g) = \left\|f-g\right\|_{\infty} = \max_{a \leq x \leq b}\left| f(x) - g(x)\right|
+	\]
+	Ci proponiamo di stimare la distanza (errore) tra una funzione e il suo polinomio interpolante.
+\begin{proposition}{}{}
+Sia $f \in C^{n+1}([a, b])$.
+
+Allora, per ogni $x \in [a, b]$, esiste $\eta_x \in [a, b]$ tale che
+\begin{align}
+f(x) - p_n(x) = \omega_n(x) \cdot \frac{f^{n+1}(\eta_x)}{(n+1)!}
+\end{align}
+dove:
+\[
+\omega_n(x) = (x - x_0)(x-x_1)\cdots (x-x_n) = \prod_{i=0}^{n}(x-x_i)
+\]
+ovvero un polinomio di grado $n + 1$.
+\end{proposition}
+\begin{note}{}{}
+Facendo tendere $x_1, \dots, x_n$ al nodo $x_0$:
+\[
+p_n(x) \text{ è un polinomio di Taylor sviluppato in un intorno del punto $x_0$}
+\]
+mentre il secondo membro di $(1)$ diventa il resto di Lagrange.
+\end{note}
+\begin{proof}
+Se $x = x_i$ con $i = 0, \dots, n$ la (1) è ovviamente vera. Pertanto finiamo un valore $x \pm x_i$. Consideriamo la seguente funzione ausiliaria nella variabile $t \in [a, b]$:
+\[
+g(t) = \omega_n(x)(f(t) - p_n(t)) - \omega_n(t)(f(x) - p_n(x))
+\]
+Risulta:
+\begin{align*}
+g(x_i) &= 0 \quad \forall i = 0, \dots, n \\
+g(x) &= 0
+\end{align*}
+La funzione $g$ si annulla in $n+2$ punti distinti di $[a, b]$. Inoltre $g \in l^{n+1}([a, b])$.
+
+Per il teorema di Rolle-Fermat:
+\begin{align*}
+	g'(t) & \text{ si annulla in $n+1$ punti distinti di $[a, b]$} \\
+	g''(t) & \text{ si annulla in $n$ punti distinti di $[a, b]$} \\
+	\vdots \\
+	g^{(n+1)}(t) & \text{ si annulla in un punto di $[a, b]$}
+\end{align*}
+Cioè $\exists \eta_x \in [a, b]$ tale che $g^{(n+1)}(\eta_x) = 0$.
+
+Osserviamo che:
+\[
+\frac{\text{d}^{n+1}}{\text{d}t^{n+1}}p_n(t) = 0
+\]
+Essendo poi $\omega_n(t) = t^{n+1} + q_n(t)$
+
+abbiamo:
+\[
+\frac{\text{d}^{n+1}}{\text{d}t^{n+1}}\omega_n(t) = (n+1)!
+\]
+Risulta quindi:
+\[
+g^{(n+1)}(t) = \omega_n(x)f^{n+1}(t) - (n+1)!(f(x) + p_n(x))
+\]
+Per $t = \eta_x$ si ottiene quindi:
+\[
+0 = g^{(n+1)}(\eta_x) = \omega_n(x)f^{(n+1)}(\eta_x) - (n+1)!(f(x) - p_n(x))
+\]
+da cui:
+\[
+f(x) - p_n(x) = \omega_n(x) \cdot \frac{f^{(n+1)}(\eta_x)}{(n+1)!}
+\]
+\end{proof}
 \end{document}
