@@ -1596,4 +1596,313 @@ $M_1 = $ ``Su input $<p>$: dove $p$ è un polinomio sulla variabile $x$.
 Se $p$ ha una radice intera, $M_1$ ad un certo punto la trova e accetta. Se $p$ non ha radice intera, $M_1$ sarà in esecuzione per sempre. Nel caso di più variabili, possiamo presentare una TM $M$ simile che riconosce $D$. Ora $M$ considera tutte le possibili impstazioni delle variabili con valori interi.
 
 Sia $M_1$ che $M$ sono riconoscitori, ma non decisori. Possiamo convertire $M_1$ in un decisore per $D_1$, perchè possiamo calcolare dei limiti all'intervallo dei valroi in cui possono trovarsi le radici di un polinomio a singola variabile e limitare la ricerca a questo intervallo di valori. Se non si trova una radice all'interno di questi limiti, la macchian rifiuta. Il teorema Matijaseviùc mostra che non è possibile calcolare limiti analoghi per polinomi a più variabili.
+\chapter{Decidibilità}
+\section{Linguaggi decidibili}
+\subsection{Problemi decidibili relativi a linguaggi regolari}
+Iniziamo con alcuni problemi computazionali relativi ad automi finiti. Forniamo algoritmi per testare se un automa finito accetta o meno una stringa, se il linguaggio di un automa finito è vuoto e se due automi finiti sono equivalenti.
+
+Il \textit{problema dell'accettazione} per DFA consistente nel testare se un particolare automa finito deterministico accetta una data stringa, può essere espresso come un linguaggio, $A_{DFA}$. Questo linguaggio contiene le codifiche di tutti i DFA con le stringhe che essi accettano. Definiamo
+\[
+A_{DFA} = \{<B, w> \mid B \text{ è un DFA che accetta la stringa di input }w\}
+\]
+Il problema di verifica se un DFA $B$ accetta l'input $w$ coincide con il problema di verificare se $<B, w>$ è un elemento del linguaggio $A_{DFA}$. Mostrare che il linguaggio è decidibile equivale a mostrare che il problema computazionale è decidibile.
+\begin{theorem}{}{}
+$A_{DFA}$ è un linguaggio decidibile.
+\end{theorem}
+Per dimostrare questo teorema dobbiamo presentare una TM $M$ che decide $A_{DFA}$.
+
+$M = ``$ Su input $<B, w>$, dove $B$ è un DFA e  $w$ è una stringa
+\begin{enumerate}
+	\item Simula $B$ su input $w$
+	\item Se la simulazione termina in uno stato di accettazione, acceetta, altrimenti rifiuta. ''
+\end{enumerate}
+\begin{proof}
+	Per dimostrare che $A_{DFA}$ è decidibile costruiamo una TM $M$ che ha:
+	\begin{itemize}
+		\item una codifica di $B$ sul primo nastro (regole);
+		\item una codifica di $w$ sul secondo nastro;
+		\item una codifica dello stato corrente di $B$ sul terzo nastro.
+	\end{itemize}
+	$M$ cerca la transizione giusta sul primo nastro e modifica stato corrente e carattere osservato. Se lo stato è finale, allora $M$ accetta, altrimenti rifiuta.
+\end{proof}
+Possiamo dimostrare un teorema simile per automi a stati finiti non deterministici. Dato:
+\[
+A_{NFA} = \{<B, w> \mid B \text{ è un NFA che accetta la stringa di input } w\}
+\]
+\begin{theorem}{}{}
+	$A_{NFA}$ è un linguaggio decidibile.
+\end{theorem}
+\begin{proof}
+	Presentiamo una TM $M$ che decide $A_{NFA}$. Potremmo progettare $N$ in modo che operi come $M$, simulando un NFA invece di un DFA. Invece, procediamo in modo diverso per illustrare una nuova idea: $N$ usa $M$ come sottoprocedura. Poichè $M$ è progettata per funzionare con un DFA, $N$ prima converte l'NFA che riceve come input in un DFA e poi lo passa ad $M$.
+
+	$N = ``$Su input $<B, w>$, dove $B$ è un NFA e $w$ è una stringa:
+	\begin{enumerate}
+		\item Converte l'NFA $B$ in un DFA $C$ equivalente;
+		\item Esegue la TM $M$ su input $<C, w>$
+		\item Se $M$ accetta, \textit{accetta}, altrimenti, \textit{rifiuta}''.
+	\end{enumerate}
+\end{proof}
+In modo analogo possiamo determinare se un'espressione regolare genera una data stringa. Consideriamo
+\[
+A_{REX} = \{<R, w> \mid R \text{ è un'espressione regolare che genera la stringa } w\}
+\]
+\begin{theorem}{}{}
+	$A_{REX}$ è un linguaggio decidibile.
+\end{theorem}
+\begin{proof}
+	La seguente TM $P$ decide $A_{REX}$.
+
+	$P = ``$ Su input $<R, w>$, dove $R$ è un'espressione regolare e $w$ è una stringa:
+	\begin{enumerate}
+		\item Converte l'espressione regolare $R$ in un NFA $A$ equivalente;
+		\item Esegue la TM $N$ su input $<A, w>$
+		\item Se $N$ accetta, \textit{accetta}, altrimenti, \textit{rifiuta}''.
+	\end{enumerate}
+\end{proof}
+Questi tre teoremi dicono che, ai fini della decidibilità, è equivalente presentare alla macchian di Turing, un DFA, un NFA, oppure un'espressione regolare, perchè la macchina è in grado di convertire una codifica nell'altra.
+
+Ora affrontiamo un diverso tipo di problema concernente gli automi a stati finiti: il \textit{test del vuoto} per il linguaggio di un automa finito. Nella dimostrazioen seguente, dobbiamo determinare se un automa finito accetta una qualche stringa. Consideriamo:
+\[
+E_{DFA} = \{<A> \mid A \text{ è un DFA e } L(A) = \emptyset\}
+\]
+\begin{theorem}{}{}
+$E_{DFA}$ è un linguaggio decidibile.
+\end{theorem}
+\begin{proof}
+	Il DFA accetta almeno una stringa se e solo se dallo stato iniziale può raggiungere uno stato di accettazione percorrendo il verso delle frecce del DFA. Per verificare questa condizione possiamo progettare una TM $T$ tale che:
+
+	$T = ``$ Su input $<A>$, dove $A$ è un DFA:
+	\begin{enumerate}
+		\item Marca lo stato iniziale di $A$.
+		\item Ripete fino a quando nno vengono più marcati nuovi stati:
+		\begin{enumerate}
+			\item Marca qualsiasi stato che ha una transizione provieniente da uno stato già marcato.
+		\end{enumerate}
+		\item Se nessuno stato di accettazione risulta marcato, \textit{accetta}, altrimenti, \textit{rifiuta}''.
+	\end{enumerate}
+\end{proof}
+Il prossimo teorema afferma che determinare se due DFA riconoscono lo stesso linguaggio è decidibile. Sia:
+\[
+EQ_{DFA} = \{<A, B> \mid A \text{ e } B \text{ sono DFA e } L(A) = L(B)\}
+\]
+\begin{theorem}{}{}
+$EQ_{DFA}$ è un linguaggio decidibile.
+\end{theorem}
+\begin{proof}
+Per dimostrare questo teorema costruiamo un nuovo DFA $C$ a partire da $A$ e $B$, dove $C$ accetta solo quelle stringhe che sono accettate da $A$ o da $B$, ma non da entrambi. In particolare, se $A$ e $B$ riconoscono lo setsso linguaggio, $C$ non accetterà nulla. Il linguaggio di $C$ è:
+\[
+L(C) = \left(L(A) \cap \overline{L(B)}\right) \cup \left(\overline{L(A)} \cap L(B)\right)
+\]
+Questa espressione è denotata come \textit{differenza simmetrica} di $L(A)$ e $L(B)$. La differenza simmetrica è utile perchè $L(C) = \emptyset \iff L(A) = L(B)$. Siamo in gardo di costruire da  $A$ e da $B$ con le costruzioni fatte per dimostrare che la classe dei linguaggi regolare risulta chiusa rispetto alle operazioni di complemento, unione e intersezione.
+
+Costruiamo $F = ``$Su input $<A, B>$, dove $A$ e $B$ sono DFA:
+\begin{enumerate}
+	\item Costruisce il DFA $C$ come descritto.
+	\item Esegue la TM $M$ su input $<C>$.
+	\item Se $T$ accetta, \textit{accetta}, altrimenti, \textit{rifiuta}.
+\end{enumerate}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/differenza_simmetrica}
+		\caption{Differnza simmetrica di $L(A)$ e $L(B)$}
+	\end{center}
+\end{figure}
+\end{proof}
+\subsection{Problemi decidibili relativi a linguaggi context-free}
+Descriviamo ora algoritmi per determinare se una CFG genera una particolare stringa e per determinare se il linguaggio di una CFG è vuoto.
+
+Consideriamo
+\[
+A_{CFG} = \{<G, w> \mid G \text{ è una CFG che genera la stringa }w\}
+\]
+\begin{theorem}{}{}
+$A_{CDG}$ è un linguaggio decidibile.
+\end{theorem}
+Per la CFG $G$ e la stringa $w$ vogliamo determinare se $G$ genera $w$. Un'idea è quella di utilizzare $G$ per passare attraverso tutte le derivazioni per determinare se ne esiste una di $w$. Questo non funziona, poichè bisognerebbe provare infinite derivazioni. Se $G$ non genera $w$, questo algoritmo potrebbe non fermarsi. Tale idea dà una macchina di Turing che è un riconoscitore, non un decisore, per $A_{CFG}$. Per rendere questa macchina di Turing un decisore occorre assicurare che l'algoritmo provi solo un numero finito di derivazioni. Precedentemente, abbiamo dimostrato che, se $G$ fosse in forma normale di Chomsky, qualsiasi derivazione di $w$ avrebbe $2n - 1$ passi, dove $n$ è la lunghezza di $w$.
+\begin{proof}
+	Diamo la TM $S$ per $A_{CFG}$.
+
+	$S = ``$ Su input $<G, w>$, dove $G$ è una CFG e $w$ è una stringa:
+	\begin{enumerate}
+		\item Converte $G$ in una grammatica equivalente in forma normale di Chomsky.
+		\item Lista tutte le derivazioni di $2n - 1$ passi, dove $n$ è la lunghezza di $w$; tranne se $n = 0$, in tal caso lista tutte le derivazioni di un passo.
+		\item Se una di tali derivazioni genera $w$, \textit{accetta}, altrimenti, \textit{rifiuta}.''
+	\end{enumerate}
+\end{proof}
+Il problema di determinare se una CFG genera una particolare stringa è correlato al problema della compilazione dei linguaggi di programmazione. L'algoritmo nella TM $S$ è molto inefficiente e non sarebbe mai utilizzato in pratica.
+
+Ricordiamo che le CFG e i PDA sono equivalenti, quindi tutto ciò che vale per la decidibilità dei problemi concernenti le CFG vale anche per i PDA. Torniamo ora al problema del test del vuoto per il linguaggio di una CFG. Come abbiamo fatto per i DFA, possiamo dimostrare che il problema di determinare se una CFG genera almeno una stringa è decidibile. Sia:
+\[
+E_{CFG} = \{<G> \mid G \text{ è una CFG ed }L(G) = \emptyset\}
+\]
+\begin{theorem}{}{}
+	$E_{CFG}$ è un linguaggio decidibile.
+\end{theorem}
+Per progettare un algoritmo per questo problema, potremmo tentare di utilizzare la TM $S$ e passare attraverso tutte le possibili $w$. Però le $w$ da testare sono infinite, quindi questo metodo potrebbe non terminare mai. Per determinare se il linguaggio di una grammatica è vuoto, abbiamo bisogno di testare se la variabile iniziale può generare una stringa di terminali. L'algoritmo fa questo risolvendo un problema più generale. Determina per ogni variabile se essa è in grado di generare una string di terminali. Quando l'algoritmo ha determinato che una variabile può generare qualche stringa di terminali, l'algoritmo tiene traccia di queste informazioni marcando tale variabile. Dappiamo, l'algoritmo marca tutti i simboli terminali della grammatica. Poi, scandisce tutte le regole della grammatica. Se trova una regola che consente a qualche variabile di essere sostituita da una stringa di simboli, che sono già tutti marcati, l'algoritmo sa che anche questa variabile può essere marcata. L'algoritmo continua in questo modo finchè non può marcare ulteriori variabili. La TM $R$ implementa questo algoritmo.
+\begin{proof}
+$R = ``$ Su input $<G>$, dove $G$ è una CFG:
+\begin{enumerate}
+	\item Marca tutti i simboli terminali in $G$.
+	\item Ripete fin quando nessuna nuova variabile viene marcata:
+	\begin{enumerate}
+		\item Marca una qualsiasi variabile $A$ tale che $G$ ha una regola $A \to U_1U_2\cdots U_k$ ed ogni simbolo $U_1, \dots, U_k$ è già stato marcato.
+	\end{enumerate}
+	\item Se la variabile iniziale non è segnata, \textit{accetta}, altrimenti, \textit{rifiuta}.
+\end{enumerate}
+\end{proof}
+Consideriamo ora il problema di determinare se due grammatiche context-free generano lo stesso linguaggio. Sia:
+\[
+EQ_{CFG} = \{<G, H> \mid G \text{ e }H \text{ sono CFG e } L(G) = L(H)\}
+\]
+Potremmo utilizzare lo stesso procedimento utilizzato per dimostrare che  $EQ_{DFA}$ è decidibile. Ma questo procedimento non va bene per le CFG perchè la classe dei linguaggi context-fre non è chiusa per complemento o intersezione. Infatti, $EQ_{CFG}$ non è decidibile.
+
+Ora mostriamo che i linguaggi context-free possono essere decisi dalle macchine di Turing.
+\begin{theorem}{}{}
+	Ogni linguaggio context-free è decidibile.
+\end{theorem}
+Sia $A$ un CFL. Il nostro obiettivo è dimostrare che $A$ è decidibile. Dimostriamo questo teorema con la TM $S$ per decidere $A_{CFG}$.
+\begin{proof}
+	Sia $G$ una CFG per $A$, progettiao una TM $M_G$ che decide $A$. Costruiamo una copia di $G$ in $M_G$. Essa funziona come segue.
+
+	$M_G = ``$Su input $w$:
+	\begin{enumerate}
+		\item Esegue la TM $S$ su input $<G, w>$.
+		\item Se questa macchina accetta, \textit{accetta}; altrimenti, \textit{rifiuta}.
+	\end{enumerate}
+\end{proof}
+Quest'ultimo teorema fornisce il collegamento ifnale nelle relazioni tra le quattro principali classi di linguaggi che abbiamo descritto finora: regolari, context-free, decidibili e Turing-riconoscibili.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/relazione_linguaggi}
+	\end{center}
+	\caption{Le relazioni tra le classi di linguaggi}
+\end{figure}
+\section{Indecidibilità}
+In questa sezione dimostriamo uno dei teoremi più importanti della teoria della computazione: esiste un problema specifico che è algoritmicamente irrisolvibile.
+
+Affrontiamo il primo problema che stabilisce l'indecibilità di uno specifico linguaggio: il problema di determinare se una macchina di Turing accetta una determinata stringa in input. Chiamiamo tale linguaggio $A_{TM}$. Sia:
+\[
+A_{TM} = \{<M, w> \mid M \text{ è una TM e } M \text{ accetta }w\}
+\]
+\begin{theorem}{}{}
+$A_{TM}$ è indecidibile.
+\end{theorem}
+Prima di dimostrare questo teorema, osserviamo che $A_{TM}$ è Turing-riconoscibile. Quindi questo teorema mostra che i riconoscitori sono più potenti dei decisori. Richiedere che una TM si fermi su ogni input limita le tipologie di linguaggi che possono essere riconosciuti. La seguente macchian di Turing $U$ riconosce $A_{TM}$.
+
+$U = ``$ Su input $<M, w>$ dove $M$ è una TM e $w$ è una stringa:
+\begin{enumerate}
+	\item Simula $M$ su input $w$
+	\item Se durante la computazione $M$ entra nello stato di accettazione, \textit{accetta}; se $M$ entra nello stato di rifiuto, \textit{rifiuta}. ''
+\end{enumerate}
+Si noti che questa macchina cicla su input $<M, w>$ se $M$ cicla su $w$, questo è il motivo per cui non decide $A_{TM}$.
+\subsection{Il metodo della diagonalizzazione}
+La dimostrazione dell'indecidibilità di $A_{TM}$ utilizza una tecnica chiamata \textit{diagonalizzazione}.
+\begin{definition}{\nmu Richiamo sulle funzioni}{richiamo_funzioni}
+Supponiamo di avere gli insiemi $A$ e $B$ ed una funzione $f$ da $A$ a $B$. Diciamo che $f$ è \textit{iniettiva}, se essa non mappa mai due elementi diversi in uno stesso punto, cioè se $f(a) \neq f(b)$ ogniqualvolta $a \neq b$.
+
+Diciamo che $f$ è \textit{suriettiva} se tocca ogni elemento di $B$ - cioè se per ogni $b\in B$ esiste un $a \in A$ tale che $f(a) = b$.
+
+Diciamo che $A$ e $B$ hanno \textit{stessa cardinalità} se esiste una funzione iniettiva e suriettiva $f: A \to B$. Una funzione che è sia iniettiva che suriettiva è detta funzione \textit{biettiva}. In una funzione biettiva ogni elemento di $A$ viene mappato in un unico elemento di $B$ e per ogni elemento di $B$ esiste un unico elemento di $A$ che viene mappato in esso. Una biezione è un modo semplice per accoppiare elementi di $A$ con elementi di $B$.
+\end{definition}
+\begin{definition}{\nmu Insieme numerabile}{insieme_numerabile}
+Un insieme  $A$ è \textit{numerabile} se è finito oppure ha la stessa cardinalità di $\mathbbm{N}$.
+\end{definition}
+L'insieme $\mathbbm{Q}$ è un esempio di insieme numerabile perchè si può definire una biezione con $\mathbbm{N}$.  Infatti, si può definire una matrice $Q$ in cui l'elemento alla riga $i$ e alla colonna $j$ è il numero $\frac{i}{j}$ ed è possibile definire un'enumerazione degli elementi di $Q$, pertanto $\mathbbm{Q}$ e $\mathbbm{N}$ hanno stessa cardinalità.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/enumerazione_q}
+	\end{center}
+\end{figure}
+Tuttavia, ci sono insiemi che sono troppo grandi. Un tale insieme è detto \textit{non numerabile}.
+\begin{theorem}{}{}
+	L'insieme $\mathbbm{R}$ non è numerabile.
+\end{theorem}
+\begin{proof} Per dimostrare che $\mathbbm{R}$ è non numerabile, mostriamo che non esiste una biezione tra $\mathbbm{N}$ e $\mathbbm{R}$. La dimostrazione è per assurdo.
+
+Supponiamo che esiste una biezione $f$ tra $\mathbbm{N}$ e $\mathbbm{R}$. Per essere una biezione, $f$ deve associare tutti gli elementi di $\mathbbm{N}$ con tutti gli elementi di $\mathbbm{R}$. Tuttavia troveremo un numero $x \in \mathbbm{R}$ che non è accoppiato con alcun elemento di $\mathbbm{N}$. Un metodo per trovare questo numero $x$ è quello di costruirlo. Segliamo una cifra di $x$ in modo da renderlo differente da ogni numero reale accoppiato con un elemento di $\mathbbm{N}$. Alla fine saremo sicuri che $x$ risulta diverso da ogni numero reale accoppiato con un elemento di $\mathbbm{N}$. Illustriamo quest'idea con un esempio. Supponiamo che la biezione $f$ esista. Prendiamo $f(1) = 3.14159\dots$, $f(2) = 55.5555\dots$, $f(3)=\dots$, e così via, tano per dare alcuni valori per $f$. Allora $f$ accoppia il numero 1 con $3.14159\dots$, il numero 2 con $55.55555\dots$, e così via. La tabella seguente mostra alcuni valori di un'ipotetica biezione $f$ tra $\mathbbm{N}$ e $\mathbbm{R}$.
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+$n$ & $f(n)$ \\
+\hline
+1 & $3.14159\ldots$ \\
+2 & $55.55555\ldots$ \\
+3 & $0.12345\ldots$ \\
+4 & $0.50000\ldots$ \\
+$\vdots$ & $\vdots$ \\
+\end{tabular}
+\end{table}
+Costruiamo il numero $x$ desiderato, dandone la rappresentazione decimale. Si tratta di numero compreso tra 0 e 1, quindi tutte le sue cifre significative sono cifre frazionarie che seguono la virgola decimale. Il nostro obiettivo è quello di garantire che $x \neq f(n)$ per ogni $n$. Per garantire $x \neq f(1)$, scegliamo la prima cifra di $x$ come una qualsiasi cifra diversa dalla priam cifra decimale 1 di $f(1) = 3.14159\dots$. Arbitriariamente, scegliamola pari a 4. Per assicurarci che $x \neq f(2)$, scegliamo la seconda cifra di $x$ diversa dalla seconda cifra decimale 5 di $f(2)$. Arbitriariamente, scegliamola pari a 6. Continuando in questo modo lungo la diagonale della tavola per $f$, tteniamo tutte le cifre di $x$. Sappiamo che $x$ non è $f(n)$ per ogni $n$ perchè differisce da $f(n)$ nell'$n$-esima cifra frazionaria.
+\end{proof}
+Il teorema precedente ha un'importante applicazione nella teoria della computazione. Esso dimostra che alcuni linguaggi non sono decidibili e neppure Turing riconoscibili, per la ragione che l'insieme dei linguaggi è non numerabile mentre l'insieme di tutte le macchine di Turing è numerabile. Poichè ogni macchina di Turing è in grado di riconoscere un solo linguaggio e ci sono più linguaggi che macchine di Turing, alcuni linguaggi non sono riconosciuti da una qualche macchina di Turing.
+\begin{corollary}{}{}
+Alcuni linguaggi non sono sono Turing-riconoscibili.
+\end{corollary}
+\begin{proof}
+Per dimostrare che l'insieme di tutte le macchine di Turing è numerabile dobbiamo prima osservare che l'insieme di tutte le stringhe $\Sigma^*$	è numerabile, per ogni alfabeto $\Sigma$. Avendo solo un numero finito di stringhe di ogni lunghezza, possiamo formare una lista di $\Sigma^*$ scrivendo tutte le stringhe di lunghezza 0, lunghezza 1, lunghezza 2, e così via.
+
+L'insieme di tutte le macchine di Turing e numerabile perchè ogni macchina di Turing $M$ può essere codificata con una stringa $<M>$. Se ci limitiamo a tralasciare quelle stringhe che non sono la codifica di una macchina di Turing, possiamo ottenere una lista di tutte le macchine di Turing. Per mostrare che l'insieme di tutti i linguaggi è non  numerabile, dobbiamo prima osservare che l'insieme delle sequenza binarie infinite è non-numerabile.
+
+Una \textit{sequenza binaria infinita} è una sequenza senza fine di 0 e di 1. Sia $\mathcal{B}$ l'insieme di tutte sequenze binarie infinite. Possiamo dimostrare che $\mathcal{B}$ è non numerabile utilizzando una dimostrazione mediante diagonalizzazione. Sia $\mathcal{L}$ l'insieme di tutti i linguaggi sull'alfabeto $\Sigma$. Mostriamo che $\mathcal{L}$ è non-numerabile dando una corrispondenza con $\mathcal{B}$, dimostrando così che i due insiemi hanno la stessa cardinalità. Sia $\Sigma^* = \{s_1, s_2, s_3, \dots\}$. Ogni linguaggio $A \in \mathcal{L}$ ha un'unica sequenza in $\mathcal{B}$. Il bit $i$-esimo della sequenza è un 1 se $s_i \in A$ ed è uno 0 se $s_i \notin A$; questa è chiamata la \textit{sequenza caratteristica} di $A$.
+
+La funzione $f:\mathcal{L} \to \mathcal{B}$, dove $f(A)$ è uguale alla sequenza caratteristica di $A$, è sia iniettiva che suriettiva, quindi è una biezione. Pertanto, essendo $\mathcal{B}$ non numerabile, anche $\mathcal{L}$ è non numerabile.
+
+Abbiamo così dimostrato che l'insieme di tutti i linguaggi non può essere messo in corrispondenza biunivoca con l'insieme di tutte le macchine di Turing. Concludiamo, quindi, che alcuni linguaggi non sono riconosciuti da una macchina di Turing.
+\end{proof}
+\subsection{Un linguaggio indecidibile}
+Dimostriamo l'indecidibilità del linguaggio:
+\[
+A_{TM} = \{<M, w> \mid M \text{ è una TM ed } M \text{ accetta }w\}
+\]
+\begin{proof}
+	Assumiamo che $A_{TM}$ è decidibile, per poi ottenere una contraddizione. Supponiamo che $H$ sia un decisore per $A_{TM}$. Sull'input $<M, w>$, dove $M$ è una TM e $w$ è una stringa, $H$ si ferma ed accetta se $M$ accetta $w$. Inoltre, $H$ si ferma e rifiuta se $M$ non accetta $w$. In altri termini, assumiamo che $H$ è una TM, dove
+	\[
+	H\left(<M, w>\right) = \begin{cases}
+		accetta &\text{ se $M$ accetta $w$}\\
+		rifiuta &\text{ se $M$ rifiuta $w$}
+	\end{cases}
+	\]
+Ora costruiamo una nuova macchina di Turing $D$ avente $H$ come sottoprocedura. Questa nuova TM chiama $H$ per determinare cosa fa $M$ quando l'input di $M$ è la sua stessa descrizione $<M>$. Una volta che $D$ ha determinato quest'informazione, essa fa il contrario. Cioè, rifiuta se $M$ accetta ed accetta se $M$ non accetta. Diamo ora una descrizione di $D$.
+
+$D = ``$ Su input $<M>$, dove $M$ è una TM:
+\begin{enumerate}
+	\item Esegue $H$ su input $<M, <M>>$
+	\item Da in output l'opposto di ciò che $H$ dà in ouput. Cioè, se $H$ accetta, \textit{rifiuta}; e se $H$ rifiuta, \textit{accetta}.
+\end{enumerate}
+Se $D$ viene eseguita con la sua stessa descrizione $<D>$, otteniamo:
+\[
+D\left(<D>\right) = \begin{cases}
+	accetta, &\text{ se $D$ non accetta $<D>$}\\
+	rifiuta &\text{ se $D$ accetta $<D>$}
+\end{cases}
+\]
+Indipendentemente da ciò che $D$ fa, essa è costretta a fare il contrario, il che ovviamente è una contraddizione. Quindi, nè la TM $D$ nè la TM $H$ possono esistere.
+\end{proof}
+Rivediamo i passi di questa prova. Supponiamo che la TM $H$ decida $A_{TM}$. Quindi usiamo $H$ per costruire una TM $D$ che prende in input $<M>$, tale che $D$ accetta $<M>$ esattamente quando $M$ non accetta il suo input $<M>$, Infine, eseguiamo $D$ su se stessa. Quindi, le macchine eseguono le seguenti azioni, dove l'ultima riga fornisce la contraddizione.
+\begin{itemize}
+	\item $H$ accetta $<M, w>$ esattamente quando $M$ accetta $w$.
+	\item $D$ rifiuta $<M>$ esattamente quando $M$ accetta $<M>$
+	\item $D$ rifiuta $<D>$ esattamente quando $D$ accetta $<D>$.
+\end{itemize}
+\subsection{Un linguaggio non Turing-riconoscibile}
+Nella sezione precedente abbiamo dimostrato che un linguaggio è non decidibile. Ora mostriamo un linguaggio che non è neppure Turing-riconoscibile. Si noti che $A_{TM}$ non basta allo scopo, perchè abbiamo dimostrato che $A_{TM}$ è Turing riconoscibile. Il teorema seguente mostra che, se un linguaggio ed il suo complemento sono entrambi Turing-riconosbili, il linguaggio è decidibile. Quindi, per qualsiasi linguaggio non decidibile, o esso non è Turing-riconoscibile oppure il suo complemento non è Turing-riconoscibile. Diciamo che un linguaggio è \textit{coTuring riconoscibile} se esso è il complemento di un linguaggio Turing-riconoscibile.
+\begin{theorem}{}{}
+	Un linguaggio è decidibile se e solo se è Turing-riconoscibile e coTuring-riconoscibile.
+\end{theorem}
+\begin{proof}
+	Abbiamo due direzioni da dimostrare. In primo luogo, se $A$ è decidibile, possiamo facilmente vedere che sia $A$ che il suo complemento $\overline{A}$ sono Turing-riconoscibili. Qualsiasi linguaggio decidibile è Turing-riconoscibile, e il complemento di un linguaggio decidibile è a sua volta decidibile. Per la direzione inversa, se entrambi $A$ e $\overline{A}$ sono Turing-riconoscibili, indichiamo con $M_1$ il riconoscitore per $A$ e con $M_2$ il riconoscitore per $\overline{A}$. La seguente macchina di Turing $M$ è un decisore per $A$.
+
+	$M = ``$ Su input $w$:
+	\begin{enumerate}
+		\item Esegue sia $M_1$ che $M_2$ su input $w$ parallelo.
+		\item Se $M_1$ accetta, \textit{accetta}; se $M_2$ accetta, \textit{rifiuta}.
+	\end{enumerate}
+	L'esecuzione di due macchine in parallelo significa che $M$ ha deu nastri, uno per simulare $M_1$ e l'altro per simulare $M_2$. In questo caso $M$ alterna la simulazione di un passo di $M_1$ con un passo di $M_2$ e continua finchè una delle due accetta. Ora dimostriamo che $M$ decide $A$. Ogni stringa $w$ è in $A$, oppure in $\overline{A}$. Pertanto una tra $M_1$ e $M_2$ deve accettare $w$. Poichè $M$ si ferma ogni volta che $M_1$ accetta oppure $M_2$ accetta, allora $M$ si ferma sempre quindi è un decisore. Inoltr,e accetta tutte le stringhe in $A$ e respinge tutte le stringhe in $\overline{A}$. Quindi $M$ è un decisore per $A$, e pertanto $A$ è decidibile.
+\end{proof}
+\begin{corollary}{}{}
+$\overline{A_{TM}}$ non è Turing-riconoscibile.
+\end{corollary}
+\begin{proof} Sappiamo che $A_{TM}$ è Turing-riconoscibile. Se anche $\overline{A_{TM}}$ fosse Turing-riconoscibile, $A_{TM}$ sarebbe decidibile. Ma, precedentemente, abbiamo dimostrato che $A_{TM}$ non è decidibile, quindi $\overline{A_{TM}}$ non può essere Turing-riconoscibile.
+
+\end{proof}
 \end{document}
