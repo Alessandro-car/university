@@ -4835,4 +4835,218 @@ for (int i = 0; i < petTypes.length; i++) {
 	}
 }
 \end{lstlisting}
+\section{Java Generics}
+Con le \textit{Java Generics} è possibile implementare il concetto di tipo parametrizzato, che permette di creare componenti (spesso dei contenitori) che sono semplici da utilizzare con più tipi. Una delle motivazioni principali delle Java Generics è rivolta alla possibilità di creare classi contenitori. Consideriamo una semplice classe che contiene un solo oggetto di classe \textit{Object}.
+\begin{lstlisting}[style=javastyle]
+class Automobile {}
+public class Holder2 {
+	private Object a;
+	public Holder2(Object a) { this.a = a; }
+	public void set(Object a) { this.a = a; }
+	public Object get() { return a; }
+
+	public static void main(String[] args) {
+		Holder h2 = new Holder2(new Automobile());
+		Automobile a = (Automobile)h2.get();
+		h2.set("Not an automobile!");
+		String s = (String)h2.get();
+		h2.set(1);
+		Integer x = (Integer)h2.get();
+	}
+}
+\end{lstlisting}
+La classe \textit{Holder2} è in grado di contenere oggetto di qualsiasi classe. L'istruzione \texttt{h2.set(1)} converte automaticamente un \textit{int} in \textit{Integer} (\textit{autoboxing}). L'istruzione \texttt{for} permette di iterare su tutti gli oggetti del contenitore.
+
+Ci sono alcuni casi nei quali è necessario inserire all'interno di un contenitore più oggetti omogenei. In questi casi è possibile ricorrere alle Java Generics che:
+\begin{itemize}
+	\item permettono di specificare il tipo degli oggetti contenuti;
+	\item Demandano al compilatore la possibilità di effettuare controllo di tipo al ``compile time''.
+\end{itemize}
+Nell'esempio precedente, è possibile ricorrere alle generics:
+\begin{lstlisting}[style=javastyle]
+public class Holder3<T>  {
+	private T a;
+
+	public Holder3(T a) { this.a = a; }
+
+	public void set(T a) { this.a = a; }
+	public T get() { return a; }
+
+	public static void main(String[] args) {
+		Holder3<Automobile> h3 = new Holder3<Automobile>(new Automobile());
+		Automobile a = h3.get();
+		// h3.set("Not an Automobile"); // Error
+		// h3.set(1); // Error
+		Holder3<String> h4 = new Holder3<String>("Not an automobile!");
+	}
+}
+\end{lstlisting}
+\subsection{Tuple}
+In alcuni casi è possibile che sia necessario definire una funzione che non restituisca non un singolo valore ma una coppia di valori o una tripla, ecc...
+\begin{lstlisting}[style=javastyle]
+public class TwoTuple<A, B> {
+	public final A first;
+	public final B secondl
+	public TwoTuple(A a, B b) { first = a; second = b; }
+	public String toString() {
+		return "(" + first + "," + second + ")";
+	}
+}
+
+class Amphibian{}
+class Vehicle {}
+
+public class TupleTest {
+	static TwoTuple<String, Integer> f() {
+		// Autoboxing converts the int to Intger:
+		return new TwoTuple<String, Integer>("hi", 47);
+	}
+	public static void main(String[] args) {
+		TwoTuple<String, Integer> ttsi = f();
+	}
+}
+\end{lstlisting}
+Tutte le classi contenitore sono definite come classi generiche (\texttt{ArrayList<T>, LinkedList<T>}, ...).
+
+Le Java Generics possono essere anche utilizzate per parametrizzare la dichiarazione di interfacce, ad esempio \texttt{Iterator<T>, Comparable<T>, Comparator<T>, ...}
+
+Per tutte le classi che implementano l'interfaccia \textit{Collection}, per le quali è definita l'operazione \texttt{iterator()} si può usare la struttura di controllo \textit{for-each}.
+\begin{lstlisting}[style=javastyle]
+for(<variabile>: <collection>) { ... }
+
+Iterator<Cat> it = cats.iterator();
+while (it.hasNext())
+	it.next().print();
+\end{lstlisting}
+equivale a:
+\begin{lstlisting}[style=javastyle]
+for (Cat o: cats)
+	o.print();
+\end{lstlisting}
+
+\subsection{Metodi generici}
+Oltre a parametrizzare la dichiarazione di intere classi, è possibile parametrizzare la dichiarazione dei metodi all'interno di una classe. Un metodo può essere definito generico indipendentemente dal fatto che la classe sia generica oppure no.
+
+Per di più, se un metodo definito in una classe parametrizzata è statico, tale metodo non accederà al parametro di tipo della classe.
+
+Per definrie un metodo come generico è sufficiente parametrizzare la sua dichiarazione:
+\begin{lstlisting}[style=javastyle]
+public class GenericMethods {
+	public <T> void f(T x) {
+		System.out.println(x.getClass().getName());
+	}
+
+	public static void main(String[] args) {
+		GenericMethods gm = new GenericMethods();
+		gm.f(""); 	// prints java.lang.String
+		gm.f(1);	  // prints java.lang.Integer
+		gm.f(1.0);	// prints java.lang.Double
+		gm.f(1.0F); // prints java.lang.Float
+		gm.f('c');  // prints java.lang.Character
+		gm.f(gm)    // prints GenericMethods
+	}
+
+}
+\end{lstlisting}
+Notiamo che:
+\begin{lstlisting}[style=javastyle]
+public class New {
+	public static <T> LinkedList<T> IList() {
+		return new LinkedList<T>();
+	}
+
+	public static void main(String[] args) {
+		LinkedList<String> Ils = New.IList();
+		Ils.<String>add("map"); // inutile
+		ils.add("corso A");
+	}
+}
+\end{lstlisting}
+In Java SE 7 \textit{List<Object>} non può essere convertito in \textit{List<String>}. Da Java SE 8 l'inferenza dei tipi è estesa all'argomento dei metodi:
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+public class New {
+	public static <T> LinkedList<T> IList() {
+		return new LinkedList<T>();
+	}
+
+	public static void processList(LinkedList<String> IList) {
+		for (String obj : IList)
+			System.out.println(obj);
+	}
+
+	public static void main(String[] args) {
+		processList(New.<String>IList()); // obbligatorio in Java 7
+		processList(New.IList()); // solo da Java 8 in poi.
+	}
+}
+\end{lstlisting}
+Vediamo un ulteriore esempio:
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+public class GenericVarargs {
+	public static <T> List<T> makeList(T... args) {
+		List<T> result = new ArrayList<T>();
+		for (T item : args)
+			result.add(item);
+		return result;
+	}
+
+	public static void main(String[] args) {
+		List<String> ls = makeList("A");
+		System.out.println(ls); // [A]
+		ls = makeList("A", "B",  "C");
+		System.out.prinltn(ls); // [A, B, C]
+		ls = makeList("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""));
+		System.out.prinltn(ls) // [, A, B, C, D, ...]
+	}
+}
+\end{lstlisting}
+\subsection{Il problema dell'erasure}
+Le Java Generics lasciano compunque alcune questioni poco chiare. Per esempio, mentre è possibile ricorrere al letterale di classe per la classe \textit{ArrayList}, \textit{ArrayList.class}, non è possibile ricorrere al lettarale di classe per la classe \textit{ArrayList} ottenuta parametrizzando il tipo del contenuto:
+\[
+\textit{ArrayList<Intger>.class}
+\]
+Per comprendere meglio questo aspetto, consideriamo il seguente esempio:
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+
+public class ErasedTypeEquivalence {
+	public static void main(String[] args) {
+		Class c1 = new ArrayList<String>().getClass();
+		Class c2 = new ArrayList<String>().getClass();
+		System.out.prinltn(c1 == c2);
+	}
+}
+
+/* Output:
+true
+*/
+\end{lstlisting}
+Il risultato è true, benchè \textit{ArrayList<String>} ed \textit{ArrayList<Intger>} sono di tipo diverso.
+
+La ragione di questo sta nel seguente fatto. Non è disponibile alcuna informazione sui tipi di parametri generici all'interno del codice generico. Le generics del Java sono implementate usando l'\textit{erasure}. Questo significa che ogni informazione del tipo è cancellata quando si ricorre all'astrazione generica. Così \textit{ArrayList<STring>} e \textit{ArrayList<Integer>} sono di fatto, lo stesso tipo \textit{ArrayList} al run time.
+\begin{lstlisting}[style=javastyle]
+import java.util.*;
+class From {}
+class Fnorkle {}
+class Quark<Q> {}
+class Particle<POSITION, MOMENTUM> {}
+
+public class LostInformation {
+	public static void main(String[] args) {
+		List<Frob> list = new ArrayList<Frob>();
+		Map<Frob, Fnorkle> map = new HashMap<Frob, Fnorkle>();
+		Quark<Fnorkle> quark = new Quart<Fnorkle>();
+		Particle<Long, Dobule> p =new Particle<Long, Double>();
+		System.out.println(Arrays.toString(list.getClass().getTypeParameters()))) // [E]
+		System.out.println(Arrays.toString(Arrays.toString(map.getClass().getTypeParameters()))) // [K, V]
+		System.out.println(Arrays.toString(quark.getClass().getTypeParameters()))); // [Q]
+		System.out.println(Arrays.toString(p.getClass().getTypeParameters()))) // [POSITION, MOMENTUM]
+	}
+}
+\end{lstlisting}
+Nell'esempio precedente, è usato il metodo di istanza \textit{Class.getTypeParameters()} che, secondo i javadoc, ``returns an array of TypeVariable objects that represent the type variables declared by the type specification...''
+
+Tuttavia, tale metodo non restituisce i tipi, ma i nomi dei parametri.
 \end{document}
