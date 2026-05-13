@@ -4697,4 +4697,142 @@ class Statistics {
 	}
 }
 \end{lstlisting}
+\section{RTTI - Run-Time Type Identification}
+Per comprendere il funzionamento di RTTI in Java bisogna capire come sono rappresentate al run-time le informazioni sul tipo, cioè sulla classe. Ciò è realizzato attraverso un tipo speciale di oggetto chiamato \textit{Class Object} che contiene le informazioni sulla classe, per questo talvolta è chiamato meta-classe.
+
+Le informazioni come attributi, metodi, modalità di accesso, etc. sono tutte prensenti nel \textit{.class}.
+Durante la compilazione viene generato un oggetto \textit{Class} per ogni classe che costituisce il programma.
+
+Gli oggetti di Class relativi alle varie classi che compongono un programma non sono caricati tutti in memoria prima di inizare l'esecuzione. Quando al run-time si istanzia una classe, la \textit{Java Virtual Machine}, su cui sta girando il programma, prima verifica se l'oggetto \textit{Class} corrispondente è caricato. In caso negativo la JVM lo carica ricercando il file .class con quel nome.
+
+Il metodo \texttt{forName()} è un metodo statico di \textit{Class} che serve per ottenere un riferimento a un oggetto \textit{Class}. Esso prende un oggetto di tipo \textit{String} contentente il nome testuale della classe di cui si vuole il riferimento e restituisce un riferimento a \textit{Class}.
+
+Alternativamente, per ottenere un riferimento a un oggetto \textit{Class} si può anche ricorrere al \textit{lettera di class (class literal)}, dato dal nome della classe suguito da \textit{.class}. I vantaggi di questa notazione sono i seguenti.
+\begin{itemize}
+	\item Semplicità.
+	\item Efficienza.
+	\item Controllo di esistenza della classe durante la compilazione.
+\end{itemize}
+Il letterale di classe funzione, oltre che con le classi, con gli array, con i tipi primitivi e con le interfacce.
+Per i ``wrapper'' dei tipi primitivi c'è anche un campo standard chiamato \textbf{TYPE}. Questo campo produce un riferiemnto all'oggetto \textit{Class} per il tipo primitivo associato tale che si hanno le seguenti equivalenze.
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}[c]{|l|l|}
+			\hline
+			boolean.class & Boolean.TYPE \\
+			char.class & Character.TYPE \\
+			byte.class & Byte.TYPE \\
+			short.class & Short.TYPE \\
+			int.class & Integer.TYPE \\
+			long.class & Long.TYPE \\
+			float.class & Float.TYPE \\
+			double.class & Double.TYPE \\
+			void.class & Void.TYPE \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+Le forme di RTTI viste finora, includono:
+\begin{itemize}
+	\item il classico \textit{cast} che usa RTTI per assicurarsi che il cast è corretto e solleva un eccezione \textit{ClassCastException} se è stato ottenuto un cast non corretto.
+	\item l'oggetto \textit{Class} rappresentante il tipo dell'oggetto.
+
+	L'oggetto \textit{Class} può essere interrogato per ottenere utili informazioni al run-time.
+\end{itemize}
+In C++ il classico cast non compie una RTTI. Dice semplicemente al compilatore di trattare l'oggetto come di un altro tipo.
+
+In Java, che esegue il controllo di tipo, questo tipo di cast è spesso chiamato ``\textit{type safe downcast}''.
+
+Un'altra forma di RTTI in Java è ottenuta attraverso l'uso della parola chiave \texttt{instanceof} che indica se un oggetto è istanza di un particolare tipo e restituisce un \textit{boolean}.
+\[
+\texttt{if (m instanceof Dog)  ((Dog)m).bark()};
+\]
+L'istruzione precedente, verifica se l'oggetto \textit{m} appartiene alla classe \textit{Dog} prima di effettuare il casting, altrimenti si potrebbe sollevare una \textit{ClassCastException}.
+
+Segue un esempio di uso di \texttt{instanceof}.
+\begin{lstlisting}[style=javastyle]
+class Pet {}
+class Dog extends Pet {}
+class Pug extends Dog {}
+class Counter { int i; }
+
+import java.util.*;
+public class PetCount {
+	static String[] typenames = { "Pet", "Dog", "Pug" };
+
+	public static void main(String[] args) {
+		ArrayList pets = new ArrayList();
+		try {
+			Class[] petTypes = {
+				Class.forName("Dog"),
+				Class.forName("Pug"),
+			};
+
+			for (int i = 0; i < 5; i++) {
+				pets.add(
+					petTypes[(int)(Math.random() * petTypes.length)].newInstance();
+				)
+			}
+		} catch (InstantiationException e) {
+			System.err.prinltn("Cannot instantiate");
+			return;
+		} catch (IllegalAccessException e) {
+			System.err.println("Cannot access");
+			return;
+		} catch (ClassNotFoundException e) {
+			System.err.println("Cannot find class");
+			return;
+		}
+	}
+	...
+
+	HashMap h = new HashMap();
+	for (int i = 0; i < typenames.length; i++)
+		h.put(typenames[i], new Counter());
+	for (int i = 0; i < pets.size(); i++) {
+		Object o = pets.get(i);
+		if (o instance of Pet)
+			((Counter) h.get("Pet")).i++;
+		if (o instance of Dog)
+			((Counter) h.get("Dog")).i++;
+		if (o instance of Pug)
+			((Counter) h.get("Pug")).i++;
+	}
+
+	for (int i = 0; i < pets.size(); i++)
+		System.out.println(pets.get(i).getClass());
+
+	for (int i = 0; i < typenames.length; i++)
+		System.out.println(typenames[i] + " quantity: " + ((Counter) h.get(typenames[i])).i);
+
+}
+\end{lstlisting}
+Quando si dispone di un oggetto, si può estrarre il riferimento all'oggetto \textit{Class} relativo alla sua classe richiamando un metodo che è implementato in \textit{Object}: \textit{getClass()}.
+
+Nel precedente esempio, alternativamente all'uso di \textit{Class.forName} si possono usare i letterali \textit{class}. Ad esempio: \texttt{Class[] petTypes = {Dog.class, Pug.class}}
+
+In questo caso la creazione di \textit{petTypes} non deve essere inclusa in un blocco try, perchè viene valutata al compile-time, diversamente dal metodo \textit{Class.forName()}.
+
+L'uso dell'operatore \texttt{instanceof} potrebbe risultare spesso molto noioso perchè lo si deve specificare per il confronto di ogni tipo di oggetto distinto. La classe \textit{Class} mette a disposizione il metodo \textit{isInstance} che fornisce un modo per invocare dinamicamente l'operatore \textit{instanceof}. Ad esempio, il seguente codice:
+\begin{lstlisting}[style=javastyle]
+Class[] petTypes = {Dog.class, Pug.class};
+
+for (int i = 0; i < pets.size(); i++) {
+	Object o = pets.get(i);
+	if (o instanceof Pet)
+		...
+	if (o instanceof Dog)
+		...
+	...
+}
+\end{lstlisting}
+Diventa:
+\begin{lstlisting}[style=javastyle]
+for (int i = 0; i < petTypes.length; i++) {
+	if (petTypes[i].isInstance(o)) {
+		String key = petTypes[i].toString();
+		((Counter) h.get(key)).i++;
+	}
+}
+\end{lstlisting}
 \end{document}
