@@ -5104,6 +5104,127 @@ La 1. e 2. in forma compatta si scriveranno:
 S+S \subset S, \quad \mathbbm{R} \cdot S \subset S
 \]
 \end{note}
+Analizziamo alcuni esempi di sottospazi.
+\begin{itemize}
+	\item \textit{Sottospazio nullo}.
+
+	$S = \{0\}$, ovvero il sottoinsieme ridotto al solo elemento nullo, è un sottospazio vettoriale. In effetti: $0 + 0 = 0 \in S$ e $\lambda \cdot 0 = 0 \in S$.
+	\item \textit{Sottospazio generato da un insieme di elementi di V}.
+
+	Siano $v_1, v_2, \dots, v_k$, $k$ elementi di $V$ e consideriamo l'insieme $S$ formato dalle combinazioni lineari di questi elementi:
+	\[
+	S = \left\{\displaystyle\sum_{i=1}^{k}\alpha_i v_i \text{ al variare di }\alpha_i \in \mathbbm{R}\right\}
+	\]
+	$S$ è un sottoinsime di $V$ che risulta stabile rispetto a $+$ e $\cdot$. $S$ prende il nome di \textit{sottospazio generato} dai vettori $v_i, i = 1, \dots, k$ e si denota con $\text{span}\{v_1, v_2, \dots, v_k\}$.
+
+	Tali vettori quindi rappresentano un sistema di generatori per $S$: ulteriormente se essi risultano linearmente indipendenti, allora rappresenteranno una base per $S$ e quindi $\text{dim}(S) = k$.
+\end{itemize}
+\subsection{Nucleo di un'applicazione lineare}
+Una matrice $A \in \mathbbm{R}^{m\times n}$ può essere riguardata come un'applicazione da $\mathbbm{R}^n$ in $\mathbbm{R}^m$:
+\[
+A := \mathbf{x} \in \mathbbm{R}^n \mapsto \mathbf{y} = A\mathbf{x} \in \mathbbm{R}^m
+\]
+Tale applicazione risulta lineare: $A(\alpha\mathbf{x} + \beta\mathbf{y}) = \alpha A\mathbf{x} + \beta A\mathbf{y}$.
+
+Il sottoinsieme di $\mathbbm{R}^n$:
+\[
+\text{ker}(A) = \{\mathbf{x} \in \mathbbm{R}^n \mid A\mathbf{x} = 0\}
+\]
+risulta stabile rispetto a $+$ e $\cdot$ e pertanto è un sottospazio di $\mathbbm{R}^n$. $\text{ker}(A)$ prende il nome di \textit{nucleo} di $A$.
+\subsection{Immagine o range di una matrice}
+Il sottoinsieme di $\mathbbm{R}^m$:
+\[
+Im(A) = \{\mathbf{y} \in \mathbbm{R}^m \mid \exists \mathbf{x} \in \mathbbm{R}^n \text{ t.c } \mathbf{y} = A\mathbf{x}\}
+\]
+risulta stabile rispetto a $+$ e $\cdot$ e pertanto è un sottospazio di $\mathbbm{R}^m$. $Im(A)$ prende il nome di \textit{immagine} di $A$.
+\begin{note}{}{}
+$Im(A)$ risulta il sottospazio generato dalle colonne di $A$, cioè, partizionando $A$ per colonne: $A = [\mathbf{a}_1, \mathbf{a}_2, \dots, \mathbf{a}_n]$, risulta:
+\[
+Im(A) = span\{\mathbf{a}_1, \mathbf{a}_2, \dots, \mathbf{a}_n\}
+\]
+Per rendersene conto, basta osservare che il prodotto $A\mathbf{x}$, con $\mathbf{x}$ generico, rappresenta una generica combinazione lineare delle colonne di $A$.
+\end{note}
+
+Con la definizione di immagine di una matrice, possiamo dare una definizione alternativa di rango:
+\[
+\text{rank}(A) = \text{dim}(\text{Im}(A)) \equiv \text{ num di colonne linearmente indipendenti di $A$}
+\]
+\subsection{Sottospazio ortogonale}
+Due vettori, $\mathbf{x}, \mathbf{y} \in \mathbbm{R}^n$ si dicono ortogonali se il loro prodotto scalare è nullo $\mathbf{x}^T\mathbf{y} = 0$.
+\begin{definition}{\nmu Sottospazio ortogonale}{sott_ortogonale}
+	Siano $V$ sottospazio di $\mathbbm{R}^n$ e $\{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k\}$ una sua base. Il sottoinsieme di $\mathbbm{R}^n$
+	\[
+	V^\perp = \left\{\mathbf{x} \in \mathbbm{R}^n \mid \mathbf{x}^T\mathbf{v} = 0, \forall \mathbf{v} \in V\right\} \subset \mathbbm{R}^n
+	\]
+	risulta essere un sottospazio di $\mathbbm{R}^n$. $V^\perp$ è detto \textit{sottospazio ortogonale} di $V$.
+\end{definition}
+Per stabilire se $\mathbf{x} \in V^\perp$ è sufficiente fare il test di ortogonalità solo sugli elementi della base di $V$; infatti:
+\[
+\mathbf{x} \in V^\perp \iff \mathbf{x}^T\left(\displaystyle\sum_{i=1}^{k}\alpha_i\mathbf{v}_i\right) = 0 \iff \displaystyle\sum_{i=1}^{k}\alpha_i\mathbf{x}^T\mathbf{v}_i =0 \iff \begin{cases}
+	\mathbf{x}^T\mathbf{v}_i = 0 \\
+	\forall i = 1, \dots, k
+\end{cases}
+\]
+In forma compatta possiamo scrivere:
+\[
+\mathbf{x} \in V^\perp \iff A^T\mathbf{x} = 0
+\]
+infatti:
+\[
+A^T = \begin{pmatrix}
+	\mathbf{v}_1^T \\
+	\mathbf{v}_2^T \\
+	\vdots \\
+	\mathbf{v}_k^T
+\end{pmatrix}
+\]
+Dunque:
+\[
+V^\perp = ker\left(A^T\right)
+\]
+Calcoliamo la dimensione di $V^\perp$.
+
+Sappiamo che $V$ ha dimensione $k$, dato che $\mathbf{v}_1, \dots, \mathbf{v}_k$ sono linearmente indipendenti. Dunque risulta:
+\[
+rank(A) = rank\left(A^T\right) = k
+\]
+Come abbiamo visto, dire che $\mathbf{x} \in V^\perp$ significa:
+\[
+A^T\mathbf{x} = 0
+\]
+Per il teorema di \namerefl{th:rouche_capelli}, tale sistema ammetterà infinito  alla num. di incognite meno $rank\left(A^T\right)$ soluzioni, e quindi possiamo concludere:
+\[
+dim\left(V^\perp\right) = n - k = n - dim(V)
+\]
+Vediamo alcune proprietà di $V^\perp$.
+
+Sia $V$ sottospazio vettoriale di  $\mathbbm{R}^n$ e $\{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k\}$ una sua base. Si provi che:
+\begin{enumerate}
+	\item $V \cap V^\perp = \{0\}$
+	\item $V + V^\perp = \mathbbm{R}^n$
+\end{enumerate}
+\subsection{Somma diretta}
+\begin{definition}{\nmu Somma diretta}{somma_diretta}
+	Siano $V$ e $W$ sottospazi vettoriali di $\mathbbm{R}^n$. Si dice che $\mathbbm{R}^n$ è \textit{somma diretta} di $V$ e $W$ e si scrive:
+	\[
+	\mathbbm{R}^n = V \oplus W
+	\]
+	se
+	\begin{enumerate}
+		\item $V \cap W = \{0\}$
+		\item $V + W = \mathbbm{R}^n$
+	\end{enumerate}
+\end{definition}
+\begin{proposition}{}{}
+Se $\mathbbm{R}^n = V \oplus W$, ogni $\mathbf{x} \in \mathbbm{R}^n$ può essere rappresentato in maniera univoca come somma di un elemento di $V$ ed un elemento di $W$, cioè:
+\[
+\forall \mathbf{x} \in \mathbbm{R}^n\ \exists!\ \mathbf{v} \in V,\ \exists!\ \mathbf{w} \in W \text{ tali che } \mathbf{x} = \mathbf{v} + \mathbf{w}.
+\]
+\end{proposition}
+Ne segue quindi che:
+\[
+\mathbbm{R}^n = V \oplus V^\perp
+\]
 \chapter{Interpolazione polinomiale}
 Definiamo il problema.
 
@@ -5375,4 +5496,273 @@ da cui:
 f(x) - p_n(x) = \omega_n(x) \cdot \frac{f^{(n+1)}(\eta_x)}{(n+1)!}
 \]
 \end{proof}
+\chapter{Problema lineare dei minimi quadrati}
+Sia $V$ sottospazio vettoriale di $\mathbbm{R}^m$ e $\{v_1, v_2, \dots, v_n\}$ una sua base.
+
+Abbiamo visto che:
+\begin{align*}
+\mathbbm{R}^m &= V \oplus V^\perp \\
+\text{dim}(V) + \text{dim}(V^\perp) &= m
+\end{align*}
+Inoltre, detta $A$ la matrice le cui colonne sono i vettori $v_i$, cioè $A = [v_1, v_2, \dots, v_n]$, sappiamo che:
+\begin{align*}
+	V &= \text{Im}(A) \\
+	V^\perp &= \text{ker}\left(A^T\right)
+\end{align*}
+Possiamo allora concludere con la seguente fondamentale proprietà dell'algebra delle matrici:
+\begin{align*}
+	\mathbbm{R}^m = \text{Im}(A) \oplus \text{ker}\left(A^T\right) \\
+	\text{dim(Im($A$)) + dim(ker$\left(A^T\right)$)} &= m \quad \text{num di righe di $A$}
+\end{align*}
+Consideriamo il sistema lineare di $m$ equazioni in $n$ incognite:
+\[
+Ax = b
+\]
+Considerato per ogni $x\in\mathbbm{R}^n$ il vettore residuo:
+\[
+r(x) = b - Ax
+\]
+osserviamo che
+\[
+x \text{ è soluzione del sistema} \iff r(x) = 0 \iff \left\| r(x) \right\| = 0
+\]
+dove $\left\|\cdot\right\|$ è una qualsiasi norma vettoriale.
+
+Se $m > n$ il sistema si dice \textit{sovradimensionato} poichè contiene più equazioni che incognite (nelle applicazioni è spesso $m \gg n$).
+
+In tal caso, in generale, il sistema non sarà compatibile poichè, salvo casi eccezionali, risulterà $\text{rank($A$)} \neq \text{rank}\left([A, b]\right)$
+
+Non potendo allora essere $r(x) = 0$, ci si chiede allora se esiste un vettore $x^*$ che minimizza la norma del vettore residuo.
+
+Se come norma scegliamo la norma 2, il problema prima esposto prende il nome di \textit{problema lineare dei minimi quadrati}.
+\begin{assignment}{\nmu Problema lineare dei minimi quadrati}{min_quadrati}
+Siano dati: $A \in \mathbbm{R}^{m\times n}$ e $b \in \mathbbm{R}^m$, con $m \geq n$. Determinare $x^*$ tale che:
+\[
+\left\|b - Ax^*\right\|_2 = \min_{x \in \mathbbm{R}^n}\left\|b-Ax\right\|_2
+\]
+\end{assignment}
+\begin{theorem}{}{}
+	Se il rango di $A$ è massimo, cioè $\text{rank}(A) = n$, il problema dei minimi quadrati ammette un'unica soluzione $x^*$, che può essere ottenuta come soluzione del seguente sistema di  $n$ equazioni in $n$ incognite:
+	\[
+	A^TAx = A^Tb
+	\]
+	Tale sistema prende il nome di \textit{sistema normale}.
+\end{theorem}
+\begin{note}{}{}
+La matrice dei coefficienti del sistema normale $A^TA$ è simmetrica e definita positiva. Infatti:
+\[
+(A^TA)^T = A^TA
+\]
+occorre provare che:
+\[
+\forall x \neq 0:\ x^TA^TAx > 0
+\]
+Sia $x \neq 0$, allora: $x^TA^TAx = \left\|Ax\right\|_2^2 \geq 0$. Basta allora far vedere che $\left\|Ax\right\|_2 \neq 0$ cioè $Ax \neq 0$, cioè $x \notin \text{ker}(A)$.
+
+Infatti, risulta: $\text{ker}(A) = \{0\}$ essendo il rango di $A$ pari ad $n$.
+
+Da questo deriva che, $\text{det}\left(A^TA\right) \neq 0$ quindi il sistema normale ammette soluzione unica e $A^TA$ ammette fattorizzazione di Cholesky.
+\end{note}
+\begin{proof} Poichè $\mathbbm{R}^m = \text{Im}(A) \oplus \text{ker}\left(A^T\right)$ possiamo effettuare la seguente decomposizione del vettore $b$:
+\[
+b = b_1 + b_2 \quad \text{con } b_1 \in \text{Im}(A) \text{ e } b_2 \in \text{ker}\left(A^T\right)
+\]
+ove:
+\begin{align*}
+	b_1 \in \text{Im}(A) &\Rightarrow \exists x^* \in \mathbbm{R}^n \mid b_1 = Ax^* \text{ cioè } b_1 - Ax^* = 0 \\
+	b_2 \in \text{ker}\left(A^T\right) &\Rightarrow A^Tb_2 = 0
+\end{align*}
+Consideriamo il vettore residuo: $r(x) = b - Ax = b_1 - Ax + b_2 = y + b_2$, dove abbiamo posto $y = b_1 - Ax$. Osserviamo che il vettore $y \in \text{Im}(A)$.
+
+Calcoliamo la norma 2 di $r(x)$:
+\begin{align*}
+	\left\|r(x)\right\|_2^2 &= r^T \cdot r = (y + b2)^T(y+b_2) = (y^T + b_2^T) \cdot (y + b_2) \\
+	&= y^Ty + y^Tb_2 + b_2^Ty + b_2^Tb_2 = \left\|y\right\|_2^2 + \left\|b_2\right\|_2^2
+\end{align*}
+Il minimo valore di $\left\|r(x)\right\|_2$ lo si ottiene in corrispondenza della scelta $x = x^*$; infatti si ha:$y = b_1 - Ax^* \Rightarrow \left\|y\right\|_2 = 0$. Infine:
+\begin{align*}
+Ax^* = b_1 &\Rightarrow A^TAx^* = A^Tb_1 \\
+&\Rightarrow A^TAx^* = A^Tb_1 + A^Tb_2 \\
+&\Rightarrow A^TAx^* = A^T(b_1 + b_2) \\
+&\Rightarrow A^TAx^* = A^T b
+\end{align*}
+\end{proof}
+\section{Limite dell'interpolazione polinomiale}
+La matrice dei coefficienti $(m + 1) \times (n + 1)$:
+\[
+A = \begin{pmatrix}
+	x_0^n & x_0^{n-1} & \cdots & x_0 & 1 \\
+	x_1^n & x_1^{n-1} & \cdots & x_1 & 1 \\
+	\vdots \\
+	x_m^n & x_m^{n-1} & \cdots & x_m & 1
+\end{pmatrix}
+\]
+è detta matrice di Vandermonde. Si può dimostrare che se i nodi $x_i$ sono distinti, il suo rango è massimo, ovvero $\text{rank}(A) = n + 1$.
+
+Ha senso allora risolvere il sistema rettangolare nel senso dei minimi quadrati, cioè ricavare la soluzione che minimizza la norma 2 del residuo $\left\|b-Ax\right\|_2$.
+
+Il polinomio $p^*_n(x)$ che corrisponde a tale soluzione prende il nome di \textit{polinomio di migliore approssimazione nel senso dei minimi quadrati}.
+
+Si verifica facilmente che, in questo caso, la norma 2 del vettore residuo è:
+\[
+\left\|b-Ax\right\|_2 = \sqrt{\displaystyle\sum_{i=0}^{m}(p_n(x_i) - y_i)^2}
+\]
+La quantità:
+\[
+\sqrt{\frac{1}{m-n}\displaystyle\sum_{i=0}^{m}(p_n(x_i) - y_i)^2}
+\]
+prende il nome di \textit{scarto quadratico o medio} o \textit{deviazione standard}. $m-n$ è la differenza tra il numero di dati, dette misure, e il numero di coefficienti nel modello, detti gradi di libertà.
+\section{La retta di regressione lineare}
+Supponiamo che i dati da approssimare evidenzino una dipendenza lineare tra i valori della grandezza $y$ rispetto alla variabile $x$, come nel seguente esempio.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/regressione_lineare.png}
+	\end{center}
+\end{figure}
+Avrà senso allora approssimare i dati mediante un polinomio lineare.
+\begin{definition}{\nmu Retta di regressione lineare}{reg_lineare_retta}
+	La retta che approssima i dait $(x_i, y_i), i = 0, \dots, m$ nel senso dei minimi quadrati, prende il nome di \textit{retta di regressione lineare}.
+\end{definition}
+Deriviamo l'equazione della retta di regressione linare. Dovremo imporre le condizioni di interpolazione
+\[
+p_1(x_i) = y_i \quad i = 0, \dots, m
+\]
+essendo
+\[
+p_1(x) = a_0x + a_1
+\]
+Otteniamo un sistema di $m + 1$ equazioni nelle 2 incognite $a_0$ ed $a_1$.
+
+La matrice dei coefficienti $(m + 1) \times 2$ del sistema è:
+\[
+A = \begin{pmatrix}
+	x_0 & 1 \\
+	x_1 & 1 \\
+	\vdots \\
+	x_m & 1
+\end{pmatrix}
+\]
+che, come già osservato, avrà rango 2.
+
+Il sistema normale $A^TAx = A^Tb$ di 2 equazioni e 2 incognite sarà:
+\[
+\begin{cases}
+	\left(\displaystyle\sum_{i=0}^{m}x_i^2\right)a_0 + \left(\displaystyle\sum_{i=0}^{m}x_i\right)a_1 = \displaystyle\sum_{i=0}^{m}x_iy_i \\
+	\left(\displaystyle\sum_{i=0}^{m}x_i\right)a_0 + (m+1)a_1 = \displaystyle\sum_{i=0}^{m}y_i
+\end{cases}
+\]
+Introducento le quantità:
+\begin{itemize}
+	\item $\overline{x} = \frac{1}{m+1}\sum_{i=0}^{m}x_i$ detto valor medio delle ascisse $x_i$
+	\item $\overline{y} = \frac{1}{m+1}\sum_{i=0}^{m}y_i$ detto valor medio delle ordinate $y_i$
+	\item $\text{var}(x) = \frac{1}{m+1}\sum_{i=0}^{m}(x_i - \overline{x})^2$ detta varianza di $x$
+	\item $\text{cov}(x, y) = \frac{1}{m+1}\sum_{i=0}^{m}(x_i - \overline{x})(y_i - \overline{y})$ detta covarianza di $x$ e di $y$
+\end{itemize}
+La soluzione del sistema è:
+\[
+a_0 = \frac{\text{cov}(x,y)}{\text{var}(x)} \quad a_1 = \overline{y} - a_0\overline{x}
+\]
+Per l'esempio precedente si ha:
+\[
+a_0 = -1.9712 \quad a_1 = 0.9623
+\]
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.95\textwidth]{images/retta_regressione_lineare}
+	\end{center}
+\end{figure}
+La norma 2 del vettore residuo è: $\left\|r(x)\right\|_2 = 0.2918$
+\section{L'indice di determinazione}
+La norma 2 del vettore residuo misura la ``bontà di adattamento'' ai dati del polinomio di migliore approssimazione. Infatti, quanto più piccola è la norma del vettore residuo $r\left(x^*\right)$, tanto migliore risulterà l'adattamento del polinomio di migliore approssimazione $p^*_n(x)$ ai dati.
+
+Tuttavia, al fine di misurare la bontà di adattamento del polinomio $p_n^*(x)$ ai dati, in statistica, piuttosto che il vettore residuo, ha maggio rilevanza il cosidetto \textit{indice di determinazione} il quale ha il vantaggio di esprimere la misura dell'adattamento mediante un valore percentuale, essendo compreso tra 0 ed 1.
+
+Definiamo la devianza di $x$:
+\[
+\text{dev}(x) = \displaystyle\sum_{i=0}^{m}(x_i - \overline{x})^2 (=(m+1)\text{var}(x))
+\]
+Ricordiamo che il polinomio di migliore approssimazione nel senso dei minimi quadrati è:
+\[
+p_n^*(x) = a_0^*x^n + a_1^*x^{n-1} + \dots + a^*_{n-1}x + a_n^*
+\]
+i cui coefficienti $a_i^*, i = 0, \dots, n$ sono le soluzioni del sistema normale di $n+1$ equazioni in $n+1$ incognite $A^TAx = A^Tb$ dove:
+\[
+A = \begin{pmatrix}
+	x_0^n & x_0^{n-1} & \cdots & x_0 & 1 \\
+	x_1 ^n & x_1^{n-1} & \cdots & x_1 & 1 \\
+	\vdots \\
+	x_m^n & x_m^{n-1} & \cdots & x_m & 1
+\end{pmatrix}
+\]
+è la matrice di $V$ di rango $n+1$ e
+\[
+b = [y_0, y_1, \dots, y_m]^T
+\]
+è il vettore delle ordinate dei dati.
+
+Poniamo anche:
+\[
+b^* = Ax^* = [p_n^*(x_0), p_n^*(x_1), \dots, p^*_n(x_m)]^T
+\]
+è il vattore dei valori teorici, ovvero il vettore le cui componenti sono i valori che il polimomio $p_n^*$ assume nei nodi $x_i$.
+
+Poniamo $e = [1, 1, \dots, 1]^T$, detto vettore di componenti unitarie. Valgono le seguenti proprietà:
+\begin{enumerate}
+	\item $e^Tr\left(x^*\right) = 0$
+	\item $\overline{y} = \overline{y^*}$, dove:
+	\begin{itemize}
+		\item $\overline{y} = \frac{1}{m+1}\sum_{i=0}^{m}y_i$ è la media dei valori osservati;
+		\item $\overline{y^*} = \frac{1}{m+1}\sum_{i=0}^{m}b_i^* = \frac{1}{m+1}\sum_{i=0}^{m}p_n^*(x_i)$ è la media dei valori teorici.
+	\end{itemize}
+\end{enumerate}
+\begin{proof} Dimostriamo le precedenti due proprietà:
+\begin{enumerate}
+	\item Sappiamo che $A^Tr(x^*) = 0$. È quindi nullo il prodotto scalare tra l'ultima riga di $A^T$ ed il veottore $r\left(x^*\right)$: osservando che l'ultima colonna di $A$ coincide con $e$.
+	\item Osservato che $r\left(x^*\right) = b - Ax^* = b - b^*$ la 1) è equivalente a $\sum_{i=0}^{p}(y_i - p_n^*(x_i)) = 0$ da cui segue direttamente la 2).
+\end{enumerate}
+\end{proof}
+\begin{proposition}{}{}
+Vale che
+\[
+\text{dev}(b) = \text{dev}\left(b^*\right) + \text{dev}\left(r\left(x^*\right)\right)
+\]
+In parole, la deviazione del vettore delle ordinate dei dati può essere scomposta nella somma di due componenti indipendenti che riflettono rispettivamente la variabilità intrinseca al modello e quella residuale.
+\end{proposition}
+\begin{proof}
+	Ricordando che $\overline{y^*} = \overline{y}$ e che il valor medio di $r\left(x^*\right)$ è nullo, la tesi è equivalente a
+	\[
+	(b - \overline{y}e)^T(b-\overline{y}e) = (b^* - \overline{y}e)^T)(b^* - \overline{y}e) + r\left(x^*\right)^Tr\left(x^*\right)
+	\]
+	ovvero:
+\[
+\left\|b\right\|_2^2 - 2\overline{y}e^Tb + (m+1)\overline{y}^2 = \left\|b^*\right\|_2^2 - 2\overline{y}e^Tb^* + (m+1)\overline{y}^2 + \left\|r\left(x^*\right)\right\|_2^2
+\]
+cioè:
+\[
+\left\|b\right\|_2^2 = \left\|b^*\right\|_2^2 + \left\|r\left(x^*\right)\right\|_2^2
+\]
+essendo $e^Tb^* = e^Tb = (m+1)\overline{y}$.
+
+L'asserto segue osservando che, essendo $A^TAx^* = A^Tb$,
+\begin{align*}
+	\left\|r\left(x^*\right)\right\|_2^2 &= \left(b - Ax^*\right)^T\left(b-Ax^*\right) \\
+	&= \left\|b\right\|_2^2 + \left\|Ax^*\right\|_2^2 - 2b^TAx^* \\
+	&= \left\|b\right\|_2^2 + \left\|Ax^*\right\|_2^2 - 2\left(x^*\right)^TA^TAx^* \\
+	&= \left\|b\right\|_2^2 - \left\|Ax^*\right\|_2^2
+\end{align*}
+\end{proof}
+\begin{definition}{\nmu Indice di determinazione}{indice_determinazione}
+	Il rapport tra la devianza spiegata dal polinomio di migliore approssimazione $p\left(x^*\right)$ e quella totale viene detto \textit{indice di determinazione}, è denotato con $R^2$ e costituisce una misura dell'adattamento del modello ai dati osservati:
+	\[
+	R^2 = \frac{\text{dev}\left(b^*\right)}{\text{dev}\left(b\right)} = 1 - \frac{\text{dev}\left(r\left(x^*\right)\right)}{\text{dev}(b)}
+	\]
+\end{definition}
+Dalla proposizione precedente si deducono immediatamente le seguenti proprietà:
+\begin{enumerate}
+	\item $0 \leq R^2 \leq 1$
+	\item $R^2 = 1 - \frac{\left\|r\right\|_2^2}{\text{dev}(y)}$
+\end{enumerate}
+Dalla 1) segue che $R^2$ esprime, in valore percentuale, la ``bontà di adattamento'' del modello teorico ai dati sperimentali $(x_i, y_i)$
+
+La proprietà $2)$ mostra la relazione tra l'indice di determinazione e la norma 2 del vettore residuo; in particolare: $\left\|r\right\|_2 = 0 \iff R^2 = 1$
 \end{document}
