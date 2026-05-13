@@ -1903,6 +1903,108 @@ Nella sezione precedente abbiamo dimostrato che un linguaggio è non decidibile.
 $\overline{A_{TM}}$ non è Turing-riconoscibile.
 \end{corollary}
 \begin{proof} Sappiamo che $A_{TM}$ è Turing-riconoscibile. Se anche $\overline{A_{TM}}$ fosse Turing-riconoscibile, $A_{TM}$ sarebbe decidibile. Ma, precedentemente, abbiamo dimostrato che $A_{TM}$ non è decidibile, quindi $\overline{A_{TM}}$ non può essere Turing-riconoscibile.
+\end{proof}
+\chapter{Riducibilità}
+Nel capitolo precedente, abbiamo presentato esempi di problemi risolvibili tramite macchina di Turing e dato un esemio di problema, $A_{TM}$, che è computazionalmente irrisolvibile. In questo capitolo esaminiamo altri problemi irrisolvibili e per fare ciò introduciamo un metodo, detto \textit{riducibilità}, per dimostrare che alcuni problemi sono computazionalmente irrisolvibili.
 
+Una \textit{riduzione} è un modo di convertire un problema in un altro problema in modo tale che una soluzione al secondo problema può essere usata per risolvere il primo problema. In termini delal teoria della computabilità, se $A$ è riducibile a $B$ e $B$ è decidibile, allora anche $A$ è decidibile. Equivalentemente, se $A$ è indecidibile e riducibile a $B$, $B$ è indecidibile. Quest'ultima parte è la chiave per dimostrare che alcuni problemi sono indecidibili.
+\section{Problemi indecidibili dalla teoria dei linguaggi}
+Abbiamo già stabilito l'indecidibilità di $A_{TM}$, il problema di determinare se una macchina di Turing accetta un dato input. Consideriamo ora un problema affine, $HALT_{TM}$, il problema di determinare se una macchina di Turing si ferma (accettando o rifiutando) su un dato input. Questo problema è generalmente noto come il \textit{problema della fermata}. Usiamo l'indecidibilità di $A_{TM}$ per dimostrare l'indecidibilità del problema della fermata riducendo $A_{TM}$ a $HALT_{TM}$. Sia
+\[
+HALT_{TM} = \{\langle M, w \rangle \mid M \text{ è una TM e $M$ si ferma su input $w$}\}
+\]
+
+\begin{theorem}{}{}
+	$HALT_{TM}$ è indecidibile.
+\end{theorem}
+Questa dimostrazione è per assurdo. Assumiamo che $HALT_{TM}$ è decidibile ed utilizziamo questa assunzione per dimostrare che $A_{TM}$ è decidibile, contraddicendo il teorema. L'idea chiave è quella di mostrare che $A_{TM}$ è riducibile a $HALT_{TM}$.
+
+Supponiamo di avere una TM $R$ che decide $HALT_{TM}$. Usiamo quindi $R$ per costruire $S$, una TM che decide $A_{TM}$.
+\begin{proof}
+Assumiamo al fine di ottenere una contraddizione che la TM $R$ decide $HALT_{TM}$. Costruiamo la TM $S$ per decidere $A_{TM}$, che opera come segue.
+
+$S = ``$ Su input $\langle M, w \rangle$, una codifica di una TM $M$ ed una stringa $w$:
+\begin{itemize}
+	\item Esegue la TM $R$ su input $\langle M, w \rangle$.
+	\item Se $R$ rifiuta, \textit{rifiuta}.
+	\item Se $R$ accetta, simula $M$ su $w$ finché non si ferma.
+	\item Se $M$ ha accettato, \textit{accetta}; se $M$ ha rifiutato, \textit{rifiuta}''.
+\end{itemize}
+Chiaramente, se $R$ decide $HALT_{TM}$, allora $S$ decide $A_{TM}$. Poichè $A_{TM}$ è indecidibile, allora anche $HALT_{TM}$ deve essere indecidibile.
+\end{proof}
+
+Presentiamo altri teoremi e le loro dimostrazioni come ulteriori esempi dell'uso della riducibilità per dimostrare l'indecidibiilità. Sia
+\[
+E_{TM} = \{\langle M \rangle \mid M \text{ è una TM e }L(M) = \emptyset \}
+\]
+\begin{theorem}{}{}
+	$E_{TM}$ è indecidibile.
+\end{theorem}
+Seguiamo lo schema adottato nel teorema precedente. Assumiamo che $E_{TM}$ è decidibile e mostriamo che $A_{TM}$ è decidibile, una contraddizione. Sia $R$ una TM che decide $E_{TM}$. Utilizziamo $R$ per costruire la TM $S$ che decide $A_{TM}$
+\begin{proof}
+Descriviamo la macchina $M_1$.
+
+$M_1 = ``$ Su input $x$:
+\begin{enumerate}
+	\item Se $x \neq w$, \textit{rifiuta}
+	\item Se $x = w$, esegue $M$ su input $w$ e \textit{accetta} se $M$ accetta''.
+\end{enumerate}
+Questa macchina ha la stringa $w$ come parte della sua descrizione. Essa verifica se $x = w$ nel modo ovvio, attraverso la scansione dell'input e confrontandolo carattere per carattere con $w$ per determinare se coincidono. Mettendo insieme tutto questo, assumiamo che la TM $R$ decide $E_{TM}$ e costruiamo la TM $S$ che decide $A_{TM}$ come segue.
+
+$S = ``$ Su input $\langle M, w \rangle$, una codifica di una TM $M$ e una stringa $w$:
+\begin{enumerate}
+	\item Usa la descrizione di $M$ e $w$ per costruire la TM $M_1$ descritta sopra.
+	\item Esegue $R$ su input $\langle M_1 \rangle$
+	\item Se $R$ accetta, \textit{rifiuta}; se $R$ rifiuta, \textit{accetta}.''
+\end{enumerate}
+
+$S$ deve essere in grado di calcolare una descrizione di $M_1$ da una descrizione di $M$ e $w$. Può farlo, perchè ha bisogno solo di aggiungere ad $M$ alcuni stati in più che svolgono il test $x = w$. Se $R$ fosse un decisore per $E_{TM}$, $S$ sarebbe un decisore per $A_{TM}$. Un decisore per $A_{TM}$ non può esistere, quindi sappiamo che $E_{TM}$ deve essere indecidibile.
+\end{proof}
+
+Un altro problema interessante è quello di determinare se una macchina di Turing riconosce un linguaggio che pùo essere riconosciuto anche da un modello di calcolo più semplice. Ad esempio, sia $REGULAR_{TM}$ il problema di determinare se una data macchina di Turing ha un automa finito equivalente. Questo problema equivale a determinare se la macchina di Turing riconosce un linguaggio regolare. Sia
+\[
+REGULAR_{TM} = \{\langle M \rangle \mid M \text{ è una TM ed $L(M)$ è un linguaggio regolare.}\}
+\]
+\begin{theorem}{}{}
+	$REGULAR_{TM}$ è indecidibile.
+\end{theorem}
+Come sempre, assumiamo che $REGULAR_{TM}$ sia deciso da una TM $R$ e utilizziamo questa assunzione per costruire una TM $S$ che decide $A_{TM}$. L'idea è che $S$ prenda il suo input $\langle M, w \rangle$ e modifichi $M$ in modo che la risultante TM riconosca un linguaggio regolare se e solo se $M$ accetta $w$.
+
+Chiamiamo $M_2$ la macchina così modificata. Progettiamo $M_2$ in modo che riconosca un linguaggio non regolare $\{0^n1^n \mid n \geq 0\}$ se $M$ non accetta $w$, e riconosca il linguaggio regolare $\Sigma^*$ se $M$ accetta $w$. Dobbiamo specificare come $S$ può costruire una tale $M_2$ da $M$ a $w$. Qui, $M_2$ accetta automaticamente tutte le stringhe in $\{0^n1^n \mid n \geq 0\}$. Inoltre, se $M$ accetta $w$, $M_2$ accetta tutte le altre stringhe.
+
+Non costruiamo $M_2$ per essere eseguita su qualche input, ma la costruiamo con il solo scopo di dare in input la sua descrizione al decisore per $REGULAR_{TM}$ che abbiamo assunto esistere. Quando tale decisore dà la sua risposta, possiamo usarla per rispondere se $M$ accetta $w$ o meno. Quindi possiamo decidere $A_{TM}$, una contraddizione.
+\begin{proof}
+	Definiamo $R$ come una TM che decide $REGULAR_{TM}$ e costruiamo una TM $S$ che decide $A_{TM}$. Allora $S$ funziona come segue.
+
+	$S = ``$ Su input $\langle M, w \rangle$, dove una $M$ è una TM e $w$ una stringa:
+	\begin{enumerate}
+		\item Costruisce la seguente TM $M_2$.
+
+		$M_2 = ``$ Su input $x$:
+		\begin{enumerate}
+			\item Se $x$ ha la forma $0^n1^n$, \textit{accetta}.
+			\item Se $x$ non ha tale forma, esegue $M$ su input $w$ e \textit{accetta} se $M$ accetta $w$''.
+		\end{enumerate}
+		\item Esegue $R$ su input $\langle M_2 \rangle$
+		\item Se $R$ accetta, \textit{accetta}; se $R$ rifiuta, \textit{rifiuta}''.
+	\end{enumerate}
+\end{proof}
+Il seguente teorema mostra che verificare l'equivalenza di due macchine di Turing è un problema indecidibile. Sia
+\[
+EQ_{TM} = \{\langle M_1, M_2 \rangle \mid M_1 \text{ ed }M_2 \text{ sono TM ed } L(M_1) = L(M_2)\}
+\]
+\begin{theorem}{}{}
+	$EQ_{TM}$ è indecidibile.
+\end{theorem}
+Mostriamo che se $EQ_{TM}$ fosse decidibile allora anche $E_{TM}$ sarebbe decidibile eseguendo una riduzione da $E_{TM}$ a $EQ_{TM}$. L'idea è semplice. $E_{TM}$ è il problema di determinare se il linguaggio di una TM è vuoto. $EQ_{TM}$ è il problema di determinare se i linguaggi delle due TM sono uguali. Se uno di questi linguaggi è $\emptyset$, dobbiamo determinare se il linguaggio dell'altra macchina è vuoto, cioè il problema $E_{TM}$.
+\begin{proof}
+	Consideriamo una TM $R$ che decide $EQ_{TM}$ e costruiamo la TM $S$ che decide $E_{TM}$ come segue.
+
+	$S = ``$Su input $\langle M \rangle$, dove $M$ è una TM:
+	\begin{enumerate}
+		\item Esegue $R$ su input $\langle M, M_1 \rangle $, dove $M_1$ è una TM che rifiuta ogni input.
+		\item Se $R$ accetta, \textit{accetta}; se $R$ rifiuta, \textit{rifiuta}''.
+	\end{enumerate}
+	Se $R$ decide $EQ_{TM}$, $S$ decide $E_{TM}$. Ma sappiamo che $E_{TM}$ e indecidibile, quindi anche $EQ_{TM}$ deve essere indecidibile.
 \end{proof}
 \end{document}
