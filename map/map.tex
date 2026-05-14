@@ -5049,4 +5049,84 @@ public class LostInformation {
 Nell'esempio precedente, è usato il metodo di istanza \textit{Class.getTypeParameters()} che, secondo i javadoc, ``returns an array of TypeVariable objects that represent the type variables declared by the type specification...''
 
 Tuttavia, tale metodo non restituisce i tipi, ma i nomi dei parametri.
+\section{Serializzazione}
+Al termine dell'esecuzione di un programma, i dati utilizzati vengono distrutti. Per poterli preservare fra due esecuzioni consecutive è possibile ricorrere all'uso dell'I/O su file.
+
+Nel caso di semplici strutture o di valori di un tipo primitivo, questo approccio è facilmente implementabile. I problemi si presentano quando si desidera memorizzare strutture complesse: in questo caso occorrerebbe memorizzare tutte le parti di un oggetto separatamente, secondo una ben precisa rappresentazione, per poi ricostruire l'informazione dell'oggetto all'occorrenza.
+
+La \textit{persistenza} di un oggetto indicala capacità di un oggetto di poter ``vivere'' separatamente dal programma che lo ha generato. Java contiene un meccanismo per creare oggetti persistenti, detto \textit{serializzazione degli oggetti}: un oggetto viene serializzato trasformandolo in una sequenza di byte che lo rappresentano. In seguito questa rappresentazione può essere usata per ricostruire l'oggetto originale. Una volta serializzato, l'oggetto può essere memorizzato in un file o inviato a un altro computer perchè lo utilizzi.
+
+In Java la serializzazione viene realizzata tramite
+\begin{itemize}
+	\item un'interfaccia e
+	\item due classi.
+\end{itemize}
+Ogni oggetti che si vuole serializzare deve implementare l'interfaccia \textit{Serializable}, la quale non contiene metodi e serve soltanto al compilatore per comprendere che un oggetto di quella determinata classe può essere serializzato.
+
+Per serializzare un oggetto si invoca poi il metodo \textit{writeObject} della classe \textit{ObjectOutputStream}; per deserialzzarlo si usa il metodo \textit{readObject} della classe \textit{ObjectInputStream}.
+
+\textit{ObjectInputStream} e \textit{ObjectOutputStream} sono stream di manipolazione e devono essere utilizzati congiuntamente a un \textit{OutputStream} e un \textit{InputStream}. Quindi gli stream di dati effettivamente usati dall'oggetto serializzato possono rappresentare file, comunicazioni su rete, stringhe, ecc.
+\begin{lstlisting}[style=javastyle]
+FileOutputStream outFile = new FileOutputStream("info.dat");
+ObjectOutputStream outStream = new ObjectOutputStream(outFile);
+outStream.writeObject(myCar);
+\end{lstlisting}
+dove \textit{myCar} è un oggetto della classe \textit{Car} definita dal programmatore e che implementa l'interfaccia \textit{Serializable}.
+
+Per poter leggere l'oggetto serializzato e ricaricarlo in memoria centrale si procederà come segue:
+\begin{lstlisting}[style=javastyle]
+FileInputStream inFile = new FileInputStream("info.dat");
+ObjectInputStream inStream = new ObjectInputStream(inFile);
+Car myCar = (Car) inStream.readObject();
+\end{lstlisting}
+La serializzazione di un oggetto si occupa di serializzare tutti gli eventuali riferimento ad esso collegati. Dunque, se la classe \textit{Car} contenesse dei riferimenti a oggetti di classe \textit{Engine}, questa verrebbe serializzata automaticamente e diverrebbe parte della serializzazione di \textit{Car}. La classe \textit{Engine} dovrà, pertanto, implementare anch'essa l'interfaccia \textit{Serializable}.
+
+\begin{note}{}{}
+Gli attributi di classe, cioè definiti come \textit{static} \textbf{non} vengono serializzati. Per poterli salvare occorre provvedere in modo personalizzato.
+\end{note}
+\begin{lstlisting}[style=javastyle]
+class Nave implements Serializable {
+	private static int nroNavi = 1;
+	private int nroNave;
+	private String nomeNave;
+
+	Nave(String nomeNave) {
+		nroNave = nroNavi++;
+		this.nomeNave = nomeNave;
+	}
+
+	public String toString() {
+		return nomeNave + ":" + nroNave;
+	}
+
+	public void salva() throws FileNotFoundException, IOException {
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("info.dat"));
+
+		out.writeObject(this);
+		out.writeObject(nroNavi);
+		out.close();
+	}
+
+	public static Nave carica() throws FileNotFoundException, IOException {
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream("info.dat"));
+		Nave n = (Nave)in.readObject();
+		Nave.nroNavi = (Integer)in.readObject();
+		in.close();
+		return n;
+	}
+}
+\end{lstlisting}
+Molte classi della libreria standard Java implementano l'interfaccia \textit{Serializable} in modo da essere serializzate quando necessario. Esempi di tali classi sono: \textit{String, HashMap, ...}
+
+Ovviamente, nel caso di \textit{HashMap} anche gli oggetti memorizzati nella struttura dati devono implementare l'interfaccia \textit{Serializable}.
+\subsection{Il modificatore \textit{transient}}
+A volte, quando si serializza un oggetto, si può desiderare di escludere delle informazioni, ad esempio, una password.
+
+Questo accade quando le informazioni vengono trasmesse via rete. Il pericolo è che, pur dichirandola con visibilità privata, la password possa essere letta e usata da soggetti non autorizzati quando serializzata. Un'altra ragione potrebbe essere quella di voler escludere l'informazione della serializzazione semplicemente perchè tale informazione può essere semplicemente riprodotta quando l'oggetto viene deserializzato. In questo modo lo stream di byte che contiene l'oggetto serializzato non ha informazioni inutili che ne aumenterebbero la dimensione.
+
+Per modificare la dichiarazione di una variabile può essere usata la parola chiave \texttt{transient}: questa indica al compilatore di non rappresentarla come parte dello stream di byte della versione serializzata dell'oggetto. Ad esempio, si supponga che un oggetto contenga la seguente dichiarazione:
+\[
+\texttt{private transient String password}
+\]
+Questa variabile, quando l'oggetto che la contiene viene serializzato, non viene inclusa nella rappresentazione.
 \end{document}
