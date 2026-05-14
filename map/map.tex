@@ -5129,4 +5129,43 @@ Per modificare la dichiarazione di una variabile può essere usata la parola chi
 \texttt{private transient String password}
 \]
 Questa variabile, quando l'oggetto che la contiene viene serializzato, non viene inclusa nella rappresentazione.
+\section{Java Database Connectivity}
+Uno dei motivi di successo di Java è dovuto alla possibilità di sviluppare applicazioni client/server indipendenti dalla piattaforma. L'indipendenza dalla piattaforma deve essere garantita anche per applicazioni che lavorano su basi di dati. Per questo è noto lo standard \textit{Java Database Connectivity (JDBC)}. Uno dei problemi principali con le basi di dati è la non compatibilità dei linguaggi, infatti pur basandosi sull'SQL, ogni DBMS aggiunge o modifica qualcosa allo standard.
+
+JDBC è progettato per essere platform-indipendent. Per permettere ciò JDBC fornisce un \textit{driver manager} che gestisce dinamicamente tutti gli oggetti dirver di cui hanno bisogno le interrogazioni a database.
+
+Pertanto, se si hanno tre diversi DBMS allora necessiteranno tre diversi tipi di oggetti driver. Gli oggetti driver si registrano presso il driver manager al momento del caricamento, che può essere forzato con il metodo \textit{Class.forName()}. Come tutte le API Java anche JDBC è stato progettatato in modo da semplificare tutte le normali operazioni di interfacciamento con un database: connessione, creazione di tabelle, interrogazione e visualizzazione dei risultati.
+\subsection{Connessione ad un database}
+Per aprire un database si deve creare un ``database URL'' che specifica:
+\begin{itemize}
+	\item che si sta usando JDBC attraverso la stringa \textit{jdbc};
+	\item il \textit{sottoprotocollo} ovvero il nome del driver o il nome di meccanismo di connettività al database;
+	\item \textit{l'identificatore del database}. Questo varia a seconda del database usato, ma generalmente fornisce un nome logico che viene associato, dal software di amministrazione del database, ad una cartella fisica dove sono localizzate le tabelle. In genere, è necessario registrare l'identificatore del database e tale processo varia con il tipo di piattaforma.
+\end{itemize}
+Queste informazioni sono combinate in un'unica stringa chiamata \textit{database URL}.
+
+La connessione ad un DB prevede i seguenti passi:
+\begin{enumerate}
+	\item \textbf{Trovare il driver JDBC}
+
+	L'istruzione \texttt{Class.forName(``...'');} permette di caricare i driver per il database a cui si vuole accedere. Per verificare che il caricamento del driver sta funzionando correttamente è opportuno inserire il codice in un blocco \textit{try-catch}.
+
+	\textbf{Questo passo non è più obbligatorio dalla versione 6 in poi del driver jdbc per mysql}
+	\item \textbf{Configurazione della connessione al database}.
+
+	Quando ci si deve connetere ad un database è necessario invocare il metodo statico \texttt{DriverManager.getConnection()} passando come parametri la URL del database, lo \textit{username} e la \textit{password} per accedervi.
+
+	Sarà restituito un oggetto della classe \textit{Connection} che verrà poi usato per formulare query e/o manipolare la base di dati.
+
+	\item \textbf{Generare la query SQL}.
+
+	Stabilita la connessione con l'istruzione \textit{DriverMangaer.getConnection()}, è possibile usare l'oggetto \textit{Connection} per creare un oggetto \textit{Statement} attraverso il metodo \textit{createStatement()} che permetterà di operare sul database.
+
+	A questo punto si invoca il metodo \textit{executeUpdate} o il metodo \textit{executeQuery} per eseguire l'istruzione SQL.
+
+	Nel caso di \textit{executeQuery}, verrà restituito un oggetto \textit{ResultSet} che è un iteratore. Infatti attraverso il metodo \textit{next()} è possible scorrere l'insieme dei record restituiti dalla query.
+\end{enumerate}
+\begin{example}{\nmu Connessione a un DB con Java}{conn_db}
+\lstinputlisting[style=javastyle]{DBAccess.txt}
+\end{example}
 \end{document}
