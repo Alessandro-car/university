@@ -5765,4 +5765,329 @@ Dalla proposizione precedente si deducono immediatamente le seguenti proprietà:
 Dalla 1) segue che $R^2$ esprime, in valore percentuale, la ``bontà di adattamento'' del modello teorico ai dati sperimentali $(x_i, y_i)$
 
 La proprietà $2)$ mostra la relazione tra l'indice di determinazione e la norma 2 del vettore residuo; in particolare: $\left\|r\right\|_2 = 0 \iff R^2 = 1$
+\chapter{Autovalori e autovettori}
+\begin{definition}{\nmu Autovalore e autovettore}{autovalore_autovettore}
+Sia $A$ una matrice quadrata di dimensione $n$. Uno scalare $\lambda \in \mathbbm{C}$ si dice autovalore di $A$ se
+\[
+\exists \underline{x} \neq 0 \text{ t.c } A\underline{x} = \lambda\underline{x}
+\]
+Il vettore \underline{x} (reale o complesso) è detto \textit{autovettore} associato all'autovalore $\lambda$.
+\end{definition}
+\section{Significato geometrico} Gli autovettori definiscono particolari direzioni dello spazio vettoriale $\mathbbm{C}^n$ che risultano invarianti rispetto all'azione della matrice $A$. In effetti, lavorando in norma 2:
+\[
+\left\|A\underline{x}\right\|_2 = \left\|\lambda\underline{x}\right\|_2 = \left| \lambda \right| \cdot \left\|\underline{x}\right\|_2
+\]
+$A\underline{x}$ è quindi un vettore che condivide con $\underline{x}$ la medesima direzione e la sua grandezza è scalata di un fattore $\left|\lambda\right|$.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/autovettore.png}
+	\end{center}
+\end{figure}
+Per determinare gli autovalori e autovettori di una matrice, occorre risolvere il sistema lineare
+\begin{align}
+A\underline{x} = \lambda\underline{x}
+\end{align}
+dipendente dal parametro $\lambda$ imponendo che ammetta soluzioni non nulle.
+
+Osserviamo che la (8.1) è equivalente a:
+\begin{align}
+	(A - \lambda I)\underline{x} = 0
+\end{align}
+Per il teorema di \namerefl{th:rouche_capelli}, affinchè la (8.2) abbia soluzioni non nulle, occorre imporre:
+\begin{align}
+	\text{det}(A -\lambda I) = 0
+\end{align}
+La (8.3) è detta equazione caratteristica.
+
+Poniamo
+\[
+p(\lambda) = \text{det}(A - \lambda I)
+\]
+e osserviamo che $p(x)$ è un polinomio di grado $n$ in $\lambda$.
+Infatti:
+\[
+p(\lambda) = \begin{bmatrix}
+	a_{11} - \lambda & a_{12} & \cdots & a_{1n} \\
+	a_{21} & a_{22} - \lambda & \cdots & a_{2n} \\
+	\vdots \\
+	a_{n1} & a_{n2} & \cdots & a_{nn} - \lambda
+\end{bmatrix}
+\]
+Applicando la regola di Laplace è possibile provare che:
+\[
+p(\lambda) = (-\lambda)^n + c_1(=\lambda)^{n-1} + \dots + c_n
+\]
+dove il coefficiente $c_i$ è la somma degli $\binom{n}{i}$ minori principali di $A$ di ordine $i$ $\left(\text{quindi } c_n = \text{det}(A) \text{ e } c_1 = \displaystyle\sum_{i=1}^{n}a_{ii} - \text{traccia di }A\right)$.
+
+Dal teorema fondamentale dell'algebra $p(\lambda)$ ammette $n$ radici (non necessariamente distinte) che rappresenteranno gli autovalori di $A$:
+\[
+\lambda_1, \lambda_2, \dots, \lambda_n
+\]
+Dopodichè è possibile calcolare gli autovettori risolvendo i sistemi lineari:
+\[
+(A - \lambda_i I)\underline{x} = 0, \quad i = 1, \dots, n
+\]
+
+\begin{example}{}{}
+Determinare gli autovalori di
+\[
+A = \begin{bmatrix}
+	1 & -1 \\
+	2 & 4
+\end{bmatrix}
+\]
+\[
+p(\lambda) = \text{det}\begin{pmatrix}
+	1-\lambda & -1 \\
+	2 & 4 - \lambda
+\end{pmatrix} = (\lambda - 2)(\lambda - 3)
+\]
+\[
+p(\lambda) = 0 \iff \begin{cases}
+	\lambda_1 = 2 \\
+	\lambda_2 = 3
+\end{cases}
+\]
+Calcoliamo l'autovettore $\underline{x}_1$ associato a $\lambda_1$:
+\[
+\begin{bmatrix}
+	1 - 2 & -1 \\
+	2 & 4 - 2
+\end{bmatrix}\begin{pmatrix}
+	x_1 \\
+	x_2
+\end{pmatrix} = \begin{pmatrix}
+	0 \\
+	0
+\end{pmatrix}
+\]
+L'insieme delle soluzioni è:
+\[
+\begin{bmatrix}
+	-1 \\
+	1
+\end{bmatrix}
+\]
+\begin{note}{}{}
+Dall'equazione (8.1) segue che un autovettore è definito univocamente a meno di uno scalare moltiplicativo. Infatti se $A\underline{x} = \lambda\underline{x}$ moltiplicando membro a membro per uno scalare $\alpha \neq 0$
+\[
+\alpha\left(A\underline{x}\right) = \alpha\left(\lambda\underline{x}\right) \iff A\left(\alpha\underline{x}\right) = \lambda\left(\alpha\underline{x}\right)
+\]
+\end{note}
+Nell'esempio precedente, possiamo scegliere
+\[
+\underline{x}_1 = \begin{bmatrix}
+	-1 \\
+	1
+\end{bmatrix}
+\]
+L'autovettore associato all'autovalore $\lambda_2 = 3$ lo si ottiene risolvendo il sistema omogeneo:
+\[
+\begin{bmatrix}
+	1-3 & 1 \\
+	2 & 4 - 3
+\end{bmatrix}\begin{pmatrix}
+	x_1 \\
+	x_2
+\end{pmatrix} = \begin{pmatrix}
+	0 \\
+	0
+\end{pmatrix}
+\]
+che ammette soluzioni della forma $h\begin{bmatrix}
+	-\frac{1}{2} \\
+	1
+\end{bmatrix}$
+
+Dunque possiamo, ad esempio, scegliere
+\[
+\underline{x}_2 = \begin{bmatrix}
+	-1 \\
+	2
+\end{bmatrix}
+\]
+ottenuto per $h=2$.
+\end{example}
+\begin{definition}{\nmu Autovalore dominante}{autovalore_dominante}
+Supponiamo di ordinare gli autovalori di $A$ come:
+\[
+\left|\lambda_1\right| \geq \left|\lambda_2\right| \geq \dots \geq \left|\lambda_n\right| \geq 0
+\]
+$\lambda_1$ è detto \textit{autovalore dominante} di $A$ se risulta:
+\[
+\left|\lambda_1\right| > \left|\lambda_i\right| \quad i=2,\dots, n
+\]
+\end{definition}
+\begin{note}{}{}
+Se $A$ è una matrice reale e $\lambda_1$ e autovalore determinante di $A$, allora $\lambda_1 \in \mathbbm{R}$
+\end{note}
+Avere informazioni sull'autovalore dominante di una matrice è importante in molti contesti applicativi, ad esempio, quando si studia la stabilità di un sistema.
+
+Studieremo un metodo numerico che consente di determinare l'autovalore determinante di una matrice e il corrispondente autovettore.
+\section{Proprietà degli autovalori}
+Le proprietà degli autovalori sono le seguenti.
+\begin{enumerate}
+	\item $\lambda = 0$ è autovalore di $A \iff A$ è singolare.
+	\item Se $A$ è non singolare e ammette autovalore $\lambda$ e autovettore $\underline{x}$ allora:
+	\[
+	A^{-1}\underline{x} = \frac{1}{\lambda}\underline{x}
+	\]
+	\item $A$ e $A^T$ condividono i medesimi autovalori. Infatti:
+	\[
+	\text{det}(A^T - \lambda I) = \text{det}(A - \lambda I)
+	\]
+	\item $\underline{x}$ è autovettore associato a $\lambda \iff \underline{x} \in \text{ker}(A -\lambda I) \backslash \{\underline{0}\}$
+	\item autovettori associati a autovalori distinti sono linearmente indipendenti. Infatti, siano:
+	\[
+	\lambda, \underline{x} \quad \text{autovalore e autovettore di }A
+	\]
+	e
+	\[
+	\mu, \underline{y} \quad \text{ autovalore e autovettore di }A
+	\]
+	con $\lambda \neq \mu$. Consideriamo una combinazione lineare nulla di $\underline{x}$ e $\underline{y}$:
+	\[
+	c_1\underline{x} + c_2\underline{y} = \underline{0}
+	\]
+	Vogliamo mostrare che, necessariamente, $c_1 = c_2 = 0$. Premoltiplicando l'equazione precedente per $A$ otteniamo:
+	\[
+	c_1A\underline{x} + c_2A\underline{y} = \underline{0}
+	\]
+	che è equivalente a:
+	\[
+	c_1\lambda\underline{x} + c_2\mu\underline{y} = 0
+	\]
+	Moltiplicando per $\mu$ e sottraendo membro a membro:
+	\[
+	c_1(\lambda-\mu)\underline{x} = \underline{0} \Rightarrow c_1 = 0
+	\]
+	Quindi, dall'equazione otteniamo che $c_2 = 0$
+\end{enumerate}
+\section{Metodo delle potenze}
+Il metodo delle potenze è un metodo numerico per il calcolo dell'autovalore dominante di una matrice.
+
+Le ipotesi di lavoro sono le seguenti. Supponiamo, per semplicità, che $A$ ammetta $n$ autovettori linearmente indipendenti: $\underline{x}_1, \underline{x}_2, \dots, \underline{x}_n$.
+
+Con $\underline{x}_1$ autovettore associato all'autovalore dominante $\lambda_1$.
+\subsection{Definizione del metodo}
+A partire da $\underline{y}_0 \in \mathbbm{R}^n$ fissato, il metodo delle potenze genera la seguente successione:
+\[
+\underline{y}_1 = A\underline{y}_0; \quad \underline{y}_2 = A\underline{y}_1; \dots; \quad \underline{y}_k = A\underline{y}_{k-1}
+\]
+Risulta:
+\[
+\underline{y}_k = A\underline{y}_{k-1} = A \cdot A \underline{y}_{k-2} = \dots = A^k\underline{y}_0
+\]
+Ora notiamo che
+\[
+\{\underline{x}_1, \underline{x}_2, \dots, \underline{x}_n\}
+\]
+formano una base di $\mathbbm{R}^n$. Possiamo sviluppare $\underline{y}_0$ lungo questa base:
+\[
+\underline{y}_0 = \alpha_1\underline{x}_1 + \alpha_2\underline{x}_2 + \dots + \alpha_n\underline{x}_n
+\]
+Supponiamo che $\underline{y}_0$ sia scelto in modo che $\alpha_1 \neq 0$. Osserviamo che da:
+\begin{align*}
+	A\underline{x} &= \lambda\underline{x} \quad \text{premoltiplicando per $A$}: \\
+	A^2\underline{x} &= \lambda A\underline{x} = \lambda^2\underline{x} \\
+	\vdots \\
+	A^k\underline{k} &= \lambda^k\underline{x}
+\end{align*}
+Consideriamo $\underline{y}_k = A^k\underline{y}_0$. Risulta:
+\begin{align*}
+	\underline{y}_k &= A^k(\alpha\underline{x}_1 + \alpha_2\underline{x}_2 + \dots + \alpha_n\underline{x}_n) \\
+	&= A^k\displaystyle\sum_{i=1}^{n}\alpha_i\underline{x}_i = \displaystyle\sum_{i=1}^{n}\alpha_iA^k\underline{x}_i \\
+	&= \displaystyle\sum_{i=1}^{n}\alpha_i\lambda_i^k\underline{x}_i \\
+	&= \alpha_1\lambda_1^k\underline{x}_1 + \displaystyle\sum_{i=2}^{n}\alpha_i\lambda_i^k\underline{x}_i \\
+	&= \lambda_1^k\left[\alpha_1\underline{x}_1 + \displaystyle\sum_{i=2}^{n}\alpha_i\left(\frac{\lambda_i}{\lambda_1}\right)^k\underline{x}_i\right]
+\end{align*}
+Poniamo:
+\[
+\underline{g}_k = \displaystyle\sum_{i=2}^{n}\alpha_i\left(\frac{\lambda_i}{\lambda_1}\right)^k\underline{x}_i
+\]
+e osserviamo che
+\[
+\lim\limits_{k \to +\infty} = \underline{g}_k = \underline{0}
+\]
+essendo $\left|\frac{\lambda_i}{\lambda_1}\right| < 1$ dato che $\lambda_1$ è dominante.
+
+Quindi:
+\begin{align}
+\underline{y}_k = \lambda_1^k(\alpha_1\underline{x}_1 + \underline{g}_k)
+\end{align}
+Per $k$ grande:
+\[
+\underline{y}_k \approx \alpha_1\lambda_1^k\underline{x}_1
+\]
+Quindi $\underline{y}_k$ tende ad allinearsi all'autovettore dominante. Contestualmente alla successione $\underline{y}_k$ costruiamo la seguente successione numerica:
+\[
+\sigma_k = \frac{\underline{y}^T_{k+1}\underline{y}_k}{\underline{y}^T_k\underline{y}_k}
+\]
+Facciamo vedere che
+\[
+\lim\limits_{k \to \infty}\sigma_k = \lambda_1
+\]
+Infatti:
+\begin{align*}
+	\sigma_k &= \frac{\underline{y}_{k+1}^T\underline{y}_k}{\underline{y}_k^T\underline{y}_k} \\
+	&= \frac{\lambda_1^{k+1}(\alpha_1\underline{x}_1^T + \underline{g}_{k+1}^T)\lambda_1^k(\alpha_1\underline{x}_1 + \underline{g}_k)}{\lambda_1^k(\alpha_1\underline{x}_1^T + \underline{g}_k^T)\lambda_1^k(\alpha_1\underline{x}_1 + \underline{g}_k)} \\
+	&= \lambda_1\cdot\frac{\left|\alpha_1\right|^2\left\|\underline{x}_1\right\|^2_2 + O(\underline{g}_k)}{\left|\alpha_1\right|^2\left\|\underline{x}_1\right\|_2^2 + O(\underline{g}_k)}
+\end{align*}
+Passando al limite per $k \to \infty$ si ottiene l'arresto poichè $O(\underline{g}_k) \to 0$.
+
+Per ottenere l'autovettore dominante possiamo considerare la seguente successione:
+\[
+\frac{\underline{y}_k}{y_k^{(m_k)}}
+\]
+dove $y_k^{(m_k)}$ denota una componente di massimo modulo di $\underline{y}_k$, cioè:
+\[
+\left| y_k^{(m_k)}\right| = \left\|\underline{y}_k\right\|_{\infty} = \max_{1 \leq i \leq n}\left| y_k^{(i)}\right|
+\]
+Con medesimi calcoli di sopra, si mostra che
+\[
+\lim\limits_{k\to\infty}\frac{\underline{y}_k}{y_k^{(m_k)}} = \underline{x}_1
+\]
+
+\begin{note}{}{}
+In generale, l'implementazione di questo metodo comporta problei di overflow o underflow. Per ovviare a ciò si introduce la variante della normalizzazione. Questa variante è inutile se $\left|\lambda_1\right| = 1$.
+\end{note}
+
+\section{Metodo della potenza con tecnica di normalizzazione}
+\begin{note}{}{}
+Un vettore normalizzato è un vettore di norma 1. Se $\underline{x} \in \mathbbm{R}^n \backslash \{\underline{0}\}$ e $\left\|\cdot\right\|$ è una norma di $\mathbbm{R}^n$, allora:
+\[
+\underline{z} = \frac{\underline{x}}{\left\|\underline{x}\right\|}
+\]
+è un vettore di norma 1. Infatti:
+\[
+\left\|\underline{z}\right\| = \left\|\frac{\underline{x}}{\left\|\underline{x}\right\|}\right\| = \frac{1}{\left\|\underline{x}\right\|}\cdot \left\|\underline{x}\right\| = 1
+\]
+\end{note}
+Supponiamo, nel seguito, di lavorare con la norma 2. Si parte da $\underline{y}_0 \in \mathbbm{R}^n$ generico e si pone:
+\[
+\underline{z}_0 = \frac{y_0}{\left\|y_0\right\|}
+\]
+definiamo
+\[
+\begin{cases}
+	\underline{t}_1 = A\underline{z}_0 \\
+	\underline{z}_1 = \frac{\underline{t}_1}{\left\|\underline{t}_1\right\|}
+\end{cases}
+\]
+Vediamo la relazione tra $\underline{y}_k, \underline{z}_k$ e $\underline{t}_k$.
+
+Risulta:
+\begin{align*}
+	\underline{z}_k = \frac{1}{\left\|\underline{t}_k\right\|}A\underline{z}_{k-1} = \frac{1}{\left\|\underline{t}_k\right\|\left\|\underline{t}_{k-1}\right\|}A^2\underline{z}_{k-2} \\
+	&= \cdots = \frac{1}{\prod_{i=0}^{k}\left\|\underline{t}_i\right\|}A^k\underline{y}_0 \\
+	&= \delta_k\underline{y}_k
+\end{align*}
+avendo posto $\delta_k = \frac{1}{\prod_{i=0}^{k}\left\|\underline{t}_i\right\|}$
+
+Conseguentemente:
+\[
+\sigma_k = \frac{\underline{y}_{k+1}^T\underline{y}_k}{\underline{y}_k^T\underline{y}_k} = \frac{\frac{1}{\delta_{k+1}}\underline{z}_{k+1}^T \frac{1}{\delta_k}\underline{z}_k}{\frac{1}{\delta_k}\underline{z}_k^T \frac{1}{\delta_k}\underline{z}_k}
+\]
+Normalizzando $\delta_{k+1} = \frac{\delta_k}{\left\|\underline{t}_{k+1}\right\|}$. Quindi:
+
 \end{document}
