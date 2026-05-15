@@ -5168,4 +5168,157 @@ La connessione ad un DB prevede i seguenti passi:
 \begin{example}{\nmu Connessione a un DB con Java}{conn_db}
 \lstinputlisting[style=javastyle]{DBAccess.txt}
 \end{example}
+\section{Gestione dei thread}
+Gli oggetti forniscono un modo per strutturare il programma in sezioni indipendenti. Spesso, però, è necessario dividere il programma, in parti eseguibili indipendentemente e contemporanamente.
+
+Ogni subtask, chiamato \textit{thread}, definisce un diverso percorso di esecuzione. Un thread è un singolo flusso di controllo sequenziale in un programma. Pertanto ne consegue che il multithreading può essere considerato una specializzazione del multitasking.
+
+Infatti, è importante distinguere il multitasking basato su processi da quello basato su thread.
+
+Nel multitasking basato su processi, il sistema operativo è capace di eseguire uno o più processi ala votla distribuendo periodicamente l'uso della CPU a ciascun processo. Ciò significa che il processo è l'unità minima di esecuzione. Infatti in tutti i sistemi operativi è possibile compilare un programma e allo stesso tempo utilizzare un editor.
+
+Nel multitasking basato su thread, l'unità di esecuzione più piccola è il thread quindi in un programma è possibile avere thread multipli in esecuzione. Per esempio, un editor di testo può formattare del testo e stamparne un altro contemporaneamente.
+
+Java supporta il multithreading.
+
+Il metodo più semplice per creare un thread è quello di derivare la classe \textit{Thread} che ha tutti i meccanismi necessari per creare ed eseguire i thread. Il metodo più importante della classe \textit{Thread} è \textit{run()} che rappresenta il punto di entrata per il thread.
+\begin{example}{}{}
+\lstinputlisting[style=javastyle]{primo-thread.txt}
+\end{example}
+Oltre al metodo \textit{run()} la classe \textit{Thread} definisce altri metodi per la gestione dei \textit{Thread}.
+\begin{itemize}
+	\item \textit{getName} ottiene il nome di un thread;
+	\item \textit{getPriority} ottiene la priorità di un thread;
+	\item \textit{isAlive} determina se un thread è ancora in esecuzione;
+	\item \textit{join} attende che un thread termini;
+	\item \textit{sleep} sospende un thread per un determinato periodo;
+	\item \textit{start} avvia un thread chiamando il relativo metodo di esecuzione;
+	\item \textit{suspend} sospende un thread.
+\end{itemize}
+Quando un programma Java viene avviato, è già in esecuzione un thread che viene solitamente denominato \textit{thread principale (main thread)} del programma. Questo thread è importante per due motivi:
+\begin{itemize}
+	\item è il thread da cui saranno generati altri thread;
+	\item deve essere l'ultimo thread a terminare l'esecuzione dopodichè il programma termina.
+\end{itemize}
+È possibile controllare il thread principale, mediante un oggetto \textit{Thread}, che è creato automaticamente all'avvio del programma. A tale scopo viene fornito un metodo statico pubblico della classe \textit{Thread} denominato \textit{currentThread()}. Questo metodo restituisce un riferimento al thread in cui viene chiamato permettendo di gestirlo come un qualsiasi altro thread.
+
+In generale un thread può essere creato generando un'istanza della classe \textit{Thread}. È possbile fare ciò in due modi:
+\begin{itemize}
+	\item implementando l'interfaccia \textit{Runnable};
+	\item estendendo la classe \textit{Thread}.
+\end{itemize}
+Per implementare l'interfaccia \textit{Runnable}, una classe deve implementare il metodo \textit{run()}. Il metodo \textit{run()} può chiamare altri metodi, utilizzare altre classi, dichiarare variabili come accade nel thread principale. La differenza sta nel fatto che \textit{run()} stabilisce il punto di entrata per un nuovo thread di esecuzione all'interno del programma.
+\subsection{Creazione di thread multipli}
+Lo svantaggio nell'implementazione dell'interfaccia \textit{Runnable} sta nel fatto che il thread non potrebbe accedere ai membri privati o protetti della classe principale.
+\begin{example}{}{}
+\lstinputlisting[style=javastyle]{multithread2.txt}
+\end{example}
+Con il multithreading si può verificare la possibilità che due o più thread cercano di accedere ad una risorsa limitata \textbf{condivisa}. In tal caso è necesasrio prevedere dei metodi che siano in grado di garantire l'utilizzo esclusivo della risorsa da parte di un thread per volta in modo da evitare i \textit{fenomeni di collisione}.
+
+Il processo appena esposto viene chiamato \textit{sincronizzazione}. Java implementa la sincronizzazione attraverso gli elementi del linguaggio. Tipicamente, i membri dato di una classe sono privati alla classe stessa, per cui si può controllare l'uso della risorsa semplicemente sincronizzando l'invocazione dei metodi che vi accedono. In molte situazioni questo può bastare. Java fornisce lo specificatore \textit{synchronized} per quanto riguarda i metodi. Solo un tread alla volta può chiamare un metodo synchronized per l'oggetto sul quale è invocato (sebbene un thread possa chiamare più metodi sincronizzati per l'oggetto).
+
+Esempi di definizione dei metodi sincronizzati sono:
+\begin{lstlisting}[style=javastyle]
+synchronized void f() { /* ... */ }
+synchronized void g() { /* ... */ }
+\end{lstlisting}
+Ciascun oggetto contiene un singolo sistema di bloccaggio, chiamato anche \textit{monitor}, che è parte dell'oggetto stesso. Quando viene chiamato un metodo sincronizato su un oggetto, quell'oggetto è bloccato e non può essere chiamato alcun altro metodo sincronizzato dell'oggetto finchè il primo non termina e rilascia il blocco.
+
+Per esempio, supponiamo di avere i metodi sincronizzati \textit{f()} e \textit{g()}. Se viene invocato il metodo \textit{f()} per un dato oggetto, il metodo \textit{g()} non può essere chiamato per lo stesso oggetto finchè \textit{f()} non è completo. Quindi, se si vuole proteggere delle risorse da un accesso simultaneo di thread multipli si può obbligare l'accesso a tali risorse solo attraverso metodi sincronizzati.
+\begin{example}{\nmu Uso di synchronized}{sync}
+\lstinputlisting[style=javastyle]{uso-di-syncronized.txt}
+\end{example}
+Nell'esempio il thread della classe \textit{SincType} tramite il metodo \textit{run()} incrementa due contatori. In più c'è un altro thread della classe \textit{Watcher} che stampa il contenuto dei due contatori.
+
+Senza la parola chiave \textit{synchronized} potrebbe accadere che di tanto in tano i due contatori diventano diversi. Ma aggiungendo la parola \textit{synchronized} a \textit{run()} il Watcher non riesce mai a chiamare \textit{syntest} fino a quando la risorsa non è sbloccata.
+
+È possibile limitare la sincronizzazione alla sola \textit{sezione critica} relativa ad un oggetto.
+\begin{lstlisting}[style=javastyle]
+synchronized(syncObject) {
+	// Codice accessibile da
+	// un thread alla volta
+}
+\end{lstlisting}
+L'esempio precedente può essere modificato rimuovendo la parola chiave \textit{synchronized} dal metodo \textit{run()} e ponendo invece le due linee critiche in un blocco \textit{synchronized} e conviene effettuare il blocco sull'oggetto coninvolto in \textit{synchTest()} che è l'oggetto corrente (this).
+\begin{lstlisting}[style=javastyle]
+public void run() {
+	while (true) {
+		synchronized(this) {
+			a++;
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				System.err.println("Interrupted");
+			}
+			b++;
+		}
+		try {
+			sleep(500);
+		} catch (InterruptedException e) {
+			System.err.println("Interrupted");
+		}
+	}
+}
+\end{lstlisting}
+L'uso di \textit{synchronized} è molto svantaggioso dal punto dell'efficienza, infatti si potrebbero verificare dei colli di bottiglia. D'altra parte una condivisione non corretta delle risorse potrebbe portare a eventi disastrosi per il programma. Si conclude che la sincronizzazione deve essere effettuata solo quando è necessaria.
+\subsection{Stati di un thread}
+Un thread può trovarsi in uno dei seguenti stati:
+\begin{itemize}
+	\item \textit{New}: l'oggetto thread è stato creato ma non è stato ancora avviato quindi non può essere in esecuzione. Il sistema di scheduling non sa ancora della sua esistenza.
+	\item \textit{Runnable}: un thread può essere in esecuzione quando il meccanismo di \textit{time-slicing} ha dei cicli di CPU accessibili ai thread. Di conseguenza un thread potrebbe o meno essere in esecuzione, nulla gli impedisce di essere eseguito se richiesto dallo scheduler. Non è in alcuno modo bloccato o in uno stato di \textit{dead}.
+	\item \textit{Dead}: il classimo modo per terminare un thread è quello di uscire dal metodo \textit{run()}. Tuttavia è possibile anche farlo mediante l'invocazione dei metodi \textit{stop()} o \textit{destroy()}. In ogni caso conviene non utilizzare gli ultimi due metodi quando il thread deve eseguire operazioni particolari, in quanto potrebbe lasciare il sistema in uno stato inconsistente. È preferibile forzare l'arresto di un thread attraverso un flag che permetta di uscire dal metodo \textit{run()}.
+	\item \textit{Blocked}: il thread potrebbe essere in esecuzione ma qualcosa lo impedisce. Quando un thread è bloccato lo scheduler lo salterà evitando di concedergli del tempo CPU. Finchè il thread non ritorna nello stato \textit{Runnable} non effettuerà alcuna operazione.
+\end{itemize}
+\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{images/thread_state.png}
+		\end{center}
+		\caption{Diagramma di stato di un thread}
+\end{figure}
+Un thread può portarsi nello stato \textit{blocked} per le seguenti ragioni:
+\begin{itemize}
+	\item Si è volontariamente sospeso il thread mediante l'invocazione del metodo \textit{sleep(milliseconds)} pertanto non continuerà l'esecuzione prima che sia passato il tempo specifico.
+	\item È stata sospesa l'esecuzione del thread con il metodo \textit{suspend()}. Il thread non tornerà nello stato \textit{Runnable} finchè non si ha un messagio di \textit{resume()}.
+	\item È stata sospesa l'esecuzione del thread con il metodo \textit{wait()} pertanto non tornerà nello stato \textit{Runnable} finchè non si ha un messaggio di \textit{notify()} oppure \textit{notifyAll()}.
+	\item Il thread sta aspettando che sia completato un'operazione di I/O.
+	\item Il thread sta cercando di chiamare un metodo sincronizzato oppure un altro oggetto non accessibile.
+\end{itemize}
+È possibile anche invocare il metodo \textit{yield()} per cedere volontariamente la CPU in modo tale che gli altri thread possono essere eseguiti.
+
+La classe \textit{Thread} ha il metodo \textit{suspend()} per fermare temporaneamente l'esecuzione di un thread fino alla chiamata del metodo \textit{resume()} che fa ripartire il thread dal punto in cui era stata interrotta l'esecuzione. \textit{resume()} deve essere chiamata da un thread esterno.
+
+Sia \textit{sleep()} che \textit{suspend()} non rilasciano la risorsa dopo averla bloccata, in pratica nessun thread può accedervi fino a quando il thread che l'ha bloccata non la rilascia. Il comportamento di \textit{wait()} è diverso, infatti altri metodi \textit{synchronized} dell'oggetto thread possono essere invocati mentre è chiamata una \textit{wait()}. Usando \textit{wait()} è necessario usare \textit{notify()} e \textit{notifyAll()} per riportare il thread nello stato \textit{Runnable}.
+\subsection{Deadlock}
+Siccome i thread possono essere bloccati e siccome gli oggetti possono essere sincronizzati, è possibile che un thread sia bloccato in attesa di un altro. La situazione limite si ha nel momento in cui tutti i thread aspettano un altro thread. In questo caso si verifica una situazione di stallo chiamata \textit{deadlock}. È abbastanza difficile che si verifichino tali situazioni. Ma quando accadono è praticamente impossibile effetuare il debug.
+
+Un tipico caso di deadlock è il seguente:
+\begin{lstlisting}[style=javastyle]
+// thread1 esegue il seguente codice
+synchronized (a) {
+	...
+	synchronized (b) { ... }
+	...
+}
+
+// Contemporaneamente thread2 esegue il seguente codice:
+synchronized (b) {
+	...
+	synchronized (a) { ... }
+	...
+}
+\end{lstlisting}
+Per ridurre il problema del deadlock in Java 1.2 sono stati deprecati i metodi \textit{stop(), suspend(), resume()} e \textit{destroy()}. Per \textit{suspend()} e \textit{resume()} il motivo sta nel fatto che volendo riesumare il thread, bisogna attendere che esso sia rilasciato dal thread che l'ha bloccato, potendo generare, così, una situazione di \textit{deadlock}.
+\subsection{Priorità}
+La priorità di un thread fornisce allo scheduler informazioni sull'ordine di esecuzione. Nel caso ci sono un certo numero di thread bloccati, in attesa di esecuzioni, lo scheduler lancerà quello con priorità più alta. Ciò non significa che i thread con bassa priorità non verranno mai eseguiti (situazione di deadlock) ma solo che saranno eseguiti meno frequentemente.
+
+Per impostare la priorità di thread si deve utilizzare il metodo \textit{setPriority()} della classe \textit{Thread}. La sintassi generale è la seguente:
+\[
+\texttt{final void setPriority(int level)}
+\]
+Il livello specifica la nuova impostazione per il thread chiamante. Il valorea ssunto deve variare nell'intervallo \texttt{MIN\_PRIORITY} e \texttt{MAX\_PRIORITY}. Attualmente questi valori sono rispettivamente 1 e 10. Per rispristinare il valore di default, si deve specificiare \texttt{NORM\_PRIORITY} il cui valore è 5.
+
+Per ottenere l'impostazione attuale della priorità, occorre chiamare il metodo \textit{getPriority()} di \textit{Thread} nel modo seguente:
+\[
+\texttt{final int getPriority()}
+\]
 \end{document}

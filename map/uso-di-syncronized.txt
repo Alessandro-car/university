@@ -1,0 +1,51 @@
+public class SyncThread {
+	private TwoCounter t=new TwoCounter();
+	SyncThread(){
+
+			t.start();
+			new Watcher();
+	}
+	class TwoCounter extends Thread{
+		private int a=0;
+		private int b=0;
+
+		synchronized public  void run() {
+			while (true) {
+				{
+					a++;
+					b++;
+				}
+				try {
+					sleep(500);
+				} catch(InterruptedException e) {
+					System.err.println("Interrupted");
+				}
+			}
+		}
+
+		// synchTest e' eseguito solo quando run non e' in esecuzione
+		//nello stesso Thread e viceversa
+
+		public synchronized void synchTest() {
+			System.out.println("a"+a+"b"+b);
+		}
+	}
+
+	class Watcher extends Thread{
+		public Watcher() { start(); }
+		public void run() {
+			while(true) {
+				t.synchTest();
+				try {
+					sleep(500);
+				} catch(InterruptedException e) {
+						System.err.println("Interrupted");
+				}
+			}
+		}
+	}
+
+	public static void main (String args[]) {
+		SyncThread s=new SyncThread();
+	}
+}
