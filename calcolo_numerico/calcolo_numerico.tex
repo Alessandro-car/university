@@ -6089,5 +6089,16 @@ Conseguentemente:
 \sigma_k = \frac{\underline{y}_{k+1}^T\underline{y}_k}{\underline{y}_k^T\underline{y}_k} = \frac{\frac{1}{\delta_{k+1}}\underline{z}_{k+1}^T \frac{1}{\delta_k}\underline{z}_k}{\frac{1}{\delta_k}\underline{z}_k^T \frac{1}{\delta_k}\underline{z}_k}
 \]
 Normalizzando $\delta_{k+1} = \frac{\delta_k}{\left\|\underline{t}_{k+1}\right\|}$. Quindi:
-
+\[
+\sigma_k = \frac{\left\|\underline{t}_{k+1}\right\|\underline{z}_{k+1}^T\underline{z}_k}{\underline{z}_k^T\underline{z}_k} = \frac{\underline{t}_{k+1}^T\underline{z}_k}{\left\|\underline{z}_k\right\|_2^2}
+\]
+Se $\left\|\cdot\right\| = \left\|\cdot\right\|_2$ allora $\left\|\underline{z}_k\right\|_2^2 = 1$ e risulta:
+\[
+\sigma_k = \underline{t}_{k+1}^T\cdot\underline{z}_k
+\]
+Per l'autovettore dominante, osserviamo che
+\[
+\frac{\underline{y}_k}{y_k^{(m_k)}} = \frac{\frac{1}{\delta_k}\underline{z}_k}{\frac{1}{\delta_k}\underline{z}_k^{(m_k)}} = \frac{\underline{z}_k}{z_k^{(m_k)}}
+\]
+Se invece desideriamo la normalizzazione in norma 2, possiamo direttamente considerare la successione $\{\underline{z}_k\}$.
 \end{document}
