@@ -2007,4 +2007,526 @@ Mostriamo che se $EQ_{TM}$ fosse decidibile allora anche $E_{TM}$ sarebbe decidi
 	\end{enumerate}
 	Se $R$ decide $EQ_{TM}$, $S$ decide $E_{TM}$. Ma sappiamo che $E_{TM}$ e indecidibile, quindi anche $EQ_{TM}$ deve essere indecidibile.
 \end{proof}
+\part{Teoria della complessità}
+\chapter{Complessità di tempo}
+Anche quando un problema è decidibile, e quindi in linea di principio computazionalmente risolvibile, può non essere risolvibile in pratica se la solzione richiede una quantità eccessiva di tempo di memoria.
+\section{Misure di complessità}
+Consideriamo il linguaggio $A = \{0^k1^k \mid k \geq 0\}$. Ovviamente, $A$ è un linguaggio decidibile. Calcoliamo di quanto tempo necessita una macchina di Turing a nastro singolo per decidere $A$. Esaminiamo la seguente TM $M_1$ per $A$.
+
+$M_1 = ``$ Su input $w$:
+\begin{enumerate}
+	\item Scandisce il natsro e \textit{rifiuta} se trova uno 0 a destra di un 1.
+	\item Ripete se il nastro contiene almeno uno 0 ed almeno un 1:
+	\begin{enumerate}
+		\item Scandice il nastro, cancellando uno 0 ed un 1.
+	\end{enumerate}
+	\item Se rimane almeno uno 0 dopo che ogni simbolo 1 è stato cancellato, o se rimane almeno un 1 dopo che ogni simbolo 0 è stato cancellato, \textit{rifiuta}. Altrimenti, se non rimangono né simboli 0 né simboli 1, \textit{accetta}.''
+\end{enumerate}
+Analizzeremo l'algoritmo della TM $M_1$ che decide $A$ per determinare la quantità di tempo che impiega. Si analizza il \textbf{\textit{caso peggiore}}, dove si valuta il tempo di esecuzione massimo tra tutti gli input di una determinata lunghezza. Si analizza il \textbf{\textit{caso medio}}, dove si considera la media dei tempi di esecuzione su tutti gli input di una determinata lunghezza.
+\begin{definition}{\nmu Complessità di tempo}{complessita_tempo}
+	Sia $M$ una macchina di Turing deterministica che si ferma su tutti gli input. Il \textit{tempo di esecuzione} o \textit{complessità di tempo} di $M$ è la funzione $f: \mathbbm{N} \to \mathbbm{N}$, dove $f(n)$ è il numero massimo di passi che $M$ utilizza su un qualsiasi input di lunghezza $n$. Se $f(n)$ è il tempo di esecuzione di $M$, diciamo che $M$ ha tempo di esecuzione $f(n)$ e che $M$ è una macchina di Turing di tempo $f(n)$.
+\end{definition}
+\subsection{Notazione O-grande ed o-piccola}
+Poichè il tempo di esecuzione di un algoritmo è spesso un'espressione complessa, solitamente ci limitiamo ad ottenerne una stima. L'utile metodo di stima, detto \textit{analisi asintotica}, permette di valutare il tempo di esecuzione dell'algoritmo quando viene eseguito su grandi input. Lo facciamo prendende in considerazione solo il termine di ordine maggiore dell'espressione del tempo di esecuzione dell'algoritmo, trascurando sia il coefficiente di tale termine, che tutti i termini di ordine inferiore. La \textit{notazione asintotica}, viene anche chiamata notazione \textit{O-grande}.
+\begin{definition}{\nmu O-grande}{bigO}
+	Siano $f$ e $g$ funzioni, $f, g: \mathbbm{N} \to \mathbbm{R}^+$. Si dice che $f(n) = O(g(n))$ se esistono interi positivi $c$ e $n_0$ tali che per ogni $n \geq n_0$
+	\[
+	f(n) \leq cg(n)
+	\]
+	Quando $f(n) = O(g(n))$, diciamo che $g(n)$ è un \textit{limite superiore} per $f(n)$, o più precisamente, che $g(n)$ è un \textit{limite superiore asintotico} per $f(n)$, per sottolineare che stiamo ignorando le costanti.
+
+	$\mathbbm{R}^+$ è l'insieme dei numeri reali non negativi.
+\end{definition}
+\begin{example}{}{}
+Sia $f_1(n) = 5n^3 + 2n^2 + 22n + 6$. Selezionando il termine di coefficiente maggiore e trascurando il suo coefficiente, si ottiene $f_1(n) = O\left(n^3\right)$.
+
+Verifichiamo che questo risultato soddisfa la definzione formale di \nameref{def:bigO}. Lo facciamo ponendo $c = 6$ e $n_0 = 10$. Quindi $5n^3 + 2n^2 + 22n + 6 \leq 6n^3$ per ogni $n \geq 10$. Inoltre, $f_1(n)=O\left(n^4\right)$ perchè $n^4 > n^3$ e quindi è un limite superiore asintotico per $f_1$.
+\end{example}
+La notazione $O$-grande ha una controparte chiamata \textbf{\textit{notazione o-piccolo}}. La notazione $O$-grande dice che una funzione è asintoticamente \textit{non più grande}. Per dire che una funzione è asintoticamente \textit{più piccola} di un'altra, usiamo la notazione \textit{o}-piccolo. La differenza tra le notazioni $O$-grande e $o$-piccolo è analoga alla differenza tra $\leq$ e $<$.
+\begin{definition}{\nmu o-piccolo}{smallO}
+	Siano $f$ e $g$ funzioni $f, g: \mathbbm{N} \to \mathbbm{R}^+$. Diciamo che $f(n) = o(g(n))$ se
+	\[
+	\lim\limits_{n\to\infty}\frac{f(n)}{g(n)} = 0
+	\]
+	In altri termini, $f(n) = o(g(n))$ significa che per ogni numero reale $c > 0$, esiste un numero $n_0$, tale che $f(n) < cg(n)$ per ogni $n \geq n_0$.
+\end{definition}
+\subsection{Analisi degli algoritmi}
+Vogliamo stabilire una notazione per classificare i linguaggi in base alla loro necessità di tempo.
+\begin{definition}{\nmu Classe di complessità di tempo}{time}
+	Sia $t: \mathbbm{N} \to \mathbbm{R}^+$ una funzione. La \textit{classe di complessità di tempo, TIME(t(n))}, è definita come l'insieme di tutti i linguaggi che sono decisi da una macchina di Turing in tempo $O(t(n))$.
+\end{definition}
+Torniamo al linguaggio $A = \{0^k1^k \mid k \geq 0\}$ e la macchina TM $M_1$ che decide $A$.
+
+$M_1 = ``$ Su input $w$:
+\begin{enumerate}
+	\item Scandisce il natsro e \textit{rifiuta} se trova uno 0 a destra di un 1.
+	\item Ripete se il nastro contiene almeno uno 0 ed almeno un 1:
+	\begin{enumerate}
+		\item Scandice il nastro, cancellando uno 0 ed un 1.
+	\end{enumerate}
+	\item Se rimane almeno uno 0 dopo che ogni simbolo 1 è stato cancellato, o se rimane almeno un 1 dopo che ogni simbolo 0 è stato cancellato, \textit{rifiuta}. Altrimenti, se non rimangono né simboli 0 né simboli 1, \textit{accetta}.''
+\end{enumerate}
+La fase $1$ richiede $2n$ passi, che nella notazione $O$-grande diventa $O(n)$. Nelle fasi 2 e 3, la macchina esegue ripetutamente la scansione del nastro e cancella uno 1 e un 1 ad ogni scansione. Ogni scansione utilizza $O(n)$ passo. Poichè ogni scansione elimina due simboli, possono verificarsi al più $\sfrac{n}{2}$ scansioni. Così, il tempo toale impiegato dalle fasi 2 e 3 è di $\sfrac{n}{2}O(n) = O(n^2)$ passi. Quindi $A \in \mathbf{TIME}(n^2)$.
+
+Cerchiamo una TM che migliora il tempo di esecuzione e consideriamo la macchina $M_2$.
+
+$M_2 = ``$Su input $w$:
+\begin{enumerate}
+	\item Scandisce il nastro e \textit{rifiuta} se trova uno 0 a destra di un 1.
+	\item Ripete finchè il nastro contiene almeno uno 0 ed un 1.
+	\begin{enumerate}
+		\item Scandisce il nastro, controllando se il numero totale di 0 e di 1 rimasti è pari o dispari. Se è dispari, \textit{rifiuta}.
+		\item Scandisce nuovamente il nastro, cancellando prima ogni secondo 0 a partire dal primo 0, poi cancellando ogni secondo 1 a partire dal primo 1.
+	\end{enumerate}
+	\item Se nessun 0 e nessun 1 rimangono sul nastro, \textit{accetta}.
+
+	Altrimenti, \textit{rifiuta}''.
+\end{enumerate}
+Analizziamo il tempo di esecuzione di $M_2$. Osserviamo che ogni fase impiega un tempo $O(n)$. Determiniamo il numero di volte in cui ognuna viene eseguita. Le fasi 1 e 5 vengono esegute una volta, impiegando un tempo totale di $O(n)$. La fase 4 scarta almeno metà dei simboli 0 e 1 ogni volta che viene eseguita, quindi si verificano al massimo $1 + \log_2{n}$ iterazioni del ciclo prima di averli cancellati tutti. Così il tempo tale delle fasi 2, 3, 4 è $(1 + \log_2{n})O(n)$ o $O(n\log n)$. Il tempo di esecuzione di $M_2$ è $O(n) + O(n\log n) = O(n \log n)$. Quindi $A \in \mathbf{TIME}(n\log n)$.
+\section{La classe P}
+\subsection{Tempo polinomiale}
+\begin{definition}{\nmu La classe P}{P}
+	$\mathbf{P}$ è la classe dei linguaggi che sono decidibili in tempo polinomiale su una macchina di Turing deterministica a singolo nastro, In altre parole,
+	\[
+	P = \bigcup_{k}\mathbf{TIME}\left(n^k\right)
+	\]
+\end{definition}
+La classe P ha un ruolo centrale nella teoria della complessità ed è importante perchè
+\begin{enumerate}
+	\item P è invariante per tutti i modelli di calcolo che sono polinomialmente equivalenti ad una macchina di Turing deterministica a nastro singolo.
+	\item P corrisponde approssimativamente alla classe dei problemi che sono realisticamente risolvibili su un computer.
+\end{enumerate}
+Il punto 1 indica che P è una classe matematicamente robusta. Non è influenzata dai paritolari del modello di computazione che stiamo usando. Il punto 2 indica che P è importante da un punto di vista pratico. Quando un problema è in P, abbiamo un metodo per risolverlo che viene eseguito in tempo $n^k$, per una qualche costante $k$. Ovviamente, un tempo di esecuzione di $n^{100}$ è improbabile che sia di qualche utilità pratica.
+\paragraph{Esempi di problemi in P} Quando analizziamo un algoritmo per dimostrare che esso viene eseguito in tempo polinomiale, abbiamo bisogno di fare due cose. In primo luogo, dobbiamo dare un limite superiore polinomiale sul numero di fasi che l'algoritmo esegue quando viene eseguito su un input di lunghezza $n$. Poi, dobbiamo esaminare le singole fasi nella descrizione dell'algoritmo per essere sicuri che ognuna può essere implementata in tempo polinomiale su un modello deterministico ragionevole. Quando entrambi i compiti sono stati completati, possiamo concludere che l'algoritmo ha un tempo di esecuzione polinomiale perchè abbiamo dimosttrato che viene eseguito per un numero polinomiale di fasi, ciascuna delle quali può essere eseguita in tempo polinomiale, e la composizione di polinomi è ancora un polinomio.
+
+Analizziamo problemi computazionali che contengono la codifica di un grafo. Una codifica ragionevole di un grafo consiste in un elenco dei suoi nodi e archi. Un altro è la \textit{matrice di adiacenza}, dove l'elemento $(i, j)-$esimo è 1 se c'è un arco dal nodo $i$ al nodo $j$ e 0 se non c'è. Quando analizziamo algoritmi sui grafi, il tempo di esecuzione può essere calcolato in termini del numero di nodi invece della dimensione della rappresentazione del grafo. Così, se analizziamo un algoritmo e mostriamo che il suo tempo di esecuzione è polinomiale nel numero di nodi, sappiamo che esso è anche polinomiale nella dimensione dell'input.
+
+Il primo problema riguarda grafi orientati. Un grafo orientato $G$ contiene nodi $s$ e $t$, come mostriamo nella seguente figura. Il problema \textit{PATH} consiste nel determinare, se esiste, un cammino diretto da $s$ a $t$. Sia
+\begin{align*}
+PATH = \{\langle G, s, t\rangle \mid G \text{ è un grafo orientato che contiene un cammino diretto da }s \text{ a }t \}
+\end{align*}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{images/path.png}
+		\caption{Esiste un cammino da $s$ a $t$?}
+	\end{center}
+\end{figure}
+\begin{theorem}{}{}
+	$PATH \in P$
+\end{theorem}
+\begin{proof} Un algoritmo in tempo polinomiale $M$ per $PATH$ funzione come segue.
+
+$M = ``$Su input $\langle G, s, t \rangle$, dove $G$ è un grafo orientato con nodi $s$ e $t$:
+\begin{enumerate}
+	\item Marca il nodo $s$.
+	\item Ripete il seguente passo fino a quando nessun nuovo nodo viene marcato:
+	\begin{enumerate}
+		\item Scansione tutti gli archi di $G$. Se trova un arco $(a, b)$ che va da un nodo $a$ marcato ad un nodo $b$ non marcato, marca il nodo $b$.
+	\end{enumerate}
+	\item Se $t$ è marcato, \textit{accetta}. Altrimenti, \textit{rifiuta}.''
+\end{enumerate}
+Ora analizziamo questo algoritmo per dimostrare che lavora in tempo polinomiale. Ovviamente, le fasi 1 e 4 sono eseguite una solta volta. La fase 3 è eseguita al più $m$ volte perchè ogni volta, tranne l'ultima, marca un nodo aggiuntivo in $G$. Quidni il numero totale di fasi utilizzate è al massimo $1+1+m$, che da un polinomio nelal dimensione di $G$.
+
+Le fasi 1 e 4 sono facilmente implementate in tempo polinomiale su un qualsiasi modello deterministico ragionevole. La fase 3 richiede una scansione dell'input ed un test che verifichi se certi nodi sono marcati o meno, ed è anch'essa facilmente implementabile in tempo polinomiale. Quindi $M$ è un algoritmo di tempo polinomiale per $PATH$.
+\end{proof}
+
+Consideriamo un altro esempio di algoritmo avente tempo polinomiale. Diciamo che due numeri sono \textit{relativamente primi} se 1 è il più grande numero intero che li divide entrambi. Per esempio, 10 e 21 sono relativamente primi, anche se nessuno dei due è un numero primo. Sia $RELPRIME$ il problema di verificare se due numeri sono relativamente primi. Quindi
+\[
+RELPRIME = \{\langle x, y \rangle \mid x \text{ e } y \text{ sono relativamente primi}\}
+\]
+\begin{theorem}{}{}
+	$RELPRIME \in P$.
+\end{theorem}
+Questo problema si può risolvere con antico procedimento numerico, chiamato \textit{algoritmo di Euclide}, per il calcolo del massimo comun divisore.
+\begin{proof}
+	L'algoritmo euclideo $E$ è il seguente.
+
+	$E = ``$Su input $\langle x, y \rangle$, dove $x$ e $y$ sono numeri naturali in binario:
+	\begin{enumerate}
+		\item Ripete finchè $y = 0$:
+		\begin{enumerate}
+			\item Pone $x = x\mod y$
+			\item Scambia $x$ e $y$.
+		\end{enumerate}
+		\item Output $x$''.
+	\end{enumerate}
+L'algoritmo $R$ risolve $RELPRIME$, utilizzando $E$ come sottoprocedura.
+
+$R = ``$Su input $\langle x, y \rangle$, dove $x$ e $y$ sono numeri naturali in binario:
+\begin{enumerate}
+	\item Esegue $E$ su $\langle x, y \rangle$.
+	\item Se il risultato è 1, \textit{accetta}. Altrimenti, \textit{rifiuta}.
+\end{enumerate}
+Chiaramente, se $E$ lavora in tempo polinomiale, così fa $R$ e quindi abbiamo solo bisogno di analizzare $E$ per valutarne il tempo e la correttezza. Per analizzare la complessità di tempo di $E$, per prima cosa mostriamo che ogni esecuzione della fase 2, taglia il vaore di $x$ di almeno la metà. Dopo l'esecuzioe della fase 2, risulta $x < y$ a causa della funzione $\mod$. Dopo la fase 3, risulta $x > y$ perchè i due valori vengono scambiati. Cosi, quando la fase 2 viene successivamente eseguita, $x > y$. Se $\sfrac{x}{2} \geq y$, allora $x \mod y \leq y \leq \sfrac{x}{2}$ e $x$ diminuisce di almeno la metà. Se $\sfrac{x}{2} <  y$, allora $x \mod y = x - y <\sfrac{x}{2}$ e $x$ diminuisce di almeno la metà. I valori di $x$ e $y$ sono scambiati ogni volta che viene eseguita la fase 3, così ognuno dei valori originali di $x$ e $y$ è ridotto di almeno la metà ad ogni iterazione del ciclo. Quindi, il numero di volte in cui le fasi 2 e 3 sono eseguite risulta pari a $\min{2\log_2{x}, 2\log_2{y}}$. Questi logaoritmi sono proporzionali alle lunghezze delle rappresentazioni, il che dà il numero di fasi eseguite pari a $O(n)$.
+\end{proof}
+L'ultimo esempio di algoritmo polinomiale mostra che ogni linguaggio context-free è decidibile in tempo polinomiale.
+\begin{theorem}{}{}
+	Ogni linguaggio context-free è un elemento di P.
+\end{theorem}
+\begin{proof}
+	Il seguente algoritmo $D$ dimostra il teorema. Sia $G = \left(\Sigma, Q, P, S, F\right)$ una CFG in forma normale di Chomsky che genera il CFL $L$. Si supponga che $S$ sia la variabile iniziale.
+
+	$D = ``$Su input $w = w_1\cdots w_n$:
+	\begin{lstlisting}[style=pseudocode, mathescape=true]
+		if w = $\epsilon$ and $S \to \epsilon \in P$ then
+			accetta.
+		else:
+			rifiuta.
+		for i=1 to n: // Esamina sottostringhe di lunghezza 1
+			if $A \to b \in P$ and $b = w_i$ then
+				table(i, i) = A
+		for l = 2 to n: // l e' la lunghezza della sottostringa
+			for i = 1 to n - l + 1: // i posizione iniziale della sottstringa
+				j = i + l - 1         // j posizione finale della sottostringa
+				for k = i to j - 1:   // k posizione di separazione
+					for each $A \to BC$:
+						if $B \in table(i, k)$  and $C \in table(k + 1, j)$ then
+							table(i, j) = A
+		if $S \in table(1, n)$ then:
+			accetta
+		else:
+			rifiuta
+	\end{lstlisting}
+	Ogni fase è facilmente implementata in modo da essere eseguita in tempo polinomiale. Le fasi 4 e 5 sono eseguite al più $nv$, volte dove $v$ è il numero di variabili in $G$ ed è un costante fissa indipendente da $n$, quindi queste fasi sono eseguite $O(n)$ volte. La fase 6 (riga 8) è eseguita al più $n$ volte, la fase 7 (riga 9) è eseguita al più $n$ volte. Ogni volta che la fase 7 viene eseguita, le fasi 8 (riga 9) e 9 (riga 11) sono eseguite al più $n$ volte. Ogni volta che la fase 9 viene eseguita, la fase 10 (riga 12) è eseguita $r$ volte, dove $r$ è il numero di regole di $G$, ed è un'altra costante. Quindi la fase 11 (riga 13) dell'algortimo viene eseguita $O(n^3)$ volte. La somma totale mostra che $D$ esegue $O(n^3)$ fasi.
+\end{proof}
+\section{La classe NP}
+Consideriamo il problema del \textit{cammino Hamiltoniano} in un grafo orientato $G$ è un cammino orientato che attraversa ongi nodo del grafo esattamente una volta. Consideriamo il problema di verificare se un grafo orientato contiene un cammino Hamiltoniano che collega due nodi specificati, come mostrato nella seguente figura. Sia
+\begin{align*}
+HAMPATH = \{\langle G, s, t \rangle \mid \quad & G \text{ è un grafo orientato} \\
+& \text{con un cammino Hamiltoniano da } s \text{ a }t\}
+\end{align*}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/hampath.png}
+	\end{center}
+	\caption{HAMPATH}
+\end{figure}
+Nessuno sa se $HAMPATH$ è risolvibile in tempo polinomiale. Il problema $HAMPATH$ ha una caratteristica chiamata \textit{verificabilità polinomiale} che è importante per capire la sua complessità. Anche se non conosciamo una maniera veloce per determinare se un grafo contiene un cammino Hamiltoniano, se un tale cammino è stato scoperto in qualche modo, si potrebbe facilmente convicere qualcun altro della sua esistenza semplicmente esibendolo. In altre parole, \textit{verificare} l'esistenza di un cammino Hamiltoniano può essere molto più facile che \textit{determinare} la sua esistenza.
+
+Un altro problema polinialmente verificabile è l'essere composto. Ricordiano che un numero naturale è \textbf{\textit{composto}} se è il prodotto die due numeri interi maggiori di 1. Sia
+\[
+COMPOSITES = \{x \mid x = pq, \text{ per gli interi } p,q > 1\}
+\]
+Alcuni problemi potrebbero non essere polinomialmente verificabili. Per esempio, consideriamo $\overline{HAMPATH}$. Anche se riuscissimo a determinare che un grafo non ha un cammino Hamiltoniano, non conosciamo alcun modo per verificarne l'inesistenza senza utilizzare lo setsso algoritmo avente tempo esponenziale usato per la determinazione originaria. Una definizione formale è la seguente
+\begin{definition}{\nmu Verificatore}{verificatore}
+	Un \textbf{\textit{verificatore}} per un linguaggio $A$ è un algoritmo $V$, dove
+	\[
+	A = \{w \mid V \text{ accetta }\langle w, c \rangle \text{ per qualche stringa } c\}
+	\]
+	Misuriamo il tempo di un verificatore solo in termini della lunghezza di $w$, quindi un \textit{verificatore in tempo polinomiale} viene eseguito in tempo polinomiale nella lunghezza di $w$. Un linguaggio $A$ è \textit{polinomialmente verificabile}  se ammette un verificatore in tempo polinomiale.
+\end{definition}
+Un verificatore usa ulteriori informazioni, rappresentate ad simbolo $c$ nella definizione di \namerefl{def:verificatore}. Questa informazione è chiamata \textit{certificato} o \textit{prova} di appartenenza ad $A$.
+Ad esempio, per il problema \textit{HAMPATH}, un certificato per una stringa $\langle G, s, t \rangle \in HAMPATH$ è semplicemente un cammino Hamiltoniano da $s$ a $t$. Per il problema COMPOSITES, un ceritificato peril numero $x$ è semplicemente uno dei suoi divisori.
+\begin{definition}{\nmu La classe NP}{np}
+	La classe $\mathbf{NP}$ è la classe dei linguaggi che ammettono un verificatore in tempo polinomiale.
+\end{definition}
+La classe NP è importante perchè contiene molti problemi di interesse pratico. Come abbiamo visto, $HAMPATH$ e $COMPOSITES$ sono elementi di NP. Inoltre, $COMPOSITES$ è anche elemento di P, che è un sottoinsieme di NP; ma dimostrare questo risultato più forte è molto più difficile. Il termine NP proviene da \textbf{\textit{tempo polinomiale non deterministico}} e deriva da una caratterizzazione alternativa che utilizza macchine di Turing non deterministiche di tempo polinomiale.
+
+Quella che segue è una macchina di Turing non deterministica che decide il problema $HAMPATH$ in tempo polinomiale non deterministico.
+
+$N_1 = ``$Su input $\langle G, s, t \rangle$, dove $G$ è un grafo orientato con nodi $s$ e $t$:
+\begin{enumerate}
+	\item Scrive una lista di $m$ numeri, $p_1, \dots, p_m$, dove $m$ è il numero di nodi in $G$. Ogni numero nella lisat è scelto in modo non deterministico tra 1 e $m$.
+	\item Controlla se vi sono ripetizioni nella lista. Se ne trova una, \textit{rifiuta}.
+	\item Controlla se $s = p_1$ e $t = p_m$. Se una delle due è falsa, \textit{rifiuta}.
+	\item Per ogni $i$ tra $1$ e $m-1$, controlla se $(p_i, p_{i+1})$ è un arco di $G$. Se non lo è, \textit{rifiuta}. Altrimenti tutti i test sono stati superati, quindi \textit{accetta}.''
+\end{enumerate}
+Nella fase 1 la selezione non deterministica richiede chiaramente un tempo polinomiale. Nelle fasi 2 e 3, ogni parte è un semplice controllo, quindi entrambe richiedono tempo polinomiale. Infine, anche la fase 4 richiede tempo polinomiale. Quindi, questo algoritmo viene eseguito in tempo polinomiale non deterministico.
+\begin{theorem}{}{}
+Un linguaggio è in NP se esso viene deciso in tempo polinomiale da una macchina di Turing non deterministica.
+\end{theorem}
+\begin{proof}
+	Per la parte diretta di questo teorema, assumiamo $A \in NP$ e mostriamo che $A$ è deciso da NTM $N$ avente tempo polinomiale. Sia $V$ il verificatore polinomiale per $A$ la cui esistenza è assicurata dalla definizione della \textit{\nameref{def:np}}. Si supponga che $V$ è una TM avente tempo di esecuzione $n^k$ e costruiamo $N$ come segue.
+
+$N = ``$Su input $w$ di lunghezza $n$:
+\begin{enumerate}
+	\item In maniera non deterministica seleziona una stringa di $c$ di lunghezza al più $n^k$.
+	\item Esegue $V$ su input $\langle w, c \rangle$.
+	\item Se $V$ accetta, \textit{accetta}; altrimenti, \textit{rifiuta}.''
+\end{enumerate}
+Per dimostrare la direzione inversa del teorema, supponiamo che $A$ è deciso da una NTM $N$ avente tempo polinomiale e costruiamo come segue un verificatore $V$ avente tempo polinomiale.
+
+$V = ``$Su input $\langle w, c \rangle$, dove $w$ e $c$ sono stringhe:
+\begin{enumerate}
+	\item Simula $N$ su input $w$, trattando ogni simbolo di $c$ come la descrizione di una scelta non deterministica da formulare ad ogni passo.
+	\item Se questo ramo di computazione di $N$ accetta, \textit{accetta}; altrimenti, \textit{rifiuta}.''
+\end{enumerate}
+\end{proof}
+Definiamo la classe di complessità di tempo non deterministico $\mathbf{NTIME}(t(n))$ in modo analogo alla classe di complessità di tempo deterministico $\mathbf{TIME}(t(n))$.
+\begin{definition}{\nmu Classe NTIME}{ntime}
+	$\mathbf{NTIME}(t(n)) = \{L \mid L$ è un linguaggio deciso da una macchina di Turing non deterministica di tempo $O(t(n))\}$
+\end{definition}
+
+\begin{corollary}{}{}
+\[
+NP = \bigcup_k\mathbf{NTIME}\left(n^k\right)
+\]
+\end{corollary}
+\subsection{Esempi di problemi in NP}
+Una \textbf{\textit{clique}} in un grafo non orientato è un sottografo, in cui ogni due nodi sono collegati da un arco. Una \textbf{\textit{k-clique}} è una clique che contiene $k$ nodi. La seguente figura illustra un grafo con una 5-clique.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/5-clique.png}
+	\end{center}
+	\caption{Un grafo con una 5-clique}
+\end{figure}
+Il problema della clique consiste nel determinare se un grafo contiene una clique di una dimensione specificata. Sia
+\[
+CLIQUE = \{\langle G, k \rangle \mid G \text{ è un grafo non orientato contenente una }k\text{-clique}\}
+\]
+\begin{theorem}{}{}
+	$CLIQUE \in NP$
+\end{theorem}
+\begin{proof}
+	Il seguente algoritmo è un verificatore $V$ per $CLIQUE$.
+
+	$V = ``$Su input $\langle \langle G, k \rangle, c \rangle$:
+	\begin{enumerate}
+		\item Controlla se $c$ è un sottografo con $k$ nodi in $G$.
+		\item Controlla se $G$ contiene tutti gli archi tra i nodi in $c$.
+		\item Se entrambe le condizioni sono verificate, \textit{accetta}; altrimenti, \textit{rifiuta}.
+	\end{enumerate}
+\end{proof}
+Un'altra dimostrazione può essere la seguente.
+\begin{proof}
+	Definiamo la TM $N$ nel seguente modo.
+
+	$N = ``$Su input $\langle G, k \rangle$, dove $G$ è un grafo:
+	\begin{enumerate}
+		\item Non deterministicamente seleziona un sottoinsieme $c$ di $k$ nodi in $G$.
+		\item Controlla se $G$ contiene tutti gli archi tra i nodi di $c$.
+		\item Se sì, \textit{accetta}; altrimenti, \textit{rifiuta}.''
+	\end{enumerate}
+\end{proof}
+
+Come altro esempio, consideriamo il problema di aritmetica sugli interi $SUBSET\text{-}SUM$. Ci viene dato un insieme di numeri $x_1, \dots, x_k$ ed un valore obiettivo $t$. Vogliamo determinare se l'insieme contiene un sottoinsieme che somma a $t$. Quindi,
+\begin{align*}
+	SUBSET\text{-}SUM = \{\langle S, t \rangle \mid &S = \{x_1, \dots, x_k\}, \text{ e per qualche } \\
+	& \{y_1, \dots, y_l\} \subseteq \{x_1, \dots, x_k\}, \text{ si ha }\Sigma y_i = t\}
+\end{align*}
+\begin{theorem}{}{}
+	$SUBSET\text{-}SUM \in NP$.
+\end{theorem}
+\begin{proof}
+	L'algoritmo seguente è un verificatore $V$ per $SUBSET\text{-}SUM$.
+
+	$V = ``$Su inpout $\langle \langle S, t \rangle, c \rangle$:
+	\begin{enumerate}
+		\item Verifica se $c$ è una collezione di numeri la cui somma è  $t$.
+		\item Verifica se $S$ contiene tutti i numeri in $c$.
+		\item Se le condizioni sono entrambe vere, \textit{accetta}; altrimenti, \textit{rifiuta}.''
+	\end{enumerate}
+\end{proof}
+Una dimostrazione alternativa è la seguente.
+\begin{proof}
+	Definiamo la NTM $N$ come segue.
+
+	$N = ``$Su input $\langle S, t \rangle$:
+	\begin{enumerate}
+		\item In modo non deterministico seleziona un sottoinsieme $c$ dei numeri in $S$.
+		\item Verifica se $c$ è una collezione di numeri la cui somma è $t$.
+		\item Se la condizione è vera, \textit{accetta}; altrimenti, \textit{rifiuta}.''
+	\end{enumerate}
+\end{proof}
+Si osservi che i complementi di questi insiemi,  non sono elementi di NP. Verificare che qualcosa non è presente sembra essere più difficile di verificare che è presente. Definiamo una classe di complessità separata, denominata \textbf{coNP}, che contiene i linguaggi che sono il complemento di un linguaggio in NP. Non sappiamo se coNP è diversa da NP.
+\subsection{P = NP}
+Come abbiamo detto, NP è la classe dei linguaggi che sono risolubili in tempo polinomiale con una macchina di Turing non deterministica. P è la classe dei linguaggi per cui l'appartenenza può essere decisa in tempo polinomiale. Quindi, riassumendo:
+\begin{itemize}
+	\item P = la classe dei linguaggi per cui l'appartenenza è \textit{decidibile} velocemente.
+	\item NP = la classe dei linguaggi per cui l'appartenenza è \textit{verificabile} velocemente.
+\end{itemize}
+Abbiamo presentato i linguaggi $HAMPATH$ e $CLIQUE$ che sono elementi di NP, ma non è nota l'appartenenza a P. Il potere della verificabilità polinomiale sembra essere molto maggiore di quello della decidibilità polinomiale. Ma, P e NP potrebbero essere uguali. Non siamo in grado di dimostrare l'esistenza di un solo linguaggio in NP che non è in P.
+
+Il miglior metodo deterministico attualmente noto per decidere se un linguaggio è in NP utilizza tempo esponenziale. In altre parole, possiamo dimostrare che
+\[
+NP \subseteq EXPTIME = \bigcup_k TIME\left(2^{n^k}\right)
+\]
+ma non sappiamo se NP è contenuta in una classe di complessità deterministica più piccola.
+\section{NP-completezza}
+Un progresso importante sulla questione $P \neq NP$ è dovuto al lavoro di Stephen Cook e Leonid Levin che scoprirono vari problemi appartenenti a NP la cui complessità individuale è correlata a quella dell'intera classe. Se esistesse un algoritmo di tempo polinomiale per uno qualsiasi di essi, tutti i problemi in NP diventerebbero risolvibili in tempo polinomiale. Questi problemi vengono detti \textbf{\textit{NP-completi}}.
+
+Il problema NP-completo che analizziamo è il \textbf{\textit{problema della soddisfacibilità}}. Una \textbf{\textit{formula booleana}} è un'espressione che coinvolge variabili e operazioni booleane. Una formula boleana è \textbf{\textit{soddisfacibile}} se qualche assegnamento di 0 e di 1 alle variabili fa sì che la formula valga 1. La seguente formula booleana
+\[
+\phi = (\overline{x} \wedge y) \vee (x \wedge \overline{z})
+\]
+è soddisfabili percè l'assegnamento $x = 0, y = 1$ e $z = 0$ fa sì che $\phi$ valga 1. Il problema della soddisfacibilità consiste nel verificare se una formula booleana è soddisfabile. Sia
+\[
+SAT = \{\langle \phi \rangle \mid \phi \text{ è una formula booleana soddisfacibile}\}
+\]
+\begin{theorem}{\nmu SAT polinomiale}{sat_pol}
+	$SAT \in P \iff P = NP$
+\end{theorem}
+\subsection{Ridicibilità in tempo polinomiale}
+Precedentemente, abbiamo definito il concetto di riduzione di un problema ad un altro. Quando il problema $A$ si riduce al problema $B$, una soluzione per $B$ può essere usata per risolvere $A$. Ora definiamo un versione della riducibilità che tiene contro dell'efficienza di computazione. Quando il problema $A$ è ridicibile \textit{efficientemente} al problema $B$, una soluzione efficiente per $B$ può essere usata per risolvere  $A$ efficientemente.
+
+\begin{definition}{\nmu Funzione calcolabile in tempo polinomiale}{f_pol}
+	Una funzione $f: \Sigma^* \to \Sigma^*$ è una \textbf{\textit{funzione calcolabile in tempo polinomiale}} se esiste una TM $M$ che si arresta con $f(\omega)$ soltanto sul suo nastro, quando ha iniziato con un qualsasi input $\omega$.
+\end{definition}
+
+\begin{definition}{\nmu Riducibilità in tempo polinomiale}{riducibile_pol}
+	Il linguaggio $A$ è \textbf{\textit{riducibile mediante una funzione in tempo polinomiale}}, o semplicemente \textbf{\textit{riducibile in tempo polinomiale}}, al linguaggio $B$, denotato con $A \leq_P B$, se esiste una funzione calcolabile in tempo polinomiale $f: \Sigma^* \to \Sigma^*$ dove, per ogni $\omega$,
+	\[
+	\omega\in A \iff f(\omega) \in B
+	\]
+	La funzione $f$ è chiamata \textbf{\textit{riduzione di tempo polinomiale}} di $A$ a $B$.
+\end{definition}
+\begin{theorem}{}{}
+Se $A\leq_P B$ e $B \in P$, allora $A \in P$.
+\end{theorem}
+\begin{proof}
+	Sia $M$ l'algoritmo di tempo polinomiale che decide $B$ ed $f$ la riduzione di tempo polinomiale di $A$ a $B$. Descriviamo un algoritmo di tempo polinomiale $N$ che decide $A$ come segue.
+
+	$N = ``$Su input $\omega$:
+	\begin{enumerate}
+		\item Calcola $f(\omega)$.
+		\item Esegui $M$ con input $f(\omega)$ e dai in output qualsiasi cosa $M$ da in output.''
+	\end{enumerate}
+	Risulta $\omega\in A$ ogni volta che $f(\omega) \in B$ perchè $f$ è una funzione di riduzione di $A$ a $B$. Pertanto, $M$ accetta $f(\omega)$ ogni volta che $\omega \in A$. Inoltre, $N$ computa in tempo polinomiale perchè ciascuna delle sue due fasi viene eseguita in tempo polinomiale.
+\end{proof}
+Prima di mostrare una riduzione di tempo polinomiale, introduciamo $3SAT$, un caso speciale di problema di soddisfacibilità per cui tutte le formule sono in forma speciale. Un \textbf{\textit{letterale}} è una variabile booleana o una variabile booleana negata, come $x$ o $\overline{x}$. Una \textbf{\textit{clausola}} consiste in diversi letterali connessi tramite operatori $\vee$, come $(x_1 \vee \overline{x}_2 \vee \overline{x}_3 \vee \overline{x}_4)$. Una formula booleana è in \textbf{\textit{forma normale congiuntiva}} o \textbf{\textit{cnf}}, se comprende diverse clasusole connesse tramite operatori $\wedge$, come
+\[
+(x_1 \vee \overline{x}_2 \vee \overline{x}_3 \vee \overline{x}_4) \wedge (x_3 \vee \overline{x}_5 \vee x_6) \wedge (x_3 \vee \overline{x}_6)
+\]
+Essa è una \textbf{\textit{formula 3cnf}} se tutte le clausole hanno tre letterali. Sia $3SAT = \{\langle \phi \rangle \mid \phi \text{ è una formula 3cnf soddisfacibile}\}.$
+\begin{theorem}{}{}
+	$3SAT$ è riducibile in tempo polinomiale a $CLIQUE$.
+\end{theorem}
+\begin{proof}
+	Sia $\phi$ una formula con $k$ clausola come
+	\[
+	\phi = (a_1 \vee b_1 \vee c_1) \wedge (a_2 \vee b_2 \vee c_2) \wedge \dots \wedge (a_k \vee b_k \vee c_k)
+	\]
+	La riduzione $f$ genera la stringa $\langle G, k \rangle$, dove $G$ è un grafo non orientato definito come segue.
+
+	I nodi in $G$ sono organizzati in $k$ gruppi di tre nodi ciascuno, detti \textbf{\textit{triple}}, $t_1, \dots, t_k$. Ciascun tripla corrisponde ad una delle clausole in $\phi$, e ciascun nodo in una tripla corrisponde ad un letterale nella clausola associata. Si etichetti ciascun nodo di $G$ con il suo letterale corrispondente in $\phi$. Gli archi di $G$ connettono tutti meno due tipi di coppie di nodi in $G$. Non ci sono archi presenti tra nodi nella stessa tripla, e non ci sono archi presenti tra nodi con etichette complementari, come $x_2$ ed $\overline{x}_2$.
+
+	Dimostriamo che $\phi$ è soddisfacibile se e solo se $G$ ha una clique di dimensione $k$. Si supponga che $\phi$ abbia un assegnamento che la soddisfa. In questo assegnamento soddisfacente, almeno un letterale è vero in ogni clausola. In ciascuna tripla di $G$, si selezioni un nodo corrispondente al letterale vero nell'assegnamento soddisfacente. Se più di un letterale è vero in una particolare clausola, si scelga uno dei letterali veri arbitriaramente. I nodi appena selezionati formano una clique di dimensione $k$. Il numero di nodi selezionati è $k$ perchè ne è stato scelto uno per ognuna delle $k$ triple. Ciascuna coppia dei nodi selezionati è collegata da un arco perchè nessuna coppia rientra in una delle eccezioni descritte in precedenza. Non possono essere della stessa tripla perchè ne è stato scelto uno per tripla. Non possono avere etichette complementari perchè i letterali associati erano entrambi veri nell'assegnamento soddisfacente. Pertanto, $G$ contiene una clique di dimensione $k$.
+
+	Si supponga che $G$ abbia una clique di dimensione $k$. Nessuna coppia di nodi di una clique occorre nella stessa tripla perchè i nodi della stessa tripla non sono connessi da archi. Pertanto, ciascuna delle $k$ triple contiene esattamente uno dei $k$ nodi della clique. Si assegnino valori di verità alle variabili di $\phi$, in modo tale che ciascun letterale che etichetta un nodo della clique risulti vero.  Questa operazione è sempre possibile perchè due nodi etichettati in modo complementare non sono connessi da un arco, e, quindi, non possono essere entrambi nella clique. L'assegnamento così definito per le variabili soddisfa $\phi$ perchè ciascuna tripla contiene un nodo della clique, e quindi, ciascuna clausola contiene un letterale a cui è stato assegnato \textit{true}. Pertanto, $\phi$ è soddisfacibile.
+\end{proof}
+Quindi, se $CLIQUE$ è risolvibile in tempo polinomiale lo è anche $3SAT$.
+\subsection{Definzione di NP-completezza}
+\begin{definition}{\nmu NP-completezza}{np_completo}
+	Un linguaggio $B$ è \textbf{\textit{NP-completo}} se soddisfa due condizioni:
+	\begin{enumerate}
+		\item $B$ appartiene a NP, e
+		\item ogni $A$ appartenente NP è riducibile in tempo polinomiale a $B$.
+	\end{enumerate}
+\end{definition}
+\begin{theorem}{}{}
+	Se $B$ è NP-completo e $B \in P$, allora P = NP
+\end{theorem}
+\begin{proof}
+	Il teorema discende direttamente dalla definizione di riducibilità in tempo polinomiale.
+\end{proof}
+\begin{theorem}{}{}
+	Se $B$ è NP-completo e $B \leq_P C$ per $C \in $NP, allora $C$ è NP-completo.
+\end{theorem}
+\begin{proof}
+	Già sappiamo che $C$ appartiene a NP, quindi dobbiamo far vedere che ogni $A$ appartenente a NP è riducibile in tempo polinomiale a $C$, poichè $B$ è NP-completo, ogni linguaggio appartenente a NP è riducibile in tempo polinomiale a $B$, e $B$ a sua volta è riducibile in tempo polinomiale a $C$. Le riduzioni in tempo polinomiale possono essere composte; cioè, se $A$ è riducibile in tempo polinomiale a $B$ e $B$ è riducibile in tempo polinomiale a $C$, allora $A$ è riducibile in tempo polinomiale a $C$. Pertanto, ogni linguaggio appartenente a NP è riducibile in tempo polinomiale a $C$.
+\end{proof}
+\subsection{Il Teorema di Cook e Levin}
+Una volta che disponiamo di un problema NP-completo, possiamo ottenerne altri attraverso riduzioni polinomiali da esso. Tuttavia, determinare il primo problema NP-completo è più difficile. Lo facciamo provando che $SAT$ è NP-completo.
+\begin{theorem}{\nmu Teorema di Cook e Levin}{cook_levin}
+$SAT$ è NP-completo.
+\end{theorem}
+\begin{proof}
+	Prima di tutto, mostriamo che $SAT$ appartiene a NP. Una macchina non deterministica di tempo polinomiale può ipotizzare un assegnamento per una data formula $\phi$ ed accettare se l'assegnamento soddisfa $\phi$. Successivamente, prendiamo un qualsiasi linguaggio $A$ appartenente ad NP e facciamo vedere che $A$ è riducibile in tempo polinomiale a $SAT$. Sia $N$ una NTM che decide $A$ in tempo $n^k$ per qualche costante $k$. La nozione che segue aiuta a descrivere la riduzione.
+
+	Un \textbf{\textit{tableau}} per $N$ su $\omega$ è una tabella $n^k \times n^k$ le cui righe sono le configurazioni di una diramazione della computazione di $N$ su input $\omega$, come mostrato nella figura seguente.
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{images/tableau.png}
+		\end{center}
+		\caption{Un tableau}
+	\end{figure}
+	Per convenienza assumiamo che ciascuna configurazione inizi e finisca con un simbolo $\#$. Pertanto, la prima e l'ultima colonna di un tableau sono tutti $\#$. La prima riga di un tableau è la configurazione iniziale di $N$ su $\omega$, e ciascuna riga di segue dalla precedente in accordo alla funzione di transizione di $N$. Un tableau è \textbf{\textit{accettante}} se qualche riga del tableau è una configurazione accettante.
+
+	Ogni tableau accettante per $N$ su $\omega$ corrisponde ad una diramazione della computazione accettante di $N$ su $\omega$. Quindi, il problema di stabilire se $N$ accetta $\omega$ è equivalente al problema di stabilire se esiste un tableau accettante per $N$ su $\omega$.
+
+	Passiamo ora alla descrizione di tempo polinomiale $f$ di $A$ a $SAT$. Su input $\omega$, la riduzione produce una formula $\phi$. Iniziamo descrivendo le variabili di $\phi$. Siano $Q$ e $\Gamma$ l'insieme degli stati e l'alfabeto del nastro di $N$, rispettivamente. Sia $C = Q \cup \Gamma \cup \{\#\}$. Per ciascun $i$ e $j$ tra 1 ed $n^k$ e per ciascun $s \in C$, introduciamo una variabile $x_{i, j, s}$.
+
+	Ciascuna delle $\left(n^k\right)^2$ entrate di un tableau è chiamata \textbf{\textit{cella}}. La cella in riga $i$ e colonna $j$ viene denotata con $cell[i, j]$ e contiene un simbolo di $C$. Rappresentiamo i contenuti delle celle con le variabili di $\phi$. Se $x_{i, j, s} = 1$, significa che $cell[i, j]$ contiene $s$.
+
+	Progettiamo a questo punto $\phi$ in modo tale che un assegnamento che soddisfa le variabili di $\phi$ corrisponda ad un tableau accettante per $N$ su $\omega$. La formula $\phi$ è l'AND di quattro parti: $\phi_{cell} \wedge \phi_{start} \wedge \phi_{move} \wedge \phi_{accept}$. Descriviamo ciascuna parte, una per volta.
+
+	La prima cosa che dobbiamo garantire al fine di ottenere una corrispondenza tra un assegnamento ed un tableau è che l'assegnamento ponga ad 1 esattamente una variabile per ciascuna cella. La formula $\phi_{cell}$ garantisce questo requisito in termini di operazioni booleane:
+	\[
+	\phi_{cell} = \bigwedge_{1 \leq i,j\leq n^k}\left[\left(\bigvee_{s \in C}x_{i, j, s}\right) \wedge \left(\bigwedge_{s, t \in C, s \neq t}(\overline{x_{i, j, s}} \vee \overline{x_{i, j, t}})\right)\right]
+	\]
+	La prima parte della formula stabilisce che almeno una variabile assume valore 1 nella cella corrispodente. La seconda parte stabilisce che non più di una variabile assume valore 1.
+
+	Qualsiasi assegnamento alle variabili che soddisfa $\phi$ (e di conseguenza $\phi_{cell}$) deve avere esattamente una variabile ad 1 per ogni cella. Pertanto, qualsiasi assegnamento che soddisfa $\phi$ specifica un simbolo in ciascuna cella della tabella. Le parti $\phi_{start}, \phi_{move}$ e $\phi_{accept}$ garantiscono che questi simboli corrispondano realmente ad un tableau accettante.
+
+	La formula $q_{start}$ assicura che la prima riga della tabella sia la configurazione iniziale di $N$ su $\omega$, richiedendo esplicitamente che le variabili  siano ad 1:
+	\begin{align*}
+		\phi_{start} = &x_{1, 1, \#} \wedge x_{1, 2, q_0} \wedge \\
+		& x_{1, 3 \omega_1} \wedge x_{1, 4, \omega_2} \wedge \dots \wedge x_{1, n + 2, \omega_n} \wedge \\
+		& x_{1, n+3, \sqcup} \wedge \dots \wedge x_{1, n^k - 1, \sqcup} \wedge x_{1, n^k, \#}
+	\end{align*}
+	La formula $\phi_{accept}$ garantisce che una configurazione accettante sia presente nel tableau. Essa assicura che $q_{accept}$, il sibmolo per lo stato di accettazione, compaian in una delle celle del tableau, richiedendo che una delle variabili corrispondenti sia a 1:
+	\[
+	\phi_{accept} = \bigvee_{1 \leq i, j \leq n^k} x_{i, j, q_{accept}}
+	\]
+	Infine, la formula $\phi_{move}$ garantisce che ciascuna riga del tableau corrisponda ad una configurazione che segue legittimamente dalla configurazione della riga precedente, in accordo alle regole di $N$. Lo fa assicurando che ogni finestra di celle $2 \times 3$ sia lecita. Diciamo che una finestra è \textbf{\textit{lecita}} se non viole le azioni specificate della funzione di transizione di $N$. Per esempio, siano $a, b$ e $c$ elementi dell'alfabeto di nastro,  e $q_1$ e $q_2$ stati di $N$. Si assuma che nello stato $q_1$ con la testina che legge una $a$, $N$ scrive una $b$, resta nello stato $q_1$, e muove a destra; e che quando nello stato $q_1$ con la testina che legge una $b$,  $N$ non deterministicamente
+	\begin{enumerate}
+		\item scrive una $c$, entra in $q_2$, e muove a sinistra, oppure
+		\item scrive una $a$, entra in $q_2$, e muove a destra.
+	\end{enumerate}
+	In termini formali $\delta(q_1, a) = \{(q_1, b, R)\}$ e $\delta(q_1, b) = \{(q_2, c, L), (q_2, a, R)\}$. Esempi di finestre lecite per questa macchina sono le seguenti.
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.7\textwidth]{images/finestre.png}
+		\end{center}
+		\caption{Esempi di finestre lecite}
+	\end{figure}
+	Esempi di finestre non lecite sono:
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=0.7\textwidth]{images/finestre_non_lecite.png}
+		\end{center}
+		\caption{Esempi di finestre non lecite}
+	\end{figure}
+	\begin{proposition}{}{}
+	Se la riga superiore del tableau è la configurazione iniziale ed ogni finestra nel tableau è lecita, ciascuna riga del tableau è una configurazione che segue legittimamente dalla precedente.
+	\end{proposition}
+	Proviamo l'asserto considerando ogni coppia di configurazioni adiacenti nel tableau, indicate come la configurazione superiore e la configurazione inferiore. Nella configurazione superiore, ogni cella che contiene un simbolo di nastro e non è adiacente ad un simbolo di stato rappresenta la cella centrale superiore in una finestra la cui riga superiore non contiene stati. Pertnato, questo stesso simbolo deve comparire al centro in basso nella finestra. La finestra contenente il simbolo di stato nella cella centrale superiore garantisce che le tre posizioni corrispondenti vengano aggiorante consistentemente tramite la funzione di transizione.
+
+	Torniamo ora alla costruzione di $\phi_{move}$. Essa garantisce che ttute le finestre nel tableau sono lecite. Ciascuna finestra contiene sei celle, che possono essere impostate in un numero fissato di modi per produrre una finestra lecita. La formula $\phi_{move}$ stabilisce che le impostazioni delle sei celle devono essere uno di questi modi, ossia
+	\[
+	\phi_{move} = \bigwedge_{1 \leq i < n^k, 1 < j < n^k} \left(\text{la finestra }(i, j)\text{ è lecita}\right)
+	\]
+	che possiamo scrivere come:
+	\[
+	\bigwedge_{a_1, \dots, a_6} \left(x_{i, j-1, a_1} \wedge x_{i, j, a_2} \wedge x_{i, j + 1, a_3} \wedge x_{i + 1, j-1, a_4} \wedge x_{i +1, j, a_5} \wedge x_{i + 1, j + 1, a_6}\right)
+	\]
+	Esaminiamo la dimensione di $\phi$ per analizzare la complessità della riduzione.
+
+	Prima di tutto, stimiamo il numero di variabili che ha. Il tableau è una tabella $n^k \times n^k$, quindi contiene $n^{2k}$ celle. Ciascuna cella ha $l$ variabili associate ad essa, dove $l = \left|C\right|$. Poichè $l$ dipende soltanto dalla TM $N$ e non dalla lunghezza dell'input $n$, il numero totale di variabili è $O\left(n^{2k}\right)$.
+
+	Stimiamo la dimensione di ciascuna delle parti di $\phi$. La formula $\phi_{cell}$ scandisce ogni singola cella del tableau, quindi la sua dimensione è $O\left(n^{2k}\right)$. La formula $q_{start}$ scandisce la prima riga del tableau, quindi la sua dimensione è $O\left(n^k\right)$. Le formule $q_{move}$ e $q_{accept}$ contengono un frammento di dimensione fissata della formula per ciascuna cella del tableau, quindi la loro dimensione è $O\left(n^{2k}\right)$. Pertanto, la dimensione complessiva di $\phi$ è $O\left(n^{2k}\right)$. Tale limite è sufficiente perchè dimostra che la dimensione di $\phi$ è polinomiale in $n$. Pertando, possiamo costruire facilmente una riduzione che produce $\phi$ in tempo polinomiale dall'input $\omega$.
+\end{proof}
+Quindi, abbiamo dimostrato il \namerefl{th:cook_levin}.
+
+La NP-completezza può essere provata con una riduzione di tempo polinomiale da un linguaggio che è già noto essere NP-completo. Possiamo usare $SAT$ per questo scopo; ma usare $3SAT$ è solitamente più facile.
+\begin{corollary}{}{}
+$3SAT$ è NP-completo.
+\end{corollary}
+\begin{proof}
+	Ovviamente $3SAT$ appartiene a NP, quindi dobbiamo provare solamente che tutti i linguaggi appartenenti a NP si riducono a $3SAT$ in tempo polinomiale. Un modo per farlo è facendo vedere che $SAT$ si riduce in tempo polinomiale a $3SAT$. Invece, lo facciamo modificando la dimostrazione del \namerefl{th:cook_levin}, in modo tale che produca direttamente una formula in cnf con tre letterali per clausola.
+	La formula del \namerefl{th:cook_levin} produce una formula è già quasi in cnf. La formula $\phi_{cell}$ è un grosso AND di sottoformule. Quindi, $\phi_{cell}$ è in cnf. La formula $q_{start}$ è un grosso AND tra variabili, quindi è in cnf. La formula $\phi_{accept}$ è un grosso OR di variabili, ed è perciò una singola clausola. La formula $\phi_{move}$ è l'unica che non è in forma cnf, ma possiamo facilmente convertirla.
+
+	$\phi_{move}$ è un grosso AND di sottoformule. La legge distributiva, stabilisce che possiamo sostituire un OR di vari AND con un equivalente AND di vari OR. Il risultato è una formula che è in cnf.
+
+	Ora che abbiamo scritto la formula in cnf, la convertiamo in una con tre letterali per clausola. In ciascuna clausola che correntemente ha uno o due letterali, duplichiamo uno dei due letterali, fino a quando il numero totale diventa tre. Ciascuna clausola che ha più di tre letterali la dividiamo in più clausole e aggiungiamo ulteriori variabili per preservare la soddisfacibilità o non della clausola originale. Per esempio, sostituiamo la clausola $(a_1 \vee a_2 \vee a_3 \vee a_4)$ con l'espressione di due clausole $(a_1 \vee a_2 \vee z) \wedge (\overline{z} \vee a_3 \vee a_4)$. In generale, se la clausola contiene $l$ letterali,
+	\[
+	(a_1 \vee a_2 \vee \dots \vee a_l)
+	\]
+	possiamo sostituirla con le $l-2$ clausole
+	\[
+	(a_1 \vee a_2 \vee z_1) \wedge (\overline{z_1} \vee a_3 \vee z_2) \wedge (\overline{z_2} \vee a_4 \vee z_3) \wedge \cdots \wedge (\overline{z_{l-3}} \vee a_{l-1} \vee a_{l})
+	\]
+	È possibile verificare che la nuova formula è soddisfacibile se e solo se la formula originale lo era, quindi la dimostrazione è completa.
+\end{proof}
+
 \end{document}
