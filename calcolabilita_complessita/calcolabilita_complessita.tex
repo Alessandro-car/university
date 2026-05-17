@@ -2528,5 +2528,164 @@ $3SAT$ è NP-completo.
 	\]
 	È possibile verificare che la nuova formula è soddisfacibile se e solo se la formula originale lo era, quindi la dimostrazione è completa.
 \end{proof}
+\chapter{Complessità di spazio}
+In questo capitolo valutiamo la complessità dei problemi computazionali in termini della quantità di spazio, o memoria, che essi richiedono. Come per la complessità di tempo, abbiamo necessità di selezionare un modello per misurare lo spazio utilizzato da un algoritmo. Usiamo le macchine di Turing perchè sono matematicamente semplici ed abbastanza vicine ai calcolatori reali.
 
+\begin{definition}{\nmu Complessità di spazio}{complessita_spazio}
+	Sia $M$ una macchina di Turing deterministica che si arresta su tutti gli input. La \textbf{\textit{complessità di spazio}} di $M$ è la funzione $f: \mathbbm{N} \to \mathbbm{N}$, dove $f(n)$ è il numero massimo di celle del nastro che $M$ scandisce su ogni input di lunghezza $n$. Se la complessità di spazio di $M$ è $f(n)$, diciamo anche che $M$ computa in spazio $f(n)$.
+
+	Se $M$ è una macchina di Turing non deterministica dove tutte le diramazioni si arrestano su tutti gli input, definiamo la sua complessità di spazio $f(n)$ come il massimo numero di celle del nastro che $M$ scandisce su qualsiasi diramazione della sua computazione per ogni input di lunghezza $n$.
+\end{definition}
+
+Stimiamo la complessità di spazio delle macchine di Turing attravereso la notazione asintotica.
+\begin{definition}{\nmu Classi di complessità di spazio}{classi_spazio}
+	Sia $f: \mathbbm{N} \to \mathbbm{R}^+$ una funzione. Le \textbf{\textit{classi di complessità di spazio}}, $\mathbf{SPACE}(f(n))$ e $\mathbf{NSPACE}(f(n))$, sono definite come segue.
+	\begin{align*}
+		\mathbf{SPACE}(f(n)) = \{L \mid L & \text{ è un linguaggio deciso da una} \\
+		& \text{macchina di Turing deterministica} \\
+		& \text{con spazio }O(f(n))\}
+	\end{align*}
+	\begin{align*}
+		\mathbf{NSPACE}(f(n)) = \{L \mid L & \text{ è un linguaggio deciso da una} \\
+		& \text{macchina di Turing non deterministica} \\
+		& \text{con spazio }O(f(n))\}
+	\end{align*}
+\end{definition}
+\begin{example}{}{}
+Nel capitolo precedente abbiamo introdotto il problema NP-completo $SAT$. Adesso mostriamo che esso può essere risolto con un algoritmo che richiede una quantità di spazio lineare.
+
+$M_1 = ``$Su input $\langle \phi \rangle$, dove $\phi$ è una formula booleana:
+\begin{enumerate}
+	\item Per ogni assegnamento di verità alle variabili $x_1, \dots, x_m$ di $\phi$:
+	\begin{enumerate}
+		\item Valuta $\phi$ sull'assegnamento di verità.
+	\end{enumerate}
+	\item Se $\phi$ vale 1, \textit{accetta}; altrimenti, \textit{rifiuta}.''
+\end{enumerate}
+La macchina $M_1$ computa in spazio lineare perchè ad ogni iterazione del ciclo può riutilizzare la stessa porzione del nastro. La macchina ha necessità di memorizzare soltanto l'assegnamento di verità corrente, e ciò può essere fatto con spazio $O(m)$. Il numero di variabili $m$ è al più $n$, la lunghezza dell'input, pertanto la macchina computa in spazio $O(n)$.
+\end{example}
+\section{Teorema di Savitch}
+Il teorema di Savitch mostra che le macchine deterministiche possono simulare le macchine non deterministiche usando una quantità di spazio sorprendentemente molto piccola. Per la complessità di tempo, tale simulazione sembra richiedere un incremento esponenziale in tempo. Per la complessità di spazio, il teorema di Savitch mostra che ogni TM non deterministica che usa spazio $f(n)$ può essere convertita in una TM deterministica che usa soltanto spazio $f^2(n)$.
+\begin{theorem}{\nmu Teorema di Savitch}{savitch}
+	Per ogni funzione $f: \mathbbm{N} \to \mathbbm{R}^+$, dove $f(n) \geq n$
+	\[
+	\mathbf{NSPACE}(f(n)) \subseteq \mathbf{SPACE}\left(f^2(n)\right)
+	\]
+\end{theorem}
+L'idea della dimostrazione è la seguente. Consideriamo il seguente problema. Date due configurazioni della NTM, $c_1$ e $c_2$, e un numero $t$, verifichiamo se la NTM può transire  da $c_1$ a $c_2$ in al più $t$ passi, usando soltanto spazio $f(n)$. Chiamiamo questo problema il \textbf{\textit{problema della resa}} o \textbf{\textit{yeldability problem}}. Risolvendo il problema della resa, dove $c_1$ è la configurazione iniziale, $c_2$ è la configurazione finale, e $t$ è il numero massimo di passi che la macchina non deterministica può effettuare, possiamo stabilire se la macchina accetta il proprio input.
+
+Per fare ciò, forniamo un algoritmo ricorsivo deterministico che risolve il problema della resa. L'algoritmo opera creando una configurazione intermedia $c_m$, e verificando ricorsivamente se $c_1$ può portare a $c_m$ in al più $\sfrac{t}{2}$ passi, e se $c_m$ può portare a $c_2$ in al più $\sfrac{t}{2}$ passi. La riutilizzazione dello spazio per ognuno dei due test ricorsivi permette un risparmio di spazio significativo.
+
+Questo algoritmo richiede spazio per memorizzare le chiamate ricorsive. Ciascun livello della ricorsione usa spazio $O(f(n))$ per memorizzare una configurazione. La profondità della ricorsione è $\log t$, dove $t$ è il tempo massimo che la macchina non deterministica può usare su ogni diramazione. Risulta $t = 2^{O(f(n))}$, quindi $\log t = O(f(n))$. Pertanto la simulazione deterministica usa spazio $O\left(f^2(n)\right)$.
+\begin{proof}
+	Sia $N$ una NTM che decide il linguaggio $A$ in spazio $f(n)$. Costruiamo una TM deterministica $M$ che decide $A$. La macchina $M$ utilizza la procedura \texttt{CANYIELD}, che verifica se una delle configurazioni di $N$ può darne un'altra entro uno specificato numero di passi. Questa proceudra risolve il problema della resa.
+
+	Sia $\omega$ una stringa di input per $N$. Per le configurazioni $c_1$ e $c_2$ di $N$, e l'intero $t$, \texttt{CANYIELD($c_1, c_2, t$)} dà in output \textit{accetta} se  $N$ può passare dalla configurazione $c_1$ alla configurazione $c_2$ in $t$ o meno passi attraverso un qualche cammino non deterministico. Altrimenti, \texttt{CANYIELD} dà in output \textit{rifiuta}. Per convenienza, assumiamo che $t$ sia una potenza di 2.
+
+	\texttt{CANYIELD} = ``Su input $c_1, c_2$ e $t$:
+	\begin{enumerate}
+		\item Se $t=1$, allora verifica direttamente se $c_1 = c_2$ o se $c_1$ dà $c_2$ in un passo, in accordo alle regole di $N$. \textit{Accetta} se uno dei due test ha successo; \textit{rifiuta} se falliscono entrambi.
+		\item Se $t > 1$, allora per ogni configurazione $c_m$ di $N$ usando spazio $f(n)$:
+		\begin{enumerate}
+			\item Esegui \texttt{CANYIELD$\left(c_1, c_m, \sfrac{t}{2}\right)$}
+			\item Esegui \texttt{CANYIELD$\left(c_m, c_2, \sfrac{t}{2}\right)$}
+			\item Se i passi 3 e 4 sono entrambi accettanti, allora \textit{accetta}.
+		\end{enumerate}
+		\item Se non ha ancora accettato, \textit{rifiuta}''.
+	\end{enumerate}
+	Ora definiamo $M$ per simulare $N$ come segue. Prima modifichiamo $N$ in modo tale che, quando accetta, cencella il proprio nastro e muove la testina sulla cella più a sinistra, entrando in una configurazione detta $c_{accept}$. Denotiamo con $c_{start}$ la configurazione iniziale di $N$ su $\omega$. Selezioniamo una costante $d$ in modo tale che $N$ abbia al più $2^{df(n)}$ configurazioni usando un nastro di $f(n)$ celle, dove $n$ è la lunghezza di $\omega$. Allora sappiamo che $2^{df(n)}$ fornisce un limite superiore al tempo di esecuzione di ogni diramazione di $N$ su $\omega$.
+
+	$M = ``$Su input $\omega$:
+	\begin{enumerate}
+		\item Fornisci in output il risultato di \texttt{CANYIELD$\left(c_{start}, c_{accept}, 2^{df(n)}\right)$}''.
+	\end{enumerate}
+
+	L'algoritmo \texttt{CANYIELD} ovviamente risolve il problema della resa e, di conseguenza, $M$ simula correttamente $N$. Dobbiamo verificare che $M$ lavora in spazio $O\left(f^2(n)\right)$.
+
+	Ogni qualvolta che \texttt{CANYIELD} invoca se stessa ricorsivamente, memorizza il numero della fase corrente e i valori di $c_1, c_2$ e $t$ in una pila, in modo tale che questi valori possano essere recuperati dalla chiamata ricorsiva.
+
+	Ciascun livello della ricorsione usa perciò uno spazio aggiuntivo pari a $O(f(n))$. Inoltre, ciascun livello della ricorsione divide la taglia di $t$ a metà. Inizialmente $t$ è pari a $2^{df(n)}$, e quindi la profondità della ricorsione è $O\left(\log 2^{df(n)}\right)$ ovvero $O(f(n))$. Pertanto, lo spazio totale usato è $O\left(f^2(n)\right)$.
+
+	Una difficoltà sorge in quanto $M$ deve conoscere il valore di $f(n)$ quando invoca \texttt{CANYIELD}. Possiamo farlo modificando $M$ in modo tale che tenti con $f(n) = 1, 2, \dots$ . Per ciascun valore $f(n) = i$, l'algoritmo modificato usa \texttt{CANYIELD} per stabilire se la configurazione di accettazione è raggiungibile. Se la configurazione finale è raggiungibile, $M$ accetta; se nessuna configurazione di lunghezza $i + 1$ è raggiungibile, $M$ rifiuta; e altrimenti, $M$ continua con $f(n) = i + 1$.
+\end{proof}
+\section{La classe PSPACE}
+In analogia con la classe $P$, definiamo la classe $PSPACE$ per la complessità di spazio.
+\begin{definition}{\nmu PSPACE}{pspace}
+	$\mathbf{PSPACE}$ è la classe dei linguaggi che sono decidibili in spazio polinomiale con una macchina di Turing deterministica.
+
+	In altre parole,
+	\[
+	PSPACE = \bigcup_kSPACE\left(n^k\right)
+	\]
+\end{definition}
+
+Definiamo NPSACE, la controparte non deterministica di PSPACE. Tuttavia, in virtù del \namerefl{th:savitch}, PSPACE = NPSPACE, perchè il quadrato di un polinomio è ancora un polinomio.
+
+Esaminiamo la relazione di PSPACE con P ed NP. Osserviamo che $P \subseteq PSPACE$, perchè una macchina che esegue velocemente non può usare una quantità di spazio grande. Precisamente, per $t(n) \geq n$, qualsiasi macchina che opera in tempo $t(n)$ può usare al più spazio $t(n)$, perchè una macchina può esplorare al più una nuova cella ad ogni passo della propria esecuzione. Similmente, $NP \subseteq NPSPACE$ e, pertanto, $NP \subseteq PSPACE$.
+
+Viceversa, possiamo limitare la complessità di tempo di una macchina di Turing in termini della sua complessità di spazio. Per $f(n) \geq n$, una TM che usa spazio $f(n)$ può avere al più $f(n)2^{O(f(n))}$ configurazioni differenti. Una computazione di una TM che si arresta non può ripetere una configurazione. Pertanto, una TM che usa spazio $f(n)$ deve computare in tempo $f(n)2^{O(f(n))}$, quindi $PSPACE \subseteq EXPTIME = \bigcup_kTIME\left(2^{n^k}\right)$.
+Quindi le relazioni tra le classi di complessità sono le seguenti
+\[
+P \subseteq NP \subseteq PSPACE = NPSPACE \subseteq EXPTIME
+\]
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{images/relazioni_compl.png}
+	\end{center}
+	\caption{Relazioni tra P, NP, PSPACE e EXPTIME}
+\end{figure}
+\section{PSPACE-Completezza}
+Introduciamo la nozione di PSPACE-completezza per la classe PSPACE.
+\begin{definition}{\nmu PSPACE-completezza}{pspace_completo}
+	Un linguaggio $B$ è \textbf{\textit{PSPACE-completo}} se soddisfa due condizioni:
+	\begin{enumerate}
+		\item $B$ appartiene a PSPACE, e
+		\item qualsiasi $A$ appartiene a PSPACE è riducibile in tempo polinomiale a $B$.
+	\end{enumerate}
+	Se $B$ soddisfa soltanto la condizione 2, diciamo che è \textbf{\textit{PSPACE-hard}}.
+\end{definition}
+I problemi completi sono importanti perchè sono esempi dei problemi più difficili in una classe di complessità. Un problema completo è più difficile perchè ogni altro problema nella classe può essere facilmente ridotto ad esso.
+\subsection{Il problema TQBF}
+Il primo esempio di problema PSPACE-completo richiede una generalizzazione del problema della soddisfacibilità. Il problema TBQF consiste nel determinare se una formula booleana \textit{completamente quantificata} è vera o falsa. Una formula booleana si dice completamente quantificata se ogni variabile presente nella formula è presente nell'ambito di qualche quantificatore, ad esempio:
+\[
+\phi = \forall x\exists y \left[(x \vee y) \wedge (\overline{x} \vee \overline{y})\right]
+\]
+è completamente quantificata.
+\[
+TBQF = \{\langle \phi \rangle \mid \phi \text{ è una formula booleana vera completamente quantificata}\}
+\]
+\begin{theorem}{}{}
+	$TBQF$ è PSPACE-completo.
+\end{theorem}
+\begin{proof}
+	Prima di tutto, diamo un algoritmo polinomiale in spazio che decide $TBQF$.
+
+	$T = ``$Su input $\langle \phi \rangle$, una formula booleana completamente quantificata:
+	\begin{enumerate}
+		\item Se $\phi$ non contiene quantificatori, allora è un'espressione con valori costanti soltanto, quindi valuta $\phi$ e \textit{accetta} se è vera; altrimenti, \textit{rifiuta}.
+		\item Se $\phi$ è uguale a $\exists x\ \psi$, invoca ricorsivamente $T$ su $\psi$, prima con 0 al posto di $x$ e poi con 1 al posto di $x$. Se uno dei due risultati è di accettazione, allora \textit{accetta}; altrimenti, \textit{rifiuta}.
+		\item Se $\phi$ è uguale a $\forall x\ \psi$, invoca ricorsivamente $T$ su $\psi$, prima con 0 al posto di $x$ e poi con 1 al posto di $x$. Se entrambi i risultati sono di accettazione, allora \textit{accetta}; altrimenti, \textit{rifiuta}.''
+	\end{enumerate}
+	L'algoritmo $T$ decide $TBQF$. Per analizzare la sua complessità di spazio, notiamo che la profondità della ricorsione è data al più dal numero di variabili. A ciascun livello dobbiamo memorizzare soltanto il valore di una variabile, quindi, lo spazio totale utilizzato è $O(m)$, dove $m$ è il numero di variabili. Pertanto, $T$ computa in spazio lineare.
+
+	Adesso mostriamo che $TBQF$ è PSPACE-hard. Sia $A$ un linguaggio deciso da una TM $M$ in spazio $n^k$ per qualche costante $k$. Diamo una riduzione di tempo polinomiale di $A$ a $TBQF$.
+
+	La riduzione associa una stringa $\omega$ ad una formula booleana quantificata $\phi$ che è vera se e solo se $M$ accetta $\phi$. Per mostrare come costruire $\phi$, risolviamo un problema più generale. Usando due collezioni di variabili denotate con $c_1$ e $c_2$, rappresentanti due configurazioni, ed un numero $t > 0$, costruiamo una formula $\phi_{c_1, c_2, t}$. Se assegniamo a $c_1$ e $c_2$ configurazioni reali, la formula è vera se e solo se $M$ può andare da  $c_1$ a $c_2$ in al più $t$ passi. Allora possiamo definire $\phi$ come la formula $\phi_{c_{start}, c_{accept}, h}$ dove $h = 2^{df(n)}$, per una costante $d$, scelta in modo tale che $M$ abbia non più di $2^{df(n)}$ configurazioni possibili su un input di lunghezza $n$. Sia $f(n) = n^k$. Per comodità, assumiamo che $t$ sia una potenza di 2. La formula codifica i contenuti delle celle di una configurazione come nel \namerefl{th:cook_levin}. Ciascuna ha diverse variabili ad essa associate, una per ogni simbolo del nastro e stato, corrispondenti alle possibili situazioni per la cella. Ciascuna configurazione ha $n^k$ celle e, quindi, è codificata da $O\left(n^k\right)$ variabili.
+
+	Se $t = 1$, possiamo costruire facilmente $\phi_{c_1, c_2, t}$. Progettiamo la formula per dire che $c_1$ risulta uguale a $c_2$, oppure che $c_2$ segue da $c_1$ tramite un singolo passo di $M$. Esprimiamo l'uguaglianza scrivendo un'espressione booleana che afferma che ciascuna delle variabili che rappresentano $c_1$ contiene lo stesso valore booleano della variabile corrispondente che rappresenta $c_2$. Esprimiamo la seconda possibilità usando la tecnica presentata nel \namerefl{th:cool_levin}. Cioè, possiamo esprimere $c_1$ dà $c_2$ in un singolo passo di $M$ scrivendo espressioni booleane che affermano che il contenuto di ciascuna tripla di celle di $c_1$ dà correttamente il contentuto della tripla di celle di $c_2$ corrispondente.
+
+	Se $t > 1$, costruiamo $\phi_{c_1, c_2, t}$ ricorsivamente. Sia
+	\[
+	\phi_{c_1, c_2, t} = \exists m_1 \left[\phi_{c_1, m_1, \sfrac{t}{2}} \wedge \phi_{m_1, c_2, \sfrac{t}{2}}\right]
+	\]
+	Il simbolo $m_1$ rappresenta una configurazione di $M$. La formula $\phi_{c_1, c_2, t}$ assume il valore corretto ogni volta che $M$ può andare da $c_1$ a $c_2$ in al più $t$ passi. Tuttavia, è troppo grande. Ogni livello della ricorsione dimezza $t$ ma raddoppia la dimensione della formula. Pertanto, otteniamo una formula di dimensione circa $t$. Inizialmente $t = 2^{df(n)}$, e quindi il metodo produce una formula di dimensione esponenziale.
+
+	Per ridurre la dimensione della formula, utilizziamo il quantificatore $\forall$, in aggiunta al qualificatore $\exists$. Sia
+	\[
+	\phi_{c_1, c_2, t} = \exists m_1 \forall (c_3, c_4) \in \{(c_1, m_1), (m_1, c_2)\}\left[\phi_{c_3, c_4, \sfrac{t}{2}}\right]
+	\]
+	Scrivendo $\forall (c_3, c_4) \in \{(c_1, m_1), (m_1, c_2)\}$, indichiamo che le variabili che rappresentano le configurazioni $c_3$ e $c_4$ possino assumere i valori delle variabili di $c_1$ ed $m_1$ oppure di $m_1$ e $c_2$, rispettivamente, e che la formula risultante $\phi_{c_3, c_4, \sfrac{t}{2}}$ è vera in entrambi i casi.
+
+	Per calcolare la dimensione della formula $\phi_{c_{start}, c_{accept}, h}$ dove $h = 2^{df(n)}$, notiamo che ciascun livello della ricorsione aggiunge una porzione della formula che è lineare nella dimensione delle configurazioni, ed è perciò di dimensione $O(f(n))$. Il numero di livelli della ricorsione è $\log\left(2^{df(n)}\right)$, ovvero $O(f(n))$. Pertanto, la dimensione della formula risultante è $O\left(f^2(n)\right)$
+\end{proof}
 \end{document}
