@@ -5321,4 +5321,125 @@ Per ottenere l'impostazione attuale della priorità, occorre chiamare il metodo 
 \[
 \texttt{final int getPriority()}
 \]
+\section{Programmazione in rete}
+La programmazione in rete è sempre stata complessa. Le principali difficoltà sono dovute alla necessità, da parte del programmatore, di conoscere i dettagli della rete, dei protocolli e persino dell'hardware. Al programmatore si richiede di utilizzare delle librerie per connettersi a un nodo della rete, per impacchettare e spacchettare i messaggi, per inviare i messaggi, tutto secondo rigidi protocolli di \textit{handshaking}.
+
+I progettisti di Java hanno reso la programmazione in rete molto simile alla lettura e scrittura di file, con la differenza che i ``file'' esistono su un elaboratore remoto e che questo può decidere esattamente cosa vuole fare dell'informazione richiesta o inviata.
+
+Il modello di programmazione usato è quello di un file; infatti si fa il wrapping di una connessione di rete, un \textbf{\textit{socket}}, in un flusso di oggetti, in modo da utilizzare le stesse invocazioni di metodo utilizzate per i flussi di oggetti al fine di scambiare informazioni. Grazie al fatto che Java è multipiattaforma, i dettagli relativi alla rete sono stati astratti e presi in carico dalla JVM e dall'installazione locale di Java. Infine, le caratteristiche multithreding di Java facilitano un altro aspetto importante della programmazione in rete: la gestione di connessioni multiple concorrenti.
+\subsection{Identificazione di una macchina}
+Sicuramente, al fine di comunicare con un altro nodo della rete, è necessario connettersi con l'elaboratore giusto. Occorre dunque essere in grado di identificarlo univocamente. L'identificazione del nodo avviene mediante l'IP. Esistono due modi per identificare l'IP:
+\begin{itemize}
+	\item Mediante \textbf{DNS} (\textit{Domain Name System})
+	\item Mediante \textbf{\textit{dot notation}}. Ad esempio 194.207.187.74
+\end{itemize}
+In Java si usa una speciale classe per rappresentare l'IP in entrambe le forme: \textit{InetAddress} del package \textit{java.net}.
+
+La classe dispone di un metodo statico \texttt{InetAddress.getByName()} che permette di ottenere un oggetto \textit{InetAddress} a partire dal nome o dall'indirizzo IP di un host.
+\[
+\texttt{InetAddress addr = InetAddress.getByName(null);}
+\]
+restituisce l'indirizzo IP del ``localhost''.
+\subsection{Uso del Port}
+Un indirizzo IP non è sufficiente per individuare un server unico. Infatti possono esistere più server su una stessa macchina. Quando si imposta un client o un server è necessario scegliere la ``porta'', \textbf{\textit{port}}, sul quale sia il server che il client decidono di connettersi.
+
+La porta non è una locazione fisica su una macchina ma è un'\textit{astrazione software}. Tipicamente ogni servizio è associato ad un singolo numero di porta su una macchina server. Il programma client non deve conoscere soltanto l'indirizzo IP, ma anche il \textit{port} giusto per il servizio richiesto. Ad esempio:
+\[
+\texttt{appice.di.uniba.it:8000}
+\]
+8000 è il port associato ad un MS Personal Web Server.
+\subsection{Socket}
+In Java si usa un socket per creare la connessione ad un'altra macchina. In particolare, per stabilire una connessione fra due computer occorrerà disporre di un socket su ogni macchina. Il \textit{socket} è un'astrazione software usata per rappresentare i terminali di una connessione tra due macchine. Creando un socket in Java, si ottengono un \textbf{\textit{InputStream}} e un \textbf{\textit{OutputStream}} al fine di abiliatre la connessione in un modo simile a un I/O su stream di oggetti.
+
+Ci sono due classi socket basate su stream:
+\begin{itemize}
+	\item \textbf{\textit{ServerSocket}} che il server usa per ascoltare una richiesta di connessione.
+	\item \textbf{\textit{Socket}} usata dal client per inizializzare la connessione.
+\end{itemize}
+Una volta che un client richiede una connessioen socket, il \textit{ServerSocket} restituisce (mediante il metodo \textit{accept()}) un \textit{Socket} corrispondente attraverso il quale la comunicazione può avvenire dal lato server. Solo dopo che è avvenuto tutto ciò si ha una connessione ``Socket-to-Socket''.
+
+Quando si crea un ServerSocket, si specifica solo un numero di port. Non occorre specificare un indirzzo IP poichè esso è già associato alla macchina sul quale il server gira. Al contrario, quando si crea un Socket lato client, occorre specificare tanto l'indirzzo IP quanto il numero di port al quale connettersi. Il socket restituito da \texttt{ServerSocket.accept()} conterrà poi entrambe le informazioni. A questo punto si usano i metodi \texttt{getInputStream()} e \texttt{getOutputStream()} per produrre i corrispondenti oggetti delle classi \textit{InputStream} e \textit{OutputStream} a partire dai singoli \textit{Socket}. Gli stream ottenuti permettono, quindi, di lavorare con classi buffer e classi di formattazione. Proprio come avveniva nell'I/O da file.
+\begin{example}{\nmu Esempio di server}{server}
+\lstinputlisting[style=javastyle]{esempio-di-server.txt}
+\end{example}
+\begin{example}{\nmu Esempio di client}{client}
+\lstinputlisting[style=javastyle]{esempio-di-client.txt}
+\end{example}
+
+Un problema di non poca rilevanza è la necessità di manipolare più connessioni contemporaneamente. Per servire più client contemporaneamente si ricorre al multithreading. Lo schema base prevede la creazione di un singolo \textit{ServerSocket} sul server e chiamare \texttt{accept()} per attendere una connessione. Quando la connessione è attiva e \texttt{accept()} termina la sua esecuzione e si utlizza il Socket ottenuto in un nuovo thread per servire un particolare client. Il thread principale, intanto, richiamerà \texttt{accept()} per attendere un nuovo client.
+\begin{example}{\nmu Server con multithreading}{server_multithreading}
+\begin{lstlisting}[style=javastyle]
+import java.io.*;
+import java.net.*;
+
+public class MultiJabberServer {
+	static final int PORT = 8080;
+	public static void main(String[] args) throws IOException {
+		ServerSocket s = new ServerSocket(PORT);
+		System.out.println("Server Started");
+		try {
+			while(true) {
+				// Si blocca finche' non si verifica una connessione:
+				Socket socket = s.accept();
+				try {
+      		new ServeOneJabber(socket);
+				} catch(IOException e) {
+					// Se fallisce chiude il socket,
+					// altrimenti il thread la chiudera':
+      		socket.close();
+				}
+			}
+		} finally {
+      s.close();
+    }
+  }
+}
+
+class ServeOneJabber extends Thread {
+	private Socket socket;
+	private BufferedReader in;
+	private PrintWriter out;
+	public ServeOneJabber(Socket s) throws IOException {
+		socket = s;
+		in = new BufferedReader(new InputStreamReader(
+				socket.getInputStream()
+		));
+
+		out = new PrintWriter(
+						new BufferedWriter(
+							new OutputStreamWriter(
+								socket.getOutputStream()
+							)
+						),
+					true
+		);
+
+		// se una qualsiasi delle chiamate precedenti solleva una
+		// eccezione, il processo chiamante e' responsabile della
+		// chiusura del socket. Altrimenti lo chiudera' il thread
+		start(); // Chiama run()
+	}
+
+	public void run() {
+		try {
+			while (true) {
+				String str = in.readLine();
+				if (str.equals("END")) break;
+      	System.out.println("Echoing: " + str);
+				System.out.println(str);
+			}
+			System.out.println("closing...");
+		} catch(IOException e) {
+      System.err.println("IO Exception");
+		} finally {
+			try {
+      	socket.close();
+			} catch(IOException e) {
+      	System.err.println("Socket not closed");
+			}
+		}
+	}
+}
+\end{lstlisting}
+\end{example}
 \end{document}
