@@ -37,4 +37,4 @@ x = np.linalg.solve(U, c)
 print("x =", x)
 
 # Controllo: Ax dovrebbe dare b
-print("Ax =", A @ x)
+print("Ax =", matA @ x)
