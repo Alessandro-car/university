@@ -1,0 +1,65 @@
+Specifica sintattica:
+	- Tipi: Matrice, Intero, Booleano, Reale
+	- Operatori:
+		- creaMatrice(Intero) -> Matrice // crea una matrice quadrata di reali (inizialmente pari a 0), la dimensione della matrice e' specificata come parametro
+		- assegna(Matrice, Intero, Intero, Reale) -> Matrice // Assegna il valore specificato alla posizione della matrice con indice di riga e colonna specificati come secondo e terzo parametro
+		- leggi(Matrice, Intero, Intero) -> Reale
+		- max(Matrice) -> Reale
+		- somma(Matrice, Matrice) -> Matrice // Restituisce la matrice somma, errore se hanno dimensione diversa
+		- uguale(Matrice, Matrice) -> Booleano // errore se hanno dim diversa
+
+Specifica algebrica:
+	I costruttori sono creaMatrice() e assegna()
+	- Operatore leggi(Matrice, Intero, Intero):
+		Declare M: Matrice; i, j, r, c, n: Intero; v: Reale
+		- leggi(creaMatrice(n), r, c) = 0
+		- leggi(assegna(M, i, j, v), r, c) =
+				if i = r and j = c then v
+				else leggi(M, r, c)
+	- Operatore max(Matrice):
+		Declare M: matrice; i, j, n: Intero; v: Reale
+		- max(crea(n)) = 0
+		- max(assegna(M, i, j, v)) = if v > max(M) then v else max(M)
+	- Operatore somma(Matrice, Matrice):
+		Declare M, M': matrice; i, j, r, c, n, n': Intero; v, v': Reale
+		- somma(crea(n), crea(n')) = if n = n' then crea(n) else error
+		- somma(crea(n), assegna(M', r, c, v')) =
+				if n = dimensione(M') then
+					assegna(M', r, c, v')
+				else
+					error
+		- somma(assegna(M, i, j, v), crea(n')) =
+				if dimensione(M) = n' then assegna(M, i, j, v)
+				else error
+		- somma(assegna(M, i, j, v), assegna(M, r, c, v')) =
+				if dimensione(M) = dimensione(M') then
+					if i = r and j = c then modifica(M, i, j, v + v')
+					else
+						assegna(somma(M, assegna(M, r, c, v')), i, j, v)
+				else
+					error
+		Ove vengono utilizzati i seguenti operatori:
+		- dimensione(Matrice) -> Intero:
+			- dimensione(crea(n)) = n
+			- dimensione(assegna(M, i, j, v)) = dimensione(M)
+		- modifica(Matrice, Intero, Intero, Reale) -> Matrice:
+			- modifica(crea(n), r, c, v') = assegna(crea(n), r, c, v')
+			- modifica(assegna(M, i, j, v), r, c, v') =
+					if i = r and j = c then
+						assegna(M, i, j, v')
+					else
+						assegna(modifica(M, r, c, v'), i, j, v)
+	- Operatore uguale(Matrice, Matrice):
+		Declare M, M': Matrice; i, j, r, c, n, n': Intero; v, v': Reale
+		- uguale(crea(n), crea(n')) = if n = n' then true else error
+		- uguale(crea(n), assegna(M', r, c, v')) = if n = dimensione(M') then false else error
+		- uguale(assegna(M, i, j, v), crea(n')) = if dimensione(M) = n' then false else error
+		- uguale(assegna(M, i, j, v), assegna(M', r, c, v')) =
+				if dimensione(M) = dimensione(M') then
+					if i = r and j = c then
+						if v = v' then true
+						else error
+					else
+						uguale(M, M')
+				else
+					error

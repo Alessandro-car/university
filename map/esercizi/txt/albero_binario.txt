@@ -1,0 +1,66 @@
+Specifica sintattica:
+	- Tipi: Albero, Nodo, Intero, Boolean
+	- Operatori:
+		- crea() -> Albero // Crea un albero binario vuoto
+		- aggiungiR(Albero, Nodo) -> Albero // Aggiunge la radice all'albero
+		- aggiungiS(Albero, Nodo, Nodo) -> Albero // Aggiunge il secondo nood come figlio sinistro del primo nodo nell'albero
+		- aggiungiD(Albero, Nodo, Nodo) -> Albero // Aggiunge il secondo nodo come figlio destro del primo nodo nell'albero
+		- conta(Albero) -> Intero // Conta il numero di nodi nell'albero
+		- max(Albero) -> Intero // Restituisce la profondita' massima dell'albero
+		- pota(Albero, Nodo) -> Albero // Cancella il sottoalbero radicato nel nodo trasformandolo in foglia; solleva errore se il nodo e' assente
+		- Equal(Albero, Albero) -> Boolean // Restiuisce vero se i due alberi hanno uguale profondita' massima, falso altrimenti.
+
+Specifica algebrica:
+	I costruttori sono crea(), aggiungiR(), aggiungiS(), aggiungiD()
+	- Operatore conta(Albero) -> Intero:
+		Declare A: Albero; r, s, d: Nodo; n: Intero
+		- conta(crea()) = 0
+		- conta(aggiungiR(A, r)) = 1
+		- conta(aggiungiS(A, r, s)) = 1 + conta(A)
+		- conta(aggiungiD(A, r, d)) = 1 + conta(A)
+	- Operatore max(Albero) -> Intero:
+		Declare A: Albero; r, s, d: Nodo; n: Intero
+		Definisco il seguente operatore:
+			- prof(Albero, Nodo) -> Intero
+				- prof(crea(), n') = 0
+				- prof(aggiungiR(A, r), n') = if n' = r then 1 else error
+				- prof(aggiungiS(A, r, s), n') = if n' = s then 1 + prof(A) else prof(A)
+				- prof(aggiungiD(A, r, d), n') = if n' = d then 1 + prof(A) else prof(A)
+
+		- max(crea()) = 0
+		- max(aggiungiR(A, r)) = 1
+		- max(aggiungiS(A, r, s)) = if 1 + prof(A) > max(A) then 1 + prof(A) else max(A)
+		- max(aggiungiD(A, r, d)) = if 1 + prof(A) > max(A) then 1 + prof(A) else max(A)
+	- Operatore pota(Albero, Nodo) -> Albero:
+		Declare A: Albero; r, s, d, n: Nodo
+		- pota(crea(), n) = error
+		- pota(aggiungiR(A, r), n) = if n = r then crea() else error
+		- pota(aggiungiS(A, r, s), n) =
+				if n = s then A
+				else
+					if n = r then pota(A)
+				else aggiungiS(pota(A, n), r, s)
+		- pota(aggiungiD(A, r, d), n) =
+				if n = d then A
+				else
+					if n = r then pota(A)
+				else aggiungiD(pota(A, n), r, d)
+	- Operatore Equal(Albero, Albero) -> Boolean:
+		Declare A, A': Albero; r, r', s, s', d, d': Nodo
+		- equal(crea(), crea()) = true
+		- equal(crea(), aggiungiR(A', r')) = false
+		- equal(crea(), aggiungiS(A', r', s')) = false
+		- equal(crea(), aggiungiD(A', r', d')) = false
+		- equal(aggiungiR(A, r), crea()) = false
+		- equal(aggiungiR(A, r), aggiungiR(A', r')) = true
+		- equal(aggiungiR(A, r), aggiungiS(A', r', s')) = false
+		- equal(aggiungiR(A, r), aggiungiD(A', r', d')) = false
+		- equal(aggiungiS(A, r, s), crea()) = false
+		- equal(aggiungiS(A, r, s), aggiungiR(A', r')) = false
+		- equal(aggiungiS(A, r, s), aggiungiS(A', r', s')) = max(aggiungiS(A, r, s)) = max(aggiungiS(A', r', s'))
+		- equal(aggiungiS(A, r, s), aggiungiD(A', r' , d')) = max(aggiungiS(A, r, s)) = max(aggiungiD(A', r', d'))
+		- equal(aggiungiD(A, r, d), crea()) = false
+		- equal(aggiungiD(A, r, d), aggiungiR(A', r')) = false
+		- equal(aggiungiD(A, r, d), aggiungiS(A', r', s')) = max(aggiungiD(A, r, d)) = max(aggiungiS(A', r', s'))
+		- equal(aggiungiD(A, r, d), aggiungiD(A', r', d')) = max(aggiungiD(A, r, d)) = max(aggiungiD(A', r', d'))
+

@@ -1,0 +1,90 @@
+Specifica sintattica:
+	- Tipi: SocialBook, Contatto, Intero, Boolean
+	- Operatori:
+		- crea() -> SocialBook
+		- aggiungiContatto(SocialBook, Contatto) -> SocialBook
+		- aggiungiLegame(SocialBook, Contatto, Contatto) -> SocialBook
+		- vuoto(SocialBook) -> Boolean
+		- contieneContatto(SocialBook, Contatto) -> Booleano
+		- contieneLegame(SocialBook, Contatto, Contatto) -> Boolean
+		- contaLegami(SocialBook, Contatto) -> Intero
+		- rimuoviContatto(SocialBook, Contatto) -> SocialBook
+		- rimuoviLegame(SocialBook, Contatto, Contatto) -> SocialBook
+		- contiene(SocialBook, SocialBook) -> Boolean //True se tutti i contatti del primo social book appartengono anche al secondo social book
+Specifica algebrica:
+I costruttori sono crea(), aggiungiContatto(SocialBook, Contatto) e aggiungiLegame(SocialBook, Contatto, Contatto).
+	- Operatore vuoto(SocialBook):
+		Declare S: SocialBook; c, c': Contatto
+		- vuoto(crea()) = true
+		- vuoto(aggiungiContatto(S, c)) = false
+		- vuoto(aggiungiLegame(S, c, c')) = false
+	- Operatore contieneContatto(SocialBook, Contatto):
+		Declare S: SocialBook; c, c', c'': Contatto
+		- contieneContatto(crea(), c'') = false
+		- contieneContatto(aggiungiContatto(S, c), c'') =
+				if c = c'' then
+					true
+				else
+					contieneContatto(S, c'')
+		- contieneContatto(aggiungiLegame(S, c, c'), c'') = contieneContatto(S, c'')
+	- Operatore contieneLegame(SocialBook, Contatto, Contatto):
+		Declare S: SocialBook; c, c', c'', c''': Contatto
+		- contieneLegame(crea(), c'', c''') = error
+		- contieneLegame(aggiungiContatto(S, c), c'', c''') =
+				if contieneContatto(aggiungiContatto(S, c), c'') and contieneContatto(aggiungiContatto(S, c), c''') then
+					if c = c'' or c = c''' then
+						false
+					else
+						contieneLegame(S, c'', c''')
+				else
+					error
+		- contieneLegame(aggiungiLegame(S, c, c'), c'', c''') =
+				if (c = c'' and c' = c''') or (c = c''' and c' = c'') then
+					true
+				else
+					contieneLegame(S, c'', c''')
+	- Operatore contaLegami(SocialBook, Contatto):
+		Declare S: SocialBook; c, c', c'': Contatto
+		- contaLegami(crea(), c'') = error
+		- contaLegami(aggiungiContatto(S, c), c'') = if c = c'' then 0 else contaLegami(S, c'')
+		- contaLegami(aggiungiLegame(S, c, c'), c'') =
+				if c = c'' or c' = c'' then
+					1 + contaLegami(S, c'')
+				else
+					contaLegami(S, c'')
+
+				Assumo +(Intero, Intero) -> Intero
+	- Operatore rimuoviContatto(SocialBook, Contatto):
+		Declare S: SocialBool; c, c', c'': Contatto
+		- rimuoviContatto(crea(), c'') = error
+		- rimuoviContatto(aggiungiContatto(S, c), c'') =
+				if c = c'' then S
+				else aggiungiContatto(rimuoviContatto(S, c''), c)
+		- rimuoviContatto(aggiungiLegame(S, c, c'), c'') =
+				if c = c'' or c' = c'' then rimuoviContatto(S, c'')
+				else aggiungiLegame(rimuoviContatto(S, c''), c, c')
+	- Operatore rimuoviLegame(SocialBook, Contatto, Contatto):
+		Declare S: SocialBook; c, c', c'', c''': Contatto
+		- rimuoviLegame(crea(), c'', c''') = error
+		- rimuoviLegame(aggiungiContatto(S, c), c'', c''') =
+				if c = c'' or c = c''' then rimuoviLegame(S, c'', c''')
+				else aggiungiContatto(rimuoviLegame(S, c'', c'''), c)
+		- rimuoviLegame(aggiungiLegame(S, c, c'), c'', c''') =
+				if (c = c'' and c' = c''') or (c = c''' and c' = c'') then S
+				else aggiungiLegame(rimuoviLegame(S, c'', c'''), c, c')
+	- Operatore contiene(SocialBook, SocialBook):
+		Declare S, S': SocialBook; c, c', c'', c''': Contatto
+		- contiene(crea(), crea()) = true
+		- contiene(crea(), aggiungiContatto(S', c'')) = false
+		- contiene(crea(), aggiungiLegame(S', c'', c''')) = false
+		- contiene(aggiungiContatto(S, c), crea()) = false
+		- contiene(aggiungiContatto(S, c), aggiungiContatto(S', c'')) =
+				(c = c'' or contieneContatto(S', c)) and contiene(S, aggiungiContatto(S', c''))
+		- contiene(aggiungiContatto(S, c), aggiungiLegame(S, c'', c''')) =
+				contiene(aggiungiContatto(S, c), S)
+		- contiene(aggiungiLegame(S, c, c'), crea()) = false
+		- contiene(aggiungiLegame(S, c, c'), aggiungiContatto(S', c'')) =
+				contiene(S, aggiungiContatto(S', c''))
+		- contiene(aggiungiLegame(S, c, c'), aggiungiLegame(S', c'', c''')) =
+				contiene(S, aggiungiLegame(S', c'', c'''))
+
