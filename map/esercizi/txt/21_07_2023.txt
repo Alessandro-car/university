@@ -1,0 +1,47 @@
+1) Specifica algebrica:
+	I costruttori sono crea() e aggiungi()
+	Dichiaro il seguente operatore: len(SequenzaIndicizzata) -> Intero:
+		- len(crea()) = 0
+		- len(aggiungi(S, e)) = 1 + len(S)
+	- Operatore leggi(SequenzaIndicizzata, Intero) -> Elemento:
+		Declare S: SequenzaIndicizzata; i: Intero; e: Elemento
+		- leggi(crea(), i) = error
+		- leggi(aggiungi(S, e), i) = if i = 1 + len(S) then e else leggi(S, i)
+	- Operatore scambia(SequenzaIndicizzata, Intero, Intero) -> SequenzaIndicizzata:
+		Declare S: SequenzaIndicizzata; e: Elemento; i, j: Intero
+		- scambia(crea(), i, j) = error
+		- scambia(aggiungi(S, e), i, j) =
+				if 0 <= i, j <= 1 + len(S) then
+					if i = j then aggiungi(S, e)
+					else modifica(aggiungi(S, e), i, leggi(aggiungi(S, e), j))
+				else
+					error
+			Ove definiamo l'operatore modifica(SequenzaIndicizzata, Intero, Elemento) -> SequenzaIndicizzata:
+				- modifica(crea(), i, e') = error
+				- modifica(aggiungi(S, e), i, e') =
+						if i = 1 + len(S) then aggiungi(S, e')
+						else modifica(S, i, e')
+		- Operatore conta(SequenzaIndicizzata) -> Intero:
+			Declare S: SequenzaIndicizzata; e: Elemento
+			- conta(crea()) = len(crea())
+			- conta(aggiungi(S, e)) = len(aggiungi(S, e))
+		- Operatore combina(SequenzaIndicizzata, SequenzaIndicizzata) -> SequenzaIndicizzata:
+			Declare S, S': SequenzaIndicizzata; e, e': Elemento
+			- combina(crea(), crea()) = crea()
+			- combina(crea(), aggiungi(S', e')) =
+					if len(S') % 2 == 0 then
+						aggiungi(combina(crea(), S')), e')
+					else
+						combina(crea(), S')
+			- combina(aggiungi(S, e), crea()) =
+					if len(S) % 2 == 0 then
+						aggiungi(combina(S, crea()), e)
+					else
+						combina(S, crea())
+			- combina(aggiungi(S, e), aggiungi(S', e')) =
+					if len(S) % 2 == 0 then
+						aggiungi(combina(S, aggiungi(S', e')), e)
+					else
+						combina(S, aggiungi(S', e'))
+
+
