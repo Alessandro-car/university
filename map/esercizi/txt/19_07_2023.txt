@@ -1,0 +1,70 @@
+1) Specifiche algebriche:
+I costruttori sono crea(), aggiungiNodo() e aggiungiNodoConnesso().
+Dalla specifica sintattica definiamo i seguenti operatori ausiliari:
+	- controllaNodoConnesso(Rete, Nodo) -> Boolean:
+		- controllaNodoConnesso(crea(), n) = false
+		- controllaNodoConnesso(aggiungiNodo(R, n), n2) = if n2 = n then true else controllaNodoConnesso(R, n2)
+		- controllaNodoConnesso(aggiungiNodoConnesso(R, n1, n2, p), n3) =
+			if n1 = n3 or n2 = n3 then
+				false
+			else
+				controllaNodoConnesso(R, n3)
+	- esisteNodo(Rete, Nodo) -> Booleano:
+		- esisteNodo(crea(), n) = false
+		- esisteNodo(aggiungiNodo(R, n), n2) = if n = n2 then true else esisteNodo(R, n2)
+		- esisteNodo(aggiungiNodoConnesso(R, n1, n2, p), n3) =
+			if n1 = n3 or n2 = n3 then
+				false
+			else
+				esisteNodo(R, n3)
+	- contaArchiUscenti(Rete, Nodo) -> Intero:
+		- contaArchiUscenti(crea(), n) = 0
+		- contaArchiUscenti(aggiungiNodo(R, n), n2) = if n2 = n then 0 else contaArchiUscenti(R, n2)
+		- contaArchiUscenti(aggiungiNodoConnesso(R, n1, n2, p), n3) =
+				if n1 = n3 then 1 + contaArchiUscenti(R, n3)
+				else contaArchiUscenti(R, n3)
+	- sommaPesi(Rete) -> Intero:
+		- sommaPesi(crea()) = 0
+		- sommaPesi(aggiungiNodo(R, n)) = sommaPesi(R)
+		- sommaPesi(aggiungiNodoConnesso(R, n1, n2, p)) = p + sommaPesi(R)
+- Operatore conta(Rete, Peso) -> Intero:
+	Declare R: Rete; n1, n2: Nodo; p1, p2: Peso
+	- conta(crea(), p2) = 0
+	- conta(aggiungiNodo(R, n1), p2) = conta(R, p2)
+	- conta(aggiungiNodoConnesso(R, n1, n2, p1), p2) = if p1 = p2 then 1 + conta(R, p2) else conta(R, p2)
+- Operatore cancella(Rete, Nodo) -> Rete:
+	Declare R: Rete; n1, n2, n3: Nodo; p: Peso
+	- cancella(crea(), n3) = error
+	- cancella(aggiungiNodo(R, n2), n3) = if n2 = n3 then R else aggiungiNodo(cancella(R, n3), n2)
+	- cancella(aggiungiNodoConnesso(R, n1, n2, p), n3) =
+		if n1 = n3 or n2 = n3 then
+			aggiungiNodoConnesso(R, n1, n2, p)
+		else
+			if esisteNodo(R, n3) then
+				aggiungiNodoConnesso(cancella(R, n3), n1, n2, p)
+			else
+				error
+- Operatore maggiore(Rete, Nodo, Nodo) -> Nodo:
+	Declare R: Rete; n1, n2, n3, n4: Nodo; p: Peso
+	- maggiore(crea(), n1, n2) = error
+	- maggiore(aggiungiNodo(R, n1), n2, n3) =
+		if esisteNodo(aggiungiNodo(R, n1), n2) and esisteNodo(aggiungiNodo(R, n1), n3) then
+			if contaArchiUscenti(R, n2) > contaArchiUscenti(R, n3) then
+				n2
+			else
+				n3
+		else
+			error
+	- maggiore(aggiungiNodoConnesso(R, n1, n2, p), n3, n4) =
+		if esisteNodo(aggiungiNodoConnesso(R, n1, n2, p), n3) and esisteNodo(aggiungiNodoConnesso(R, n1, n2, p), n3) then
+			if contaArchiUscenti(aggiungiNodoConnesso(R, n1, n2, p), n3) > contaArchiUscenti(aggiungiNodoConnesso(R, n1, n2, p), n4) then
+				n3
+			else
+				n3
+		else
+			error
+- Operatore uguale(Rete, Rete) -> Booleano:
+	Declare R1, R2: Rete; n1, n2: Nodo; p: Peso
+	- uguale(crea(), R2) = sommaPesi(crea()) = sommaPesi(R2)
+	- uguale(aggiungiNodo(R, n2), R2) = somamPesi(R) = sommaPesi(R2)
+	- uguale(aggiungiNodoConnesso(R, n1, n2, p), R2) = (p + sommaPesi(R)) = sommaPesi(R2)

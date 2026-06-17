@@ -1,0 +1,43 @@
+1) Specifica algebrica:
+I costruttori sono crea() e registra()
+- Operatore rimpiazza(Dizionario, Valore, Valore) -> Dizionario:
+	Declare D: Dizionario; i: Intero; v1, v2, v3: Valore
+	- rimpiazza(crea(), v2, v3) = crea()
+	- rimpiazza(registra(D, i, v1), v2, v3) =
+		if v1 = v2 then
+			registra(rimpiazza(D, v2, v3), i, v3)
+		else
+			registra(rimpiazza(D, v2, v3), i, v1)
+- Operatore somma(Dizionario) -> Intero:
+	Declare D: Dizionario; i: Intero; v: Valore
+	- somma(crea()) = 0
+	- somma(registra(D, i, v)) = i + somma(D)
+- Operatore warning(Dizionario) -> Booleano:
+	Declare D: Dizionario; i: Intero; v: Valore
+	Definiamo l'operatore occorrenze(Dizionario, Valore) -> Intero:
+		- occorrenze(crea(), v2) = 0
+		- occorrenze(registra(D, i, v1), v2) =
+			if v1 = v2 then
+				1 + occorrenze(D)
+			else
+				occorrenze(D)
+	e l'operatore controllaCoppia(Dizionario, Dizionario) -> Booleano:
+		- controllaCoppia(crea, D2) = false
+		- controllaCoppia(registra(D, i, v1), D2) = if occorrenze(D2, v1) >= 2 then true else controllaCoppia(D, D2)
+	- warning(crea()) = false
+	- warning(registra(D, i, v1)) = controllaCoppia(registra(D, i, v1), registra(D, i, v1))
+- Operatore Intersezione(Dizionario, Dizionario) -> Dizionario:
+	Declare D1, D2: Dizionario; i: Intero; v1: Valore
+	- Intersezione(crea(), D2) = crea()
+	- Intersezione(registra(D1, i, v1), D2) =
+		if esisteCoppia(D2, i, v1) then
+			registra(Intersezione(D1, D2), i, v1)
+		else
+			Intersezione(D1, D2)
+	ove abbiamo utilizzato l'operatore ausiliario esisteCoppia(Dizionario, Intero, Valore):
+		- esisteCoppia(crea(), i, v) = false
+		- esisteCoppia(registra(D, i, v), k, v2) =
+			if k = i and v = v2 then
+				true
+			else
+				esisteCoppia(D, k, v2)

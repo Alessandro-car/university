@@ -1,0 +1,50 @@
+1) Specifica algebrica:
+I costruttori sono crea() e aggiungi().
+Definiamo un operatore ausiliario len(SequenzaIndicizzata) -> Intero:
+	- len(crea()) = 0
+	- len(aggiungi(S, e)) = 1 + len(S)
+- Operatore modifica(SequenzaIndicizzata, Intero, Elemento) -> SequenzaIndicizzata
+	Declare S: SequenzaIndicizzata; i: Intero; e, e': Elemento
+	- modifica(crea(), i, e') = error
+	- modifica(aggiungi(S, e), i, e') =
+		if 0 <= i <=1 + len(S) then
+			if i = 1 + len(S) then
+				aggiungi(S, e')
+			else
+				aggiungi(modifica(S, i, e'), e)
+		else
+			error
+- Operatore ruota(SequenzaIndicizzata) -> SequenzaIndicizzata:
+	Declare S: SequenzaIndicizzata; e: Elemento
+	- ruota(crea()) = crea()
+	- ruota(aggiungi(S, e)) =
+		if vuoto(S) then
+			aggiungi(S, e)
+		else
+			aggiungi(aggiungi(togliTesta(S), e), testa(S))
+
+	Dove definiamo l'operatore testa(SequenzaIndicizzata) -> Elemento:
+		- testa(crea()) = error
+		- testa(aggiungi(S, e)) = if vuoto(S) then e else testa(S)
+	e l'operatore togliTesta(SequenzaIndicizzata) -> SequenzaIndicizzata:
+		- togliTesta(crea()) = error
+		- togliTesta(aggiungi(S, e)) = if vuoto(S) then crea() else aggiungi(togliTesta(S), e)
+
+- Operatore vuoto(SequenzaIndicizzata) -> Booleano:
+	Declare S: SequenzaIndicizzata; e: Elemento
+	- vuoto(crea()) = true
+	- vuoto(aggiungi(S, e)) = false
+	- Operatore combina(SequenzaIndicizzata, SequenzaIndicizzata) -> SequenzaIndicizzata:
+		Declare S, S': SequenzaIndicizzata; e, e': Elemento
+		- combina(crea(), crea()) = crea()
+		- combina(crea(), aggiungi(S', e')) =
+				if len(aggiungi(S', e')) % 2 == 0 then
+					aggiungi(combina(crea(), S'), e')
+				else
+					combina(crea(), S')
+		- combina(aggiungi(S, e), crea()) = aggiungi(S, e)
+		- combina(aggiungi(S, e), aggiungi(S', e')) =
+				if (1 + len(S')) % 2 == 0 then
+					aggiungi(combina(aggiungi(S, e), S'), e')
+				else
+					combina(aggiungi(S, e), S')

@@ -1,0 +1,41 @@
+1) Specifica algebrica:
+I costruttori sono crea() e registra()
+- Operatore rimpiazza(Dizionario, Chiave, Valore) -> Dizionario:
+	Declare D: Dizionario; k1, k2: Chiave; v1, v2: Valore
+	- rimpiazza(crea()) = error
+	- rimpiazza(registra(D, k1, v1), k2, v2) =
+		if k1 = k2 then
+			registra(D, k1, v2)
+		else
+			registra(rimpiazza(D, k2, v2), k1, v1)
+- Operatore conta(Dizionario, Valore) -> Intero:
+	Declare D: Dizionario; k: Chiave; v1, v2: Valore
+	- conta(crea(), v2) = 0
+	- conta(registra(D, k, v1), v2) = if v1 > v2 then 1 + conta(D, v2) else conta(D, v2)
+	Assumo l'esistenza dell'operatore >(Valore, Valore) -> Booleano
+- Operatore warning(Dizionario) -> Booleano:
+	Declare D: Dizionario; k: Chiave; v: Valore
+	- warning(crea()) = true
+	- warning(registra(D, k, v1)) = controllaUnici(registra(D, k, v1), registra(D, k, v1))
+	ove abbiamo definito l'operatore ausiliario occorrenze(Dizionario, Valore) -> Intero:
+		- occorrenze(crea(), v2) = 0
+		- occorrenze(registra(D, k, v1), v2) = if v1 = v2 then 1 + occorrenze(D) else occorrenze(D, v2)
+	e l'operatore controllaUnici(Dizionario, Dizionario) -> Booleano:
+		- controllaUnici(crea(), d2) = false
+		- controllaUnici(registra(D, k, v), d2) = if occorrenze(d2, v) = 1 then true else controllaUnici(D, d2)
+- Operatore contenuto(Dizionario, Dizionario) -> Booleano:
+	Declare D1, D2: Dizionario; k1, k2: Chiave; v1, v2: Valore
+	- contenuto(crea(), crea()) = true
+	- contenuto(crea(), registra(D2, k2, v2)) = false
+	- contenuto(registra(D1, k1, v1), crea()) = false
+	- contenuto(registra(D1, k1, v1), registra(D2, k2, v2)) =
+		if esisteCoppia(registra(D1, k1, v1), k2, v2) then
+			contenuto(D1, D2)
+		else
+			false
+	ove abbiamo usato l'operatore esisteCoppia(Dizionario, Chiave, Valore) -> Booleano:
+		- esisteCoppia(crea(), k2, v2) = false
+		- esisteCoppia(registra(D1, k1, v1), k2, v2) =
+				if k1 = k2 and v2 = v1 then true
+				else esisteCoppia(D1, k2, v2)
+

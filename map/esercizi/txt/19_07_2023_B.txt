@@ -1,0 +1,52 @@
+1) Specifica algebrica:
+I costruttori sono crea(), aggiungiNodo() e aggiungiConnessione().
+Dalla specifica sintattica dichiariamo i seguenti operatori ausiliari.
+- esisteNodo(Rete, Nodo) -> Booleano:
+	- esisteNodo(crea(), n3) = false
+	- esisteNodo(aggiungiNodo(R, n1), n3) = if n1 = n3 then true else esisteNodo(R, n3)
+	- esisteNodo(aggiungiConnessione(R, n1, n2, p), n3) =
+		if n1 = n3 or n2 = n3 then
+			true
+		else
+			esisteNodo(R, n3)
+- out(Rete, Nodo) -> Intero:
+	- out(crea(), n3) = error
+	- out(aggiungiNodo(R, n1), n3) = if n1 = n3 then 0 else out(R, n3)
+	- out(aggiungiConnessione(R, n1, n2, p), n3) =
+		if n1 = n3 then 1 + out(R, n3) else out(R, n3)
+
+- Operatore peso(Rete) -> Peso:
+	- peso(crea()) = error
+	- peso(aggiungiNodo(R, n)) = peso(R)
+	- peso(aggiungiConnessione(R, n1, n2, p)) = p + peso(R)
+
+- Operatore cancella(Rete, Peso) -> Rete:
+	- cancella(crea(), p) = error
+	- cancella(aggiungiNodo(R, n), p) = aggiungiNodo(cancella(R, p), n)
+	- cancella(aggiungiConnessione(R, n1, n2, p1), p2) =
+			if p1 = p2 then
+				cancella(R, p2)
+			else
+				aggiungiConnessione(cancella(R, p2), n1, n2, p1)
+- Operatore in(Rete, Nodo) -> Intero:
+	- in(crea(), n) = error
+	- in(aggiungiNodo(R, n1), n2) = if n1 = n2 then 0 else in(R, n2)
+	- in(aggiungiConnessione(R, n1, n2, p), n3) = if n2 = n3 then 1 + in(R, n3) else in(R, n3)
+- Operatore maggiore(Rete, Rete, Nodo) -> Rete:
+	- maggiore(crea(), R2, n3) = if esisteNodo(R2, n3) then R2 else error
+	- maggiore(aggiungiNodo(R, n1), R2, n3) =
+		if esisteNodo(aggiungiNodo(R, n1), n3) and esisteNodo(R2, n3) then
+			if (in(R, n3) - out(R, n3)) > (in(R2, n3) - out(R2, n3)) then
+				aggiungiNodo(R, n1)
+			else
+				R2
+		else
+			error
+		- maggiore(aggiungiConnessione(R, n1, n2, p), R2, n3) =
+			if esisteNodo(R, n3) and esisteNodo(R2, n3) thena
+				if (in(aggiungiConnessione(R, n1, n2, p), n3) - out(aggiungiConnessione(R, n1, n2, p), n3)) > (in(R2, n3) - out(R2, n3)) then
+					aggiungiConnessione(R, n1, n2, p)
+				else
+					R2
+			else
+				error

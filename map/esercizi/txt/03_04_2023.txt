@@ -1,0 +1,44 @@
+1) Specifica algebrica:
+I costruttori sono crea() e assegna().
+Dalla specifica sintattica definiamo i seguenti operatori ausiliari:
+	- Operatore cellaVuota(Vettore, Intero) -> Booleano:
+		- cellaVuota(crea(n), i) = true
+		- cellaVuota(assegna(V, i, e), k) = if i = k then false else cellaVuota(V, k)
+	- Operatore dim(Vettore) -> Intero:
+		- dim(crea(n)) = n
+		- dim(assegna(V, i, e)) = dim(V)
+e assumiamo l'esistenza dell'operatore >(Elemento, Elemento) -> Booleano.
+- Operatore modifica(Vettore, Intero, Elemento) -> Vettore:
+	Declare V: Vettore; i, j: Intero; e1, e2: Elemento
+	- modifica(crea(), j, e2) = error
+	- modifica(assegna(V, i, e1), j, e2) =
+		if 0 <= j <=dim(assegna(V, i, e1)) then
+			if j = i then
+				assegna(V, i, e2)
+			else
+				if cellaVuota(assegna(V, i, e1), j) then
+					error
+				else
+					assegna(modifica(V, j, e2), i, e1)
+		else
+			error
+- Operatore prefisso(Vettore, Intero) -> Vettore:
+	Declare V: Vettore; i, j: Intero; e: Elemento
+	- prefisso(crea(), j) = crea()
+	- prefisso(assegna(V, i, e), j) =
+		if 0 <= j <= dim(assegna(V, i, e)) then
+			if j <= i then
+				assegna(prefisso(V, j), i, e)
+			else
+				prefisso(V, j)
+		else
+			error
+- Operatore conta(Vettore, Elemento) -> Intero
+	Declare V: Vettore; i: Intero; e1, e2: Elemento
+	- conta(crea(), e2) = 0
+	- conta(assegna(V, i, e1), e2) = if e1 > e2 then 1 + conta(V, e2) else conta(V, e2)
+
+- Operatore uguale(Vettore, Vettore, Elemento) -> Booleano:
+	Declare V1, V2: Vettore; i, j: Intero; e1, e2, e3: Elemento
+	- uguale(crea(), V2, e3) = conta(crea(), v3) = conta(V2, e3)
+	- uguale(assegna(V1, i, e2), V2, e3) = conta(assegna(V1, i, e2), e3) = conta(V2, e3)
