@@ -1,0 +1,64 @@
+1) Specifica algebrica:
+I costruttori sono crea(), aggiungiNodo(), connetti().
+Definiamo gli operatori ausiliari:
+	- esisteNodo(Grafo, Nodo) -> Booleano:
+		Declare G: Grafo; n1, n2, n3: Nodo
+		- esisteNodo(crea(), n3) = false
+		- esisteNodo(aggiungiNodo(G, n1), n3) = if n1 = n3 then true else esisteNodo(G, n3)
+		- esisteNodo(connetti(G, n1, n2), n3) = if n1 = n3 or n2 = n3 then true else esisteNodo(G, n3)
+	- contaNodi(Grafo) -> Intero:
+		Declare G: Grafo; n1, n2: Nodo
+		- contaNodi(crea()) = 0
+		- contaNodi(aggiungiNodo(G, n1)) = 1 + contaNodi(G)
+		- contaNodi(connetti(G, n1, n2)) = contaNodi(G)
+- Operatore cancella(Grafo, Nodo, Nodo) -> Grafo:
+	Declare G: Grafo; n1, n2, n3, n4: Nodo
+	- cancella(crea(), n3, n4) = error
+	- cancella(aggiungiNodo(G, n1), n3, n4) =
+		if esisteNodo(aggiungiNodo(G, n1), n3) and esisteNodo(aggiungiNodo(G, n1), n4) then
+			if n1 = n3 or n1 = n4 then
+				aggiungiNodo(G, n1)
+			else
+				aggiungiNodo(cancella(G, n3, n4), n1)
+		else
+			error
+	- cancella(connetti(G, n1, n2), n3, n4) =
+		if esisteNodo(G, n3) and esisteNodo(G, n4) then
+			if n1 = n3 and n2 = n4 then
+				G
+			else
+				connetti(cancella(G, n3, n4), n1, n2)
+		else
+			error
+- Operatore conta(Grafo, Nodo) -> Intero:
+	Declare G: Grafo; n1, n2, n3: Nodo
+	- conta(crea(), n3) = error
+	- conta(aggiungiNodo(G, n1), n3) = if n1 = n3 then 0 else conta(G, n3)
+	- conta(connetti(G, n1, n2), n3) =
+		if n1 = n3 or n2 = n3 then
+			1 + conta(G, n3)
+		else
+			conta(G, n3)
+- Operatore media(Grafo) -> Reale
+	Declare G: Grafo; n1, n2: Nodo
+	- media(crea()) = 0
+	- media(aggiungiNodo(G, n1)) = media(G)
+	- media(connetti(G, n1, n2)) = (numArchi(G)) / (contaNodi(G))
+
+	ove abbiamo definito l'operatore ausiliario numArchi(Grafo) -> Intero:
+		- numArchi(crea()) = 0
+		- numArchi(aggiungiNodo(G, n1)) = numArchi(G)
+		- numArchi(connetti(G, n1, n2)) = 1 + numArchi(G)
+- Operatore uguale(Grafo, Grafo) -> Booleano:
+	Declare G, G': Grafo; n1, n2: Nodo
+	- uguale(crea(), G') = false
+	- uguale(aggiungiNodo(G, n1), G') =
+		if esisteNodo(G', n1) and uguale(G, G') then
+			true
+		else
+			false
+	- uguale(connetti(G, n1, n2), G') =
+		if uguale(G, G') then
+			true
+		else
+			false

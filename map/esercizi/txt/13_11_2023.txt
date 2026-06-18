@@ -1,0 +1,77 @@
+1) Specifica algebrica:
+I costruttori sono crea(), aggiungiNodo(), connetti().
+Dalla specifica sintattica definiamo i seguenti operatori ausiliari:
+	- esisteNodo(Grafo, Nodo) -> Booleano:
+		Declare G: Grafo; n1, n2, n3: Nodo
+		- esisteNodo(crea(), n3) = false
+		- esisteNodo(aggiungiNodo(G, n1), n3) = if n1 = n3 then true else esisteNodo(G, n3)
+		- esisteNodo(connetti(G, n1, n2), n3) =
+				if n1 = n3 or n2 = n3 then
+					true
+				else
+					esisteNodo(G, n3)
+	- out(Grafo, Nodo) -> Intero: // Conta numero di archi uscenti dal nodo.
+		Declare G: Grafo; n1, n2, n3: Nodo
+		- out(crea(), n3) = error
+		- out(aggiungiNodo(G, n1), n3) = if n1 = n3 then 0 else out(G, n3)
+	 	- out(connetti(G, n1, n2), n3) = if n1 = n3 then 1 + out(G, n3) else out(G, n3)
+
+- Operatore cancella(Grafo, Nodo, Nodo) -> Grafo:
+	Declare G: Grafo; n1, n2, n3, n4: Nodo
+	- cancella(crea(), n3, n4) = crea()
+	- cancella(aggiungiNodo(G, n1), n3, n4) =
+		if esisteNodo(aggiungiNodo(G, n1), n3) and esisteNodo(aggiungiNodo(G, n1), n4) then
+			aggiungiNodo(cancella(G, n3, n4), n1)
+		else
+			aggiungiNodo(G, n1)
+	- cancella(connetti(G, n1, n2), n3, n4) =
+		if esisteNodo(connetti(G, n1, n2), n3) and esisteNodo(connetti(G, n1, n2), n4) then
+			if n1 = n3 and n2 = n4 then
+				aggiungiNodo(cancella(G, n3, n4), n2)
+			else
+				connetti(cancella(G, n3, n4), n1, n2)
+		else
+			connetti(G, n1, n2)
+- Operatore conta(Grafo, Nodo) -> Intero:
+	Declare G: Grafo; n1, n2, n3: Nodo
+	- conta(crea(), n3) = 0
+	- conta(aggiungiNodo(G, n1), n3) = if n1 = n3 then 0 else conta(G, n3)
+	- conta(connetti(G, n1, n2), n3) = if n2 = n3 then 1 + conta(G, n3) else conta(G, n3)
+- Operatore minimo(Grafo) -> Nodo:
+	Declare G, G': Grafo; n1, n2: Nodo
+	Definiamo l'operatore ausiliario:
+		min(Grafo, Grafo) -> Nodo:
+			- min(crea(), G') = error
+			- min(aggiungiNodo(G, n1), G') =
+				if conta(G', n1) < conta(G', min(G, G')) then
+					n1
+				else
+					min(G, G')
+			- min(connetti(G, n1, n2), G') =
+				if conta(G', n2) < conta(G', min(G, G') then
+					n2
+				else
+					min(G, G')
+
+	- minimo(crea()) = error
+	- minimo(aggiungiNodo(G, n1)) = min(aggiungiNodo(G, n1), aggiungiNodo(G, n1))
+	- minimo(connetti(G, n2, n3)) = minimo(connetti(G, n2, n3), connetti(G, n2, n3))
+- Operatore uguale(Grafo, Grafo, Nodo) -> Booleano:
+	Declare G, G': Grafo; n1, n2, n3: Nodo
+	- uguale(crea(), G', n3) = error
+	- uguale(aggiungiNodo(G, n1), G', n3) =
+		if esisteNodo(aggiungiNodo(G, n1), n3) and esisteNodo(G', n3) then
+			if conta(aggiungiNodo(G, n1), n3) > out(G', n3) then
+				true
+			else
+				false
+		else
+			error
+	- uguale(connetti(G, n1, n2), G', n3) =
+		if esisteNodo(connetti(G, n1, n2), n3) and esisteNodo(G', n3) then
+			if conta(connetti(G, n1, n2), n3) > out(G', n3) then
+				true
+			else
+				false
+		else
+			error
