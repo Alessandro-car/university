@@ -1,0 +1,31 @@
+1) Specifica algebrica:
+I costruttori sono crea() e aggiungi().
+- Operatore leggi(Lista, Intero) -> Elemento:
+	Declare L: Lista; e: Elemento; i: Intero
+	- leggi(crea(), i) = error
+	- leggi(aggiungi(L, e), i) =
+		if 0 <= i <= 1 + conta(L) then
+			if i = 1 + conta(L) then e
+			else leggi(L, i)
+		else
+			error
+- Operatore pari(Lista) -> Lista:
+	Declare L: Lista; e: Elemento
+	- pari(crea()) = crea()
+	- pari(aggiungi(L, e)) =
+		if conta(L) % 2 != 0 then
+			aggiungi(pari(L), e)
+		else
+			pari(L)
+- Operatore conta(Lista) -> Intero:
+	Declare L: Lista; e: Elemento
+	- conta(crea()) = 0
+	- conta(aggiungi(L, e)) = 1 + conta(L)
+- Operatore combina(Lista, Lista) -> Lista:
+	Declare L, L': Lista; e: Elemento
+	- combina(L, crea()) = pari(L)
+	- combina(L, aggiungi(L', e)) =
+		if dim(L') % 2 != 0 then
+			aggiungi(combina(L, L'), e)
+		else
+			combina(L, L')
