@@ -39,3 +39,46 @@ I costruttori sono crea() e registra()
 				if k1 = k2 and v2 = v1 then true
 				else esisteCoppia(D1, k2, v2)
 
+2) Gli oggetti in Ada sono moduli dotati di uno stato locale. Un oggetto è un insieme di variabilli interne ad un modulo e manipolabili tramite gli operatori definiti nel modulo stesso. Per definire oggetti simili, bisogna definire tanti moduli quanti sono gli oggetti ed essi differiscono per identificatore dell'oggetto. Di conseguenza, c'è una grande mole di codice duplicato che causa inefficienza in termini di spazio. Per evitare questo si usano i generic package, ovvero una classe di oggetti simili. I generic package non sono compilabili separatamente; package distinti comportano la creazione di molteplici copie dello stesso codice; la creazione dei legami al compile-time garantisce efficienza in tempo. Inoltre, data la presenza di stesse occorrenze di metodi, per richiamare uno di essi bisogna utilizzare la dot notation.
+
+package ObjDizionario
+begin
+	procedure registra(k: in String, v: in Integer);
+	procedure rimpiazza(k: in String, v: in Integer);
+end ObjDizionario
+
+package body ObjDizionario
+	max: const Integer = 100;
+	valori: array of Integer (1..max);
+	chiavi: array of String (1..max);
+	top: Integer range (0..max) = 0;
+
+	procedure registra(k: in String, v: in Integer)
+	var i: Integer;
+	begin
+		if top == max then return;
+		for i := 1 to top
+			if chiavi(i) == k then return
+		top := top + 1;
+		chiavi(top) := k;
+		valori(top) := v;
+	end
+
+	procedure rimpiazza(k: in String, v: in Integer)
+	var i: Integer;
+	begin
+		for i := 1 to top
+			if chiavi(i) == k then
+				valori(i) := v
+				return;
+		raise "Chiave non trovata"
+	end
+end ObjDizionario
+
+with ObjDizionario; use ObjDizionario;
+
+d: ObjDizionario;
+d.registra("Mela", 2)
+d.registra("Ananas", 3)
+
+La creazione di un oggetto in questo caso mette in evidenza un limite nella definizione dell'operazione contenuto. L'oggetto in Ada crea un'unica istanza globale e lo stato viene salvato nelle variabili del package ed esiste un solo Dizionario in tutto il programma. Quindi la definizione dell'operatore contenuto che prevede come argomenti due dizionari è impossibile. Per superare questo limite è bene definire il Dizionario come un tipo di dato astratto, dove il package non contiene più variabikli di stato e l'utente può dichiarare istanze multiple.

@@ -48,4 +48,53 @@
 					else
 						combina(S, aggiungi(S', e'))
 
+2)
+generic
+	max: Positive;
+	type Elemento is private;
+package TypeSequenzaIndicizzata
+begin
+	type SequenzaIndicizzata is private;
+	procedure aggiungi(s: in out SequenzaIndicizzata, e: in Elemento);
+	function leggi(s: in SequenzaIndicizzata, i: Integer) return Elemento;
+	private
+		type SequenzaIndicizzata is record
+			valori: array(1..max) of Elemento;
+			top: Integer range(0..max)=0;
+		end record
+end TypeSequenzaIndicizzata
 
+package body TypeSequenzaIndicizzata
+begin
+	procedure aggiungi(s: in out SequenzaIndicizzata, e: in Elemento)
+	begin
+		if s.top == max then return;
+		s.top := s.top + 1;
+		s.valori(s.top) := e;
+	end
+
+	function leggi(s: in SequenzaIndicizzata, i: in Integer) return Elemento
+	begin
+		if i < 0 || i > max then return;
+		return s.valori(i);
+	end
+end TypeSequenzaIndicizzata
+
+with TypeSequenzaIndicizzata;
+package SequenzaIndicizzataInteger is new TypeSequenzaIndicizzata(100, Integer);
+package SequenzaIndicizzataChar is new TypeSequenzaIndicizzata(100, Character);
+with SequenzaIndicizzataInteger; use SequenzaIndicizzataInteger;
+with SequenzaIndicizzataChar; SequenzaIndicizzataChar;
+
+S1: SequenzaIndicizzataInteger;
+S2: SequenzaIndicizzataChar;
+
+S1.aggiungi(1);
+S1.aggiungi(10);
+S2.aggiungi('a');
+S2.aggiungi('b');
+S2.aggiungi('c');
+S2.aggiungi('d');
+
+Ho creato il dato astratto generico TypeSequenzaIndicizzata tramite la clausola 'generic' di Ada che ti permette di definire un dato astratto generico. In questo caso si dota l'astrazione generica del parametro formale Elemento che rappresenta il tipo di dato memorizzato dall'array e al parametro formale max che denota la dimensione massima dell'array. In questo modo, il valore attribuito dal parametro formale max e il tipo del dato Elemento vengono stabiliti all'atto dell'istanziazione. Infatti, l'istanziazione package SequenzaIndicizzataInteger is new TypeSequenzaIndicizzata(100, Integer) sta istanziando una SequenzaIndicizzata che conterrà al massimo 100 elementi di tipo intero.
+Analizziamo la differenza tra l'astrazione generica in Ada e in Java. In Java, i Generics vengono implementati attraverso la cancellazione del tipo a tempo di compilazione. Il compilatore veririca la corretteza dei tipi, ma nel bytecode sostituisce i parametri generici con Object. QUindi, aa runtime esiste una sola versione della classe compilata per tutti i tipi. In Ada, invece, quando viene utilizzato il costrutto generic il compilatore crea fisicamente una nuova copia del codice per quello specifico tipo. Quindi, il codice generato è ottimizzato ed è fortemente tipizzato a runtime.

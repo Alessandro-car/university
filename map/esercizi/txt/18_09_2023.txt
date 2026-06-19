@@ -41,3 +41,73 @@ I costruttori sono crea() e registra()
 				true
 			else
 				esisteCoppia(D, k, v2)
+
+2) Nei linguaggi di programmazione imperativi, come Ada, i tipi di dato astratto sono cittadini di prima classe, a differenza degli oggetti che sono cittadini di terza classe in quanto:
+	- una procedura non può restituire l'istanza di un package;
+	- non è possibile creare dinamicamente degli oggetti in quanto le istanze sono stabilite al momento della compilazione.
+Quindi, i tipi astratti sono denotabili, possono essere passati come argomenti di funzione e possono anche essere il valore di ritorno di una funzione, mentre gli oggetti sono solo denotabili.
+Inoltre, tramite l'utilizzo dei tipi astratti, il programmatore utente non può manipolare direttamente i dati ma deve usare solo le operazioni fornite dal tipo di dato astratto. Inoltre, a differenza degli oggetti, il programmatore utente può definire diverse istanze del tipo di dato astratto, rendendo posisibli operazioni tra più istanze.
+I tipi astratti, però, sono poco estendibili, infatti, l'aggiunta di un nuovo dato nel costruttore comporta cmabianenti nelle implementazioni esistenti degli operatori.
+
+generic
+	max: Positive;
+	type Valore is private;
+package TypeDizionario
+	type Dizionario is limited private;
+	procedure registra(d: in out Dizionario, k: in Integer, v: in Valore);
+  function intersezione(d1: in Dizionario, d2: in Dizionario) return Dizionario;
+begin
+	private
+	type Dizionario is record
+		top: Integer range (0..max) = 0;
+		valori: array (1..max) of Valore;
+		chiavi: array (1..max) of Integer;
+	end record
+end TypeDizionario
+
+package body TypeDizionario
+begin
+	procedure registra(d: in out Dizionario, k: in Integer, v: in Valore)
+	var i: Integer;
+	begin
+		if d.top == max then return;
+		for i := 1 to d.top
+			if d.chiavi(i) == k then return;
+		d.top := d.top + 1;
+		d.chiavi(d.top) := k;
+		d.valori(d.top) := v;
+	end
+
+	function intersezione(d1: in Dizionario, d2: in Dizionario) return Dizionario
+	var result: Dizionario;
+	var i: Integer;
+	begin
+		for i := 1 to d1.top
+			if esisteCoppia(d2, d1.chiavi(i), d1.valori(i)) then
+				registra(result, d1.chiavi(i), d1.valori(i))
+	end
+
+	function esisteCoppia(d: in Dizionario, k: in Integer, v: in Valore) return Boolean
+	var i: Integer;
+	begin
+		for i := 1 to d.top
+			if d.chiavi(i) == k && d.valori(i) == v then return true;
+		return false;
+	end
+end TypeDizionario
+
+
+with TypeDizionario;
+package IntDizionario is new TypeDizionario(100, Integer);
+package StringDizionario is new TypeDizionario(100, String);
+
+with IntDizionario; use IntDizionario;
+with StringDizionario; use StringDizionario;
+
+var1: IntDizionario;
+var2: StringDizionario
+
+registra(var1, 1, 2)
+registra(var1, 2, 3)
+registra(var2, 1, "C")
+registra(var2, 5, "D")
