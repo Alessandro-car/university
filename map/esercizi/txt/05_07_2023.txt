@@ -48,3 +48,128 @@ Definiamo un operatore ausiliario len(SequenzaIndicizzata) -> Intero:
 					aggiungi(combina(aggiungi(S, e), S'), e')
 				else
 					combina(aggiungi(S, e), S')
+
+2) L'astrazione di selettore indica l'accesso ad una variabile. Ad esempio, in Pascal, possiamo accedere un array tramite l'operatore [], ad esempio vett[i] = vett[i + 1]. Notiamo, quindi, che la notazione vett[i] può essere usato sia come nome di un valore (legame dinamico fra identificatore e valore) e sia come un indirizzo (legame statico fra identificatore e locazione di memoria). Un accesso ad una variabile restituisce un riferimento ad una variabile. Tuttavia, consideriamo il seguente esempio:
+	type q: Queue;
+	function first(q: Queue): integer
+
+	i := first(q)
+
+La chiamata a funzione first(q) può essere usata solo alla destra di un'assegnazione perchè le funzioni restituiscono solo valori, mentre a sinistra dovrebbe restituire riferimenti ad area di memoria. Questo non è possibile in un linguaggio come il Pascal, mentre, in un linguaggio come il C++ è possibile definire delle vere e proprie astrazioni di selettore utilizzando il seguente codice:
+	static int& first(q: Queue)
+
+ed è possibile utilizzarlo nel seguente modo first(q) *= first(q).
+
+generic
+	max: Positive;
+	type Elemento is private;
+package ClassSequenzaIndicizzata
+begin
+	procedure aggiungi(e: in Elemento);
+	procedure combina(other: in Array; len_other: in Integer);
+end ClassSequenzaIndicizzata
+
+package body ClassSequenzaIndicizzata
+begin
+	valori: array (1..max) of Elemento;
+	top: Integer range (0..max) := 0;
+
+	procedure aggiungi(e: in Elemento)
+	begin
+		if top == max then return;
+		top := top + 1;
+		valori[top] := e;
+	end
+
+	procedure combina(other: in Array; len_other: in Integer)
+	var i: Integer;
+	begin
+		for i in 1..len_other
+			if i mod 2 = then
+				aggiungi(other[i]);
+	end
+end ClassSequenzaIndicizzata
+
+with ClassSequenzaIndicizzata;
+package IntSequenzaIndicizzata is new ClassSequenzaIndicizzata(100, Integer);
+package CharSequenzaIndicizzata is new ClassSequenzaIndicizzata(100, Character);
+with IntSequenzaIndicizzata; use IntSequenzaIndicizzata;
+with CharSequenzaIndicizzata; use CharSequenzaIndicizzata;
+
+s1: IntSequenzaIndicizzata;
+s2: CharSequenzaIndicizzata;
+
+s1.aggiungi(1);
+s1.aggiungi(10);
+s2.aggiungi('a');
+s2.aggiungi('b');
+s2.aggiungi('c');
+
+In questo codice è presente l'astrazione di selettore valori[top] e other[i].
+
+3) Il meccanismo di serializzazione in Java permette di rendere persistenti la vita degli oggetti anche quando il programma termina. Questo è utile quando un oggetto può servire tra due esecuzioni consecutive. Per fare questo è possibile ricorrere all'uso dell'I/O su file. In Java la serializzazione viene realizzata tramite l'interfaccia Serializable e le classi ObjectInputStream e ObjectOutputStream. Le ulttime due classi vengono utilizzate congiuntamente ad un OuputStream e un InputStream che sono degli stream di manipolazione dati. Per salvare un dato su file, l'approccio è il seguente:
+FileOutputStream file = new FileOutputStream("prova.dat")
+ObjectOutStream out = new ObjectOutputStream(file);
+out.writeObject(prova);
+
+Per caricare un dato da file, invece:
+FileInputStream file = new FileInputStream("prova.dat");
+ObjectInputStream in = new ObjectInputStream(file);
+in.readObject();
+
+È bene notare che l'interfaccia Serializable non contiene metodi ma serve solo al compilatore per comprendere che un oggetto di una classe può essere serialzzato. Inoltre, gli attributi di tipo static non vengono serializzati automaticamente ma bisogna effettuare una chiamata alla funzione writeObject esclusivamente per gli attributi di tipo static. Inoltre, esistono casi in cui non si vogliono memorizzare tutti gli attributi di un oggetto, magari perchè sono dati sensibili oppure perchè possono essere facilmente ricalcolati tramite il caricmento degli altri attributi. Per fare questo Java mette a disposizione la parola chiave transient che indica che un determinato attributo non deve essere serializzato. Ad esempio:
+private transient password
+
+class Elemento implements Serializable {
+	private String nome;
+	private float valore;
+
+	Elemento(String nome, float valore) {
+			this.nome = nome;
+			this.valore = valore;
+	}
+
+	void setNome(String nome) { this.nome = nome; }
+	void setValore(float valore) { this.valore = valore; }
+	String getNome() { return this.nome; }
+	float getValore() { return this.valore; }
+}
+
+import Elemento;
+import java.util.ArrayList;
+import java.io.*; // OutStream e InStream
+class SequenzaIndicizzata implements Serializable {
+	private ArrayList<Elemento> elementi;
+
+	SequenzaIndicizzata() {
+		this.elementi = new ArrayList<>();
+	}
+
+	void aggiungi(Elemento e) {
+		this.elementi.add(e);
+	}
+
+	public void salva() {
+		try {
+			FileOutputStream file = new FileOutputStream("prova.dat");
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			out.writeObject(this);
+		} catch (IOException e) {
+			System.err.println(e);
+		} finally {
+			out.close();
+		}
+	}
+
+	public static SequenzaIndicizzata carica() {
+		try {
+				FileInputStream file = new FileInputStream("prova.dat");
+				ObjectInputStream in = new ObjectInputStream(file);
+				return (SequenzaIndicizzata) in.readObject();
+		} catch (IOException e) {
+			System.err.println(e);
+		} finally {
+			in.close();
+		}
+	}
+}
