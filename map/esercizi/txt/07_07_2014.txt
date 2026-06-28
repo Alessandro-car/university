@@ -1,0 +1,61 @@
+2) I costruttori sono creaAlbero(), insRadice() e insNodo().
+Declare:
+
+Operatore foglia(Albero, Nodo) -> Booleano
+- foglia(creaAlbero(), n) = false
+- foglia(insRadice(A, n), n') = if n == n' then true else false
+- foglia(insNodo(A, n, n'), n'') = if n' == n'' then true else foglia(A, n'')
+
+Operatore cancellaNodo(Albero, Nodo) -> Albero;
+- cancellaNodo(creaAlbero(), n) = creaAlbero()
+- cancellaNodo(insRadice(A, n), n') = if n' == n then creaAlbero() else insRadice(A, n)
+- cancellaNodo(insNodo(A, n, n'), n'') =
+	if n'' == n'then
+		A
+	else
+		if foglia(insNodo(A, n, n'), n'') then
+			insNodo(cancellaNodo(A, n''), n, n')
+		else
+			insNodo(A, n, n')
+
+Operatore pota(Albero, Nodo) -> Albero:
+- pota(creaAlbero(), n) = creaAlbero()
+- pota(insRadice(A, n), n') = insRadice(A, n)
+- pota(insNodo(A, n, n'), n'') =
+	if n'' == n' then
+		insNodo(A, n, n')
+	else
+		if n'' == n then
+			pota(A, n'')
+		else
+			insNodo(pota(A, n''), n, n')
+
+Operatore listaFigli(Albero, Nodo) -> Lista
+- listaFigli(creaAlbero(), n) = creaLista()
+- listaFigli(insRadice(A, n), n') = creaLista()
+- listaFigli(insNodo(A, n, n'), n'') =
+	if n == n'' then
+		insLista(listaFigli(A, n''), n')
+	else listaFigli(A, n'')
+
+Operatore uguale(Albero, Albero) -> Booleano
+- uguale(creaAlbero(), A') = vuoto(A')
+- uguale(insRadice(A, n), A') =
+	if contiene(A', n) and vuoto(cancellaNodo(A', n)) == true
+		then true
+	else false
+- uguale(insNodo(A, n, n'), A') =
+	if contiene(A', n) and contiene(A', n') then
+		uguale(A, A')
+	else
+		false
+
+ove definiamo vuoto(Albero) -> Booleano se l'albero non ha nodi:
+- vuoto(creaAlbero()) = true
+- vuoto(insRadice(A, n)) = false
+- vuoto(insRadice(A, n, n')) = false
+
+e l'operatore contiene(Albero, Nodo) -> Booleano:
+- contiene(creaAlbero(), n) = false
+- contiene(insRadice(A, n), n') = if n' == n then true else false
+- contiene(insNodo(A, n, n'), n'') = if n'' == n or n'' == n then true else contiene(A, n'')

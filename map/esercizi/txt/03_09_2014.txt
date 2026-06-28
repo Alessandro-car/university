@@ -1,0 +1,101 @@
+1) I tipi astratti permettono di astrarre sulla classe sintattica tipo, mentre la definizione di una classe permette di astrarre sulla dichiarazione di moduli dotati di stato locale. La classe, quindi, definisce una matrice di oggetti dotati di uno stato interno e, a differenza della definizione di un tipo astratto, mettono a disposizione solo un set di operazioni che si possono applicare su tali oggetti. Un tipo astratto, invece, oltre alle operazioni rende anche disponibile un identificatore di tipo. Inoltre, definendo una classe di oggetti istanzia una sola istanza per oggetto e gli oggetti in Ada sono cittadini di terza classe, pertanto, se ci sono operatori che prevedono l'uso di due istanze diverse di uno stesso oggetto l'uso di una classe diventa inopportuno. Le differenze tra tipi astratti e classi in Ada si possono raggruppare in tre categorie:
+	- sintattica: Gli operatori definiti nel tipo astratto hanno un parametro in più relativo al tipo di dato che si sta definendo.
+	- realizzativa: nel caso dei tipi astratti gli operatori vengono definiti una sola volta, mentnre nel caso della classe vengono definiti tante volte quante sono le istanze.
+	- concettuale: Il tipo astratto è realizzato intorno alle osservazioni. Le osservazioni sono implementate come operazioni che operano su una rappresentazione concreta derivata dai costruttori,. Le classi invece sono realizzate intorno ai costruttori, le osservazioni diventano metodi dei valori.
+
+Quindi, concludendo, si può dire che il tipo astratto è un insieme con delle operazioni, mentre una classe è un insieme di operazioni.
+
+Coda come tipo astratto:
+generic
+	capacity: Positive;
+	type Elemento is private;
+package TypeCoda
+begin
+	type Coda is private;
+	function leggicoda(c: in Coda) return Elemento;
+	procedure incoda(c: in out Coda, e: in Elemento);
+	procedure fuoricoda(c: in out Coda);
+	function codavuota(c: in Coda) return Boolean;
+end TypeCoda
+package body TypeCoda
+begin
+	type Coda is record
+		valori: array (1..capacity) of Elemento;
+		top: Integer range of (0..capacity) = 0;
+	end record
+
+	function leggicoda(c: in Coda) return Elemento
+	begin
+		if (c.top != 0) then
+			return valori(c.top)
+		else
+			raise "Eccezione"
+	end
+
+	procedure incoda(c: in out Coda, e: in Elemento)
+	begin
+		if (c.top == capacity) then
+			raise "Eccezione"
+		else
+			c.top := c.top + 1
+			c.valori(c.top) := e
+	end
+
+	procedure fuoricoda(c: in out Coda)
+	begin
+		if (c.top != 0) then
+			c.top := c.top - 1;
+		else
+			raise "Eccezione"
+	end
+
+	function codavuota(c: in Coda) return Boolean
+	begin
+		if (c.top == 0) then
+			return true;
+		else
+			return false;
+	end
+end TypeCoda
+
+with TypeCoda;
+package CodaInt is new TypeCoda(100, Integer)
+C: CodaInt;
+incoda(C, 2)
+
+2) I costruttori sono creaCoda() e inCoda().
+Declare: C, C': Coda; e, e': TipoElemento
+
+Assumo: +(Intero, Intero) = Intero
+
+Operatore leggiCoda(Coda) -> TipoElemento:
+- leggiCoda(creaCoda()) = error
+- leggiCoda(inCoda(C, e)) = e
+
+Operatore fuoriCoda(Coda) -> Coda:
+- fuoriCoda(creaCoda()) = error
+- fuoriCoda(inCoda(C, e)) = C
+
+Operatore codaVuota(Coda) -> Boolean:
+- codaVuota(creaCoda()) = true
+- codaVuota(inCoda(C, e)) = false
+
+Operatore concatena(Coda, Coda) -> Coda:
+- concatena(C, creaCoda()) = C
+- concatena(C, inCoda(C', e)) = inCoda(concatena(C, C'), e)
+
+Operatore inCodaMenoNumerosa(Coda, Coda, TipoElemento) -> Coda:
+- concatena(C, creaCoda(), e) = inCoda(creaCoda(), e)
+- concatena(C, inCoda(C', e), e') =
+	if lunghezza(C) <= 1 + lunghezza(C') then
+		inCoda(C, e')
+	else
+		inCoda(inCoda(C', e), e')
+
+ove abbiamo definito l'operatore lunghezza(Coda) -> Intero:
+- lunghezza(creaCoda()) = 0
+- lunghezza(inCoda(C, e)) = 1 + lunghezza(C)
+
+
+
+

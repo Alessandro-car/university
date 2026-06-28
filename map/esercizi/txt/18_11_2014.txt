@@ -1,0 +1,52 @@
+2) I costruttori sono creaCoda(), aggiungiInizio() e aggiungiFine().
+Declare: C, C': CodaDoppia; e: Elemento
+
+Operatore vuoto(CodaDoppia) -> Booleano:
+- vuoto(creaCoda()) = true
+- vuoto(aggiungiInizio(C, e)) = false
+- vuoto(aggiungiFine(C, e)) = false
+
+Operatore ruota(CodaDoppia) -> CodaDoppia:
+- ruota(creaCoda()) = creaCoda()
+- ruota(aggiungiInizio(C, e)) = aggiungiInizio(aggiungiInizio(rimuoviFine(C), e), leggiFine(c))
+- ruota(aggiungiFine(C, e)) = aggiungiInizio(C, e)
+
+Operatore leggiInizio(codaDoppia) -> Elemento:
+- leggiInizio(creaCoda()) = error
+- leggiInizio(aggiungiInizio(C, e)) = e
+- leggiInizio(aggiungiFine(C, e)) = leggiInizio(C)
+
+Operatore leggiFine(codaDoppia) -> Elemento:
+- leggiFine(creaCoda()) = error
+- leggiFine(aggiungiInizio(C, e)) = leggiFine(C)
+- leggiFine(aggiungiFine(C, e)) = e
+
+Operatore rimuoviInizio(codaDoppia) -> CodaDoppia:
+- rimuoviInizio(creaCoda()) = error
+- rimuoviInizio(aggiungiInizio(C, e)) = C
+- rimuoviInizio(aggiungiFine(C, e)) = rimuoviInizio(C)
+
+Operatore rimuoviFine(codaDoppia) -> CodaDoppia:
+- rimuoviFine(creaCoda()) = error
+- rimuoviFine(aggiungiInizio(C, e)) = rimuoviFine(C)
+- rimuoviFine(aggiungiFine(C, e)) = C
+
+Operatore concatena(CodaDoppia, CodaDoppia) -> CodaDoppia:
+- concatena(C, creaCoda()) = C
+- concatena(C, aggiungiInizio(C', e)) = affiungiFine(concatena(C, C'), e)
+- concatena(C, aggiungiFine(C', e)) = aggiungiFine(concatena(C, C'), e)
+
+3) Le forme di polimorfismo individuate nella classificazione Cardelli e Wegner sono di due tipologie:
+	- polimorfismo universale del quale fanno parte il polimorfismo parametrico e di inclusione;
+	- polimorfismo ad hoc del quale fanno parte l'overloading e la coercizione.
+Nel polimorfismo parametrico, una funzione polimorfa ha un parametro di tipo che determina il tipo di argomento per ciascuna applicazione della funzione. Il polimorfismo di inclusione nasce da una relazione di inclusione fra insiemi di valori. Ad esempio in C il valore 0 è polimorfo, in C++ il valore void* appartiene a tutti i tipi di puntatore.
+Si ha polimorfismo per overloading quando si usa lo stesso identificatore per metodi differenti e si ricorre ad informazioni di contesto per decidere quale metodo è djenotato da una particolare occorrenza dell'identificatore. La disambiguazione necessaria per una corretta compilazione si basa sul tipo di argomenti del metodo. La coercizione invece si ha quando un metodo definito per oggetti di tipo T1 viene applicato anche ad oggetti di tipo T2.
+
+6) Gli stati di un thread in Java sono i seguenti:
+	- New: l'oggetto thread è stato creato ma non ancora avviato quindi non è in esecuzione e il sistema di scheduling non sa della sua esistenza.
+	- Runnable: un thread può essere in esecuzione uando la CPU gli fornisce uno slice di tempo. Un thread in questo stato potrebbe essere o meno in esecuzione e nulla gli impedisce di essere eseguito.
+	- Dead: il classico modo per terminare un thread è farlo uscire dal metodo run(). Ci sono anche altri modi per farlo terminare, tramite i metodi stop() e destroy() che però è meglio non usare in quanto potrebbero lasciare il sistema in uno stato inconsistente.
+	- Blocked: il thread potrebbe essere in esecuzione ma qualcosa glielo impedisce e quando un thread  è nello stato di Blocked lo scheduler lo salterà evitando di concedergli del tempo CPU.
+
+Un thread può andare nello satto di thread perchè è stato sospeso tramite l'invocazione del metodo sleep(). È stata sospesa la sua esecuzione mediante il metodo suspend() e tornerà nello stato di Runnable quando viene chiamato il metodo resume(). È stata sospesa l'esecuzione del thread con il metodo wait() e tornerà in Runnable quando verrà chiamato il metodo notify(). Il thread sta aspettando un'operazione di I/O. Il thread sta cercando di chiamare un metodo sincronizzato o un oggetto non accessibile.
+La parola chiave synchronized serve per implementare il meccanismo di sincronizzazione per l'acceso ad una risorsa condivisa. Syncronized può essere applicato ai metodi, e in tal caso un thread può chiamare un solo metodo Syncronized alla volta. È possibile anche limitare la sincronizzazione alla sezione critica relativa ad un oggetto.

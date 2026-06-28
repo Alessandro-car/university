@@ -1,0 +1,44 @@
+2) I costruttori sono creaFrase() e aggiungiCarattere(Frase, Carattere).
+Declare: F, F': Frase; c, c': Carattere
+
+Operatore cancellaCarattere(Frase):
+- cancellaCarattere(creaFrase()) = error
+- cancellaCarattere(aggiungiCarattere(F, c)) = F
+
+Operatore maiuscolo(Frase, Carattere) -> Frase:
+- maiuscolo(creaFrase(), c) = error
+- maiuscolo(aggiungiCarattere(F, c), c') =
+	if esisteCarattere(aggiungiCarattere(F, c), c') then
+		if c == c' then
+			aggiungiCarattere(maiuscolo(F, c'), maiuscolo(c))
+		else
+			aggiungiCarattere(maiuscolo(F, c'), c)
+	else
+		error
+
+Operatore lunghezza(Frase) -> Intero:
+- lunghezza(creaFrase()) = 0
+- lunghezza(aggiungiCarattere(F, c)) = 1 + lunghezza(F)
+
+Operatore concatena(Frase, Frase) -> Frase:
+- concatena(F, creaFrase()) = F
+- concatena(F, aggiungiCarattere(F', c)) = aggiungiCarattere(concatena(F, F'), c)
+
+Operatore maggiore(Frase, Frase) -> Boolean:
+- maggiore(F, creaFrase()) = false
+- maggiore(F, aggiungiCarattere(F', c)) =
+	if lunghezza(F) == 1 + lunghezza(F') then
+		if maggiore(last(F), c) then
+			maggiore(F, F')
+		else
+			false
+	els
+		false
+
+Ove abbiamo definito l'operatore last(Frase) -> Carattere:
+- last(creaFrase()) = error
+- last(aggiungiCarattere(F, c)) = c
+
+3) Il polimorfismo per inclusione nel paradigma OO nasce da una relazione di inclusione fra insiemi di valori. L'inclusione di insiemi di valori è tipico dei sottotipi. Ad esempio in C il valore 0 è polimorfo, in C++ il tipo void* appartiene a tutti i tipi di puntatore. Nella programmazione OO si ha polimorfismo per inclusione se un oggetto appartiene a una classe e a ttutte le sue superclassi. Quindi si può assegnare un oggetto di una sottoclasse di una classe C a una variabile di tipo C e una funzione che opera su un oggetto di classe C può essere applicata anche a sottoclassi di C.
+
+L'utilizzo più interessante del polimorfismo di inclusione si ha quando le invocazioni dei metodi su oggetti di classe diverse produce comportamento differente anche se la definizione della funzione è la stessa. Questo dipende dal legame statico/dinamico tra identificatore di funzione e realizzazione. Nei linguaggi di programmazione con binding statico il legame tra identificatore di funzione e corpo viene fatto al compile time mentre nei linguaggi con binding dinamico, come Java, il controllo viene eseguito a run time e quindi esistono opportuni meccanismi per identificatare il tipo di un oggetto a run time (RTTI).
