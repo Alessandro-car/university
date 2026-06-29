@@ -1,0 +1,117 @@
+1) I costruttori sono crea() e aggiungi()
+Declare
+
+Assumo +(Intero, Intero) = Intero
+				%(Intero, Intero) = Intero
+Operatore leggi(Lista, Intero) -> Elemento:
+- leggi(crea(), i) = error
+- leggi(aggiungi(L, e), i) = if i = 1 + dim(L) then e else leggi(L, i)
+
+ove abbiamo definito l'operatore dim(Lista):
+	- dim(crea()) = 0
+	- dim(aggiungi(L, e)) = 1 + dim(L)
+
+Operatore dispari(Lista) -> Lista:
+- dispari(crea()) = crea()
+- dispari(aggiungi(L, e)) =
+		if 1 + dim(L) % 2 == 0 then
+			dispari(L)
+		else
+			aggiungi(dispari(L), e)
+
+Operatore conta(Lista, Elemento) -> Intero:
+- conta(crea(), e) = 0
+- conta(aggiungi(L, e), e') = if e == e' then 1 + conta(L) else conta(L)
+
+Operatore combina(Lista, Lista) -> Lista:
+- combina(L, crea()) = dispari(L)
+- combina(L, aggiungi(L', e)) =
+	if dim(aggiungi(L', e)) % 2 == 0 then
+		combina(dispari(L), L')
+	else
+		aggiungi(combina(L, L'), e)
+
+2) Nella definizione dei tipi astratti in Ada è possibile astrarre, tramite l'astrazione generica, sulla dichiarazione di modulo che sottointende una computazione. In particolar modo, per astrarre la definizione di un tipo di dato astratto si può ricorrere al concetto di generic package e di tipo parametrizzato. Il tipo parametrizzato definisce un parametro formale che verrà poi dichiarato all'atto dell'inizializzazione del package. Per inizializzare un generic package in Ada si utilizza la seguente notazione:
+package ST1 is new ST(Integer)
+e il precompilatore sostituisce questa stringa con il comando di definizione di un package, ad esempio: with ST1; use ST1. In Ada, a differenza del linguaggio Java, quando si inizializza un generic package, il compilatore crea tanti moduli quante sono le istanze di package definite.
+L'utilizzo di un generic package comporta la definizione di una matrice di oggetti "simili" senza dover creare diversi moduli in base a quante sono le istanze degli oggetti.
+
+Definizione del dato astratto Pila
+generic
+	max: Positive;
+	type Elemento is private;
+package typePila
+begin
+	type Pila is private;
+	procedure inPila(p: in out Pila, e: in Elemento);
+	procedure fuoriPila(p: in out Pila);
+	private
+		type Pila is record
+			top: Integer range of (0..max) = 0;
+			valori: Array (1..max) of Elemento;
+		end record;
+end typePila
+
+package body typePila
+	procedure inPila(p: in out Pila, e: in Elemento)
+	begin
+		if p.top == max then
+			raise "Eccezione"
+		else
+			p.top := p.top + 1;
+			p.valori(p.top) := e
+	end
+
+	procedure fuoriPila(p: in out Pila)
+	begin
+		if p.top == 0 then
+			raise "Eccezione"
+		else
+			p.top := p.top - 1;
+	end
+end typePila
+
+with typePila;
+package IntPila is new typePila(100, Integer)
+with IntPila; use IntPila;
+package CharPila is new typePila(100, Character)
+with CharPila; use CharPila;
+
+L'astrazione di procedura impartisce un comando da eseguire che cambia lo stato di un sistema. Nel codice scritto, due esempi di astrazione di procedura sono entrambe le funzioni inPila e fuoriPila che modificano lo stato del sistema incrementando o decrementando l'attributo top di Pila o aggiungendo valori all'array valori di Pila. Infatti, un'astrazione di procedura è specificata nel seguente modo:
+	procedure I(FP1, ..., FPn) is C
+ove I è un'identificatore, FP1, ..., FPn sono parametri formali e C è il blocco di comandi da eseguire. Data una chiamata ad un'astrazione di proceudura il punto di vista dell'utente è che la chiamata a tale proceudra modificherà lo stato del sistema in modo dipendente dai parametri, mentre dal punto di vista dell'implementatore è che la chiamata esegue il blocco di comandi C.
+
+3) In Java esistono due modi per creare un thread. Il primo, che è anche il più semplice, è quello di estendere la classe Thread e definire il metodo run() che è il metodo più importante in quanto definisce il punto di entrata di un thread. Inoltre, la classe Thread presenta dei metodi aggiuntivi come:
+	- getPriority() che restituisce la priorità del thread corrente,
+	- isAlive() che restituisce se un thread è in esecuzione,
+	- getName() che restituisce il nome di un thread,
+	- join() attende che un thread termini
+	- sleep() che sospende il thread per un dato periodo di tempo,
+	- start() avvia un thread cambiando il relativo metodo run(),
+	- suspend() che sospende un thread in esecuzione.
+L'altro modo per creare un thread in Java è quello di implementare l'interfaccia Runnable e creare un oggetto di tipo Thread. Implementando l'interfaccia Runnable bisogna ridefinire il metodo run() e uno degli svantaggi di utilizzare questo approccio è che non si ha accesso a metodi e attributi della classe Thread.
+
+class MyThread extends Thread {
+	private int x;
+
+	MyThread(String name, int x) {
+		this.x = x;
+	}
+
+	public void run() {
+		int i = 0;
+		while (true) {
+			System.out.println(Math.pow(x, i));
+			i += 1;
+		}
+	}
+}
+
+class Main {
+	private void main(String args[]) {
+		MyThread th = new MyThread(2);
+		th.start();
+	}
+}
+
+La forma di ereditarietà usata in questo codice è l'ereditarietà per estensione in quanto è stato aggiunto l'attributo x e il metodo run().

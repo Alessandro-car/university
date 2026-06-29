@@ -1,0 +1,172 @@
+1) I costruttori sono crea() e aggiungi()
+Declere
+Assumo
+
+Operatore leggi(Lista, Intero) -> Elemento:
+- leggi(crea(), i) = error
+- leggi(aggiungi(L, e), i) =
+	if i >= 1 and i <= 1 + dim(L)
+		if i == 1 + dim(L) then e else leggi(L, e)
+	else
+		error
+
+ove dim(Lista) -> Intero:
+- dim(crea()) = 0
+- dim(aggiungi(L, e)) = 1 + dim(L)
+
+Operatore conta(Lista, Elemento) -> Intero:
+- conta(crea(), e) = 0
+- conta(aggiungi(L, e), e') = if e == e' then 1 + conta(L) else conta(L)
+
+Operatore suffisso(Lista, Intero) -> Lista:
+- suffisso(crea(), i) = crea()
+- suffisso(aggiungi(L, e), i) =
+	if i >= 1 and i <= 1 + dim(L) then
+		if i <= 1 + dim(L) then
+			aggiungi(suffisso(L, k - 1), e)
+	else
+		error
+
+Operatore combina(Lista, Lista, Intero) -> Intero:
+- combina(L, crea(), i) = L
+- combina(L, aggiungi(L', e), i) = concatena(L, suffisso(aggiungi(L', e), i))
+
+ove concatena(Lista, Lista) -> Lista:
+- concatena(L, crea()) = L
+- concatena(L, aggiungi(L', e)) = aggiungi(concatena(L, L'), e)
+
+2) L'astrazione di tipo permette di astrarre sulla classe sintattica tipo. Le tecniche di programmazione a supporto dell'astrazione di tipo sono due:
+	- la definizione di un tipo di dato astratto, cioè l'astrazione sulla classe sintattica tipo;
+	- la definziione di una classe di oggetti, cioè l'astrazione sulla dichiarazione di moduli dotati di stati locali.
+In entrambi i casi occorre incapsulare la rappresentazione del dato con operazioni lecite. Tuttavia ci sono delle differenze. Nel tipo di dato asratto il modulo rende disponibile un tidentificatore di tipo e un insieme di operatori applicabili su di esso. Nella definizione di una classe di oggetti, invece, il modulo mette a disposizione solo un insieme di operatriL'astrazione di tipo è collegata al concetto di astrazione generica che in Ada si esemplifica con la creazione di generic package che creano una matrice di oggetti "simili" dotati di uno stato interno. Un package è una tecnica per incapsulare i tipi ed è suddiviso in due parti: una specification che contiene la dichiarazione di tipi, costnati, funzioni e procedure. Un body, invece, contiene l'implementazione di procedure e funzioni ed eventualmente una routine di inizializzazione del package. La specification si suddivide in private ove le entità dichiarate in questa parte non sono visibili all'esterno e la parte visible dove le entità sono messe a disposizione del programmatore mediante la clausole use.
+
+Definizione del tipo astratto Lista in Ada.
+generic
+	max: Positive;
+	type Elemento is private;
+package typeLista
+begin
+	type Lista is private;
+	procedure aggiungi(l: in out Lista, e: in Elemento);
+	function leggi(l: in Lista, i: in Integer) return Elemento;
+
+	private
+		type Lista is record
+			top: Integer range of (0..max) = 0;
+			valori: array (1..max) of Elemento;
+		end record
+end
+
+package body typeLista
+begin
+	procedure aggiungi(l: in out Lista, e: in Elemento)
+	begin
+		if l.top == max then
+			raise "Eccezione"
+		else
+			l.top := l.top + 1;
+			l.valori(l.top) := e;
+	end
+
+	function leggi(l: in Lista, i: in Integer) return Elemento
+	begin
+		if i >= 1 && i <= l.top then
+			return l.valori(i)
+		else
+			raise "Eccezione"
+	end
+end typeLista
+
+with TypeLista;
+package IntLista is new TypeLista(100, Integer)
+package CharLista is new TypeLista(100, Character)
+
+with IntLista; use IntLista;
+with CharLista; use CharLista;
+L1: IntLista;
+L2: CharLista;
+
+aggiungi(L1, 1);
+aggiungi(L1, 10);
+aggiungi(L2, 'a');
+aggiungi(L2, 'b');
+aggiungi(L2, 'c');
+
+3) Il meccanismo di gestione delle eccezioni in Java permette di separare la normale esecuzione del programma dalla cattura e gestione di situazioni anomale che si generano a run-time.
+In Java le eccezioni sono degli oggetti e sono istanza della classe Throwable che si suddivide in due classi:
+	- la classe Exception usata per le condizioni eccezionali che il programma utente dovrebbe catturare. A sua volte la classe Exception contiene delle eccezioni controllate che derivano direttamente da Exception e il programmatore è obbligato a gestirle e le eccezioni non controllate che derivano dalla classe RuntimeException e il programmatore non è obbligato a catturarle e gestirle.
+	- la classe Error che definisce le eccezioni da catturare in circostanze normali nel programma.
+
+Nel linguaggio Java per creare e lanciare un'eccezioni si utilizza la clausola throw new ThrowableInstance(msg) ed è bene non confonderla con la clausola throws ExceptionLists che invece viene usta nella dichiarazione di un metodo per indicare quali eccezioni potrebbe generare quel metodo. Se un metodo contiene porzioni di codice che potrebbero generare eccezioni controllate la dichiarazione del metodo deve necessariamente contenere la clausola throws. Per gestire un'eccezione in Java si utilizza la sintassi del try-catch-finally. Nella sezione try viene inserita la porzione di codice che potrebbe lanciare delle eccezioni. Se in un metodo try viene lanciata un'eccezione questa deve essere catturata e gestita. Per fare ciò, si esce dal blocco try e si cerca il rispettivo blocco catch che ha come argomento il tipo di eccezione da gestire. Dopo aver trovato il rispettivo metodo catch si esegue la porzione di codice all'interno del blocco catch. Ad un blocco try ci possono essere più blocchi catch in quanto un metodo può lanciare più eccezioni di tipo differente. La clausola finally invece contiene una porzione di codice che viene eseguita indipendentemente da come si è usciti dal blocco try.
+
+Il linguaggio Java permette anche di definire nuove eccezioni controllate e non, estendendo rispettivamente la classe Exception o RuntimeException.
+
+class Elemento {
+	private int codice;
+	privagte String valore;
+
+	Elemento(int codice, String valore) {
+		this.codice = codice;
+		this.valore = valore;
+	}
+}
+
+class Lista {
+	private List<Elemento> valori;
+
+	Lista() {
+		valori = new ArrayList<>();
+	}
+
+	void aggiungi(Elemento e) {
+		valori.add(e);
+	}
+
+	Elemento leggiControllata(int i) throws CheckedException {
+		if (i < 0 || i > valori.size(i)) {
+			throw new CheckedException("Controllata");
+		}
+		return valori.get(i);
+	}
+
+	Elemento leggiNonControllata(int i) {
+		if (i < 0 || i > valori.size())
+			throw new UncheckedException("Non controllata");
+		valori.get(i);
+	}
+}
+
+class CheckedException extends Exception {
+	public CheckedException(String msg) {
+		super(msg);
+	}
+}
+
+class UncheckedException extends RuntimeException {
+	public UncheckedException(String msg) {
+		super(msg);
+	}
+}
+
+class Main {
+	public void main(String[] args) {
+		Lista l = new Lista();
+
+		l.aggiungi(new Elemento(1, "prova"));
+		l.aggiungi(new Elemento(2, "prova2"));
+
+		try {
+			l.leggiControllata(1);
+		} catch CheckedException {
+			System.err.println(e.getMessage());
+		}
+		l.leggiNonControllata(2);
+	}
+}
+
+In java la parola chiave final ha significati diversi a seconda di dove viene utilizzata. Quando final viene applicato ai dati bisogna fare distinzione tra dati primitivi e oggetti. Quando il final viene applicato ai dati primitivi allora tale dato viene reso costante e il compilatore sostituisce ogni occorrenza di quel dato con il valore corrispondente. Quando la parola chiave viene applicato agli oggetti, invece, viene reso costante il riferimento all'oggetto ma l'oggetto stesso può essere modificato.
+Java permette anche la creazione dei blank final, ovvero attributi dichiarati final ma non inizializzati e vengono inizializzati solo prima di essere usati. Questo è utile in quanto per istanze di oggetti diversi si possono avere diversi valori per l'attributo dichirato final pur mantenendo le caratteristiche del final.
+Quando la parola chiave final viene applicato ai metodi allora si vuole indicare che tale metodo non deve essere specializzato ulteriormente e i metodi final vengono gestiti in modo più efficiente dal compilatore in quanto il compilatore chiama tali metodi con delle chiamate inline.
+Il final applicati alle classi, invece, denota che quella classe è una classe foglia che non verrà specializzata ulteriormente.
+
+

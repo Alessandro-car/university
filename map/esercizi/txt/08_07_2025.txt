@@ -1,0 +1,139 @@
+1) I costruttori sono crea(Nodo), aggiungiFiglioSinistro() e aggiungiFiglioDestro().
+Declare:
+
+Assumo
+
+Operatore numeroFigli(AlberoBinario, Nodo) -> Intero:
+- numeroFigli(crea(n), n') = if n == n' then 0 else error
+- numeroFigli(aggiungiFiglioDestro(A, n, n'), n'') =
+	if n'' = n' then 0
+	else
+		if n'' = n then 1 + numeroFigli(A, n'')
+		else numeroFigli(A, n'')
+	- numeroFigli(aggiungiFiglioSinistro(A, n, n'), n'') =
+		if n'' = n' then 0
+		else
+			if n'' = n then 1 + numeroFigli(A, n'')
+			else numeroFigli(A, n'')
+
+Operatore profondita(AlberoBinario, Nodo) -> Intero:
+- profondita(crea(n), n') = if n = n' then 1 else error
+- profondita(aggiungiFiglioSinistro(A, n, n'), n'') =
+	if n'' == n' then 1 + profondita(A, n)
+	else
+		profondita(A, n'')
+- profondita(aggiungiFiglioDestro(A, n, n'), n'') = uguale a figlio sinistro
+
+Operatore minore(AlberoBinario, AlberoBinario) -> Booleano:
+- minore(A, crea()) = if numNodi(A) <= 0 then false else true
+- minore(A, aggiungiFiglioSinistro(A', n, n')) = if numNodi(A) < 1 + numNodi(A') then true else false
+Per il figlio destro è uguale.
+
+Operatore numNodi:
+- numNodi(crea(n)) = 1
+- numNodi(aggiungiFiglioSinistro(A, n, n')) = 1 + numNodi(A)
+Idem per figlio destro
+
+Operatore max(AlberoBinario) -> Nodo:
+- max(crea(n)) = n
+- max(aggiungiFiglioSinistro(A, n, n')) = if diametro(n') > diametro(max(A)) then n' else max(A)
+Idem per figlio destro
+
+2) La definizione dei tipi astratti in Ada e la definizione di classi di oggetti sono due tecniche di programmazione di supporto all'astrazione sulla classe sintattica tipo.
+Nella definizione di un tipo astratto si astrae sulla classe sintattica tipo mentre la definziione di una classe di oggetti permette di astrarre sulla dichiarazione di un modulo dotato di stato locale.
+Quindi, entrambe permettono di ottenere l'astrazione dati ma con alcune differenze. Il tipo astratto mette a disposizione dell'utente un identificatore di tipo e un insieme di operatori applicabili su di esso mentre una classe di oggetti mette a disposizione dell'utente solo un'insieme di operatori.
+Possiamo descrivere le differenze tra tipo astratto e classe in Ada raggruppandole in 3 categorie:
+- Differenze sintattiche: gli operatori definiti nel tipo di dato astratto presentano un parametro in più relativo al tipo di dato che si sta definendo;
+- Differenze concettuali: il tipo di dato astratto è realizzato intorno alle osservazioni. Ogni osservazione è implementata come un metodo che opera su una realizzazione concreta. Le classi, invece, sono realizzate intorno ai costruttori e le osservazioni diventano metodi dei valori.
+- Differenze realizzative: Gli operatori del tipo astratto vengono definiti una sola volta, mentre gli oepratori di una classe vengono definiti tante votle quante sono le istnaze della classe.
+Inoltre, gli oggetti in Ada sono cittadini di terza classe in quanto una procedura non può restituire un'istanza di una classe e non si possono creare dinamicamente istanze di una classe e questo mette in evidenza un limite delle classi in Ada in quanto se ci sono oepratori che necessitano di più istanze di una stessa classe allora questi non sono implementabili. I dati astratti sono cittadini di prima classe e lo svantaggio di questi è la scarsa estendibilità in quanto un'aggiunta di un dato ad un costruttore comporta modifiche significative all'implementazioni dei metodi di tale dato.
+
+generic
+package ClassePaziente
+begin
+	procedure creaPaziente(e: in Intero, n: in String);
+	procedure incrementa();
+end ClassePaziente;
+
+package body ClassePaziente
+begin
+	eta: Integer;
+	nome: String;
+	procedure creaPaziente(e: in Integer, n: in String)
+	begin
+		eta := e;
+		nome := n
+	end
+
+	procedure incrementa()
+	begin
+		eta := eta + 1
+	end
+end ClassePaziente
+
+package TypePaziente
+begin
+	type Paziente is limited private;
+	procedure creaPaziente(p: in out Paziente, e: in Integer, n: in String);
+	procedure incrementa(p: in out Paziente);
+	function minore(p1: in Paziente, p2: in Paziente) return Paziente;
+
+	private
+		type Paziente is record
+			eta: Integer;
+			nome: String
+		end record
+end TypePaziente
+
+package body TypePaziente
+begin
+	procedure creaPaziente(p: in out Paziente, e: in Integer, n: in String)
+	begin
+		p.eta := e;
+		p.nome := n;
+	end
+
+	procedure incrementa()
+	begin
+		p.eta := p.eta + 1;
+	end
+
+	function minore(p1: in Paziete, p2: in Paziente) return Paziente
+	begin
+		if p1.eta < p2.eta then
+			return p1;
+		else
+			return p2;
+	end
+end TypePaziente
+
+3)
+class MyThread implements Runnable {
+	private String nome;
+	private float x;
+	private Thread th;
+
+	MyThread(String nome, float x) {
+		this.nome = nome;
+		this.x = x;
+		th = new Thread(this, this.nome);
+		th.start();
+	}
+
+	@Override
+	public void run() {
+		int i = 1;
+		while (true) {
+			System.out.println(x / i);
+			i += 1;
+		}
+	}
+}
+
+class Main {
+	public void main(String[] args) {
+		MyThread prova = new MyThread("prova", 1.5);
+
+	}
+}
+
