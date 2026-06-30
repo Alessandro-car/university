@@ -1,0 +1,145 @@
+1) I costruttori sono crea(), aggiungiNodo(Grafo, Nodo) e aggiungiNodoConensso(Grafo, Nodo, Nodo)
+Declare: G, G': Grafo; n, n', n'': Nodo
+
+Assumo: +(Intero, Intero) -> Intero
+
+Operatore contaArchi(Grafo) -> Intero:
+- contaArchi(crea()) = 0
+- contaArchi(aggiungiNodo(G, n)) = contaArchi(G)
+- contaArchi(aggiungiNodoConensso(G, n, n')) = 1 + contaArchi(G)
+
+Operatore cancella(Grafo, Nodo) -> Grafo:
+- cancella(crea(), n) = crea()
+- cancella(aggiungiNodo(G, n), n') =
+	if n = n' then G else aggiungiNodo(cancella(G, n'), n)
+- cancella(aggiungiNodoConensso(G, n, n'), n'') =
+	if n'' = n or n'' = n' then G else aggiungiNodoConensso(cancella(G, n''), n, n')
+
+Operatore out(Grafo, Nodo) -> Intero:
+- out(crea(), n) = error
+- out(aggiungiNodo(G, n), n') = if n = n' then 0 else out(G, n')
+- out(aggiungiNodoConensso(G, n, n'), n'') =
+	if n'' == n' then 1 + out(G, n'')
+	else out(G, n'')
+
+Operatore uguale(Grafo, Grafo, Nodo) -> Booleano:
+- uguale(crea(), G', n) = error
+- uguale(aggiungiNodo(G, n), G', n') = in(aggiungiNodo(G, n), n') == in(G', n')
+- uguale(aggiungiNodoConnesso(G, n, n'), G', n'') =
+	in(aggiungiNodoConensso(G, n, n'), n'') = in(G', n'')
+
+ove in(Grafo, Nodo) -> Intero:
+	- in(crea(), n) = error
+	- in(aggiungiNodo(G, n), n') = if n = n' then 0 else in(G, n')
+	- in(aggiungiNodoConensso(G, n, n'), n'') =
+		if n'' = n then 1 + in(G, n'') else in(G, n'')
+
+2) Il concetto di ereditarietà nel modello OO indica che una classe può essere ottenuta a partire da una classe già esistente detta classe base. La nuova classe che si ottiene è detta sottoclasse della classe base ed è una specializzazione della classe base, in quanto contiene stessi attributi e metodi della classe base e aggiunge altri attributi o metodi, oppure ridefinisce metodi esistenti nella classe base. Per le classi nelle quali viene applicato il meccanismo di ereditarietà per variazione funzionale e per estensione si instaura una relazione is_a e vale il principio di sostituibilità secondo il quale ad una variabile dichiarata come tipo della classe basa può essere assegnata un'istanza della sottoclase. Questo perchè, la sottoclasse include le stesse caratteristiche della classe base. Le forme di ereditarietà nel paradigma OO sono diverse:
+ - ereditarietà per estensione: la sottoclasse introduce nuovi attributi o metodi alla classe base;
+ - erediteriatà per variazione funzionale: la sottoclasse ridefinisce, secondo il meccanismo di overriding, dei metodi già esistenti nella classe base in quanto potrebbero rivelarsi inadeguati per la sottoclasse. L'overrding prevede che la firma del metodo rimanga la stessa ma l'implementazione cambia.
+ - ereditarietà per implementazione: la sottoclasse utilizza il codice della classe base per implementare l'astrazione associata. Questa forma di ereditarietà si applica quando la sottoclasse deve usufruire solo dei servizi della classe base ma non della sua interfaccia.
+ - ereditarietà singola: la sottoclasse deriva una sola classe base.
+ - ereditarietà multipla: la sottoclasse può derivare una o più classi. Questa forma di ereditarietà può portare a diversi problemi. In particolar modo, quando la sottoclasse eredita un metodo definite da due o più superclassi differenti il compilatore non sa quale implementazione ereditare e si crea un'ambiguità chiamata conflitto di realizzazione. Infatti, questa forma di ereditarietà non sempre è supportata dai linguaggi di programamzione. Ad esempio, in Java questa forma di ereditarietà non è supportata.
+
+3) L'interfaccia Comparable in Java contiene il metodo public int compareTo(Object o) che confronta l'oggetto corrente con l'oggetto passato come parametro e restituisce un valore positivo se l'oggetto corrente è maggiore dell'oggetto passato come parametro, negativo se è minore e 0 se sono uguali.
+L'interfaccia comparator invece contiene i metodi public int compare(Object o1, Object o2) che restituisce gli stessi valori del metodo compareTo. L'altro metodo che contiene l'interfaccia Comparator è il metodo public boolean equals(Object obj). La differenza tra le due interfacce è che Comparable definire un ordine naturale tra gli oggetti mentre Comparator viene usata per avere un ordinamento differente.
+
+class ArrayComp implements Comparator {
+	public int compare(Object o1, Object o2) {
+		int e1 = (int) o1;
+		int e2 = (int) o2;
+		if (e1 > e2) return 1;
+		if (e1 < e2) return -1;
+		return 0;
+	}
+}
+class Main {
+	public static void main(String[] args)  {
+		int array[] = {1, 2, 4, 6, 10, 3, 23, 4};
+		int max = 0;
+		for (int i = 0; i < array.length - 1; i++) {
+			ArrayComp comp = new ArrayComp();
+			if (comp.compare(array[i], array[i + 1]) > 0) {
+				max = array[i];
+			} else {
+				max = array[i + 1];
+			}
+		}
+		System.out.println(max);
+	}
+}
+
+---
+class Studente {
+	private String matricola;
+	private String cognome;
+	private int eta;
+
+	public Studente(String matricola, String cognome, int eta) {
+		this.cognome = cognome;
+		this.matricola = matricola;
+		this.eta = eta;
+	}
+
+	public String getCognome() { return this.cognome; }
+	public int getEta() { return this.eta; }
+}
+
+class Classe {
+	private Studente[] studenti;
+
+	Classe(Studente[] studenti) {
+		this.studenti = studenti;
+	}
+
+	public static Studente massimo(Classe c, Comparator comp) {
+		Studente max = null;
+		for (int i = 0; i < c.studenti.size() - 1; i++) {
+			if (comp.compare(c.studenti.get(i), c.studenti.get(i + 1)) > 0) {
+				max = c.studenti.get(i);
+			} else {
+				max = c.studenti.get(i + 1);
+			}
+		}
+	}
+}
+
+class CognomeComparator implements Comparator {
+	public itn compare(Object o1, Object o2) {
+		Studente s1 = (Studente) o1;
+		Studente s2 = (Studente) o2;
+		return s1.getCognome().compareTo(s2.getCognome());
+	}
+}
+
+class EtaComparator implements Comparator {
+	public int compare(Object o1, Object o2) {
+		Studente s1 = (Studente) o1;
+		Studente s2 = (Studente) o2;
+		return s2.getEta().compareTo(s2.getEta());
+	}
+}
+
+public class Main {
+	public static void main(String[] args) {
+		Studente[] array = {
+            new Studente(1, "Rossi", 22),
+            new Studente(2, "Bianchi", 24),
+            new Studente(3, "Verdi", 21),
+            new Studente(4, "Gialli", 25),
+            new Studente(5, "Neri", 23)
+        };
+    Classe classe = new Classe(array);
+		Studente maxCognome = Classe.massimo(classe, new CognomeComparator());
+		Studente maxEta = Classe.massimo(classe, new EtaComparator());
+	}
+}
+
+Il meccanismo di RTTI, acronimo per Run Time Type Identification, in Java server per stabilire il tipo di un oggetto a run-time. Questo meccanismo è importante in quanto il linguaggio java implementa il meccanismo di late binding o binding dinamico, ovvero collega la definizione di un metodo al corpo a run-time e non a compile time. Per fare questo dobbiamo capire come Java memorizza le informazioni delle classe a run-time. Ciò è realizzato attraverso un tipo speciale di oggetto, chiamato Class Object che contiene tutte le informazioni di una classe. Tutte le infromazioni riguardanti attributi, metodi, visibilità ecc. sono memorizzate nel file .class delle classe .java corrispondente. Per accedere al file .class di una classe è possibile farlo in due metodi:
+- tramite il metodo forName() che è un metodo statico di Class che ritorna un riferimento a un oggetto Class e prende in input un parametro di tipo String che rappresenta il nome della classe;
+- si può accedere al file .class di una classe attraverso il letterale di classe dato dal nome della classe seguito da .class. I vantaggi di questa notazione sono la semplicità, l'efficienza e il controllo di esistenza della classe durante la computazione.
+- tramite il metodo getClass() che è implementato e ereditato dalla superclasse Object.
+Inoltre, per i wrapper dei tipi primitivi c'è anche un campo standard chiamato TYPE. Ad esempio l'equivalente di boolean.class è Boolean.TYPE.
+
+Un'altra forma di RTTI è la clausola instanceof che indica se un oggetto è istanza di un particolare tipo e restituisce un boolean. Alternativametne, la classe Class mette a disposizione la funzione isInstance che fornisce un modo per invocare dinamicamente l'pperatore instanceof, che potrebbe risultare noioso in quanto lo si deve specificare per il confronto di ogni tipo di oggetto distinto.
+L'RTTI è importate in Java in quanto il meccanismo del casting utilizza l'RTTI per assicurarsi a run-time che la conversione sia lecita, questo tipo di conversione è detta type safe downcast.

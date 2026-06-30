@@ -1,0 +1,144 @@
+1) I costruttori sono crea(), aggiungiNodo(Rete, Nodo) e aggiungiConnessione(Rete, Nodo, Nodo, Peso).
+Declare: R, R': Rete; n, n', n'', n''': Nodo; p, p': Peso
+
+Assumo: +(Intero, Intero) -> Intero
+
+Operatore conta(Rete, Peso) -> Intero
+- conta(crea(), p) = 0
+- conta(aggiungiNodo(R, n), p) = conta(R, p)
+- conta(aggiungiConnessione(R, n, n', p), p') =
+	if p = p' then 1 + conta(R, p') else conta(R, p')
+
+Operatore cancella(Rete, Nodo) -> Rete:
+- cancella(crea(), n) = error
+- cancella(aggiungiNodo(R, n), n') =
+	if n = n' then R else aggiungiNodo(cancella(R, n'), n)
+- cancella(aggiungiConnessione(R, n, n', p), n'') =
+	if n'' = n or n'' = n' then R else aggiungiConnessione(cancella(R, n''), n, n')
+
+Operatore uguale(Rete, Nodo, Nodo) -> Booleano:
+- uguale(crea(), n, n') = error
+- uguale(aggiungiNodo(R, n), n', n'') =
+	contaConn(aggiungiNodo(R, n), n') == contaConn(aggiungiNodo(R, n), n'')
+- uguale(aggiungiConnessione(R, n, n'), n'', n''') =
+	contaConn(aggiungiConnessione(R, n, n'), n'') == contaConn(aggiungiConnessione(R, n, n'), n''')
+
+ove contaConn(Rete, Nodo) -> Intero:
+	- contaConn(crea(), n) = 0
+	- contaConn(aggiungiNodo(R, n), n') = if n = n' then 0 else contaConn(R, n')
+	- contaConn(aggiungiConnessione(R, n, n', p), n'') =
+		if n''= n or n'' = n' then 1 + contaConn(R, n'') else contaConn(R, n'')
+
+Operatore maggiore(Rete, Rete, Peso) -> Booleano:
+- maggiore(R, crea(), p) = conta(R, p) > 0
+- maggiore(R, aggiungiNodo(R', n), p) = conta(R, p) > conta(R', p)
+- maggiore(R, aggiungiConnessione(R, n, n', p), p') =
+	if p = p' then
+		conta(R, p') > 1 + conta(R', p')
+	else
+		conta(R, p) > conta(R', p)
+
+2) Nella definizione di una nuova classe derivata non sempre estendere la classe base risulta il meccanismo più appropriato. Spesso una classe può essere ottenuta contenendo i puntatori ad oggetti di altre classi e questo meccanismo è noto come meccanismo di composizione. Questo succede quando una classe necessita dei servizi di un'altra classe ma non della sua interfaccia.
+Inoltre, distinguiamo due forme di composizione: la composizione e l'aggregazione per i quali l'UML riserva due notazioni differenti.
+La composizione comporta una dipendenza esistenziale tra le parti e l'intero, cioè le parti non possono vivere senza l'intero e questo comporta che la creazione e la distruzione delle parti avvenga all'interno dell'oggetto principale e le parti non possono far parte di altri oggetti. La composizione in UML si indica con un rombo pieno.
+Il meccanismo di aggregazione, invece, è un'associazione debole fra parti e intero dove le parti possono vivere senza l'intero e possono far parte anche di altri oggetti. In UML l'aggregazione si indica con un rombo vuoto. Il meccanismo di aggregazione viene utilizzato solitamente in 3 casi principali:
+	- contenimento fisico;
+	- appartenenza;
+	- composizione funzionale.
+
+Il principio di sostituibilità nasce da una relezione di ereditarietà tra classi che implica una relazione is_a tra le classi. In particolar modo, una sottoclasse di una classe è una specializzazione di tale classe, pertanto, ad una variabile dichiarata con il tipo della classe base può essere assegnata un'istanza della sottoclasse in quanto la sottoclasse contiene le stesse caratteristiche della classe base. Nel nostro esempio questo accade per la classe LibroScolatiscoEred in quanto è in una relazione is_a con Libro e Disciplina. Per quanto riguarda la classe LibroScolastico, invece, il meccanismo di composizione/aggregazione comporta una relazione has_a tra le classi e il principio di sostituibilità in questo tipo di relazione non è applicabile perchè la classe LibroScolastico non ha la stessa interfaccia della classe Libro e Disciplina ma ne utilizza solo i servizi forniti da esse
+
+3) La programmazione in rete è sempre stata complicata in quanto il programmatore per comunicare con un dispositivo remoto dovrebbe conoscere i protocolli e spesso anche dell'hardware. Il linguaggio Java, invece, fornisce un meccanismo semplice per comunicare con un dispositivo remoto rendendo la comunicazione simila alla scrittura e lettura su un file con la differenza che il file non è memorizzato fisicamente ma si trova in remoto.
+Per comunica via rete, in Java, si fa il wrapping di una connessione di rete, detta socket, in un flusso di oggetti in modo da utilizzare le stesse invocazioni di metodo utilizzate per i flussi di oggetti al fine di scambiare informazioni.
+
+Per comunicare con un altro nodo della rete è necessario localizzarlo e l'identificazione del nodo avviene mediante l'indirizzo IP. Un indirizzo IP può essere identificato mediante dot notaion (192.168.2.1) oppure mediante DNS (Domain Name System) e la libreria java.net dispone di un metodo InetAddress.getByName() che restituisce un oggetto IneAddress a partire dal nome o dall'indirizzo IP.
+
+Per identificare un host sulla rete non è necessario solo l'indirizzo IP in quanto su un server ci possono essere più calcolatori. Per riconoscere univocametne un host si utilizza anche il concetto di porta che è un'astrazione software.
+
+Come detto precedentemente, per stabilire la connessione con un'altra macchina occorrerà disporre di un socket su ogni macchina. Creando un socket si ottengeono un InputStream e un OutputStream al fine di abilitare la connessione simile ad un I/O su stream di oggetti. Ci sono due classi scoket basate su stream:
+ - ServerSocket che il server usa per ascoltare una richiesta di connessione;
+ - Socket usata dal client per inizializzare la connessione.
+
+Ogni volta che il client richiedere una connessione socker, il ServerSocket restituisce un oggetto Socket tramite il metodo accept(). In un sistema multithreading, il server è continuamente in ascolto di richieste di connessione invocando il metodo accept() ogni qual volta che un client richiede la connessione. Per la creazione del Socket, invece, occorre specificare l'indirizzo IP del server e il numero di porta.
+
+Dopo che la connessione è stata stabilita si utilizzano i metodi getInputStream() e getOutputStream() per creare gli oggetti InputStream e OutputStream.
+
+class MultiServer {
+	private int PORT = 8080;
+	public MultiServer(int port) {
+		this.PORT = port;
+		this.run();
+	}
+
+	public void run() {
+		ServerSocket s = null;
+		try {
+			s = new ServerSocket(this.PORT);
+			wnile (true) {
+				Socket socket = s.accept();
+				try {
+					new ServerOneClient(socket);
+				} catch (IOException e ) {}
+			}
+		} catch (IOException e) {
+		} finally {
+			s.close();
+		}
+	}
+}
+
+class ServerOneClient extends Thread {
+	private Socket socket;
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
+
+	public ServerOneClient(Socket socket) {
+		this.socket = socket;
+		in = new ObjectInputStream(this.socket.getInputStream());
+		out = new ObjectOutputStream(this.socket.getOutputStream);
+
+		this.start();
+	}
+
+	@Override
+	public void run() {
+		try {
+			while (true) {
+				int first = (int) in.readObject();
+				int second = (int) in.readObject();
+				out.writeObject(first + second);
+				out.flush();
+			}
+		} catch (IOException e) {
+		} finally {
+			socket.close();
+		}
+	}
+}
+
+class Client {
+	public static void main(String[] args) throws IOException {
+		InetAddress addr = InetAddress.getByName("127.0.0.1");
+		Socket socket = new Socket(addr, 8080);
+		ObjectOutputStream out = null;
+		ObjectInputStream in = null;
+		try {
+			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {}
+
+		do {
+			System.out.println("Insert the first number: ");
+			first = Keyboard.readInt();
+			out.writeObject(first);
+
+			System.out.println("Insert the second number: ");
+			second = Keyboard.readInt();
+			out.writeObject(second);
+
+			System.out.println("Result: " + in.readObject().toString());
+			System.out.println("\nWould you like to continue (y\n): ");
+			risp = Character.toUpperCase(Keyboard.readChar());
+		} while (risp == 'Y');
+	}
+}
