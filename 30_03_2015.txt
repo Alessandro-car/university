@@ -1,0 +1,86 @@
+1) I cittadini di prima classe hanno 3 caratteristiche:
+	- Sono denotabili, ovvero ad essi viene associato un nome;
+	- Sono esprimibili, ovvero solo il risultato di un'operazione complesssa.
+	- Sono memorizzabili, ovvero possono essere assegnati ad una variabile;
+
+I cittadini di seconda classe subiscono alcune restrizioniu operativamente in quanto, tipicamente, non possono essere restituiti come risultato o salvati in variabili, ma possono essere passati come argomenti ad altre entità. I cittadini di terza classe, invece, possono essere solo chiamati o invocati.
+Le funzioni sono cittadini di prima classe in Java dalla versione 8 in poi, sono di seconda classe in C, in Pascal e in Ada 95+ e sono di terza classe in Java 7 e in Ada 83.
+
+2) I costruttori sono creaTreno(), aggiungiVagoneTesta(Treno, Vagone), aggiungiVagoneFine(Treno, Vagone).
+Declare: T, T': Treno; v: Vagone
+
+Assumo: +(Intero, Intero) -> Intero
+
+Operatore leggiVagoneTesta(Treno) -> Vagone:
+- leggiVagoneTesta(creaTreno()) = error
+- leggiVagoneTesta(aggiungiVagoneTesta(T, v)) = v
+- leggiVagoneTesta(aggiungiVagoneFine(T, v)) = leggiVagoneTesta(V)
+
+Operatore leggiVagoneFine(Treno) -> Vagone:
+- leggiVagoneTesta(creaTreno()) = error
+- leggiVagoneFine(aggiungiVagoneFine(T, v)) = leggiVagoneFine(V)
+- leggiVagoneFine(aggiungiVagoneFine(T, v)) = v
+
+Operatore leggiVagone(Treno, Intero) -> Vagone:
+- leggiVagone(creaTreno(), i) = error
+- leggiVagone(aggiungiVagoneTesta(T, v), i) = if i == 1 then v else leggiVagone(T, i - 1)
+- leggiVagone(aggiungiVagoneFine(T, v), i)  =
+	if i == numVagoni(T) + 1 then v else leggiVagone(T, i)
+
+ove numVagoni(Treno) -> Intero:
+- numVagoni(creaTreno()) = 0
+- numVagoni(aggiungiVagoneTesta(T, v)) = 1 + numVagoni(T)
+- numVagoni(aggiungiVagoneFine(T, v)) = 1 + numVagoni(T)
+
+Operatore vagonePopoloso(Treno) -> Vagone:
+- vagonePopoloso(creaTreno()) = error
+- vagonePopoloso(aggiungiVagoneTesta(T, v)) =
+	if cardinalita(v) > cardinalita(vagonePopoloso(T)) then v
+	else vagonePopoloso(T)
+
+- vagonePopoloso(aggiungiVagoneFine(T, v)) =
+	if cardinalita(v) > cardinalita(vagonePopoloso(T)) then v
+	else vagonePopoloso(T)
+
+Operatore uguale:
+- uguale(creaTreno(), T') = if numVagoni(T') == 0 then true else false
+- uguale(aggiungiVagoneTesta(T, v), T') =
+	if cardinalita(v) == cardinalita(leggiVagoneTesta(T')) then
+		uguale(T, cancellaVagoneTesta(T'))
+	else
+		false
+
+- uguale(aggiungiVagoneFine(T, v), T') =
+	if cardinalita(v) == cardinalita(leggiVagoneFine(T')) then
+		uguale(T, cancellaVagoneFine(T'))
+	else
+		false
+
+ove cancellaVagoneTesta(Treno) -> Treno:
+- cancellaVagoneTesta(creaTreno) = error
+- cancellaVagoneTesta(aggiungiVagoneTesta(T, v)) = T
+- cancellaVagoneFIne(aggiungiVagoneFine(T, v)) = aggiungiVagoneFine(cancella(T), v)
+
+ove cancellaVagoneFine(Treno) -> Treno:
+- cancellaVagoneFine(creaTreno) = error
+- cancellaVagoneFIne(aggiungiVagoneTesta(T, v)) = aggiungiVagonTesta(cancella(T), v)
+- cancellaVagoneFine(aggiungiVagoneFine(T, v)) = T
+
+3) Il polimorfismo universale nel paradigma OO presenta diverse caratteristiche:
+- può essere applicato ad una categoria potenzialemente illimitata di tipi;
+- i diversi morfismi sono generati automaticamente;
+- c'è una base comune a tutti i morfismi.
+Il polimorfismo universale si manifesta in due modi: attraverso il polimorfismo parametrico e di inclusione. Nel polimorfismo parametrico c'è un parametro esplicito o implicito che determina il tipo dell'argomento per ciascuna applicazione della funzione. Le funzioni che esibiscono questa tipologia di polimorfismo sono anche dette funzioni generiche.
+Il polimorfismo di inclusione nasce da una relazione di inclusione fra insiemi di valori. Ad esempio in C++ il valore void* appartiene a tutti i tipi di puntatore, in C il valore 0 appartiene a tutti i tipi di puntatore e cosi via.
+Nel paradigma OO il polimorfismo di inclusioen si manifesta in due forme:
+- si può assegnare un'istanza di una sottoclasse di C ad una variabile definita di tipo C;
+- se una funzione opera su oggetti di tipo C allora può operare anche su oggetti che sono sottoclasse di C.
+L'utilizzo più interessante si ha quando le invocazioni dei metodi su oggetti di classe produce un comportamento diverso anche se la definizione della funzione è unica. Questo dipende dal tipo di legame tra identificatore di funzione e corpo del metodo. In linguaggio come il C++, il tipo di legame è statico, quindi il collegamento tra definizione di funzione è corpo è stabilito a compile-time mentre in linguaggi come Java il bindind è dinamico e quindi esistono dei meccanismi che permettono di stabilire a run-time il tipo di un oggetto.
+
+4) Il meccanismo di serializzazione in Java serve per preservare i dati tra due esecuzioni consecutive di un programma. Questo è possibile tramite l'I/O su file.
+Quindi, la persistenza di un oggetto indica la capacità di un oggetto dik poter vivere separatamente dal programma che lo ha generato. In Java la serializzazione si ottiene mediante l'utilizzo di un'interfaccia e di due classi.
+L'interfaccia in questione è l'interfaccia Serializable che è un'interfaccia priva di metodi ma serve al compilatore per comprendere quali oggetti verranno serializzati. L'interfaccia Serializable deve essere implementata da quelle classi i cui oggetti devono essere resi persistenti. Se una classe da serializzare presenta i riferimenti ad oggetti di altre classi, allora anche le altre classi dovranno implementare l'interfaccia Serializable.
+Le due classi che si utilizzano per implementare il meccanismo di Serializzazione sono le classi ObjectOutputStream e ObjectInputStream che consentono di manipolare i dati mediante un flusso di byte e vengono utilizzate congiuntamente a due classi di manipolazione dati, in questo caso FileOutputStream e FileInputStream.
+Per serializzare un oggetto si utilizza il metodo writeObject della classe ObjectOutputStream e per deserializzare un oggetto si utilizza il metodo readObject della classe ObjectInputStream.
+Se una classe che implementa l'interfaccia Serializable contiene attributi statici, questi non vengono inclusi nel processo di serializzazione automatico. Se si ha necessità di salvarli si deve prevedere un meccanismo personalizzato per scriverne e legerne i valori nello stream.
+Inoltre, non sempre si desidera che tutti gli attributi facciano parte del processo di serializzazione, soprattutto se sono dati sensibili. Java, per questo mette a disposizione la parola chiave transient nella definizione di un attributo che indica al compilatore di non includere tale attributo nel processo di serializzazione.
