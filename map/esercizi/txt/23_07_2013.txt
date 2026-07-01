@@ -1,0 +1,100 @@
+1) L'astrazione di controllo permette di astrarre sulla classe sintattica struttura di controllo. Le strutture di controllo stabiliscono l'ordine con il quale istruzioni singole o gruppi di istruzione devono essere eseguiti.
+Il linguaggio macchina fornisce due semplici modi per stabilire l'ordine di esecuzione delle singole istruzioni e sono l'elaborazione in sequenza e il salto.
+Nei linguaggi di programmazione di alto livello, come Java, ci sono strutture di controllo astratte come la selezione, che in Java si esemplifica come:
+if (condizione) {
+ // Esecuzione di un blocco di istruzioni
+} else {
+	// Esecuzione di un blocco di istruzioni
+}
+Inoltre, sono state introdotte anche strutture di controllo astratte per l'iterazione. La struttura di controllo iterativa ha due parametri, il dato astratto e la variabile alla quale assegnare un valore contenuto nel dato astratto. Il meccanismo di visita dei valori è incapsulato nel dato astratto. In Java, la struttura di controllo iterativa si esemplifica con il for-each. Ad esempio, dato un ArrayList:
+List<String> prova = new ArrayList<>();
+//Inserimento valori
+for (String el : prova) {
+	System.out.println(el);
+}
+e il meccanismo di visita dei valori che offre il contenitore ArrayList è la funzione iterator().
+Possiamo specificare un'astrazione di controllo come segue:
+control I(FP1, ..., FPn) is E
+ove I è un'identificatore, FP1, ..., FPn sono parametri formali ed E è un'espressione di controllo che definisce un ordine di esecuzione.
+I linguaggi di programmazione più moderni, inoltre, forniscono anche dei meccanismi per la gestione di condizinoi eccezionali del programma come errori aritemtici o di I/O. Il meccanismo di gestione delle eccezioni prevede la ricerca di un gestore nel blocco corrente, se non c'è esce dal blocco corrente e restituisce il controllo all'unità chiamante e si continua a risalire fino a quando non si trova un gestore o fino a quando non si raggiunge il livello più alto, ovvero nel main.
+Anche in Java è possibile gestire le eccezioni mediante la sintassi del try-catch-finally block.
+
+Le strutture di controllo di selezione e iterative definiscono un ordinamento totale sull'esecuzione dei comandi di un programma. I linguaggi di programmazione paralleli utilizzano altri costrutti del flusso di controllo, come fork, cicli for paralleli e introducono un ordinamento parziale sull'esecuzione dei comandi. Anche questo è possibile in Java, mediante la creazione dei thread.
+
+2)  I costruttori sono creaListaSpesa() e insProdotto().
+Declare: L, L': ListaSpesa; i, i': Posizione; p, p': Prodotto
+Assumo: <(Posizione, Posizione) -> Booleano
+
+Operatore leggiProdotto(ListaSpesa, Posizione) -> Prodotto:
+- leggiProdotto(creaListaSpesa(), i) = error
+- leggiProdotto(insProdotto(L, i, p), i') = if i = i' then p else leggiProdotto(L, i')
+
+Operatore cancella(listaSpesa, Posizione) -> ListaSpesa:
+- cancella(creaListaSpesa(), i) = error
+- cancella(insProdotto(L, i, p), i') = if i = i' then L else insProdotto(cancella(L, i'), i, p)
+
+Operatore aggiungiProdotto(ListaSpesa, Posizione, Prodotto) -> ListaSpesa:
+- aggiungiProdotto(creaListaSpesa(), i, p) = insProdotto(creaListaSpesa(), i, p)
+- aggiungiProdotto(insProdotto(L, i, p), i', p') =
+	if posizioneVuota(insProdotto(L, i, p), i') then
+		insProdotto(L, i', p)
+	else
+		insProdotto(shiftDestra(L, i'), i', p')
+
+Operatore posizioneVuota(ListaSpesa, Posizione) -> Booleano
+- posizioneVuota(creaListaSpesa(), i) = true
+- posizioneVuota(insProdotto(L, i, p), i') = if i = i' then false else posizioneVuota(L, i')
+
+Operatore shiftDestra(ListaSpesa, Posizione) -> ListaSpesa:
+- shiftDestra(creaListaSpesa(), i) = creaListaSpesa()
+- shiftDestra(insProdotto(L, i, p), i') =
+	if i < i' then
+		insProdotto(shiftDestra(L, i'), i, p)
+	else
+		insProdtto(shiftDestra(L, i'), posizioneSuccessiva(i), p)
+
+Operatore uguale(ListaSpesa, ListaSpesa) -> Booleano:
+	- uguale(creaListaSpesa(), L') = vuoto(L')
+	- uguale(insProdotto(L, i, p), L') =
+		if leggiprodotto(L', i) == p then
+			uguale(L, cancella(L', i))
+		else
+			false
+
+ove vuoto(ListaSpesa) -> Booleano:
+- vuoto(creaListaSpesa()) = true
+- vuoto(insProdotto(L, i, p)) = false
+
+3) La definizione di tipi astratti e la definizione di classi sono due tecniche di programmazione di supporto all'astrazione dati ove:
+	- la definizione di tipi astratti permette di astrarre sulla classe sintattica tipo;
+	- la definzione di classi di oggetti permette di astrarre sulla dichiarazione di un modulo dotato di stato interno.
+
+Entrambe le definizioni permettono di incapsulare la rappresentazione del dato con le operazioni lecite, ma ci sono delle differenze.
+	- la definizione di un tipo astratto mette a disposizione dell'utente un identificatore di tipo oltre alle operazioni applicabili su di esso;
+	- la definizione di una classe invece mette a disposizione dell'utente solo gli operatori.
+Possiamo categorizzare le differenze tra tipi astratti e classi in 3 categorie principali:
+- Sintattica. Gli operatori definiti nel tipo astratto hanno un parametro in più relativo al tipo di dato che si sta definendo;
+- Realizzativa. Gli operatori definiti nel tipo astratto vengono definiti una sola volta, mentre, nel caso della classe vengono definiti tante volte quante sono le istanze di quella classe.
+- Concettuale. Il dato astratto è costruito intorno alle osservazioni. Le osservazioni sono operazioni che operano su una realizzazione concreta derivata dai costruttori. Le classi invece sono realizzate intorno ai costruttori e le osservazioni diventano metodi dei valori.
+
+Quindi, possiamo definire un tipo astratto come un insieme con delle operazioni e una classe come un insieme di operazioni.
+
+Infine, una differenza importante tra dati astratti e classi è che le classi definiscono una matrice di "oggetti" simili. Ma gli oggetti, in linguaggi come Ada, sono cittadini di terza classe in quanto non possono essere passati come argomenti di una funzione e non possono essere restituiti da una procedura. Questo perchè l'istanza di un oggetto coincide con la definizione del modulo stesso, quindi, se ci sono oeprazioni che richiedono più istanze di uno stesso oggetto queste non sono implementabili usando un approccio basato su classi, in quanto non definiscono un identificatore di tipo.
+Questo problema è risolvibile definendo dei tipi astratti che sono cittadini di prima classe e quindi possono essere restituiti come valore di una funzione e possono essere passati come argomenti.
+Lo svantaggio dei tipi astratti, rispetto alle classi, è la scarsa estendibilità. Se si vuole aggiungere un costruttore si è costretti a fare modifiche intrusive in tutto il codice esistente. Mentre in un approccio basato su classi questo si risolve andando a definire nuove classi senza alterare il codice esistente.
+
+5) In Java gli stati di un Thread possono essere:
+- New, il thread è stato creato ma non è stato avviato e pertnato, il sistema di scheduling non è a conoscenza della sua esistenza;
+- Runnable, un thread potrebbe essere in esecuzione se il meccanismo di time-slicing della CPU ha dei slice di tempo accessibili ai thread. Un thread potrebbe essere o meno in esecuzione ma nulla gli impedisce di essere eseguito se richiesto dallo scheduler;
+- Dead. In questo stato il thread è terminato. Il classimo modo per far terminare un thread è l'uscita dal metodo run(). Esistono altri modi per forzare la terminazione di un thread e sono i metodi stop() e destroy() che è preferibile non usarli in quanto potrebbero lasciare il sistema in uno stato inconsistente(). Quindi, è preferibile forzare l'arresto medainte un flag che lo fa uscire dal metodo run().
+- Blocked: in questo stato i thread potrebbero essere in esecuzione ma c'è qualcosa che lo impedisce. I thread in questo stato vengono saltati dal sistema di scheduler.
+
+Un thread può passare dallo satto di Runnable allo stato Blocked per diversi motivi:
+- è stato sospeso mediante la chiamata del metodo sleep(milliseconds) e tornerà ad essere in esecuzione quando passerà il tempo indicato;
+- è stato sospeso mediante la chiamata alla funzione suspend() e riprenderà la sua esecuzione quando verrà chiamato il metodo resume().
+- è stato sospeso mediante la chiamata wait() e riprenderà la sua esecuzione quando verrà chiamato il metodo notify().
+- è in attesa di un'operazione di I/O.
+- il thread sta cercando di chiamare un metodo sincronizzato o un oggetto non accessibile.
+
+Infine, i metodi stop(), suspend(), resume() e destroy() sono stati deprecati per ridurre il problema del deadlock, in quanto sia sleep() che suspend() sospendono il thread ma non rilasciano la risorsa. Questo significa che nessun altro thread può accedervi se il thread originale non viene sbloccato. Il metodo wait() invece è più sicuro perchè permette l'invocazione di altri metodi synchronized dell'oggetto durante la stessa.
+
