@@ -1,14 +1,12 @@
-1) I costruttori sono crea() e aggiungi()
-Declere
-Assumo
+1) I costruttori sono crea() e aggiungi(Lista, Elemento) -> Lista.
+Declare: L, L': Lista; e, e': Elemento; i: Intero
+
+Assumo: +(Intero, Intero) -> Intero
 
 Operatore leggi(Lista, Intero) -> Elemento:
 - leggi(crea(), i) = error
 - leggi(aggiungi(L, e), i) =
-	if i >= 1 and i <= 1 + dim(L)
-		if i == 1 + dim(L) then e else leggi(L, e)
-	else
-		error
+	if i == dim(L) + 1 then e else leggi(L)
 
 ove dim(Lista) -> Intero:
 - dim(crea()) = 0
@@ -16,53 +14,66 @@ ove dim(Lista) -> Intero:
 
 Operatore conta(Lista, Elemento) -> Intero:
 - conta(crea(), e) = 0
-- conta(aggiungi(L, e), e') = if e == e' then 1 + conta(L) else conta(L)
+- conta(aggiungi(L, e), e') = if e = e' then 1 + conta(L) else conta(L)
 
 Operatore suffisso(Lista, Intero) -> Lista:
 - suffisso(crea(), i) = crea()
 - suffisso(aggiungi(L, e), i) =
-	if i >= 1 and i <= 1 + dim(L) then
-		if i <= 1 + dim(L) then
-			aggiungi(suffisso(L, k - 1), e)
-	else
+	if < 0 or i > 1 + dim(L) then
 		error
+	else
+		if i == 0 then crea()
+		else aggiungi(suffisso(L, i - 1), e)
 
-Operatore combina(Lista, Lista, Intero) -> Intero:
-- combina(L, crea(), i) = L
-- combina(L, aggiungi(L', e), i) = concatena(L, suffisso(aggiungi(L', e), i))
+Operatore combina(Lista, Lista, Intero) -> Lista:
+- combina(crea, L', i) = suffisso(L', i)
+- combina(aggiungi(L, e), L', i) = concatena(suffisso(aggiungi(L, e), i), suffisso(L'))
 
 ove concatena(Lista, Lista) -> Lista:
-- concatena(L, crea()) = L
-- concatena(L, aggiungi(L', e)) = aggiungi(concatena(L, L'), e)
+- concatena(crea(), L') = L'
+- concatena(aggiungi(L, e), L') = aggiungi(concatena(L, L'), e)
 
-2) L'astrazione di tipo permette di astrarre sulla classe sintattica tipo. Le tecniche di programmazione a supporto dell'astrazione di tipo sono due:
-	- la definizione di un tipo di dato astratto, cioè l'astrazione sulla classe sintattica tipo;
-	- la definziione di una classe di oggetti, cioè l'astrazione sulla dichiarazione di moduli dotati di stati locali.
-In entrambi i casi occorre incapsulare la rappresentazione del dato con operazioni lecite. Tuttavia ci sono delle differenze. Nel tipo di dato asratto il modulo rende disponibile un tidentificatore di tipo e un insieme di operatori applicabili su di esso. Nella definizione di una classe di oggetti, invece, il modulo mette a disposizione solo un insieme di operatriL'astrazione di tipo è collegata al concetto di astrazione generica che in Ada si esemplifica con la creazione di generic package che creano una matrice di oggetti "simili" dotati di uno stato interno. Un package è una tecnica per incapsulare i tipi ed è suddiviso in due parti: una specification che contiene la dichiarazione di tipi, costnati, funzioni e procedure. Un body, invece, contiene l'implementazione di procedure e funzioni ed eventualmente una routine di inizializzazione del package. La specification si suddivide in private ove le entità dichiarate in questa parte non sono visibili all'esterno e la parte visible dove le entità sono messe a disposizione del programmatore mediante la clausole use.
+2) L'astrazione di tipo è una tecnica di programmazione di supporto all'astrazione dati. Le tecniche di supporto all'astrazione dati, infatti, sono due:
+- creazione di tipi di dato astratti che permettono di astrarre sulla classe sintattica tipo;
+- creazione di classi di oggetti che permette di astrarre sulla dichiarazione di un modulo dotata di stato interno.
+L'astrazione di tipo mette a disposizione dell'utente un identificatore di tipo e un insieme di operatori applicabili su di esso. L'astrazione di tipo possiamo specificarla come segue:
+type I(FP1, ..., FPn) is E
+ove I è un'identificatore, FP1, ..., FPn sono parametri formali ed E rapprsenta una rappresentazione concreta del tipo che si sta definendo.
+Per poter realizzare al meglio l'astrazione di tipo, la realizzazione del tipo di dato astratto non deve essere visibili al fruitore esterno. Occorre quindi incapsulare la rappresentazione dei dati con il loro utilizzo ed è possibile fare ciò mediante la creazione di un modulo. In Ada il modulo prende il nome di package che è composto da due parti:
+- la specification che contiene la dichiarazione di costanti, di procedure, di funzioni e di tipi. La specification a sua volta si divide in parte pubblica che contiene dati o operazioni che possono essere utilizzate anche all'esterno e parte privata che contiene dati o operazioni interni al modulo.
+L'identificatore di tipo viene creato con la parola chiave private e la realizzazione viene definita nella parte private della specificiation. Inoltre, se si vogliono inibire operazioni di assegnazione e confronto fornite di default dal compilatore si può dichiarare il tipo astratto come limited private.
+- il body che contiene l'implementazione dei metodi dichiarati nella specification e talvolta, una routine di inizializzazione del package.
 
-Definizione del tipo astratto Lista in Ada.
+Inoltre, in Ada è possibile anche parametrizzare un package ottenendo il cosidetto generic package. I parametri possibili che si possono passare ad un generic package sono di due tipi:
+- parametri di valore: come ad esempio la capacità massima di un array;
+- parametri di tipo: permettono di passare il tipo di dato come paraemtro formale, i valori dei parametri verranno poi formalizzati quando verrà istanziato il generic package.
+L'astrazione generica è utile in quanto se, ad esempio, c'è necessità di creare una Pila di Interi, una Pila di Stringhe e una pila di Caratteri, il programmatore dovrebbe creare tre moduli separati, ma con l'astrazione generica e i parametri di tipo viene creato un solo modulo e sarà poi il compilatore a controllare la correttezza dei tipi e a creare i moduli per le tre istanze del package.
+Per istanziare un generic package in Ada la sintassi è la seguente:
+package prova is new noemGenericPacakge(...)
+e questa linea di codice verrà processata in fase di precompilazione e verrà sostituita con il comando di importazione di un package e il compilatore verificherà staticamente la correttezza dei parametri formali con quelli effettivi.
+Inoltre, il compilatore per ogni istanziazione del generic package crea una copia del codice del package per quel determinato tipo e questo comporta inefficienza in spazio ma efficienza in tempo in quanto i legami vengono risolti a compile-time.
+
 generic
 	max: Positive;
 	type Elemento is private;
-package typeLista
+package TypeLista
 begin
-	type Lista is private;
+	type Lista is limited private;
 	procedure aggiungi(l: in out Lista, e: in Elemento);
-	function leggi(l: in Lista, i: in Integer) return Elemento;
+	function leggi(l: in Lista, i: in Integer) return Elemento
 
 	private
 		type Lista is record
 			top: Integer range of (0..max) = 0;
-			valori: array (1..max) of Elemento;
+			valori: Array (1..max) of Elemento;
 		end record
-end
+end TypeLista
 
-package body typeLista
+package body TypeLista
 begin
 	procedure aggiungi(l: in out Lista, e: in Elemento)
 	begin
-		if l.top == max then
-			raise "Eccezione"
+		if l.top == max then raise "Eccezione";
 		else
 			l.top := l.top + 1;
 			l.valori(l.top) := e;
@@ -70,19 +81,18 @@ begin
 
 	function leggi(l: in Lista, i: in Integer) return Elemento
 	begin
-		if i >= 1 && i <= l.top then
-			return l.valori(i)
+		if i < 0 or i > l.top then raise "Eccezione"
 		else
-			raise "Eccezione"
+			return l.valori(i);
 	end
-end typeLista
+end TypeLista
 
 with TypeLista;
-package IntLista is new TypeLista(100, Integer)
-package CharLista is new TypeLista(100, Character)
-
+package IntLista is new TypeLista(100, Integer);
+package CharLista is new TypeLista(100, Character);
 with IntLista; use IntLista;
 with CharLista; use CharLista;
+
 L1: IntLista;
 L2: CharLista;
 

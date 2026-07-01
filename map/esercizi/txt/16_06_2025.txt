@@ -1,31 +1,184 @@
-1) Specifica algebrica:
-I costruttori sono crea() e aggiungi().
-- Operatore leggi(Lista, Intero) -> Elemento:
-	Declare L: Lista; e: Elemento; i: Intero
-	- leggi(crea(), i) = error
-	- leggi(aggiungi(L, e), i) =
-		if 0 <= i <= 1 + conta(L) then
-			if i = 1 + conta(L) then e
-			else leggi(L, i)
+1) I costruttori sono crea() e aggiungi(Lista, Elemento) -> Lista.
+Declare: L, L': Lista; e: Elemento; i: Intero
+
+Assumo: +(Intero, Intero) -> Intero
+%(Intero, Intero) -> Intero
+
+Operatore leggi(Lista, Intero) -> Elemento:
+- leggi(crea(), i) = error
+- leggi(aggiungi(L, e), i) =
+	if 1 <= i <= 1 + conta(L) then
+		if i == 1 + conta(L) then e
+		else leggi(L, i)
+	else
+		error
+
+Operatore pari(Lista) -> Lista:
+- pari(crea()) = crea()
+- pari(aggiungi(L, e)) =
+	if 1 + conta(L) % 2 == 0 then aggiungi(pari(L), e)
+	else pari(L)
+
+Operatore conta(Lista) -> Intero:
+- conta(crea()) = 0
+- conta(aggiungi(L, e)) = 1 + conta(L)
+
+Operatore combina(Lista, Lista) -> Lista:
+- combina(crea(), L') = pari(L')
+- combina(aggiungi(L, e), L') = concatena(pari(aggiungi(L, e)), pari(L'))
+
+ove concatena(Lista, Lista) -> Lista:
+- concatena(crea(), L') = L'
+- concatena(aggiungi(L, e), L') = aggiungi(concatena(L, L'), e)
+
+2) L'astrazione generica permette di astrarre sulla classe sintattica dichiarazione in quanto sottointende una computazione. Nello specifico la dichiarazione comporta la creazione dei binding. Possiamo specificare l'astrazione generica come:
+generic I(FP1, ..., FPn) is D
+ove I è un identificatore, FP1, ..., FPn sono parametri formali e D è una dichiarazione che può essere una dichiarazione di funzione, una dichiarazione di dato, una dichiarazione di modulo ecc.
+D quindi funge da matrice dalla quale ricavare le dichiarazioni per istanziazione.
+In Ada l'esemplificazione dell'astrazione generica è la creazione del generic package che consente di creare una matrice di oggetti "simili" tra loro mediante il concetto di package ed è anche possibile passare dei parametri. I parametri da passare al generic package sono di due tipi:
+- parametri di valore: come ad esempio una capacità massima di un array;
+- parametri di tipo: permettono di passare un tipo di dato come parametro formale.
+I valori dei parametri verrano poi formalizzati quando verrà istanziato il generic package. Per istanziare un generic package in Ada, la sintassi è la seguente:
+with genericPackage;
+package P1 is new genericPackage(parametri).
+
+Ove l'ultima riga verrà processata in fase di precompilazione e verrà sostituita con il comando di importazione di un package, ad esempio: with P1; use P1.
+In Ada, quando viene istanziato un generic package il compilatore verificherà staticamente la corcondanza tra parametri formali ed effettivi e per ogni istanziazione di esso crea una copia del codice per quel determinato tipo. Questo comporta inefficienza in termini di spazio, ma efficienza in tempo perchè i legami vengono risolti a compile-time. In Java, invece, l'astrazione generica si ottiene con le Java generics che permette di inserire dei parametri formali nella dichiarazione di una classe e la sintassi è la seguente:
+class Stack <T> {
+	private T elemento;
+}
+Inoltre, è possibile anche parametrizzare un metodo indipendentemente se la classe è parametrizzata o meno e basta specificarlo nella dichiarazione del metodo:
+public <T> int prova(T e1, T e2) {}
+In Java, a differenza di Ada, il compilatore non crea del codice per ogni istanziazione della classe generica ma applica il meccanismo del type erasure, secondo il quale il compilatore elimina ogni riferimento al tipo. Quindi, a run-time ArrayList<Integer> e arrayList<String> risultano lo stesso tipo di ArrayList quindi si perdono le informazioni sul tipo a run-time. Prima di cancellare i tipi, però, il compilatore Java sfrutta l'astrazione generica per effettuare un controllo di tipo statico a compile-time che rende sicuro l'utilizzo delle classi generiche.
+
+Classe Lista con elemento generico.
+
+generic
+	max: Positive;
+	type Elemento is private;
+package ClassLista
+begin
+	procedure aggiungi(e: in Elemento);
+	function leggi(i: in Intero) return Elemento;
+end ClassLista
+
+package body ClassLista
+begin
+	valori: array (1..max) of Elemento;
+	top: Integer range of (0..max) = 0;
+
+	procedure aggiungi(e: in Elemento)
+	begin
+		if top == max then raise "Eccezione"
 		else
-			error
-- Operatore pari(Lista) -> Lista:
-	Declare L: Lista; e: Elemento
-	- pari(crea()) = crea()
-	- pari(aggiungi(L, e)) =
-		if conta(L) % 2 != 0 then
-			aggiungi(pari(L), e)
+			top := top + 1;
+			valori(top) := e
+	end
+
+	function leggi(i: in Intero) return Elemento
+	begin
+		if i < 0 or i > top then raise "Eccezione"
 		else
-			pari(L)
-- Operatore conta(Lista) -> Intero:
-	Declare L: Lista; e: Elemento
-	- conta(crea()) = 0
-	- conta(aggiungi(L, e)) = 1 + conta(L)
-- Operatore combina(Lista, Lista) -> Lista:
-	Declare L, L': Lista; e: Elemento
-	- combina(L, crea()) = pari(L)
-	- combina(L, aggiungi(L', e)) =
-		if dim(L') % 2 != 0 then
-			aggiungi(combina(L, L'), e)
-		else
-			combina(L, L')
+			return valori(i);
+	end
+end ClassLista
+
+with ClassLista;
+package IntLista is new ClassLista(100, Integer);
+package CharLista is new ClassLista(100, Character);
+with IntLista; use IntLista;
+with CharLista; use CharLista;
+
+L1: IntLista;
+L2: CharLista;
+
+L1.aggiungi(1);
+L1.aggiungi(10);
+L2.aggiungi('a');
+L2.aggiungi('b');
+L2.aggiungi('c');
+
+L'operatore combina non è stato implementato in quanto in Ada una classe è un insieme di oggetti "simili" dotati di stato interno, ma, in Ada gli oggetti sono cittadini di terza classe. Quindi, una procedura non può restituire un'istanza di un oggetto e non si possono creare istanze dinamicamente in quanto le istanze sono stabilite a compile time. Inoltre, un oggetto coincide fisicamente con il modulo stesso e il suo stato è accessibile solo dai suoi metodi interni quindi gli operatori che prevedono l'utilizzo di più istanze di uno stesso oggetto non sono implementabili seguendo questo approccio ma sarebbe più corretto definire un tipo di dato astratto che oltre a definire degli oepratori definisce anche un identificatore di tipo.
+
+3) In Java il meccanismo di gestione delle eccezioni permette di separare il normale flusso del programma con la gestione di condizioni eccezionali che si possono generare a run-time.
+In Java, le eccezioni sono degli oggetti e quindi vengono creati, come tutti gli altri oggetti, con la clausola new. Le eccezioni in Java fanno parte della classe Throwable che si suddivide in due classi principali:
+- Exception: contiene le condizioni eccezionali che il programmatore deve necessariamente gestire;
+- Errore: contiene le condizioni anomale che si possono verificare in circostanze normali del programma e il programmatore non è obbligato a gestirle. Questi erroro interessano l'esecuzione del programma da parte della JVM, come un overflow sullo stack.
+Inoltre, nella classe Exception facciamo distinzione tra due categorie di eccezioni: le eccezioni controllate che derivano dalla classe Exception e il programmatore è obbligato a gestirle e le eccezioni non controllate che derivano dalla classe RuntimException che il programmatore non è obbligato a gestire.
+Per lanciare una nuova eccezione si utilizza la clausola throw e la sintassi è la seguente:
+throw new ThrowableInstance(msg)
+ed è bene fare distinzione tra la clausola throw e la clausola throws. La clausola throws viene inserita nella definizione di un metodo per indicare che il metodo contiene del codice che può lanciare determinati tipi di eccezioni. La sintassi è la seguente:
+visibilità return_type name(argumentsList) throws ExceptionsList {}
+Java per catturare e gestire le eccezioni utilizza il meccanismo del try-catch-finally block. Nel blocco try viene racchiuso il blocco di codice che potrebbe generare delle eccezioni. Se si verifica un'eccezione nel blocco try si cerca il blocco catch che ha come argomento lo stesso tipo di eccezione catturata. Inoltre, considerando che nel blocco try si possono verificare diversi tipi di eccezione, ci possono essere più blocchi catch che seguono il blocco try, uno per ogni tipologia di eccezione che potrebbe verificarsi. Inoltre, ci possono essere anche dei blocchi try annidati, ovvero all'interno di un blocco try ci può essere del codice che a sua volta potrebbe generare delle eccezioni che verranno gestite dal blocco catch più interno.
+Se non si trova un blocco catch corrispondetnte allora il controllo viene restituito al metodo chiamante e continua a risalire finchè non trova un gestore. Dopo aver trovato un gestore, l'esecuzione riprende dall'istruzione successiva al gestore, quindi è un modello a terminazione.
+Infine, nel blocco finally si trova una porzione di codice che viene eseguita indipendentemente da come si è usciti dal blocco try.
+Java permette anche la creazione di eccezioni personalizzate. In particolar modo, se si vuole definire delle eccezioni controllate allora la classe eccezione che si sta defiendo dovrà estendere la classe Exception, altrimenti RuntimeException se l'eccezione da creare è non controllata.
+
+class CheckedException extends Exception {
+	public CheckedException(String msg) {
+		super(msg);
+	}
+}
+
+class UncheckedException extends RuntimeException {
+	public UncheckedException(String msg) {
+		super(msg);
+	}
+}
+
+class Elemento {
+	private String nome;
+	private float valore;
+	Elemnto(String nome, float valore) {
+		this.nome = nome;
+		this.valore = valore;
+	}
+}
+
+class Lista {
+	private List<Elemento> valori;
+	Lista() {
+		valori = new ArrayList<>();
+	}
+
+	void aggiungi(Elemento e) {
+		valori.add(e);
+	}
+
+	Elemento leggiChecked(int i) throws {
+		if (i < 0 || i > valori.size())
+			throw new CheckedException("Index out of bounds");
+		return valori.get(i);
+	}
+
+	Elemento leggiUnchecked(int i) {
+		if (i < 0 || i > valori.size()) {
+			throw new UncheckedException("Index out of bounds");
+		}
+		return valori.get(i);
+	}
+}
+
+class Main {
+	public static void main(String[] args) {
+		Lista l = new Lista();
+		l.aggiungi(new ELemento("priva", 1.0f));
+		l.aggiungi(new Elemento("priva2", 2.0f));
+
+		try {
+			l.leggiChecked(3);
+		} catch (CheckedException e) {
+			System.err.println(e.getMessage());
+		}
+
+		l.leggiUnchecked(3);
+	}
+}
+
+La parola chiave final in Java ha significati diversi in base a dove viene utilizzato. Se la parola chiave final viene applicata ad un dato allora facciamo distinzione tra dato primitivo e oggetto.
+Se il final viene applicato ad un dato primitivo allora tale dato viene reso costante e il compilatore sostituisce ogni occorrenza di quel dato con il valore corrispondente.
+Se il final viene applicato ad un oggetto, invece, viene reso costante il riferimento all'oggetto ma l'oggetto può essere modificato.
+Inoltre, Java permette la creazione dei blank final, ovvero di dati final non inizializzati. Per poterli utilizzare, però, devono essere necessariamente utilizzati prima del loro utilizzo. I blank final sono molto utili in quanto si potrebbero avere valori diversi per istanze diverse di un oggetto pur mantenendo le caratteristiche di un dato final.
+Quando la parola chiave final viene applicato ad un metodo invece, si indica che quel metodo non vuole essere ulteriormente specializzato e il compilatore gestisce in maniera più efficiente i metodi final in quanto effettua le chiamate ad essi come un chiamata inline. Se il final viene applicato agli argomenti di un metodo, allora i riferimenti ad essi vengono resi costanti e non possono essere modificati.
+Infine, se il final viene applicato ad una classe si indica che quella classe non verrà specializzata ulteriormente e quindi diventa una classe foglia.
+
