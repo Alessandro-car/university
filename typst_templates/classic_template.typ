@@ -79,11 +79,12 @@
 	show figure.where(kind: "exercise"): it => it.body
 	show figure.where(kind: "code"): it => it.body
 	show figure.where(kind: "algorithm"): it => it.body
+	show figure.where(kind: "proposition"): it => it.body
 
   // Intercetta la @label e stampa il titolo
   show ref: it => {
     let el = it.element
-    if el != none and el.func() == figure and el.caption != none and (el.kind == "theorem" or el.kind == "definition" or el.kind == "example" or el.kind == "exercise" or el.kind == "algorithm" or el.kind == "code") {
+    if el != none and el.func() == figure and el.caption != none and (el.kind == "theorem" or el.kind == "definition" or el.kind == "example" or el.kind == "exercise" or el.kind == "algorithm" or el.kind == "code" or el.kind == "proposition") {
       link(it.target)[#el.caption.body]
     } else {
       it
@@ -129,6 +130,22 @@
     breakable: true
   )[
     #text(weight: "bold")[Teorema #context counter(figure.where(kind: "theorem")).display().]
+    #if title != none [ (#title) ]
+    #text(style: "italic")[#body]
+  ]
+)
+
+#let proposizione(title: none, body) = figure(
+  kind: "proposition",
+  supplement: "Proposizione",
+  numbering: "1",
+  caption: title,
+  block(
+    width: 100%,
+    spacing: 1.5em,
+    breakable: true
+  )[
+    #text(weight: "bold")[Teorema #context counter(figure.where(kind: "proposition")).display().]
     #if title != none [ (#title) ]
     #text(style: "italic")[#body]
   ]
