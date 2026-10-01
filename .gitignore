@@ -15,10 +15,7 @@ libri/
 *.o
 *.zip
 *.docx
-*.jpg
-*.jpeg
 *.webp
-*.png
 *.gif
 *.sh
 *.fdb_latexmk
