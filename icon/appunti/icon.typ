@@ -409,7 +409,7 @@ Nella *ricerca in ampiezza*, detta _breadth-first search, BFS_ la frontiera è i
 	nodi a un arco di distanza da $A$;
 	- espandendo questi perocrsi, nell'ordine si ha:
 	$
-	[chevron.r A, B, E angle.,r chevron.l A, B, F chevron.r, chevron.l A, C, J chevron.r, chevron.l A, D, H chevron.r]
+	[chevron.l A, B, E chevron.r chevron.l A, B, F chevron.r, chevron.l A, C, J chevron.r, chevron.l A, D, H chevron.r]
 	$
 	percorsi da $A$ di lunghezza 2;
 	- dopo l'espansiuone dei percorsi del passo precedente la frontiera diventa:
@@ -457,15 +457,52 @@ La DFS risulta _inefficiente_ quando:
 - sono possibili percorsi infiniti in caso di grafo infinito o contenente cicli;
 - pur esistendo soluzioni alternative poco profonde, la ricerca si attarda su percorsi più lunghi.
 
-=== Approfondimento iterativoe in tal caso
+=== Approfondimento iterativo
 L'obiettivo dell'algoritmo *ITERATIVE DEEPENING* della DFS è combinare l'efficienza in spazio di DFS con l'ottimalità di BFS. L'idea è quella di non memorizza ma ricalcolare gli elementi della frontiera di BFS usando DFS che usa meno spazio. \
 DFS effettua una ricerca limitata fino a una data _profondità_ come per le iterazioni di BFS. In caso di fallimento si eliminano i percorsi via via calcolati ripartendo, se necessario, dopo aver aumentato il limite. Si parte cercando fino a profondità 1, poi si costruiscono i cammini fino a lunghezza 2, poi quelli di lunghezza 3, ecc$dots$. Se essiste, una soluzione verrà trovata, esplorando percorsi in tale ordine: uno con il numero minimo di archi sarà individuato per primo. \
 Il _fallimento_ della ricerca in profondità limitata può essere:
 - _innaturale_: per raggiungimento del limite di profondità e in tal caso la ricerca riparte, dopo aver incrementato il limite;
 - _naturale_: quando l'intero spazio di ricerca è esaurito non esiste soluzione a nessun livello di profondità.
+```python
+  procedure ID_search(G, s, goal)
+  Input
+    G: grafo con insiemi di nodi N e di archi A
+    s: nodo di partenza
+    goal: funzione booleana sugli stati
+  Output
+    cammino da s a un nodo per il quale goal sia vero
+    ovvero ⊥ altrimenti
+  Local
+    raggiunta_max_profondita: boolean
+    limite_profondita: integer
 
-*Inserire algoritmo iterative deeping*
+    procedure Ricerca_a_profondita_limitata(⟨n_0,...,n_k⟩, b)
+    Input
+      ⟨n_0,...,n_k⟩: percorso
+      b: integer {b ≥ 0}
+    Output
+      percorso fino a nodo-obiettivo di lunghezza k + b
 
+      if b > 0 then
+        for each ⟨n_k,n⟩ ∈ A do
+          risultato ← Ricerca_a_profondita_limitata(⟨n_0,...,n_k,n⟩, b - 1)
+          if risultato ≠ ⊥ then
+            return risultato
+      else if goal(n_k) then
+        return ⟨n_0,...,n_k⟩
+      else if n_k ha vicini then {fallimento innaturale}
+        raggiunta_max_profondita ← true
+      return ⊥
+
+  limite_profondita ← 0
+  repeat
+    raggiunta_max_profondita ← false
+    risultato ← Ricerca_a_profondita_limitata(⟨s⟩, limite_profondita)
+    if risultato ≠ ⊥ then
+      return risultato
+    limite_profondita ← limite_profondita + 1
+  until not raggiunta_max_profondita
+  return ⊥ {fallimento naturale}```
 La procedura $"Ricerca_a_profondita_limitata"$ implementa una DFS a profondità limitata: trova percorsi di lunghezza $k + b$, dove $k$ è la lunghezza del percorso e $b >= 0$; viene chiamato a profondità crescenti. I percorsi vengono trovati nello stesso ordine della BFS: si controlla di aver trovato un obiettivo solo se $b = 0$.\
 Per assicurare di fallire quando anche la BFS fallirebbe, si tiene traccia dei casi in cui un limite amggiore potrebbe aiutare a trovare una soluzione. La ricerca _fallisce inaturalmente_ se ha esaurito tutto lo spazio di ricerca e non sono stati tagliati percorsi per limite raggiungo; se $"raggiunta_max_profondita"$, falsa al momento della chiamata, diventa vera alla fine, il limite può essere incrementato per la successiva iterata.
 
@@ -473,19 +510,52 @@ Per assicurare di fallire quando anche la BFS fallirebbe, si tiene traccia dei c
 In caso di archi con _costi_ non unitari si cerca la soluzione di _minimo costo totale_. Gli algoritmi precedenti non garantiscono soluzioni di costo minimo: il costo non viene preso in considerazione. BFS minimizza solo il _numero_ degli archi: potrebbe esistere una soluzione alternativa, come un percorso più lungo ma di costo inferiore. \
 L'algoritmo *LOWEST COST-FIRST SEARCH* (LcFS), detto anche _least-cost search_ o _uniform-cost search_, si comporta come BFS ma con la selezione dei percorsi di costo minimo. Viene implementato usando una _coda con priorità_ come frontiera ordinata da _cost_.
 #esempio[
-Si consideri il grafo in figura @fig-robot-consegne. Si espanderà sempre il percorso più a sinistra nella frontiera (costi dei perocrsi indicati come pedici):
-- $[chevron.l A chevron.r_0]$ frontiera iniziale
-- $[chevron.l A, B chevron.r_2, chevron.l A, C chevron.r_3, chevron.l A, D chevron.r_4]$
-*Continuare a scrivere esempio dalle slide*
+  Si consideri il grafo in figura @fig-robot-consegne. Si espanderà sempre il percorso più a sinistra nella frontiera (costi dei percorsi indicati come pedici):
+
+  - $[chevron.l A chevron.r_0]$ frontiera iniziale
+  - $[chevron.l A, B chevron.r_2, chevron.l A, C chevron.r_3, chevron.l A, D chevron.r_4]$
+  - $[chevron.l A, C chevron.r_3, chevron.l A, B, E chevron.r_4, chevron.l A, D chevron.r_4, chevron.l A, B, F chevron.r_5]$
+  - $[chevron.l A, B, E chevron.r_4, chevron.l A, D chevron.r_4, chevron.l A, B, F chevron.r_5, chevron.l A, C, J chevron.r_(10)]$
+  - $[chevron.l A, D chevron.r_4, chevron.l A, B, F chevron.r_5, chevron.l A, C, J chevron.r_(10)]$
+  - $[chevron.l A, B, F chevron.r_5, chevron.l A, D, H chevron.r_8, chevron.l A, C, J chevron.r_(10)]$
+  - $[chevron.l A, B, F, D chevron.r_7, chevron.l A, D, H chevron.r_8, chevron.l A, C, J chevron.r_(10)]$
+  - $[chevron.l A, D, H chevron.r_8, chevron.l A, C, J chevron.r_(10), chevron.l A, B, F, D, H chevron.r_(11)]$
+  - $[chevron.l A, C, J chevron.r_(10), chevron.l A, D, H, G chevron.r_(11), chevron.l A, B, F, D, H chevron.r_(11)]$.
+
+  Dopo l'espansione di $chevron.l A, C, J chevron.r$, si selezionerà $chevron.l A, D, H, G chevron.r$, percorso di costo minimale da $A$ a $G$.
 ]
 Il fattore di ramificazione è _finito_ se i _costi_ sono _limitati_ inferiormente da una costante positiva: ciò garantisce la soluzione ottimale, quando esiste. Il primo percorso trovato termina in un nodo-obiettivo ed è ottimale perchè si procede in ordine di costo. \
-In mancanza di un limite inferiore allora sono possibili percorsi _infiniti_, ad esempio con nodi $n_0, n_1, n_2, dots$ con $forall i > 0 : chevron.l n_(i-1), n_i$ di cost $1/2^i$ esistono infiniti percorsi $chevron.l n_0, n_1, dots, n_k$, con costo $ < 1$; se $exists chevron.l n_0, g chevron.r, g o a l(g)$ con costo $>=1$, l'arco non verrebbe mai selezionato. \
+In mancanza di un limite inferiore allora sono possibili percorsi _infiniti_, ad esempio con nodi $n_0, n_1, n_2, dots$ con $forall i > 0 : chevron.l n_(i-1), n_i$ di costo $1/2^i$ esistono infiniti percorsi $chevron.l n_0, n_1, dots, n_k chevron.r$, con costo $ < 1$; se $exists chevron.l n_0, g chevron.r, g o a l(g)$ con costo $>=1$, l'arco non verrebbe mai selezionato. \
 La complessità è esponenziale in spazio e tempo: genera tutti i percorsi con costo inferiore a quello della soluzione.
 == Ricerca Informata (Euristica)
 === Euristica
 Tale tipo di ricerca prende in considerazione _informazioni sull'obiettivo_, nella selezione dei nodi da esplorare, attraverso l'uso di una *funzione euristica* _h_ che associa a ogni nodo $n$ un numero reale _non-negativo_, una stima del costo minimale di un perocorso da $n$ fino a un nodo-obiettivo. \
 L'euristica $h$ si dice *ammissibile* se _sottostima_ il costo reale: $h(n)$ minore o uguale rispetto al costo minimale effettivo del percorso da ciascun nodo a un nodo-obiettivo. Tale informazione approssimata è spesso immediatamente disponibile trovando un _compromesso_ tra efficienza del suo calcolo e accuratezza della stima. Tipicamente, risolvendo una forma semplificata del problema, si possono poi usare i costi effettivi del problema semplificato come euristica nella soluzione del problema originario.
-*Inserire esempio slide*
+#esempio(title: [Problema nel grafo in @fig-robot-consegne])[
+Considerando come _euristica_ la distanza in linea retta tra nodo e obiettivo più vicino, quindi supponendo che tali distanze siano ad esempio:
+
+    #v(0.5em)
+    #align(center)[
+      #table(
+        columns: 10,
+        align: center,
+        // Disegna la linea orizzontale sotto l'intestazione e quelle verticali tra le colonne
+        stroke: (x, y) => (
+          bottom: if y == 0 { 0.5pt } else { none },
+          left: if x > 0 { 0.5pt } else { none }
+        ),
+        [], [$A$], [$B$], [$C$], [$D$], [$E$], [$F$], [$G$], [$H$], [$J$],
+        [$h(dot)$], [7], [5], [9], [6], [3], [5], [0], [3], [4]
+      )
+    ]
+    #v(0.5em)
+
+    $h$ risulta ammissibile e in particolare: essa è
+
+    - _esatta_ per il nodo $H$;
+    - _molto sottostimata_ per il nodo $B$: sembra vicino al nodo-obiettivo (costo $5$), ma raggiungere l'obiettivo costa molto di più;
+    - _ingannevole_ per il nodo $E$: sembra vicino al nodo-obiettivo (costo $3$) ma non permette di raggiungere l'obiettivo.
+]
 === DFS Euristica e Greedy best-First Search
 L'euristica $h$ può essere _estesa_ al caso dei percorsi:
 $
@@ -493,19 +563,31 @@ h(chevron.l n_0, dots, n_k chevron.r) = h(n_k)
 $
 La *DFS Euristica* usa $h$ per ordinare i _vicini_ aggiunti alla pila/frontiera della DFS standard. I vicini vengono aggiunti in modo che il _migliore_ vada in cima. Tale scelta è comunque _locale_: si esplorano i percorsi che estendono quello selezionato prima di tentarne altri. Si presentano problemi analoghi al caso della DFS: non c'è garanzia di terminazione e ritrovamento di una soluzione ottimale. \
 Si potrebbe considerare la _best-first search_ che sfrutta un'euristica $h$ da minimizzare nella scelta del prossimo cammino da espandere. In particolare, nella _greedy best-first search_, GbFS, si sceglie il percorso della frontiera con valore di $h$ minimo. Purtroppo potrebbe seguire cammini apparantemente promettenti che, però, potrebbero continuare a estendersi indefinitamente.
-*Inserire esempio slide*.
 === Ricerca $A^*$
 L'algoritmo $A^*$ combina idee da LcFS e GbFS. Nella selezione del percorso da espandere si considerano: il costo effettivo del percorso parziale che dal nodo iniziale arriva al nodo corrente e l'euristica, ossia una stima del percorso dal nodo corrente fino a un obiettivo. \
 Per ogni percorso $p = chevron.l s, dots, n chevron.r$ della frontiera, si stima il costo di un percorso che passi per $p$ e progesua fino a un nodo-obiettivo $g$:
-$ f(p) = mat(
-  delim: #none,
-  s, limits(-->)^math.it("reale"), n, limits(-->)^math.it("stima"), g;
-  "", c o s t(p), +, h(p), ""
-) $
+$
+f(p) = c o s t(p) + h(p)
+ $
 dove $c o s t(p)$ rappresenta il costo effettivo di $p$ e $h(p)$ è una stima del costo del cammino da $n$ a $g$. \
 Si segue lo schema dell'algoritmo di ricerca generico in @alg-ricerca e si rappresenta la _frontiera_ con una coda con priorità, ordinata da $f(p)$. Se $h$ è ammissibile allora $f(p)$ non sovrastima il cost d'un percorso completo che includa $p$. \
 $A^*$ può seguire molti perocrsi ma alla fine ne trova uno di costo minimo. Altri possono semprare (provvisoriamente) di costo inferiore. $A^*$ migliora le prestazioni degli algoritmi da cui origina.
-*Inserire esempio slide*.\
+#esempio(title: [$A^*$ su grafo ed euristica])[
+Si consideri il grafo in figura:
+#figure(
+image("images/Astart.png", width: 70%),
+caption: [Problema con costi effettivi sugli archi e valori dell'euristica sui nodi]
+)
+Sequenza delle frontiere. Il pedice indica il valore di $f(p)$.
+- $[chevron.l A chevron.r_7]$ iniziale, essendo $h(A) = 7$ e $c o s t(chevron.l chevron.r) = 0$
+- $[chevron.l A, B chevron.r_7, chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12)]$
+- $[chevron.l A, B, E chevron.r_7, chevron.l A, B, F chevron.r_(10), chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12)]$
+- $[chevron.l A, B, F chevron.r_(10), chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12)]$
+- $[chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12), chevron.l A, B, F, D chevron.r_(13)]$
+- $[chevron.l A, D, H chevron.r_(11), chevron.l A, C chevron.r_(12), chevron.l A, B, F, D chevron.r_(13)]$
+- $[chevron.l A, D, H, G chevron.r_(11), chevron.l A, C chevron.r_(12), chevron.l A, B, F, D chevron.r_(13)]$
+La soluzione è $chevron.l A, D, H, G chevron.r$ di costo 11.
+]
 Un algoritmo è *ammissibile* se, quando esistono soluzioni, ne trova sempre una ottimale.
 #proposizione[
 $A^*$ è ammissibile se:
@@ -528,11 +610,56 @@ Per l'efficienza di $A^*$, $h$ è tanto migliore quanto più ridce la cardinalit
 L'idea di questo algoritmo è combinare l'effic ienza in spazio delle strategie in profondità con informazione euristica. Risulta efficace quando esistono molti cammini verso un nodo-obiettivo. Questo algoritmo assume che $h(n)$ sia ammissibile. \
 Questo algoritmo memorizza il percorso di costo minimo verso un nodo-obiettivo trovato e il suo costo che diventa un _limite_: un percorso $p : c o s t(p) + h(p) >= l i m i t e$ aggiorando _limite_; si continua poi a cercare un'eventuale soluzione migliore.\
 Si genera così una sequenza di soluzioni via via migliori restituendo quella finale: l'algoritmo viene tipicamente implementato usando la DFS per la ricerca in profondità limitata dal valore di _limite_.
-*Inserire algoritmo*\
+```python
+  procedure DFBranchAndBound(G, s, goal, h, limite_0)
+  Input
+    G: grafo con nodi N e archi A
+    s: nodo di partenza
+    goal: funzione di test dei nodi
+    h: euristica sui nodi
+    limite_0: limite iniziale (∞ se non specificato)
+  Output
+    percorso di costo minimo da s a un nodo obiettivo se esiste una
+    soluzione di costo minore di limite_0, oppure ⊥
+  Local
+    percorso_migliore: percorso o ⊥
+    limite: numero reale non negativo
+
+    procedure cbsearch(⟨n_0,...,n_k⟩)
+      if cost(⟨n_0,...n_k⟩) + h(n_k) < limite then
+        if goal(n_k) then
+          percorso_migliore ← ⟨n_0,...,n_k⟩
+          limite ← cost(⟨n_0,...,n_k⟩)
+        else
+          for each ⟨n_k,n⟩ ∈ A do
+            cbsearch(⟨n_0,...,n_k,n⟩)
+
+  {main}
+  percorso_migliore ← ⊥
+  limite ← limite_0
+  cbsearch(⟨s⟩)
+  return percorso_migliore```
+
 La procedura _cbsearch_, _cost-bounded search_, comunica attraverso variabili globali; inizialmente, _limite_ è impostata a $"limite"_0$, stima per eccesso del costo d'una soluzione ottimale. \
 _DFBranchAndBound_ restituirà, se esiste, una soluzione ottimale con costo inferiore a $"limite"_0$. Se $"limite"_0$ supera di poco il costo minimo, l'algoritmo non espanderà più archi di $A^*$. La variabile $"limite"_0$ serve a far eliminare percorsi di costo maggiore: trovato un percorso completo, si esplorano solo percorsi con valore di $f$ inferiore a quello del percorso trovato, ossia esattamente i percorsi esplorati da $A^*$ quando trova una soluzione. Quando restituisce $perp$, se $"limite"_0 = infinity$ allora non ci sono soluzioni, se invece $"limite"_0$ è finito allora non ci sono soluzioni di costo inferiore a $"limite"_0$.\
 Combinato con ID l'algoritmo può incrementare via via il limite fino a trovare una soluzione ovvero può mostrare che non c'è soluzione. \
-*INSERIRE ESEMPIO SLIDE* \
+#esempio(title: "Robot-consegne")[
+In un problema più complesso, si considerino:
+- _stati_ comprendenti le consegne da fare;
+- il _costo_ dato dalla distanza totale per tutte le consegne;
+- un'_euristica_ possibile pari al massimo tra:
+	+ la distanza massima per consegne ancora da fare non caricate: per ognina, la distanza dalla sua posizione e, da qui, fino alla destinazione;
+	+ la distanza della destinazione più lontana per le consegne trasportate.
+Tale massimo non sovrastima il costo: è la soluzione per un problema semplificato che non considera muri e tutte le altre consegne da fare tranne la più difficile; è appropriato: vanno consegnate quelle trasportate, passate  aprendere quelle ancora non caricate e portate a destinazione. \
+Se il robot può trasportare una sola consegna, un'euristica dovrebbe sommare le distanze per il trasporto di ognuna più la distanza dalla più vicina: non è detto che sarà effettuata per prima.
+]
+#esempio(title: "Navigatore")[
+Per la minimizzazione del tempo:
+- possibile euristica: distanza in linea retta dalla locazione corrente al nodo-obiettivo divisa per la velocità massima, assumendo che ci si possa dirigere a destinazione alla massima velocità;
+- euristica più sofisticata: date velocità massime diverse per autostrade e strade locali, si sceglie il massimo tra:
+	+ minimo tempo stimato per andare a destinazione su strade locali lente;
+	+ minimo tempo utile a raggiungere un'autostrada da una strada locale, per poi raggiungere un luogo vicino alla destinazione e arrivarci da strada locale.
+]
 === Progettazione della funzione Euristica
 Un'*euristica ammissibile* è una funzione non negativa $h$ definita sui nodi, tale che dato un nodo $n$, $h(n)$ non è mai superiore al costo reale del percorso ottimale da $n$ a un nodo-obiettivo. \
 Una _procedura standard_ per definire un'euristica può essere descritta come segue:
@@ -552,13 +679,37 @@ Essenzialmente vi sono due tipi di *pruning*, ovvero _potatura_, con relative st
 Alcuni dei metodi di ricerca visti in precedenza potrebbero rimanere intrappolati in cicli senza possibilità di uscita anche nel caso di grafi finiti. \
 Per avere la garanzia di trovare una soluzione in caso di _grafo finito_ non andranno presi in considerazione vicini già presenti nel percorso corrente. \
 Nella *potatura dei cicli*, detta _cycle / loop pruning, CP_, si prevede un controllo addizionale preventivo: dato un nodo da aggiungere, va testata l'occorrenza nel percorso. \
-Nello shema di algoritmo di ricerca @alg-ricerca si aggiungono alla frontiera solo percorsi $chevron.l n_0, dots, n_k, n chevron.r$, tali che $n in.not brace.l n_0, dots, n_k brace.r$, scartando il percorso selezionato; in alternativa si può effettuare il controllo dopo la selezione del nodo. \
+Nello shema di *@alg-ricerca* si aggiungono alla frontiera solo percorsi $chevron.l n_0, dots, n_k, n chevron.r$, tali che $n in.not brace.l n_0, dots, n_k brace.r$, scartando il percorso selezionato; in alternativa si può effettuare il controllo dopo la selezione del nodo. \
 La compelssità dei controlli aggiuntivi per la verifica della presenza di un nodo nel percorso corrente dipende dal metodo di ricerca adottato:
 - _costante_ permetodi (DF) che memorizzano un _unico percorso_; si può usare una funzione _hash_ oppure si può associare un _bit_ a ogni ndoo, che sarà acceso quando viene aggiunto a un percorso e viene spento in caso di backtracking; per cui basterà non espandere nodi con il bit acceso; tale metodo funziona perchè si lavora su un solo percorso;
 - _lineare_ nella lunghezza del percorso corretne per metodi che gestiscono più percorsi (esponenziali in spazio): serve una ricerca per evitare di aggiungere al percorso parziale un nodo già presente.
 === Potatura di Percorsi Multipli
 Spesso più di un percorso porta a uno stesso nodo. Occorre quindi _eliminare_ dalla fronteira ogni percorso che porti a un nodo per il quale ne esista già un altro (di costo inferiore). \
-Una strategia di *multiple-path pruning* (MPP) può essere implementata gestendo una lista di nodi terminali di percorsi già esplorati, detta *closed list* o _explored set_: inzialmente essa è buota poi, selezionato un percorso $chevron.l n_0, dots, n_k chevron.r$ della frontiera, se $n_k$ è già nella lista esso può essere scartato, altrimenti si aggiunge $n_k$ alla lista e si prosegue. *VEdere algoritmo dal libro*. \
+Una strategia di *multiple-path pruning* (MPP) può essere implementata gestendo una lista di nodi terminali di percorsi già esplorati, detta *closed list* o _explored set_: inzialmente essa è buota poi, selezionato un percorso $chevron.l n_0, dots, n_k chevron.r$ della frontiera, se $n_k$ è già nella lista esso può essere scartato, altrimenti si aggiunge $n_k$ alla lista e si prosegue.
+```python
+procedure SearchMPP(G, s, goal)
+	Input
+    - G: grafo con nodi N e archi A
+    - s: nodo di partenza
+    - goal: funzione booleana sui nodi
+  Output
+    - cammino da s a un nodo per cui goal è vero
+    - oppure ⊥ se non ci sono cammini soluzione
+  Variabili locali
+    - frontier: insieme di cammini
+    - explored: insieme di nodi esplorati
+
+  frontier := {⟨s⟩}
+  explored := {}
+  while frontier != {} do
+    seleziona e rimuovi ⟨n_0, ..., n_k⟩ da frontier
+    if n_k ∉ explored then
+      explored := explored ∪ {n_k}
+      if goal(n_k) then
+        return ⟨n_0, ..., n_k⟩
+      frontier := frontier ∪ {⟨n_0, ..., n_k, n⟩ : ⟨n_k, n⟩ ∈ A}
+  return ⊥
+```
 Si noti che questa strategia non garantisce che non eliminato un percorso di costo minimo. Per garantire di preservare le soluzioni ottimali vi sono alcune alternative:
 - assicurare che il primo percorso trovato per un dato nodo si ottimale quindi gli altri si possono eliminare;
 - se nella frontiera si dovesse inserire un percorso $p = chevron.l s, dots, n, dots, m chevron.r$, ma fosse già presente $p'=chevron.l s, dots, n chevron.r $ meno costoso della parte fino a $n$ in $p$, si può eliminare $p$ oppure sostituire in $p$ tale parte con $p'$.
@@ -574,13 +725,38 @@ La consistenza è garantita se $h$ soddisfa la *restrizione di monotonicità*:
 $
 h(n) <= c o s t(n, n') + h(n')
 $
-per ogni arco $chevron.l n, n' chevron.r$. Ciò è più facile da testare: dipende solo dagli archi, non dalle coppie di nodi considerate. \
-*Inserire esempio*\
-*Inserire tabella slide*\
+per ogni arco $chevron.l n, n' chevron.r$. Ciò è più facile da testare: dipende solo dagli archi, non dalle coppie di nodi considerate.
+#figure(
+  caption: [Consuntivo dei diversi algoritmi: si considera la complessità in spazio, con $d$ profondità e $b$ limite superiore per il _fattore di ramificazione_.],
+  supplement: [Tabella],
+  table(
+    columns: 4,
+    align: left,
+    // Gestione dinamica dei bordi orizzontali senza usare hline()
+    // y == 0 è l'intestazione, y == 8 è l'ultima riga dei dati
+    stroke: (x, y) => (
+      top: if y == 0 { 1pt } else { 0pt },
+      bottom: if y == 0 or y == 8 { 1pt } else { 0pt },
+      left: 0pt,
+      right: 0pt,
+    ),
+
+    [*strategia*], [*selezione* \ *dalla frontiera*], [*garanzia* \ *soluzione*], [*complessità* \ *(spazio)*],
+
+    [BFS], [primo nodo aggiunto], [con meno archi], [$O(b^d)$],
+    [DFS], [ultimo nodo aggiunto], [no], [$O(b d)$],
+    [ID], [n/a], [con meno archi], [$O(b d)$],
+    [$G_"BFS"$], [$h(p)$ minimale], [no], [$O(b^d)$],
+    [LcFS], [$c o s t(p)$ minimale], [costo minimo], [$O(b^d)$],
+    [$A^*$], [$c o s t(p) + h(p)$ minimale], [costo minimo], [$O(b^d)$],
+    [DF B&B], [n/a], [costo minimo], [$O(b d)$],
+    [$"IDA"^*$], [n/a], [costo minimo], [$O(b d)$],
+  )
+)
 #proposizione[
 Data un'euristica consistente, MPP non impedisce ad $A^*$ di trovare una soluzione ottimale.
 ]
-QUindi, nelle condizioni della proposizione sull'ammissibilità di $A^*$ che garantiscono solo il ritrovamento di una soluzione ottimale, se l'euristica è consistente, anche $A^*$ con MPP la potrà trovare. \
+Quindi, nelle condizioni della proposizione sull'ammissibilità di $A^*$ che garantiscono solo il ritrovamento di una soluzione ottimale, se l'euristica è consistente, anche $A^*$ con MPP la potrà trovare. \
 Nella pratica, $A^*$ include MPP per default.
 ==== Confronto fra MPP e CP
 - MPP è più generale di CP: un ciclo può essere considerato come un altro percorso verso un dato nodo, destinato a essere potato;
@@ -593,4 +769,47 @@ Un'*algoritmo* di ricerca *completo* garantisce il ritrovamento di una soluzione
 $
 P eq.not N P ?
 $
+== Strategia di Ricerca più sofisticate
+Sono possibili alcune estensioni delle strategie di ricerca presentate:
+- dato che decidere la direzione della ricerca impatta sull'efficienza, si può pensare a una ricerca retrograda per soluzioni ottimali da qualunque nodo;
+- per determinare una buona euristica si può usare la _programmazione dinamica_: metodi basati sulla _decomposizione_ del problema in un numero di problemi equivalenti ma di minore complessità.
+=== Direzione della ricerca
+Nella *ricerca in avanti*, _forward search_, si comincia da un nodo di partenza e si prosegue fino a raggiungere i nodi-obiettivo. Nella *ricerca retrograda*, _backward search_, si parte da un nodo-obiettivo e si usa il _grafo inverso_ alla ricerca del non di partenza; i vicini del nodo-obiettivo considerati per inizializzarela fronteira sono tutti gli altri nodi-obiettivo: $brace.l n : g o a l(n) brace.r$.\
+La direzione di ricerca è indifferente quando:
++ il numero di nodi-obiettivi è finito;
++ per ogni nodo _n_ si possono generare i _vicini_ del *grafo inverso* $brace.l n' : chevron.l n', n chevron.r in A brace.r$.
+Le dimensioni dello spazio di ricerca sono date da $b^d$, dove $b$ è il fattore di ramificazione e $d$ la lunghezza del cammino. Riducendo questi parametri si abbassa la complessità aumentando l'_efficienza_. È possibile che vi sia una differenza tra i fattori da ramificazione uscente ed entrante; in tal caso un principio generale per la scelta della direzione della ricerca è quello di considerare la direzione per cui $b$ risulta inferiore.
+=== Ricerca bidirezionale
+Nella *ricerca bidirezionale* si riduce il tempo di ricerca procedendo in entrambe le direzioni: quando le due frontiere si intersecano, si deve ricostruire un in singolo cammino dal nodo di partenza al nodo-obiettivo. \
+Come si è sicuro che le due frontiere s'incantrano ? Nel caso della DFS è difficile date le ridotte dimensioni delle frontiere mentre nel caso della BFS è garantito. \
+Combinando DFS e BFS in direzioni opposte, si garantirebbe l'intersezione, ma la scelta per la direzione del cammino dipende. Per la BFS il fattore di tale scelta è il costo del mantenimento della frontiera (tempo proporzionale a $b^k$) mentre per la DFS è il costo della ricerca nella frontiera per avere un'intersezione; se si tratta di una ricerca simmetrica bidirezionale si è nell'ordine di $2 b^(k/2)$, con risparmi in tempo, ma la complessità rimane esponenziale.
+=== Ricerca in una gerarchia di astrazioni
+L'idea è quella di astrarre la definizione del problema, rimuovendo dettagli: una soluzuone parziale del problema potrà essere ottenuta da una soluzione per la versione astratta. Con l'astrazione si punta a risolvere un problema in generale, lascaindo da risolvere problemi più semplici e specifici. \
+Diverse sono le modalità di astrazione di problemi. Tutte le strategie di ricerca presentate sono utilizzabili ma le specifiche decomposizioni utili non risultano facili da individuare.
+#esempio(title: "Ricerca a isole")[
+	Si consideri una ricerca fra i diversi piani di un edificio. Trovata la soluzione a livello di isola si passa a risolvere ricorsivamente i sotto-problemi in modo analogo:
+	- informazioni sulle soluzioni trovate a livelli più bassi possono servire a quelle per livelli più alti;
+	- ai livelli più alti si può usare tale informazione per riformulare un piano di ricerca;
+	- il processo tipicamente non garantisce soluzioni ottimali perchè considera solo alcune delle decomposizioni possibili.
+] <ex_isola_ricerca>
+=== Uso della programmazione dinamica
+La *programmazione dinamica, PD,* fornisce un metodo generale di ottimizzazione basato sulla memorizzazione di soluzioni parziali: una soluzione per un problema più semplice già prodotta dev'essere solo ritrovata e non ricalcolata. \
+Si può ricorrere alla PD per la costruzione offline di un'*euristica perfetta*, _coast_to_goal()_, che fornisca il costo esatto di un cammino completo di costo minimo su frafi finiti:
+$
+"cost_to_goal"(n) = cases(
+	0 & "se goal"(n),
+	min_(chevron.l n, m chevron.r in A)[c o s t(chevron.l n, m chevron.r) + "cost_to_goal"(m)] & "altrimenti"
+)
+$
+calcolato uasndo LcFS + MPP sul grafo inverso a partire dai nodi-obiettivo: si cerca il cammino di costo minimo da ogni nodo verso i nodi-obiettivo e si converva il valore di _coast_to_goal_ per ogni nodo. \
+Una *policy* è una politica da seguire nella specifica dell'arco da considerare per ogni nodo; essa è *ottimale* se i suoi costi non sono mai superiori ai costi calcolati usando altre policy.
+- _coast_to_goal_ viene calcolata offiline e usata nella costruzione di una policy: da $n$ si dovrebbe andare al vicino $m$ che minimizza $c o s t(chevron.l n, m chevron.r) + "cost_to_goal"(m)$. Questa policy porta sempre a un obiettivo con un cammino di costo minimo partendo da qualsiasi nodo;
+- sono presenti della alternative:
+	+ memorizzare il vicino per tutti i nodi offline, sfruttando le associazioni tra nodi nelle decisioni online sulle azioni, oppure
+	+ fornire _cost_to_goal_ pre-calcolata e calcolare i vicini online.
 
+Riguardo la complessità si può dire in breve che:
++ PD è lineare in tempo e spazio rispetto alle dimensioni del granfo nella costruzione di _cost_to_goal_, tipicamente esponenziali nella lunghezza del percorso;
++ Data _cost_to_goal_, determinare l'arco migliore richiede tempo costante rispetto alla grandezza del grafo, essendoci un numero limitato di vicini per nodo.
+La PD può servire a costruire euristiche per $A^*$ e Branch-and-Bound: semplificando il problema fino a ottenere spazi di ricerca ridotti e trovando in tali spazi soluzioni di lunghezza ottimale; ciò definisce un DB di pattern usato nell'euristica per il problema originale. \
+La PD è utile quando i nodi-obiettivo possono essere elencati esplicitamente, la soluzione cercata è un cammino di costo minimo, il grafo ridotto è finito, con memoria sufficiente per contenere la tabella, l'obiettivo non cambia. La policy può essere riusata per i diversi nodi-obiettivo: si ammortizza il costo per produrre la tabella su diverse istanze dello stesso problema; tuttavia essa va calcolata per ogni diverso nodo-obiettivo.
