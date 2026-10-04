@@ -813,3 +813,107 @@ Riguardo la complessità si può dire in breve che:
 + Data _cost_to_goal_, determinare l'arco migliore richiede tempo costante rispetto alla grandezza del grafo, essendoci un numero limitato di vicini per nodo.
 La PD può servire a costruire euristiche per $A^*$ e Branch-and-Bound: semplificando il problema fino a ottenere spazi di ricerca ridotti e trovando in tali spazi soluzioni di lunghezza ottimale; ciò definisce un DB di pattern usato nell'euristica per il problema originale. \
 La PD è utile quando i nodi-obiettivo possono essere elencati esplicitamente, la soluzione cercata è un cammino di costo minimo, il grafo ridotto è finito, con memoria sufficiente per contenere la tabella, l'obiettivo non cambia. La policy può essere riusata per i diversi nodi-obiettivo: si ammortizza il costo per produrre la tabella su diverse istanze dello stesso problema; tuttavia essa va calcolata per ogni diverso nodo-obiettivo.
+= Ragionamento con vincoli
+== Variabili e vincoli
+Vedremo come passare da problemi definiti su spazi di stati a problemi su spazi definiti da caratteristiche. Le _caratteristiche_, o _feature_, vengono descritte attraverso l'uso di *variabili*, spesso non indipendenti fra loro, e di *vincoli rigidi* che specificano combinazioni lecite di assegnazioni alle variabili, e/o *vincoli flessibili*, ossia funzioni che codificano le preferenze fra le diverse assegnazioni. \
+Il _ragionamento_ si svolge generando assegnazioni che soddisfino i vincoli rigidi e ottimizzino i vincoli flessibili.
+=== Variabili e Assegnazioni
+Si considereranno problemi descritti in termini di variabili _algebriche_ ossia simboli usati per denotare caratteristiche del mondo (reale o immaginario). \
+La notazione adotta nomi che iniziano per maiuscola: ogni variabile ha un  *dominio* associato, denotato con $d o m(X)$. Si considereranno _variabili discrete_ con dominio finito o almeno enumerabile. Un altro tipo è quello delle _variabili continue_, ad esempio variabili con dominio $RR$. \
+Un'*assegnazione* è una funzione da un insieme di variabili ai loro domini: dato ${X_1, X_2, dots, X_k}$ a $X_i$ si assegna $v_i in d o m(X_i)$ per ogni $i = 1, dots, k$:
+
+$
+X_1 = v_1, X_2 = v_2, dots, X_k = v_k
+$
+Essendo una funzione a ogni variabile viene assegnato un solo valore. Un'*assegnazione totale* riguarda tutte le variabili, altrimenti si dice *parziale*. Un'assegnazione totale rappresenta uno stato del mondo, detto _mondo possibile_. \
+Date $n$ variabili con domini di cardinalità $d$, si hanno $d^n$ assegnazioni totali. L'uso delle variabili offre un _vantaggio_: con poche variabili si possono descrivere molti stati:
+- con 10 variabili binarie: $2^(10) approx 10^3$ stati;
+- con 20 variabili binarie: $2^(20) approx 10^6$ stati;
+- con 30 variabili binarie: $2^(30) approx 10^9$ stati;
+- con 100 variabili binarie: $2^(100) approx 10^(30)$ stati.
+Ragionare con 30 variabili è più facile che con un miliardo di stati ma anche con 100 variabili non ci sarebbero grossi problemi, mentre è impraticabile ragionare esplicitamente con $2^(100)$ stati. \
+Tuttavia molti problemi reali possono essere definiti solo in termini di migliaia o anche milioni di variabili, come le previsioni del meteo.
+=== Vincoli
+Dato un problema, le assegnazioni possono essere _ammissibili_ o _non ammissibili_. Un *vincolo rigido* (_hard constraint_) specifica le assegnazioni lecite per una o più variabili e comprende:
+- un *ambito*, detto _scope_, ossia l'insieme $S$ di variabili coinvolte con una sua arietà $bar S bar$
+- la *condizione*, una funzione booleana sulle assegnazioni alle variabili del vincolo che dovrà risultare vera solo per assegnazioni lecite.
+Seguono alcuni esempi di vincoli di diverse arietà:
+- $B <= 3$ _unario_;
+- $A <= B$ _binario_;
+- $A + B = C$ _ternario_.
+La _definizione_ di un vincolo può essere: *intensionale*, ossia in termini di formule logiche; *estensionale*, come elencazione delle assegnazioni lecite, come con le relazioni ovvero le tabelle di tuple nei DB relazionali. \
+Dati il vincolo $c$ con ambito $S$ e l'assegnazione $A$ su variabili contenute in $S$, anche non tutte, si dirà che $A$ soddisfa $c$ se la condizione è vera per $A$ ristretta all'ambito di $c$ ovvero che $A$ *viola* $c$ in caso contrario.
+#esempio(title: "Gita")[
+In una gita di quattro giorni, tre _attività_ da svolgere possono essere rappresentate da variabili $A, B, C$ tutte con identico dominio $brace.l 1, 2, 3, 4 brace.r$.\
+Si consideri il seguente vincolo in forma intensionale su $brace.l A, B, C brace.r$:
+$
+(A <= B) and (B < 3) and (B < C) and not (A = B and C <= 3)
+$
+esso richede che $A$ non possa seguire $B$, $B$ sia svolta prima del $3^degree$ giorno e comunque prima di $C$ e, infine, che se $A$ è concomitante con $B$, $C$ si svolga dopo il $3^degree$ giorno. \
+Lo steso vincolo, definito estensionalmente elenca le assegnazioni lecite:
+#figure(
+table(
+  columns: 3,
+  align: center,
+  stroke: none,
+  table.vline(x: 1, stroke: rgb("800000")),
+  table.vline(x: 2, stroke: rgb("800000")),
+  table.hline(y: 1, stroke: rgb("800000")),
+
+  [$A$], [$B$], [$C$],
+  [2], [2], [4],
+  [1], [1], [4],
+  [1], [2], [3],
+  [1], [2], [4]
+)
+)
+Ad esempio è soddisfatto da $brace.l A = 1, B = 2, C = 3, D = 3, E = 1$ in quanto in tabella si trova $brace.l A = 1, B = 2, C = 3 brace.r$, ristretta al suo ambito.
+]
+=== Problema di soddisfacimento di vincoli
+Un *problema di soddisfacimento di vincoli (CSP)* è definito da un insieme di variabili ognuna con un proprio _dominio_ e un insieme di _vincoli_. Una sua *soluzione* è un'assegnazione totale che soddisfa tutti i vincoli. \
+Un _CSP finito_ ha un numero finito di variabili di dominio finito. Oltre a metodi per CSP finiti, si prenderanno in considerazione anche algoritmi per casi con variabili dal dominio continuo. Molti esempi vengono dal mondo dei giochi, come il Sudoku o la Criptoaritmetica.
+#esempio(title: "Robot consegne")[
+Si può costruire un CSP definendo:
+- le attività da svolgere: $a, v, c, d, e$ e i _momenti_ possibili: $1, 2, 3, 4$;
+- le rispettive variabili $A, B, C, D, E$, tutte con lo stesso dominio, ossia con $d o m(A) = d o m(B) = d o m(C) = d o m(D) = d o m(E) = brace.l 1, 2, 3, 4 brace.r$;
+- l'insieme dei _vincoli_: $
+	brace.l B eq.not 3; C eq.not 2; A eq.not B; B eq.not C; C < D; A = D; E < A; E < B; E < C; E < D; B eq.not D brace.r
+$
+]
+Legati ai CSP, si possono definire diversi problemi di complessità crescente:
+- determinare se esista una soluzione o meno;
+- trovare una soluzione;
+- contare il numero di soluzioni;
+- enumerare tutte le soluzioni;
+- trovare la soluzione migliore, rispetto a una data misura di qualità;
+- determinare se alcuni enunciati siano veri per tutte le soluzioni.
+I CSP possono risultare difficili per il loro carattere multidimensionale; il compito base è quello di trovare una soluzione. Già nel caso di CSP con domini finiti tale problema è NP-completo; metodi sistematici hanno una complessità esponenziale ma, ove possibile, si sfrutta la struttura dello spazio di ricerca.
+== Risoluzione di CSP tramite ricerca
+Un algoritmo *Generate-And-Test* è un algoritmo _esaustivo_ per CSP finiti semplce ma inefficiente. Per trovare una soluzione si generano e controllano in modo sistematico, una alla volta, le possibili assegnazioni totali; si restituirà la prima che soddisfa tutti i vincoli. Per trovare tutte le soluzioni si deve continuare a iterare, conservando le soluzioni via via trovate. \
+Si osservi che con $n$ domini di cardinalità $d$ si hanno $d^n$ possibili assegnazioni totale; con $e$ vincoli il numero totale di test è $O(e d^n)$: al crescere di $n$ diventa rapidamente intrattabile, servono quindi soluzioni alternative.
+=== Algoritmi su Grafo di Ricerca
+In alternativa, si possono sfruttare _algoritmi di ricerca su grafo_ per spazi di stati determinati dalle assegnazioni parziali. L'idea conduttrice è quella di testare i vincoli su assegnazioni parziali di ambito limitato crescente: se un'assegnazione parziale viola un vincolo, anche le assegnazioni totali che la estendono lo violeranno quindi è possibile potare lo spazio di ricerca. \
+Si può usare la DFS per cercare tutte le soluzioni di un CSP con variabili $V_s$ e vincoli $C_s$, estendendo via via l'assegnazione parziale _contesto_parziale_, dove:
+- $V_s$ insieme delle variabili senza assegnazione in _contesto_parziale_;
+- $C_s$ insieme dei vincoli che coinvolgono almeno una variabile in $V_s$;
+- chiamata iniziale: ``` DFS_solver```$(V_s, C_s, emptyset)$.
+Rispetto a Generate-And-Test, i test anticipati consentono di potare sotto-alberi, risparmiando lavoro. \
+*INSERIRE ALGORITMO* \
+L'albero di ricerca risultante ha dimensioni che dipendono dall'ordine di scelta delle variabili. Un ordine _statica_, ad esempio sempre prima $A$, poi $B$, poi $C$, risulterà meno efficiente di uno _dinamico_. Ma l'ordine ottimale potrebbe essere più difficile da trovare.
+== Algoritmi basati su Consistenza
+Si introduce una nozione di *consistenza* intesa come compatibilità, o coerenza logica, fra assegnazioni e vincoli. Una *rete di vincoli* (_constraint network_) indotta da un CSP è costituita da un _grafo bipartito_:
+- un nodo _(circolare)_ per ogni variabile, con un dizionario $d o m$ che, per ogni variabile $X$, contenga l'insieme $d o m[X]$ di valori possibili, inizialmente impostato con l'intero suo dominio;
+- un nodo _(rettangolare)_ per ogni vincolo $c$;
+- un arco $chevron.l X, c chevron.r$ per ogni variabile $X$ nell'ambito del vincolo $c$.
+Un arco $chevron.l X, c chevron.r$ si dice *consistente* _rispetto ai domini (domain consistent)_ se e solo se $forall x in d o m[X]: brace.l X = x brace.r$ soddisfa $c$. \
+Dato il vincolo $c$ su $brace.l X, Y_1, dots, Y_k brace.r$, l'arco $chveron.l X, c chevron.r$ è *consistente* se e solo se $forall x in d o m[X], exists y_1, dots, y_k: y_i in d o m[Y_i]$ tale che $brace.l X = x, Y_1 = y_1, dots, Y_k = y_k$ soddisfi $c$. \
+Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $d o m[X]$ non ci sono valori di $Y_1, dots, Y_k$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $d o m[X]$ si può ripristinare la consistenza di $chveron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
+L'idea di base è quella di rendere la rete consistente restringendo i domini. A tale scopo, si considera l'insieme _inconsistenti_ degli archi potenzialmente non consistenti:
+- si inizializza _inconsistenti_ con tutti gli archi del grafo;
+- si ripete fino a svuotare _inconsistenti_: estratto un arco $chevron.l X, c chevron.r$ da _inconsistenti_ se $chevron.l X, c chevron.r$ non è consistente, si deve restringere $d o m[X]$. Si devono, poi, aggiungere a _inconsistenti_ gli archi resi non consistenti dal passo precedente: $chevron.l Z, c' chevron.r, c' = c$, con ambito che comprende $X$ e una diversa $Z$. \
+*INSERIRE ALGORITMO*. \
+``` GAC``` termina con una rete consistente con variabili dai domini _ridotti_. Tre casi sono possibili:
++ un dominio è vuoto quindi non ci sono soluzioni: se uno è vuoto, lo saranno anche altri domini ridotti ad esso connessi, già prima della terminazione;
++ i domini sono tutti ridotti a un solo valore, quindi la _soluzione è unica_;
++ altrimenti, si è ottenuto CSP semplificato cui applicare altri metodi.
+Dei metodi alternativi sono algoritmi basati sulla *consistenza dei percorsi*.
