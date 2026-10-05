@@ -897,8 +897,24 @@ Si può usare la DFS per cercare tutte le soluzioni di un CSP con variabili $V_s
 - $V_s$ insieme delle variabili senza assegnazione in _contesto_parziale_;
 - $C_s$ insieme dei vincoli che coinvolgono almeno una variabile in $V_s$;
 - chiamata iniziale: ``` DFS_solver```$(V_s, C_s, emptyset)$.
-Rispetto a Generate-And-Test, i test anticipati consentono di potare sotto-alberi, risparmiando lavoro. \
-*INSERIRE ALGORITMO* \
+Rispetto a Generate-And-Test, i test anticipati consentono di potare sotto-alberi, risparmiando lavoro.
+#algoritmo(title: [Risolutore di CSP tramite DFS])[
+  #pseudocode-list[
+    + *procedure* $"DFS_solver"(V_s, C_s, "contesto_parziale")$
+    + $c e <- {c in C_s | c " valutabile in " "contesto_parziale"}$
+    + *if* $"contesto_parziale"$ viola un vincolo in $c e$ *then*
+      + *return* $emptyset$
+    + *else if* $V_s = emptyset$ *then*
+      + *return* $"contesto_parziale"$
+    + *else*
+      + selezionare una variabile $"var" in V_s$
+      + $"sols" <- emptyset$
+      + *for* $"val" in "dom"("var")$ *do*
+        + $"sols" <- "sols" union$
+        + #h(3em) $"DFS_solver"(V_s backslash {"var"}, C_s backslash c e, {"var" = "val"} union "contesto_parziale")$
+      + *return* $"sols"$
+  ]
+] <alg:risolutore-csp-dfs>
 L'albero di ricerca risultante ha dimensioni che dipendono dall'ordine di scelta delle variabili. Un ordine _statica_, ad esempio sempre prima $A$, poi $B$, poi $C$, risulterà meno efficiente di uno _dinamico_. Ma l'ordine ottimale potrebbe essere più difficile da trovare.
 == Algoritmi basati su Consistenza
 Si introduce una nozione di *consistenza* intesa come compatibilità, o coerenza logica, fra assegnazioni e vincoli. Una *rete di vincoli* (_constraint network_) indotta da un CSP è costituita da un _grafo bipartito_:
@@ -906,14 +922,270 @@ Si introduce una nozione di *consistenza* intesa come compatibilità, o coerenza
 - un nodo _(rettangolare)_ per ogni vincolo $c$;
 - un arco $chevron.l X, c chevron.r$ per ogni variabile $X$ nell'ambito del vincolo $c$.
 Un arco $chevron.l X, c chevron.r$ si dice *consistente* _rispetto ai domini (domain consistent)_ se e solo se $forall x in d o m[X]: brace.l X = x brace.r$ soddisfa $c$. \
-Dato il vincolo $c$ su $brace.l X, Y_1, dots, Y_k brace.r$, l'arco $chveron.l X, c chevron.r$ è *consistente* se e solo se $forall x in d o m[X], exists y_1, dots, y_k: y_i in d o m[Y_i]$ tale che $brace.l X = x, Y_1 = y_1, dots, Y_k = y_k$ soddisfi $c$. \
-Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $d o m[X]$ non ci sono valori di $Y_1, dots, Y_k$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $d o m[X]$ si può ripristinare la consistenza di $chveron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
+Dato il vincolo $c$ su $brace.l X, Y_1, dots, Y_k brace.r$, l'arco $chevron.l X, c chevron.r$ è *consistente* se e solo se $forall x in d o m[X], exists y_1, dots, y_k: y_i in d o m[Y_i]$ tale che $brace.l X = x, Y_1 = y_1, dots, Y_k = y_k$ soddisfi $c$. \
+Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $d o m[X]$ non ci sono valori di $Y_1, dots, Y_k$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $d o m[X]$ si può ripristinare la consistenza di $chevron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
 L'idea di base è quella di rendere la rete consistente restringendo i domini. A tale scopo, si considera l'insieme _inconsistenti_ degli archi potenzialmente non consistenti:
 - si inizializza _inconsistenti_ con tutti gli archi del grafo;
-- si ripete fino a svuotare _inconsistenti_: estratto un arco $chevron.l X, c chevron.r$ da _inconsistenti_ se $chevron.l X, c chevron.r$ non è consistente, si deve restringere $d o m[X]$. Si devono, poi, aggiungere a _inconsistenti_ gli archi resi non consistenti dal passo precedente: $chevron.l Z, c' chevron.r, c' = c$, con ambito che comprende $X$ e una diversa $Z$. \
-*INSERIRE ALGORITMO*. \
+- si ripete fino a svuotare _inconsistenti_: estratto un arco $chevron.l X, c chevron.r$ da _inconsistenti_ se $chevron.l X, c chevron.r$ non è consistente, si deve restringere $d o m[X]$. Si devono, poi, aggiungere a _inconsistenti_ gli archi resi non consistenti dal passo precedente: $chevron.l Z, c' chevron.r, c' = c$, con ambito che comprende $X$ e una diversa $Z$.
+#algoritmo(title: [Generalized Arc Consistency (GAC)])[
+  #pseudocode-list[
+    + *procedure* $"GAC"(V_s, "dom", C_s, "inconsistenti")$
+    + *while* $"inconsistenti" != emptyset$ *do*
+      + selezionare e rimuovere $chevron.l X, c chevron.r$ da $"inconsistenti"$
+      + ${Y_1, dots, Y_k} <- "ambito"(c) backslash {X}$
+      + $N D <- {x | x in "dom"[X] and exists y_1 in "dom"[Y_1], dots, y_k in "dom"[Y_k]:$
+      + #h(3em) $c(X = x, Y_1 = y_1, dots, Y_k = y_k)}$
+      + *if* $N D != "dom"[X]$ *then*
+        + $"inconsistenti" <- "inconsistenti" union {chevron.l Z, c' chevron.r | {X, Z} subset.eq "ambito"(c'), c' != c, Z != X}$
+        + $"dom"[X] <- N D$
+    + *return* $"dom"$
+  ]
+] <alg:gac>
 ``` GAC``` termina con una rete consistente con variabili dai domini _ridotti_. Tre casi sono possibili:
 + un dominio è vuoto quindi non ci sono soluzioni: se uno è vuoto, lo saranno anche altri domini ridotti ad esso connessi, già prima della terminazione;
 + i domini sono tutti ridotti a un solo valore, quindi la _soluzione è unica_;
 + altrimenti, si è ottenuto CSP semplificato cui applicare altri metodi.
 Dei metodi alternativi sono algoritmi basati sulla *consistenza dei percorsi*.
+== Separazione dei domini
+L'idea base degli algoritmi di *separazione dei domini* è quella di decomporre il CSP in una serie di _casi disgiunti_ da risolvere separatamente; le soluzioni sono ricostruire riunendo quelle trovate per i diversi casi. Ad esempio:
+- $X$ binaria, dominio $brace.l t, f brace.r$, due problemi ridotti: trovare le soluzioni con $X = t$ e quelle con $X = f$; se ne basta una, secondo caso considerato solo se il primo non ha soluzione;
+- $A$ con dominio $brace.l 1, 2, 3, 4 brace.r$, ci sono diverse maniere per separare i valori:
+	- un caso per ciascun valore; ciò fa fare più strada con una sola suddivisione alla volta;
+	- due sottoinsiemi disgiunti: $A in brace.l 1, 2 brace.r$ e $A in brace.l 3, 4 brace.r$; questo taglia di più in meno passi.
+Nel seguente schema di algoritmo si integra l'approccio basato sulla consistenza in un algoritmo ricorsivo:
++ si semplifica il CSP in input tramite ``` GAC()```
++ se non è risolto direttamente:
+	+ si seleziona una variabile, con dominio almeno binario;
+	+ si partiziona il dominio ottenendo (2+) problemi semplificati;
+	+ si risolvono ricorsivamente tali problemi.
+#algoritmo(title: [Risolutore ricorsivo basato su consistenza])[
+  #pseudocode-list[
+    + *procedure* $"Con_Solve"(V_s, "dom", C_s, "inconsistenti")$
+    + $"dom"_0 <- "GAC"(V_s, "dom", C_s, "inconsistenti")$
+    + *if* $exists X: "dom"_0[X] = emptyset$ *then*
+      + *return false*
+    + *else if* $forall X: |"dom"_0[X]| = 1$ *then*
+      + *return* soluzione con $X = x in "dom"_0[X] quad forall X$
+    + *else*
+      + selezionare $X$ tale che $|"dom"_0[X]| > 1$
+      + partizionare $"dom"_0[X]$ in $D_1$ e $D_2$
+      + $"dom"_1 <-$ copia di $"dom"_0$ con $"dom"_1[X] = D_1$
+      + $"dom"_2 <-$ copia di $"dom"_0$ con $"dom"_2[X] = D_2$
+      + $"inconsistenti" <- { chevron.l Z, c' chevron.r | {X, Z} subset.eq "ambito"(c'), Z != X }$
+    + *return* $"Con_Solve"(chevron.l V_s, "dom"_1, C_s chevron.r, "inconsistenti")$ *or*
+    + #h(3em) $"Con_Solve"(chevron.l V_s, "dom"_2, C_s chevron.r, "inconsistenti")$
+  ]
+] <alg:risolutore-ricorsivo-consistenza>
+L'algoritmo fornisce tutte le soluzioni:
+- se un dominio è vuoto non ci sono soluzioni;
+- se il dominio ha un solo valore si ha una sola soluzione;
+- ritornando dalla ricorsione restituisce l'unione delle soluzioni dei 2 casi;
+- c'è modo di usare anche algoritmi di ricerca su grafo, ma qui contano le soluzioni e non i cammini.
+Un possibile miglioramento è il seguente: se un'assegnazione rende il grafo _non connesso_, ogni componente può essere risolta separatamente. Si ricava facilmente una soluzione ricombinando le soluzioni delle componenti. Il conteggio del numero di soluzioni è fattibile in modo efficiente.
+== Eliminazione di Variabili
+L'*eliminazione di variabili*, _variabile elimination (VE)_, è una tecnica che semplifica la rete dei vincoli rimuovendo variabili. L'idea di base è quella di eliminare progressivamente le variabili, una alla volta, ottenendo CSP semplificati da risolvere e infine, a partire dalle loro soluzioni, ricostruire quelle dei CSP più complessi: quando si elimina la variabile $X$ si deve costruire un nuobo vincolo sulle rimanenti che rifletta gli effetti dei vincoli su $X$; esso sostituisce tutti i vincoli su $X$ producendo una rete semplificata; alla fine, ogni soluzione di un CSP ridotto va estesa per ottenere una soluzione del CSP che ricomprenda anche $X$. \
+Per eliminare una variabile $X$:
++ considerate le relazioni relative a tutti i vincoli su $X$, sia $r_X (X, overline(Y))$ quella ottenuta dal join di tali relazioni, vincolo che codifica l'_influenza_ di $X$ su $overline(Y)$, insieme delle altre variabili nell'ambito di $r_X$, vicine di $X$ nel grafo dei vincoli;
++ la _proiezione_ di $r_X$ su $overline(Y)$ sostituisce tutte le relazioni in cui occorre $X$;
++ si ottiene un CSP ridotto, senza la $X$, da risolvere ricorsivamente. Al ritorno delle chiamate ricorsive si estendono le tabelle-soluzioni per il CSP ridotto tramite join con $r_X$, per aggiungere la colonna delle assegnazioni a $X$. Nel caso-base resta una sola variabile, per cui la soluzione da restituire è la tabella con i valori del dominio consistenti con i vincoli.
+#esempio[
+Si consideri un CSP con le variabili $A, B, C$ di dominio $brace.l 1, 2, 3, 4 brace.r$ e sia $B$ la variabile da eliminare, inclusa nei vincoli: $A < B$ e $B < C$. Per eliminarla, si fa il join tra le relazioni dei vincoli su $B$:
+#let rel(cols, ..cells) = table(
+  columns: cols,
+  stroke: (x, y) => if y == 0 { (bottom: 0.75pt + rgb("#8b0000")) } else { none },
+  align: center,
+  row-gutter: 0.3em,
+  ..cells
+)
+
+#align(center)[
+  #grid(
+    columns: 5,
+    column-gutter: 1.2em,
+    align: horizon,
+
+    // Prima tabella
+    rel(2,
+      $A$, $B$,
+      $1$, $2$,
+      $1$, $3$,
+      $1$, $4$,
+      $2$, $3$,
+      $2$, $4$,
+      $3$, $4$
+    ),
+
+    // Operatore di Natural Join
+    $join$,
+
+    // Seconda tabella
+    rel(2,
+      $B$, $C$,
+      $1$, $2$,
+      $1$, $3$,
+      $1$, $4$,
+      $2$, $3$,
+      $2$, $4$,
+      $3$, $4$
+    ),
+
+    // Operatore di uguaglianza
+    $=$,
+
+    // Tabella risultato
+    rel(3,
+      $A$, $B$, $C$,
+      $1$, $2$, $3$,
+      $1$, $2$, $4$,
+      $1$, $3$, $4$,
+      $2$, $3$, $4$
+    )
+  )
+]
+La proiezione della tabella-join su $A$ e $C$ induce una nuova relazione senza la $B$:
+#let rel(cols, ..cells) = table(
+  columns: cols,
+  stroke: (x, y) => if y == 0 { (bottom: 0.75pt + rgb("#8b0000")) } else { none },
+  align: center,
+  row-gutter: 0.3em,
+  ..cells
+)
+
+#align(center)[
+  #rel(2,
+    $A$, $C$,
+    $1$, $3$,
+    $1$, $4$,
+    $2$, $4$
+  )
+]
+Tale vincolo sostituisce gli originari e contiene tutte le informazioni utili al resto della rete; con VE poi si risolve il resto della rete semplificata. \
+Per avere una o tutte le soluzioni a partire dalla soluzione del CSP ridotto: si memorizza la relazione del join su $A, B, C$ per estendere la soluzione della rete ridotta includendo $B$.
+]
+#algoritmo(title: [Eliminazione di Variabili])[
+  #pseudocode-list[
+    + *procedure* $"VE_CSP"(V_s, C_s)$
+    + *Input:*
+      + $V_s$: insieme di variabili
+      + $C_s$: insieme di vincoli su $V_s$
+    + *Output:*
+      + relazione contenente tutte le assegnazioni consistenti
+    + *if* $|V_s| = 1$ *then*
+      + *return* join di tutte le relazioni in $C_s$
+    + *else*
+      + Selezionare $X in V_s$ da eliminare
+      + $C X <- {c in C_s | X in "ambito"(c)}$
+      + $R <-$ join di tutti i vincoli in $C X$
+      + $N R <-$ proiezione di $R$ sulle variabili $V_s backslash {X}$
+      + $S <- "VE_CSP"(V_s backslash {X}, (C_s backslash C X) union {N R})$
+    + *return* $R join S$
+  ]
+] <alg:eliminazione-variabili>
+Seguono alcune osservazioni:
+- _caos base_: rimane una sola variabile, quindi una soluzione esiste se ci sono righe nelle relazioni finali e saranno tutte relative a una sola variabile basterà intersecarle;
+- caso _ricorsivo_: l'ordine di selezione delle variabili ha un impatto sull'efficienza; al ritorno se bastasse una soluzione, si restituisce solo una tupla di $R join S$. È garantito che sia parte d'una soluzione; se un valore di $R$ non avesse tuple, non ci sarebbero soluzioni con tale valore.
+VE può essere combinato con algoritmi basati su consistenza da usare per semplificare il problema quando si elimina una variabile. Le tabelle intermedie risulteranno più piccole.
+== Ricerca Locale
+Nel caso di spazi molto grandi, o infiniti, non è pensabile una ricerca sistematica sull'intero spazio. Si può puntare su metodi _mediamente efficienti_ per trovare soluzioni, ma _senza garanzie_ di ritrovamento anche quando esistono. Perciò tali metodi sono utili quando si sa che, verosimilmente, ce ne sono. \
+La classe dei metodi di *ricerca locale*, comunemente investigati nell'ambito della _ricerca operativa_ e dell'_AI_, comprende molte tecniche, con uno stesso schema-base:
+#algoritmo(title: [Schema della #smallcaps[Ricerca Locale]])[
+  #pseudocode-list[
+    + *procedure* $"Local_search"(V_s, "dom", C_s)$
+    + *Input:*
+      + $V_s$: insieme di variabili
+      + $"dom"$: funzione che restituisce il dominio di una variabile
+      + $C_s$: insieme di vincoli da soddisfare
+    + *Output:*
+      + assegnazione totale che soddisfa i vincoli
+    + *Local:*
+      + $A$ dizionario di valori indicizzato dalle variabili in $V_s$
+    + *repeat* #text(fill: luma(150))[ $brace.l "try" brace.r$]
+      + *for each* $X in V_s$ *do*
+        + $A[X] <-$ valore (casuale) da $"dom"(X)$
+      + #text(fill: luma(150))[ $brace.l "walk" brace.r$]
+      + *while not* $"ferma_walk"()$ *and* $A$ non soddisfa $C_s$ *do*
+        + Selezionare $Y in V_s$ e un valore $w in "dom"(Y)$
+        + $A[Y] <- w$
+      + *if* $A$ soddisfa $C_s$ *then*
+        + *return* $A$
+    + *until* terminazione
+  ]
+] <alg:ricerca-locale>
+- si inizia con un'assegnazione totale di un valore a ciascuna variabile;
+- si tenta di migliorare l'assegnazione iterativametne effettuando passi di _miglioramento_, passi _casuali_ e _ripartenze_ da assegnazioni iniziali differenti.
+Ogni iterazione della ``` repeat``` rappresenta un *tentativo* (_try_): con il primo ciclo ``` for each``` si ha l'*inizializzazione casuale* di $A$; per ogni assegnazione casuale successiva si ha una *ripartenza casuale* in alternativa anche congetture più informate basate su euristiche o conoscenza pregressa, poi migliorate iterando. Nel ciclo ``` while``` si effettua una *ricerca locale* (_walk_) nello spazio delle assegnazioni:
+- si seleziona una assegnazione tra i possibili *successori* di $A$ che differiscono per il valore assegnato a una sola variabile;
+- si ha lo stop se si è trovata una soluzione o si avvera il criterio di ``` ferma_walk()```, ad esempio è stato raggiunto un numero massimo di iterate.
+La fermata non è garantita: l'algoritmo può divergere se il CSP non ha soluzione. In alcuni casi, anche se ne esistessero, potrebbe rimanere intrappolato in una regione; una garanzia di _completezza_ dipende dai criteri di selezione e di stop. \
+*Random Sampling* e la versione della ricerca locale in cui:
+- ``` ferma_walk()``` risulta sempre vera quindi il ciclo ``` while``` non viene mai eseguito: si continua indefinitamente a provare assegnazioni casuali che possano soddisfare tutti i vincoli;
+- l'algoritmo è completo ossia garantisce di trovare la soluzione se questa esiste, tuttavia il tempo richiesto non può essere limitato e tipicamente risulta molto lento;
+- la sua efficienza dipende dalle dimensioni dei domini e dal numero di soluzioni esistenti.
+*Random Walk* è la versione della ricerca locale in cui:
+- ``` ferma_walk()``` risulta sempre falsa per cui non si hanno ripartenze casuali: si esce dal ciclo ``` while``` solo se si trova una soluzione e, nel ciclo, si ripete la selezione casuale di una variabile e un valore da assegnarle;
+- l'algoritmo è completo con passi più veloci rispetto al resampling di tutte le variabili, ma può richiedere più passi, in base alla distribuzione delle soluzioni;
+- in alternativa, quando le dimensioni dei domini delle variabili differiscono, si può selezionare a caso una variabile e poi un valore del suo dominio oppure selezionare casualmente una coppia variabile-valore, il che favorisce la selezione di variabili con dominio più grande.
+=== Miglioramento Iterativo
+L'approccio del *miglioramento iterativo* è un tipo di ricerca locale che prevede la selezione del _miglior successore_ vicino all'assegnazione corrente in termini di una *funzione obiettivo*. Quando la funzione è da minimizzare  (una funzione di _costo_ o di _perdita_), il metodo prende il nome di _Greedy Descent_, _discesa sbrigativa_. Se, invece, è da massimizzare, il metodo prende il nome di _Greedy Ascent_, o anche *Hill Climbing*. Nel seguito si considereranno solo funzioni da _minimizzare_, per l'altro criterio sarà sufficiente cambiare il segno della funzione. Nei casi di parità di valore della funzione si opera una scelta casuale. \
+Si distinguono:
+- *ottimi locali*, ossia assegnazioni non migliorabili da alcun successore, come i _minimi_ o _massimi locali_ trovati, rispettivamente, con _greedy descent_ o _ascent_;
+- *ottimi globali*, quelli con valutazione massima fra tutte le assegnazioni, che risultano comunque anche ottimi locali.
+Una funzione di valutazione tipica per i CSP è il numero di *conflitti*, come i vincoli violati: un'assegnazione totale con 0 conflitti è una soluzione. Tale funzione può essere raffinata pesando i vincoli in maniera differenziata. Adottando il _numero di conflitti_, si dirà che un CSP è _soddisfacibile_ se si trova un minimo globale con valore nullo ovvero è non soddisfacibile se il minimo globale ha valore positivo: se si trova un minimo locale con valore positivo, non è detto che esso sia globale, e quindi che il CSP non sia soddisfacibile. \
+Si considera il miglior successore anche quando questo non ha una migliore valutazione rispetto all'assegnazione corrente. È possibile che l'algoritmo trovi ottimi locali che risultano successori reciproci e che continui a passare da uno all'altro senza poter trovare una soluzione. Questo rende l'algoritmo _incompleto_.
+=== Algoritmi stocastici
+Per evitare minimi locali che non siano anche globali, negli *algoritmi stocastici* si ricorre a una maggiore casualità. Le mosse casuali previste saranno:
++ il *random restart*, in cui valori scelti a caso per tutte le variabili: costituisce una mossa casuale globale che consente di ripartire da regione anche completamente diverse dello spazio;
++ il *random step*, una mossa casuale locale da alternare a passi di ottimizzazione: utilizzata nel _Greedy descent / ascent_ permette pasasi in direzione opposta in modo da sfuggire a minimi / massimi locali.
+Integrando _massimo miglioramento iterativo_ e mosse _casuali_ si definiscono algoritmi per la *ricerca locale stocastica*.
+#esempio(title: "Spazi 2D")[
+Si veda la seguente figura:
+#figure(
+image("images/spazi_ricerca.png", width: 70%),
+caption: [Due spazi di ricerca con caratteristiche diverse]
+)
+Il _successore_ si ottiene tramite un piccolo passo dall'attuale posizione verso sinistra o destra.
+- spazio di ricerca (a): _Greedy descent_ può trovare facilmente minimi locali, serve un _random restart_ che porti nella parte centrale nella quale si converge rapidamente verso uno globale; invece _random walk_ non funzionerebbe bene; richiederebbe molti piccoli passi casuali per uscire da un minimo locale;
+- spazio di ricerca (b): _random restart_ rimane bloccato a cercare tra numerosi minimi locale mentre _random walk_ con _greedy descent_ potrebbe evitare tali minimi locali.
+]
+Con spazi con diverse caratteristiche in regioni differenti si può pensare di ricorrere a un *catalogo di algoritmi* da cui scegliere.
+== Varianti della ricerca Locale
+Molte altre varianti sono possibili nella _scelta del successore_ e nelle scelte _casuali_. Con domini _limitati_ tutti i valori possono essere scelti per i successori. COn domini più estesi si possono considerare solo alcuni valori, risparmiando tempo, in genere si considerano solo quelli più vicini ai precedenti, ma esistono metodi più sofisticati di selezione.
+=== Tabu Search
+La *tabu search* è una forma di ricerca locale con memoria che evita la modifica di assegnazioni introdotte di recente. Si memorizzano le variabili modificate negli ultimi $t$ passi (*tenure*) che andranno considerate non selezionabili. In tal modo si evitano i cicli dopo poche assegnazioni. Va ottimizzato il parametro $t$. Nella sua implementazione, se è piccolo si può considerare una lista delle variabili modificate di recente, invece se è grande si memorizza per ogni variabile il passo in cui si è avuto l'ultima sua modifica.
+=== Passo di Massimo Miglioramento
+In questo metodo di ricerca locale, si seleziona una coppia variabile-valore che porta al miglioramento di valutazione massimale. In caso di più coppie si opera una scelta casuale. \
+Nella sua implementazione "ingenua" data l'assegnazione totale corrente, per ogni variabile $X$ e ogni valore $v in d o m(X)$ diverso da quello corrente, si confronta l'assegnazione corrente con quella in cui si assegna $X = v$. Si seleziona quindi una delle coppie di _massimo miglioramento_. Si noti che la modifica potrebbe portare a _differenze negative_ nella valutazione, ossia a peggioramenti. Inoltre, le variabili non coinvolte in vincoli possono essere trascurate. \
+In un'implementazione alternativa si adotta una coda con priorità fatta di coppie variabile-valore pesate. Per ogni $X$ e ogni $v in d o m(X)$ non assegnato in $A$, in coda ci sarà una coppia $chevron.l X, v chevron.r$ con peso $w = h(A') - h(A)$. Si considera allora il miglioramento dell'assegnazione $A'$ ottenuta sostituendo $X = v$ rispetto ad $A$. Questo dipenderà dai valori assegnati a $X$ e dai suoi vicini nella rete dei vincoli, non da quelli assegnati alle altre variabili. A ogni iterata si seleziona una _coppia-successore_ di massimo miglioramento, ossia con _peso minimale_. Ogni nuova assegnazione comporta il ricalcolo dei pesi e il riordimento della coda, ma solo per coppie con variabili presenti in vincoli il cui soddisfacimento è mutato.
+=== Scelta a due fasi
+L'algoritmo di *scelta a due fasi* prevede la selezione della coppia articolata in:
++ selezione della variabile per la riassegnazione;
++ selezione del valore.
+Si gestisce una coda con priorità di variabili con associato un peso pari al numero dei conflitti in cui ognuna sia coinvolta. Ad ogni passo:
++ si seleziona $X$ che partecipa a più conflitti;
++ le si cambia il valore assegnato, scegiendolo fra quelli che minimizzano il numero di conflitti oppure casualmente.
+Vanno infine ricalcolati i pesi per le variabili coinvolte in vincoli il cui soddisfacimento è mutato.
+=== Algoritmo Any-Conflict
+L'idea-base dell'algoritmo *Any-Conflict* è quella di scegliere, per la modifica, una *variabile conflittuale* ossia una che partecipa a uno o più conflitti. A ogni iterata: si seleziona casualmente una variabile conflittuale, non necessariamente quella con più conflitti, quindi le si assegna, in alternativa, un valore che minimizzi il numero di conflitti oppure un valore casuale. \
+Sono possibili alcune varianti, ad esempio cambiando il criterio di selezione casuale della variabile: si può scegliere prima un conflitto e poi una variabile coinvolta oppure si opera una semplice scelta casuale di una variabile conflittuale. La differenza fra i due criteri sta nella probabilità di selezione di una variabile: nel primo essa dipende dal numero di conflitti in cui la variabile è coinvolta, nel secondo si ha la stessa probabilità per tutte le variabili.
+=== Simulated Annealing
+Il *simulated annealing* prende in prestito una metafora dal dominio della _metallurgia_ (ovvero della _termodinamica_): ad alte temperature l'algoritmo deve comportarsi con maggiore casualità o plasticità mentre a basse temperature deve consentire minore casualità in conseguenza una maggiore durezza. Come funzione di valutazione si adotta un'euristica basata sul numero di conflitti. \
+L'algoritmo riduce lentamente la temperatura cui è legata una misura di probabilità:
+- ad _alte temperature_ si deve comportare come _random walk_ per poter evitare i minimi locali, alla ricerca di regioni con bassi valori dell'euristica, quindi i passi peggiorativi dovranno risultare più probabili;
+- a _basse temperature_ si deve comportare come _greedy descent_, portando direttamente verso i minimi (locali).
+A ogni passo, data l'assegnazione corrente $A$: si sceglie a caso una variabile e un valore ottenendo una nuova assegnazione $A'$; se $A'$ non peggiore l'euristica andrà a rimpiazzare l'assegnazione corrente, altrimenti può farlo ma con una probabilità che dipende dalla temperatura e dal valore dell'euristica. \
+Si consideri la seguente figura:
+#figure(
+image("images/funzione_esp.png", width: 70%),
+caption: [Una funzione esponenziale]
+) <fig:funzione_esp>
+Sia la *temperatura* $T in RR_+$. Si consideri l'andamento della @fig:funzione_esp.
+- Sia $h(A)$ l'euristica da minimizzare, il numero di conflitti legati ad $A$;
+- Se $h(A') <= h(A)$, si accetta direttamente la nuova $A'$ altrimenti, la si può accettare con probabilità (*distribuzione di Gibss / Boltzmann*):
+$
+exp[- (h(A') - h(A))/T]
+$
+	Si noti che quando $A'$ è peggiorativa, quindi l'esponente è negativo. Tendendo  $h(A') - h(A)$ a 0, sarà più probabile accettare $A'$. Infatti ad alte temperature l'argomento dell'esponenziale tende a 0 e la probabilità a 1, mentre a basse temperature, l'esponente tende a $-infinity$ e la probabilità a 0. \
+Il cosidetto *problema di annealing* specifica cme ridurre la temperatura al progredire della ricerca: spesso si usa il _raffreddamento geometrico_ che, ad esempio parte da $T = 10$ e si moltiplica per $0.99$ ad ogni passo, arrivando a $0.07$ dopo 500 passi. - a temperature alte, come $T = 10$, si tende ad accettare passi che peggiorano di poco, con una leggera preferenza rispetto a passi che migliorano;
+- a temperature ridotte, come $T = 1$, i passi peggiorativi sono accettati molto meno frequentamente;
+- a temperature basse, come $T = 0.1$, i passi peggiorativi sono accetti molto raramente.
+=== Ripartenza casuale

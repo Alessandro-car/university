@@ -44,13 +44,23 @@
 
   // ------------------------------------------------------------------
   // 6. Configurazione dei blocchi di codice (Nativa Typst)
-  // I colori della sintassi (Java, C++, Rust) funzionano in automatico
-  // senza dover definire nulla.
   // ------------------------------------------------------------------
 
   show raw.where(block: true): set par(leading: 0.6em)
+
+  // Applica il tema stile-LaTeX personalizzato
+  set raw(theme: "custom_code.tmTheme")
+
+  // Configurazioni specifiche per il tab-size per vari linguaggi
+  show raw.where(lang: "java"): set raw(tab-size: 4)
+  show raw.where(lang: "cpp"): set raw(tab-size: 2)
+  show raw.where(lang: "ml"): set raw(tab-size: 2)
+  show raw.where(lang: "ada"): set raw(tab-size: 3)
+  show raw.where(lang: "pascal"): set raw(tab-size: 2)
+  // Default per tutti gli altri
   set raw(tab-size: 4)
 
+  // Stile grafico del blocco di codice reale
   show raw.where(block: true): it => block(
     fill: luma(248),
     stroke: (left: 2pt + luma(150)),
@@ -262,28 +272,27 @@
 #let codice(title: none, body) = figure(
   kind: "code",
   supplement: "Codice",
-  numbering: none, // <-- Disabilita la numerazione
+  numbering: none,
   caption: title,
   block(
     width: 100%,
     spacing: 1.5em,
     breakable: true
   )[
-    #text(weight: "bold")[Codice] // <-- Rimosso il contatore
+    #text(weight: "bold")[Codice]
     #if title != none [ (#title) ]
     #v(0.5em)
     #body
   ]
 )
 
-// Ambiente per Algoritmi/Pseudocodice
+// Ambiente per Algoritmi/Pseudocodice.
 #let algoritmo(title: none, body) = figure(
   kind: "algorithm",
   supplement: "Algoritmo",
   numbering: "1.1",
   caption: title,
   block(width: 100%, breakable: true)[
-    // Titolo centrato
     #align(center)[
       #text(weight: "bold")[Algoritmo #context counter(figure.where(kind: "algorithm")).display():]
       #if title != none [ #title ]
@@ -291,18 +300,19 @@
     #v(0.5em)
     #line(length: 100%, stroke: 0.5pt + black)
     #v(0.5em)
-    // Corpo dell'algoritmo
+
+    // Corpo dell'algoritmo formattato come il blocco codice
     #block(
       width: 100%,
-      fill: luma(250), // Sfondo quasi invisibile, molto accademico
-      inset: (left: 0pt, right: 10pt, top: 5pt, bottom: 5pt),
+      fill: luma(248),
+      stroke: (left: 2pt + luma(150)),
+      inset: (left: 10pt, right: 10pt, top: 10pt, bottom: 10pt),
     )[
       #set align(start)
-      #set text(font: "New Computer Modern Mono", size: 9.5pt)
-      // Stile per le righe: trasforma la lista numerata in numeri di riga grigi
+      #set text(font: ("Fira Code", "Menlo", "Consolas", "Courier New"), size: 9.5pt)
       #set enum(
-        numbering: n => text(fill: luma(150), size: 8pt)[#n],
-        indent: 10pt,
+        numbering: n => box(width: 1.5em, align(right)[#text(fill: luma(150), size: 9pt)[#n]]),
+        indent: 0pt,
         body-indent: 1em
       )
       #body
