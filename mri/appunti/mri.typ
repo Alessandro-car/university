@@ -185,3 +185,155 @@ Il modello di ritrovamento booleano è basato sulla teoria degli insiemi. Per ap
 - Individuare frasi comuni, possibilmente usando un dizionario specifico di dominio
 - costruire gli indici invertiti, detti _inverted index_, che permettono di accedere alla lista dei documenti che contengono una data parola, detta _keyword_.
 Nel modello di ritrovamento booleano un documento è rappresentato mediante un *insieme* di parole e le query sono espressioni booleane di keyword collegate tramite le operazioni di AND, OR e NOT, includendo l'uso di parentesi graffe per indicare lo scopo. In output si ottiene se il documento è rilevante o meno, non ci sono corrispondenze parziali o una classificazione di rilevanza. Quindi la nozione di rilevanza in questo modello è di tipo booleana.
+=== Vettori di incidenza
+Consideriamo la seguente tabella:
+#let header(content) = text(fill: rgb("#0000cc"))[#content]
+#let row-title(content) = text(fill: rgb("#9c3115"))[#content]
+#table(
+  columns: 7,
+  // Aggiunge solo la linea grigia superiore alla prima riga
+  stroke: (x, y) => if y == 0 { (top: 0.5pt + rgb("#f0f0f0")) } else { none },
+  align: (x, y) => if x == 0 { right + horizon } else { center + horizon },
+  column-gutter: 0.6em,
+  row-gutter: 0.6em,
+
+  // Intestazione
+  [], header[Antony and Cleopatra], header[Julius Caesar], header[The Tempest], header[Hamlet], header[Othello], header[Macbeth],
+
+  // Dati
+  row-title[Antony], [1], [1], [0], [0], [0], [1],
+  row-title[Brutus], [1], [1], [0], [1], [0], [0],
+  row-title[Caesar], [1], [1], [0], [1], [1], [1],
+  row-title[Calpurnia], [0], [1], [0], [0], [0], [0],
+  row-title[Cleopatra], [1], [0], [0], [0], [0], [0],
+  row-title[mercy], [1], [0], [1], [1], [1], [1],
+  row-title[worser], [1], [0], [1], [1], [1], [0]
+)
+Quindi, per ogni termine abbiamo un vettore composto da 0 o 1. Per rispondere ad una query come:
+$
+"Brutus, Ceaser and NOT Calpurnia"
+$
+si prendono i vettori per le rispettive parole:
+- _Brutus_: 110100;
+- _Caesar_: _110111_;
+- _Calpurnia_ (complementato): 101111.
+Infine, eseguiamo l'and bit a bit e otteniamo:
+$
+110100 " AND " 110111 " AND " 101111 = 100100
+$
+=== Indice invertito
+Per ogni termine $t$, memorizziamo una lista di tutti i documenti che contengono tale ptermine. Ogni documento è identificato da un *docID* è un numero seriale per i documenti. \
+Supponiamo di implementare gli indici invertiti utilizzando array di dimensione statica e consideriamo la seguente figura:
+#figure(
+image("images/indici_invertiti_statici.png", width: 70%),
+)
+Se, ad esempio, si aggiunge la parola _Caesar_ al documento 14, non possiamo inserire quest'ultimo nell'array e, quindi, bisogna usare strutture dati in grado di supportare liste di *postings* a dimensione variabile. \
+In memoria centrale, questo problema si risolve tipicamente utilizzando:
+- *Liste concatenate*
+- *Array a lunghezza variabile*.
+Queste soluzioni dinamiche permettono di aggiungere nuovi *docID* man mano che l'indice cresce, accettando dei compromessi tra l'ottimizzazione dello spazio occupato e la facilità di inserimento. Su disco, invece, è normale e ottimale mantenere una sequenza continua di dati per velocizzare i tempo di lettura. \
+Inoltre, a prescindere dalla struttura dinamica scelta in memoria, è fondamentale ricordare che i documenti all'interno di ogni lista di *posting* devono sempre essere mantenuti ordinati per *docID* crescente per garantire l'efficienza delle operazioni di intersezione durante le query. \
+Segue un esempio di costruzione dell'indice invertito:
+#figure(
+image("images/costruzione_indice.png", width: 70%),
+caption: [Costruzione dell'indice invertito]
+)
+=== Fasi dell'Indicizzatore
+Analizziamo le passi che compongono l'indicizzatore:
++ Creazione delle coppie (Token, docID)
+	- Il processo estrae il testo e genera una sequenza formata da coppie di valori: un *token modificato* e l'*ID del documento* in cui quel token compare.
+	- I token vengono definiti "modificati" perchè, subiscono una pre-elaborazione prima di essere inseriti nella tabella.
++ *Ordinamento*. Una volta generata la sequenza iniziale di coppie (Token, docID), il sistema procede con l'ordinamento di questi dati. Questo passaggio è identificato come la fase centrale e più importante del processo di indicizzazione. \
+	L'algoritmo riorganizza l'intera tabella applicando due criteri di ordinamento in sequenza:
+	+ *Ordinamento primario per termine*: tutte le coppie vengono ordinate alfabeticametne in base alla colonna del token. In questo modo, tutte le occorrenze della stessa parola vengono raggruppate vicine.
+	+ *Ordinamento secondario per docID*: a parità di termine, le tuple vengono ordinate in modo crescente in base all'identificativo del documento.
++ *Dizionario e postings*. Dopo aver ordinato alfabeticametne i termini e i relativi docID, il sistema trasforma la lista lineare nella struttura finale dell'indice invertito attraverso tre operazioni fondamentali:
+	- *Unione dei termini (Merging)*: le entrate multiple dello stesso termine relative a un singolo documento vengono unite. Se una parola compare più volte, non si creano puntatori duplicati allo stesso documento, ma le occorrenze vengono compattate.
+	- *Divisione in due strutture (Split)*: I dati elaborati vengono formalmente suddivisi nelle due componenti principali: il *Dizionario* e le relative liste di *Postings*.
+	- *Aggiunta della Document Frequency*: Per ogni termine nel dizionario viene aggiunta l'informazione sulla _Document Frequency_. Questo valore indica il numero totale di documenti distinti all'interno della collezione in cui quel termine è presente.
+=== Elaborazione della query: Operazione AND
+Per comprendere come il sistema estrae i documenti a partire da un indice invertito, consideriamo l'elaborazione di una query con operatore logico AND: *Brutus AND Caesar*. \
+Le fasi dell'elaborazione sono le seguenti.
++ Localizza il termine *Brutus* all'interno del Dizionario e ne recupera la rispettiva lista di _postings_.
++ Localizza il termine *Caesar* nel Dizionario e ne recupera la relativa lista di _postings_.
++ Esegue un Merge delle due liste di postings per individuare i documenti che contengono contemporaneamente entrambe le parole. \
+Affinchè l'intersezione sia computazionalmente efficiente, sussistono due vincoli fondamntali:
+- I postings all'interno di ciascuna lista devono essere rigorosamente ordinati per docID;
+- Le liste devono essere processate in *ordine di lunghezza crescente*, iniziando dalle parole più rare per ridurre da subito il numero di documenti da confrontare.
+L'algoritmo di intersezione è il seguente.
+#algoritmo(title: [Intersezione])[
+  #pseudocode-list[
+	+ Intersect($p_1$, $p_2$)
+    + $a n s w e r <- chevron.l chevron.r$
+    + *while* $p_1 != "NIL"$ *and* $p_2 != "NIL"$
+      + *do if* $d o c I D(p_1) = d o c I D(p_2)$
+        + *then* $"ADD"(a n s w e r, d o c I D(p_1))$
+        + $p_1 <- n e x t(p_1)$
+        + $p_2 <- n e x t(p_2)$
+      + *else if* $d o c I D(p_1) < d o c I D(p_2)$
+        + *then* $p_1 <- n e x t(p_1)$
+        + *else* $p_2 <- n e x t(p_2)$
+    + *return* $a n s w e r$
+  ]
+] <alg:intersect>
+=== Query booleane: corrispondenza esatta
+Il modello di ritrovamento booleano si basa sulla capacità di sottoporre al sistema delle query formulate come vere e proprie espressioni booleane.
++ *Caratteristiche del modello*.
+	- Le query booleane utilizzano gli opearatori logici fondamentali.
+	- In questo modello, ogni documento viene visto e trattato matematicamente come un semplice _insieme di parole_.
+	- La sua natura è *precisa*: l'esito della ricerca è puramente binario. Un documento soddisfa esattamente la condizione dettata dalla query oppure non la soddisfa affatto.
+	- Per via di queste caratteristiche, rappresenta forse il modello più semplice su cui sia possibile costruire un sistema di Information Retrieval.
++ *Rilevanza storica e attuale*
+	- È stato lo strumento di retrieval principale in ambito commerciale per circa tre decenni.
+	- Ancora oggi, molti dei sistemi di ricerca di uso comune si basano su logico booleana. Tra questi figurano la ricerca all'interno delle emeail, i cataloghi delle biblioteche e la funzione Spotlight di Mac OS X.
+=== Problemi del modello booleano
+Nonostante la loro semplicità, i modelli di retrieval booleano presentano diverse criticità e limitazioni:
+- *Estrema rigidità*: l'utilizzo dell'operatore AND richiede che tutti i termini siano presenti, portando spesso a ottenere troppi pochi risultati. Al contrario, l'operatore OR si accontenta di un qualsiasi termine, rischiando di generare una mole eccessiva di risultati.
+- *Difficoltà nell'esprimere richieste complesse*. Risulta complicato esprimere i bisogni informativi complessi degli utenti, poichè queste informazioni devono essere obbligatoriamente tradotte e forzate all'interno di un'espressione booleana.
+- *Mancanza di controllo sul volume dei risultati*. È difficile controllare il numero di documenti che il sistema recupera, poichè tutti i documenti che presentano una corrispondenza verranno inevitabilmente restituiti.
+- *Difficoltà nel ranking*. Non è possibile generare una classifica di rilevanza accurata, dato che tutti i documenti recuperati soddisfano logicamente la query allo stesso livello.
+- *Difficoltà nell'applicazione del relevance feedback*. Risulta problematico implementare meccanismi di feedback. Se l'utente identifica un documento restituito come rilevante o irrilevante, non è chiaro come la query originale debba essere modificata di conseguenza.
+== Fasi di preprocessing
+Quando un sistema si appresta a elaborare un documento greszzo, deve prima determinare alcune sue caratteristiche fondamentali, rispondendo a tre domande:
+- *Formato*: in quale formato si trova il file;
+- *Lingua*: in quale lingua è scritto il testo;
+- *Codifica*: quale codifica dei caratteri viene utilizzata.
+Dal punto di vista formale, ognuna di queste sfide rappresenta un vero e proprio *problema di classificazione*. Nonostante la loro natura, nella pratica questi compiti vengono spesso affrontati in modo _euristico_: invece di addestrare modelli complessi, la classificazione viene predetta applicando delle regole semplici. Un esempio di questa implementazione è il riconoscimento della lingua: se nel testo ci sono molte occorrenze della parole "the", allora il documento è in inglese. \
+Durante il processo di parsing e indicizzazione, i sistemi devono affrontare diverse complicazioni legate alla varietà di formati e lingue:
++ *la gestione del multilinguismo*
+	- la collezione di documenti da indicizzare può includere testi scritti in molte lingue differenti. Questo implica che un singolo indice potrebbe trovarsi a memorizzare e gestire termini appartenenti a diverse lingue contemporaneamente
++ *documenti e componenti ibridi*. In alcuni casi, un singolo documento o i vari componenti che lo formano possono contenere al loro interno molteplici lingue o formati. Un tipico esempio è un'email scritta in france che ha come allegato un documento PDF scritto in tedesco.
++ *Il problema dell'unità documentale*. Alla luce di queste complessità strutturali, sorge una domanda fondamentale: come si definisce esattametne un "documento unitario" da indicizzare? Ci sono diverse interpretazioni a seconda del contesto:
+	- è un singolo file?
+	- è un'email?
+	- è un'email considerata insieme a tutti i suoi allegati?
+	- oppuer un gruppo di file interconnessi?
+=== Tokenizzazione
+La tokenizzazione è il processo di suddivisione del testo grezzo in unità fondamentali e significative. Analizziamone un esempio.
+#esempio[
+Sia data in input la frase:
+$
+"Friends, Romans and Countrymen"
+$
+e in output il sistema elabora il testo e restituisce un insieme di tokens. In questo esempio specifico vengono estratti:
+$
+"Friends Romans Countrymen"
+$
+]
+Diamo una definizione formale di token.
+#definizione(title: "Token")[
+Un *token* è definito come un'istanza di una specifica sequenza di caratteri all'interno del testo.
+]
+Ogni token così generato diventa un candidato potenziale per diventare una voce vera e propria all'interno dell'indice. Tuttavia, per diventare una voce definitiva dell'indice, il token deve prima subire un *ulteriore processamento*. \
+La domanda findamentale che guida le fasi successive della progettazione di un indicizzatore è: *quali sono i token validi da emettere?* \
+Nel processo di tokenizzazione sorgono diverse problematiche e ambiguità su come interpretare correttamente i caratteri speciali, i trattini e la punteggiatura. I casi critici principali sono i seguenti:
+- *Gestione degli apostrofi e dei genitivi*. Prendendo come esempio la frase "Finland's capital", come deve essere gestito il termine possessivo? Il token risultante deve essere _Finland?, Finlands?_ oppure _Finland's?_
+- *Parole con trattino*. Espressioni come "Hewlett-Packard" devono essere suddivise in due token distinti? Ci sono casi come "state-of-the-art", in cui bisogna decidere se spezzare o meno una sequenza complessa unita da trattini. Esistono parole ambigue come "co-education", o variazioni ortografiche come _lowercase_, _lower-case_ e _lower case_.
+	In questi casi, può rilevarsi efficace fare in modo che sia l'utente stesso a inserire eventuali trattini per guidare la ricerca.
+- *Nomi composti*. Nomi propri come "San Francisco" devono essere considerati come un unico token oppure come token separati? E soprattutto: con quale criterio logico si deicde se un'espressione plurinominale costituisce un token unico?
+==== La gestione dei numeri nella tokenizzazione
+La gestione delle sequenze numeriche e dei codici alfanumerici rappresenta un aspetto critico durante la tokenizzazione, a causa della grande varietà di formati esistenti. \
+*INSERIRE ESEMPI LIBRO*\
+Spesso queste stringhe contengono spazi interni che complicano la separazione dei token. I sistemi di IR meno recenti potrebbero scegliere di non indicizzare affatto i numeri. Tuttavia, indicizzare i numeri è spesso estremamente utile: basti pensare alla ricerca sul web di codici di errore o di _stack trace_. Una possibile soluzione tecnica a questo problema è l'uso degli *n-grammi*. Molto spesso, i metadati associati vengono indicizzati separatamente come *meta-data*.
+
+
