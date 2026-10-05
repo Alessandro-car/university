@@ -1189,3 +1189,10 @@ Il cosidetto *problema di annealing* specifica cme ridurre la temperatura al pro
 - a temperature ridotte, come $T = 1$, i passi peggiorativi sono accettati molto meno frequentamente;
 - a temperature basse, come $T = 0.1$, i passi peggiorativi sono accetti molto raramente.
 === Ripartenza casuale
+L'algoritmo di *ripartenza casuale*, _random restart_, permette di migliorare le prestazioni di un _algoritmo causale debole_, uno che abbia successo in pochi casi specifici. Nel seguito sarà indicata con $p$ la probabilità di successo d'una singola esecuzione. Per stimare le prestazioni di _random restart_, si considera una sequensza di $n$ sue esecuzioni indipendenti. \
+La probabilità di successo in almeno una di tali esecuzioni sarà $1 - (1 - p)^n$ essendo $(1-p)^n$ la probabilità di fallimento in tutti gli $n$ tentativi. \
+_Random restart_ risulta computazionalmente costoso quando sono coinvolte molte variabili. Nella sua variante _partial restart_ si fanno assegnazioni solo ad alcune variabili, per consentire di spostarsi verso un'altra regione. In tal caso le esecuzioni non sono più indipendenti fra loro quindi si richiede un'analisi teorica più complessa.
+== Algoritmi basati su popolazioni
+A differenza degli algoritmi esaminati in precedenza che considerano un'assegnazione alla volta, tali metodi gestiscono *popolazioni* di *individui*, ossia insiemi di assegnazioni. Nella _beam search_ si considerano le migliori $k$ assegnazioni, numero che può variare casualmente nella loro variante stocastica. Anche negli algoritmi evoluzionistici si considerano i migliori $k$ individui nella metafora riproduttiva.
+== Beam Search
+
