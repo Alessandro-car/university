@@ -1195,4 +1195,98 @@ _Random restart_ risulta computazionalmente costoso quando sono coinvolte molte 
 == Algoritmi basati su popolazioni
 A differenza degli algoritmi esaminati in precedenza che considerano un'assegnazione alla volta, tali metodi gestiscono *popolazioni* di *individui*, ossia insiemi di assegnazioni. Nella _beam search_ si considerano le migliori $k$ assegnazioni, numero che può variare casualmente nella loro variante stocastica. Anche negli algoritmi evoluzionistici si considerano i migliori $k$ individui nella metafora riproduttiva.
 == Beam Search
-
+La *beam search* si comporta in maniera simile agli algoritmi di massimo miglioramento iterativo, con la differenza di lavorare simultaneamente su più assegnazioni (fino a $k$) anziché una sola. Essa ha successo quando viene trovata un'assegnazione che soddisfa tutti i vincoli. A ogni passo, si selezionano i migliori $k$ successori. La selezione è casuale in caso di parità di valutazione. Si continua con il nuovo insieme di $k$ assegnazioni. \
+In caso di _memoria limitata_ si sceglie $k$ in base alla memoria disponibile. È possibile usre le diverse varianti di ricerca locale viste in precedenza. Occorrerà ovviamte più tempo nel cercare i migliori $k$ successori. Per una ricerca più rpida, si può ricorrere ad approssimazioni dei migliori $k$ individui.
+=== Beam Search Stocastica
+In questa variante si selezionano $k$ individui casualmente favorando quelli con valutazione migliore. La probabilità di selezione sarà definita in funzione dell'euristica: per un individuo $A$ la probabilità di selezione (_distribuzione di Gibbs/Boltzmann_) proporzionale a:
+$
+exp[(-h(A))/T]
+$
+dove $h(A)$ è la funzione obiettivo e $T$ una misura della temperatura. Questa variante consente più diversità nella popolazione: $h$ riflette la capacità di _adattamento_ come in biologia dove vale il principio di _sopravvivenza dei più adatabbili_ per cui un individuo più adattabile ha maggiori probabilità di passare il proprio materiale genetico alle future generazioni. \
+Questa è interpretabile come una forma di _riproduzione asessuata_ in cui si produce una discendenza leggermente mutata. Si osservi che gli stessi individui potranno essere selezionati casulamente anche più volte.
+=== Algoritmi Genetici
+Anche questi metodi sono definiti per gestire _popolazioni_ di individui. Restando nella metafora evoluzionistica, il loro patrimonio genetico è rappresentato da un'assegnazione. Nuovi individui vengono creati dalla _combinazione_ di _coppie_ di _genitori_ della generazione precedente. I migliori sono poi selezionati per far parte della generazione successiva.
+#algoritmo(title: [Schema di algoritmo genetico])[
+  #pseudocode-list[
+    + *procedure* $"Genetic_algorithm"(V_s, C_s, S, k)$
+    + *Input*
+      + $V_s$: insieme di variabili
+      + $C_s$: insieme di vincoli da soddisfare
+      + $S$: programma di raffreddamento della temperatura
+      + $k$: dim. popolazione - intero pari
+    + *Output*
+      + assegnazione totale che soddisfa i vincoli
+    + *Local*
+      + $P o p, N P o p$: insieme di assegnazioni
+      + $T$: numero reale
+    + $P o p <-$ insieme di $k$ assegnazioni totali casuali
+    + $T$ inizializzato in base a $S$
+    + *repeat*
+      + *if* $exists A in P o p$ che soddisfa tutti i vincoli in $C_s$ *then*
+        + *return* $A$
+      + $N P o p <- emptyset$
+      + *repeat* $k/2$ volte
+        + $A_1 <- "Random_selection"(P o p, T)$
+        + $A_2 <- "Random_selection"(P o p, T)$
+        + $N_1, N_2 <- "Crossover"(A_1, A_2)$
+        + $N P o p <- N P o p union {"mutate"(N_1), "mutate"(N_2)}$
+      + $P o p <- N P o p$
+      + $T$ viene aggiornato in base a $S$
+    + *until* terminazione
+    + #h(0pt)
+    + *procedure* $"Random_selection"(P o p, T)$
+      + selezionare $A$ da $P o p$ con probabilità proporzionale a $e^(-h(A)/T)$
+      + *return* $A$
+    + #h(0pt)
+    + *procedure* $"Crossover"(A_1, A_2)$
+      + selezionare casualmente un intero $i$, $1 <= i < |V_s|$
+      + $N_1 <- {(X_j = v_j) in A_1 | j <= i} union {(X_j = v_j) in A_2 | j > i}$
+      + $N_2 <- {(X_j = v_j) in A_2 | j <= i} union {(X_j = v_j) in A_1 | j > i}$
+      + *return* $N_1, N_2$
+  ]
+] <alg:algoritmo-genetico>
+Sono possibili diverse tecniche di selezione:
+- _Selezione proporzionale alla fitness_: a ogni iterata, si generano $k$ nuovi individui. Si opera una seleezione casuale delle coppie, che favorisca gli individui più adatti con probabilità dipendente dall'incremento della misura di fitness apportato e da una misura della temperatura. Per ogni coppia, si opera un _crossover_ e si fanno _mutare_ casualmente alcuni valori, per alcune variabili scelte a caso. Si passa infine a considerare la successiva generazione.
+- _Selezione a torneo_: a ogni iterata si selezionano casualmente $t$ individui (misura di _greediness_) e poi si scelgono i più adattabili fra questi.
+Un'operazione di combinazione tipicamente utilizzata è il *crossover* che prevede la selezione di una coppia di individui e la conseguente generazione della loro prole ossia di individui ottenuti copiando parte delle assegnazioni da un genitore e il resto dell'altro. Si tratta di un'operazione aggiuntiva rispetto alla mutazione. Vi sono diverse forme di crossover:
+- *crossover uniforme*: si considerano due individui genitore e si generano due figli; per ogni variabile, si copia nel primo figlio il valore da uno dei genitori scelto in maniera casuale, quello dell'altro genitore sarà copiato nel secondo figlio;
+- *one-point crossover*: assumendo un _ordinamento_ sulle variabili, si seleziona casualmente un indice $i$ per generare ciascun figlio selezionando i valori per le variabili fino a $i$ da un genitore e per le successive dall'altro. L'efficacia dipenderà dall'ordinamento scelto in fase di progettazione.
+== Ottimizzazione
+A volte si hanno informazioni sulla preferibilità delle assegnazioni. Un *problema di ottimizzazione* richiede di trovare le migliori assegnazioni totali. Esso può essere formalizzato come segue, dati:
+- un insieme di variabili con dominio associato;
+- una *funzione-obiettivo* dalle assegnazioni totali a $RR$, tipicamente una funzione di costo/errore/loss;
+- un *criterio di ottimalità*, tipicamente _minimizzare_ la funzione-obiettivo.
+Bisogna trovare un'assegnazione totale *ottimale* per il criterio adottato. \
+Un *problema di ottimizzazione vincolato* prevede anche _vincoli rigidi_ che specificano le assegnazioni ammissibili. L'obiettivo è quello di trovare un'assegnazione ottimale ammissibile. \
+Sul tema dell'ottimizzazione esiste una vasta letturatura scientifica, con molte tecniche proposte: ad esmepio nella programamzione lineare sono coinvolte variabili continue, funzioni-obiettivo lineari e diseguaglianze lineari come vincoli. Quando un problema da risolvere, prevedendo anche qualche trasformazione, rientra in categorie classiche, allora converrà preferire algoritmi specifici. \
+Rispetto ai CSP, l'ottimizzazione presenta un'ulteriore difficoltà: riconoscere le soluzioni solo per confronto fra assegnazioni. Si possono trattare i vincoli rigidi come quelli flessibili ma assegnando un costo infinito in caso di violazione: se il costo è finito non vi sarà stata nessuna violazione. In alternativa si può associare alla violazione di vincolo rigido un costo elevato maggiore della somma di tutti i costi di vincoli flessibili. L'algoritmo di ottimizzazione dovrà trovare una soluzione con il minor numero di vincoli rigidi violati e, tra questi,, quelli di costo minimo.
+=== Metodi Sistematici per il Caso Discreto
+Si parla di *ottimizzazione discreta* in caso di problema che coinvolge solo variabili _discrete_. Possono essere adattati i metodi di ricerca di percorsi ottimali su grafo visti in precedenza. In questo caso il grafo avrà nodi contenenti assegnazioni a un insieme di variabili. I vicini di un nodo $n$ si trovano scegliendo una variabile $v a r$ non presente in $n$ e le relative assegnazioni di valori, consistenti con gli eventuali vincoli rigidi. Il costo di un arco è dato dalla somma dei costi dei vincoli valutati dopo l'assegnazione a _var_. \
+Il nodo di partenza conterrà l'assegnazione vuota metnre un nodo-goal conterrà un'assegnazione totale. I costi sono assengati solo quando un vincolo flessibile può essere valutato. Per usare gli algoritmi $A^*$, _Branch-and-Bound_ i costi-arco devono essere non-negativi.
+=== Ricerca locale per l'ottimizzazione
+L'uso della ricerca locale nel caso di problemi di ottimizzazione mira a minimizzare la funzione-obiettivo. Gli algoritmi di ricerca lcoale aggiornano via via e infine restituiscono la _migliore assegnazione trovata_. La terminazione può essere garantita fissando un numero massimo di iterate. \
+È difficile stabilire se un'assegnazione totale trovata sia ottimale: si ha un *ottimo locale* trovando un'assegnazione non peggiore di tutte le successive possibili; un *ottimo globale* è dato da un'assegnazione non peggiore di tutte le assegnazioni. Senza la ricerca sistematica non si può sapere se la migliore assegnazione trovata localmente costituisca un ottimo globale o se ne esiste altrove una migliore. \
+Per arrivare a una soluzione si può consentire la violazione di vincoli rigidi, ad esempio adottando costi di violazione alti ma finiti.
+=== Domini Continui: Discesa di Gradiente
+In questo caso, la ricerca locale è più complicata: bisogna stabilire come definire il _successore_ di un'assegnazione. \
+L'idea dell'algoritmo di _Discesa del Gradiente (Gradient Descent)_ è quella di minimizzare la funzione di valutazione (purchè continua e differenziabile). Come in un percorso in discesa, si fanno passi nelle direzioni più ripide. Il successore di un'assegnazione viene calcolato facendo un passo in discesa di lunghezza proporzionale alla _pendenza_ della funzione, ossia alla sua derivata. \
+Esiste anche una ricerca di massimi di funzione obiettivo tramite _Risalita del Gradiente (Gradient Ascent)_ facendo passi di segno positivo.\
+Nel caso _monodimensionale_ se a $X$ è assegnato $v in RR$ il valore successivo sarà:
+$
+v - eta dot.c (d f)/(d X)(v)
+$
+dove $eta$ è la misura del pass che determina la rapidità della discesa; la derivata viene valutata in $v$:
+$
+lim_(epsilon -> 0)(f(X=v + epsilon) - f(X=v))/epsilon
+$
+Nel caso _multidimensionale_ si fanno passi in tutte le direzioni, proporzionali a ogni _derivata parziale_. Date le variabili $chevron.l X_1, dots, X_n chevron.r$ e un'assegnazione iniziale di valori $chevron.l v_1, dots, v_n chevron.r$, l'assegnazione successiva si ottiene muovendosi lungo ogni direzione, in proporzione alla relativa pendenza di $h$. Il nuovo valore per $X_i$ si ottiene calcolando:
+$
+v_i <- v_i - eta dot.c (partial h)/(partial X_i)(arrow(v)) quad forall i = 1, dots, n
+$
+dove $(partial h)/(partial X_i)$ è la _derivata parziale_ rispetto a $X_i$ (le altre vengono trattate come costanti):
+$
+(partial h)/(partial X_i)(arrow(v))=lim_(epsilon -> 0)(h(v_1, dots, v_i + epsilon, dots, v_n) - h(v_1, dots, v_i, dots, v_n))/(epsilon)
+$
+L'utilità dell'algoritmo sarà evidente nell'apprendimento automatico del valore dei parametri di un modello, anche nel caso di modelli complessi con $10^(12)$ parametri da ottimizzare. \
+Vi sono numerose *varianti*, ad esempio per $eta$ si può usare una forma di ricerca binaria per cercare un valore ottiamle, oppure potrebbe variare in funzione delle diverse iterate. \
+Per quanto riguarda la convergenza in caso di funzioni regolari con un minimo, GD converge a un minimo locale se $eta$ è sufficientemente piccolo. Qunado è troppo grande allora è possibile che diverga, se, invece è troppo piccolo esso converge molto lentamente. Se il minimo locale è unico allora sarà anche un minimo globale. In caso di più minimi locali è necessaria un'ulteriore ricerca per trovare il minimo globale. Ad esempio, si può usare _random restart_ o _random walk_. È garantito il minimo globale solo quando sarà stato attraversato l'intero spazio di ricerca.
