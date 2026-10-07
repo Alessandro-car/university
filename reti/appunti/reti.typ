@@ -213,4 +213,5 @@ La maggior parte dei browser, supporta HTTP/2. Gli obiettivi principali di HTTP/
 Per aggirare questo problema è possibile aprire più connessioni TCP parallele per trasportare una singola pagina web, "imbrogliando" e prendersi una parte maggiore della larghezza di banda del collegamento. Uno degli obiettivi principali di HTTP/2 è eliminare o ridurre il numero di connessioni TCP parallele per il trasporto di una singola pagina web.
 == HTTP/3
 QUIC è un nuovo protocollo di trasporto implementato nel livello di applicazione sul portocollo UDP. QUIC offre diverse opportune funzionalità per HTTP, come il multiplexing dei messaggi (_interleaving_), il controllo di flusso per ogni stream e la creazione di connessioni a bassa latenza. HTTP/3 è un altro, nuovo protocollo HTTP progettato per funzionare su QUIC. HTTP/3 non è ancora stato completmente standardizzato. Molte delle funzionalità HTTP/2 sono incluse in QUIC, facilitando la progettazione di HTTP/3.\
-*INSERIRE SEZIONE 2.6*
+== Streaming video e reti per la distribuzione di contenuti
+Lo streaming video rappresenta circa l'80% del traffico Internet (statistica del 2020).Analizziamo come i servizi streaming vengano implementati nell'Internet di oggi.
