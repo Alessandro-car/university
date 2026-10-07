@@ -350,6 +350,167 @@ Le scelte di tokenizzazione variano profondamente in base alle specifità lingui
 + *Caso di arabo e ebraico*
 	- _Direzione di scrittura_: l'arabo e l'ebraico si scrivono fondamentalmente da destra a sinistra, sebbene determinati elementi come i numeri siano scritti da sinistra a destra.
 	- _Rappresentazione e Unicode_: grazie all'utilizzo di Unicode, la presentazione visiva di superficie risulta complessa a causa della mescolanza di direzioni, ma la forma memorizzata sottostante rimane lineare e diretta.
+==== Stop words
+Con una stop list, puoi escludere completamente dal dizionario le parole più comuni, in quanto hanno un contenuto semantico piccolo e ce ne sono tante. \
+La tendenza attuale però tende ad includere nel dizionario anche le stop word. Questo perchè sono state sviluppate tecniche di compressione efficaci e lo spazio richiesto per includere le stop words nel sistema è diventato estremamente ridotto. Inoltre ci sono avanzate tecniche di ottimizzazione che fanno si che il costo computazionale al momento della query sia minimo. \
+Infine, ci sono dei casi in cui le stop words sono necessarie:
+- _Ricerche per frase_: risultano indispensabili per query specifiche come "King of Denmark"
+- Titoli di opere o canzoni: sono essenziali per gestire stringhe come "Let it be".
+- _Query "relazionali"_: servono per interpretare correttamente ricerche come "flights to London".
+==== Normalizzazione dei termini
+La normalizzazione dei termini è necessaria sia per le parole presenti nel testo indicizzato e sia per le parole inserite nelle query in una forma comune. L'obiettivo è, ad esempio, fare in modo che il sistema riconosca e metta in corrispondenza forme equivalenti come _U.S.A_ e _USA_. \
+Il risultato del processo di normalizzazione prende il nome di *termine*, inteso come una parola normalizzata (_word type_) che rappresenta una singola voce all'interno del dizionario del sistema di Information Retrieval. \
+Il processo definisce implicitamente delle classi di equivalenza tra i termini. Questo avviene operativamente attraverso regole quali:
+- La rimozione dei punti per formare un termine standard ad esempio _U.S.A_ e _USA_ appartengono alla classe di equivalenza $[U S A]$.
+- La rimozione dei trattini, ad esempio _anti-discriminatory_ e _antidiscriminatory_ appartengono alla classe di equivalenza $["antidiscriminatory"]$.
+Inoltre, ci sono lingue in cui anche gli accenti possono diventare critici. Ad esempio, il termine francese _résumé_ rispetto a _resume_. Queste forme differenti dovrebbero essere trattate come equivalenti dal sistema. \
+Il fattore più importante da considerare nella progettazione è il modo in cui gli utenti tendono a digitare le proprie query per queste parole. Anche nelle lingue che prevono standardmente l'uso di accenti, gli utenti spesso non li digitano quando effetuano una ricerca. Di conseguenza, è spesso preferibile normalizzare i termini riconducibili a una forma priva di eccenti. \
+Anche le date e l'alternanza nell'uso giapponese dei caratteri _kana_ rispetto ai caratteri cinesi devono essere normalizzati. Il processo di tokenizzazione e normalizzazione dipende strettamente dalla lingua e risulta pertanto profondamente intrecciato con il rilevamento della lingua stessa. Ad esempio nella frase "Morgen will ich in MIT" bisogna stabilire se si tratta effettivamente della preposizione tedesca _mit_. \
+La regola fondamentale è quella di normalizzare sia il testo che viene inserito nell'indice sia i termini specifici della query, riconducendoli esattamente alla medesima forma standard. \
+Un'altra operazione fondamentale è quella della riduzione delle maiuscole, e ci sono diversi modi per farlo:
+- _Conversione universale_: prevede di ridurre tutte le lettere a minuscole;
+- _Eccezioni contestuali_: si valutano le maiuscole a metà frase, come nel caso di _General Motors_, o la distinzione tra acronimi e parole comuni.
+Risulta spesso ottimale applicare la conversione in minuscolo a tutto, poichè gli utenti tendono a digitare in minuscolo a prescindere dalla capitalizzazione formalmente corretta. \
+Ci si interroga su quale sia l'effetto concreto delle operazioni di normalizzazione sulle prestazioni del sistema in termini di precisione e richiamo. \
+Un'alternativa alle classi di equivalenza è quella di includere nel dizionario tante varianti di un termine e poi fare un'espansione asimettrica a query time. Ad esempio se l'utente inserisce la query _window_ il sistema cerca per _window, windows_. Questo approccio è potenzialmente più potente ma meno efficiente.
+==== Thesauri e Soundex
+Analizziamo la gestione di sinonimi e omonimi. È possibile gestirli tramite classi di equivalenza costruite manualmente, come ad esempio l'equivalenza tra _Car_ e _automobile_, oppure tra _color_ e _colour_. Si possono riscrivere i termini per formare classi di equivalenza: quando un documento contiene la parola _automobile_, ad esempio, viene indicizzato sotto la forma combinata _car-automobile_ (e viceversa). Un'alternativa consiste nell'espandere la query in fase di ricerca, facendo in modo che se la query contiene _automobile_, il sistema cerchi anche sotto _car_. \
+Per gestire gli errori di ortografia, invece, si applica l'approccio _soundex_, un sistema che raggruppa le parole in classi di equivalenza basandosi su euristiche di tipo fonetico.
+=== Lemmatizzazione
+Il processo di lemmatizzazione consiste nel ridurre le forme flesse o varianti alla loro forma base, ovvero la forma che si cercherebbe all'interno di un dizionario. Esempi di lemmatizzazione sono:
+- le voci verbali _am, are, is_ vengono ricondotte a _be_;
+- i termini _car, cars, car's, cars'_ vengono ricondotti a _car_.
+Un esempio di trasformazione di una frase è: "the boy's cars are different colors" che diventa "the boy car be different color". \
+Diamo una definizione formale di lemmatizzazione:
+#definizione(title: "Lemmatizzazione")[
+La lemmatizzazione implica l'esecuzione di una riduzione "corretta" alla forma del lemma presente come intestazione nel dizionario.
+]
+=== Stemming
+Il processo di stemming consiste nel ridurre i termini alle "radici" prima di procedere con l'indicizzazione. Lo stemming suggerisce un'operazione grossolana di rimozione dei suffissi, la cui implementazione è dipendente dalla lingua. Ad esempio, parole derivate come _automate, automatic_ e _automation_ vengono tutte ridotte alla forma comune _automat_. \
+Analizziamone un impatto pratico sul testo:
+$
+"for example compressed and compression are both accepted as equivalent compress"
+$
+venga trasformata in forme alterate quali
+$
+"for exampl compress and compress ar both accept as equival to compress"
+$
+==== Algoritmo di Porter
+L'algoritmo di Porter è l'algoritmo più diffuso per lo stemming della lingua inglese. I risultati suggeriscono che sia almeno tanto valido quanto le altre opzioni di stemming disponibili. Il processo si basa su convezioni e su 5 fasi di riduzione.
+- Le fasi vengono applicate in modo sequenziale.
+- Ciascuna fase è costituita da un insieme di comandi.
+- Una convenzione tipica stabilisce che, tra le regole presenti in un comando composto, si debba selezionare quella che si applica al suffisso più lungo.
+Analizziamone un esempio pratico: la parola _Girls_, la lettera "s" viene identificata come suffisso, mentre _Girl_ costituisce la radice.
+== Punteggio, Pesatura dei Termini e Modello dello Spazio Vettoriale
+=== Problemmi del modello di ritrovamento booleano
+Fino ad ora, le nostre query sono state booleane, quindi i documenti potevano essere rilevanti o meno. Il modello di ritrovamento booleano è utile per utenti esperti che hanno una conoscenza completa dei loro bisgoni e della collezione di documenti. È anche utile per le applicazioni che possono facilmente consumare migliaia di risultati. \
+Non risulta efficiente, però, per la maggior parte degli utenti in quanto non capaci di scrivere query booleano (oppure se lo sono, pensano che sia troppo impegnativo). Inoltre, la maggior parte degli utenti non vogliono guardare tra migliaia di risultati. \
+Le query booleane spesso risultano in troppi pochi risultati oppure in troppo risultati. Ci vogliono grandi capacità per costruire una query che produce un numero di documenti rilevanti ragionevoli, in quanto le operazioni di AND ne producono pochi e l'operazione di OR ne producono tanti.
+=== Ranked Retrieval Models
+I modelli di ritrovamento basati su ranking, anzichè restituire un insieme non ordinato di documenti che soddisfano un'espressione booleana, il sitema restituisce un ordinamento sui migliori documenti della collezione rispetto a una specifica query. \
+Inoltre, invece di utilizzare un linguaggio di interrogazione basato su operatori ed espressioni formali, la query dell'utente è costituita semplicemente da una o più parole scritte in linguaggio naturale. In linea di principio si possono distinguere due scelte separate, ovvero il linguaggio di interrogazione (_query language_) e il modello di ritrovamento (_retrieval model_). Tuttavia, nella pratica, i modello di ritrovamento basati sul ranking sono normalmente associati alla query a testo libero. \
+Quando un sistema produce una classifica di risultati, un insieme di risultati troppo grande non è più un problema, in quanto ne mostriamo i primi $k (approx 10)$.
+=== Classificazione come base del ranked retrieval
+L'obiettivo dei sistemi di ranking e restituire in ordine i documenti che hanno la maggiore probabilità di risultare utili per l'utente che effettua la ricerca. Sorge spontanea la domanda su come sia possibile ordinare per grado di importanza i documenti presenti nella collezione in relazione a una determinata query. \
+Si assegna un punteggio, ad esempio compreso nell'intervallo [0, 1], a ciascun documento. Questo punteggio misura quanto bene un documento e una query riescono a "corrispondere". \
+Ci serve un modo per assegnare un punteggio ad un documento. Per iniziare la trattazione, si prende in considerazione una query composta da un unico termine. Se il termine della query non compare all'interno del documento il punteggio deve essere pari a 0. A tal proposito ci si chiede il motivo di questa regola e se sia possibile adottare soluzioni migliori. Più il termine della query è frequente all'interno del documento, maggiore dovrebbe essere il punteggio assegnato.
+==== Primo approccio: Coefficiente di Jaccard
+Il coefficiente di Jaccard rappresenta una misura comunemente impiegata per calcolare la sovrapposizione tra due insiemi, $A$ e $B$. \
+Il coefficiente si calcola come il rapporto tra la cardinalità dell'intersezione e la cardinalità dell'unione dei due insiemi, espresso dalla formula:
+$
+j a c c a r d(A, B) = bar A inter B bar backslash bar A union B bar
+$
+Analizziamone alcune proprietà:
+- $j a c c a r d(A, B) = 1$ nel caso di insiemi identici;
+- $j a c c a r d(A, B) = 0$ nel caso in cui l'intersezione sia nulla.
+Gli insiemi non devono necessariamente avere la stessa dimensione e il coefficiente assegna sempre un valore compreso tra 0 e 1.
+#esempio[
+Viene posto l'interrogativo su quale sia il punteggio di corrispondenza tra query e documento calcolato dal coefficiente di Jaccard per due documenti specifici. Sia data la seguente query:
+$
+Q: "ides of march"
+$
+I documenti sono:
+- $D_1: "caesar died in march"$
+- $D_2: "the long march"$.
+Applichiamo la formula
+$
+j a c c a r d(Q, D) = bar Q inter D bar backslash bar Q union D bar
+$
+e ottieniamo:
+- $j a c c a r d(Q, D_1) = 1/6$
+- $j a c c a r d(Q, D_2) = 1/5$
+]
+Il coefficiente di Jaccard non considera la *frequenza dei termini*. Inoltre, i termini rari all'interno di una collezione sono più informativi rispetto a quelli frequenti, ma il coefficiente di Jaccard ignora completamente questa informazione. Emerge la necessità di disporre di un metodo più sofisticato per effettuare la noramalizzazione basata sulla lunghezza del testo.
+==== Secondo approccio: matrici di conteggio termini-documenti
+Consideriamo il numero di volte in cui un determinato termine compare all'interno di un documento. Ciascun documento viene rappresentato come un vettore di conteggio appartenente a $NN^V$ corrispondente a una colonna della matrice.
+#let blu = rgb("#0000ff")
+#let marrone = rgb("#993300")
 
+#let opere = (
+  "Antony and Cleopatra", "Julius Caesar", "The Tempest",
+  "Hamlet", "Othello", "Macbeth",
+)
 
+#let dati = (
+  ("Antony",    157,  73, 0, 0, 0, 0),
+  ("Brutus",      4, 157, 0, 1, 0, 0),
+  ("Caesar",    232, 227, 0, 2, 1, 1),
+  ("Calpurnia",   0,  10, 0, 0, 0, 0),
+  ("Cleopatra",  57,   0, 0, 0, 0, 0),
+  ("mercy",       2,   0, 3, 5, 5, 1),
+  ("worser",      2,   0, 1, 1, 1, 0),
+)
 
+#table(
+  columns: 7,
+  inset: (x: 10pt, y: 7pt),
+  align: center + horizon,
+  stroke: (x, y) => if x == 2 {
+    (
+      left: red,
+      right: red,
+      top: if y == 0 { red },
+      bottom: if y == dati.len() { red },
+    )
+  },
+
+  // intestazione
+  [],
+  ..opere.map(o => text(fill: blu, weight: "bold", o)),
+
+  // righe
+  ..dati
+    .map(r => (
+      text(fill: marrone, weight: "bold", r.at(0)),
+      ..r.slice(1).map(n => text(weight: "bold", str(n))),
+    ))
+    .flatten(),
+)
+=== Bag of words model
+In questo modello si fa uso della rappresentazione vettoriale che non tiene conto dell'ordine delle parole all'interno di un documento. Ad esempio frasi come "John is quicker than Mary" e "Mary is quicker than John" generano esattamente gli stessi vettori. \
+Per certi versi, questo modello rappresenta un passo indietro rispetto all'indice posizionale, il quale era in grado di distinguere questi due documenti.
+=== Term frequency tf
+#definizione(title: "Term frequency")[
+La frequenza del termine $t f_(t, d)$ di un termine $t$ in un documento $d$ è definita come il numero di volte in cui $t$ compare all'interno di $d$.
+]
+Vogliamo utilizzare il valore di $t f$ nel calcolo dei punteggi di corrispondenza tra query e documento, ma ci si interroga su come farlo correttamente. La frequenza grezza in sè non è ciò che vogliamo. Un documento con 10 occorrenze di un termine è certamente più rilevante rispetto a un documento con una sola occorrenza, ma non è 10 volte più rilevante. \
+La rilevanza non cresce in modo direttamente proporozionale rispetto alla frequenza del termine. È bene notare che la frequenza, nell'ambito dell'Information Retrieval, è pari al conteggio puro.
+==== Pesatura basata sulla frequenza logaritmica
+Il peso basato sulla frequenza logaritmica di un termine $t$ in un documento $d$ è definito dalla funzione a tratti:
+$
+w_(t, d) = cases(
+1 + log_10(t f_(t, d)) & "se" t f_(t, d) > 0,
+0 & "altrimenti"
+)
+$
+Ad esempio:
+- $0 -> 0$
+- $1 -> 1$
+- $2 -> 1.3$
+- $10 -> 2$
+- $1000 -> 4$ e così via.
+Per una coppia documento query il punteggio complessivo si ottiene sommando i pesi per tutti i termini $t$ presenti sia nella query $q$ che nel documento $d$:
+$
+s c o r e(d, q) = sum_(t in q inter d)(1 + log(t f_(t, d)))
+$
+La *condizione di annullamento*, ovvero se il punteggio è pari 0, si avvera se nessuno dei termini della query è presente all'interno del documento.
