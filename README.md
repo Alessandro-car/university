@@ -6,7 +6,8 @@ In questo spazio condivido pubblicamente tutti gli appunti e i materiali di stud
 
 ## Strumenti e Formato
 
-Tutti i documenti presenti in questa repository sono redatti utilizzando **LaTeX** e **Typst**. Questa scelta mi permette di avere appunti puliti e professionali, particolarmente adatti per la trascrizione di formule matematiche, dimostrazioni formali e diagrammi informatici.
+Tutti i documenti presenti in questa repository sono redatti utilizzando **LaTeX** e **Typst**. Questa scelta mi permette di avere appunti puliti e professionali, particolarmente adatti per la trascrizione di formule matematiche, dimostrazioni formali e diagrammi informatici. 
+**NOTA**: Gli appunti più recenti sono strutturati meglio a livello di cartelle. In altri invece, le immagini sono nella stessa cartella dove sono presenti i file .tex e file .pdf degli appunti. Per chi vuole aggiornare gli appunti può scaricare il file .tex e modificarlo, mentre per chi ha bisogno dei soli appunti basta scaricare il file .pdf degli appunti.
 
 ## Argomenti Trattati
 
