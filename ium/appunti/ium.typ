@@ -377,3 +377,40 @@ La valutazione è un passo essenziale in una progettazione human-centred, e dovr
 	Dovrebbe esiste un processo per il monitoraggio di lungo termine dell'uso del prodotto o del sistema, che consiste nel raccogliere input dagli utenti, con modalità differenti, lungo un certo periodo di tempo.
 - Documentazione dei risultati
 	Allo scopo di gestire il processo di progettazione iterativo, i risultati delle valutazioni dovrebbero essere registrati in modo sistematico. Dovrebbe esistere un'adeguata evidenza che un numero adeguato di utenti abbia partecipato al test e che questi utenti siano rappresentativi delle categorie identificate nei requisiti, che i test siano adeguati a fornire indicazioni attendibili e, infine, che siano stati usati metodi appropriati per il test le la raccolta dei dati.
+== UCD Sprint
+L'HCD è spesso anche chiamato "User Centred Design (UCD)". Lo UCD Sprint è un processo *passo-dopo-passo* progettato per favorire la generazione costruttiva di idee all'interno del team software. Presenta una struttura chiara con passaggi definiti per ogni parte del processo di progettazione. La metodologia è accessibile a team meno esperti, rendendola adatta alla formazione nel design. Il processo UCD Sprint è stato sviluppato attraverso corsi intensivi di interaction design da ricercatori leader nell'interazione uomo-computer. Per i professionisti che hanno familiarità con i metodi di user-centred desigm, il processo può essere applicato più rapidamente. \
+Lo User-Centred Design Sprint è suddiviso in 3 parti. Ogni parte è divisa in processi distinti, pensati per guidare i partecipanti attraverso:
+- Un'analisi degli utenti.
+- Una sessione di brainstoring e schizzi.
+- Un prototipo finale, testing e analisi dei risultati. \
+Lo UCD Sprint è un'istanz del modello HCD dell'ISO 9241:210. Come tale, ne ha tutte le caratteristiche. In particolare, l'UCD Sprint è un processo ciclico, e i progettisti possono ripetere le varie fasi liberamente in base alle necessità di progetto.
+#figure(
+image("images/ucd_sprint.png", width: 70%),
+caption: [Fasi dell'UCD Sprint]
+)
+=== Design Thinking
+Il Design Thinkign è un'*ideologia supportata da un processo correlato*. Una definizione completa richiede la comprensione di entrambi.
+#definizione(title: "Design thinking")[
+L'ideologia del _design thinking_ afferma che un approccio pratico e incentrato sull'utente alla risoluzione dei problemi può portare all'innovazione e l'innovazione può portare alla differenziazione e a un vantaggio competitivo. Questo approccio pratico e incentrato sull'utente è definito dal processo del design thinking e comprende 6 fasi distinte, come definito e illustrato di seguito.
+#figure(
+	image("images/design_thinking.png", width: 70%),
+	caption: [Fasi del design thinking]
+)
+]
+Il Design Thinking è incentrato sull'utente che parte dai dati dell'utente:
+- crea artefatti di design che rispondono a esigenze utente reali e non immaginarie
+- testa tali artefatti con utenti reali.
+Questo processo sfrutta l'esperienza collettiva e stabilisce un linguaggio comune, oltre a un consenso all'interno del team. Incoraggia l'innovazione esplorando molteplici soluzioni per lo stesso problema. Jakob Nielsen afferma che "un'interfaccia meravigliosa che risolve il problema sbagliato fallirà". \
+Anaizziamo nel dettaglio le fasi del Design Thinking:
++ *Empatizzare*. In questa fase si conducono ricerche al fine di sviluppare la conoscenza su ciò che i tuoi utenti fanno, dicono, pensano e provano.
++ *Definire*. Combinare tutte le ricerche e osservare dove esistono i problemi dei tuoi utenti. Mentre identifichi le esigenze dei tuoi utenti, inizia a evidenziare le opportunità di innovazione.
++ *Ideare*. Fare brainstorming su una serie di idee folli e creative che rispondano alle esigenze degli utenti insoddisfatte identificate nella fase di definizione.
++ *Prototipare*. Costruire rappresentazioni reali e tangibili per un sottoinsieme delle tue idee. L'obiettivi di questa fase è capire quali componenti delle tue idee funzionano, e quali no.
++ *Testare*. Tornare dai tuoi utenti per ricevere feedback. Bisogna chiedersi se tale soluzione soddisfa le esigenze degli utenti.
++ *Implementare*. Mettere in pratica la visione. Assicurarsi che la soluzione sia materializzata e influenzi la vita dei tuoi utenti finali.
+Il Design Thinking è un processo iterativo, come mostrato nella seguente figura.
+#figure(
+image("images/design_thinking_iterativo.png", width: 70%),
+caption: [Iteratività del design thinking]
+)
+UCD Sprint e Design Thinking sembrano simili proprio perchè sono istanze dello stesso modello HCD. Quindi condividono molti aspetti. La scelta di un processo piuttosto che un altro è spesso legato alle esigenze dei progettisti e alle esigenze dei gruppi di lavoro.
