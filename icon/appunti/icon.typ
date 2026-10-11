@@ -1290,3 +1290,330 @@ $
 L'utilità dell'algoritmo sarà evidente nell'apprendimento automatico del valore dei parametri di un modello, anche nel caso di modelli complessi con $10^(12)$ parametri da ottimizzare. \
 Vi sono numerose *varianti*, ad esempio per $eta$ si può usare una forma di ricerca binaria per cercare un valore ottiamle, oppure potrebbe variare in funzione delle diverse iterate. \
 Per quanto riguarda la convergenza in caso di funzioni regolari con un minimo, GD converge a un minimo locale se $eta$ è sufficientemente piccolo. Qunado è troppo grande allora è possibile che diverga, se, invece è troppo piccolo esso converge molto lentamente. Se il minimo locale è unico allora sarà anche un minimo globale. In caso di più minimi locali è necessaria un'ulteriore ricerca per trovare il minimo globale. Ad esempio, si può usare _random restart_ o _random walk_. È garantito il minimo globale solo quando sarà stato attraversato l'intero spazio di ricerca.
+= Rappresentazione e Ragionamentoi Proposizionale
+== Proposizioni
+Le *proposizioni* sono _enunciati_ che possono essere veri o falsi. Esse sono espresse in un linguaggio formale che si può descrivere in termini di sintassi e semantica, la *logica proposizionale*. \
+Il _ragionamento_, che potrà essere definito in termini di proposizioni, si propone obiettivi quali trovare modelli, trovare conseguenze logiche, formulare ipotesi e fare debugging della conoscenza descritta per correggere eventuali errori.
+=== Sintassi del Calcolo Proposizionale
+A ciascun enunciato, se formulato correttamente in un linguaggio basato su variabili booleano e connettivi logici, potrà poi essere associato un valore di verità. \
+Una *proposizione atomica*, o *atomo* viene rappresntato da un simbolo, condizionalmente una stringa alfanumerica, contenente eventuali "\_", che inizi con una lettera minuscola. Esempi di atomi ben formati sono: _ai\_divertente_, _piove_, _soleggiato_.
+Una *proposizione* o *formula logica* è costituita da atomo oppure da una proposizione *composta* formata usando connettivi logici e proposizioni più semplici. Nella seguente tabella sono elencate le diverse proposizioni composte che si possono formare a partire da due generiche proposizioni $p$ e $q$:
+#align(center)[
+  #table(
+    columns: 3,
+    align: center + horizon,
+    stroke: (x, y) => (
+      top: if y == 0 { 1pt } else { 0pt },
+      bottom: if y == 0 or y == 7 { 1pt } else { 0pt }
+    ),
+    [sintassi], [lettura], [definizione],
+    $not p$, ["non $p$"], [_negazione di $p$_],
+    $p and q$, ["$p$ e $q$"], [_congiunzione di $p$ e $q$_],
+    $p or q$, ["$p$ o $q$"], [_disgiunzione di $p$ e $q$_],
+    $p arrow.r q$, ["$p$ implica $q$"], [_implicazione di $q$ da $p$_],
+    $p arrow.l q$, ["$p$ se $q$"], [_implicazione di $p$ da $q$_],
+    $p arrow.l.r q$, ["$p$ se e solo se $q$"], [_equivalenza di $p$ e $q$_],
+    $p xor q$, ["$p$ XOR $q$"], [_or esclusivo di $p$ e $q$_]
+  )
+]
+Vale il classico ordine di _precedenza_ fra connettivi: $not, and, or, ->, <-, <->, xor$. Si possono usare le parentesi per disambiguare e avere una maggiore leggibilità, ad esempio la proposizione
+$
+not a or b and c -> d and not e or f
+$
+si potrà scrivere nella forma equivalente
+$
+((not a) or (b and c)) -> ((d and (not e)) or f)
+$
+=== Semantica del Calcolo Proposizionale
+La *semantica* definisce il significato degli enunciati, fornendo la corrispondenza tra simboli e stato del mondo che viene rappresentato. Ogni proposizione sarà _interpretabile_ come vera o falsa rispetto allo stato del mondo: le proposizioni vere determinano il mondo conosciuto dal sistema, essendo un _atomo_ l'unità minima che possa essere dotata di significato. Il significato delle proposizioni più complesse discenderà da quello degli atomi. \
+Un'*interpretazione* è definita come funzione: $pi: "Atomi" -> brace.l "true, false" brace.r$
+- se $pi(alpha) = "true"$, si dice che $alpha$ *vero* nell'interpretazione $pi$;
+- se $pi(alpha) = "false"$, si dice che $alpha$ *falso* nell'interpretazione $pi$.
+Un'interpretazione si può anche definire come l'insieme $I$ di tutti e soli gli atomi veri, ossia associati al valore di verità $"true"$. Tutti gli altri atomi saranno interpretati come associati a $"false"$. \
+Per associare i valori di verità alle proposizioni non atomiche, si dovranno considerare le tavole di verità dei connettivi, mostrate di seguito:
+#align(center)[
+  #table(
+    columns: 9,
+    align: center + horizon,
+    stroke: (x, y) => (
+      top: if y == 0 { 1pt } else { 0pt },
+      bottom: if y == 0 or y == 4 { 1pt } else { 0pt }
+    ),
+    $p$, $q$, $not p$, $p and q$, $p or q$, $p arrow.l q$, $p arrow.r q$, $p arrow.l.r q$, $p xor q$,
+    [_true_], [_true_], [_false_], [_true_], [_true_], [_true_], [_true_], [_true_], [_false_],
+    [_true_], [_false_], [_false_], [_false_], [_true_], [_true_], [_false_], [_false_], [_true_],
+    [_false_], [_true_], [_true_], [_false_], [_true_], [_false_], [_true_], [_false_], [_true_],
+    [_false_], [_false_], [_true_], [_false_], [_false_], [_true_], [_true_], [_true_], [_false_]
+  )
+]
+Si noti che la verità di una proposizione dipende solo dall'interpretazione dei suoi atomi. Una stessa proposizione ammette diverse interpretazioni per gli atomi contenuti, quindi potrà avere assegnati valori di verità diversi. \
+Una *base di conoscenza* (KB, _knowledge base_) è costituita da un insieme di proposizioni dette *assiomi*: essi sono dichiarati come veri. La base di conoscenza può essere vista come una congiunzione implicita degli assiomi, quindi sarà vera se tutti i suoi assiomi sono veri. \
+Gli assiomi servono a specificare il mondo da rappresentare attraverso quella che si dice la sua *interpretazione intesa*, ossia quella che dovrebbe risidere nella mente ell'esperto di dominio e che va formalizzata dall'ingegnere della conoscenza fornendo la sua assiomatizzazione. Nella *teoria dei modelli*, un *modello* di una base di conoscenza _KB_ è un'interpretazione per la quale sia vero ogni assioma di _KB_. \
+La proposizione $g$, _goal_, è *conseguenza logica* di _KB_, ovvero $g$ segue logicamente da _KB_ se e solo se $g$ vera in ogni modello di _KB_, in simboli:
+$
+K B models g
+$
+In inglese questa relazione fra _KB_ e _g_ si dice _entailment_. \
+Quindi, se vale $K B models g$, non esistono modelli di _KB_ nei quali _g_ sia falsa. In caso contrario, si può scrivere $K B cancel(models) g$ per dire che "_g_ non è conseguenza logica di _KB_", ciò significa che esiste un modello di _KB_ in cui _g_ è falsa. Un caso da distinguere è quello in cui $K B models not g$. \
+È bene notare che non vengono prese in considerazione altre possibili interpretazioni di $g$ che non siano modelli di $K B$.
+#esempio(title: "Base di conoscenza")[
+Data la _KB_ contenente gli assiomi:
+- _sam\_felice_;
+- _ai\_divertente_;
+- _vermi\_vivono\_sottoterra_;
+- _sera_;
+- _bruco\_mangia\_mela_;
+- _mela\_mangiata_ $<-$ _bruco\_mangia\_mela_;
+- _interruttore\_acceso_ $<-$ _sam\_nella\_stanza_ $and$ _sera_
+si può scrivere:
+- $K B models $_bruco\_mangia\_mela_
+- $K B models$ _mela\_mangiata_
+mentre $K B cancel(models) $_interruttore\_acceso_ ossia esiste un modello di _KB_ in cui _interruttore\_acceso_ è falso; tale modello, dovendo risultare vero l'ultimo assioma in _KB_, può essere definito assumento che _sam\_nella\_stanza_ sia falso.
+]
+=== Semantica: punto di vista del progettista
+Per caratterizzare un dominio / mondo, il progettista della _KB_ lo definisce come *interpretazione intesa*: il significato dei simboli viene definito attraverso proposizioni, ossia assiomi che si possono assumere veri rispetto a tale stato del mondo, quindi le conseguenze logiche di _KB_ saranno vere rispetto all'_interpretazione intesa_. Il significato viene così condiviso e potrà essere usato per interpretare le risposte a interrogazioni della _KB_.
+==== Metodologia di Costruzione di Basi di Conoscenza
+Il progetto della base di conoscenza _KB_ si sviluppa nelle seguenti fasi:
++ SI sceglie il dominio/mondo da rappresentare, ossia l'interpretazione intesa. Questo può comprendere sia aspetti del mondo reale, un mondo immaginario oppure un dominio astratto come quello numero e/o dell'insiemistica.
++ Si scelgono gli atomi per rappresentare le proposizioni d'interesse, la cosiddetta *concettualizzazione*, cui associare un significato preciso rispetto all'interpretazione intesa.
++ Si definiscono gli assiomi di _KB_, ossia proposizioni vere nell'interpretazione intesa, l'*assiomatizzazione* del dominio applicativo per il sistema.
++ Si pongono al sistema domande sull'interpretazione intesa; le sue risposte dovranno essere interpretate in base ai significati associati ai simboli.
+=== Semantica: Punto di vista della Macchina
+Il sistema elabora la _KB_ per decidere se _g_ è vera nell'interpretazione intesa. I modelli di _KB_ rappresentano tutti e soli i modi in cui il mondo potrebbe essere fatto. Data una concettualizzazione e un'assiomatizzazione corrette, l'interpretazione intesa sarà uno dei modelli di _KB_, ma il sistema non sa determinarlo esattamente. \
+Il sistema deve determinare se $K B models g$: se $K B models g$, esso potrà concludere che _g_ sarà vera nell'interpretazione intesa, essendo _g_ vera in tutti i modelli di _KB_. Se, invece, $K B cancel(models) g$, allora non può trarre conclusioni: _g_ potrebbe essere falsa proprio nell'interpretazione intesa ma il sistema non può stabilirlo dato che non la conosce. \
+Queste forme di inferenza sono implementate dalle procedure di dimostrazione trattate nel seguito. \
+È bene notare che $K B cancel(models) g$ non comporta necessariamente che $ K B models not g$. \
+Inoltre, si noti che il progettista può sbagliare e codificare nella _KB_ assiomi falsi nell'interpretazione intesa. In tali casi non può essere garantito che le risposte della macchina siano vere in tale interpretazione.
+== Vincoli Proposizionali
+Si considereranno ora CSP con vincoli rappresentati come _formule logiche_ dalla struttura concisa e formale per consentire l'elaborazione automatica. \
+Un _problema_ di *soddisfacibilità proposizionale (SAT)* è definito da:
+- un insieme di _variabili booleane_;
+	si usa la sintassi $X = t r u e$ abbreviata in $x$, e $X = f a l s e$ oppure $not x$.
+- un insieme di _vincoli clausali_ o *clausole*, ossia espressioni logiche della forma:
+	$
+	l_1 or l_2 or dots.c or l_k
+	$
+	in cui ogni *letterale* $l_i$ è un atomo $a$ o la sua negazione $not a$, ossia un'assegnazione a una variabile booleana; si dirà che $a$ _occorre negativamente_ (risp. _positivamente_) nel letterale $not a$ (risp. $a$).
+La clausola $l_1 or l_2 or dots.c or l_k$ è vera in un'interpretazione se e solo se $exists i in brace.l 1, dots, k brace.r : l_i$ vero in tale interpretazione. In tal casol, si dice anche che il vincolo clausale è _soddisfatto_. \
+In Logica Proposizionale, una clausola è una forma logica in una forma ristretta. Esiste un algoritmo di conversione per cui ogni proposizione può essere convertita in forma di clausola. \
+Nei CSP, una clausola è un vincolo su un insieme di variabili booleane che è soddisfatto se almeno uno dei suoi letterali è vero: $l_1 or l_2 or dots.c or l_k$ equivale a $not(not l_1 and not l_2 and dots.c and not l_k)$, ciò esclude che le assegnazioni in cui tutti i letterali risultino falsi.
+=== Forma Clausale per CSP
+Un CSP finito si può trasformare in un problema di soddisfabilità di una _KB_ proposizionale in cui:
+- per ogni variabile $Y$ del CSP, con $d o m(Y) = brace.l v_1, dots, v_k brace.r$ si considerano le *variabili indicatrici* booleane $brace.l Y_1, dots, Y_k brace.r$ tali che $forall i = 1, dots, k : Y_i$ vera se $Y = v_i$ e falsa altrimenti; quindi per rappresentare $Y$ in _KB_ si considereranno gli atomi $y_1, dots, y_k$;
+- si aggiungeranno a _KB_ le seguenti clausole:
+	- $not y_i or not y_j (equiv not(y_i and not y_j))$ per ogni $i, j in brace.l 1, dots k brace.r$ con $i < j$, poichè $y_i$ e $y_j$ non possono essere entrambi veri;
+	- $y_1 or dots.c or y_k$, poichè uno degli $y_i$ dev'essere necessariamente vero, ossia $Y$ avrà un certo valore $i$ nell'assegnazione totale;
+- per ogni vincolo del CSP, si definirà una clausola per ogni assegnazione che lo violi:
+	- $not(l_1 and l_2 and dots.c and l_k)$ che equivale a $not l_1 or not l_2 or dots.c or not l_k$, ad esempio letterali per le assegnazioni alle $Y_i$ non ammesse dal vincolo;
+	- per semplificare, si possono combinare le clausole; ad esempio, combinando $a or b or c$ con $a or b or not c$ si ha $a or b$.
+#esempio[
+Considerando le variabili $A$ e $B$ con dominio $brace.l 1, 2, 3, 4 brace.r$
+- per $A$, le variabili indicatrici saranno $a_1, a_2, a_3$ e $a_4$ con $a_i$ vera se e solo se $A = i$, variabili disgiunte che coprono tutti i casi per cui, in tutto, 7 clausole:
+$
+not a_1 or not a_2, not a_1 or not a_3, not a_1 or not a_4, not a_2 or not a_3, not a_2 or not a_4, not a_3 or not a_4, a_1 or a_2 or a_3 or a_4
+$
+]
+- analogamente per $B$;
+- il vincolo $A < B$ implica che $a_4$ sika falsa, $b_1$ falsa e le coppie che lo violano siano parimenti false quindi un totale di 5 clausole: $not a_4, not b_1, not a_2 or not b_2, not a_3 or not b_3, not a_3 or not b_2$. Si noti che non serve $not a_1 or not b_1$ già implicata da $not b_1$.
+L'algoritmo *DPLL Davis-Putnam-Logemann-Loveland* prevede:
+- la riduzione dei domini e dei vincoli;
+- la separazione dei domini;
+- l'assegnazione di letterali _puri_.
+L'algoritmo risulta efficiente con strutture dati indicizzate ad hoc.
+== Clausole Definite Proposizionali
+Il linguaggio delle *clausole definite proposizionali* è un sottolinguaggio della logica proposizionale con la stessa semantica. Esso ammette una forma più specifica di proposizioni, le clausole con un unico letterale positivo della forma seguente:
+$
+a or not b_1 or dots.c or not b_m
+$
+Le _proposizioni atomiche_ o _atomi_ sono gli stessi della logica proposizionale. Valendo l'equiivalenza $A or not B equiv A <- B$, una *clausola definita* proposizionale si può scrivere come segue:
+$
+h <- a_1 and dots.c and a_m
+$
+formula che si legge "_h_ se $a_1$ e $dots.c$ e $a_m$". In tale formula, $h$ si dice *testa* (_head_) e $a_1 and dots.c and a_m$ si dice *corpo* della clausola. \
+Una clausola definita è una *regola* se $m > 0$ (ossia ha un corpo che rappresenta una condizione), altrimenti è un *fatto* o *clausola atomica* quando $m = 0$ nel qual caso si può omettere $<-$. \
+Una *base di conoscenza* può essere specificata come insieme di clausole definite. \
+La clausola $h <- a_1 and dots.c and a_m$ è falsa nell'interpretazione $I$ se $a_1, dots, a_m$ sono tutti veri in $I$ ma $h$ è falsa, altrimenti essa è vera in $I$. \
+La clausola definita è una forma ristretta di clausola nella quale compare esattamente un letterale positivo. Ad esempio, $a <- b and c and d$ è equivalente a $a or not b or not c or not d$. Essa non può rappresentare una qualunque disgiunzione3 di atomi, nemmeno se tutti negati.
+#let a(s) = text(style: "italic")[#s]
+#esempio(title: "Scheda impianto elettrico")[
+Si consideri un ambiente intelligente per la simulazione (diagnostica) come quello nella figura sottostante:
+#figure(
+image("images/impianto_elettrico.png", width: 70%),
+caption: [Impianto elettrico]
+)
+- si definisce una _rappresentazione_ dello stato di cavi (_wire_), prese (_outlet_), luci, deviatori (_switch_) e fusibili (_circuit breaker_), ecc.. I dettagli trascurabili non verranno modellati (ad es. colori, peso, lunghezze, altezze, ecc.);
+
+- bisogna decidere il _livello di astrazione_ per la rappresentazione: per _specialisti_ (i voltaggi, le correnti, le frequenze, ...) oppure comprensibile anche a non specialisti (in base al _senso comune_);
+
+- poi si decide _cosa_ rappresentare: proposizioni su accensione luci, funzionamento cavi, stato deviatori, ecc.;
+
+- si definiscono _atomi_ con significati precisi per il mondo da modellare: nomi descrittivi come #a("su_d2") per indicare che il deviatore #a("d2") è in posizione #a("su") oppure #a("alimentata_l1") che indica che il punto-luce #a("l1") è sotto tensione.
+
+- si definisce anche la _conoscenza di fondo_ (_background knowledge_, BK) che fornisce altri fatti veri riguardo il mondo, ed è rappresentata nel sistema attraverso altre clausole definite, spesso in forma semplice, come fatti:
+
+  #pad(left: 1.5em)[
+    #grid(
+      columns: (1fr, 1fr),
+      row-gutter: 0.8em,
+      [
+        - #a("luce_l1.")
+        - #a("luce_l2.")
+        - #a("ok_l1.")
+        - #a("ok_l2.")
+      ],
+      [
+        - #a("ok_f1.")
+        - #a("ok_f2.")
+        - #a("alimentazione_esterna.")
+      ]
+    )
+  ]
+
+- si può anche considerare una parte del dominio e definire altre _regole_:
+
+  #pad(left: 1.5em)[
+    - $#a("alimentata_l1") arrow.l #a("alimentato_c0.")$ \
+      "(luce) " #a("l1") " alimentata se (cavo) " #a("c0") " sotto tensione"
+    - $#a("alimentato_c0") arrow.l #a("alimentato_c1") and #a("su_d2.")$
+    - $#a("alimentato_c0") arrow.l #a("alimentato_c2") and #a("giu_d2.")$
+    - $#a("alimentato_c1") arrow.l #a("alimentato_c3") and #a("su_d1.")$
+    - $#a("alimentato_c2") arrow.l #a("alimentato_c3") and #a("giu_d1.")$
+    - $#a("alimentata_l2") arrow.l #a("alimentato_c4.")$
+    - $#a("alimentato_c4") arrow.l #a("alimentato_c3") and #a("su_d3.")$
+    - $#a("alimentata_p1") arrow.l #a("alimentato_c3.")$
+    - $#a("alimentato_c3") arrow.l #a("alimentato_c5") and #a("ok_f1.")$
+    - $#a("alimentata_p2") arrow.l #a("alimentato_c6.")$
+
+    #v(1em)
+    #align(center)[_4 Rappresentazione e Ragionamento Proposizionale_]
+    #v(1em)
+
+    - $#a("alimentato_c6") arrow.l #a("alimentato_c5") and #a("ok_f2.")$
+    - $#a("alimentato_c5") arrow.l #a("alimentazione_esterna.")$
+    - $#a("accesa_l1") arrow.l #a("luce_l1") and #a("alimentata_l1") and #a("ok_l1.")$
+    - $#a("accesa_l2") arrow.l #a("luce_l2") and #a("alimentata_l2") and #a("ok_l2.")$
+  ]
+
+- a run-time, si forniranno al sistema delle _osservazioni_, ad es. fatti sullo stato dei deviatori, come:
+
+  #pad(left: 1.5em)[
+    #grid(
+      columns: (1fr, 1fr),
+      row-gutter: 0.8em,
+      [
+        - #a("giu_d1.")
+- #a("su_d2.")
+      ],
+      [
+        - #a("su_d3.")
+      ]
+    )
+  ]
+]
+
+=== Domande e Risposte
+Si deve determinare la verità di fatti riguardanti il mondo ossia il dominio rappresentato:
+- un utente può porre domande sulle conseguenze logiche della base di conoscenza fornita alla macchina;
+- il sistema è in grado di dare risposte decidendo se date proposizioni seguano logicamente dalla base di conoscenza o meno;
+- l'utente potrà comprendere il significato di tali risposte, se conosce la semantica degli atomi utilizzati.
+A tale scopo si definisce una *query*, ossia una domanda utile a sapere se una data proposizione segua logicamente da una base di conoscenza, denotata con:
+$
+"ask" b
+$
+dove $b$ è un atomo o una congiunzione di atomi il che corrisponde al corpo di una regola: $<- b_1 and dots.c and b_m$. \
+Le risposte possibili sono:
+- $"yes"$ se $b$ è conseguenza logica, $K B models b$;
+- $"no"$ altrimenti, $K B cancel(models) b$: ciò significa che $b$ sia falso in un modello della _KB_, non necessariamente nell'interpretazione intesa, ma non è possibile determinarlo con la conoscenza disponibile.
+=== Dimostrazioni
+La relazione $models$ definisce le risposte corrette secondo la _teoria dei modelli_. La *teoria ella dimostrazione*, _proof theory_, si occupa invece di come calcolare tqali risposte, ossia della dimostrazione delle conseguenza logiche. Si tratta di un problema di _deduzione_, una forma di _inferenza_. \
+Una *prova*, (_proof_), è una dimostrazione, derivabile anche _automaticamente_, del fatto che una proposizione seuga logicamente da un insieme di assiomi. Una proposizione dimostrabile si dice anche *teorema*. \
+Una *procedura di dimostrazione*, _proof procedure_, è un algoritmo, eventualmente non deterministico, utile a costruire prove. Data una procedura di dimostrazione, si denota con
+$
+K B tack g
+$
+la possibilità di produrre attraverso al procedura una prova del fatto che $g$ sia conseguenza di $K B$. \
+Le proprietà più importanti delle procedure riguardano le relazioni tra prove e modelli:
+- una procedura è *corretta* (_sound_) se e solo se ogni proposizione dimostrata dalla procedura è conseguenza logica di _KB_:
+$
+"se" K B  tack g "allora" K B models g
+$
+- una procedura è *completa* se e solo se ogni conseguenza logica di _KB_ può essere dimostrata dalla procedura:
+$
+"se" K B models g "allora" K B tack g
+$
+Esistono due tipi principali di procedure: le _bottom-up (BU)_ e le _top-down (TD)_.
+=== Procedura Bottom-Up
+L'obiettivo di una procedura _bottom-up_ è quello di derivare tutte le conseguenze logiche di una base di conoscenza. A tal fine si costruisce la prova gradualmente, basandosi su quanto è stato già dimostrato. Si procede per *concatenazione in avanti* (_forward chaining_) su clausole definite, derivando fati nuovi a partire da quanto è già stato dimostrato. \
+A tal fine si impiega una sola _regola di derivazione_ che costituisce una generalizzazione della *regola d'inferenza* detta *modus ponens*
+$
+(p -> q quad p)/(q)
+$
+Se $h <- a_1 and dots.c and a_m$ è in _KB_ e ogni $a_i$ è già stato provato, allora si potrà derivare $h$. \
+Ogni fatto ($m=0$) in _KB_ è un assioma quindi viene considerato immediatamente provato. \
+La seguente procedura trova $C$, l'_insieme delle conseguenze_ di _KB_:
+#algoritmo(title: [Procedura bottom-up])[
+  #pseudocode-list[
+    + *procedure* $"Prove_DC_BU"(K B)$
+    + *Input*
+      + $K B$: insieme di clausole definite
+    + *Output*
+      + insieme di tutte le conseguenze logiche di $K B$
+    + *Local*
+      + $C$ insieme di atomi
+      + $C <- emptyset$
+    + *repeat*
+      + selezionare $h <- a_1 and dots and a_m$ da $K B$
+      + #h(3em) tale che $forall i: a_i in C$ e $h in.not C$
+      + $C <- C union {h}$
+      + *until* nessuna clausola selezionabile
+    + *return* $C$
+  ]
+] <alg:procedura-bottom-up>
+La risposta restituita è `yes` ossia $K B tack g$ quando $g in C$, se $g$ atomica, ovvero quando $brace.l g_1, dots, g_k brace.r subset.eq C$ se $g$ è una congiunzione di atomi $g_1 and dots.c and g_k$.
+#esempio[
+_KB_ con gli assiomi:
+#grid(
+    columns: (1fr, 1fr),
+    [
+      - $a <- b and c$.
+      - $b <- d and e$.
+      - $b <- g and e$.
+      - $c <- e$.
+    ],
+    [
+      - $d$.
+      - $e$.
+      - $f <- a and g$.
+    ]
+  )
+
+  La traccia dei valori (insiemi) assegnati via via a $C$ è la seguente:
+
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      - ${}$
+      - ${d}$
+      - ${e, d}$
+    ],
+    [
+      - ${c, e, d}$
+      - ${b, c, e, d}$
+      - ${a, b, c, e, d}$
+    ]
+  )
+
+Da $C = {a, b, c, e, d}$ si può concludere che $K B tack a$, $K B tack b$, ecc. \
+Si noti che:
+  - non viene mai usata l'ultima regola di $K B$;
+  - non si riesce a provare né $f$ né $g$, difatti c'è un modello della $K B$ in cui $f$ e $g$ sono entrambe false.
+]
+La procedura bottom-up gode delle seguenti proprietà:
+- _Punti Fissi_: $C$ restituito è un *minimo punto fisso*:
+	- ogni ulteriore applicazione della regola di derivazione non lo cambia;
+	- detta $I$ l'interpretazione in cui ogni atomo in $C$ è vero e tutti gli altri sono falsi, $I$ dev'essere un modello di _KB_;
+	- $I$ è un modello minimale di _KB_: ha il minor numero di proposizioni vere tra tutti i suoi modelli.
+- _Correttezza_: ogni atomo in _C_ è la conseguenza logica di _KB_
+	- se $K B tack g$ allora $K B models g$
+- _Completezza_: tutte le conseguenze logiche sono derivabili
+	- se $K B models g$ allora $g$ è vera in ogni modello di _KB_ quindi anche in quello minimo, ovvero in $C$, per cui $K B tack g$.
