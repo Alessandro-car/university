@@ -513,4 +513,93 @@ Per una coppia documento query il punteggio complessivo si ottiene sommando i pe
 $
 s c o r e(d, q) = sum_(t in q inter d)(1 + log(t f_(t, d)))
 $
-La *condizione di annullamento*, ovvero se il punteggio è pari 0, si avvera se nessuno dei termini della query è presente all'interno del documento.
+La *condizione di annullamento*, ovvero se il punteggio è pari 0, si avvera se nessuno dei termini della query è presente all'interno del documento. \
+La formula precedentemente introdotta definisce il cosidetto *_sublinear tf-scaling_*, in cui il peso è calcolato come
+$
+w_(t, d) = cases(
+1 + log_10(t f_(t, d)) & "se" t f_(t, d) > 0,
+0 & "altrimenti"
+)
+$
+L'approccio normale, *normal* è il metodo più semplice e diretto e consiste nell'utilizzare il numero puro di occorrenze del termine all'interno del documento. Ma, come discusso in precedenza, l'utilizzo di una scala sublineare per la frequenza dei termini risulta complessivamente migliore e più efficace.
+=== Document frequency
+I termini rari, nell'intera collezione dei documenti, sono più informativi dei termini frequenti, ad esempio delle stop word. \
+Consideriamo un termine in una query che è raro nella collezione, ad esempio _aracnocentrico_. Un documento che contiene tale termine sarà, molto probabilmente, rilevante alla query "aracnocentrico". Quindi, dobbiamo assegnare un peso alto per termini considerati rari. \
+Generalmente i termini frequenti sono *meno informativi* dei termini rari. \
+*VEDERE ESEMPI SLIDE* \
+==== idf weight
+$d f_t$ è la _frequenza del documento_ del termine $t$: il numero di documenti che contiene tale termine $t$
+- $d f_t$ è una misura inversa dell'informatività di $t$, più piccola è meglio è.
+- $d f_t <=N$
+Definiamo con _idf_, *inverse document frequency*, di $t$ come
+$
+i d f_t = log(N / (d f_t))
+$
+è una funzione che dipende solo da $t$, non dal documento. Utilizziamo $log(N / (d f_t))$ e non $N / (d f_t)$ per attenuare l'effetto di _idf_. \
+Per ogni termine $t$ nella collezione di documenti esiste il corrispettivo valore di _idf_. \
+L'idf non ha effetto su query che presentano un'unico termine in quanto esiste un valore di idf per ogni termine nella collezione. Il valore di idf influisce sulla classificazione dei documenti per query che hanno almeno 2 termini. \
+==== Differenza fra collection e document frequency
+La collection frequency di un termine $t$ conta il numero di occorrenze di $t$ nella collezione, contando occorrenze multiple. La document frequency, conta in quanti documenti è presente il termine $t$. \
+Per avere una ricerca migliore uniamo questi due concetti nel *tf-idf weighting*.
+==== tf-idf weighting
+Il *tf-idf weight* di un termine è il prodotto del suo _tf weight_ e del suo _idf weight_:
+$
+w_(t, d) = (1 + log(t f_(t, d))) times log(N / (d f_t))
+$
+Questo è il migliore schema di pesatura nell'ambito dell'information retrieval. È bene notare che il segno "-" non indica sottrazione, ma un trattino. Ci sono altre nomenclature per questo schema, come *tf.idf* oppure *tf* $times$ *idf*.
+Il tf-idf ha 2 proprietà:
++ Aumenta con il numero di occorrenze in un documento;
++ Aumenta con la rarità del termine nella collezione.
+Con questo possiamo definire la classificazione finale dei documenti data una query con la seguente formula:
+$
+S c o r e(d, q) = sum_(t in q inter d)t f_(t, d) times i d f_t
+$
+=== Documenti come vettori
+Supponiamo di avere uno spazio vettoriale con $V$ dimensioni, ove:
+- i termini sono gli assi dello spazio;
+- i documenti sono i punti o i vettori nello spazio.
+In un web search engine questo spazio vettoriale può arrivare anche ad avere una dimensione di decine di millioni. \
+Questi sono vettori molto scarsi in quanto la maggior parte delle voci è pari a 0.
+=== Query come vettori
+Vogliamo fare la stessa cosa fatta per i documenti, rappresentare le query come uno spazio vettoriale e vogliamo classificare i documenti secondo la loro vicinanza alla query nello spazio vettoriale. La vicinanza rappresenta la similarità dei vettori e l'inverso della distanza. \
+Stiamo volgendo la nostra attenzione per non far ricorso al modello di ritrovamento booleano e per classificare con un punteggio più alto i documenti più rilevanti rispetto ai documenti meno rilevanti.
+==== Formalizzazione della prossimità nello spazio vettoriale
+Un primo approccio è quello di considerare la distanza tra due punti, intesa come la distanza tra gli estremi dei due vettori. \
+Ci si interroga sulla possibilità di utilizzare la distanza euclidea ma è una cattiva idea perchè restituisce valori elevanti quando viene applicata a vettori con lunghezze differenti. Consideriamo il seguente esempio:
+#figure(
+image("images/distanza_euclidea.png", width: 70%),
+)
+La distanza euclidea tra $q$ e $d_2$ è grande anceh quando la distribuzione dei termini nella query $q$ e la distribuzione dei termini nel documento $d_2$ sono molto simili.\
+La soluzione è quella di utilizzare l'angolo anzichè la distanza. Consideriamo il seguente esperimento: si prenda un documento $d$ e lo si concaten a se stesso. Questo documento viene chiamato $d'$. Semanticamente $d$ e $d'$ possiedono esattamente lo stesso contenuto. La distanza euclidea tra i due documenti può risultare piuttosto grande. Se si utilizza la rappresentazione $t f_(t, d)$ l'angolo tra i due documenti è pari a 0, il che corrisponde alla massima somiglianza. \
+Quindi l'idea è quella di ordinare i documenti in base all'angolo che formano con la query.
+==== Dagli angoli ai coseni
+Le due seguenti modalità di ordinamento risultano equivalenti:
+- ordinare i documenti in ordine _decrescente_ rispetto all'angolo compreso tra la query e il documento;
+- ordinare i documenti in ordine crescente rispetto al coseno tra query e documento ($cos("query", "documenti")$)
+La funzione coseno è monoticamente decrescente nell'intervallo $[0^degree, 180^degree]$. \
+Analizziamo come e perchè dovremmo calcolare i coseni. \
+Un vettore può essere normalizzato dividendo ciascun componente per la sua lunghezza, per questo utilizziamo la norma 2, $L_2$:
+$
+lr(||arrow(x)||)_2 = sqrt(sum_i x_i^2)
+$
+Dividendo un vettore per la sua norma 2 lo rende un vettore di lunghezza pari ad 1, quindi un *versore*. I due documenti $d$ e $d'$ dell'esperimento precedente avranno vettori identici dopo averli normalizzati. Quindi documenti lunghi e corti avranno un peso comparabile. \
+Consideriamo ora la formula $cos("query", "document")$.
+$
+cos(arrow(q), arrow(d)) = (arrow(q) dot.c arrow(d))/(|arrow(q)| |arrow(d)|) = (arrow(q))/(|arrow(q)|) dot.c (arrow(d))/(|arrow(d)|) = (sum_(i=1)^(|V|)q_i d_i)/(sqrt(sum_(i=1)^(|V|)q_i^2) sqrt(sum_(i=1)^(|V|)d_i^2))
+$
+Per vettori normalizzati, la similarità del coseno è semplicemente il prodotto scalare:
+$
+cos(arrow(q), arrow(d)) = arrow(q) dot.c arrow(d) = sum_(i=1)^(|V|)q_i d_i
+$
+#esempio(title: "Similarità del coseno tra 3 documenti")[
+Consideriamo i tre documenti:
+- _Sas: Sense and Sensibility_
+- _Pap: Pride, and Prejudice_
+- _WH: Wuthering Heights?_
+e consideriamo la frequenza dei termini:
+#figure(
+image("images/cos_tf_ex.png", width: 70%),
+caption: [Term frequency]
+)
+*CONTINUARE ESEMPIO SLIDE 82*
+]
