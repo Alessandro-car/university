@@ -1509,7 +1509,7 @@ caption: [Impianto elettrico]
       ]
     )
   ]
-]
+] <es:impianto_elettrico>
 
 === Domande e Risposte
 Si deve determinare la verità di fatti riguardanti il mondo ossia il dominio rappresentato:
@@ -1772,4 +1772,108 @@ I diversi tipi di errori possibili sono:
 + risposta _mancante_: dimostrazione fallita per qualche atomo vero nell'interpretazione intesa;
 + _loop infinito_: solo con procedure TD, in base alla strategia di selezione. Ma si può evitare con meccanismi di potatura dei cicli.
 === Risposte Errate
-
+Si tratta di risposte fornite dalla procedura di dimostrazione che sono _false_ nell'interpretazione intesa, cioè casi di *falsi positivi*. Se la procedura è corretta allora nella dimostrazione sarà stata impiegata una clausola errata. \
+Per il _debugging dei falsi positivi_, si considerano l'atomo $g$ dimostrato che, invece, dovrebbe essere falso nell'interpretazione intesa e la clausola usata per dimostrarlo $g <- a_1 and dots.c and a_k$. I casi possibili sono i seguenti:
+- tutti gli $a_i$ sono veri nell'interpretazione intesa, quindi la clausola $g <- a_1 and dots.c and a_k$ è errata;
+- uno o più $a_i$ dimostrati sono a loro volta falsi nell'interpretazione intesa, per cui si ha un analogo problema da risolvere.
+L'algoritmo da usare può essere schematizzato come segue:
+#algoritmo(title: [Debug dei falsi positivi])[
+  #pseudocode-list[
+    + *procedure* $"Debug_false"(g, K B)$
+    + *Input*
+      + $K B$ base di conoscenza
+      + $g$ atomo: $K B tack g$ ma falso nell'interpretazione intesa
+    + *Output*
+      + clausola in $K B$ che risulta falsa
+    + Trovare $g <- a_1 and dots.c and a_k in K B$ usata per dimostrare $g$
+    + Chiedere all'utente se ogni $a_i$ sia vero o meno
+    + *if* l'utente indica un $a_i$ falso *then*
+      + *return* $"Debug_false"(a_i, K B)$
+    + *else if* l'utente risponde che tutti gli $a_i$ sono veri *then*
+      + *return* $g <- a_1 and dots.c and a_k$
+  ]
+] <alg:debug-falsi-positivi>
+=== Risposte mancanti
+In tal caso una risposta positiva attesa (ossia un goal vero nell'interpretazione intesa) non viene derivata dal sistema. Il _fallimento_ dipende da un atomo $g$ vero nell'interpretazione intesa ma tale che $K B cancel(tack) g$, si tratta, cioè, di un caso di *falso negativo*. \
+Tale atomo segnala il caso di una o più _clausole mancanti_ tra gli assiomi della base di conoscenza e si può individuare con una procedura, come quella riportata, per trovare atomi cui manchino clausole utili alla loro dimostrazione:
+#algoritmo(title: [Debug dei falsi negativi])[
+  #pseudocode-list[
+    + *procedure* $"Debug_missing"(g, K B)$
+    + *Input*
+      + $K B$ base di conoscenza
+      + $g$ atomo: $K B cancel(tack) g$ ma $g$ vero nell'interpretazione intesa
+    + *Output*
+      + atomo per il quale manchi una clausola utile
+    + *if* $exists g <- a_1 and dots.c and a_k in K B$ con tutti gli $a_i$ veri nell'interpretazione intesa \
+      #h(1.5em) *then*
+      + Selezionare $a_i$ che non può essere dimostrato
+      + *return* $"Debug_missing"(a_i, K B)$
+    + *else*
+      + *return* $g$
+  ]
+] <alg:debug-falsi-negativi>
+== Dimostrazione per Contraddizione
+=== Clausole di Horn
+Si intende estendere il ragionamento ammettendo regole che producano _contraddizioni_, ossia utili a specificare casi _impossibili_. Ciò ha anche lo scopo di implementare successvimente forme di _diagnostica_. A tale scopo il linguaggio delle clausole definite può essere esteso per esplicitare le contraddizioni. Definiti un atomo speciale, detto _false_, che codifica la contraddizione, ossia che è falso in tutte le interpretazioni, saranno amesse regole, dette *vincoli d'integrità*, rappresentate da clausole con l'atomo _false_ come testa:
+$
+"false" <- a_1 and dots.c and a_k
+$
+Una *clausola di Horn* è una clausola definita o un vincolo d'integrità, ossia la sua testa è un atomo normale oppure l'atomo speciale _false_. \
+Da una base di conoscenza di clausole di Horn si possono derivare *negazioni* di atomi tramite la regola di ragionamento detta _modus tollens_:
+$
+(p -> q quad not q)/(not p)
+$
+#esempio[
+Data la base di conoscenza $K B_1$:
++ $"false" <- a and b$;
++ $a <- c$.
++ $b <- c$.
+$c$ è falso in tutti i modelli di $K B_1$. Pertanto si può scrivere $K B_1 models not c$
+]
+Inoltre, valendo le seguenti equivalenze:
+$
+("false" <- a_1 and dots.c and a_k) equiv not(a_1 and dots.c and a_l) equiv not a_1 or dots.c or not a_k
+$
+dimostrare che una _congiunzione di atomi_ sia falsa in tutti i modelli di $K B$ equivale a provare una *disgiunzione* di _negazione di atomi_. \
+Un insieme di clausole $K B$ è *insoddisfacibile* se non ha modelli:
+$
+K B models "false"
+$
+Un insieme di clausole $K B$ è *inconsistente* rispetto a una procedura di dimostrazione $tack$ se consente di derivare $"false"$:
+$
+K B tack "false"
+$
+Se la procedura $tack$ è corretta e completa allora $K B$ è inconsistente se e solo se è insoddisfacibile. \
+Una base di conoscenza di clausole definite è sempre soddisfacibile, per esempio basta considerare l'interpretazione che assegna il valore _true_ a tutti gli atomi. Ciò non vale per le basi di clausole di Horn.
+=== Assumibili e Conflitti
+Le _contraddizioni_ sono utili a individuare combinazioni di assunzioni incompatibili, ossia ipotesi fatte (per mancata conoscenza) che possono dimostrarsi false. \
+Si definisce *assumibile* un atomo che può essere assunto in una _dimostrazione per contraddizione_. In diagnostica, sarà utile a determinare una _disgiunzione di negazioni_ di assumibili, provando la contraddizione a partire da una base di conoscenza e una combinazione di assumibili. \
+Si dice *conflitto* di $K B$ l'insieme di assumibili $C = brace.l c_1, dots, c_r brace.r$ tale che $K B union C models "false"$. Si tratta di una *risposta* per una dimostrazione per contraddizione del tipo: $K B models not c_1 or dots.c or not c_r$. Un conflitto è *minimale* se nessun suo sottoinsieme costituisce, a sua volta, un conflitto.
+#esempio[
+Data $K B_2$ e l'insieme di atomi assumibili $brace.l c, d, e, f, g, h brace.r$:
+$
+K B_2 = cases(
+"false" <- a and b.,
+a <- c.,
+b <- d.,
+b <- e.
+)
+$
+- $brace.l c, d brace.r$ e $brace.l c, e brace.r$ sono conflitti minimali;
+- $brace.l c, d, e, h brace.r$ è un conflitto non minimale.
+]
+=== Diagnosi basata sulla consistenza
+Lo scopo della diagnosi è quello di determinare possibili guasti in base a un modello del sistema, una base di conoscenza, e a osservazioni aggiuntive sul sistema stesso. \
+In sostanza si fanno assunzioni sul funzionamento normale, considerando quindi assumibili in assenza di guasti. Si derivano i componenti _anormali_, ossia i conflitti, le anomalie nel sistema.
+#esempio(title: "Impianto elettrico, continuo.")[
+Si consideri la base di conoscenza dell'@es:impianto_elettrico. Si aggiungono:
+- assunzioni di normalità tramite _assumibili_: atomi _ok\*_ per ogni componente;
+- osservazioni fornite dall'utente che specificano le posizioni effettive (_su / giu_) dei deviatori, lo stato delle luci (_lit / spenta_), $dots$;
+- vincoli d'integrità utili a definire stati reciprocamente incompatibili come, ad esempio, che sia possibile un solo stato per i punti-luce:
+$
+"false" <- s p e n t a_(l_1) and a c c e s a_(l_1)
+$
+*CONTINUARE ESEMPIO*
+]
+Dato l'insieme dei conflitti, l'utente può diagnosticare il problema: ciò è anche utile a farsi un'idea della numerosità dei possibili guasti. \
+Nella *diagnosi basata su consistenza* (CBD) dato un insieme di conflitti, cioè un insieme di assumbili con almeno un elemento in ogni conflitti, si costruisce una diagnosi che sarà *minimale* se nessun suo sotto-insieme è una diagnosi. Intuitivamente, una sola delle diagnosi minimali è quella giusta: qualla contenente solo conflitti falsi nell'interpretazione intesa.
