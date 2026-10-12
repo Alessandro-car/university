@@ -1617,3 +1617,159 @@ La procedura bottom-up gode delle seguenti proprietà:
 	- se $K B tack g$ allora $K B models g$
 - _Completezza_: tutte le conseguenze logiche sono derivabili
 	- se $K B models g$ allora $g$ è vera in ogni modello di _KB_ quindi anche in quello minimo, ovvero in $C$, per cui $K B tack g$.
+=== Procedura Top-Down
+Tale procedura effettua una ricerca _retrogada top-down_ a partire da una query per determinare se questa segua logicamente dalle clausole di _KB_. Essa si basa su una diversa regola di ragionamento detta *risoluzione*:
+$
+(l_1 or dots.c or a or dots.c or l_r quad l'_1 or dots.c or not a or dots.c or l'_m)/(l_1 or dots.c or l_r or l'_1 or dots.c or l'_m)
+$
+si noti che si applica alla forma generale delle clausole: basta individuare un atomo che compare positivamente in una delle due premesse e negativamente nell'altra.\
+In particolare, si usa la *risoluzione SLD* (Selezione di un atomo usando una strategia Lineare su clausole Definite):
+$
+(a <- a_1 and dots.c and underline(a_i) and dots.c and a_r quad a_i <- b_1 and dots.c and b_m)/(a <- a_1 and dots.c and underline(b_1 and dots.c and b_m) and dots.c and a_r)
+$
+versione _proposizionale_ di una forma più generale presentata in seguito.
+==== Procedura Top-Down con Clausole di Risposta
+Una *clausola di risposta* ha la forma
+$
+"yes" <- a_1 and a_2 and dots.c and a_m
+$
+dove _yes_ è un atomo _speciale_, vero se la risposta alla query è _yes_. \
+Data la query $"ask" q_1 and dots.c and q_m$, si parte dalla clausola di risposta iniziale
+$
+"yes" <- q_1 and dots.c and q_m
+$
+successivamente si ripete:
+- la _selezione_ di un atomo del corpo da dimostrare;
+- la _scelta_ di una clausola definita in _KB_ avente come testa l'atomo selezionato per effettuare un passo di *risoluzione*; qualora non vi fossero altre clausole per dimostrare l'atomo selezionato, la dimostrazione _fallisce_.
+Il *risolvente* della clausola di risposta e della clausola scelta sarà una nuova clausola di risposta:
+$
+("yes" <- underline(a_1) and a_2 and dots.c and a_m quad a_1 <- b_1 and dots.c and b_p)/("yes" <- b_1 and dots.c and b_p and a_2 and dots.c and a_m)
+$
+In sostanza l'atomo _goal_ selezionato ($a_1$) viene sostituito dal corpo della clausola scelta. \
+In una dimostrazione di successo si raggiunge la *risposta*, ossia una clausola di risposta con corpo vuoto (tutti i goal sono stati dimostrati):
+$
+"yes" <-
+$
+Nella *derivazione SLD* per una query $"ask" q_1 and dots.c and q_k$ da _KB_ si avrà una sequenza di clausole di risposta $gamma_0, gamma_1, dots, gamma_n$ tali che:
+- $gamma_0$ è la clausola di risposta che ingloba la _query originaria_ $"yes" <- q_1 and dots.c and q_k$;
+- $gamma_i$ è il _risolvente_ di $gamma_(i-1)$ con una clausola definita in _KB_;
+- $gamma_n$ è la _risposta_.
+==== Procedura Top-Down Alternativa
+Si parte da un insieme $G$ (_goal_) di _atomi da dimostrare_, quindi:
+- si inizializza $G$ con tutti gli atomi della query (_sotto-goal_) quindi $G$ corrisponde a $"yes" <- and.big_(g_i in G)g_i$;
+- selezionato $a$, la clausola scelta $a <- b_1 and dots.c and b_p$ indica che $a$ può essere sostituito in $G$ dai sotto-goal $b_1, dots, b_p$;
+- si ha una terminazione con successo se $G = emptyset$
+#algoritmo(title: [Algoritmo Top-Down])[
+  #pseudocode-list[
+    + *non-deterministic procedure* $"Prove_DC_TD"(K B, Q u e r y)$
+    + *Input*
+      + $K B$: insieme di clausole definite
+      + $Q u e r y$ insieme di atomi da dimostrare
+    + *Output*
+      + *yes* se $K B models Q u e r y$, altrimenti fallisce (no)
+    + *Local*
+      + $G$ insieme di atomi
+    + $G <- Q u e r y$
+    + *repeat*
+      + selezionare un atomo $a in G$
+      + scegliere da $K B$ una clausola definita $a <- B$ con $a$ come testa
+      + #text(fill: rgb("558B2F"), style: "italic")[{se possibile, altrimenti il tentativo fallisce}]
+      + $G <- (G backslash {a}) union B$
+    + *until* $G = emptyset$
+    + *return yes*
+  ]
+] <alg:algoritmo-top-down>
+Qualsiasi atomo di $G$ può essere selzionato (tutti lo saranno). Se una seleziona non porta a terminare la prova, non serve tentarne selezionarne un altro, l'intera dimostrazione fallisce. \
+La procedura di _scelta_ della clausola per la risoluzione è non deterministica. Se ci sono scelte che portano a $G$ vuoto, l'algoritmo ha successo, altrimenti il tentativo fallisce. \
+Il corpo della clausola $B$ e $G$ sono considerati come insiemi di atomi. In alternativa $G$ può essere costituito da una lista ordinata di atomi che possono occorrere più volte.
+#esempio[
+  Data la base di conoscenza con le seguenti clausole:
+
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      - $a arrow.l b and c.$
+      - $b arrow.l d and e.$
+      - $b arrow.l g and e.$
+      - $c arrow.l e.$
+    ],
+    [
+      - $d.$
+      - $e.$
+      - $f arrow.l a and g.$
+    ]
+  )
+
+  e la query: _ask a._\
+  Si userà un insieme di goal $G$ in luogo del corpo della clausola di risposta $y e s arrow.l G$, inizialmente gli atomi (della query) da dimostrare: $G = {a}$; si seleziona sempre l'atomo _più a sinistra_ del corpo. I passi sono i seguenti:
+
+  #align(center)[
+    #table(
+      columns: 2,
+      align: left,
+      stroke: (x, y) => if y == 0 { (bottom: 0.5pt + rgb("#990000")) } else { none },
+      [risolventi $gamma_i$], [clausole da $K B$],
+      [$y e s arrow.l underline(a)$], [$a arrow.l b and c$],
+      [$y e s arrow.l underline(b) and c$], [$b arrow.l d and e$],
+      [$y e s arrow.l underline(d) and e and c$], [$d$],
+      [$y e s arrow.l underline(e) and c$], [$e$],
+      [$y e s arrow.l underline(c)$], [$c arrow.l e$],
+      [$y e s arrow.l underline(e)$], [$e$],
+      [$y e s arrow.l$], []
+    )
+  ]
+
+  Una sequenza _alternativa_ di scelte in cui si sceglie la seconda clausola per $b$ è la seguente:
+
+  - $y e s arrow.l a$
+  - $y e s arrow.l b and c$
+  - $y e s arrow.l g and e and c$
+
+  ma selezionando $g$ non ci sono regole da scegliere, per cui _questo tentativo fallisce_: occorre scegliere altre alternative, se ve ne sono.
+]
+==== Algoritmo TD su Grafo di Ricerca
+Si può anche pensare a un algoritmo alternativo indotto dalla strategia di selezione basato su _grafo di ricerca_ in cui:
+- i _nodi_ contengono clausole di risposta (bastano gli atomi nei loro corpi);
+- i _vicini_ di $"yes" <- underline(a_1) and dots.c and a_m$ rappresentano tutte le possibili clausole di risposta ottenute risolvendo su $a_1$ e possono essere generati dinamicamente, uno per ogni clausola definita con testa $a_1$;
+- i _nodi obiettivo_ sono del tipo $"yes" <- $
+- si può usare qualsiasi metodo di ricerca su grafo: basta trovare un percorso di successo perchè la query sia conseguenza logica della base di conoscenza; per ogni nodo, lo spazio viene determinato dalla query e dall'atomo selezionato.
+#figure(
+image("images/albero_ricerca.png", width: 70%),
+caption: [Albero di ricerca generato dall'algoritmo alternativo]
+)
+==== Confronto fra procedure
+Le dimostrazioni TD e BU sono interscambiabili: ciò può essere utile a provare la correttezza e la completezza della TD. La BU prova ogni atomo una sola volta mentre TD potrebbe provare lo stesso atomo più volte, ma si concentra su quelli rilevanti per la query. Con TD sono possibili cicli infiniti.
+#esempio[
+Data la base di conoscenza
+$
+K B = brace.l g <- a. quad a <- b. quad b <- a. quad g <- c. quad c.
+$
+e la query $"ask" g.$, si ha che:
+- le uniche conseguenze logiche sono $g$ e $c$;
+- la procedura BU termina con il punto fisso $brace.l c, g brace.r$
+- la procedura TD con DFS semplice potrebbe continuare indefinitamente a meno che non sia prevista la potatura dei cicli
+]
+La _strategia di selezione_ dell'atomo per la risoluzione condiziona _efficienza_ e _terminazione_:
+- negli esempi precedenti: atomo più a sinistra, il che risulta problematico senza controllo sui cicli;
+- una strategia migliore seleziona l'atomo che porti al fallimento più rapidamente;
+- una strategia comune prevede l'ordinamento degli atomi per la selezione; ciò consente l'uso di un'euristica.
+== Interrogare l'utente
+A run-time il sistema riceve *osservazioni* dagli utenti, da sensori o altre sorgenti. \
+Esse sono rappresentate come _insiemi di atomi_. Le osservazioni interagiscono con la *conoscenza di fondo* (_background knowledge, BK_): possono esservi aggiunte o essere tenute separate dalla BK (base knowledge). \
+Le informazioni fornite dall'utente sono incomplete: è possibile che non sappia usare il vocabolario o non sappia giudicarne la rilevanza. Per questo servirebbero:
++ un'_ontologia_ che specifichi il significato dei simboli
++ un'_interfaccia_ che possa aiutare a fornire informazioni rilevanti.
+Analogamente, i _sensori_ possono essere _passivi_, quando raccolgono osservazioni dirette oppure _attivi_, se atti a raccogliere risposte a esplicite richieste di informazioni necessarie. \
+Per l'_acquisizione_ si può pensare a un meccanismo *ask-the-user* integrato nella procedura di ragionamento: si considerano atomi dichiarati come *askable* per rappresentare fatti veri acquisibili a run-time dall'utente. Nella procedura TD, selezionato un atomo da dimostrare, si usa una clausola della base di conoscenza oppure, se è askable si chiede all'utente se sia vero o falso. Si noti che ciò vale solo per atomi rilevanti per la risposta, quindi si considerano tre diverse classi di atomi:
++ non askable;
++ askable senza risposta-utente: si può chiedere e memorizzare;
++ askable con risposta-utente memorizzata: usati senza chiedere di nuovo.
+Si può adottare un meccanismo simile anche con procedure bottom-up, ma vanno evitate troppe richieste all'utente.
+== Debugging a Livello di Conoscenza
+Data una semantica esplicita si possono realizare spiegazione e debugging a livello di conoscenza. Il *knowledge-level-debugging* consiste nel trovare errori nelle basi di conoscenza facendo riferimento solo al significato dei simboli e a quanto risulta vero nel mondo codificato e non ai passi di ragionamento. \
+I diversi tipi di errori possibili sono:
++ risposta _errata_: derivazione di atomo falso nell'interpretazione intesa;
++ risposta _mancante_: dimostrazione fallita per qualche atomo vero nell'interpretazione intesa;
++ _loop infinito_: solo con procedure TD, in base alla strategia di selezione. Ma si può evitare con meccanismi di potatura dei cicli.
+=== Risposte Errate
+
