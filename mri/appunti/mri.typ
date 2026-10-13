@@ -601,5 +601,44 @@ e consideriamo la frequenza dei termini:
 image("images/cos_tf_ex.png", width: 70%),
 caption: [Term frequency]
 )
-*CONTINUARE ESEMPIO SLIDE 82*
+Il peso calcolato tramite log frequency è il seguente:
+#figure(
+image("images/log_ex.png", width: 70%),
+caption: [Log frequency]
+)
+Normalizzando tali pesi otteniamo:
+#figure(
+image("images/norm_ex.png", width: 70%),
+caption: [Normalizzazione della lunghezza]
+)
+Analizziamo i calcoli del coseno:
+$
+cos("Sas, PaP") approx 0.789 times 0.832 + 0.515 times 0.555 + 0.335 times 0.0 + 0.0 times 0.0 approx 0.94
+$
+$
+cos("Sas, WH") approx 0.79
+$
+$
+cos("Pap, WH") approx 0.69
+$
 ]
+Per calcolare il punteggio tramite coseno si utilizza il seguente algoritmo:
+#algoritmo(title: [CosineScore($q$)])[
+  #pseudocode-list[
+    + _float_ $S c o r e s[N] = 0$
+    + _float_ $L e n g t h[N]$
+    + *for each* query term $t$
+      + *do* calculate $w_{t,q}$ and fetch postings list for $t$
+        + *for each* pair$(d, "tf"_{t,d})$ in postings list
+          + *do* $S c o r e s[d] "+=" w_{t,d} times w_{t,q}$
+    + Read the array $L e n g t h$
+    + *for each* $d$
+      + *do* $S c o r e s[d] = (S c o r e s[d]) / (L e n g t h[d])$
+    + *return* Top $K$ components of $S c o r e s[]$
+  ]
+] <alg:cosine-score>
+Il tf-idf weighting ha diverse varianti:
+#figure(
+image("images/tf-idf-varianti.png", width: 70%),
+caption: [Varianti del tf-idf weighting]
+)
