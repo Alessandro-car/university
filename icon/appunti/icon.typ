@@ -1967,4 +1967,89 @@ con completamento:
 - $a <=> not a$
 che risulta _inconsistente_ dal punto di vista logico. Il completamento di una base aciclica è sempre consistente e prevede un solo valore di verità per ogni atomo.
 === Ragionamento Non Monotono
-
+In una logica *monotona* ogni proposizione derivabile da una base di conoscenza rimane derivabile dopo l'aggiunta di altre proposizioni: aggiungendo assioni non si riduce l'insieme delle proposizioni derivabili. In una _Logica non monotona_ alcune conclusioni possono essere invalidate con l'aggiunta di altri assiomi.
+==== Default ed Eccezioni
+Una logica non monotona è utile a rappresentare casi predefiniti. Si dice *default* una regola che resta valida fintantochè non si verifichi un'eccezione. Ad esempio per asserire che normalmente $b$ è vera se $c$ è vera si può definire la regola:
+$
+b <- c and tilde a b\_a
+$
+con $a b\_a$ che indica l'anormalità rispetto a qualche aspetto di $a$. Dato $c$ si può derivare $b$, a meno che non venga asserito $a b\_a$, in quanto l'aggiunta di $a b\_a$ inibisce la possibilità di concludere $b$. Le regole che implicano $a b\_a$ possono inibire il default, sotto le condizoni del corpo della regola. Ad esempio, nella maggior parte dei casi gli uccelli ($c$) sono volatili $(b)$, ma i pinguini fanno eccezione $(a b\_a)$.
+=== Procedure di Dimostrazione per la NAF
+==== Procedura Bottom-Up + NAF
+La procedura BU per clausole definite va modificata: quando $p$ fallisce va aggiunto il letterale $tilde p$ all'insieme $C$ delle conseguenze derivate. \
+Si ha una definzione ricorsiva del *fallimento*: $p$ fallisce se fallisce il corpo di ogni clausola che abbia $p$ coem testa; un corpo fallisce se almeno uno dei suoi letterali fallisce; un atomo $b_i$ fallisce se si può derivare $tilde b_i$ e la negazione $tilde b_i$ fallisce se si può derivare $b_i$.
+#algoritmo(title: [Algoritmo bottom-up di dimostrazione con NAF])[
+  #pseudocode-list[
+    + *procedure* $"Prove_NAF_BU"(K B)$
+    + *Input*
+      + $K B$: insieme di clausole che possono includere NAF
+    + *Output*
+      + insieme di letterali che seguono dal completamento di $K B$
+    + *Local*
+      + $C$ insieme di letterali
+      + $C <- \{ \}$
+    + *repeat*
+      + *either*
+        + selezionare $(h <- b_1 and dots.c and b_m) in K B$ tale che: $h in.not C$ e $forall i: b_i in C$
+        + $C <- C union \{h\}$
+      + *or*
+        + selezionare $h$ con $tilde h in.not C$ tale che:
+          + $forall(h <- b_1 and dots.c and b_m) in K B: exists i: tilde b_i in C$ oppure $b_i = tilde g$ e $g in C$
+        + $C <- C union \{tilde h\}$
+    + *until* non ci sono altre selezioni possibili
+  ]
+] <alg:naf-bottom-up>
+*INSERIRE ESEMPIO SLIDE*
+==== Procedura Top-Down + NAF
+La procedura TD è analoga a quella delle clausole definite, ma procede per NAF. È non-deterministca e, come tale, si può implementare come ricerca di scelte di successo: selezionato un atomo $tilde a$, parte una nuova dimostrazione per $a$; se questa fallisce allora $tilde a$ ha successo altrimenti l'algoritmo fallisce: deve tentare altre scelte se possibile.
+#algoritmo(title: [Algoritmo top-down di dimostrazione con NAF])[
+  #pseudocode-list[
+    + *non-deterministic procedure* $"Prove_NAF_TD"(K B, Q u e r y)$
+    + *Input*
+      + $K B$: insieme di clausole che includono la NAF
+      + $Q u e r y$: insieme di letterali da dimostrare
+    + *Output*
+      + yes se $Q u e r y$ segue dal completamento di $K B$, 'fail' altrimenti
+    + *Local*
+      + $G$: insieme di letterali
+    + $G <- Q u e r y$
+    + *repeat*
+      + selezionare il letterale $l in G$
+      + *if* $l = tilde a$ *then*
+        + *if* $"Prove_NAF_TD"(K B, a) = " 'fail' "$ *then*
+          + $G <- G backslash {l}$
+        + *else*
+          + *return* 'fail'
+      + *else*
+        + scegliere una clausola $l <- B in K B$
+        + $G <- G backslash {l} union B$
+    + *until* $G = emptyset$
+    + *return yes*
+  ]
+] <alg:naf-top-down>
+*INSERIRE ESEMPIO SLIDE* \
+Quanto detto vale solo enl caso di fallimento finito: nessuna conclusione è possibile in caso di divergenza. Ad esempio, data una base di conoscenza con la sola regola $p <- p$ e la query $"ask" p$, l'algoritmo non converge: il completamento è $p <=> p$ ma, pur potendosi accertare l'indimostrabilità di $p$, una procedura corretta non può concludere $tilde p$ poichè non segue logicamente dal completamento.
+== Abduzione
+L'*abduzione* è una forma di ragionamento nella quale si fanno ipotesi, ossia assunzioni, al fine di spiegare osservazioni. Le ipotesi da farsi possono implicare le osservazioni fatte: se verificate, esse giustificano quanto osservato ma non si devono introdurre _contraddizioni_ poichè queste giustificherebbero qualsiasi conclusione. \
+L'abduzione si differenzia dalla deduzione la quale mira alle conseguenze logiche di un set di assiomi e dall'induzione che comporta l'inferenza di relazioni generali da casi particolari.
+==== Scenari e Spiegazioni
+Possiamo schematizzare questa forma di ragionamento come segue. I dati sono i seguenti:
+- una base $K B$ di Horn;
+- un insieme $A$ di atomi utili a costruire ipotesi, detti assumibili o anche abducibili,
+dobbiamo trovare delle spiegazioni per delle osservazioni. \
+Si dice *scenario* di $chevron.l K B, A chevron.r$ un insieme di abducibili $H subset.eq A$ tale che $K B union H$ sia soddisfacibile. In tal caso deve esistere un modello in cui tutti gli elementi di _KB_ e di _H_ sono veri, quindi nessun sottoinsieme di $H$ deve essere un conflitto per _KB_. \
+Una *spiegazione* della proposizione $g$ da $chevron.l K B, A chevron.r$ è uno scenario $H subset.eq A$ che, assieme a $K B$, abbia $g$ come conseguenza, quindi:
+- $K B union H models g$ e
+- $K B union H cancel(models) "false"$
+Essa è *minimale* se $H$ non contiene altre spiegazioni: per ogni altra $H'$ di $g$ da $chevron.l K B, A chevron.r$ deve risultare $H' subset.not H$.\
+*INSERIRE ESEMPIO SLIDE*
+==== Diagnosi Abduttiva
+La _diagnosi abduttiva (AbD)_ formula iptoesi su problemi riscontrati e funzionamento normale. \
+Confrontandola con quella basata su consistenza (CbD):
+- al livello di _rappresentazione_, la CbD mira solo al comportamento normale quindi le ipotesi saranno assunzioni sul comportamento normale, mentre con la AbD si modella anche il comportamento anomalo, si devono prevedere assumibili anche per ciascun guasto;
+- per quanto riguarda le osservazioni, la CbD le aggiunge alla base di conoscenza per poi dimostrare _false_ mentre la AbD le considera come goal da spiegare attraverso ipotesi;
+- in termini di qualità, la AbD risulta più dettagliata,le diagnosi sono migliori: si distinguono base di conoscenza e assunzioni consentono di dimostrare le osservazioni, anche per casi in cui non sia definibile la normalità.
+==== Ragionamento Abduttivo: Procedure
+Il ragionamento abduttivo è basato su assunzioni e si realizza mediante le procedure su clausole di Horn:
+- con la procedura BU si calcolano spiegazioni minimali per ogni atomo, essa è ulteriormente specialzizabile con il pruning delle spiegazioni dominate;
+- con la procedura TD si trovano spiegazioni di un $g$ generando i conflitti, ma mirando a dimostrare $g$ anzichè _false_: la spiegazione minimale di $g$ sarà un insieme minimale di assumibili raccolti nella prova.
