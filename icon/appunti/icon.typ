@@ -1877,3 +1877,94 @@ $
 ]
 Dato l'insieme dei conflitti, l'utente può diagnosticare il problema: ciò è anche utile a farsi un'idea della numerosità dei possibili guasti. \
 Nella *diagnosi basata su consistenza* (CBD) dato un insieme di conflitti, cioè un insieme di assumbili con almeno un elemento in ogni conflitti, si costruisce una diagnosi che sarà *minimale* se nessun suo sotto-insieme è una diagnosi. Intuitivamente, una sola delle diagnosi minimali è quella giusta: qualla contenente solo conflitti falsi nell'interpretazione intesa.
+=== Ragionamento con Assunzioni e Clausole di Horn
+L'_obiettivo_ è la ricerca dei _conflitti_ in basi di conoscenza di clausole di Horn attraverso dimostrazioni per contraddizione dei due tipi considerati in precedenza.
+==== Implementazione Bottom-Up
+Si estende l'algoritmo bottom-up per clausole definite:
+- le conclusioni sono _coppie_ $chevron.l a, A chevron.r$, con $A$ insiemi di assumibili che implicano l'atomo $a$ rispetto a $K B$;
+- nell'inizializzazione, l'insieme di conclusioni sarà $C <- brace.l chevron.l a, brace.r a brace.r chevron.r brace.r bar a "assumibile" brace.r$;
+- si usano poi le clausole in _KB_ per derivare nuove conclusioni:
+	se $exists h <- b_1 and dots.c and b_m in K B$ tale che ogni $chevron.l b_i, A_i chevron.r in C$, allora si può aggiungere $chevron.l h, A_1 union dots union A_m$ a $C$
+#algoritmo(title: [Algoritmo bottom-up per la dimostrazione di conflitti])[
+  #pseudocode-list[
+    + *procedure* $"Prove_conflict_BU"(K B, A s)$
+    + *Input*
+      + $K B$: insieme di clausole di Horn
+      + $A s$: insieme di atomi che si possono assumere veri
+    + *Output*
+      + insieme di conflitti
+    + *Local*
+      + $C$: insieme di coppie atomo/insieme di assumibili
+      + $C <- {chevron.l a, {a} chevron.r | a in A s}$
+    + *repeat*
+      + selezionare la clausola $h <- b_1 and dots and b_m in K B$ tale che:
+      + #h(3em) per ogni $i$ $chevron.l b_i, A_i chevron.r in C$ e $chevron.l h, A chevron.r in.not C$, dove $A = A_1 union dots union A_m$
+      + $C <- C union {chevron.l h, A chevron.r}$
+    + *until* nessun'altra selezione possibile
+    + *return* ${A | chevron.l f a l s e, A chevron.r in C}$
+  ]
+] <alg:bottom-up-conflitti>
+==== Implementazione Top-Down
+L'implementazione top-down deriva dall'omologa per clausole definite, con due _differenze_:
+- la query da provare è dall'atomo speciale _false_;
+- nella dimostrazione, gli atomi assumibili non vanno dimostrati ma semplicemente raccolti via via assunti come veri.
+#algoritmo(title: [Algoritmo top-down per la dimostrazione di conflitti])[
+  #pseudocode-list[
+    + *non-deterministic procedure* $"Prove_conflict_TD"(K B, A s)$
+    + *Input*
+      + $K B$: insieme di clausole di Horn
+      + $A s$: insieme di atomi che si possono assumere veri
+    + *Output*
+      + un conflitto
+    + *Local*
+      + $G$ insieme di atomi (che implicano $f a l s e$)
+    + $G <- {f a l s e}$
+    + *repeat*
+      + selezionare un atomo $a in G$ tale che $a in.not A s$
+      + scegliere una clausola $a <- B$ di $K B$ con $a$ come testa
+      + $G <- (G backslash {a}) union B$
+    + *until* $G subset.eq A s$
+    + *return* $G$
+  ]
+] <alg:top-down-conflitti>
+Si osservi che l'algoritmo contiene diverse scelte _non deterministiche_ in corrispondenza delle quali si ptoranni trovare diversi conflitti: in mancanza di scelte, l'algoritmo fallisce.
+== Assunzione di Conoscenza Completa
+Nella semantica dele basi di dati quello che non è derivabile viene considerato falso: la conoscenza su un dominio viene considerata _completa_. In Logica la mancanza di conoscenza non consente di trarre conclusioni dal fallimento delle dimostrazioni. \
+Assumendo la *completezza della conoscenza*, le clausole con uno stesso atomo come testa coprono tutti e soli i casi in cui esso è vero. Tale assunzione si dice anche *closed-world (CWA)*. In base ad essa, se non si riesce a dimostrare che $a$ sia vero, si conclude che è falso, ossia che la sua negzione $not a$ è vera. Si assume quindi che tutto quello che è rilevante sia stato asserito esplicitamente nella base di conoscenza. \
+In Logica normalmente si può assumere che una base di conosceza possa definire tutta la conoscenza su un dato diminio nella sua completezza, si parla pertanto di *open-world assumption (OWA)*. Quindi, non potendo trarre conclusioni dalla mancanza di conoscenza, la base di conoscenza di clausole definite non può avere $not a$ come conseguenza logica.
+==== Completare la Base di Conoscenza
+Per codificare l'assunzione di conosceza completa negli assiomi della base di conoscenza essa dev'essere trasfomrata ossia _completata_. \
+Dato l'atomo $a$, si considerino tutte le clausole della base di conoscenza che lo definiscono:
+$
+a <- b_1. quad dots quad a <- b_n.
+$
+dove $b_i$ è una congiunzione di atomi oppure _true_. In mancanza di clausole per $a$ si considera: $a <- "false"$. \
+Tali clausole possono essere riassunte da un'unica proposizione:
+$
+a <- b_1 or dots.c or b_n
+$
+Se $a$ è vero allora, per la CWA, dovrà necessariamente essere vero uno dei corpi $b_i$ quindi si può aggiungere:
+$
+a -> b_1 or dots.c or b_n
+$
+Il significato delle clausole per l'atomo $a$ sotto CWA è la congiunzione delle due proposizioni, ossia l'equivalenza:
+$
+a <=> b_1 or dots.c or b_n
+$
+detta _complemnto di Clark_ delle clausole per $a$. Si noti che se non ci sono regole per $a$, il complemento sarà $a <=> "false"$. \
+Il *complemento di Clark* della base di conoscenza ricomprende i complementi di tutti gli atomi della base. \
+*INSERIRE ESEMPIO SLIDE*
+==== Negazione come Fallimento
+Un *letterale* è un atomo o la negazione di un atomo. Con il completamento si possono dimostrare negazioni di proposizioni, quindi la negazione può essere ammessa anche nel corpo delle clausole. Si considereranno clausole definite estese contenenti nel corpo letterali. La _negazione sotto assunzione di conoscenza completa_, detta anche *negation as failure (NaF)*, verrà denotata con $tilde a$ per distinguerla dalla negazione classica. Sotto CWA, il corpo $g$ è una conseguenza di $K B$ se e solo se $K B' models g$, dove $K B'$ è il completamento di $K B$. Si noti come $tilde a$ nel corpo di una clausola diventi $not a$ nel completamento. \
+*INSERIRE ESEMPIO SLIDE* \
+Con la NAF, le basi di conoscenza non acicliche diventa problematiche dal punto di vista semantico. Ad esempio, data la base non aciclica:
+- $a <- tilde b$
+- $b <- tilde a$
+il completamento equivalente a $a <=> not b$, indica che $a$ e $b$ hanno valori di verità opposti: solo uno può essere vero. \
+Un altro esempio di base di conoscenza non aciclica è una con l'assioma:
+- $a <- tilde a$
+con completamento:
+- $a <=> not a$
+che risulta _inconsistente_ dal punto di vista logico. Il completamento di una base aciclica è sempre consistente e prevede un solo valore di verità per ogni atomo.
+=== Ragionamento Non Monotono
+
