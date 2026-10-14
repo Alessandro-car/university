@@ -103,6 +103,8 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 	\accentset{\mbox{\rule{0.55em}{0.5pt}}}{#1}%
 }
 
+\graphicspath{{images/}}
+
 \begin{document}
 	{
 		\let\cleardoublepage\clearpage
@@ -3558,9 +3560,9 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\subsection{Potenza del test di Gauss}
 		Sia:
 		\[
-		H_0: \mu \geq \mu_0 
+		H_0: \mu \geq \mu_0
 		\]
-		e 
+		e
 		\[
 		H_1: \mu < 0
 		\]
@@ -3588,7 +3590,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
 		\end{align*}
 		Allora:
 		\begin{align*}
-			P_\mu\Bigg[\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1 - \alpha}\Bigg] &\leq P_\mu\Bigg[\frac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \geq \frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg] \\ 
+			P_\mu\Bigg[\frac{\wbar{X}_n - \mu_0}{\frac{\sigma}{\sqrt{n}}} \geq -z_{1 - \alpha}\Bigg] &\leq P_\mu\Bigg[\frac{\wbar{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}} \geq \frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg] \\
 			&\sim N(0, 1) \\
 			&= 1 - \Phi\Bigg(\frac{\sqrt{n}\delta}{\sigma} - z_{1-\alpha}\Bigg)
  		\end{align*}
@@ -3645,14 +3647,14 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		f(x_1, x_2, \dots, x_n; a) &= \begin{cases}
  			\frac{1}{a^n} & 0 \leq x_i \leq a \quad \forall i = 1, 2, \dots, n  \\
  			0
- 		\end{cases} \\ 
+ 		\end{cases} \\
  		&= \begin{cases}
  		\frac{1}{a^n} & a \geq \underset{1 \leq i \leq n}{\max}\{x_i\} \\
- 		0 
- 		\end{cases} 
+ 		0
+ 		\end{cases}
  		\end{align*}
- 		Quindi $T = \underset{1 \leq i \leq n}{\max}\{X_i\}$ è uno stimatore sufficiente. 
- 		\subsection{Campione gaussiano} 
+ 		Quindi $T = \underset{1 \leq i \leq n}{\max}\{X_i\}$ è uno stimatore sufficiente.
+ 		\subsection{Campione gaussiano}
  		Dato un campione $(X_1, X_2, \dots, X_n)$ gaussiano, la legge congiunta è pari a:
  		\[
  		f(x_1, \dots, x_n; \mu, \sigma^2) = \frac{1}{(2\pi)^{\nicefrac{n}{2}}}\frac{1}{\sigma^{2n}}e^{-\frac{\sum_{i=1}^{n}(x_i - \mu)^2}{2\sigma^2}}
@@ -3676,7 +3678,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  				&= \frac{u(t(x), \theta)v(x)}{\sum_{y: t(y) = t}u(t(y), \theta)v(y)} \\
  				&= \frac{v(x)}{v(y)}
  			\end{align*}
- 			Seconda implicazione: $P[X=x \mid T=t] = v(x)$ (non dipende dal parametro). 
+ 			Seconda implicazione: $P[X=x \mid T=t] = v(x)$ (non dipende dal parametro).
  			\begin{align*}
  				P[X=x\mid T=t(x)] &= \frac{P[X=x]}{P[T=t(x)]} \\
  				v(x) &= \frac{P[X=x]}{P[T = t(x)]} \\
@@ -3688,7 +3690,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  		Notiamo che:
  		\[
  		E[X|Y=y] = \int_{-\infty}^{\infty}xf_{x|Y=y}(x, y)dx = h(y)
- 		\] 
+ 		\]
  		allora:
  		\[
  		E[X | Y] = h(Y)
@@ -3718,7 +3720,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  			U^* = E[U \mid T]
  			\]
  			ove $U^*$ è uno stimatore corretto di $\psi(\theta)$ e $r_\theta(U^*) \leq r_\theta(U) \quad \forall \theta \in \Theta$.
- 		\end{theorem} 
+ 		\end{theorem}
  		\begin{proof}{\nmu Dimostrazione del \namerefl{th:blackwell-rao}} \quad \\
  			Notiamo che $U^*$ è una statistica. \\
  			\begin{align*}
@@ -3730,16 +3732,16 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  			\begin{align*}
  				r_\theta(U) &= E_\theta[(U - \psi(\theta))^2] \\
  				&= E_\theta[(U - U^* + U^* - \psi(\theta))^2] \\
- 				&= E_\theta[(U - U^*)^2] + E_\theta[(U^* - \psi(\theta))^2] + 2E_\theta[(U - U^*)(U^* - \psi(\theta))] 
+ 				&= E_\theta[(U - U^*)^2] + E_\theta[(U^* - \psi(\theta))^2] + 2E_\theta[(U - U^*)(U^* - \psi(\theta))]
  			\end{align*}
  			Quindi:
  			\[
- 			r_\theta(U) \geq r_\theta(U^*) + 2E_\theta[(U - U^*)(U^* - \psi(\theta))] 
+ 			r_\theta(U) \geq r_\theta(U^*) + 2E_\theta[(U - U^*)(U^* - \psi(\theta))]
  			\]
  			Dobbiamo dimostrare che $2E_\theta[(U - U^*)(U^* - \psi(\theta))]=0$.
  			\begin{align*}
- 				2E_\theta[(U - U^*)U^*] - E[(U - U^*)]\psi(\theta) 
- 			\end{align*} 
+ 				2E_\theta[(U - U^*)U^*] - E[(U - U^*)]\psi(\theta)
+ 			\end{align*}
  			devo far vedere che $E[UU^*] = E[U^{*2}]$ \\
  			\begin{align*}
  				E[UU^*] &= E[E[UU^* \mid T]] \\
@@ -3757,7 +3759,7 @@ fonttitle=\scshape\bfseries,separator sign={:\hspace{0.5em}}}{def}
  			\[
  			E_\theta[h_1(T)] = E_\theta[h_2(T)] \quad \forall \theta \in \Theta \Rightarrow h_1 = h_2
  			\]
- 			Quindi ci può essere che per uno stimatore corretto di $\psi(\theta)$ che sia funzione di $T$ statistica completa. 
+ 			Quindi ci può essere che per uno stimatore corretto di $\psi(\theta)$ che sia funzione di $T$ statistica completa.
  		\end{definition}
  		\begin{example}{\nmu Campione bernoulliano}{completezza_bernoulli}
  			Sia $(X_1, X_2, \dots, X_n)$ un campione bernoulliano e sappiamo che $T = \sum_{i=1}^{n}X_i$ è una statica sufficiente. \\
