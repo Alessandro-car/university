@@ -39,21 +39,21 @@
 }
 
 \lstdefinestyle{pascalstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	language=C++
 }
@@ -104,7 +104,7 @@
 	\nameref{#1}\egroup}
 
 \newcommand{\nmu}{}
-
+\graphicspath{{images/}}
 \begin{document}
 	{
 		\let\cleardoublepage\clearpage
@@ -133,7 +133,7 @@
 		\item \textbf{Contabilità e statistiche d'uso delle risorse}, dei tempi di risposta con il fine di migliorare le prestazioni.
 	\end{itemize}
 	Inoltre il SO dirige la CPU nell'utilizzo delle risorse del sistema e nella temporizzazione, cioè stabilire la sequenza dell'esecuzione dei programmi e decide quando un programma in esecuzione può utilizzare una risorsa (anche il processore è una risorsa). \\
-	Il \textbf{kernel} è la parte del sistema operativo che si trova in memoria centrale e contiene le funzioni del sistema operativo che vengono utilizzate frequentemente. 
+	Il \textbf{kernel} è la parte del sistema operativo che si trova in memoria centrale e contiene le funzioni del sistema operativo che vengono utilizzate frequentemente.
 	\subsection{Batch multiprogrammati}
 	I \textbf{Batch multiprogrammati} sono dei sistemi dove è consentita la multiprogrammazione, cioè l'esecuzione di più programmi in contemporanea. \\
 	\textbf{Caratteristiche } della multi-programmazione:
@@ -145,7 +145,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1.00\textwidth]{Multi_programmazione}
-	\end{figure}		
+	\end{figure}
 	La \textbf{difficoltà della multi-programmazione} sta nel gestire la memoria e scegliere quale processo mandare in esecuzione. \\
 	Nella mono-programmazione un esempio può essere:
 	\begin{itemize}
@@ -261,7 +261,7 @@
 		\end{itemize}
 	\end{itemize}
 	Lo scheduler non può scegliere il processo da più tempo in attesa in quanto potrebbe essere in attesa di un trasferimento I/O.
-	
+
 	\section{Modello a 5 stati}
 	Dal modello a 2 stati si passa al modello 5 stati:
 	\begin{itemize}
@@ -302,10 +302,10 @@
 	\section{Modalità di esecuzione dei processi}
 	\noindent
 	\textbf{Modalità utente:} esecuzione di processi utente
-	
+
 	\noindent
 	\textbf{Modalità Sistema o Kernel o Controllo:} esecuzione di istruzioni che hanno come scopo
-	
+
 	\begin{itemize}[leftmargin=*, itemsep=0.2em]
 		\item \textbf{Gestione dei Processi}
 		\begin{itemize}[leftmargin=2em, itemsep=0.1em]
@@ -315,20 +315,20 @@
 			\item Sincronizzazione
 			\item PCB
 		\end{itemize}
-		
+
 		\item \textbf{Gestione della Memoria}
 		\begin{itemize}[leftmargin=2em, itemsep=0.1em]
 			\item Allocazione
 			\item Trasferimento disco/RAM e viceversa
 			\item Gestione della paginazione, segmentazione...
 		\end{itemize}
-		
+
 		\item \textbf{Gestione I/O}
 		\begin{itemize}[leftmargin=2em, itemsep=0.1em]
 			\item Gestione buffer
 			\item Allocazione canali I/O
 		\end{itemize}
-		
+
 		\item \textbf{Supporto}
 		\begin{itemize}[leftmargin=2em, itemsep=0.1em]
 			\item Gestione interruzioni
@@ -338,9 +338,9 @@
 	\section{Creazione dei processi}
 	\begin{enumerate}[leftmargin=*, itemsep=0.5em]
 		\item Assegnare al processo un PID unico; aggiungere una entry level alla tabella dei processi
-		
+
 		\item Allocare lo spazio per il processo e per tutti gli elementi della sua immagine (PCB, User Stack, area di memoria dati e istruzioni, aree condivise)
-		
+
 		\item Inizializzazione del PCB
 		\begin{itemize}[leftmargin=2em, itemsep=0.1em]
 			\item Stato del processore = 0
@@ -348,12 +348,12 @@
 			\item Puntatori allo stack
 			\item Stato = ready
 		\end{itemize}
-		
+
 		\item Inserimenti nella coda di ready
-		
+
 		\item Estende le strutture al fine della fatturazione o delle statistiche
 	\end{enumerate}
-	
+
 	\section{Modello a 6 stati}
 	Dal modello a 5 stati si è passati al modello a 6 stati dove viene introdotto lo stato di \textit{Suspend}. \\
 	Questo stato è stato introdotto in quanto con molta probabilità tutti i processi rimangono in attesa di eventi I/O e per questo è inefficiente tenere tutti i processi in attesa di un evento in memoria RAM e quindi, con lo stato di \textit{Suspend} i processi in attesa di un evento vengono trasferiti dalla memoria RAM alla memoria secondaria, che è un'altra operazione di I/O ma è molto rapida. \\
@@ -390,7 +390,7 @@
 	Il SO può prevedere fino a 3 tipi di scheduler:
 	\begin{itemize}
 		\item \textbf{Scheduler di lungo termine}, questo determina quali programmi sono ammessi nel sistema per essere processati cioè dallo stato di new allo stato di ready o ready-suspended. Il lavoro dell'SLT è quello di stimare il comportamento globale dei job in base a stime effettuate dal programmatore o dal sistema che forniscono informazioni sulle risorse necessarie, dimensione della memoria, tempo di esecuzione ecc. \\
-		Le \textbf{strategie} principali dello scheduler di lungo termine sono: 
+		Le \textbf{strategie} principali dello scheduler di lungo termine sono:
 		\begin{enumerate}
 			\item fornire alla coda dei processi pronti gruppi di processi che siano bilanciati tra loro nello sfruttamento della CPU e dell'I/O;
 			\item aumentare il numero di processi provenienti dalla coda batch, quando il carico della CPU diminuisce;
@@ -402,10 +402,10 @@
 		\begin{itemize}
 			\item Utilizza le informazioni del PCB per stabilire la richiesta di memoria del processo;
 			\item tenta di allocare spazio in memoria centrale;
-			\item riposiziona il processo in memoria nella coda dei pronti.			
+			\item riposiziona il processo in memoria nella coda dei pronti.
 		\end{itemize}
 		\item \textbf{Scheduler di breve termine} o anche detto \textbf{dispatcher} gestisce la transizione da ready a run e viene eseguito molto frequentemente e la sua \textbf{strategia} è quella di massimizzare le prestazioni del sistema secondo un specifico insieme di obiettivi. \\
-		Questo viene invocato quando si verifica un evento: 
+		Questo viene invocato quando si verifica un evento:
 		\begin{itemize}
 			\item clock interrupt;
 			\item I/O interrupt;
@@ -421,7 +421,7 @@
 	Lo scheduling della CPU riguarda la distribuzione delle sequenze di elaborazione della CPU e un processo durante la sua fase di esecuzione si può trovare in due stati:
 	\begin{enumerate}
 		\item Si trova nel suo ciclo di elaborazione e quindi sta utilizzando attivamente la CPU;
-		\item Si trova in attesa di un'operazione di I/O		
+		\item Si trova in attesa di un'operazione di I/O
 	\end{enumerate}
 	Inoltre, i processi possono essere divisi in due macrocategorie:
 	\begin{itemize}
@@ -456,7 +456,7 @@
 		\item caratteristiche del processo;
 		\item richiesta di risorse;
 		\item comportamento durante l'esecuzione.
-	\end{itemize}  
+	\end{itemize}
 	Questo algoritmo viene applicato nei sistemi dove il tempo di risposta, soprattutto ad eventi esterni, è critico. \\
 	Il sistemista può influire sull'ordine di esecuzione dei processi modificando le priorità assegnate ad essi e le prestazioni del sistema sono dipese dalla scelta delle priorità assegnate a ciascun processo. \\
 	Le priorità sono definite:
@@ -486,7 +486,7 @@
 	Si definisce il Response Ratio come:
 	\[
 	RR = \frac{w + s}{s}
-	\] 
+	\]
 	Questo algoritmo manda in esecuzione il processo con il più alto valore di RR e quando un processo entra nella coda di \textit{Ready} per la prima volta ha un RR = 1 e al passare del tempo nella coda di \textit{Ready} il valore del Response Ratio aumenta e quindi viene implementa la tecnica dell'aging.
 	\subsubsection{Shortest Process Next - SPN}
 	In questo algoritmo, il processo scelto dalla coda di \textit{Ready} è quello con il più breve tempo di esecuzione stimato. \\
@@ -503,7 +503,7 @@
 		\item A priorità fissa e con prelazione, ad esempio serve prima la Foreground e poi la Background;
 		\item Time slice dove ad ogni coda è associato un quanto di tempo di utilizzo della CPU.
 	\end{itemize}
-	È possibile un'ulteriore soluzione, quella della \textbf{Schedulazione a code multiple con feedback} dove viene implementata la tecnica dell'aging dove un processo può essere spostato da una coda all'altra. 
+	È possibile un'ulteriore soluzione, quella della \textbf{Schedulazione a code multiple con feedback} dove viene implementata la tecnica dell'aging dove un processo può essere spostato da una coda all'altra.
  	\chapter{Thread}
 	Un thread è un \textbf{flusso di esecuzione indipendente, una traccia,} all'interno di un processo. \\
 	Le motivazioni per le quali solitamente un processo viene diviso in più thread sono:
@@ -516,9 +516,9 @@
 	\section{Differenza tra thread e processi}
 	Un \textbf{processo} possiede delle risorse:
 	\begin{itemize}
-		\item ha uno spazio di indirizzamento virtuale che contiene l'immagine del processo; 
+		\item ha uno spazio di indirizzamento virtuale che contiene l'immagine del processo;
 		\item può richiedere ulteriore memoria;
-		\item può chiedere il controllo di canali di I/O; 
+		\item può chiedere il controllo di canali di I/O;
 		\item può chiedere il controllo di dispositivi;
 		\item può chiedere files.
 	\end{itemize}
@@ -534,7 +534,7 @@
 		\item \textbf{processi multipli a singolo thread}, come UNIX;
 		\item \textbf{Multithread, più processi con più thread}, come Windows, MAC, Solaris ecc.
 	\end{itemize}
-	Sappiamo che un thread condivide le risorse del processo e in un sistema multithreading, i thread: 
+	Sappiamo che un thread condivide le risorse del processo e in un sistema multithreading, i thread:
 	\begin{itemize}
 		\item condividono lo stato e le risorse del processo a cui appartengono;
 		\item risiedono nello stesso spazio di indirizzamento,
@@ -551,7 +551,7 @@
 	\end{itemize}
 	Però, se un processo viene sospeso questo comporta la sospensione di tutti i thread contemporaneamente perchè si deve liberare spazio in memoria e i thread utilizzano lo stessso spazio di memoria condivisa. Inoltre, la terminazione di un processo richiede che tutti i thread siano terminati.
 	\section{Stati dei thread}
-	Gli stati dei thread, a differenza di quelli dei processi, sono solo 3: 
+	Gli stati dei thread, a differenza di quelli dei processi, sono solo 3:
 	\begin{itemize}
 		\item Ready;
 		\item Running;
@@ -573,7 +573,7 @@
 		\includegraphics[width=1.00\textwidth]{RPC}
 	\end{figure}
 	Vediamo un esempio di multithreading: un programma di video-scrittura, gestione e pubblicazione di pagine su desktop. \\
-	Ci sono tre thread sempre attivi: 
+	Ci sono tre thread sempre attivi:
 	\begin{enumerate}
 		\item Gestione degli eventi;
 		\item Gestione dei servizi come stampa, lettura dati, disposizione testo e attivazione di altri thread;
@@ -632,7 +632,7 @@
 		\end{itemize}
 	\end{itemize}
 	\subsection{Kernel Level Thread}
-	Per quanto riguarda i kernel level thread il lavoro di gestione dei threads è svolto dal kernel e il \textbf{modello è uno a uno}. 
+	Per quanto riguarda i kernel level thread il lavoro di gestione dei threads è svolto dal kernel e il \textbf{modello è uno a uno}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\textwidth]{KLT}
@@ -679,7 +679,7 @@
 		\item tutti i processori possono effettuare le stesse funzioni;
 		\item ogni processore esegue una stessa copia del SO;
 		\item ogni processore gestisce la schedulazione dei processi o thread disponibili.
-	\end{itemize} 
+	\end{itemize}
 	Non è facile, però, eseguire i compiti sopra elencati in quanto:
 	\begin{itemize}
 		\item i processori non devono schedulare lo stesso processo;
@@ -735,7 +735,7 @@
 	\end{itemize}
 	L'utilizzo del microkernel, però, porta diverse problematiche riguardanti le prestazioni del sistema perchè costruire, inviare, accettare e decodificare un messaggio costa più che fare una chiamata al SO e ci sono due possibili soluzioni a questo problema: la prima è quella di aggiungere funzionalità al microkernel, come fa il MACH OS in modo da ridurre il numero di cambiamenti di stato das utente a kernel però questo porta a interfacce minime alla riduzione di flessibilità ecc.; la seconda è un'ulteriore riduzione del microkernel.
 	\subsection{Funzioni minime del microkernel}
-	La prima funzione principale o minima del microkernel è la \textbf{gestione primitiva della memoria}. In questa funzione troviamo un modulo esterno al microkernel che mappa pagine virutali in pagine fisiche e il mapping viene conservato in memoria principale. 
+	La prima funzione principale o minima del microkernel è la \textbf{gestione primitiva della memoria}. In questa funzione troviamo un modulo esterno al microkernel che mappa pagine virutali in pagine fisiche e il mapping viene conservato in memoria principale.
 	\begin{itemize}
 		\item un'applicazione che accede ad una pagina che non si trova in memoria genera un page fault;
 		\item l'esecuzione passa al microkernel che invia un messaggio al paginatore comunicando la pagina richiesta;
@@ -765,7 +765,7 @@
 	I processi utilizzano delle risorse che sono gestite e amministrate dal SO e il \textbf{sistema operativo decide in merito all'assegnazione delle risorse ai processi}, disponendo l'ordine di accesso dei processi a queste e le modalità di accesso. \\
 	I processi utilizzano le risorse per tramite del Sistema Operativo, che trasmette le operazione agli strati sottostati per conto dei processi. \\
 	La gestione delle risorse può portare a diverse problematiche che devono essere accuratamente attenzionate e queste problematiche sono legate alla concorrenza e alla mutua esclusione delle risorse. \\
-	La\textbf{mutua esclusione} delle risorse significa che \textbf{una risorsa singola può essere assegnata a un solo processo alla volta}. 
+	La\textbf{mutua esclusione} delle risorse significa che \textbf{una risorsa singola può essere assegnata a un solo processo alla volta}.
 	\section{Grafo di allocazione delle risorse}
 	Un grafo di allocazione delle risorse rappresenta in che modo le risorse sono assegnate ai processi e le richieste dei processi:
 	\begin{figure}[H]
@@ -799,7 +799,7 @@
 		\item \textbf{impedirlo rimuovendone le condizioni}: progettare un SO in modo che la possibilità di avere uno stallo sia esclusa a priori tramite la negazione di una delle 4 condizioni.
 	\end{enumerate}
 	\section{Algoritmo dello struzzo}
-	L'algoritmo dello struzzo pretende che il problema non esista ed è una soluzione ragionevole se: 
+	L'algoritmo dello struzzo pretende che il problema non esista ed è una soluzione ragionevole se:
 	\begin{itemize}
 		\item lo stallo capita di rado;
 		\item il costo per evitare lo stallo è troppo elevato.
@@ -836,7 +836,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics{rilevazione_stallo_generale}
-	\end{figure}	
+	\end{figure}
 	L'\textbf{algoritmo di individuazione} dello stallo funziona nel seguente modo:
 	\begin{enumerate}
 		\item inizialmente ogni processo $P_i$ non è marcato
@@ -862,14 +862,14 @@
 	\begin{itemize}
 		\item tramite \textbf{terminazione dei processi}:
 		\begin{itemize}
-			\item abort di tutti i processi coinvolti nello stallo. Soluzione comunemente adottata. 
+			\item abort di tutti i processi coinvolti nello stallo. Soluzione comunemente adottata.
 			\item abort di un processo alla volta fino a quando il ciclo non è eliminato. Dopo ogni abort si deve rieseguire l'algoritmo di determinazione dello stallo. L'ordina con cui abortire i processi è dato dalla funzione di minimo costo basata su:
 			\begin{itemize}
 				\item priorità dei processi;
 				\item tempo trascorso in esecuzione e necessario al completamento;
 				\item risorse già utilizzate e risorse richieste;
 				\item tipo di processo.
-			\end{itemize}			
+			\end{itemize}
 		\end{itemize}
 		\item tramite \textbf{prelazione di risorse}
 		\begin{itemize}
@@ -927,26 +927,26 @@
 			int claim[n][m];
 			int alloc[n][m];
 		}
-		
+
 		//resource alloc algorithm
 		if (alloc [i, *] + request [*] > claim [i, *])
 			< error >;
 		else if (request [*] > available [*])
 			< suspend process > ;
-		else 
+		else
 		{
-			< define newstate by: 
+			< define newstate by:
 			alloc [i, *] = alloc [i, *] + request [*];
 			available [*] = available [*] - request [*] >
 		}
 		if (safe (newstate))
 			< carry out allocation >;
-		else 
+		else
 		{
 			< restore original state >;
 			< suspend process >;
 		}
-		
+
 		//test for safety algorithm (banker's algorithm)
 		boolean safe (state S)
 		{
@@ -955,19 +955,19 @@
 			currentavail = available;
 			rest = (all processes);
 			possible = true;
-			while (possible) 
+			while (possible)
 			{
-				< find a process $P_k$ in rest such that 
+				< find a process $P_k$ in rest such that
 					claim [k, *] - alloc [k, *] <= currentavail;>
 				if (found)
 				{
 					currentavail = currentavail + alloc[k, *];
 					rest = rest - {$P_k$};
-				} 
+				}
 				else
 					possible = false;
 			}
-			
+
 				return (rest == null);
 		}
 	\end{lstlisting}
@@ -1025,16 +1025,16 @@
 	\end{itemize}
 	\subsection{Vantaggi e problemi della concorrenza}
 	I vantaggi della concorrenza riguardano un migliore utilizzo delle risorse e i benefici che ne si ricavano sull'esecuzione nonostante il sovraccarico a causa del context switching. \\
-	I problemi della concorrenza, nel caso di singolo processore, possono essere: 
+	I problemi della concorrenza, nel caso di singolo processore, possono essere:
 	\begin{itemize}
 		\item una \textbf{condivisione pericolosa}: ordine delle operazioni di lettura e scrittura su aree di memoria condivise;
 		\item difficoltà nell'assegnare le risorse ai processi in maniera ottimale;
-		\item difficoltà nella rilevazione degli errori nel codice e dei conflitti di interlacciamento, cioè l'esecuzione dei processi paralleli. 
+		\item difficoltà nella rilevazione degli errori nel codice e dei conflitti di interlacciamento, cioè l'esecuzione dei processi paralleli.
 	\end{itemize}
 	Consideriamo un esempio della procedura \textit{echo}:
 	\begin{lstlisting}[style=pascalstyle]
 		char in, out;
-		void echo() 
+		void echo()
 		{
 			scanf("%c", &in);
 			out = in;
@@ -1058,7 +1058,7 @@
 		\item non ci devono essere supposizioni sulla velocità di esecuzione relative dei processi;
 		\item il tempo di permanenza nella sezione critica è definito.
 	\end{itemize}
-	I meccanismi che provvedono alla mutua esclusione sono: 
+	I meccanismi che provvedono alla mutua esclusione sono:
 	\begin{itemize}
 		\item \textbf{Approcci software}: i processi, senza aiuto del SO o del linguaggio di programmazione, devono coordinarsi tra loro tramite l'\textbf{algoritmo Dekker}
 		\begin{itemize}
@@ -1083,17 +1083,17 @@
 	Algoritmo: \\
 	\begin{lstlisting}[style=pascalstyle]
 		var turno = 0..1; //variabile globale condivisa con due valori, 0 e 1
-		Processo 0:						
-		while (turno != 0)									
-				{nulla} //busy wait			
-		<sezione critica>;				
-		turno = 1;						
-		
+		Processo 0:
+		while (turno != 0)
+				{nulla} //busy wait
+		<sezione critica>;
+		turno = 1;
+
 		Processo 1:
 		while (turno != 1)
 				{nulla} //busy wait
 		<sezione critica>;
-		turno = 0;	
+		turno = 0;
 	\end{lstlisting}
 	Notiamo, quindi, che se un processo deve aspettare il suo turno entra in un ciclo dove non succede nulla e quindi viene generata la \textbf{busy wait}, cioè l'\textbf{attesa attiva} che toglie tempo utile all'esecuzione. Il pro di questo tentativo è che garantisce la mutua esclusione in quanto un processo per poter iniziare la sua esecuzione deve attendere il suo turno, d'altra parte, però, se un processo è lento questo determina la velocità di avanzamento di entrambi i processi e se un processo fallisce nella propria sezione critica e non, questo non arriverà mai all'istruzione per cambiare il turno e quindi anche l'altro rimane bloccato per sempre. \\
 	\paragraph{Tentativo n.2} In questo tentativo, ogni processo ha un flag relativo all'utilizzo della risorsa e può leggere il flag dell'altro senza modificarlo. \\
@@ -1103,48 +1103,48 @@
 		Processo 0:
 		//mentre il processo 1 sta utilizzando la risorsa
 		//il processo 0 non fa nulla e aspetta
-		while(flag[1]) 
+		while(flag[1])
 			{nulla};
 		flag[0] = true; //indica che il processo 0 sta utilizzando la risorsa
 		<sezione critica>;
 		flag[0] = false; //indica che il processo 0 non sta utilizzando la risorsa
 	\end{lstlisting}
 	L'aspetto positivo di questo approccio è che se un processo fallisce fuori dalla sua sezione critica, l'altro può continuare a lavorare, d'altra parte se un processo fallisce entro la sezione critica o prima che questo abbia settato il suo flag a false allora l'altro rimane bloccato per sempre. Inoltre, se entrambi i processi vedono il flag dell'altro a false, mettono il loro flag a true ed entrano entrambi contemporaneamente nella sezione critica andando a violare la mutua esclusione.
-	\paragraph{Tentativo n.3} 
-	In questo tentativo, viene riutilizzata la stessa tecnica del tentativo precedente con la sola differenza che i processi, prima ancora di controllare se l'altro processo è nella sezione critica, dichiarano la propria volontà di entrare in sezione critica settando la flag a true, però in questo modo, se entrambi i processi settano la propria flag a true prima ancora che uno dei due verifichi la condizione del while entrambi andranno in busy wait e si genera uno stallo. 
+	\paragraph{Tentativo n.3}
+	In questo tentativo, viene riutilizzata la stessa tecnica del tentativo precedente con la sola differenza che i processi, prima ancora di controllare se l'altro processo è nella sezione critica, dichiarano la propria volontà di entrare in sezione critica settando la flag a true, però in questo modo, se entrambi i processi settano la propria flag a true prima ancora che uno dei due verifichi la condizione del while entrambi andranno in busy wait e si genera uno stallo.
 	Algoritmo:
 	\begin{lstlisting}[style=pascalstyle]
 		boolean flag[2];
-		
+
 		Processo 0:
 		//prima del test esprimo la volonta' di entrare in sezione critica
-		flag[0] = true 
+		flag[0] = true
 		while(flag[1])
 			{nulla};
 		<sezione critica>;
 		flag[0] = false;
 	\end{lstlisting}
 	L'aspetto positivo di questo approccio è che non viola la mutua esclusione, ma oltre al problema del deadlock precedentemente descritto si genera sempre il solito problema che se un processo fallisce nella propria sezione critica l'altro rimane bloccato per sempre.
-	\paragraph{Tentativo n.4} In questo approccio viene usata la tecnica precedente ma viene evitata la situazione di deadlock, generando però una situazione di attesa attiva. 
+	\paragraph{Tentativo n.4} In questo approccio viene usata la tecnica precedente ma viene evitata la situazione di deadlock, generando però una situazione di attesa attiva.
 	\begin{lstlisting}[style=pascalstyle]
 		Processo 0:
 		flag[0] = true
-		while (flag[1]) 
+		while (flag[1])
 		{
 			flag[0] = false;
 			<pausa>;
-			flag[0] = true; 
+			flag[0] = true;
 		}
 		<sezione critica>;
 		flag[0] = false;
-		
+
 		Processo 1:
-		flag[1] = true 
-		while (flag[0]) 
+		flag[1] = true
+		while (flag[0])
 		{
 			flag[1] = false;
 			<pausa>;
-			flag[1] = true; 
+			flag[1] = true;
 		}
 		<sezione critica>;
 		flag[1] = false;
@@ -1164,14 +1164,14 @@
 			processo P0;
 			processo P1;
 		}
-		
+
 		Processo P0:
 		{
 			flag[0] = true
 			while (flag[1]) {
 				if (turno == 1) {
 					flag[0] = false;
-					while (turno == 1) 
+					while (turno == 1)
 						{nulla}; //Attesa attiva
 					flag[0] = true;
 				}
@@ -1261,7 +1261,7 @@
 			int istanze;
 			struct processo	*P; //lista dei processi in coda
 		} semaforo;
-		
+
 		void wait(semaforo s) {
 			s.istanze--;
 			if (s.istanze < 0) {
@@ -1269,7 +1269,7 @@
 				<blocca questo processo: running->blocked >
 			}
 		}
-		
+
 		void signal(semaforo s) {
 			s.instanze++;
 			if (s.istanze <= 0) {
@@ -1284,7 +1284,7 @@
 			boolean val;
 			struct processo	*P; //lista dei processi in coda
 		} semaforo_bin;
-		
+
 		void wait(semaforo s) {
 			if (s.val == true) {
 				s.val == false;
@@ -1292,9 +1292,9 @@
 				<poni processo in coda a P>
 				<blocca questo processo: running->blocked >
 			}
-			
+
 		}
-		
+
 		void signal(semaforo s) {
 			if (*P == NULL) { //coda vuota
 				s.val = true;
@@ -1323,7 +1323,7 @@
 		.
 		signal(S);
 		signal(Q);
-		
+
 		Processo 1:
 		wait(Q);
 		wait(S);
@@ -1387,7 +1387,7 @@
 		\item tiene traccia solo della prima e dell'ultima locazione disponibile per i processi transienti;
 		\item viene posto ad uno dei due estremi della memoria;
 		\item ingloba i vettori di interrupt;
-		\item altri suoi moduli temporanei vengono posti all'altra estremità della memoria. 
+		\item altri suoi moduli temporanei vengono posti all'altra estremità della memoria.
 	\end{itemize}
 	Alla richiesta di esecuzione di un programma, il sistema operativo:
 	\begin{itemize}
@@ -1437,7 +1437,7 @@
 		\includegraphics[width=0.75\textwidth]{Partizionamento_statico}
 	\end{figure}
 	La TDP dell'esempio precedente è: \\
-	\begin{tabular}{|c | c | c | c|} 
+	\begin{tabular}{|c | c | c | c|}
 		\hline
 		\textbf{Numero partizione} & \textbf{Base partizione} & \textbf{Dimensione partizione} & \textbf{Stato partizione} \\
 		\hline
@@ -1483,7 +1483,7 @@
 	Il funzionamento del gestore della memoria e dello scheduler sono strettamente correlati:
 	\begin{itemize}
 		\item lo scheduler determina quali processi sono pronti, e quindi residenti in memoria, in attesa della CPU
-		\item il gestore della memoria può decidere di togliere un processo in memoria per liberare una partizione. 
+		\item il gestore della memoria può decidere di togliere un processo in memoria per liberare una partizione.
 	\end{itemize}
 	\paragraph{Swapping}:
 	Lo swapping è l'operazione di rimozione della memoria di un processo sospeso ed il suo successivo caricamento. Nel partizionamento statico questo aumenta il livello di occupazione della memoria centrale e di conseguenza il livello di utilizzo della CPU.	\\
@@ -1492,7 +1492,7 @@
 		\item dimensione della partizione richiesta;
 		\item priorità del processo;
 		\item tipo di evento atteso dal processo;
-		\item tempo già trascorso in memoria. 
+		\item tempo già trascorso in memoria.
 	\end{itemize}
 	Un processo residente in memoria, già parzialmente eseguito, è costituito da:
 	\begin{itemize}
@@ -1544,9 +1544,9 @@
 	Quando un processo termina o subisce uno swapping, il gestore della memoria restituisce lo spazio liberato all'insieme di aree di memoria libere. Il gestore della memoria può creare e allocare partizioni finchè non viene esaurita la memoria fisica o finchè non viene raggiunto il massimo grado di multiprogrammazione.
 	\paragraph{Principi operativi}:\\
 	Alla richiesta di una partizione il gestore della memoria (GM) ricerca una zona di memoria libera contigua di dimensione sufficiente. Se si trova un'area adatta il sistema operativo vi ricava una partizione in modo da soddisfare esattamente le necessità del processo. \\
-	L'eventuale parte rimanente di memoria libera viene restituita all'insieme della memoria libera e posta a disposizione del modulo di allocazione. La partizione viene creata registrando la sua base, la sua dimensione e il suo stato nella TDP. 
+	L'eventuale parte rimanente di memoria libera viene restituita all'insieme della memoria libera e posta a disposizione del modulo di allocazione. La partizione viene creata registrando la sua base, la sua dimensione e il suo stato nella TDP.
 	Alcune di queste informazioni vengono anche registrate nel descrittore di processo. Dopo aver caricato l'immagine del processo nella partizione creata, il processo viene sottoposto al controllo di un modulo del sistema operativo che si occupa delle operazioni successive. \\
-	Quando un processo termina o subisce uno swapping il sistema operativo restituisce la partizione all'area libera e cancella la riga nella TDP. L'insieme delle aree libere varia dinamicamente, gli spazi interni all'area libera vengono utilizzati per mantenere una lista a puntatori. Ad esempio: 
+	Quando un processo termina o subisce uno swapping il sistema operativo restituisce la partizione all'area libera e cancella la riga nella TDP. L'insieme delle aree libere varia dinamicamente, gli spazi interni all'area libera vengono utilizzati per mantenere una lista a puntatori. Ad esempio:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.70\textwidth]{partizionamento_dinamico}
@@ -1635,7 +1635,7 @@
 		\includegraphics[width=1.00\textwidth]{segmentazione}
 	\end{figure}
 	Le dimensioni della TDS sono legate alle dimensioni dello spazio virtuale di indirizzamento di uj processo. I processori della famiglia Intel, supportano fino a 16000 segmenti di 64 kb. La TDS può essere costituita da qualche riga fino a migliaia di righe e viene tenuta in memoria in uno dei segmenti associati al processo. \\
-	Due registri hardware, \textbf{RBTDS} e \textbf{RLTDS}, contengono l'indirizzo di inizio e fine della TDS associata al processo in esecuzione e questo consente anche il controllo d'accesso a segmenti non assegnati al processo. 
+	Due registri hardware, \textbf{RBTDS} e \textbf{RLTDS}, contengono l'indirizzo di inizio e fine della TDS associata al processo in esecuzione e questo consente anche il controllo d'accesso a segmenti non assegnati al processo.
 	\begin{itemize}
 		\item \textbf{RBTDS}: Registro Base della Tabella dei Descrittori di Segmento;
 		\item \textbf{RLTDS}: Registro Limite della Tabella dei Descrittori di Segmento.
@@ -1685,7 +1685,7 @@
 		\item bit più significativi che corrispondono al numeri di pagina virtuale;
 		\item bit meno significativi che corrispondono allo spiazzamento reale.
 	\end{itemize}
-	Il sistema operativo tiene traccia della corrispondenza tra pagine virtuali e pagine fisiche mediante la \textbf{tabella delle pagine o TDP}. 
+	Il sistema operativo tiene traccia della corrispondenza tra pagine virtuali e pagine fisiche mediante la \textbf{tabella delle pagine o TDP}.
 	La TDP viene costruita al momento del caricamento del processo, ogni riga della tabella contiene l'indirizzo di partenza della pagina fisica in cui è allocata la corrispondente pagina virtuale e ne vengono salvati solo i bit più significativi e la tabella è costituita da un numero di righe pari al numero di pagine occupate. \\
 	Ad esempio, supponiamo di avere una memoria di un 1 MB, suddivisa in 4096 pagine della dimensione di 256 byte ciascuna e con una lunghezza di indirizzo di 20 bit. Lo spazio di indirizzamento di un ipotetico processo utente che occupa 1008 byte (3F0H) viene suddiviso in quattro pagine virtuali da 0 a 3, in quanto quattro pagine permettono la memorizzazione di un processo di al massimo 1048 byte. \\
 	La \textbf{traduzione} dell'indirizzo virtuale avviene nel seguente modo:
@@ -1719,7 +1719,7 @@
 	Quando il processo richiedente ha uno spazio di indirizzamento non multiplo delle pagine fisiche si crea il fenomeno della \textit{frammentazione interna} della pagina ma questo è un fenomeno ridotto e legato alla dimensione della pagina fisica. \\
 	Bisogna prestare attenzione, alla scelta della tecnica di \textbf{memorizzazione delle aree libere}, infatti, la consultazione della TDM statica per trovare $n$ pagine fisiche libere richiede una ricerca su un numero di righe in media $x = \dfrac{n}{q}$, dove $n$ corrisponde al numero di pagine libere che si vuole cercare e $q$ è la probabilità che una pagina sia libera ed è legata alla percentuale di memoria libera $u$, da questo segue che $q = \dfrac{u}{100} \quad 0 < q < 1$, quindi $x$ aumenta con l'aumentare della memoria utilizzata. Ad esempio: \\
 	\[
-	n = 10 \quad u = 40\% \quad q = 0.4 
+	n = 10 \quad u = 40\% \quad q = 0.4
 	\]
 	$x$ in media è di 25 righe per ritrovare 10 pagine libere. Da qui deduciamo che la consultazione della TDM non è particolarmente efficiente, soprattutto nel caso in cui la memoria è satura e quindi si tende a sostituire la TDM con una lista a puntatori contenente i numeri delle pagine fisiche:
 	\begin{itemize}
@@ -1812,7 +1812,7 @@
 	\paragraph{Tabelle}
 	Lo schema di memoria virtuale fa uso della tabella di traduzione delle pagine, nel caso di memoria virtuale con schema a paginazione, con aggiunta di 1 bit di presenza che segnala se questa è in memoria o 0 se è una pagina mancante, cioè una \textbf{page fault}. \\
 	Quando bisogna caricare un processo il sistema operativo crea la TDP, ponendo a 1 bit di presenza delle pagine portate in memoria. Se viene richiesta, successivamente, una pagina mancante il processo viene sospeso in attesa del suo caricamento e gli altri processi nel frattempo vengono eseguiti. \\
-	Lo schema di memoria virtuale fa uso anche della \textbf{tabella di descrizione del file, TDF} che associa al numeri di pagine virtuali l'indirizzo di residenza di queste sulla memoria secondaria. 
+	Lo schema di memoria virtuale fa uso anche della \textbf{tabella di descrizione del file, TDF} che associa al numeri di pagine virtuali l'indirizzo di residenza di queste sulla memoria secondaria.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1.00\textwidth]{tabelle_memoria_vrituale}
@@ -1828,7 +1828,7 @@
 	Le soluzioni che vengono adottate sono spesso miste e dipendono dall'architettura che si vuole ottenere.
 	\paragraph{Gestione della memoria virtuale} La gestione della memoria virtuale segue gli schemi analoghi alla paginazione o alla segmentazione, con l'aggiunta della TDF. Ai fini dell'efficienza della memoria virtuale l'allocazione di un sottoinsieme di pagine virtuali su pagine fisiche richiede l'applicazione di particolari strategie che si possono classificare in:
 	\begin{itemize}
-		\item \textbf{strategie di allocazione:} quanta memoria reale allocare a ciascun processo; 
+		\item \textbf{strategie di allocazione:} quanta memoria reale allocare a ciascun processo;
 		\item \textbf{strategie di ricerca:} quali oggetti trasferire e quando dalla memoria secondaria alla memoria centrale;
 		\item \textbf{strategie di sostituzione:} in mancanza di spazio, quali oggetti rimuovere per assegnare spazio alle nuove richieste;
 		\item \textbf{strategie di posizionamento:} dove collocare un oggetto che entra in memoria.
@@ -1972,7 +1972,7 @@
 		\item proprietario;
 		\item dimensione, ecc.
 	\end{itemize}
-	Queste informazioni si definiscono \textit{attributi} dei file. 
+	Queste informazioni si definiscono \textit{attributi} dei file.
 	\begin{figure}[H]
 		\includegraphics[width=1.00\textwidth]{Attributi_file}
 	\end{figure}
@@ -2021,7 +2021,7 @@
 	Quando il file system è organizzato come un albero di directory, è necessario un qualche modo per specificare i nomi dei file. Questo può essere fatto in due diversi modi:
 	\begin{itemize}
 		\item \textbf{path name assoluto}: consiste nel cammino dalla directory radice al file. I componenti del cammini sono separati dal simbolo "/" in Unix e "\" in DOS.
-		\item \textbf{path name relativo}: si usa congiuntamente al concetto di directory di lavoro. Un utente può definire una directory come \textit{directory di lavoro corrente}. In questo caso tutti i path name che non iniziano con la directory radice sono considerati relativi alla directory di lavoro. 
+		\item \textbf{path name relativo}: si usa congiuntamente al concetto di directory di lavoro. Un utente può definire una directory come \textit{directory di lavoro corrente}. In questo caso tutti i path name che non iniziano con la directory radice sono considerati relativi alla directory di lavoro.
 	\end{itemize}
 	Alcune tipiche chiamate di sistema per la gestione delle directory sono:
 	\begin{itemize}
@@ -2077,7 +2077,7 @@
 	\end{itemize}
 	Gli i-node sono in posizione definita all'interno del file system.
 	\paragraph{Pregi} L'elemento di directory contiene solo il nome del file ed il numero di i-node e consente di mantenere in memoria gli i-node dei file aperti sprecando poco spazio. Inoltre, consente di indirizzare un numero enorme di blocchi di disco e per i file di piccole dimensioni consente di reperire rapidamente l'indirizzo dei primi blocchi di disco.
-	\section{Struttura delle directory} 
+	\section{Struttura delle directory}
 	Il file system, mediante il \textit{pathname} fornito dall'utente:
 	\begin{itemize}
 		\item localizza l'elemento della directory;
@@ -2086,21 +2086,21 @@
 	\section{Gestione dello spazio su disco}
 	I file sono generalmente memorizzati su disco, pertanto la \textit{gestione dello spazio su disco} è uno dei problemi fondamentali nell'implementazione del file system. \\
 	I file, generalmente, vengono memorizzati in blocchi di disco non necessariamente contigui. Questo perchè memorizzando un file con una sequenza contigua di byte si presenta l'ovvio problema che se il file aumenta di dimensione molto probabilmente dovrà essere spostato nel disco e lo spostamento di un file su un disco è un'operazione complessa e lenta.
-	\subsection{Dimensione dei blocchi} 
+	\subsection{Dimensione dei blocchi}
 	Il primo problema da risolvere è la scelta della dimensione dei blocchi. La scelta di un blocco molto grande rende più veloce il tempo di lettura ma provoca maggiore di spazio, invece, se la dimensione del blocco è molto piccola causa numerosi accessi ai blocchi per leggere i dati ma consente una gestione più efficiente dello spazio. \\
 	L'efficienza nel tempo e nello spazio sono intrinsecamente in conflitto nella scelta delle unità di allocazione perchè ad una buona utilizzazione dello spazio corrisponde una bassa percentuale di dati e viceversa. \\
 	Un compromesso si raggiunge scegliendo la dimensione del blocco di allocazione di 512 byte, 1024 byte e 2048 byte. \\
 	Considerando che il \textit{settore} è la minima unità fisica leggibile dal disco avremo che la dimensione del settore su disco è generalmente di 512 byte e la lettura di un blocco di allocazione di un 1Kb causerà sempre la lettura consecutiva di due settori di disco.
-	\subsection{Gestione dei blocchi liberi} 
+	\subsection{Gestione dei blocchi liberi}
 	Il problema successivo alla scelta di dimensione del blocco è quello della gestione dei blocchi liberi. \\
 	I metodi comunemente usati sono due:
 	\begin{itemize}
 		\item \textbf{lista concatenata} di blocchi che contengono gli indirizzi dei blocchi liberi nel disco;
-		\item \textbf{mappa di bit}: un disco di \textit{n} blocchi richiede una mappa di \textit{n} bit. I blocchi si rappresentano con 1 sulla mappa e 0 quelli allocati o viceversa. 
+		\item \textbf{mappa di bit}: un disco di \textit{n} blocchi richiede una mappa di \textit{n} bit. I blocchi si rappresentano con 1 sulla mappa e 0 quelli allocati o viceversa.
 	\end{itemize}
 	Il metodo della lista concatenata è più efficiente se il disco è quasi pieno, poichè il numero di blocchi è molto limitato. Inoltre, in queste condizioni, la mappa di bit potrebbe risultare spesso piena e richiedere continui accessi ad altre parti di mappa per assegnare blocchi liberi. Se c'è abbastanza memoria principale per contenere la mappa di bit, è generalmente preferibile questo rispetto alla lista concatenata.
 	\section{Affidabilità del file system}
-	Il file system può contenere dati che non possono essere persi poichè di difficile o costoso recupero. L'affidabilità del file system va perseguita spesso anche a scapito dell'efficienza o di economie. 
+	Il file system può contenere dati che non possono essere persi poichè di difficile o costoso recupero. L'affidabilità del file system va perseguita spesso anche a scapito dell'efficienza o di economie.
 	\subsection{Gestione dei blocchi fuori uso}
 	I dispositivi di memorizzazione presentano spesso blocchi inutilizzabili a causa di urti violenti, usura o difetti di fabbricazione. I blocchi inutilizzati non devono essere assegnati a nessun file e devono essere gestiti appropriatamente. \\
 	La soluzione per la gestione dei blocchi danneggiati possono essere di due tipi:
@@ -2111,7 +2111,7 @@
 	\end{itemize}
 	\subsection{Copie di backup}
 	Il metodo per ridurre le perdite di dati in caso di crash del file system è effettuare le copie di backup. \\
-	Nella pianificazione delle operazioni di backup vanno valutati principalmente: 
+	Nella pianificazione delle operazioni di backup vanno valutati principalmente:
 	\begin{itemize}
 		\item la frequenza con cui effettuare le copie di backup;
 		\item i file che presentano la maggior necessità di essere copiati;
@@ -2127,7 +2127,7 @@
 	\paragraph{Scelta dei file} La scelta va pianificata in base al contenuto dei file ed al costo di ripristino. Ad esempio:
 	\begin{itemize}
 		\item i file \textit{critici} potrebbero essere raggruppati in directory dedicate delle quali si effettua copia con maggiore frequenza;
-		\item la duplicazione di alcuni file \textit{critici} può essere opportuna se il quantitativo di memoria sprecato è giustificabile. 
+		\item la duplicazione di alcuni file \textit{critici} può essere opportuna se il quantitativo di memoria sprecato è giustificabile.
 	\end{itemize}
 	\paragraph{Tecniche di backup} La scelta va pianificata in base al tempo disponibile ed al costo sopportabile per i supporti. Le tecniche di backup possono essere:
 	\begin{itemize}
@@ -2154,7 +2154,7 @@
 	 	\item \textbf{contatore temporaneo $<$ contatore di link}: anche se tutti i file vengono rimossi, l'i-node rimane bloccato e al valore del link viene assegnato il valore del contatore.
 	 	\item \textbf{contatore temporaneo $>$ contatore di link}: se alcuni file vengono rimossi, il valore del link si azzera. L'i-node viene reso libero e i blocchi ad esso assegnati vengono assegnati alla lista libera. Inoltre, potrebbero esserci file che puntano erroneamente all'i-node e i dati vengono persi e il contatore di link viene aggiornato al valore attuale.
 	 \end{itemize}
-	\section{Prestazioni del file system} 
+	\section{Prestazioni del file system}
 	L'accesso al disco è un'operazione notevolmente più lenta della lettura in memoria. Molti file system prevedono tecniche per ridurre il numero di accessi al disco come:
 	\begin{itemize}
 		\item \textbf{caching};
@@ -2178,7 +2178,7 @@
 		\item \textbf{interleave}: un processo richiede un tempo $t_b$ per richiedere e recuperare un blocco. In situazioni di richieste consecutive un blocco richiesto può essere già passato sotto la testina e bisogna attendere una rotazione intera. \\
 		La tecnica di interleaving alloca i blocchi fisici del disco in ordine non sequenziale stretto, ma sequenziale con salti. \\
 		Sia $t_r$ il tempo di rotazione del disco avremo che:
-		\[fattore\ di\ interleaving\ =\ \dfrac{t_r}{t_b} + 1\] 
+		\[fattore\ di\ interleaving\ =\ \dfrac{t_r}{t_b} + 1\]
 	\end{itemize}
 	\subsection{Riduzione dei movimenti del braccio del disco, soluzione hard} La riduzione dei movimenti del braccio del disco avviene mediante la \textit{schedulazione del braccio del disco}. Il tempo necessario per leggere un blocco di disco dipende da:
 	\begin{itemize}
@@ -2200,14 +2200,14 @@
 		\item ($F_i$, \{r,w\}) esprime il possesso di lettura e di scrittura sull'archivio $F_i$.
 	\end{itemize}
 	Il modello basato sui domini consente di formalizzare il concetto della migrazione dei processi in un dominio di protezione diverso da quello di appartenenza. Per formalizzare la facoltà di migrare da un dominio all'altro è sufficiente considerare anche i domini come oggetti ai quali è associata l'operazione di ingresso \{in\}. Una volta entrato in un nuovo dominio, l'utente o il processo proveniente da un altro dominio non ha la possibilità di migrare ulteriormente.
-	\subsection{Strutture dati per la protezione} La matrice di protezione è tipicamente molto grande e sparsa. Una struttura più sufficiente è ottenuta rappresentando le stesse informazioni attraverso: 
+	\subsection{Strutture dati per la protezione} La matrice di protezione è tipicamente molto grande e sparsa. Una struttura più sufficiente è ottenuta rappresentando le stesse informazioni attraverso:
 	\begin{itemize}
 		\item \textbf{liste di controllo degli accessi};
 		\item \textbf{liste associate ai domini}.
 	\end{itemize}
 	\paragraph{Liste di controllo degli accessi} Ogni lista è associata ad un oggetto ed i suoi elementi sono coppie del tipo (dominio, insieme dei diritti di accesso). Ciascuna lista elenca tutti i diritti di accesso sull'oggetto che competono ad un certo dominio. Queste liste solitamente sono riferite agli utenti che sono identificati con una coppia del tipo (gruppo, nome) dove i nomi sono locali ai gruppi. Ogni lista è un attributi degli archivi.
 	\paragraph{Liste associate ai domini} In questo caso ogni lista è associata ad un dominio e i suoi elementi sono coppie del tipo (oggetto, insieme dei diritti di accesso) dove ogni elemento della lista esprime la facoltà dell'utente di accedere ad un dato oggetto con i diritti compresi in un certo insieme. Ogni lista è un attributo degli utenti e dei loro processi.
-	
+
 	\section{Protezione nel sistema operativo UNIX}
 	I meccanismi di protezione adottati in UNIX si basano sulle liste di controllo degli accessi. Dato che ogni processo è attribuito ad un utente proprietario, l'identificazione degli utenti si propaga ai loro processi. \\
 	Ogni descrittore di archivio contiene una struttura dati simile, dal punto di vista del contenuto informativo ad una lista di controllo degli accessi. Essa consiste di tre codici:
@@ -2215,7 +2215,7 @@
 		\item DirittiProprietario;
 		\item DirittiGruppo;
 		\item DirittiAltriUtenti.
-	\end{itemize} 
+	\end{itemize}
 	che esprimono i diritti di lettura, scrittura ed esecuzione agli utenti proprietari, agli utenti del gruppo e agli utenti degli altri gruppi. \\
 	Questa convenzione non permette di discriminare tra utenti dello stesso gruppo del proprietario ne tra quelli appartenenti a gruppi diversi da quello del proprietario. \\
 	\section{Identificazione degli utenti}
