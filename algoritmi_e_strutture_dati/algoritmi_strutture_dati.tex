@@ -4,7 +4,7 @@
 \usepackage{libertinus}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
-\usepackage{amsmath}	
+\usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{tabularx}
@@ -69,61 +69,61 @@
 }
 
 \lstdefinestyle{pascalstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	language=Pascal
 }
 
 \lstdefinestyle{cppstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 	language=C++
 }
 
 \lstdefinestyle{normalstyle}{
-	backgroundcolor=\color{backcolour},   
+	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue}\bfseries,
 	numberstyle=\tiny\color{codegray},
 	stringstyle=\color{codepurple},
 	basicstyle=\ttfamily\footnotesize,
-	breakatwhitespace=false,         
-	breaklines=true,                 
-	captionpos=b,                    
-	keepspaces=true,                 
-	numbers=left,                    
-	numbersep=5pt,                  
-	showspaces=false,                
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
 	showstringspaces=false,
-	showtabs=false,                  
+	showtabs=false,
 	tabsize=2,
 }
 
@@ -177,7 +177,7 @@
 
 \newcommand{\nmu}{}
 
-\begin{document}	
+\begin{document}
 	{
 		\let\cleardoublepage\clearpage
 		\maketitle
@@ -229,7 +229,7 @@
 	Le astrazioni usate per il software tendono ad evidenziare gli aspetti funzionali, quindi cosa è calcolato piuttosto che come è condotto il procedimento di calcolo. \\
 	L'astrazione fornisce una distinzione tra il livello di \textit{concettualizzazione} e quello di \textit{realizzazione}. Nella fase di \textit{concettualizzazione} viene individuata la soluzione al problema, vegono specificati gli oggetti da trattare e vengono ideate le scelte algoritmiche. \\
 	La fase di \textit{realizzazione} si riferisce a quel processo che, partendo dallo schema concettuale, permette di ottenere uno specifico programma che realizza gli elementi dello schema e  questo impone la scelta dei moduli software e della loro realizzazione. \\
-	L'astrazione viene usata per decomporre, rappresentare e generalizzare. La scomposizione di un problema in sottoproblemi è un metodo semplice per affrontare problemi complessi e l'astrazione è usata per cogliere gli aspetti essenzziali di una situazione del mondo reale in modo da definire le opportune strutture di rappresentazione che ne evidenziano alcuni aspetti e ne trascurino altri.\\ 
+	L'astrazione viene usata per decomporre, rappresentare e generalizzare. La scomposizione di un problema in sottoproblemi è un metodo semplice per affrontare problemi complessi e l'astrazione è usata per cogliere gli aspetti essenzziali di una situazione del mondo reale in modo da definire le opportune strutture di rappresentazione che ne evidenziano alcuni aspetti e ne trascurino altri.\\
 	Ci sono due tipi di astrazione:
 	\begin{itemize}
 		\item \textbf{Astrazione sui dati}. Consente di far riferimento a strtture algebrico-matematiche, caratterizzate da valori e da operazioni su tali valori. Si prescinde dal modo in cui queste strutture sono organizzate e realizzata mediante i costrutti di un linguaggio di programmazione.
@@ -242,14 +242,14 @@
 		\item programmazione strutturata, con schemi iterativi e ricorsivi;
 		\item programmazione orientata agli oggetti;
 		\item programmazione logica e funzionale.
-	\end{itemize} 
+	\end{itemize}
 	La \textit{modularizzazione} consente di razionalizzare lo sviluppo del software costruendo programmi costituiti da parti indipendenti e interagenti. Un modulo è caratterizzato da una struttura interna, è definito con un determinato scopo, offre all'esterno un insieme di funzionalità utilizzabili da altri moduli e ha precise relazioni con altri moduli. La modularizzazione facilita il processo di sviluppo e le attività di analisi e di verificae f avorisce la riusabilità. La qualità della modularizzazione aumenta:
 	\begin{itemize}
 		\item all'aumentare della \textbf{coesione} di un modulo in quanto incapsula un insieme di caratteristiche omogenee, indipendenti da altri moduli;
 		\item all'aumentare dell'uso di\textbf{information hiding}, i dettagli interni al modulo non devono giocare alcun ruolo nell'utilizzo del modulo da parte di moduli esterni;
 		\item al diminuire dell'\textbf{accopiamento} tra moduli. Non si creano dipendenze non volute o non necessarie.
 		\item con l'utilizzo dell'\textbf{interfacciamento esplicito} che suggerisce di rappresentare mediante parametri tutti i dati che vengono scambiati tra due sottoprogrammi.
-	\end{itemize} 
+	\end{itemize}
 	Le \textit{tecniche di progettazione di algoritmi e strutture dati} riguardano la definizione degli algoritmi e la individuazione delle strutture dati piu' appropriate per un determinato problema, come tecniche enumerative, backtracking, divide et impera, ecc. \\
 	\section{Classificazione dei  linguaggi di programmazione}
 	\begin{itemize}
@@ -284,7 +284,7 @@ int binomial(int n, int k)
 	return fatt(n) / fatt(k) * fatt(n-k);
 \end{lstlisting}
 		Se $fatt(i)$ non è disponibile è necessario scrivere un sotto-programma per ampliare il repertorio degli operatori e l'astrazione funzionale ci consente questo.
-	\end{example} 
+	\end{example}
 	I linguaggi di programmazione ad alto livello permettono l'uso di astrazione funzionale, cioè consentono di:
 	\begin{itemize}
 		\item creare delle unità di programma dando un nome ad un gruppo di istruzioni e stabiliscono le modalità di comunicazione tra l'unità di programma creata ed il resto del programma in cui essa si inserisce;
@@ -333,7 +333,7 @@ fatt(int k)
 				\item operatori aritmetici come somma, sottrazione, moltiplicazione e divisione;
 				\item operatori di congiunzione, disgiunzione e negazione per i booleani;
 				\item operatori di confronto tra interi come maggiore, minore, uguale ecc.;
-				\item operatori di concatenazione per le sequenze di caratteri e di selezione di sottostringa 
+				\item operatori di concatenazione per le sequenze di caratteri e di selezione di sottostringa
 			\end{itemize}
 			\item il repertorio dei simboli o nomi per l'insieme dei dati potrebbe essere: integer, boolean, string;
 			\item il repertorio dei simboli o nomi per gli operatori potrebbe essere:
@@ -437,7 +437,7 @@ TYPE
 				\item \textbf{postcondizione} che stabilisce come il risultato sia vincolato agli argomenti dell'operatore.
 			\end{itemize}
 		\end{itemize}
-	\end{itemize}	
+	\end{itemize}
 	La realizzazione sfrutta al meglio le possibilità offerte dall'ambiente di programmazione. La definizione di un formalismo per le specifiche sintattiche non pone particolari problemi. L'individuazione di formalismi per le specifiche semantiche è piu' complicato, in genere le specifiche semantiche sono date con frasi estratte dal linguaggio naturale o da quello matematico. Vedere dalle slide l'esempio di specifica. \\
 	La realizzazione riconduece la specifica ai tipi di dato primitivi e agli operatori già disponibili, in particolare gli operatori sono simulati con sottoprogrammi. \\
 	Alla stessa specifica possono corrispondere diverse realizzazioni piu' o meno efficienti. Nel valutare l'efficienza di sottoprogrammi che utilizzano tipi di dato primitivi, si precinde dalla caratteristiche della macchina, assumendo di far riferimento ad una organizzazione molto semplice. Si fa riferimento a:
@@ -489,30 +489,30 @@ Operatori:
 			\begin{lstlisting}[style=normalstyle]
 Tipi:
 	intero: l'insieme dei numeri interi
-	vettore: l'insieme delle sequenza di n elementi di tipo 
+	vettore: l'insieme delle sequenza di n elementi di tipo
 	tipoelem
 Operatori:
 	creavettore = v
 		post: per ogni i, 1 <= i <= n, l'i-esimo elemento
-		del vettore v(i) e' uguale ad un definito elemento 
+		del vettore v(i) e' uguale ad un definito elemento
 		di tipo tipoelem
 	leggivettore(v, i) = e
 		pre: 1 <= i <= n
 		post: e = v(i)
 	scrivivettore(v, i, e) = v'
 		pre: 1 <= i <= n
-		post: v'(i) = e, v'(j) = v(j) 
+		post: v'(i) = e, v'(j) = v(j)
 		per ogni j tale che 1 <= j <= n e j != i
 \end{lstlisting}
 			\item Realizzazione: \\
 			In molti linguaggi il vettore è il tipo di dato primitivo:
 			\begin{itemize}
-				\item in Fortran creavettore corrisponde a dimension v(n), leggivettore(v, i) corrisponde a v(i) e scrivivettore(v, i, e) corrisponde a v(i) = e 
+				\item in Fortran creavettore corrisponde a dimension v(n), leggivettore(v, i) corrisponde a v(i) e scrivivettore(v, i, e) corrisponde a v(i) = e
 				\item in Pascal corrisponde all'array, creavettore corrisponde a var v: array[1..n] of type tipoelem, leggivettore(v, i) corrisponde a v[i] e scrivivettore(v, i, e) corrisponde a v[i] := e
 			\end{itemize}
 		\end{itemize}
 	\end{example}
-	Vedere esempio della matrice dalle slide. 
+	Vedere esempio della matrice dalle slide.
 	\subsection{Tecniche di specifica}
 	Due tecniche comuni per la scrittura di specifiche sono:
 	\begin{itemize}
@@ -544,7 +544,7 @@ Operatori:
 		Vediamo un esempio di una specifica algebrica per il tipo Stack:
 		\begin{tabular}{ll}
 			\textbf{struttura} & Stack(di ItemType) \\[0.5em]
-			\textbf{interfaccia} & 
+			\textbf{interfaccia} &
 			\begin{tabular}[t]{@{}l@{}}
 				Create \hfill $\rightarrow$ Stack \\
 				Push(Stack, ItemType) \hfill $\rightarrow$ Stack \\
@@ -563,7 +563,7 @@ Operatori:
 		\begin{enumerate}
 			\item Gli assiomi per gli observer sono scritti in termini dei costruttori;
 			\item I costruttori che rimuovono un elemento dalla struttura sono definiti in termini dei costruttori che aggiungono un elemento alla struttura;
-			\item I costruttori che creano la struttura o aggiungono un elemento sono definiti esplicitamente. 
+			\item I costruttori che creano la struttura o aggiungono un elemento sono definiti esplicitamente.
 		\end{enumerate}
 		Per la struttura Stack avremo, \textbf{per ogni S in Stack, i in ItemType}:
 		\begin{itemize}
@@ -579,7 +579,7 @@ Operatori:
 		\textbf{Specifica sintattica}: \\
 		\begin{tabular}{ll}
 			\textbf{struttura} & Stack(di ItemType) \\[0.5em]
-			\textbf{interfaccia} & 
+			\textbf{interfaccia} &
 			\begin{tabular}[t]{@{}l@{}}
 				Create \hfill $\rightarrow$ Stack \\
 				Push(Stack, ItemType) \hfill $\rightarrow$ Stack \\
@@ -597,7 +597,7 @@ Operatori:
 			\item Push(S, I) $\to$ S':
 			\begin{itemize}
 				\item PRE: -
-				\item POST: S' è lo stack S con I al top	
+				\item POST: S' è lo stack S con I al top
 			\end{itemize}
 			\item Pop(S) $\to$ S':
 			\begin{itemize}
@@ -607,14 +607,14 @@ Operatori:
 			\item Top(S) $\to$ I:
 			\begin{itemize}
 				\item PRE: not empty(S)
-				\item POST: I è l'elemento al top dello stack S	
+				\item POST: I è l'elemento al top dello stack S
 			\end{itemize}
 		\end{itemize}
 	\end{example}
 	\chapter{Introduzione alla programmazione object oriented}
 	Nella programmazione imperativa è possibile accedere alle variabili globali da qualsiasi parte del programma ma nei programmi molto grandi questa tecnica diventa ingestibile. \\
 	Pertando è stato pensato di incapsulare ogni variabile globale in un modulo insieme ad un gruppo di operatori che possono accedere a tali variabilie e gli altri moduli possono accedere indirettamente alle variabili solo per mezzo di questi operatori. \\
-	La programmazione Object-Oriented è una disciplina che si basa su oggetti per imporre una struttura modulare sui programmi. 
+	La programmazione Object-Oriented è una disciplina che si basa su oggetti per imporre una struttura modulare sui programmi.
 	\section{Oggetti e classi}
 	Un oggetto è definito come un gruppo di procedure che condividono uno stato. Quindi un oggetto è una collezione di dati che rappresetano gli \textit{stati dell'oggetto} e procedure in grado di alterare lo stato, il \textit{comportamento}. \\
 	Agli oggetti sono associati operazioni e valori.
@@ -715,12 +715,12 @@ Operatori:
 				\item POST: $\begin{cases}
 					b = true &  l =\ <> \\
 					b = false & l \neq\ <>
-				\end{cases}$ 
+				\end{cases}$
 			\end{itemize}
 			\item \texttt{leggilista(p, l)} = $a$
 			\begin{itemize}
 				\item PRE: $p = pos(i) \quad 1 \leq i \leq n$
-				\item POST: $a = a(i)$ 
+				\item POST: $a = a(i)$
 			\end{itemize}
 			\item \texttt{scrivilista(a, p, l)} = $l'$
 			\begin{itemize}
@@ -729,7 +729,7 @@ Operatori:
 			\end{itemize}
 			\item \texttt{primolista(l)} = $p$
 			\begin{itemize}
-				\item POST: $p = pos(1)$ 
+				\item POST: $p = pos(1)$
 			\end{itemize}
 			\item \texttt{finelista(p, l)} = $b$
 			\begin{itemize}
@@ -755,7 +755,7 @@ Operatori:
 				\item POST: $\begin{cases}
 					l' =\ <a_1, \dots, a_{i-1}, a, a_{i+1}, \dots, a_n> & 1 \leq i \leq n \\
 					l' =\ <a_1, a_2, \dots, a_n, a> & i = n + 1\\
-					l' =\ < a > \quad &i = 0\ e\ l =\ <> 
+					l' =\ < a > \quad &i = 0\ e\ l =\ <>
 				\end{cases}$
 			\end{itemize}
 			\item \texttt{canclista(p, l)} = $l'$
@@ -768,7 +768,7 @@ Operatori:
 	Dalla specifica semantica emerge che per accedere a un elemento occorre conoscerne la posizione. Queseto nelle liste è possibile solo per il primo elemento, L'unico operatore che da; per risultato la posizione è \texttt{primolista}. Per gli altri la posizione si ottiene conoscendo a priori la posizione dell'elemento precedente o seguente e applicando l'operatore \texttt{predlista} o \texttt{succlista}. \\
 	Dunque per accedere ad un generico elemento occorre scandire la lista a partire dal primo elemento. \\
 	L'operatore \texttt{listavuota} è ridondante visto che puo' essere sostituito da: \[\texttt{finelista(primolista(l), l)}\]
-	Talvolta, l'operatore \texttt{primolista(l)} puo' avere implementazioni differenti, a volte ritorna l'elemento primo e non la posizione. 
+	Talvolta, l'operatore \texttt{primolista(l)} puo' avere implementazioni differenti, a volte ritorna l'elemento primo e non la posizione.
 	\begin{example}{\nmu Eliminazione di duplicati}{}
 		Questo è un esempio di come sia possibile, avendo a disposizione gli operatori definiti nell'algebra per il trattamento di una lista, risolvere un generico problema, senza sapere come la lista sia stata implementata. \\
 		Utilizziamo come linguaggio di programmazione il pascal e supponiamo di avere a disposizione degli operatori sul tipo lista. \\
@@ -809,16 +809,16 @@ elimina_duplicati(lista l)
 	\end{itemize}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\textwidth]{rappresentazione_collegata_lista}
+		\includegraphics[width=0.5\textwidth]{images/rappresentazione_collegata_lista}
 	\end{figure}
-	Si puo' notare che si usa un riferimento al primo elemento della lista, detto \textit{riferimento iniziale} e un simbolo speciale $\emptyset$ come riferimento associato all'ultimo nodo, nel caso in cui la lista sia vuota, tale simbolo compare direttamente al riferimento iniziale. 
+	Si puo' notare che si usa un riferimento al primo elemento della lista, detto \textit{riferimento iniziale} e un simbolo speciale $\emptyset$ come riferimento associato all'ultimo nodo, nel caso in cui la lista sia vuota, tale simbolo compare direttamente al riferimento iniziale.
 	\subsection{Realizzazione con cursori}
 	Nei linguaggi che non hanno i puntatori come tipi di dato primitivi è possibile simulare i puntatori con i cursori, cioè con variabili intere il cui valore è interpretato come un indice di vettore. Per fare questo si definisce un vettore spazio che:
 	\begin{itemize}
 		\item contiene tutte le liste, ognuna individuata da un proprio cursore iniziale;
-		\item contiene tutte le celle libere, organizzate anch'esse in una lista, detta \textit{lista libera}. 
+		\item contiene tutte le celle libere, organizzate anch'esse in una lista, detta \textit{lista libera}.
 	\end{itemize}
-	Tramite la realizzazione con cursori, si riesce a risolvere il problema dell'aggiornamento attraverso i riferimenti. 
+	Tramite la realizzazione con cursori, si riesce a risolvere il problema dell'aggiornamento attraverso i riferimenti.
 	\begin{example}{\nmu Lista tramite cursori}{lista_cursori}
 		Consideriamo tre liste:
 		\[
@@ -833,14 +833,14 @@ elimina_duplicati(lista l)
 		Analogamente si definisce $pos(n+1)$ uguale al cursore alla cella di spazio che contiene l'elemento $n-$esimo se $n \geq 1$ o uguale a 0 altrimenti. La lista vuota si indica con $l = \emptyset$.
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.7\textwidth]{lista_cursori}
+			\includegraphics[width=0.7\textwidth]{images/lista_cursori}
 			\caption{Rappresentazione di una lista mediante cursori}
 			\label{fig:lista_cursori}
 		\end{figure}
 		Per poter aggiornare una lista così realizzata sorge il problema di individuare la posizione di una componente libera nell'array. Per questo si usa la \textit{listalibera} memorizzata sempre nel vettore spazio per raccogliere in modo collegato le componenti libere nell'array.
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.7\textwidth]{lista_libera}
+			\includegraphics[width=0.7\textwidth]{images/lista_libera}
 			\caption{Realizzazione della lista libera}
 			\label{fig:lista_libera}
 		\end{figure}
@@ -870,7 +870,7 @@ elimina_duplicati(lista l)
 			\item spazio: array di maxlung elementi di tipo componente.
 		\end{itemize}
 	\end{itemize}
-	
+
 	Le operazioni eseguibili sulla lista libera sono:
 	\begin{itemize}
 		\item inizializzazione che serve a collagare le varia componenti dell'array che inizialmente fanno parte di listalibera;
@@ -885,7 +885,7 @@ elimina_duplicati(lista l)
 				spazio[maxlung].successivo = 0
 \end{lstlisting}
 	È immediato verificare, prima di definire le operazioni di \texttt{inslista} e \texttt{canclista}, che con questa rappresentazione l'inserimento e la cancellazione di un elemento non richiedono lo spostamento di altri elementi nella lista grazie alla \textit{listalibera} ma rimangono i problemi connessi all'uso dell'array cioè all'esigenza di definirne una dimensione. \\
-	Quindi, rispetto alla rappresentazione sequenziale l'aggiormaneto della lista non richiede lo spostamento di altri elementi, la complicazione della gestione della \textit{listalibera} è compensata dal fatto che l'aggiornamento della lista richiede un'operazione limitato di operazioni e rispetto alla rappresentazione sequenziale c'è un'altra occupazione di memoria vista la necessità di memorizzare i riferimenti. 
+	Quindi, rispetto alla rappresentazione sequenziale l'aggiormaneto della lista non richiede lo spostamento di altri elementi, la complicazione della gestione della \textit{listalibera} è compensata dal fatto che l'aggiornamento della lista richiede un'operazione limitato di operazioni e rispetto alla rappresentazione sequenziale c'è un'altra occupazione di memoria vista la necessità di memorizzare i riferimenti.
 	\paragraph{Spostamento} È fondamentale disporre della procedura \texttt{sposta(h, k)} che trasferisce la cella puntata da $h$ spostandola prima della cella puntata da $k$. La procedura aggiorna il cursore $h$ in modo che punti alla cella che seguiva quella spostata e il cursore $k$ in modo che punti alla cella spostata.
 	\begin{lstlisting}[style=normalstyle]
 		sposta(riferimento h, riferimento k)
@@ -901,16 +901,16 @@ elimina_duplicati(lista l)
 			elseif p = 1 then
 				sposta(listalibera, l)
 				spazio[l].elemento = a
-			else 
+			else
 				sposta(listalibera, spazio[p].successivo)
 				spazio[spazio[p].successivo].elemento = a
-	\end{lstlisting}	
+	\end{lstlisting}
 	\paragraph{Eliminazione} \quad \\
 	\begin{lstlisting}[style=normalstyle]
 		canclista(posizione p, lista l)
 			if p = 1 then
 				sposta(l, listalibera)
-			else 
+			else
 				sposta(spazio[p].successivo, listalibera)
 	\end{lstlisting}
 	È evidente che la realizzazione con cursori è implementabile in tutti i linguaggi che dispongono di vettori e consentono l'astrazione funzionale mediante procedure o funzioni.
@@ -924,7 +924,7 @@ elimina_duplicati(lista l)
 	\end{itemize}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\textwidth]{lista_puntatori}
+		\includegraphics[width=0.5\textwidth]{images/lista_puntatori}
 		\caption{Realizzazione di una lista mediante puntatori}
 		\label{fig:lista_puntatori}
 	\end{figure}
@@ -940,24 +940,24 @@ elimina_duplicati(lista l)
 	Vediamo la rappresentazione quando c'è un inserimento, ovvero quando \texttt{inslista} in $P = pos(i)$ con $i > 1$:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\textwidth]{instlista_puntatori_centrale}
+		\includegraphics[width=0.5\textwidth]{images/instlista_puntatori_centrale}
 	\end{figure}
 	In $P = pos(1)$, invece:
 	\begin{figure}[H]
 		\centering
-			\includegraphics[width=0.5\textwidth]{instlista_puntatori_inizio}
+			\includegraphics[width=0.5\textwidth]{images/instlista_puntatori_inizio}
 	\end{figure}
 	Per \texttt{Canclista} in  $P = pos(i)$:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.5\textwidth]{canclista_puntatori_centrale}
+		\includegraphics[width=0.5\textwidth]{images/canclista_puntatori_centrale}
 	\end{figure}
 	Da queste figure notiamo una limitazione, non è possibile sapere la cella che precede la cella $i$-esima, per questo c'è un'altra realizzazione, cioè quella a \textit{doppi puntatori} o \textit{simmetrica}
 	\subsection{Realizzazione a doppi puntatori}
 	In questa realizzazione ogni elemento contiene, oltre al riferimento al nodo successivo, anche il riferimento al precedente. Eventualmente, la lista può essere espansa con una cella in più per ottenere una lista circolare:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.7\textwidth]{lista_doppi_puntatori_circolare}
+		\includegraphics[width=0.7\textwidth]{images/lista_doppi_puntatori_circolare}
 		\caption{Realizzazione di una lista a doppi puntatori circolare}
 	\end{figure}
 	Con questa rappresentazione si ha il vantaggio di:
@@ -984,7 +984,7 @@ elimina_duplicati(lista l)
 		\item \texttt{PILAVUOTA(P) = b} \\
 		\quad \textit{Post}: $\begin{cases}
 			b = vero & P = \Lambda \\
-			b = falso & altrimenti 
+			b = falso & altrimenti
 		\end{cases}$
 		\item \texttt{LEGGIPILA(P) = a} \\
 		\quad \textit{Pre: P = } $a_1, a_2, \dots, a_n$ e $n \geq 1$ \\
@@ -1008,7 +1008,7 @@ elimina_duplicati(lista l)
 		&\texttt{PILAVUOTA(P)} = \texttt{LISTAVUOTA(P)} \\
 		&\texttt{LEGGIPILA(P)} = \texttt{LEGGILISTA(PRIMOLISTA(P), P)} \\
 		&\texttt{FUORILISTA(P)} = \texttt{CANCLISTA(PRIMOLISTA(P), P)} \\
-		&\texttt{INPILA(a, P)} = \texttt{INSLISTA(a, PRIMOLISTA(P), P)}		
+		&\texttt{INPILA(a, P)} = \texttt{INSLISTA(a, PRIMOLISTA(P), P)}
 	\end{align*}
 	\section{Realizzazione con vettore}
 	Una realizzazione dello stack con il tipo di dato pila consiste nel memorizzare gli \textit{n} elementi della pila, in ordine inverso, nelle prime \textit{n} posizioni di un vettore di \textit{maxlung} elementi, mantenendo un curosre alla testa della pila. La pila vuota viene individuata dal valore 0 contenuto nel cursore, mentra la pila satura, è individuata dal valore \textit{maxlung}. \texttt{FUORIPILA} viene realizzata decrementando il valore del cursore, mentre \texttt{INPILA} è realizzata incrementando il valore del cursore ed inserendo il nuovo elemento nella posizione del vettore individuata dal cursore. La realizzazione dettagliata con procedure Pascal è la seguente:
@@ -1018,7 +1018,7 @@ type
 		testa: 0..maxlung;
 		elementi: array[1..maxlung] of tipoelem;
 	end;
-	
+
 procedure CREAPILA(var P: pila);
 	begin
 		P.testa := 0
@@ -1056,12 +1056,12 @@ procedure INPILA(a: tipoelem, var P: pila);
 	Grazie alle pile è sempre possibile, dato un programma ricorsivo, trasformarlo in uno iterativo. I programmi ricorsivi corrispondono a metodi solutivi particolarmente adatti a problemi per i quali:
 	\begin{itemize}
 		\item la soluzione del problema di rango \textit{n} è definibile in termini della soluzione del problema di rango inferiore a \textit{n};
-		\item è definibile una soluzione per assioma sul problema di rango minimo (1 o 0). 
+		\item è definibile una soluzione per assioma sul problema di rango minimo (1 o 0).
 	\end{itemize}
 	Ad esempio, la successione di fibonacci è definita come una successione il cui $k-$esimo elemento è uguale alla somma dei due che lo precedono:
 	\begin{align*}
 		&fib(1) = 1 \quad fib(2) = 1 \quad \text{livello assiomatico} \\
-		&fib(k) = fib(k - 1) + fib(k - 2) \quad k > 2			
+		&fib(k) = fib(k - 1) + fib(k - 2) \quad k > 2
 	\end{align*}
 	La ricorsione può essere usata per formalizzare un'ampia classe di strutture dati che mostrano caratteristiche ricorsive nella struttura.  \\
 	Vedere l'esempio delle torre di Hanoi.
@@ -1074,7 +1074,7 @@ procedure INPILA(a: tipoelem, var P: pila);
 		&\quad Pre: Q = a_1, a_2, \dots, a_n \quad n \geq 0 \\
 		&\quad Post: \begin{cases}
 			Q' = a_1, a_2, \dots, a_n & n > 0 \\
-			Q'= a_1, a_2, \dots, a_n, a 
+			Q'= a_1, a_2, \dots, a_n, a
 		\end{cases}
 	\end{align*}
 	Per simulare \texttt{INCODA} con operazioni delle liste, bisogna distinguere il caso di inserzione in una coda vuota da quello di inserzione in una coda non vuota. Nel primo caso la simulazione è identica a quella di \texttt{INPILA}, mentre nel secondo caso occorre inserire l'elemento nella posizione che segue quella dell'ultimo elemento della lista:
@@ -1116,14 +1116,14 @@ procedure FUORICODA(var Q: coda);
 		end
 	end;
 
-procedure INCODA(a: tipoelem, var Q: coda);	
+procedure INCODA(a: tipoelem, var Q: coda);
 	begin
 		if Q.lung = maxlung then
 			{ messaggio di errore: coda satura }
 		else begin
 		 	Q.elementi[(Q.testa + Q.lung) mod maxlung] := a;
 		 	Q.lung := Q.lung + 1
-	end;	
+	end;
 \end{lstlisting}
 \section{Realizzazione con puntatori}
 Nella realizzazione con puntatori la coda è realizzata con \textit{n} celle, la prima delle quali è indirizzata da un puntatore ``testa'' e l'ultima da un puntatore ``fondo''. La coda vuota è individuata dal valore nullo del puntatore di testa.
@@ -1157,15 +1157,15 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\item \texttt{INSIEMEVUOTO($A$) = b} \\
 		\quad \textit{Post}: $\begin{cases}
 			b = vero & A = \empty \\
-			b = falso & altrimenti 
+			b = falso & altrimenti
 		\end{cases}$
 		\item \texttt{APPARTIENE($x, A$) = b} \\
 		\quad \textit{Post}: $\begin{cases}
 			b = vero & x \in A \\
-			b = falso & altrimenti 
+			b = falso & altrimenti
 		\end{cases}$
 		\item \texttt{INSERISCI($x, A$) = $A'$} \\
-		\quad \textit{Post:} $A'= A \cup \{x\}$ 
+		\quad \textit{Post:} $A'= A \cup \{x\}$
 		\item \texttt{CANCELLA($x, A$) = $A'$} \\
 		\quad \textit{Post:} $A'= A - \{x\}$
 		\item \texttt{UNIONE($A, B$) = $C$} \\
@@ -1174,7 +1174,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\quad \textit{Post:} $C = A \cap B$
 		\item \texttt{DIFFERENZA($A, B$) = $C$} \\
 		\quad \textit{Post:} $C = A - B$
-		
+
 	\end{itemize}
 	Gli operatori \texttt{INSERISCI} e \texttt{CANCELLA}, pur essendo rindondanti, in quanto ottenibili con gli operatori di \texttt{UNIONE} e \texttt{DIFFERENZA}, sono molto utilizzati e di solito compaiono in tutte le specifiche degli insiemi.
 	\section{Realizzazione con vettore booleano}
@@ -1183,13 +1183,13 @@ Una specifica per il tipo di dato insieme è la seguente:
 		const N = ... { valore opportuno };
 		type tipoelem = 1..N;
 			insieme = packed array[1..N] of boolean;
-		
+
 		procedure CREAINSIEME(var A: insieme);
 			var i: integer;
 			begin
 				for i := 1 to N do A[i] := false
 			end;
-			
+
 		function INSIEMEVUOTO(var A: insieme): boolean;
 			var i: integer;
 			begin
@@ -1197,34 +1197,34 @@ Una specifica per il tipo di dato insieme è la seguente:
 				while (i < N) and not A[i] do i := i + 1;
 				INSIEMEVUOTO = not A[i];
 			end;
-		
+
 		function APPARTIENE(i: tipoelem, var A: insieme): boolean;
 			begin
 				APPARTIENE := A[i]
-			end;	
-		
+			end;
+
 		procedure INSERISCI(i: tipoelem, var A: insieme);
-			begin 
+			begin
 				A[i] := true;
 			end;
-		
+
 		procedure CANCELLA(i: tipoelem, var A: insieme);
 			begin
 				A[i] := false;
 			end;
-		
+
 		procedure UNIONE(var A, B, C: insieme);
 			var i: integer;
 			begin
 				for i := 1 to N do C[i] := A[i] or B[i]
 			end;
-	
+
 		procedure INTERSEZIONE(var A, B, C: insieme);
 			var i: integer;
 			begin
 				for i := 1 to N do C[i] := A[i] and B[i]
 			end;
-			
+
 		procedure DIFFERENZA(var A, B, C: insieme);
 			var i: integer;
 			begin
@@ -1267,7 +1267,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 							q := SUCCLISTA(q, B);
 							r := SUCCLISTA(r, C);
 						end
-					else 
+					else
 						if LEGGILISTA(p, A) < LEGGILISTA(q, B)
 							then p := SUCCLISTA(p, A)
 						else
@@ -1278,13 +1278,13 @@ Una specifica per il tipo di dato insieme è la seguente:
 	Esistono delle applicazioni che, pur richiedendo una struttura dati del tipo insieme, non richiedono tutte le operazioni definite sull'insieme. Questi sottotipi del tipo insieme sono i \textit{dizionari}. \\
 	Gli elementi sono generalmente tipi strutturati ai quali si accede per mezzo di un riferimento a un campo chiave. Gli elementi assumono la forma di una coppia costituita da (chiave, valore). \\
 	La caratteristica della chiave è legata all'applicazione, ad esempio nei dizionari degli elaboratori di testi la chiave individua una parola mentre in un dizionario di magazzino la chiave può un essere un codice pezzo. \\
-	Il valore associato, invece, rappresenta l'informazione associata per scopi di gestione o manutenzione. Ad esempio nelle tabelle di simboli, utili ai compilatori e ai linker, la chiave viene usata per l'identificatore, mentre nel valore vengono memorizzate le informazioni di gestione, come indirizzo della locazione, dimensione, posizioni nelle quali l'identificatore è usato nel programma ecc. 
+	Il valore associato, invece, rappresenta l'informazione associata per scopi di gestione o manutenzione. Ad esempio nelle tabelle di simboli, utili ai compilatori e ai linker, la chiave viene usata per l'identificatore, mentre nel valore vengono memorizzate le informazioni di gestione, come indirizzo della locazione, dimensione, posizioni nelle quali l'identificatore è usato nel programma ecc.
 	\section{Operazioni}
 	Le operazioni applicate ad un dizionario devono consentire la verifica dell'esistenza di una definita chiave e deve essere possibile l'inserimento di nuove coppie (chiave, valore), come pure la cancellazione. \\
 	Può essere utile anche il recupero delle informazioni presenti nell'attributo oppure la loro eventuale modifica. \\
 	Dato che i dizionari sono casi particolari di insieme, la specifica per i dizionari è identica a quella del tipo di dato insieme. Le operazioni ammesse sono quelle di creazione, appartenenza, inserimento e cancellazione. \\
 	In alcuni casi troviamo anche operazioni come quello di recupero e aggiornamento.
-	\section{Specifica sintattica} 
+	\section{Specifica sintattica}
 	I tipi di dati, nella specifica sintattica, sono:
 	\begin{itemize}
 		\item dizionario, boolean, chiave, valore
@@ -1296,7 +1296,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\text{appartiene:} &\quad (\text{chiave}, \text{dizionario}) \to \text{booleano} \\
 		\text{inserisci:} &\quad (\text{<chiave, valore>}, \text{dizionario}) \to \text{dizionario} \\
 		\text{cancella:} &\quad (\text{chiave}, \text{dizionario}) \to \text{dizionario} \\
-		\text{recupera:} &\quad (\text{chiave}, \text{dizionario}) \to \text{valore}  
+		\text{recupera:} &\quad (\text{chiave}, \text{dizionario}) \to \text{valore}
 	\end{align*}
 	\section{Specifica semantica}
 	I tipi di dati, nella specifica semantica, sono:
@@ -1311,15 +1311,15 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\item \texttt{dizionariovuoto($D$) = b} \\
 		\quad \textit{Post}: $\begin{cases}
 			b = vero & D = \{\} \\
-			b = falso & altrimenti 
+			b = falso & altrimenti
 		\end{cases}$
 		\item \texttt{appartiene($k, D$) = b} \\
 		\quad \textit{Post}: $\begin{cases}
 			b = vero & \exists <k', v> \in D \mid k'=k \\
-			b = falso & altrimenti 
+			b = falso & altrimenti
 		\end{cases}$
 		\item \texttt{inserisci($<k, v>, D$) = $D'$} \\
-		\quad \textit{Post:} $D'= D \cup \{<k, v>\} \iff \centernot{\exists} <k', v> \mid k'=k$ 
+		\quad \textit{Post:} $D'= D \cup \{<k, v>\} \iff \centernot{\exists} <k', v> \mid k'=k$
 		\item \texttt{cancella($k, D$) = $D'$} \\
 		\quad \textit{Pre:} $\exists <k', v> \in D \mid k'= k$
 		\quad \textit{Post:} $D' = D - \{<k', v>\}$
@@ -1342,7 +1342,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 	\begin{lstlisting}[style=pascalstyle]
 		bool appartiene(k: tipoelem, D: dizionario)
 			return ricbin(D.elementi, k, 1, D.ultimo)
-		
+
 		bool ricbin(V: vettore, k: tipoelem, i: integer, j: integer)
 			if i > j then
 				ricbin = false
@@ -1350,10 +1350,10 @@ Una specifica per il tipo di dato insieme è la seguente:
 				m = (i + j) div 2
 				if k = V[m] then
 					ricbin = true
-				else 
+				else
 					if k < V[m] then
 						ricbin = ricbin(V, k, i, m - 1)
-					else 
+					else
 						ricbin = ricbin(V, k, m + 1, j)
 	\end{lstlisting}
 	\section{Rappresentazione con tabella hash}
@@ -1414,7 +1414,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 			& \textbf{26} \\
 			\hline
 	\end{tabular}} \quad \\
-	
+
 	Ci sono collisioni per i cognomi che iniziano con la stessa lettera. \\
 	Una collisione si verifica quando chiavi diverse producono lo stesso risultato della funzione. Esistono funzioni hash più o meno buone anche se le collisioni non si protranno mai evitare del tutto. \\
 	Nell'esempio visto si è adottata una semplice strategia per la risoluzione delle collisioni, chiamata \textbf{scansione lineare}: ovvero se $h(k)$ per qualunque chiave $k$ indica una posizione già occupata, si ispeziona la posizione successiva nel vettore. Se la posizione è piena si prova con la seguente e così via fino a trovare una posizione libera o trovare che la tabella è completamente piena. \\
@@ -1464,25 +1464,25 @@ Una specifica per il tipo di dato insieme è la seguente:
 		Con le liste di trabocco, il vettore \textit{v} contiene in ogni posizione un puntatore ad una lista:
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.7\textwidth]{liste_trabocco}
+			\includegraphics[width=0.7\textwidth]{images/liste_trabocco}
 			\caption{Lista di trabocco}
-		\end{figure} 
+		\end{figure}
 		\subsection{Metodi di scansione} Nella realizzazione con hash e liste di trabocco si è usato un metodo di scansione esterno contrapposto alla scansione lineare che è un metodo di scansione interno. \\
 		Altri metodi interni, o chiusi, sono:
 		\begin{itemize}
 			\item scansione quadratica;
 			\item scansione pseudocasuale;
 			\item hashing doppio.
-		\end{itemize}	
+		\end{itemize}
 		\paragraph{Scansione interna} Sia fi la funzione che viene utilizzata l'i-esima volta che si trova occupata una posizione del vettore \textit{v}, $i \geq 0$. Per $i = 0, f0 = h$. fi va scelta in modo da toccare, una sola volta, tutte le posizioni di \textit{v}.
-		\paragraph{Scansione lineare} Nella scansione lineare la funzione fi è definita come $fi = (h(k) + h \cdot i) \mod{m}$ ove $h$ è un intero positivo primo con \textit{m} e \textit{h} rappresenta la distanza tra due posizioni successive esaminate nella scansione. Dato che \textit{m} e \textit{h} sono primi tra loro, vengono esaminate tutte le posizioni di \textit{v} prima di riconsiderare le posizioni già esaminate. Lo \textbf{svantaggio} è che non riduce la formazione di agglomerati. 
+		\paragraph{Scansione lineare} Nella scansione lineare la funzione fi è definita come $fi = (h(k) + h \cdot i) \mod{m}$ ove $h$ è un intero positivo primo con \textit{m} e \textit{h} rappresenta la distanza tra due posizioni successive esaminate nella scansione. Dato che \textit{m} e \textit{h} sono primi tra loro, vengono esaminate tutte le posizioni di \textit{v} prima di riconsiderare le posizioni già esaminate. Lo \textbf{svantaggio} è che non riduce la formazione di agglomerati.
 		\paragraph{Scansione quadratica} Nella scansione quadratica la funzione fi è definita come $fi = (h(k) + h \cdot i + i(i -1)/2) \mod{m}$ ove $m$ è primo. La distanza tra due posizioni successive nella sequenza è variabile, quindi la possibilità di agglomerati è ridotta. Lo \textbf{svantaggio} è che la sequenza di scansione non include tutte le posizioni di \textit{v}, che è un vantaggio trascurabile per $m$ non troppo piccolo.
 		\paragraph{Scansione pseudocasuale} Nella scansione pseudocasuale la funzione fi è definita come $fi = (h(k) + pi) \mod{m}$ ove pi è l'i-esimo numero generato da un generatore di numeri pseudocasuali, che genera gli interi tra $1$  e $m$ una sola volta in un ordine qualunque.
 		\paragraph{Hashing doppio} Nell'hashing doppio la funzione fi è definita come $fi = (h(k) + i \cdot f(k)) \mod{m}$ ove $m$ è un'altra funzione hash diversa da $h$. \\
 		\quad \\ \quad \\
 		Usando metodi di scansione interna e potendo cancellare chiavi, non si è mai sicuri che, raggiunta una posizione vuota nella ricerca di $k$, tale chiave non si trovi in un'altra posizione di $v$, poichè la posizione ora vuota era occupata quando $k$ è stata inserita. \\
 		Bisogna dunque scandire anche le posizioni in cui si è cancellato e fermarsi o sulla posizione mai riempita o essere tornati su una posizione già scandita e questo determina un aumento del tempo di ricerca. \\
-		Se sono previste molte cancellazioni è bene utilizzare il metodo di scansione esterna. 
+		Se sono previste molte cancellazioni è bene utilizzare il metodo di scansione esterna.
 	\chapter{Alberi}
 	Un albero ordinato è formato da un insieme finito di elementi, detti nodi. Se tale insieme non è vuoto, allora un particolare nodo è designato come radice, ed i rimanenti nodi, se esistono, sono a loro volta partizionati in insiemi ordinati disgiunti, ciascuno dei quali è un albero ordinato. L'albero ordinato, comunemente chiamato ``albero'', è una struttura informativa fondamentale, che si presta a rappresentare svariate situazioni, quali:
 	\begin{enumerate}
@@ -1514,7 +1514,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 	Un albero radicato è ottenuto da un albero libero designando aribitriaramente un nodo $r$ come radice e e ordinando i nodi per livelli.
 	\section{Specifica}
 	L'albero ordinato può essere interpretato come una generalizzazione di una sequenza lineare, in cui ciascun elemento ha ancora un solo predecessore (il padre), ma in generale può avere più di un successore (i figli). Infatti, una lista è un particolare albero in cui ogni nodo ha al più un figlio e c'è una sola foglia. Analogamente alle operazioni sulle liste, quelle definite sugli alberi ordinati prevedono la possibilità di spostarsi da un nodo ad un suo parente, come figlio, fratello o padre, e inoltre di inserire o cancellare interi sottoalberi. \\
-	Un tipico insieme di operazioni per gli alberi ordinati comprende l'operazione di creazione \texttt{CREAALBERO}, quelle di selezione \texttt{RADICE}, per accedere direttamente alla radice, e \texttt{PADRE, PRIMOFIGLIO} e \texttt{SUCCFRATELLO}, per accedere, rispettivamente, al padre, al primo figlio, o al fratello sucessivo di un nodo, quelle di interrogazione \texttt{ALBEROVUOTO}, per verificare che l'albero sia vuoto, \texttt{FOGLIA} e \texttt{FINEFRATELLI}, per controllare che un nodo non abbia figli o che siano stati considerati tutti i fratelli, e quelle di modifica \texttt{INSRADICE}, per inserire la radice in un albero vuoto, \texttt{CANCSOTTOALBERO} e \texttt{INSSOTTOALBERO}, per cancellare o inserire un sottoalbero. 
+	Un tipico insieme di operazioni per gli alberi ordinati comprende l'operazione di creazione \texttt{CREAALBERO}, quelle di selezione \texttt{RADICE}, per accedere direttamente alla radice, e \texttt{PADRE, PRIMOFIGLIO} e \texttt{SUCCFRATELLO}, per accedere, rispettivamente, al padre, al primo figlio, o al fratello sucessivo di un nodo, quelle di interrogazione \texttt{ALBEROVUOTO}, per verificare che l'albero sia vuoto, \texttt{FOGLIA} e \texttt{FINEFRATELLI}, per controllare che un nodo non abbia figli o che siano stati considerati tutti i fratelli, e quelle di modifica \texttt{INSRADICE}, per inserire la radice in un albero vuoto, \texttt{CANCSOTTOALBERO} e \texttt{INSSOTTOALBERO}, per cancellare o inserire un sottoalbero.
 	\begin{align*}
 		&\texttt{CREAALBERO:} &\quad () \to \text{albero} \\
 		&\texttt{ALBEROVUOTO:} &\quad (albero) \to \text{booleano} \\
@@ -1527,7 +1527,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 		&\texttt{SUCCFRATELLO:} &\quad (nodo, albero) \to \text{nodo} \\
 		&\texttt{INSSOTTOALBERO:} &\quad (nodo, albero, albero) \to \text{albero} \\
 		&\texttt{INSPRIMOSOTTOALBERO:} &\quad (nodo, albero, albero) \to \text{albero} \\
-		&\texttt{CANCSOTTOALBERO:} &\quad (nodo, albero) \to \text{albero} 
+		&\texttt{CANCSOTTOALBERO:} &\quad (nodo, albero) \to \text{albero}
 	\end{align*}
 	Indicando per semplicità con il termine ``albero'' l'insieme di tutti gli alberi ordinati, come definiti precedentemente, e con $T$ un generico albero ordinato, la specifica semantica è la seguente.
 	\begin{itemize}
@@ -1536,14 +1536,14 @@ Una specifica per il tipo di dato insieme è la seguente:
 		\item \texttt{ALBEROVUOTO($T$) = b} \\
 		\quad \textit{Post}: $\begin{cases}
 			b = vero & T = \Lambda \\
-			b = falso & altrimenti 
+			b = falso & altrimenti
 		\end{cases}$
 		\item \texttt{INSRADICE($u, T$) = T'} \\
 		\quad \textit{Pre}: $T = \Lambda$ \\
 		\quad \textit{Post}: $T'$ è formato dalla sola radice $u$
 		\item \texttt{RADICE($T$) = $u$} \\
 		\quad \textit{Pre:} $T \neq \Lambda$
-		\quad \textit{Post:} $u$ è la radice di $T$ 
+		\quad \textit{Post:} $u$ è la radice di $T$
 		\item \texttt{FOGLIA($u, T$) = $b$} \\
 		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è un nodo di $T$ \\
 		\quad \textit{Post:} $\begin{cases}
@@ -1604,10 +1604,10 @@ Una specifica per il tipo di dato insieme è la seguente:
   \begin{lstlisting}[style=pascalstyle]
   	procedure INVISITA(u: nodo; var T: albero);
   		var v: nodo;
-  		begin 
+  		begin
   			if FOGLIA(u, T) then
   				{esamina il nodo u}
-  			else begin 
+  			else begin
   				v := PRIMOFIGLIO(u, T);
   				INVISITA(v, T);
   				{esame ``simmetrico'' del nodo u};
@@ -1618,7 +1618,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   				end
   			end
   		end;
-  \end{lstlisting} 
+  \end{lstlisting}
   \section{Realizzazioni}
   \subsection{Realizzazione con vettore dei padri}
   Si supponga che i nodi dell'albero $T$ siano numerati da 1 ad $n$. La più semplice realizzazione fa uso di un vettore contentenente, per ogni nodo $i$, $1 \leq i \leq n$, il cursore al padre: $T[i] = j$, se $j$ è il padre di $i$; $T[i] = 0$, se $i$ è la radice. \\
@@ -1626,7 +1626,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   \subsection{Realizzazione con liste di figli}
   Si supponga ancora che i nodi dell'albero $T$ siano numerati da 1 ad $n$. Una realizzazione talvolta usata consiste nel mantenere un vettore contenente, per nodo $i$, $1 \leq i \leq n$, l'identificatore di una lista di tutti i figli del nodo $i$. Trascurando la realizzazione del tipo di dato lista, si hanno le seguenti dichiarazioni:
   \begin{lstlisting}[style=pascalstyle]
-  	type 
+  	type
   		nodo = integer;
   		albero = record
   			testa: array[1..maxlung] of lista;
@@ -1636,16 +1636,16 @@ Una specifica per il tipo di dato insieme è la seguente:
   Gli operatori degli alberi possono essere realizzati in termini degli operatori delle liste. Per esempio,
   \begin{lstlisting}[style=normalstyle]
   	PRIMOFIGLIO = LEGGILISTA(PRIMOLISTA(T.testa[u]), T.testa[u])\end{lstlisting}
-  	Ovviamente, la realizzazione con liste dei figli presenta il vantaggio di poter scorrere velocemetne tutti i figli di un dato nodo, ma non permette di realizzare efficientemente altri operatori come \texttt{PADRE} o \texttt{SUCCFRATELLO}. Infatti, per poter individuare il padre o il fratello successivo di un dato nodo $u$, occorre scandire nel caso pessimo tutte le $n$ liste alla ricerca dell'unica lista nella quale compare il nodo $u$. 
+  	Ovviamente, la realizzazione con liste dei figli presenta il vantaggio di poter scorrere velocemetne tutti i figli di un dato nodo, ma non permette di realizzare efficientemente altri operatori come \texttt{PADRE} o \texttt{SUCCFRATELLO}. Infatti, per poter individuare il padre o il fratello successivo di un dato nodo $u$, occorre scandire nel caso pessimo tutte le $n$ liste alla ricerca dell'unica lista nella quale compare il nodo $u$.
   	\begin{lstlisting}[style=pascalstyle]
   		function PADRE(u: nodo; var T: albero): nodo;
   			var i: nodo;
-  			begin 
+  			begin
   				i := 1;
   				while (not APPARTIENE(u, T.testa[u]) and (i <= n)) do i := i + 1
   				PADRE := i
   			end;
-  		
+
   		function APPARTIENE(u: nodo; var L: lista): boolean;
   			var p: posizione; trovato: boolean;
   			begin
@@ -1658,7 +1658,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   	Per realizzare \texttt{SUCCFRATELLO}, occorre essenzialmente ripetere le stesse operazioni effettuate per \texttt{PADRE}, modificando la funzione \texttt{APPARTIENE} in modo da resstituire il nodo che segue $u$ nella lista $L$.
   	\subsection{Realizzazione con puntatori padre/primofiglio/fratello}
   	La realizzazione con liste dei figli non si presta bene ad eseguire operazioni come \texttt{PADRE, SUCCFRATELLO} o \texttt{INSSOTTOALBERO}. Per realizzare \texttt{PADRE} e \texttt{SUCCFRATELLO} si potrebbero introdurre due campi con questi valori in ciascuna delle celle liste, oppure usare, oltre al vettore testa, anche un vettore dei padri e un vettore dei fratelli successivi. Ciò comunque non renderebbe efficiente la \texttt{INSSOTTOALBERO}. Per effettuare un'inserzione efficientemente, occorre che tutti gli alberi condividano un'area comune, così come le liste condividono la memoria indirizzabile dei puntatori nella realizzazione con puntatori o il vettore SPAZIO nella realizzazione con cursori. Inoltre, è necessario che tutte le celle dell'area comune abbiano la stessa struttura dove siano immediatamente reperibili le informazioni per raggiungere il padre, il primo figlio, e il fratello successivo di un nodo. Quest scopo è raggiunto imponendo che ogni cella contenga almeno tre puntatori: uno al padre, uno al primo figlio e uno al fratello successivo. In tal caso, il nodo diventa un puntatore nell'area comune e non può più essere identificato col valore del nodo stesso, e in ogni cella occorre un campo apposito per il valore del nodo. \\
-  	A tal fine, si introducono due ulteriori operazioni, una di lettura \texttt{LEGGINODO}, per leggere il valore contenuto in un nodo, e una di modifica \texttt{SCRIVINODO}, per cambiare il valore memorizzato in un nodo, la cui specifica è la seguente. 
+  	A tal fine, si introducono due ulteriori operazioni, una di lettura \texttt{LEGGINODO}, per leggere il valore contenuto in un nodo, e una di modifica \texttt{SCRIVINODO}, per cambiare il valore memorizzato in un nodo, la cui specifica è la seguente.
   		\begin{align*}
   		\texttt{LEGGINODO:} &\quad (nodo, albero) \to \text{tipoelem} \\
   		\texttt{SCRIVINODO:} &\quad (tipoelem, nodo, albero) \to \text{albero} \\
@@ -1695,25 +1695,25 @@ Una specifica per il tipo di dato insieme è la seguente:
   		\item \texttt{FIGLIOSINISTRO($u, T$) = $v$} \\
   		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$, $u$ ha un figlio sinistro \\
   		\quad \textit{Post:} $v$ è il figlio sinistro di $u$ in $T$.
-  		
+
   		\item \texttt{FIGLIODESTRO($u, T$) = $v$} \\
   		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$, $u$ ha un figlio destro \\
   		\quad \textit{Post:} $v$ è il figlio destro di $u$ in $T$.
-  		
+
   		\item \texttt{SINISTROVUOTO($u, T$) = $b$} \\
   		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$ \\
   		\quad \textit{Post:} $\begin{cases}
   			b = vero & \text{se } u \text{ non ha figlio sinistro} \\
-  			b = falso & altrimenti 
+  			b = falso & altrimenti
   		\end{cases}$
-  		
+
   		\item \texttt{DESTROVUOTO($u, T$) = $b$} \\
   		\quad \textit{Pre:} $T \neq \Lambda$, $u$ è in $T$\\
   		\quad \textit{Post:} $\begin{cases}
   			b = vero & \text{se } u \text{ non ha figlio destro} \\
-  			b = falso & altrimenti 
+  			b = falso & altrimenti
   		\end{cases}$
-  		
+
   		\item \texttt{COSTRBINALBERO($T, U$) = $T'$} \\
   		\quad \textit{Post:} $T'$ è ottenuto introducendo un nuovo nodo $u$, che è la radice di $T'$, che ha come sottoalbero sinistro $T$ e come sottoalbero destro $U$ (se $T = \Lambda$, $u$ non ha figlio sinistro; se $U = \Lambda$, $u$ non ha figlio destro)
   		\item \texttt{CANCSOTTOBINALBERO($u, T$) = $T'$} \\
@@ -1725,7 +1725,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   	Non sempre questa scelta è opportuna: soprattutto se l'albero è usato per rappresentare un processo decisionale è preferibile un'algebra che preveda di costruire l'albero dall'alto verso il basso, inserendo prima la radice e poi i nodi figli via via. \\
   	In tal caso, mentre rimangono validi tutti gli operatori definiti, andrebbe sostituito l'operatore di costruzione con tre operatori nuovi, uno dedicato all'inserimento della radice e gli altri due dedicati all'inserimento del figlio sinistro e del figlio destro.
   	\begin{align*}
-  		&\texttt{INSBINRADICE}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\ 
+  		&\texttt{INSBINRADICE}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\
   		&\texttt{INSFIGLIOSINISTRO}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\
   		&\texttt{INSFIGLIODESTRO}: &\quad (\text{nodo, alberobin}) \to \text{alberobin} \\
   	\end{align*}
@@ -1734,11 +1734,11 @@ Una specifica per il tipo di dato insieme è la seguente:
   		\item \texttt{INSBINRADICE($u, T$) = $T'$} \\
   		\quad \textit{Pre:} $T = \Lambda$ \\
   		\quad \textit{Post:} $T'$ è l'albero costituito dalla sola radice $u$.
-  		
+
   		\item \texttt{INSFIGLIOSINISTRO($u, T$) = $T'$} \\
   		\quad \textit{Pre:} $T = \Lambda$, $\texttt{SINISTROVUOTO}(u, T) = vero$\\
   		\quad \textit{Post:} $T'$ è l'albero ottenuto da $T$ aggiungendo un nodo $v$ come figlio sinistro di $u$.
-  		
+
   		\item \texttt{INSFIGLIODESTRO($u, T$) = $T'$} \\
   		\quad \textit{Pre:} $T = \Lambda$, $\texttt{DESTROVUOTO}(u, T) = vero$ \\
   		\quad \textit{Post:} $T'$ è l'albero ottenuto da $T$ aggiungendo un nodo $v$ come figlio destro di $u$.
@@ -1753,13 +1753,13 @@ Una specifica per il tipo di dato insieme è la seguente:
  			if not DESTROVUOTO(u, T) then
  				BINVISITA(FIGLIODESTRO(u, T), T);
  (3)		{esame ``differito'' del nodo u}
- 		end;	
+ 		end;
   	\end{lstlisting}
   	La previsita si ottiene esaminando il nodo $u$ soltanto nella riga (1) e ignorando le righe (2) e (3). Analogamente, la invisita o la postvisita si hanno esaminando il nodo $u$ solo nella riga (2) o (3), rispettivamente.`\\
   	Una realizzazione ragionevole fa uso di un'area comune \texttt{AREALIBERA}, come nel caso degli alberi ordinati, in cui i campi ``figlio'' e ``fratello'' sono chiamate, invece, ``sinistro'' e ``destro''. \\
   	Ovviamente è possibile utilizzare puntatori anzichè cursori. Indicando la mancanza di un figlio col valore \textbf{nil} contenuto nell'apposito campo si ha:
   	\begin{lstlisting}[style=pascalstyle, mathescape]
-  		type 
+  		type
   			binalbero = $\uparrow$bincella;
   			nodo = binalbero;
   			bincella = record
@@ -1767,11 +1767,11 @@ Una specifica per il tipo di dato insieme è la seguente:
   				sinistro, destro, genitore: nodo;
   			end;
   		procedure CREABINALBERO(var T: binalbero);
-  			begin 
+  			begin
   				T := nil
   			end;
   		function BINALBEROVUOTO(var T: binalbero): boolean;
-  			begin 
+  			begin
   				BINALBEROVUOTO := (T = nil)
   			end;
   		function BINRADICE(var T: binalbero): nodo;
@@ -1783,7 +1783,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   				BINPADRE := u$\uparrow$.genitore
   			end;
   		function FIGLIOSINISTRO(u: nodo; var T: binalbero): nodo;
-  			begin 
+  			begin
   				FIGLIOSINISTRO := u$\uparrow$.sinistro
   			end;
   		function FIGLIODESTRO(u: nodo; var T: binalbero): nodo;
@@ -1791,7 +1791,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   				FIGLIODESTRO := u$\uparrow$.destro
   			end;
   		function SINISTROVUOTO(u: nodo; var T: binalbero): boolean;
-  			begin 
+  			begin
   				SINISTROVUOTO := (u$\uparrow$.sinistro = nil)
   			end;
   		function DESTROVUOTO(u: nodo; var T: binalbero): boolean;
@@ -1823,27 +1823,27 @@ Una specifica per il tipo di dato insieme è la seguente:
   	  	\begin{itemize}
 		\item \texttt{CREAPRIORCODA() = $A$} \\
 		\quad \textit{Post}: $A = \emptyset$
-		
+
 		\item \texttt{INSERISCI($x, A$) = $A'$} \\
 		\quad \textit{Post}: $A' = A \cup \{x\}$
-		
+
 		\item \texttt{MIN($A$) = $x$} \\
 		\quad \textit{Pre}: $A \neq \emptyset$ \\
 		\quad \textit{Post}: $x \in A$ e $x < y \quad \forall y \in A\ x \neq y$
-		
+
   		\item \texttt{CANCELLAMIN($A$) = $A'$} \\
   		\quad \textit{Pre}: $A \neq \emptyset$ \\
   		\quad \textit{Post}: $A' = A - \{x\}$ ove $x = \texttt{MIN}(A)$
   	\end{itemize}
   	\section{Realizzazioni}
   	Si può rappresentare una coda con priorità di $n$ elementi utilizzando strutture sequenziali come liste ordinate e non ordinate. \\
-  	Tuttavia, poichè la coda con priorità è costituito da un insieme di atomi linearmente ordinati ma senza alcuna relazione strutturale sull'insieme delle posizioni, la sua raprpesentazione è quasi sempre associata ad un unico modello concettuale: quello di albero binario. 
+  	Tuttavia, poichè la coda con priorità è costituito da un insieme di atomi linearmente ordinati ma senza alcuna relazione strutturale sull'insieme delle posizioni, la sua raprpesentazione è quasi sempre associata ad un unico modello concettuale: quello di albero binario.
   	\subsection{Realizzazione con heap}
   	Gli elementi della coda con priorità $C$ possono essere disposti in un vettore $H$, chiamato \textit{heap}, che può essere interpretato come un albero binario $B$. Ciascun nodo di $B$ corrisponde ad una posizione di $H$ che memorizza un elemento di $C$. L'albero $B$ deve verificare le seguenti proprietà:
   		\begin{enumerate}
   			\item se $h$ è il livello massimo delle foglie, allora ci sono esattamente $2^h - 1$ nodi di livello minore di $h$;
   			\item tutte le foglie di livello $h$ sono addossate a sinistra;
-  			\item ogni nodo contiene un elemento di $C$ che è maggiore di quello contenuto nel padre.  
+  			\item ogni nodo contiene un elemento di $C$ che è maggiore di quello contenuto nel padre.
   		\end{enumerate}
   	Grazie alle prime due proprietà, ciascun livello $k$ (tranne l'ultimo) di $B$ contiene tutti i possibili $2^k$ nodi, $0 \leq  \leq h$, mentre tutti i nodi di livello massimo $h$ stanno a sinistra. $B$ è ``quasi pieno'', cioè non ha nodi mancanti tranne le foglie a destra di livello massimo. Pertanto gli $n$ nodi di $B$ corrispondono alle posizioni $1\dots n$ del vettore $H$ nell'ordine in cui si incontrano i nodi visitando $B$ per livelli crescenti ed esaminando da sinistra verso destra i nodi dello stesso livello. Poichè ad ogni livello il numero di nodi raddoppia, si ha che:
   	\begin{itemize}
@@ -1852,24 +1852,24 @@ Una specifica per il tipo di dato insieme è la seguente:
   	\end{itemize}
   	Il figlio sinistro (destro) di $i$ non esiste se e solo se $2i > n$ ($2i + 1 > n$). Inoltre, per $1 \leq i \leq n$, il padre di $i$ è $\dfrac{i}{2}$. Ovviamente in $H[i]$ è memorizzato l'elemento di $C$ contenuto nel corrispondente nodo di $B$. Così, per la terza proprietà, se il figlio sinistro (destro) di $i$, allora $H[2i] > H[i]\ (H[2i+1] > H[i])$. \\
   	La realizzazione degli operatori $\texttt{MIN, CANCELLAMIN}$ e \texttt{INSERISCI} è molto semplice se si immagina di operare sull'albero $B$ anzichè sul vettore $H$. Per eseguire \texttt{MIN} basta leggere l'elemento contenuto della radice, mentre per eseguire \texttt{CANCELLAMIN} si cancella la foglia di livello massimo più a destra, così da mantenere verificate le prime due proprietà, se ne copia l'elemento nella radice, e si fa ``scendere'' tale elemento lungo un percorso radice-foglia, scambiandolo col minimo degli elementi contenuti nei figli, fino a verificare la terza proprietà. \\
-  	Vediamo le procedure Pascal che realizzano la coda con priorità usando il vettore heap. Gli $n$ elementi sono memorizzati in $heap[1\dots n]$ dove $heap[1]$ contiene l'elemento minimo. Il cursore \textit{ultimo} registrea $n$, cioè l'ultima posizione occupata, che corrisponde alla foglia di $B$ che sta più a destra tra quelle di livello massimo. Al solito, il valore 0 in \textit{ultimo} indica una coda con priorità vuota. 
+  	Vediamo le procedure Pascal che realizzano la coda con priorità usando il vettore heap. Gli $n$ elementi sono memorizzati in $heap[1\dots n]$ dove $heap[1]$ contiene l'elemento minimo. Il cursore \textit{ultimo} registrea $n$, cioè l'ultima posizione occupata, che corrisponde alla foglia di $B$ che sta più a destra tra quelle di livello massimo. Al solito, il valore 0 in \textit{ultimo} indica una coda con priorità vuota.
   	\begin{lstlisting}[style=pascalstyle]
   	type
-  		priorcoda = record 
+  		priorcoda = record
   			heap: array[1..maxlung] of tipoelem;
   			ultimo: 0..maxlung;
   		end;
-  	
+
   	procedure CREAPRIORCODA(var C: priorcoda);
   		begin
   			C.ultimo := 0
   		end;
-  	
+
   	function MIN(var C: prioricoda): tipoelem;
-  		begin 
+  		begin
   			if C.ultimo = 0
   				then {errore: priorcoda vuota}
-  				else 
+  				else
   					MIN := C.heap[1]
   		end;
   	\end{lstlisting}
@@ -1877,7 +1877,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   	\begin{lstlisting}[style=pascalstyle]
   		procedure INSERISCI(x: tipoelem; var C: priorcoda);
   			var i, k: integer; temp: tipoelem;
-  			begin 
+  			begin
   				if C.ultimo = maxlung then
   					{errore: priorcoda piena}
   				else
@@ -1899,37 +1899,37 @@ Una specifica per il tipo di dato insieme è la seguente:
   	\begin{lstlisting}[style=pascalstyle]
   		procedure CANCELLAMIN(var C: priorcoda);
   			var i, k: integer; temp: tipoelem; scambio: boolean;
-  			begin 
+  			begin
   				if C.ultimo = 0 then
   					{errore: priorcoda vuota}
-  				else 
+  				else
   					C.heap[1] := C.heap[C.ultimo]
   					C.ultimo := C.ultimo - 1;
-  					i := 1; 
+  					i := 1;
   					scambio = true;
   					while (i < C.ultimo div 2) and (scambio) do begin
 	  					k := 2 * i;
 	  					if (k < C.ultimo) then
-	  						if C.heap[k] > C.heap[k + 1] then 
+	  						if C.heap[k] > C.heap[k + 1] then
 	  							k := k + 1;
 	  					if C.heap[k] < C.heap[i] then
 	  						temp := C.heap[i];
 	  						C.heap[i] := C.heap[k];
 	  						C.heap[k] := temp;
 	  						i := k
-	  					else 	
+	  					else
 	  						scambio := false;
   					end
   			end
   		end;
-  	\end{lstlisting} 
+  	\end{lstlisting}
   	\chapter{Alberi binari di ricerca}
   	Gli alberi di ricerca sono strutture dati che supportano molte operazioni sugli insiemi dinamici:
   	\begin{itemize}
   		\item \texttt{SEARCH($S, k$)} \\
   		\quad Query che dato un insieme $S$ e un valore chiave $k$ restituisce un elemento $x$ di $S$.
   		\item \texttt{MINIMUM($S$)} e \texttt{MAXIMUM($S$)} \\
-  		\quad Query su insieme $S$ totalmente ordinato che restituiscono un elemento di $S$ con la chiave più piccola, rispettivamente con la chiave più grande. 
+  		\quad Query su insieme $S$ totalmente ordinato che restituiscono un elemento di $S$ con la chiave più piccola, rispettivamente con la chiave più grande.
   		\item \texttt{SUCCESSOR($S, x$)} e \texttt{PREDECESSOR($S, x$)} \\
   		\quad Query che dato un elemento $x$, la cui chiave appartiene ad $S$, restituisce il prossimo elemento più grande, rispettivamente il più piccolo.
   		\item \texttt{INSERT($S, x$)} e \texttt{DELETE($S, x$)} \\
@@ -1955,7 +1955,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   				INORDER-TREE-WALK(T, T.dx(n))
   	\end{lstlisting}
   	La complessità è lineare rispetto al numero dei nodi del BST.  \\
-  	Spesso si ha la necessità di cercare una chiave in un BST. Oltre all'operazione di ricerca, un BST mette a disposizione anche operazioni di \texttt{MINIMUN, MAXIMUM, SUCCESSOR, PREDECESSOR} e la complessità è lineare rispetto all'altezza dell'albero. 
+  	Spesso si ha la necessità di cercare una chiave in un BST. Oltre all'operazione di ricerca, un BST mette a disposizione anche operazioni di \texttt{MINIMUN, MAXIMUM, SUCCESSOR, PREDECESSOR} e la complessità è lineare rispetto all'altezza dell'albero.
   	\section{Specifica}
   	La specifica sintattica è la seguente:
   	  	\begin{align*}
@@ -1973,7 +1973,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   	\begin{lstlisting}[style=pascalstyle]
   		TREE-SEARCH(BST T, key k)
   			TREE-SEARCH(T, T.root())
-  			
+
   		TREE-SEARCH(BST T, Node n, key k)
   			if (n.key == k)
   				return n
@@ -1982,23 +1982,23 @@ Una specifica per il tipo di dato insieme è la seguente:
   			if (k > n.key && !T.dx_empty(n))
   				return TREE-SEARCH(T, T.dx(n), k)
   			return NULL
-  			
+
   		TREE-MINIMUN(BST T)
   			TREE-MINIMUM(T, T.root())
-  		
+
   		TREE-MINIMUM(BST T, Node n)
   			if (T.sx_empty(n))
   				return n
   			return TREE-MINIMUM(T, T.sx(n))
-  			
+
   		TREE-MAXIMUM(BST T)
   			TREE-MAXIMUM(T, T.root())
-  		
+
   		TREE-MAXIMIM(BST T, Node n)
   			if (T.dx_empty(n))
   				return n
   			return TREE-MAXIMUM(T, T.sx(n))
-  			
+
   		TREE-SUCCESSOR(BST T, Node n)
   			if (!T.dx_empty(n))
   				return TREE-MINIMUM(T, T.dx(n))
@@ -2015,7 +2015,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   	Nel successore se il nodo $n$ ha un figlio destro il successore è il minimo del sotto-albero destro, altrimenti il successore è il più piccolo antenato di $n$ il cui figlio sinistro è anche antenato di $n$, ad esempio:
   	\begin{figure}[H]
   		\centering
-  		\includegraphics[width=0.5\textwidth]{alberi_bin_ricerca}
+  		\includegraphics[width=0.5\textwidth]{images/alberi_bin_ricerca}
   	\end{figure}
   	Il successore di 15 è 17 e il successore di 13 è 5. \\
   	Analizziamo l'inserimento:
@@ -2025,26 +2025,26 @@ Una specifica per il tipo di dato insieme è la seguente:
 				T.ins_root()
 				n.key = k
 				T.write(T.root(), n)
-			else 
+			else
 				x = T.root()
 				found = true
 				while (found)
-					if (k < x.key && !T.sx_empty()) 
+					if (k < x.key && !T.sx_empty())
 						x = T.sx(x)
-					elif (k > x.key && !T.dx_empty()) 
+					elif (k > x.key && !T.dx_empty())
 						x = T.dx(x)
-					else 
+					else
 						found = false
 				if (k < x.key)
 					T.ins_sx(x)
 					n.key = k
 					T.write(T.sx(x), n)
-				else 
+				else
 					T.ins_dx(x)
 					n.key = k
 					T.write(T.dx(x), n)
    	\end{lstlisting}
-   	Analizziamo la rimozione di una chiave $k$ memorizzata in un nodo $z$ del BST. 
+   	Analizziamo la rimozione di una chiave $k$ memorizzata in un nodo $z$ del BST.
    	\begin{itemize}
    		\item Se $z$ è foglia rimuoviamo il nodo $z$ dal BST;
    		\item Se $z$ ha un solo figlio $y$ allora facciamo occupare da $y$ la posizione di $z$ nel BST;
@@ -2054,7 +2054,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    			\item Si dovrà distinguere tra:
    			\begin{itemize}
    				\item $y$ figlio destro di $z$;
-   				\item $y$ appartenente al sotto-albero destro di $z$ ma non figlio destro di $z$, si noti che in questo caso $y$ non ha figlio sinistro in quanto è il minimo di un sotto-albero. 
+   				\item $y$ appartenente al sotto-albero destro di $z$ ma non figlio destro di $z$, si noti che in questo caso $y$ non ha figlio sinistro in quanto è il minimo di un sotto-albero.
    			\end{itemize}
    		\end{itemize}
    	\end{itemize}
@@ -2087,17 +2087,17 @@ Una specifica per il tipo di dato insieme è la seguente:
    	Quindi, un treap ha le caratteristiche di un BST e di un heap. \\
    	Supponiamo di inserire i nodi $x_1, x_2, \dots, x_n$ in un treap. Il treap risultante è un albero che si sarebbe ottenuto se i nodi fossero stati inseriti in un normale BST nell'ordine dato dalle loro priorità, scelte in modo randomico. Ad esempio:
    	\begin{figure}[H]
-   		\centering 
-   		\includegraphics[width=1.0\textwidth]{ins_treap1}
-   	\end{figure} 
+   		\centering
+   		\includegraphics[width=1.0\textwidth]{images/ins_treap1}
+   	\end{figure}
    	\begin{figure}[H]
-   		\centering 
-   		\includegraphics[width=1.0\textwidth]{ins_treap2}
-   	\end{figure} 
+   		\centering
+   		\includegraphics[width=1.0\textwidth]{images/ins_treap2}
+   	\end{figure}
    	\begin{figure}[H]
-   		\centering 
-   		\includegraphics[width=1.0\textwidth]{ins_treap3}
-   	\end{figure} 
+   		\centering
+   		\includegraphics[width=1.0\textwidth]{images/ins_treap3}
+   	\end{figure}
    	\chapter{Grafi}
    	Un grafo orientato è una coppia $G = (N, A)$, con $N$ insieme finito di elementi, detti nodi, ed $A$ insieme finito di coppie ordinate di nodi, detti archi. I grafi orientati possono essere rappresentati graficamente disegnando ogni nodo con un cerchietto e ogni arco $(i, j)$ con una freccia che esce dal nodo $i$ al nodo $j$. Il numero di nodi ed il numero di archi sono di solito indicati, rispettivamente, con $n$ ed $m$. Poichè possono esserci al più $n-1$ archi uscenti da ciascun nodo, risulta $0 \leq m \leq n(n-1)$.
    	In generale, i nodi sono usati per rappresentare oggetti e gli archi per rappresentare relazioni tra coppie di oggetti. \\
@@ -2107,7 +2107,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	Anche nei grafi non orientati ci sono nozioni analoghe a quelle di cammino e ciclo. In un grafo non orientato $G$, una catena è una sequenza di nodi $u_0, u_1, \dots, u_k$ tali che $[u_i, u_{i+1}] \in A$, per $i = 0, 1, 2, \dots, k - 1$. La catena collega $u_0$ con $u_k$, o viceversa, ed ha lunghezza uguale a $k$. Se non ci sono nodi ripetuti, allora la catena è semplice, mentre se $u_0 = u_k$, allora è chiusa. Una catena sia semplice che chiusa i cui archi sono tutti distinti è un circuito. Si noti che nei grafi orientati la mancanza di ripetizioni di nodi implica la mancanza di ripetizione degli archi, ma questo non è vero per i grafi non orientati. \\
    	Un grafo non orientato è connesso se per ogni coppia di nodi distinti $u$ e $v$ esiste una catena tra $u$ e $v$.
    	\section{Specifica}
-   	Poichè ogni grafo non orientato $G$ può essere visto come un grafo orientato $D$, ottenuto da $G$ sostituendo ogni arco $[i, j]$ con i due archi $(i, j)$ e $(j, i)$, sarà fornita una specifica solo per grafi orientati. Le operazioni definite sui grafi prevedono la possibilità di inserire o cancellare nodi o archi, e di spostarsi da un nodo ad un suo adiacente. 
+   	Poichè ogni grafo non orientato $G$ può essere visto come un grafo orientato $D$, ottenuto da $G$ sostituendo ogni arco $[i, j]$ con i due archi $(i, j)$ e $(j, i)$, sarà fornita una specifica solo per grafi orientati. Le operazioni definite sui grafi prevedono la possibilità di inserire o cancellare nodi o archi, e di spostarsi da un nodo ad un suo adiacente.
    	\begin{align*}
    		&\texttt{CREAGRAFO:} &\quad &() \to \text{grafo} \\
    		&\texttt{GRAFOVUOTO:} &\quad &(\text{grafo}) \to \text{booleano} \\
@@ -2116,11 +2116,11 @@ Una specifica per il tipo di dato insieme è la seguente:
    		&\texttt{CANCNODO:} &\quad &(\text{nodo, grafo}) \to \text{grafo} \\
    		&\texttt{CANCARCO:} &\quad &(\text{nodo, nodo, grafo}) \to \text{grafo} \\
    		&\texttt{ADIACENTI:} &\quad &(\text{nodo, grafo}) \to \text{insieme}
-   	\end{align*} 
+   	\end{align*}
    	L'operazione \texttt{CREAGRAFO} restituisce un grafo ``vuoto'', cioè senza nodi e senza archi, mentre \texttt{GRAFOVUOTO} verifica se il grafo è vuoto oppure no. L'operazione \texttt{INSNODO} aggiunge al grafo un nuovo nodo ``isolato'', cioè non collegato a nessun altro nodo del grafo, mentre \texttt{INSARCO} aggiunge un nuovo arco tra una coppia di nodi del grafo. \texttt{CANCARCO} permette di cancellare un arco esistente tra una coppia di nodi, mentre \texttt{CANCNODO} cancella un nodo ``isolato''. Se il nodo da cancellare non è isolato, occorre preventivamente cancellare tutti gli archi che lo collegano ad altri nodi con ripetute applicazioni di \texttt{CANCARCO}. Infine, l'operazione \texttt{ADIACENTI} restituisce l'insieem di tutti i nodi adiacenti ad un certo nodo, cioè tutti i nodi raggiungibili con un arco che esce da tale nodo. Di seguito la specifica semantica:
    	\begin{itemize}
-   		\item \texttt{CREAGRAFO = $G$} \\ 
-   		\quad \textit{Post}: $G = (N, A)$, con $N = \emptyset$ ed $A = \emptyset$ 
+   		\item \texttt{CREAGRAFO = $G$} \\
+   		\quad \textit{Post}: $G = (N, A)$, con $N = \emptyset$ ed $A = \emptyset$
    		\item \texttt{GRAFOVUOTO($G$) = $b$} \\
    		\textit{Post}: $\begin{cases}
    			b = vero & N = \emptyset \wedge A = \emptyset \\
@@ -2142,7 +2142,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\quad \textit{Pre}: $G = (N, A)$, $u \in N$ \\
    		\quad \textit{Post}: $A(u) = \{v: (u, v) \in A\}$ detto insieme di adiacenza di $u$.
    	\end{itemize}
-   	In molte applicazioni, ai nodi e/o agli archi sono associate delle informazioni di un certo tipo dette etichette o passi. In tal caso, si parla di grafi etichettati o pesati, sui quali è utile introdurre ovvi operatori, per reperire e/o modicare le informazioni associate a nodi e/o archi. 
+   	In molte applicazioni, ai nodi e/o agli archi sono associate delle informazioni di un certo tipo dette etichette o passi. In tal caso, si parla di grafi etichettati o pesati, sui quali è utile introdurre ovvi operatori, per reperire e/o modicare le informazioni associate a nodi e/o archi.
    	\section{Realizzazioni con matrici}
    	\subsection{Matrici di incidenza}
    	La più semplici rappresentazioni di grafi utilizzano matrici. Tra queste le più usate sono la matrice di incidenza nodi-archi e la matrice di adiacenza nodi-nodi. La matrice di incidenza nodi-archi è una matrice rettangolare $B = [b_{ik}]$ di dimensioni $n \times m$, dove ciascuna riga rappresenta un nodo e ciascuna colonna rappresenta un arco, tale che:
@@ -2160,7 +2160,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		0 & \text{altrimenti}
    	\end{cases}
    	\]
-   	La matrice di incidenza è molto utile per rappresentare un grafo in certi problemi di programmazione linare, nei quali si cerca un vettore $x$ di $m$ incognite associato agli archi che soddisfi un sistema di equazioni del tipo $Bx = c$, dove $c$ è un vettore di $n$ termini noti interi. Lo spazio di memoria occupato è sempre $\Theta(nm)$ e dato un nodo non è agevole ricavare l'insieme di adiacenza. Infatti per calcolare un qualsiasi $A(u)$ occure scandire la riga $u$ di $B$ alla ricerca delle colonne $k$ con elementi $b_{uk} = -1$ e per ciascuna colonna $k$ scandirla per individuare l'indice di riga $v$ tale che $b_{vk} = +1$. 
+   	La matrice di incidenza è molto utile per rappresentare un grafo in certi problemi di programmazione linare, nei quali si cerca un vettore $x$ di $m$ incognite associato agli archi che soddisfi un sistema di equazioni del tipo $Bx = c$, dove $c$ è un vettore di $n$ termini noti interi. Lo spazio di memoria occupato è sempre $\Theta(nm)$ e dato un nodo non è agevole ricavare l'insieme di adiacenza. Infatti per calcolare un qualsiasi $A(u)$ occure scandire la riga $u$ di $B$ alla ricerca delle colonne $k$ con elementi $b_{uk} = -1$ e per ciascuna colonna $k$ scandirla per individuare l'indice di riga $v$ tale che $b_{vk} = +1$.
    	\subsection{Matrici di adiacenza}
    	La matrice di adiacenza nodi-nodi, invece, è una matrice quadrata $E = [e_{ij}]$ di dimensioni $n \times n$, tale che:
    	\[
@@ -2179,34 +2179,34 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\]
    	\section{Realizzazione con vettore di adiacenza}
    	È possibile rappresentare il grafo $G = (N, A)$ con due vettori, il vettore NODI e il vettore ARCHI. \\
-   	Il vettore NODI è formato da $N$ elementi e NODI($i$) contiene un cursore alla posizione di ARCHI a partire dalla quale è memorizzato $A(i)$. Per semplicità denotiamo i nodi con interi. Nel caso il grafo sia etichettato possiamo associare al nodo altre informazioni. 
+   	Il vettore NODI è formato da $N$ elementi e NODI($i$) contiene un cursore alla posizione di ARCHI a partire dalla quale è memorizzato $A(i)$. Per semplicità denotiamo i nodi con interi. Nel caso il grafo sia etichettato possiamo associare al nodo altre informazioni.
    	\begin{figure}[H]
-   		\centering 
-   		\includegraphics[width=0.6\textwidth]{grafo_vec_adiacenza}
+   		\centering
+   		\includegraphics[width=0.6\textwidth]{images/grafo_vec_adiacenza}
    	\end{figure}
    	Se il grafo non è orientato è necessario rappresentare ogni arco due volte, se i grafi sono etichettati sui nodi e/o sugli archi i pesi possono essere memorizzati in vettori PESINODI($n$) e PESIARCHI($m$).
    	\begin{figure}[H]
-   		\centering 
-   		\includegraphics[width=0.5\textwidth]{grafo_non_orientato_vec_adiacenza}
+   		\centering
+   		\includegraphics[width=0.5\textwidth]{images/grafo_non_orientato_vec_adiacenza}
    	\end{figure}
    	\section{Rappresentazione con lista di adiancenza}
    	È possibile anche utilizzare un vettore di nodi $A$ ed $n$ liste. Una generica componente $A(i)$ del vettore è il puntatore alla lista $i-$esima in cui sono memorizzati i nodi adiacenti a $i$.
    	\begin{figure}[H]
    		\centering
-   		\includegraphics[width=0.5\textwidth]{grafo_lista_adiacenza}
+   		\includegraphics[width=0.5\textwidth]{images/grafo_lista_adiacenza}
    	\end{figure}
    	\section{Rappresentazione con struttura a puntatori}
-   	La rappresentazione con struttura a puntatori è la versione dinamica della matrice di adiacenza estesa. Il nodo $v$ con etichetta $e$, $h$ archi entranti e $k$ archi uscenti è rappresentato mediante un record. 
+   	La rappresentazione con struttura a puntatori è la versione dinamica della matrice di adiacenza estesa. Il nodo $v$ con etichetta $e$, $h$ archi entranti e $k$ archi uscenti è rappresentato mediante un record.
    	\begin{figure}[H]
    		\centering
-   		\includegraphics[width=0.8\textwidth]{grafo_struttura_record}
+   		\includegraphics[width=0.8\textwidth]{images/grafo_struttura_record}
    	\end{figure}
    	\section{Esplorazione di un grafo}
    	Vediamo due metodi sistematici per ``visitare'' almeno una volta ogni nodo ed ogni arco di un grafo orientanto fortemente connesso (o non orientato e connesso). \\
    	Entrambi i metodi effettuano la visita in tempo ottimo $\Theta(n + m)$ a partire da un generico nodo $r$:
    	\begin{enumerate}
    		\item \textit{Depth-First-Search} (DFS), ovvero visita in profondità, detta anche a scandaglio;
-   		\item \textit{Breadth-First-Search} (BFS), ovvero visita in ampiezza, detta anche a ventaglio. 
+   		\item \textit{Breadth-First-Search} (BFS), ovvero visita in ampiezza, detta anche a ventaglio.
    	\end{enumerate}
    	Il metodo di visita DFS è una diretta estensione della visita in ordine anticipato di un albero ordinato. Quando viene visitato un nuovo nodo $u$, ci si allontana da esso il più possibile lungo un cammino (o catena), visitando nodi (e archi) nel cammino fino a giungere in un ``vincolo cieco'', ovvero in un nodo $v$ i cui nodi adiacenti sono già stati tutti visitati. Quando si è raggiunto $v$, si torna indietro lungo l'ultimo arco visitato e si riprende la visita allontanandosi lungo un altro cammino di nodi (e archi) non ancora visitati. \\
    	Nella visita BFS, invece, i nodi sono visitati in ordine di distanza crescente dal nodo di partenza $r$, dove la distanza $r$ ad un generico nodo $u$ è il minimo numero di archi in un cammino (o catena) da $r$ ad $u$. Tale metodo di visita è un'estensione di una visita per livelli di un albero radicato, in cui i figli di un nodo sono visitati dopo aver visitato tutti gli altri nodi che stanno allo stesso livello del padre. \\
@@ -2221,7 +2221,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    					if v not visitato then DFS(G, v);
    				end;
    			end;
-   			
+
    		procedure BFS(var G: grafo; u: nodo);
    			var v: nodo, Q: coda;
    			begin
@@ -2250,7 +2250,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	Lo studio della computabilità aiuta a stabilire quali problemi ammettono una soluzione algoritmica e quali no. Per i problemi computabili, è interessante conoscere la complessità degli algoritmi che lo risolvono. La \textit{complessità di un algoritmo} è una misura delle risorse di calcolo consumate durante la computazione e l'\textit{efficienza di un algoritmo} è inversamente proporzionale alla sua complessità. La teoria della complessità studia l'uso delle risorse di calcolo necessarie per la computazione di algoritmi e, più in generale, per la soluzione di problemi. Questo studio è importante al fine di:
    	\begin{itemize}
    		\item poter confrontare algoritmi diversi che risolvono lo stesso problema;
-   		\item stabilire se dei problemi ammettono algoritmi risolutivi che sono praticamente computabili. 
+   		\item stabilire se dei problemi ammettono algoritmi risolutivi che sono praticamente computabili.
    	\end{itemize}
    	Intuitivamente un programma è più efficiente di un altro se la sua esecuzione richiede meno risorse di calcolo. Le risorse di calcolo che si considerano sono:
    	\begin{itemize}
@@ -2279,19 +2279,19 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\end{itemize}
    	L'analisi dell'efficienza di un programma è basata sull'ipotesi che il costo di ogni istruzione semplice e di ogni operazione di confronto sia pari ad un'unità di costo, indipendentemente dal linguaggio e dal sistema usato. \\
    	Ci limiteremo a contare le operazioni eseguite o alcune operazioni chiave o premimenti ammettendo che il tempo compessivo di esecuzione sia proporzionale al numero di tali operazioni. \\
-   	Tratteremo come non significative le costanti moltiplicative e studieremo le funzioni di complessità nel loro ordine di grandezza. 
+   	Tratteremo come non significative le costanti moltiplicative e studieremo le funzioni di complessità nel loro ordine di grandezza.
    	\subsection{Dimensione dell'input}
    	Il costo di esecuzione di un programma dipende anche dai particolari dati di ingresso. Ad esempio il costo di esecuzione di un programma di un ordinamente di un insieme di numeri dipende dalle dimensioni dell'insieme che si considera. Per tener conto del numero di dati con cui si esegue il programma assumiamo che la dimensione dell'input rappresenta l'argomento della funzione che esprime il costo di esecuzione di un programma. \\
    	Si può caratterizzare tale dimensione mediante un intero $n$ che è precisamente identificato nella macchina di Turing come la lunghezza della porzione di nastro che contiene i dati di ingresso. Impiegando un elaboratore ed un suo linguaggio di programmazione, la dimensione $n$ è lo spazio occupato, nella memoria dell'elaboratore, dai dati relativi al problema da risolvere, o più in generale un numero proporzionale a questo spazio. Ad esempio:
    	\begin{itemize}
    		\item se si opera su matrici $n$ sarà il numero dei suoi elementi;
    		\item se si opera su un insieme, $n$ sarà il numero dei suoi elementi;
-   		\item se si opera su un grafo, $n$ sarà il numero dei nodi o il numero di archi o la somma dei due numeri. 
+   		\item se si opera su un grafo, $n$ sarà il numero dei nodi o il numero di archi o la somma dei due numeri.
    	\end{itemize}
    	\section{Complessità in spazio}
    	La complessità in spazio è il massimo spazio invaso dalla memoria durante l'esecuzione dell'algoritmo, il quale può costruire insieme di dati intermedi o di servizio, oltre ad operare sui dati iniziali e finali. Anche in questo caso ci si limita in genere allo studio della complessità asintotica. Poichè abbiamo a disposizione memorie grandissime a basso costo, studieremo la complessità in tempo. \\
    	Il costo è unario per i dati di tipo semplice, mentre per array di $n$ elementi, il costo è dato da: $n \cdot$ \textit{dimensione di un elemento}. \\
-   	Il costo di un record è dato dalla somma dei costi delle singole componenti. Ad esempio, il seguente algoritmo: 
+   	Il costo di un record è dato dalla somma dei costi delle singole componenti. Ad esempio, il seguente algoritmo:
    	\begin{lstlisting}[style=pascalstyle]
    		somma = 0
    		for i = 1 to n do somma = somma + A[i]
@@ -2306,7 +2306,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\item assegnazione, $\leftarrow $
    		\item aritmentica, $+, -, *, /$
    		\item logica, AND, OR, NOT
-   		\item confronto, $\leq, \geq, <, >, =, \neq$ 
+   		\item confronto, $\leq, \geq, <, >, =, \neq$
    		\item lettura/scrittura
    	\end{itemize}
    	è unitario. \\
@@ -2326,21 +2326,21 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\end{itemize}
    	Il costo di un'istruzione for: for i = 1 to n do S1 è equivalente al costo del seguente ciclo:
    	\begin{lstlisting}[style=pascalstyle]
-   		i = 1 
+   		i = 1
    		while i <= n do
    			S1;
    			i = i + 1
    	\end{lstlisting}
    	ed è quindi dato da: 2 + (costo di S1 + 3) * $n$. \\
-   	La complessità di un algoritmo non può essere caratterizzata da una sola funzione di complessità. A parità di dimensione di dati, il tempo di esecuzione può dipendere dalla specifica configurazione dei dati. Si considerano di solito tre differenti tipi di complessità: complessità nel caso medio, ottimo e pessimo. 
+   	La complessità di un algoritmo non può essere caratterizzata da una sola funzione di complessità. A parità di dimensione di dati, il tempo di esecuzione può dipendere dalla specifica configurazione dei dati. Si considerano di solito tre differenti tipi di complessità: complessità nel caso medio, ottimo e pessimo.
    	Nella \textit{complessità media} il valore della complessità di un algoritmo è mediato su tutte le possibili occorrenze iniziali dei dati. Nella complessità media si usa spesso la probabilità e il calcolo è spesso difficile. \\
    	Il calcolo della \textit{complessità nel caso ottimo} si ottiene considerando, a parità di dimensione dei dati, la configurazione che dà luogo al minimo tempo di esecuzione. Tale complessità è per lo più di interesse secondario anche se è abbastanza facile da determinare. \\
-   	Per calcolo della  \textit{complessità nel caso pessimo} si intende la complessità relativa a quella particolare occorrenza iniziale dei dati per l'algoritmo ha comportamento pessimo. Tale funzione di complessità fornisce un limite superiore alla complessità, entro cui il funzionamento dell'algoritmo è sempre garantito. 
+   	Per calcolo della  \textit{complessità nel caso pessimo} si intende la complessità relativa a quella particolare occorrenza iniziale dei dati per l'algoritmo ha comportamento pessimo. Tale funzione di complessità fornisce un limite superiore alla complessità, entro cui il funzionamento dell'algoritmo è sempre garantito.
    	Come abbiamo detto, si considerano tre tipi di complessità:
    	\begin{itemize}
    		\item \textbf{Caso pessimo}: si ottiene considerando quella particolare configurazione che, a parità di dimensione dei dati, dà luogo al massimo tempo di calcolo. La corrispondente funzione di complessità è indicata con $f_{pess}(n)$;
    		\item \textbf{Caso ottimo}: si ottiene considerando la configurazione che dà luogo al minimo tempo di calcolo. La corrispondente funzione di complessità è indicata con $f_{ott}(n)$;
-   		\item \textbf{Caso medio}: si riferisce al tempo di calcolo mediato su tutte le possibili configurazione dei dati, sempre per una data dimensione $n$. Funzione di complessità: $f_{med}(n)$ 
+   		\item \textbf{Caso medio}: si riferisce al tempo di calcolo mediato su tutte le possibili configurazione dei dati, sempre per una data dimensione $n$. Funzione di complessità: $f_{med}(n)$
    	\end{itemize}
    	Esistono particolari algoritmi in cui tutte le possibili configurazioni dei dati sono equivalenti per quanto riguarda la complessità in tempo. In questo caso, la complessità ottima, pessima e media coincidono. Ad esempio:
    	\begin{itemize}
@@ -2351,12 +2351,12 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\begin{lstlisting}[style=pascalstyle]
    		function ricerca_lineare(var t: array, var k: tipochiave, var trovato: boolean): boolean;
    		i := 0;
-   		repeat 
+   		repeat
    			i := i + 1
    		until(t[i].chiave = k) or (i = n)
    		if (t[i].chiave = k) then
    			ricerca_lineare := true
-   		else 
+   		else
    			ricerca_lineare := false
    	\end{lstlisting}
    	Il costo di eseguzione del programma dipende dalla posizione del particolare elemento che si vuole individuare: se l'elemento cercato è il primo del vettore allora si effettua un solo confronto (caso ottimo); se l'elemento cercato è il secondo allora si effettuano due confronti e così via. Il \textit{caso peggiore} è costituito dalla ricerca dell'ultimo elemento o da una ricerca infruttuosa, perchè in questo caso l'algoritmo esamina tutte le componenti dell'array ed esegue il ciclo $n$ volte. \\
@@ -2367,7 +2367,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\item il test dell'istruzione repeat è eseguito $n$ volte;
    		\item il test dell'istruzione if then else è eseguito 1 volta;
    		\item la sesta istruzione è eseguita 1 volta;
-   		\item la settima istruzione non viene eseguita. 
+   		\item la settima istruzione non viene eseguita.
    	\end{itemize}
    	Pertanto il costo del programma è:
    	\[
@@ -2403,11 +2403,11 @@ Una specifica per il tipo di dato insieme è la seguente:
    		&f_3(n) = 4n^2 + 2n
    	\end{align*}
    	sono asintoticamente equivalenti, in quanto crescono tutte con il quadrato di $n$. \\
-   	Il costo di esecuzione di un programma, o di un algoritmo, si esprime come funzione delle dimensioni dell'input in cui si ignorano le costanti moltiplicative. Si definiscono, inoltre, diversi tipi di delimitazioni che formalizzano la complessità di un programma o algoritmo. 
+   	Il costo di esecuzione di un programma, o di un algoritmo, si esprime come funzione delle dimensioni dell'input in cui si ignorano le costanti moltiplicative. Si definiscono, inoltre, diversi tipi di delimitazioni che formalizzano la complessità di un programma o algoritmo.
    	\section{Notazioni}
    	Descriviamo le notazioni usate per descrivere la complessità di un programma o di un algoritmo.  \\
    	\paragraph{Limite superiore}
-   	$O(f(n))$ è l'insieme di tutte le funzioni $g(n)$ tali che esistono due costanti positive $c$ e $m$ per cui: 
+   	$O(f(n))$ è l'insieme di tutte le funzioni $g(n)$ tali che esistono due costanti positive $c$ e $m$ per cui:
    	\[
    	g(n) \leq cf(n) \quad \forall n \geq m
    	\]
@@ -2434,14 +2434,14 @@ Una specifica per il tipo di dato insieme è la seguente:
    	$g(n) \in \Theta(f(n))$ tradizionalmente si legge ``$g(n)$ è di ordine $\Theta(f(n))$''; la $g$ si comporta asintoticamente esattamente come $f$, per cui l'andamento di $f$ caratterizza precisamente quello di $g$. \\
    	La funzione $h(n) = 3n^2 + 3n - 1$ è di ordine $n^2$ perchè esistono le costanti $c = 4$ e $n = 3$ per cui $h(n) < 4n^2$ per $n \geq 3$. \\
    	Notiamo che qualsiasi polinomio di grado $k$ è di ordine $n^k$ e, in accordo con la definizione, è anche di ordine $n^j$ con $j > k$. \\
-   	La funzione $g(n) = 3n^2 + 2n + 1$ è $O(n^2)$ e anche $O(n^3)$ ma è anche di ordine $\Omega(4n^2), \Omega(n^2), \Omega(n)$; inoltre è di ordine $\Theta(n^2)$, $\Theta(4n^2)$ ma non di ordine $\Theta(n)$ e neppure di ordine $\Theta(n^3)$. 
+   	La funzione $g(n) = 3n^2 + 2n + 1$ è $O(n^2)$ e anche $O(n^3)$ ma è anche di ordine $\Omega(4n^2), \Omega(n^2), \Omega(n)$; inoltre è di ordine $\Theta(n^2)$, $\Theta(4n^2)$ ma non di ordine $\Theta(n)$ e neppure di ordine $\Theta(n^3)$.
    	\paragraph{Proprietà} Seguono alcune proprietà:
    	\begin{itemize}
    		\item $g \in O(f)$ implica $(f + g) \in O(f)$
    		\item $f_1 \in O(g_1), f_2 \in O(g_2)$ implica $f_1 + f_2 \in O(g_1 + g_2)$
    		\item $O$ e $\Omega$ sono relazioni riflessive e transitive
    		\item $\Theta$ è una relazione di equivalenza
-   		\item $f\in O(g) \iff g \in \Omega(f)$ 
+   		\item $f\in O(g) \iff g \in \Omega(f)$
    	\end{itemize}
    	\section{Valutazione della complessità}
    	La valutazione del costo di un programma o di un algoritmo richiede la determinazione di una delimitazione superiore ed una inferiore. Diamo una serie di regole che aiutano a trovare la delimitazione superiore della complessità.
@@ -2454,13 +2454,13 @@ Una specifica per il tipo di dato insieme è la seguente:
    		Inoltre si noti che:
    		\begin{enumerate}
    			\item $S(n) = O(f(n)) \Rightarrow$ esistono costanti $a'$ e $n'$ tali che $S(n) < a'f(n) \quad \forall n > n'$;
-   			\item $T(n) = O(g(n)) \Rightarrow$ esistono costanti $a''$ e $n''$ tali che $S(n) < a''g(n) \quad \forall n > n''$. 
+   			\item $T(n) = O(g(n)) \Rightarrow$ esistono costanti $a''$ e $n''$ tali che $S(n) < a''g(n) \quad \forall n > n''$.
    		\end{enumerate}
    		Ne deriva che, per $n > \max(n', n'')$:
    		\[
    		S(n) + T(n) < a'f(n) + a''g(n) < (a' + a'')\max(f(n), g(n))
    		\]
-   		Quindi, $O(S(n) + T(n))$ è proprio $O(\max(f(n), g(n)))$. 
+   		Quindi, $O(S(n) + T(n))$ è proprio $O(\max(f(n), g(n)))$.
    		\item Questa regola permette di valutare il costo del programma quando esso richiede più volte l'esecuzione di un insieme di istruzioni o l'attivazione di una procedura. \\
    		Supponiamo che un programma richieda per $k$ volte l'esecuzione di una istruzione composta o l'attivazione di una procedura, e sia $f_i(n)$ il costo relativo all'esecuzione $i$-esima, $i = 1, 2, \dots, k$. Il costo complessivo del programma è pari a:
    		\[
@@ -2474,7 +2474,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\[
    		t(n) < ad(n) + b
    		\]
-   		per opportune costanti $a$ e $b$. 
+   		per opportune costanti $a$ e $b$.
    	\end{definition}
    	In altre parole, un'istruzione dominante viene eseguita un numero di volte proporzionale al costo di esecuzione di tutto l'algoritmo. È importante osservare che in un programma, più istruzioni possono essere dominanti, ma può anche accadere che il programma non contenga affatto istruzioni dominanti. \\
    	\textbf{Regola 3.} Supponiamo che un programma contenga un'istruzione dominante che, nel caso peggiore di input di dimensione $n$, viene eseguita $d(n)$ volte. La delimitazione superiore alla complessità del programma è $O(d(n))$. \\
@@ -2488,20 +2488,20 @@ Una specifica per il tipo di dato insieme è la seguente:
    		&\text{nlog} \quad& O(n\log n) \\
    		&\text{quadratica} \quad& O(n^2) \\
    		&\text{cubica} \quad& O(n^3) \\
-   		&\text{esponenziale} \quad& O(a^n) \quad a > 1 
+   		&\text{esponenziale} \quad& O(a^n) \quad a > 1
    	\end{align*}
-   	Gli algoritmi con complessità costante sono più efficienti di quelli con complessità logaritmica che a loro volta sono più efficienti di quelli con complessità lineare e così via. 
+   	Gli algoritmi con complessità costante sono più efficienti di quelli con complessità logaritmica che a loro volta sono più efficienti di quelli con complessità lineare e così via.
    	\begin{figure}[H]
    		\centering
-   		\includegraphics[width=0.8\textwidth]{complexity}
+   		\includegraphics[width=0.8\textwidth]{images/complexity}
    		\caption{$O(1) < O(\log n) < O(n) < O(n\log n) < O(n^2) < O(n^3) < \dots < O(a^n)$}
    	\end{figure}
    	La distinzione di maggiore interesse in teoria della complessità è fra:
    	\begin{itemize}
    		\item algoritmi \textit{polinomiali} con complessità $O(n^k)$ con $k > 0$;
-   		\item algoritmi \textit{esponenziali} con complessità $O(a^{g(n)})$ con $a > 1$ e $g(n)$ funzione crescente. 
+   		\item algoritmi \textit{esponenziali} con complessità $O(a^{g(n)})$ con $a > 1$ e $g(n)$ funzione crescente.
    	\end{itemize}
-   	Gli algoritmi di importanza pratica sono quelli polinomiali. \\ 
+   	Gli algoritmi di importanza pratica sono quelli polinomiali. \\
    	Ad esempio, ordinare un elenco di elementi è un compito molto frequente:
    	\begin{itemize}
    		\item ordinare numeri in modo crescente;
@@ -2510,7 +2510,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\end{itemize}
    	Vi sono molti modi per ordinare un elenco, ad esempio, il selection sort è uno dei più facili, facili da capire e da programmare, ma non è il più efficiente. \\
    	Per ordinare un array di interi in modo crescente, si cerca nell'array il numero più piccolo e lo si scambia col primo elemento dell'array; la parte ordinata dell'array è ora il primo elemento, mentre quella non ancora ordinata sono i rimanenti elementi. \\
-   	Dopodichè, si cerca nella parte non ordinata il numero più piccolo e lo si cambia con il secondo elemento dell'array e questa ricerca viene ripetuta fino a quando tutti gli elementi sono al posto giusto. 
+   	Dopodichè, si cerca nella parte non ordinata il numero più piccolo e lo si cambia con il secondo elemento dell'array e questa ricerca viene ripetuta fino a quando tutti gli elementi sono al posto giusto.
    	\begin{lstlisting}[style=cppstyle]
    		public void selectionSort(int[] a) {
    			int i,j, indexOfNextSmallest, min, temp;
@@ -2608,10 +2608,10 @@ Una specifica per il tipo di dato insieme è la seguente:
    		\item \textbf{la scelta dell'input}: si stabilisce che i valori di alcune variabili in gioco siano i dati di ingresso del problema. L'insieme di tali valori è lo \textit{spazio di input} del problema;
    		\item \textbf{la scelta dello scopo della risoluzione}: si stabilisce che i valori di alcune variabili in gioco rappresentino le soluzioni del problema. L'insieme di tali valori è lo \textit{spazio delle soluzioni};
    		\item L'identificazione del legame che i \textbf{vincoli del problema} impongono tra i valori dello spazio di input e i valori dello spazio delle soluzioni. Ciò conduce alla definizione della \textit{relazione caratteristica} del problema;
-   		\item la determinazione di quali \textbf{informazioni in uscita} si vuole che il processo risolutivo del problema produca. Queste informazioni stabiliscono lo \textit{spazio di output} e il \textit{quesito} del problema. 
+   		\item la determinazione di quali \textbf{informazioni in uscita} si vuole che il processo risolutivo del problema produca. Queste informazioni stabiliscono lo \textit{spazio di output} e il \textit{quesito} del problema.
    	\end{itemize}
    	Ad esempio, se vogliamo determinare la posizione di un numero interno in un vettore di interi, le variabili in gioco sono: un vettore \textbf{v}, un indice \textbf{k}, un numero intero \textbf{m}. \\
-   	Lo \textit{spazio di input} è l'insieme delle possibili coppie formate da un vettore $v$ e un numero intero $m$. Lo \textit{spazio delle soluzioni} è l'insieme degli indici di ogni possibile vettore. La \textit{relazione caratteristica} associa ad ogni coppia $(v, m)$ una posizione $k$ se e solo se il $k$-esimo elemento di $v$ coincide con $m$. La relazione la chiamiamo $R_{vett}$. Lo \textit{spazio di output} contiene lo spazio delle soluzioni più un particolare simbolo che denota l'assenza di soluzioni. Il \textit{quesito} stabilisce che, per ogni manifestazione che ammette soluzione, vogliamo come output un qualunque elemento dello spazio delle soluzioni legato a quella manifestazione della relazione caratteristica. 
+   	Lo \textit{spazio di input} è l'insieme delle possibili coppie formate da un vettore $v$ e un numero intero $m$. Lo \textit{spazio delle soluzioni} è l'insieme degli indici di ogni possibile vettore. La \textit{relazione caratteristica} associa ad ogni coppia $(v, m)$ una posizione $k$ se e solo se il $k$-esimo elemento di $v$ coincide con $m$. La relazione la chiamiamo $R_{vett}$. Lo \textit{spazio di output} contiene lo spazio delle soluzioni più un particolare simbolo che denota l'assenza di soluzioni. Il \textit{quesito} stabilisce che, per ogni manifestazione che ammette soluzione, vogliamo come output un qualunque elemento dello spazio delle soluzioni legato a quella manifestazione della relazione caratteristica.
    	\begin{definition}{\nmu Specifica del problema}{specifica_problema}
    		La specifica del problema è una quintupla $<I, S, R, O, Q>$ ove:
    		\begin{itemize}
@@ -2620,9 +2620,9 @@ Una specifica per il tipo di dato insieme è la seguente:
    			\item $R \subseteq I \times S$ è una reazione su $I$ ed $S$ detta relazione caratteristica;
    			\item $O$ è lo spazio dell'output;
    			\item $Q$ è una regola, detto \textit{quesito}, che sulla base della relazione caratteristica $R$ consente di definire una relazione su $I$ e $O$, $R_Q \subseteq I \times O$.
-   		\end{itemize}	
+   		\end{itemize}
    	\end{definition}
-   	Una particolare istanza del problema si ottiene ogni volta che scegliamo un particolare valore dei dati di ingresso. In relazione ad un problema e ad una sua istanza diamo la nozione di \textbf{soluzione}. 
+   	Una particolare istanza del problema si ottiene ogni volta che scegliamo un particolare valore dei dati di ingresso. In relazione ad un problema e ad una sua istanza diamo la nozione di \textbf{soluzione}.
    	\begin{definition}{\nmu Soluzione di un problema}{sol_problema}
    		Sia $P = <I, S, R, O, Q>$ un problema e sia $i \in I$ una sua istanza, una soluzione $S_i$ di $P$ per $i$ è un elemento di $S$ per cui vale:
    		\[
@@ -2632,9 +2632,9 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\begin{definition}{\nmu Rispostaza ad un problema}{risp_problema}
    		Sia $P = <I, S, R, O, Q>$ un problema e sia $i$ una sua istanza, una \textit{risposta} $r_i$ a $P$ per $i$ è un elemento di $O$ per cui vale:
    		\[
-   		<i, r_i> \in R_Q  		
+   		<i, r_i> \in R_Q
    		\]
-   		dove $R_Q$ è la relazione su $I$ e $O$ definita in base ad $R$ applicando la regola $Q$.  	
+   		dove $R_Q$ è la relazione su $I$ e $O$ definita in base ad $R$ applicando la regola $Q$.
    	\end{definition}
    	\subsection{Problemi di ricerca}
    	Tra tutte le possibili soluzioni siamo interessati a conoscere una qualunque delle soluzioni del problema per l'istanza che stiamo considerando, oppure, nel caso non esista soluzione, siamo interessati a saperlo. Introduciamo nello spazio di output il simbolo $\perp$ che individua l'\textit{assenza di soluzione}.
@@ -2680,7 +2680,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		Ad esempio, se $V = [7, 1, 3, 4]$ allora $W = [2, 3, 4, 1]$ e $V_{W_2} > V_{W_1}$
    	\end{example}
    	\subsection{Problemi di decisione}
-   	La risposta è vero o falso a seconda che il dato di ingresso soddisfi o meno una certa proprietà. Dunque lo spazio di output contiene solo i due valori di verità. 
+   	La risposta è vero o falso a seconda che il dato di ingresso soddisfi o meno una certa proprietà. Dunque lo spazio di output contiene solo i due valori di verità.
    	\begin{definition}{\nmu Problema di decisione}{problema_decisione}
    		Un problema di decisione $P$ è un problema specificato con una quintupla del tipo:
    		\[
@@ -2718,7 +2718,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    			\item $x \in I$, $y \in S$;
    			\item $y = <y_1, y_2>$ è una coppia di insiemi tale che:
    			\[
-   			y_1 \cap y_2 = \emptyset \wedge y_1 \cup y_2 = x 
+   			y_1 \cap y_2 = \emptyset \wedge y_1 \cup y_2 = x
    			\]
    			e tale che
    			\[
@@ -2766,7 +2766,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 		Per il problema $P_2$ abbiamo che $M = N$ e la funzione obiettivo:
 		\[
 		m: 2^W \times W \to M \quad \forall i \in I\ m(i, W)\ \text{ è la lunghezza di $W$}
-		\] 
+		\]
 		e la relazione $\subseteq$ è la relazione di ordinamento $\geq$ tra numeri. \\
 		Per il problema $P_3$ $M$ è l'insieme di tutti gli insiemi di lettere dell'alfabeto e la funzione obiettivo:
 		\[
@@ -2776,7 +2776,7 @@ Una specifica per il tipo di dato insieme è la seguente:
 		Ad esempio sia l'istanza per i tre problemi:
 		\[
 		\{"TORRE", "ERRORE", "ZERO", "TENORE"\}
-		\] 
+		\]
 		$P_1$ ha una soluzione ottima ``ZERO''. \\
 		$P_2$ ha sue soluzioni ottimali ``ERRORE'' e ``TENORE''. \\
 		$P_3$ ha due soluzioni ottimali ``TENORE'' e ``ZERO''.
@@ -2804,7 +2804,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    		Dati $2n + 1$ interi  positivi: $P_1, \dots, P_n, C_1, \dots, C_n, B$ trovare  $n$ valori interi $X_1, \dots, X_n$ tale che:
    		\[
    		X_{i} \in \{0, 1\} \quad 1 \leq i \leq n
-   		\] 
+   		\]
    		ove $\sum_{i=1}^{n}P_iX_i$ abbia valore massimo e $\sum_{i=1}^{n}C_iX_i \leq B$. \\
    		Lo \textit{spazio di input} $I$ è l'insieme delle coppie $(n, Q)$ dove $n$ è un intero positivo e $Q$ è una sequenza di $2n + 1$ interi positvi. L'elemento di questo spazio è:
    		\[
@@ -2830,7 +2830,7 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\end{example}
    	Dunque, la \textit{specifica di un problema} mira a determinare la struttura del problem, in modo indipendente da considerazioni relative al modo in cui il problema verrà risolto. \\
    	Lo \textit{spazio delle soluzioni} è caratteristica generale del problema e non fornisce indicazioni sulle soluzioni per una generica istanza. \\
-   	È ora necessario uno strumento che aiuti a ``caratterizzare'' le potenziali soluzioni ad una generica istanza di un problema, per orientare la scelta di un algoritmo risolutivo, il cosidetto \textbf{spazio di ricerca}. 
+   	È ora necessario uno strumento che aiuti a ``caratterizzare'' le potenziali soluzioni ad una generica istanza di un problema, per orientare la scelta di un algoritmo risolutivo, il cosidetto \textbf{spazio di ricerca}.
    	\section{Spazio di ricerca}
    	Affinchè l'analisi di un problema aiuti a formulare un algoritmo risolutivo è necessario disporre di uno strumento concettuale che aiuti a caratterizzare le potenziali soluzioni di una generica istanza del problema. \\
    	Determinare lo \textit{spazio di ricerca} per un problema $P$ significa stabilire un metodo che, per ogni istanza $i$ di $P$, consente di definire un insieme con associate due funzioni:
@@ -2858,16 +2858,16 @@ Una specifica per il tipo di dato insieme è la seguente:
    				\item per ogni elemento $z$ di $Z_i$, $a(z) = TRUE \iff o(z)$ è soluzione di $P$ per $i$;
    				\item $i$ ha risposta positiva se e solo se vi è almeno un elemento $z$ di $Z_i$ per cui $a(z) = TRUE$ e $o(z)$ è una risposta a $P$ per $i$.
    			\end{enumerate}
-   			\item un metodo per rappresentare ogni elemento di $Z_i$ mediante una struttura dati e per esprimere la funzione di ammissibilità e di risposta in termini di tale struttura. 
+   			\item un metodo per rappresentare ogni elemento di $Z_i$ mediante una struttura dati e per esprimere la funzione di ammissibilità e di risposta in termini di tale struttura.
    		\end{itemize}
    	\end{definition}
    	Lo spazio di ricerca associato associato ad una istanza $i$ di $P$ caratterizza le soluzioni e le corrispondenti risposte a $P$ per $i$.
    	\paragraph{Struttura dello spazio di ricerca per problemi di ricerca con risposta positiva} L'insieme $\{s \in S \mid (i, S) \in R\}$ rappresenta le soluzioni di $P$ per l'istanza $i$ (per un problema di ricerca questo insieme coincide con l'insieme delle risposte). \\
    	L'insieme $\{s \in S \mid \exists z \in Z_i, a(z) = TRUE \wedge o(z) = s\}$ è costituito dalle soluzioni di $P$ per l'istanza $i$ che sono rappresentate nello spazio di ricerca. \\
-   	Lo spazio di ricerca non rappresenta necessariamente tutte le soluzioni ad $i$. Se esistono risposte positive per $i$ basta che una sia rappresentata nello spazio di ricerca. 
+   	Lo spazio di ricerca non rappresenta necessariamente tutte le soluzioni ad $i$. Se esistono risposte positive per $i$ basta che una sia rappresentata nello spazio di ricerca.
    	\begin{figure}[H]
    		\centering
-   		\includegraphics[width=0.8\textwidth]{spazio_ricerca}
+   		\includegraphics[width=0.8\textwidth]{images/spazio_ricerca}
    	\end{figure}
    	\paragraph{Struttura dello spazio di ricerca per i problemi di ottimizzazione} Per i problemi di ottimizzazione valgono le seguenti osservazioni:
    	\begin{itemize}
@@ -2893,22 +2893,22 @@ Una specifica per il tipo di dato insieme è la seguente:
    	\]
    	\begin{figure}[H]
    		\centering
-   		\includegraphics[width=0.8\textwidth]{spazio_ricerca_ottimale}
+   		\includegraphics[width=0.8\textwidth]{images/spazio_ricerca_ottimale}
    	\end{figure}
    	\begin{example}{\nmu Ricerca di un elemento in un vettore}{}
    		Consideriamo una generica istanza del problema con input un vettore $V$ di $n$ elementi e un numero $M$. \\
    		Lo spazio di ricerca associato a tale istanza è l'insieme dei valori che sono indici del vettore, da 1 a $n$ e la funzione di ammissibilità verifica, dato un $j$, se $V[j] = M$. La funzione di risposta restituisce $j$. \\
-   		La struttura dati per rappresentare i singoli elementi dell'insieme è una semplice variabile di tipo intero. 
+   		La struttura dati per rappresentare i singoli elementi dell'insieme è una semplice variabile di tipo intero.
    	\end{example}
    \paragraph{Differenze tra spazio delle soluzioni e spazio di ricerca} Lo \textit{spazio delle soluzioni} è una componente della specifica del problema e fa globalmente riferimento a tutte le possibili soluzioni del problema. \\
    Lo \textit{spazio di ricerca} fornisce uno strumento per caratterizzare le soluzioni di ogni singola istanza del problema e determina anche, per ogni istnaza del problema, una struttura di dati e un meccanismo per verificare, tramite la formulazione della funzione di ammissibilità in termini di tale struttura, se una sua configurazione corrisponde o meno ad una soluzione per l'istanza e un metodo per derivare, tramite la formulazione della funzione di risposta, una risposta all'istanza. \\
    Esistono diversi modi per determinare uno spazio di ricerca di un problema. I criteri per valutare la qualità di una scelta rispetto ad un'altra sono i seguenti.
    \begin{itemize}
-   	\item Lo spazio di ricerca deve caratterizzare le soluzioni ad una istanza in modo non ridondante: è opportuno scegliere una struttura dati che escluda a priori configurazioni che non corrispondono a priori ad alcuna soluzione. 
-   	\item Lo spazio di ricerca non deve essere una banale riformulazione del problema e della sua relazione caratteristica nè deve nascondere la difficoltà di un problema, ma deve fornire elementi significativi per la comprensione della struttura del problema e delle sue soluzioni. 
+   	\item Lo spazio di ricerca deve caratterizzare le soluzioni ad una istanza in modo non ridondante: è opportuno scegliere una struttura dati che escluda a priori configurazioni che non corrispondono a priori ad alcuna soluzione.
+   	\item Lo spazio di ricerca non deve essere una banale riformulazione del problema e della sua relazione caratteristica nè deve nascondere la difficoltà di un problema, ma deve fornire elementi significativi per la comprensione della struttura del problema e delle sue soluzioni.
    \end{itemize}
    \begin{example}{\nmu Problema delle $n$ regine}{problema_ricerca_regine}
-   	Sia $i$ la dimensione della scacchiera. 
+   	Sia $i$ la dimensione della scacchiera.
  	\begin{itemize}
  		\item L'insieme che forma lo spazio di ricerca è l'insieme di tutte le possibili scacchiere di dimensione $i$ in cui sono poste $i$ regine.
  		\item La funzione di ammissibilità verifica se la scacchiera soddisfa i vincoli del problema, cioè se non esistono nella scacchiera due regine piazzate nella stessa riga, colonna o diagonale. \\
@@ -2920,10 +2920,10 @@ Una specifica per il tipo di dato insieme è la seguente:
  	Allora l'insieme degli elementi dello spazio di ricerca coincide con tutti i possibili modi di memorizzare i valori da 1 ad $i$ in un vettore $V$, ovvero tutte le possibili permutazioni di $(1, \dots, i)$. \\
  	La funzione di ammissibilità verifica se il generico elemento dello spazio di ricerca, cioè il generico vettore $V$, non contenga due elementi in posizione $h$ e $k$ tali che:
  	\[
- 	\left|V[h] - V[k]\right| = \left| h-k\right| 
+ 	\left|V[h] - V[k]\right| = \left| h-k\right|
  	\]
  	ovvero due regine nella stessa diagonale. \\
- 	La funzione di risposta ricostruisce semplicemente, a partire da un generico vettore, la corrispondente configurazione nella scacchiera. 
+ 	La funzione di risposta ricostruisce semplicemente, a partire da un generico vettore, la corrispondente configurazione nella scacchiera.
  	\end{example}
  	\section{Teniche algoritmiche}
  	Le tecniche algoritmiche sono basate su diversi paradigmi di utilizzo dello spazio di ricerca e consideriamo:
@@ -2944,15 +2944,15 @@ Una specifica per il tipo di dato insieme è la seguente:
  		\]
  		La funzione di risposta è la funzione identità. Se $N$ è la dimensione di $V$ lo spazio di ricerca ha dimensione $N!$.
  	\end{example}
- 	Un algoritmo \textit{selettivo} effettua la visita dello spazio di ricerca per trovare una permutazione che soddisfi la condizione di ammissibilità. 
+ 	Un algoritmo \textit{selettivo} effettua la visita dello spazio di ricerca per trovare una permutazione che soddisfi la condizione di ammissibilità.
  	Dal paradigma \textit{generativo} scaturiscono tecniche di progetto di algoritmi che generano direttamtente la soluzione senza selezionarla tra gli elementi dello spazio di ricerca. \\
  	In questo paradigma lo spazio di ricerca è considerato esclusivamente in fase di progetto dell'algoritmo allo scopo di caratterizzare le soluzioni del problema e definire una strategia risolutiva diretta per ogni istanza. A questo paradigma appartengono la tecnica \textit{greedy} e la tecnica \textit{divide-et-impera}. \\
  	Un algoritmo \textit{generativo} deriva la soluzione con un procedimento diretto sull'istanza, senza visitare lo spazio di ricerca. \\
  	Rappresentiamo il procedimento di esplorazione dello spazio di ricerca mediante un albero, che ha nei nodi i confronti utili a scegliere le permutazioni che sono soluzioni. Lo spazio viene partizionato e ciascuna foglia dell'albero rappresenta un possibile ordinamento. La profondità dell'albero rappresenta il numero di confronti necessario nel caso peggiore.
  	\begin{figure}[H]
  		\centering
- 		\includegraphics[width=0.8\textwidth]{albero_esplorazione}
- 	\end{figure} 
+ 		\includegraphics[width=0.8\textwidth]{images/albero_esplorazione}
+ 	\end{figure}
  	\subsection{Tecnica enumerativa}
  	La tecnica enumerativa è basata sulla sistematica ispezione, elemento per elemento, dello spazio di ricerca associato ad un'istanza di un problema, è una tecnica che \textbf{garantisce}, se lo spazio di ricerca è finito, una terminazione. \\
  	Per un problema di ricerca si termina quando si è individuato un elemento ammissibile o quando è esaurito lo spazio di ricerca. \\
@@ -2973,12 +2973,12 @@ Una specifica per il tipo di dato insieme è la seguente:
  	\begin{example}{\nmu Gioco dell'otto}{}
  		\begin{figure}[H]
  			\centering
- 			\includegraphics[width=0.8\textwidth]{gioco_otto}
+ 			\includegraphics[width=0.8\textwidth]{images/gioco_otto}
  		\end{figure}
  		I tasselli numerati devono essere disposti e ordinati lungo i bordi: la soluzione può essere ricercata esaminando tutte  le possibili disposizioni generate attraverso mosse successive. Il procedimento di ricerca è rappresentabile mediante un albero che ha nei nodi le configurazioni possibili generate mossa dopo mossa.
  		\begin{figure}[H]
-			\centering 
-			\includegraphics[width=1.0\textwidth]{albero_gioco_otto}
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/albero_gioco_otto}
  		\end{figure}
  	\end{example}
  	\paragraph{Algoritmo enumerativo per problemi di ottimizzazione} Un algoritmo enumerativo per i problemi di ottimizzazione è il seguente:
@@ -2991,18 +2991,18 @@ Una specifica per il tipo di dato insieme è la seguente:
  	\begin{example}{\nmu Gioco dell'otto}{}
  		Se consideriamo come problema il gioco dell'otto, potremmo porci l'obiettivo non solo di trovare una soluzione qualsiasi ma di trovarne una ottima, per esempio, sulla base del criterio ``il prima possibile''. Questo si traduce nella possibilità di valutare il numero di mosse che ci porta alla soluzione e nell'esplorare l'intero albero alla ricerca del cammino più breve che ci porta alla soluzione.
  	\end{example}
- 	\subsection{La tecnica del backtracking} 
+ 	\subsection{La tecnica del backtracking}
  	Nella tecnica di backtracking la generazione degli elementi dello spazio di ricerca da visitare avviene secondo un processo suddiviso in stadi e basato sul fatto che:
  	\begin{itemize}
  		\item ogni elemento dello spazio di ricerca è considerato costituito da diverse componenti e ad ogni stadio viene scelta una componente;
- 		\item se ogni elemento dello spazio di ricerca è strutturato in $n$ componenti, dopo $i$ stadi, ove $i < n$, si è costruita una \textit{soluzione parziale}. La caratteristica della tecnica di backtracking è che in molti problemi è possibile giungere alla conclusione che la soluzione parziale generata è fallimentare. Riconosciuto ciò l'algoritmo interrompe il processo di costruzione e tenta altre vie. 
+ 		\item se ogni elemento dello spazio di ricerca è strutturato in $n$ componenti, dopo $i$ stadi, ove $i < n$, si è costruita una \textit{soluzione parziale}. La caratteristica della tecnica di backtracking è che in molti problemi è possibile giungere alla conclusione che la soluzione parziale generata è fallimentare. Riconosciuto ciò l'algoritmo interrompe il processo di costruzione e tenta altre vie.
  	\end{itemize}
  	\begin{example}{\nmu String matching}{string_matching}
  		Il problema dello string matching prevede di trovare un'occorrenza di una sequenza $P$ di  $m$ caratteri (``pattern'')
  		in un'altra sequenza $T$ di $n$ caratteri (``testo''). Le due stringhe $P$ e $T$ sono formate da caratteri tratti dallo stesso alfabeto ed $m$ non supera $n$. \\
  		Un algoritmo banale consiste nel cerca di riconsocere il pattern a partire dalla prima posizione del testo e se il pattern non è intermente riconosciuto, ripetere il procedimento a partire dalla posizione successiva nel testo continuando fino al riconoscimento dell'intero pattern o all'esaurimento del testo. \\
  		Se il pattern non è riconosciuto l'algoritmo torna a ripetere il procedimento dalla posizione che segue. \\
- 		Le stringhe $P$ e $T$ si possono realizzare con due vettori di caratteri e il programma può realizzarsi mediante una funzione che restituisce la posizione di $T$ a partire dalla quale si trova la prima occorrenza di $P$ (se il pattern occorre nel testo) oppure $n + 1$ se $P$ non occorre in $T$. 
+ 		Le stringhe $P$ e $T$ si possono realizzare con due vettori di caratteri e il programma può realizzarsi mediante una funzione che restituisce la posizione di $T$ a partire dalla quale si trova la prima occorrenza di $P$ (se il pattern occorre nel testo) oppure $n + 1$ se $P$ non occorre in $T$.
  		\begin{lstlisting}[style=pascalstyle]
  			function string1(var P: array; var T: array; var n: integer; var m: integer): integer;
  				i := 1;
@@ -3012,13 +3012,13 @@ Una specifica per il tipo di dato insieme è la seguente:
  					if T[i] = P[j] then
  						i := i + 1;
  						j := j + 1;
- 					else 
+ 					else
  						k := k + 1;
  						i := k;
  						j := 1;
  					if j > m then
  						return k
- 					else 
+ 					else
  						return i
  		\end{lstlisting}
  		La funzione effettua backtracking sugli indici $i$ e $j$.  	\\
@@ -3048,20 +3048,20 @@ Una specifica per il tipo di dato insieme è la seguente:
  						if j <= m then
  							if P[j] = P[1] then
  								SUCC[j] := 0;
- 							else 
+ 							else
  								SUCC[j] := 1;
- 						else 
+ 						else
  							if P[j] = P[h] then
  								j := j + 1;
  								h := h + 1;
  								if j <= m then
  									if P[j] = P[h] then
  										SUCC[j] := SUCC[h];
- 								else 
+ 								else
  									SUCC[j] := h;
- 							else 
+ 							else
  								h := SUCC[h]
- 			
+
  			function string2(var P: array; var T: array, var n: integer, var m: integer): integer;
  				i := 1;
  				j := 1;
@@ -3070,15 +3070,15 @@ Una specifica per il tipo di dato insieme è la seguente:
  					if j = 0 then
  						i := i + 1;
  						j := 1;
- 					else 
+ 					else
  						if T[i] = P[j] then
  							i := i +1;
  							j := j + 1;
- 						else 
+ 						else
  							j := SUCC(j);
  					if j > m then
  						return i - m;
- 					else  
+ 					else
  						return i;\end{lstlisting}
  	\end{example}
  	\begin{example}{\nmu Problema delle 8 regine con algoritmo di backtracking}{otto_regine_backtracking}
@@ -3087,17 +3087,17 @@ Una specifica per il tipo di dato insieme è la seguente:
  			type posizione = [1..8];
  				vettore = array[1..8] of posizione;
  			var V: vettore;
- 			
+
  			procedure otto_regine(var V: vettore; var successo: boolean);
  				k := 1;
  				V[k] := 1;
  				successo := false;
  				repeat
  					VERIFICA(a); /* Programma che controlla il vettore */
- 					if (a) then	
+ 					if (a) then
  						repeat
  							if (V[k] < 8) then begin
- 								b := true; 
+ 								b := true;
  								V[k] := V[k] + 1;
  							else /* Backtracking */
  								b := false;
@@ -3105,8 +3105,8 @@ Una specifica per il tipo di dato insieme è la seguente:
  						until b or (k = 0);
  					else if (k = 8) then
  						successo := true;
- 					else 
- 						k := k + 1; 
+ 					else
+ 						k := k + 1;
  						V[k] := 1;
  				until successo or (k = 0);
  		\end{lstlisting}
@@ -3128,7 +3128,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  	\begin{itemize}
  		\item la radice rappresenta una soluzione parziale fittizia;
  		\item ogni nodo interno a livello $j$ con $j > 0$, rappresenta una soluzione parziale $S$ in cui sono state scelte le prime $j$ componenti, ed ha tanti fili quanti sono i modi possibili di aggiungere ad $S$ la $j+1$-esima componente.
- 		\item ogni foglia è un elemento di $Z_i$. 
+ 		\item ogni foglia è un elemento di $Z_i$.
  	\end{itemize}
  	Per un albero di ricerca associato ad un'istanza $i$ tramite $Z_i$ è importante definire:
  	\begin{itemize}
@@ -3156,13 +3156,13 @@ Una specifica per il tipo di dato insieme è la seguente:
  		Il comportamento dell'algoritmo si può descrivere mediante la rappresentazione ad albero dello spazio di ricerca. \\
  		La radice rappresenta il vettore vuoto, a livello 1 abbiamo i vettori che è possibile formare con la prima variabile $x_1 = 1$ e $x_1 = 0$ e così via.\\
  		Solo nelle foglie avrò la configurazione completa del vettore e solo alcune delle foglie rappresentano soluzioni ammissibili. \\
- 		L'algoritmo di backtracking è un algoritmo di visita in ordine anticipato dell'albero di ricerca. 
+ 		L'algoritmo di backtracking è un algoritmo di visita in ordine anticipato dell'albero di ricerca.
  	\end{example}
- 	L'algoritmo di backtracking si riferisce all'albero di ricerca $B_i$ associato all'istanza $i$ di un problema. Si comporta come se effettuase una visista in profondità. 
+ 	L'algoritmo di backtracking si riferisce all'albero di ricerca $B_i$ associato all'istanza $i$ di un problema. Si comporta come se effettuase una visista in profondità.
  	\begin{itemize}
- 		\item Ogni volta che nella visita si analizza un nodo si applica la funzione di controllo del backtracking al nodo. Se la funzione restituisce TRUE, allora quel nodo e tutto il sottoalbero associato al nodo viene abbandonato e la visita continua. 
- 		\item Se il problema è di ricerca, la visita termina quando si incontra una soluzione (una foglia con funzione di backtracking pari a false) oppure quando non esistono altri nodi da visitare. 
- 		\item Se il problema è di ottimizzazione, l'algoritmo utilizza una variabile \texttt{OTTIMO CORRENTE}, che memorizza ad ogni passo il miglior elemento ammissibile. L'algoritmo non si interrompre al primo elemento ammissibile trovato, ma continua la visita aggiornando tale variabile.  
+ 		\item Ogni volta che nella visita si analizza un nodo si applica la funzione di controllo del backtracking al nodo. Se la funzione restituisce TRUE, allora quel nodo e tutto il sottoalbero associato al nodo viene abbandonato e la visita continua.
+ 		\item Se il problema è di ricerca, la visita termina quando si incontra una soluzione (una foglia con funzione di backtracking pari a false) oppure quando non esistono altri nodi da visitare.
+ 		\item Se il problema è di ottimizzazione, l'algoritmo utilizza una variabile \texttt{OTTIMO CORRENTE}, che memorizza ad ogni passo il miglior elemento ammissibile. L'algoritmo non si interrompre al primo elemento ammissibile trovato, ma continua la visita aggiornando tale variabile.
  	\end{itemize}
  	\begin{example}{\nmu Backtracking sul problema dello zaino}{backtracking_zaino}
  		L'albero di ricerca si ottiene considerando che, se $n$ sono gli oggetti, ogni elemento dello spazio di ricerca si può costruire in $n$ stadi dove all'$i-$esimo stadio si decide se includere o no, nel sottoinsieme rappresentato da $X$, l'oggetto $i$-esimo. L'albero di ricerca è un albero binario di profondità $n$. \\
@@ -3171,7 +3171,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  		\[
  		\sum_{k=1\dots i}C_kX_k > B
  		\]
- 		La funzione, inoltre, vale TRUE se il massimo profitto ottenibile con le scelte già fatte è minore del profitto corrispondente all'ottimo corrente. 
+ 		La funzione, inoltre, vale TRUE se il massimo profitto ottenibile con le scelte già fatte è minore del profitto corrispondente all'ottimo corrente.
  		\[
  		\sum_{I = 1\dots I} P_iX_i + \sum_{i=I+1,\dots N}P_i < P_{ott}
  		\]
@@ -3180,9 +3180,9 @@ Una specifica per il tipo di dato insieme è la seguente:
  	La tecnica greedy su applica principalmente a problemi di ottimizzazione e richiede che l'algoritmo esegua il processo di costruzione di un elemento dello spazio di ricerca in stadi e si basa sui seguenti principi:
  	\begin{itemize}
  		\item ad ogni stadio $i$, per la componente $i$-esima viene scelto il valore che, tra quelli ammissibili, risulta il migliore rispetto ad un determinato criterio;
- 		\item una volta fatta la scelta per la $i$-esima componente, si passa a considerare le altre, senza più tornare sulla decisione presa. 
+ 		\item una volta fatta la scelta per la $i$-esima componente, si passa a considerare le altre, senza più tornare sulla decisione presa.
  	\end{itemize}
- 	Lo schema di un algoritmo greedy presuppone che l'algoritmo acquisisca la rappresentazione di un'istanza del problema e disponga di un metodo per organizzare in stadi la costruzione di un elemento dello spazio di ricerca. 
+ 	Lo schema di un algoritmo greedy presuppone che l'algoritmo acquisisca la rappresentazione di un'istanza del problema e disponga di un metodo per organizzare in stadi la costruzione di un elemento dello spazio di ricerca.
  	\begin{enumerate}
  		\item Poni $i$ a 1 e inizializza $z$.
  		\item Determina l'insieme $A$ dei valori ammissibili per la componente $i$-esima di $z$ e se $A \neq \emptyset$ scegli il migiore in $A$, rispetto al criterio di preferenza fissato.
@@ -3199,7 +3199,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  	X_1, X_2, \dots, X_n
  	\]
  	tali che $X_n \in \{0, 1\}$ e $\sum_{i=1}^{n}P_iX_i$ sia massima e $\sum_{i=1}^{n}C_iX_i \leq B$. \\
- 	Consideriamo l'istanza $B = 5$ e tre elementi disponibili. 
+ 	Consideriamo l'istanza $B = 5$ e tre elementi disponibili.
  	\begin{center}
 	 	\begin{tabular}{|c|c|c|c|}
 	 		\textbf{i} & $\mathbf{P_i}$ & $\mathbf{C_i}$ & $\mathbf{\sfrac{P_i}{C_i}}$ \\
@@ -3218,7 +3218,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  	\end{itemize}
  	Il risultato viene restituito nel vettore $X$ nel quale la $i$-esima componente vale 1 se l'oggetto $i$  è incluso nella soluzione e 0 altrimenti. \\
  	Il secondo metodo consiste nell'ordinare in un vettore ausiliario $V$ gli oggetti secondo l'ordine decrescente del rapporto $\sfrac{P_i}{C_i}$. Ogni elemento è in corrispondenza di un oggetto e contiene l'indice dell'oggetto in un apposito campo, oltre al rapporto $\sfrac{P_i}{C_i}$ ad esso associato. \\
- 	Dopo l'ordinamento, la funzione scandisce il vettore $V$, analizzando per ogni $i$ l'oggetto in $V[i]$  e decidendo, in base alla compatibilità con il vincolo sul budget, se includerlo o meno nella soluzione. 	
+ 	Dopo l'ordinamento, la funzione scandisce il vettore $V$, analizzando per ogni $i$ l'oggetto in $V[i]$  e decidendo, in base alla compatibilità con il vincolo sul budget, se includerlo o meno nella soluzione.
  \end{example}
  Un algoritmo greedy permette di ottenere una soluzione mediante una sequenza di decisioni; in ogni passo viene presa la decisione che al momento appare migliore. Questa strategia euristica non garantisce sempre una soluzione ottima. \\
  Come possiamo determinare se un algoritmo greedy è in grado di trovare la soluzione di un problema di ottimizzazione? I problemi che si prestano ad essere risolti con una strategia greedy presentano alcune caratteristiche:
@@ -3228,7 +3228,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  \end{itemize}
  La proprietà della scelta greedy assicura che si può ottenere una soluzione ottima globale prendendo decisioni che sono \textit{ottimi locali}.\\
  Un problema presenta una sottostruttura ottima se una soluzione ottima del problema contiene al suo interno una soluzione ottima dei sottoproblemi. \\
- La tecnica greedy è spesso utile per problemi di  ``scheduling'', in cui si hanno programmi da eseguire su un ``processore'' e si vuole l'ordine di esecuzione ``ottimo'' in base a un certo criterio. 
+ La tecnica greedy è spesso utile per problemi di  ``scheduling'', in cui si hanno programmi da eseguire su un ``processore'' e si vuole l'ordine di esecuzione ``ottimo'' in base a un certo criterio.
  \begin{example}{\nmu Problema di selezione di attività}{problema_greedy_attivita}
  	Il prolema è quello dell'assegnamento di una risorsa condivisa da un certo numero di attività in competizione tra loro. \\
  	Sia $S = \{1, 2, \dots, n\}$ un insieme di $n$ attività che devono utilizzare una determinata risorsa che non può essere utilizzata contemporanemente. Una generica attività $k$ è caratterizzata da un tempo di inizio, detta attivazione $I_k$ e un tempo di fine detto conclusione $F_k$ con $I_k \leq F_k$. \\
@@ -3237,7 +3237,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  	Si assume che le attività in ingresso siano ordinate in modo crescente rispetto al loro tempo di fine: $F_1 \leq F_2 \leq \dots \leq F_n$. \\
  	Lo spazio di ricerca può essere così definito. Se $1, \dots, n$ sono le attività relative a un'istanza $i$, allora lo spazio di ricerca  è l'insieme di tutti i possibili sottoinsiemi di $\{1, \dots, n\}$. \\
  	Ad ogni stadio l'algortimo greedy sceglie le attività $k$ che, tra quelle ancora disponibili, rilascia per prima la risorsa condivisa, quindi con un $F_k$ minore. \\
- 	Una volta scelta l'attività $k$, si aggiorna l'insieme di attività disponibili, eliminando dall'insieme quelle incompatibili con $k$, cioè quelle che richiedono l'uso della risorsa nel tempo che intercorre tra $I_k$ e $F_k$. 
+ 	Una volta scelta l'attività $k$, si aggiorna l'insieme di attività disponibili, eliminando dall'insieme quelle incompatibili con $k$, cioè quelle che richiedono l'uso della risorsa nel tempo che intercorre tra $I_k$ e $F_k$.
  	\begin{lstlisting}[style=pascalstyle]
  		procedure greedy(var I: array, var F: array, var n: integer);
  		var A: insieme;
@@ -3259,7 +3259,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  	Viene generato un albero di copertura $T$, radicato in $r$, che include un cammino da $r$ ad ogni altro nodo. L'albero radicato $T$ può essere rappresentato con un vettore di padri, inizializzato ad un albero ``fittizio'' in cui tutti i nodi sono figli di $r$ connessi ad un arco fittizio etichettato con un valore maggiore di tutte le altre etichette. \\
  	Una soluzione ammissibile $T$ è ottima se e solo se:
  	\[
- 	DIST[i] + C_{ij} = DIST[j] \quad \forall (i, j) \in T 
+ 	DIST[i] + C_{ij} = DIST[j] \quad \forall (i, j) \in T
  	\]
  	e
  	\[
@@ -3292,7 +3292,7 @@ Una specifica per il tipo di dato insieme è la seguente:
   	&\texttt{MIN:} &\quad &(\text{priorcoda}) \to \text{tipoelem} \\
   	&\texttt{CANCELLAMIN:} &\quad &(\text{priorcoda}) \to \text{priorcoda} \\
   \end{align*}
-  Gli elementi della coda con priorità sono i nodi del grafo e le priorità associate altro non sono che le distanze dal nodo origine $r$. Ad ogni iterazione è estratto da $S$ il noto avente priorità, e quindi distanza, minima. 
+  Gli elementi della coda con priorità sono i nodi del grafo e le priorità associate altro non sono che le distanze dal nodo origine $r$. Ad ogni iterazione è estratto da $S$ il noto avente priorità, e quindi distanza, minima.
   \paragraph{Algoritmo di Kruskal}
   L'algoritmo di Kruskal permette di risolvere il problema del minimo albero di copertura. Dato un grafo non orientato e connesso $G=(N, A)$, con pesi positivi sugli archi, trovare un albero di copertura per $G$, cioè un albero avente tutti i nodi in $N$, ma solo alcuni archi in $A$, in modo tale che sia minima la somma dei pesi associati agli archi. \\
   Il problema può essere risolto con molti algoritmi, dei quali i più noti si devono a Kruskal (1956) e a Prim (1957). \\
@@ -3301,11 +3301,11 @@ Una specifica per il tipo di dato insieme è la seguente:
   \begin{lstlisting}[style=normalstyle]
   	procedure kruskal(var G: grafo);
   		T := {};
-  		for a = 1 to m do 
+  		for a = 1 to m do
   			if (ARCO a = (i, j) non forma ciclo con altri archi di T) then
   				T := T + a;
   \end{lstlisting}
-  Possiamo rappresentare il grafo $G$ come preferiamo. Nella realizzazione data di seguito il grafo è realizzato con un vettore di archi e l'albero $T$ con una lista di archi, realizzata con puntatori. 
+  Possiamo rappresentare il grafo $G$ come preferiamo. Nella realizzazione data di seguito il grafo è realizzato con un vettore di archi e l'albero $T$ con una lista di archi, realizzata con puntatori.
   \begin{lstlisting}[style=normalstyle]
   	ARCO: tipo strutturato con componenti
   		- i, j: integer;
@@ -3316,16 +3316,16 @@ Una specifica per il tipo di dato insieme è la seguente:
   \end{lstlisting}
   Dato il seguente grafo:
   \begin{figure}[H]
-  	\centering 
-  	\includegraphics[width=0.5\textwidth]{grafo_kruskal}
+  	\centering
+  	\includegraphics[width=0.5\textwidth]{images/grafo_kruskal}
   \end{figure}
-  Una volta che si considera un arco, se questo unisce due alberi distinti nella foresta, l'arco viene aggiunto alla foresta e i due alberi fusi in uno. 
+  Una volta che si considera un arco, se questo unisce due alberi distinti nella foresta, l'arco viene aggiunto alla foresta e i due alberi fusi in uno.
   \begin{figure}[H]
   	\centering
-  	\includegraphics[width=0.5\textwidth]{applicazione_kruskal}
+  	\includegraphics[width=0.5\textwidth]{images/applicazione_kruskal}
   \end{figure}
   Nell'algoritmo di Kruskal la costruzione di $T$ avviene per unione di componenti connesse rappresentabili come insiemi disgiunti, due componenti si fondono in una con l'aggiunta di un nuovo arco. \\
-  Come è noto, la struttura mfset detta merge-find set è una partizione di un insieme in sottoinsiemi disgiunti detti componenti. Dunque è possibile utilizzare una struttura dati di tipo mfset per costruire $T$. 
+  Come è noto, la struttura mfset detta merge-find set è una partizione di un insieme in sottoinsiemi disgiunti detti componenti. Dunque è possibile utilizzare una struttura dati di tipo mfset per costruire $T$.
  	\begin{lstlisting}[style=pascalstyle]
  	procedure kruskal(var G: grafo);
  		var h: integer;
@@ -3345,7 +3345,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  		\item una relazione di ordinamento sulle istanze del problema, basata sulla dimensione dell'input;
  		\item un metodo di risoluzione diretto per tutte le istanze del problema che non superano una prefissata dimensione limite;
  		\item un meccanismo per suddividere i dati di ingresso relativi ad un'istanza in diverse parti, ciascuna di dimensione minore di quella originaria e rappresentante l'input di una nuova istanza dello stesso problema;
- 		\item un meccanismo per comporre le soluzioni per le istanze individuate dalla suddivisione, per ottenere la soluzione per l'istanza originaria. 
+ 		\item un meccanismo per comporre le soluzioni per le istanze individuate dalla suddivisione, per ottenere la soluzione per l'istanza originaria.
  	\end{itemize}
  	L'algortimo divide-et-impera ha il seguente schema:
  	\begin{enumerate}
@@ -3354,7 +3354,7 @@ Una specifica per il tipo di dato insieme è la seguente:
  		\item esegui ricorsivamente l'algoritmo su ciascuno degli input individuati al passo precedente;
  		\item componi i risultati ottenuti al passo precedenete ottenendo il risultato per l'istanza originaria (\textit{impera}).
  	\end{enumerate}
- 	L'applicazione più nota di questa tecnica si ha negli algoritmi di ordinamneto (\textit{natural-merge-sort} e \textit{quicksort}). 
+ 	L'applicazione più nota di questa tecnica si ha negli algoritmi di ordinamneto (\textit{natural-merge-sort} e \textit{quicksort}).
  	\begin{example}{\nmu Problema di minimo e massimo simultanei}{max_min_divideimpera}
  		In alcune applicazioni serve trovare il minimo e il massimo in un insieme di $n$ elementi simulataneamente. Per esempio, un programma grafico può aver bisogno di rappresentare in scala un insieme di dati $(x, y)$: in questo caso va determinato il minimo e il massimo di ogni coordinata.\\
  		Cercando il minimo e il massimo in modo indipendente ci vorrà un totale di $2(n-1)$ confronti. Mantenendo gli elementi minimo e massimo via via incontrati e confrontando i due elementi della coppia di input sono sufficienti $3(n/2)$ confronti. L'algoritmo è il seguente:
