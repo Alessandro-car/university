@@ -7,7 +7,7 @@
 \usepackage[most]{tcolorbox}
 \usepackage{amsthm}
 \usepackage{amsmath}
-\usepackage{amssymb} 
+\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{tabularx}
 \usepackage{enumitem}
@@ -125,6 +125,8 @@
 	showtabs=false,
 	tabsize=2,
 }
+
+\graphicspath{{images/}}
 
 \begin{document}
 	{
@@ -2190,7 +2192,7 @@ create table Docenza (
 			\node[attribute, above right=0.5cm and 1cm of citta] (abitanti) {};
 			\node[above=0.1cm of abitanti] {Numero};
 			\node[below=0.1cm of abitanti] {abitanti};
-			
+
 			% Connections
 			\draw[thick] (persona) -- node[above] {(1,1)} (residenza);
 			\draw[thick] (residenza) -- node[above] {(1,N)} (citta);
@@ -2262,7 +2264,7 @@ create table Docenza (
 		La ristrutturazione delle generalizzazioni è un tipico caso per il quale il conteggio delle istanze e degli accessi non è sempre sufficiente per scegliere la migliore alternativa possibile. Infatti da quanto detto, la terza alternativa sembra non convenga quasi mai perchè richiede un numero di accessi superiore ma quest'alternativa ha il grosso vantaggio di generare entità con pochi attributi e questo si traduce, a livello pratico, in strutture logiche di poccole dimensioni per le quali un accesso fisico permette di recuparare molti dati in una volta sola. Quindi, in alcuni casi va effettuata un'analisi più accurata che tiene conto di altri fattori come le dimensioni dei domini degli attributi e la quantità di dati che è possibile recuperare con una sola operazione di accesso a memoria secondaria. \\
 		Le alternative non sono le uniche ammesse, ma è possibile effettuare ristrutturazioni che sono combinazioni delle tre trasformazioni presentate.
 		\subsection{Partizionamento/accorpamento di concetti}
-		Entità e associazioni in uno schema E-R possono essere partizionati o accorpati per garantire una maggior efficienza delle operazioni in base al seguente principio: gli accessi si riducono separando attributi di uno stesso concetto che vengono acceduti da operazioni diverse e raggruppando attributi di concetti diverse che vengono acceduti dalle medesime operazioni. 
+		Entità e associazioni in uno schema E-R possono essere partizionati o accorpati per garantire una maggior efficienza delle operazioni in base al seguente principio: gli accessi si riducono separando attributi di uno stesso concetto che vengono acceduti da operazioni diverse e raggruppando attributi di concetti diverse che vengono acceduti dalle medesime operazioni.
 		\paragraph{Partizionamenti di entità} Consideriamo il seguente esempio:
 		\begin{figure}[H]
 			\centering
@@ -2270,7 +2272,7 @@ create table Docenza (
 		\end{figure}
 		Notiamo che l'entità \texttt{Impiegato} viene sostituita da due entità, collegate da un'associazione uno a uno, che descrivono i dati anagrafici degli impiegati e i dati relativi alla loro retribuzione. Questa ristrutturazione è conveniente se le operazioni riguardanti un impiegato richiedono solo informazioni di carattere anagrafico o solo di carattere lavorativo. \\
 		Un partizionamento di questo genere prende il nome di \textit{decomposizione verticale} di un'entità, nel senso che si suddivide il concetto operando sui suoi attributi. È possibile effettuare anche delle \textit{decomposizioni orizzontali} nelle quali la suddivisione avviene sulle occorrenze dell'entità. Ad esempio, per l'entità \texttt{Impiegato} ci potrebbero essere alcune operazioni che riguardano soltanto gli analisti e altre che rigurdano solo il venditore. \\
-		I partizionamenti orizzontali hanno un effetto collaterale: quello di dover duplicare tutte le associazioni a cui l'entità originaria partecipa. Questo può avere ripercussioni sulle prestazioni del sistema. I partizionamenti verticali generano entità con pochi attributi che possono essere tradotte in strutture logiche sulle quali, con un accesso, è possibile recuperare molti dati. Anche in questo caso, il semplice conteggio degli accessi e delle occorrenze non è sempre sufficiente per scegliere la miglior alternativa possibile. 
+		I partizionamenti orizzontali hanno un effetto collaterale: quello di dover duplicare tutte le associazioni a cui l'entità originaria partecipa. Questo può avere ripercussioni sulle prestazioni del sistema. I partizionamenti verticali generano entità con pochi attributi che possono essere tradotte in strutture logiche sulle quali, con un accesso, è possibile recuperare molti dati. Anche in questo caso, il semplice conteggio degli accessi e delle occorrenze non è sempre sufficiente per scegliere la miglior alternativa possibile.
 		\paragraph{Eliminazione di attributi multivalore} Un particolare tipo di partizionamento è quello che riguarda l'eliminazione di attributi multivalore. Questa ristrutturazione è necessaria perchè il modello relazionale non permette di rappresentare in maniera diretta questo tipo di attributo. \\
 		Consideriamo l'esempio in figura:
 		\begin{figure}[H]
@@ -2284,7 +2286,7 @@ create table Docenza (
 			\includegraphics[width=1.0\textwidth]{accorpamento_entita}
 		\end{figure}
 		L'entità \texttt{Persona} e l'entità \texttt{Appartamento}, legate dall'associazione uno a uno \texttt{Intestazione}, vengono accorpate in un'unica entità contenente gli attributi di entrambi. Questa ristrutturazione è utile se le operazioni relative alla persona coinvolgono sempre i dati relativi all'appartamento che occupa, e vogliamo risparmiare gli accessi necessari per risalire a questi dati attraverso l'associazione che li lega. Un difetto di questa ristrutturazione è la possibile presenza di valori nulli dovuta al fatto che le cardinalità ci dicono che ci sono persone che non sono intestatarie di nessun appartamento, e quindi non esistono valori per attributi \textit{Indirizzo} e \textit{Interno}. \\
-		Gli accorpamenti, in genere, si effettuano su associazioni uno a uno, raramente su associazioni uno a molti e quasi mai su associazioni molti a molti in quanto si potrebbero generare delle ridondanze. 
+		Gli accorpamenti, in genere, si effettuano su associazioni uno a uno, raramente su associazioni uno a molti e quasi mai su associazioni molti a molti in quanto si potrebbero generare delle ridondanze.
 		\paragraph{Altri tipi di partizionamento/accorpamento}
 		Le tecniche viste per il partizionamento e accorpamento di entità può essere esteso alle associazioni. In alcuni casi, conviene decomporre un'associazione tra due entità in due o più associazioni tra le stesse entità, per separare occorrenze dell'associazione originale accedute sempre separatamente e, viceversa, accorpare due o più associazioni tra le stesse entità in un'unica associazione, quando le relative occorrenze vengono sempre accedute contemporaneamente.   \\
 		\subsection{Scelta degli identificatori principali}
@@ -2293,12 +2295,12 @@ create table Docenza (
 		\begin{itemize}
 			\item Gli attributi con valori nulli non possono costituire identificatori principali. Infatti, quest'ultimi non garantiscono l'accesso a tutte le occorrenze dell'entità corrispondente.
 			\item Un identificatore composto da uno o da pochi attributi è da preferire a identificatori costituiti da molti attributi. Questo garantisce che le strutture ausiliarie per accedere ai dati, gli indici, siano di dimensioni ridotte, permette un risparmio di memoria nella realizzazione dei legami logici tra le varie relazioni e facilita le operazioni di join.
-			\item Un identificatore interno con pochi attributi è da preferire a un identificatore esterno, che magari coinvolge diverse entità. I motivi sono gli stessi del punto precedente. 
+			\item Un identificatore interno con pochi attributi è da preferire a un identificatore esterno, che magari coinvolge diverse entità. I motivi sono gli stessi del punto precedente.
 			\item Un identificatore che viene utilizzato da molte operazioni per accedere alle occorrenze di un'entità è da preferire rispetto agli altri. In questo modo, infatti, tali operazioni possono essere eseguite efficientemente poichè possono trarre vantaggio dagli indici creati automaticamente dai DBMS.
 		\end{itemize}
 		A questo punto, se nessuno degli identificatori candidati soddisfa tali requisiti, è possibile pensare di introdurre un ulteriore attributo all'entità: questo attributo conterrà  valori speciali, detti \textit{codici}, generati appositamente per identificare le occorrenze delle entità. È consigliabile tenere traccia degli identificatori non selezionati come principali ma che vengono utilizzati da qualche operazione per accedere ai dati. Per questi identificatori è possibile definire, in fase di progettazione fisica, degli \textit{indici secondari} che consentono l'accesso efficiente ai dati e possono essere usati in alternativa agli indici definiti automaticamente sugli identificatori principali.
 		\section{Traduzione verso il modello relazionale}
-		La seconda fase della progettazione logica corrisponde a una traduzione tra modelli di dati diversi: a partire da uno schema E-R ristrutturato si costruisce uno schema logico \textit{equivalente}, in grado cioè di rappresentare le medesime informazioni. Faremo riferimento a una versione semplificata del modello E-R, senza generalizzazioni e attributi multivalore, e nella quale ogni entità ha un solo identificatore. 
+		La seconda fase della progettazione logica corrisponde a una traduzione tra modelli di dati diversi: a partire da uno schema E-R ristrutturato si costruisce uno schema logico \textit{equivalente}, in grado cioè di rappresentare le medesime informazioni. Faremo riferimento a una versione semplificata del modello E-R, senza generalizzazioni e attributi multivalore, e nella quale ogni entità ha un solo identificatore.
 		\subsection{Entità e associazioni molti a molti} Consideriamo lo schema in figura:
 		\begin{figure}[H]
 			\centering
@@ -2336,10 +2338,10 @@ create table Docenza (
 		Va notato, che nella relazione \texttt{Contratto}, la chiave è costituita solo dall'identificatore di \texttt{Giocatore} perchè le cardinalità ci dicono che ogni giocatore ha un contratto con una sola squadra. A questo punto le relazioni \texttt{Contratto} e \texttt{Giocatore} hanno stessa chiave ed è possibile fonderle in un'unica relazione.
 		\begin{center}
 			\texttt{Giocatore}(\underline{Cognome}, \underline{DataNascita}, Ruolo, NomeSquadra, Ingaggio) \\
-			\texttt{Squadra}(\underline{Nome}, Città, ColoriSociali) 
+			\texttt{Squadra}(\underline{Nome}, Città, ColoriSociali)
 		\end{center}
-		In questo schema, esiste il vincolo di integrità referenziale tra l'attributo \textit{NomeSquadra} di \texttt{Giocatore} e l'attributo \textit{Nome} di \texttt{Squadra}. 
-		Quindi, l'entità che partecipa all'associazione con cardinalità massima pari a 1, viene tradotta in una relazione che contiene anche gli identificatori delle altre entità coinvolte nell'associazione ed eventualmente gli attributi dell'associazione stessa e non c'è più bisogno di rappresentare l'associazione di partenza. 
+		In questo schema, esiste il vincolo di integrità referenziale tra l'attributo \textit{NomeSquadra} di \texttt{Giocatore} e l'attributo \textit{Nome} di \texttt{Squadra}.
+		Quindi, l'entità che partecipa all'associazione con cardinalità massima pari a 1, viene tradotta in una relazione che contiene anche gli identificatori delle altre entità coinvolte nell'associazione ed eventualmente gli attributi dell'associazione stessa e non c'è più bisogno di rappresentare l'associazione di partenza.
 		\subsection{Entità con identificatore esterno}
 		Le entità con identificatori esterni danno luogo a relazioni con chiavi che includono gli identificatori delle entità ``identificanti''. Consideriamo lo schema in figura:
 		\begin{figure}[H]
@@ -2349,7 +2351,7 @@ create table Docenza (
 		Lo schema relazione a quest schema è il seguente:
 		\begin{center}
 			\texttt{Studente}(\underline{Matricola}, \underline{NomeUniversità}, Cognome, AnnoIscrizione) \\
-			\texttt{Università}(\underline{Nome}, Città, Indirizzo) 
+			\texttt{Università}(\underline{Nome}, Città, Indirizzo)
 		\end{center}
 		nel quale esiste un vincolo di integrità referenziale tra l'attributo \textit{NomeUniversità} della relazione \texttt{Studente} e l'attributo \textit{Nome} della relazione \texttt{Università}. \\
 		Rappresentando l'identificatore esterno si rappresenta direttamente anche l'associazione tra le due entità. Ricordiamo che le entità identificate esternamente partecipano all'associazione sempre con cardinalità massima pari a 1. \\
@@ -2364,13 +2366,13 @@ create table Docenza (
 		Per questo tipo di associazione abbiamo due possibilità ugualmente valide:
 		\begin{center}
 			\texttt{Direttore}(\underline{Codice}, Cognome, Stipendio, DipartimentoDiretto, InzioDirezione) \\
-			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede) 
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede)
 		\end{center}
 		con vincolo di integrità referenziale tra \textit{DipartimentoDiretto} di \texttt{Direttore} e \textit{Nome} di \texttt{Dipartimento}.
 		Oppure:
 		\begin{center}
 			\texttt{Direttore}(\underline{Codice}, Cognome, Stipendio) \\
-			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede, Direttore, InizioDirezione) 
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede, Direttore, InizioDirezione)
 		\end{center}
 		con vincolo di integrità referenziale tra \textit{Direttore} di \texttt{Dipartimento} e \textit{Codice} di \texttt{Direttore}. \\
 		È possibile anche un'ulteriore alternativa nella quale si rappresentano tutti i concetti in un'unica relazione contenente tutti gli attributi in gioco. Questa alternativa è, però, da escludere, perchè non dobbiamo dimenticarci che lo schema che stiamo traducendo è il risultato di una fase di ristrutturazione nella quale sono state effettuate precise scelte riguardanti l'accorpamento e/o partizionamento di entità. \\
@@ -2383,7 +2385,7 @@ create table Docenza (
 		In questo caso abbiamo una soluzione preferibile rispetto alle altre:
 		\begin{center}
 			\texttt{Impiegato}(\underline{Codice}, Cognome, Stipendio) \\
-			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede, Direttore, InizioDirezione) 
+			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede, Direttore, InizioDirezione)
 		\end{center}
 		per la quale esiste il vincolo di integrità referenziale tra l'attributo \textit{Direttore} della relazione \texttt{Dipartimento} e l'attributo \textit{Codice} della relazione \texttt{Impiegato}. Questa alternativa è preferibile rispetto a quella in cui l'associazione viene rappresentata nella relazione \texttt{Impiegato} mediante il nome del dipartimento diretto perchè avremmo, per questo attributo, possibili valori nulli. \\
 		Consideriamo il caso in cui entrambe le entità hanno partecipazione opzionale. Consideriamo lo schema in figura e supponiamo che possano esistere dipartimenti senza direttori.
@@ -2396,7 +2398,7 @@ create table Docenza (
 		\begin{center}
 			\texttt{Impiegato}(\underline{Codice}, Cognome, Stipendio) \\
 			\texttt{Dipartimento}(\underline{Nome}, Telefono, Sede)  \\
-			\texttt{Direzione}(\underline{Direttore}, Dipartimento, DataInzioDirezione) \\		
+			\texttt{Direzione}(\underline{Direttore}, Dipartimento, DataInzioDirezione) \\
 		\end{center}
 		Su questo schema abbiamo due vincoli di integrità referenziale: uno tra l'attributo \textit{Direttore} della relazione \texttt{Direzione} e l'attributo \textit{Codice} della relazione \texttt{Impiegato} e l'altro tra l'attributo \textit{Dipartimento} della relazione \texttt{Direzione} e l'attributo \textit{Nome} della relazione \texttt{Dipartimento}.  \\
 		Questa soluzione ha il vantaggio di non presentare mai valori nulli sugli attributi che rappresentano l'associazione. Per contro, abbiamo bisogno di una relazione inn più con un conseguente aumento della complessità della base di dati. La soluzione con tre relazioni è da prendere in considerazione solo se il numero di occorrenze dell'associazione è molto basso ripsetto alle occorrenze delle entità che partecipano all'associazione. In questo caso, si evitano la presenza di molti valori nulli.
@@ -2421,7 +2423,7 @@ create table Docenza (
 		\begin{itemize}
 			\item per tradurre \texttt{R3} introduciamo con opportune ridenominazioni gli attributi che identificano \texttt{E6} tra quelli di \texttt{E5}, nonchè l'attributo \textit{AR3} proprio di \texttt{R3}; introduciamo \textit{A61R3}, \textit{A62R3} e \textit{AR3} in \texttt{E5};
 			\item analogamente per \texttt{R4}, introduciamo \textit{A61R4} e \textit{A62R4} in \texttt{E5};
-			\item analogamente per \texttt{R5}, introduciamo \textit{A61R5}, \textit{A62R5} e \textit{AR5} in \texttt{E5}. 
+			\item analogamente per \texttt{R5}, introduciamo \textit{A61R5}, \textit{A62R5} e \textit{AR5} in \texttt{E5}.
 		\end{itemize}
 		Infine traduciamo l'unica associazione molti a molti:
 		\[
@@ -2491,14 +2493,14 @@ create table Docenza (
 	\]
 	in quanto due tuple con gli stessi valori sulla coppia di attributi \texttt{Impiegato} e \texttt{Progetto} hanno lo stesso valore sull'attributo \texttt{Progetto}. Questa è una dipendenza funzionale banale perchè asserisce una proprietàovvia di una relazione. Le dipendenze funzionali dovrebbero servire a descrivere proprietà significative dell'applicazione che stiamo rappresentando. Diremo che una dipendenza funzionale $Y \to A$ è \textit{non banale} se $A$ non compare tra gli attributi di $Y$. \\
 	Un'ultima osservazione sulle dipendenze funzionali riguarda il loro legame con il vincolo di chiave. Se prendiamo una chiave $K$ di una relazione $r$, si può facilmente verificare che esiste una dipendenza funzionale tra $K$ e ogni altro attributo dello schema di $r$. Con riferimento al nostro esempio, abbiamo detto che gli attributi \texttt{Impiegato} e \texttt{Progetto} formano una chiave. Possiamo affermare che vale la dipendenza funzioanale $\texttt{Impiegato Progetto} \to \texttt{Funzione}$.
-	Possiamo concludere dicendo che il vincolo di dipendenza funzionale \textit{generelizza} il vincolo di chiave. Più precisamente, possiamo dire che una dipendenza funzionale $Y \to Z$ su uno schema $R\left(X\right)$ degenera nel vincolo di chiave se l'unione di $Y$ e $Z$ è pari a $X$. 
+	Possiamo concludere dicendo che il vincolo di dipendenza funzionale \textit{generelizza} il vincolo di chiave. Più precisamente, possiamo dire che una dipendenza funzionale $Y \to Z$ su uno schema $R\left(X\right)$ degenera nel vincolo di chiave se l'unione di $Y$ e $Z$ è pari a $X$.
 	\section{Forma normale di Boyce e Codd}
 	\subsection{Definizione di forma normale di Boyce e Codd}
 	In riferimento alla dipendenze funzionali, si possono introdurre delle proprietà dette \textit{forme normali} che sono soddisfatte quando non ci sono anomalie. \\
-	Nel nostro esempio, le due proprietà casusa di anomalie corrispondono esattamente ad attributi coinvolti in dipendenze funzionali. 
+	Nel nostro esempio, le due proprietà casusa di anomalie corrispondono esattamente ad attributi coinvolti in dipendenze funzionali.
 	\begin{itemize}
 		\item La proprietà ``lo stipendio di ciascun impiegato è funzione del solo impiegato, indipendentemente dai progetti cui partecipa'' implica il soddisfacimento della dipendenza funzionale $\texttt{Impiegato} \to \texttt{Stipendio}$.
-		\item La proprietà ``il bilancio di ciascun progetto dipende solo dal progetto, indipendentemente dagli impiegati che vi partecipano'' corrisponde alla dipendenza funzionale $\texttt{Progetto} \to \texttt{Bilancio}$. 
+		\item La proprietà ``il bilancio di ciascun progetto dipende solo dal progetto, indipendentemente dagli impiegati che vi partecipano'' corrisponde alla dipendenza funzionale $\texttt{Progetto} \to \texttt{Bilancio}$.
 	\end{itemize}
 	Inoltre, l'attributo \texttt{Funzione} indica, per ciascun tupla, il ruolo svolto dall'impiegato nel progetto. Questo ruolo è unico per ciascuna coppia impiegato-progetto. Anche questa proprietà può essere modellata per mezzo di una dipendenza funzionale.
 	\begin{itemize}
@@ -2515,9 +2517,9 @@ create table Docenza (
 		\includegraphics[width=0.5\textwidth]{boyce_codd}
 	\end{figure}
 	ottenute per mezzo di proiezioni sugli insiemi di attributi rispettivamente corrispondenti ai tre concetti prima menzionati, eliminiamo anomalie e ridondanze: le tre relazioni sono infatti in forma normale Boyce e Codd. \\
-	Nell'esempio, la separazione delle dipendenze è stata facilitata dalla struttura delle dipendenze stesse, ``naturalmente'' separate e indipendenti l'una dall'altra. In molti casi pratici, la decomposizione può essere effettuata producendo tante relazioni quante sono le dipendenze funzionali definite. In generale, le dipendenze possono avere una struttura complessa: può non essere necessario basare la decomposizione su tutte le dipendenze e può essere difficile individuare quelle su cui si deve basare la decomposizione. 
+	Nell'esempio, la separazione delle dipendenze è stata facilitata dalla struttura delle dipendenze stesse, ``naturalmente'' separate e indipendenti l'una dall'altra. In molti casi pratici, la decomposizione può essere effettuata producendo tante relazioni quante sono le dipendenze funzionali definite. In generale, le dipendenze possono avere una struttura complessa: può non essere necessario basare la decomposizione su tutte le dipendenze e può essere difficile individuare quelle su cui si deve basare la decomposizione.
 	\section{Proprietà delle decomposizioni}
-	Analizziamo come non tutte le decomposizioni siano desiderabili e individuando alcune proprietà essenziali che devono essere soddisfatte da una ``buona'' decomposizione. 
+	Analizziamo come non tutte le decomposizioni siano desiderabili e individuando alcune proprietà essenziali che devono essere soddisfatte da una ``buona'' decomposizione.
 	\subsection{Decomposizione senza perdita}
 	Per discutere la prima proprietà, consideriamo la seguente relazione:
 	\begin{figure}[H]
@@ -2530,7 +2532,7 @@ create table Docenza (
 	\texttt{Impiegato} \to \texttt{Sede}
 	\]
 	\[
-	\texttt{Progetto} \to \texttt{Sede} 
+	\texttt{Progetto} \to \texttt{Sede}
 	\]
 	che specificano il fatto che ciascun impiegato opera presso un'unica sede e che ciascun progetto è sviluppato presso un'unica sede. Ciascun impiegato può partecipare a più progetti anche se, sulla base delle dipendenze funzioanli, devono essere tutti progetti assegnati alla sede cui afferisce. \\
 	Operando come nei casi precedenti, ovvero separando sulla base delle dipendenze, saremmo portati a decomporre la relazione in due parti:
@@ -2549,18 +2551,18 @@ create table Docenza (
 	È possibile individuare una condizione che garantisce la decomposizione senza perdita di una relazione. Sia $r$ una relazione su $X$ e siano $X_1$ e $X_2$ sottoinsiemi di $X$ tali che $X_1 \cup X_2 = X$; inoltre sia $X_0 = X_1 \cap X_2$; allora: $r$ si decompone senza perdita su $X_1$ e $X_2$ se soddisfa la dipendenza funzionale $X_0 \to X_1$ oppure $X_0 \to X_2$.  \\
 	Possiamo dire che $r$ si decompone su due relazioni se l'insieme degli attributi comuni alle due relazioni è chiave per almeno una delle relazioni decomposte. Nell'esempio, possiamo vedere che l'intersezione degli insiemi di attributi su cui abbiamo effettuato le due proiezioni è costituita dall'attributo \texttt{Sede}, che non è il primo membro di alcuna dipendenza funzionale. \\
 	\subsection{Conservazione delle dipendenze}
-	Per introdurre la seconda proprietà esaminiamo la relazione nella figura~\ref{fig:prop_decomposizioni}. Volendo ancora rimuovere le anomalie, potremmo pensare di sfruttare solo la dipendenza $\texttt{Impiegato} \to \texttt{Sede}$ per ottenere una decomposizione senza perdita. Otteniamo in questa maniera due relazioni: una sugli attributi \texttt{Impiegato} e \texttt{Sede} e l'altra sugli attributi \texttt{Impiegato} e \texttt{Progetto}. 
+	Per introdurre la seconda proprietà esaminiamo la relazione nella figura~\ref{fig:prop_decomposizioni}. Volendo ancora rimuovere le anomalie, potremmo pensare di sfruttare solo la dipendenza $\texttt{Impiegato} \to \texttt{Sede}$ per ottenere una decomposizione senza perdita. Otteniamo in questa maniera due relazioni: una sugli attributi \texttt{Impiegato} e \texttt{Sede} e l'altra sugli attributi \texttt{Impiegato} e \texttt{Progetto}.
 	Otteniamo, quindi:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\textwidth]{figura9_6}
 	\end{figure}
 	Il join delle due relazioni produce la relazione di partenza, per cui possiamo dire che la relazione nella figura~\ref{fig:prop_decomposizioni} si decompone senza perditua su $\texttt{Impiegato}$, \texttt{Sede} e \texttt{Impiegato}, \texttt{Progetto}. In effetti, \texttt{Impiegato} è chiave per la prima relazione, per cui la decomposizione senza perdita è garantita. La decomposizione, però, presenta un altro inconveniente. Supponiamo di voler inserire una nuova tupla che specifica la partecipazione dell'impiegato Neri, che opera a Milano, al progetto Marte. Sulla relazione originaria, un tale aggiornamento verrebbe individuato come illecito, perchè porterebbe a una violazione della dipendenza $\texttt{Progetto} \to \texttt{Sede}$. Sulle relazioni decomposte invece, non è possibile rilevare alcuna violazione di dipendenze: sulla relazione avente per attributi \texttt{Impiegato} e \texttt{Progetto} non è possibile definire alcuna dipendenza funzionale e quindi non ci possono essere violazioni da rilevare, mentre nella relazione su \texttt{Impiegato} e \texttt{Sede} la tupla con valori Neri e Milano soddisfa la dipendenza funzionale $\texttt{Impiegato} \to \texttt{Sede}$. Non è possibile, quindi, effettuare alcuna verifica sulla dipendenza $\texttt{Progetto} \to \texttt{Sede}$ perchè i due attributi $\texttt{Progetto}$ e \texttt{Sede} sono stati separati. \\
-	Possiamo quindi concludere che, in ogni decomposizione, ciascuna delle dipendenze funzionali dello schema originario dovrebbe coinvolgere attributi che compaiono tutti insieme in uno degli schemi composti. In questo modo è possibile garantire, sullo schema decomposto, il soddisfacimento degli stessi vincoli il cui soddisfacimento è garantito dallo schema originario. Diremo che una decomposizione che soddisfa tale proprietà \textit{conserva le dipendenze} dello schema originario. 
+	Possiamo quindi concludere che, in ogni decomposizione, ciascuna delle dipendenze funzionali dello schema originario dovrebbe coinvolgere attributi che compaiono tutti insieme in uno degli schemi composti. In questo modo è possibile garantire, sullo schema decomposto, il soddisfacimento degli stessi vincoli il cui soddisfacimento è garantito dallo schema originario. Diremo che una decomposizione che soddisfa tale proprietà \textit{conserva le dipendenze} dello schema originario.
 	\subsection{Qualità delle decomposizioni}
 	Le decomposizioni dovrebbero sempre soddisfare le proprietà di \textit{decomposizione senza perdita} e \textit{conservazione delle dipendenze}.
 	\begin{itemize}
-		\item La decomposizione senza perdita garantisce che le informazioni nella relazione originaria siano ricostruibili con precisione, senza informazioni spurie, a partire da quelle rappresentate nelle relazioni decomposte. 
+		\item La decomposizione senza perdita garantisce che le informazioni nella relazione originaria siano ricostruibili con precisione, senza informazioni spurie, a partire da quelle rappresentate nelle relazioni decomposte.
 		\item La conservazione delle dipendenze garantisce che le relazioni decomposte hanno la stessa capacità della relazione originaria di rappresentare i vincoli di integrità e quindi rilevare aggiornamenti illeciti: a ogni aggiormento lecito sulla relazione originaria corrisponde un aggiornamento lecito sulle relazioni decomposte. Sulle relazioni decomposte, sono possimi ulteriori aggiornamenti, legati ai singoli concetti rappresentati in ciascuna di esse, che non hanno un corrispettivo sulla relazione originaria, senza però corrispondere a violazione dei vincoli.
 	\end{itemize}
 	Quindi, consderiamo accettabili solo le decomposizioni che soddisfano queste due proprietà.
@@ -2595,7 +2597,7 @@ create table Docenza (
 	\end{itemize}
 	Possiamo notare che lo schema precedente soddisfa la terza forma normale. Infatti, la dipendenza $\texttt{Progetto Sede} \to \texttt{Dirigente}$ ha come primo membro una chiave della relazione, mentre $\texttt{Dirigente} \to \texttt{Sede}$, pur non contenendo una chiave al primo membro, ha un unico attributo al secondo membro che fa parte della chiave $\texttt{Progetto Sede}$. \\
 	La relazone presenta una forma di ridondanza in quanto ogni volta che un dirigente compare in una tupla, viene ripetuta per esso la sede in cui opera. Questa ridondanza, però, viene ``tollerata'' dalla terza forma normale perchè non sarebbe possibile una decomposizione che elimini tale ridondanza e al tempo stesso conservi tutte le dipendenze. \\
-	La terza forma normale è meno forte della forma normale di Boyce e Codd e quindi non offre le stesse qualità per una relazione; però rispetto alla forma normale di Boyce e Codd è sempre ottenibile. 
+	La terza forma normale è meno forte della forma normale di Boyce e Codd e quindi non offre le stesse qualità per una relazione; però rispetto alla forma normale di Boyce e Codd è sempre ottenibile.
 	\subsection{Decomposizione in terza forma normale}
 	Per ottenere una decomposizione in terza forma normale si può procedere come suggerito nel caso della forma normale di Boyce e Codd: una relazione che non soddisfa la terza forma normale si decompone in relazioni ottenute per proiezione sugli attributi corrispondenti alla dipendenze funzionali, con l'unica accortezza di mantenere sempre una relazione che contiene una chiave della relazione originaria. \\
 	Consideriamo la seguente figura:
@@ -2612,7 +2614,7 @@ create table Docenza (
 		\hline
 	\end{tabular}
 	\end{center}
-	Per essa vale la sola dipendenza funzionale $\texttt{Impiegato} \to \texttt{Stipendio}$. Una decomposizione in una relazione sugli attributi \texttt{Impiegato} e \texttt{Stipendio} e in un'altra sul solo attributo \texttt{Progetto} violerebbe la proprietà di decomposizione senza perdita, proprio perchè nessuna delle due relazioni contiene una chiave. Per garantire tale proprietà dobbiamo definire la seconda relazione sugli attributi \texttt{Impiegato} e \texttt{Progetto}, che formano una chiave della relazione originaria. La decomposizione è la seguente: 
+	Per essa vale la sola dipendenza funzionale $\texttt{Impiegato} \to \texttt{Stipendio}$. Una decomposizione in una relazione sugli attributi \texttt{Impiegato} e \texttt{Stipendio} e in un'altra sul solo attributo \texttt{Progetto} violerebbe la proprietà di decomposizione senza perdita, proprio perchè nessuna delle due relazioni contiene una chiave. Per garantire tale proprietà dobbiamo definire la seconda relazione sugli attributi \texttt{Impiegato} e \texttt{Progetto}, che formano una chiave della relazione originaria. La decomposizione è la seguente:
 	\begin{center}
 	\begin{tabular}{|c|c|}
 		\hline
@@ -2657,13 +2659,13 @@ create table Docenza (
 	Essa soddisfa le dipendenze $\ \texttt{Impiegato} \to \texttt{Categoria}\ $ e $\ \texttt{Categoria} \to \texttt{Stipendio} \ $ e quindi viola la terza forma normale, perchè $\texttt{Categoria}$ non è chiave. La seconda forma normale tollera la dipendenza tra \texttt{Categoria} e \texttt{Stipendio}, perchè \texttt{Stipendio} dipende comunque dall'intera chiave \texttt{Impiegato}. \\
 	Riportiamo le definizioni originarie di seconda e terza forma normale.
 	\begin{itemize}
-		\item Una relazione è in seconda forma normale se su d essa non sono definite \textit{dipendenze parziali}, cioè dipendenze fra un sottoinsieme proprio della chaive e altri attributi. 
+		\item Una relazione è in seconda forma normale se su d essa non sono definite \textit{dipendenze parziali}, cioè dipendenze fra un sottoinsieme proprio della chaive e altri attributi.
 		\item Una relazione è in terza forma normale se su di essa non sono definite \textit{dipendenze transitive}, cioè dipendenze della forma $K \to A$, dove $K$ è la chiave ed esiste un altro sottoinsieme di attributi $X$, non chiave, con le dipendenze $K \to X$ e $X \to A$.
 	\end{itemize}
 	Le dipendenze parziali e quelle transitive violano la terza forma normale così come noi l'abbiamo definita perchè coinvolgono una dipendenza funzionale il cui primo membro non è superchiave e il cui secondo membro non fa parte della chaive. \\
-	Inoltre, esistono altre forme normali che fanno riferimento a vincoli di integrità diversi dalle dipendenze funzionali. Tutte queste forme normali vengono poco usate nelle applicazizioni odierne in quanto è stato rilevato che la terza forma normale e la forma nornmale di Boyce e Codd forniscono il giusto compromesso tra semplicità e qualità dei risultato. 
+	Inoltre, esistono altre forme normali che fanno riferimento a vincoli di integrità diversi dalle dipendenze funzionali. Tutte queste forme normali vengono poco usate nelle applicazizioni odierne in quanto è stato rilevato che la terza forma normale e la forma nornmale di Boyce e Codd forniscono il giusto compromesso tra semplicità e qualità dei risultato.
 	\paragraph{Quarta forma normale} Prima di introdurre la definizione di quarta forma normale, introduciamo il concetto di dipendenza multivalente. Una dipendenza multivalente, MVD, si ha quando un attributo determina in modo indipendente più attributi, ad esempio: \texttt{ Prodotto} $\to\to$ \texttt{ Taglia} e \texttt{ Prodotto} $\to\to$ \texttt{ Colore}. \\
-	Dati $U$ e $V$ sottinsiemi di $r$, se $W$ è l'insieme di attributi di $r$ non compresi in $U$ e in $V$, la MVD $U \to\to V$ esiste in $r$ se e solo se: 
+	Dati $U$ e $V$ sottinsiemi di $r$, se $W$ è l'insieme di attributi di $r$ non compresi in $U$ e in $V$, la MVD $U \to\to V$ esiste in $r$ se e solo se:
 	\[
 	r = r\left(UV\right) \text{ JOIN } r\left(W\right)
 	\]
@@ -2710,7 +2712,7 @@ create table Docenza (
 	\begin{itemize}
 		\item $\texttt{Dirigente} \to \texttt{Sede Reparto}$: ogni dirigente opera presso una sede e dirige un reparto;
 		\item $\texttt{Sede Reparto} \to \texttt{Dirigente}$: per ogni sede e reparto c'è un solo dirigente;
-		\item $\texttt{Progetto Sede} \to \texttt{Reparto}$: per ogni sede, un progetto è assegnato a un solo reparto; la dipendenza funzionale \texttt{ Progetto Sede} $\to$ \texttt{Dirigente } è quindi ricostruibile. 
+		\item $\texttt{Progetto Sede} \to \texttt{Reparto}$: per ogni sede, un progetto è assegnato a un solo reparto; la dipendenza funzionale \texttt{ Progetto Sede} $\to$ \texttt{Dirigente } è quindi ricostruibile.
 	\end{itemize}
 	Per questo schema esiste una buona decomposizione. Infatti:
 	\begin{itemize}
@@ -2742,7 +2744,7 @@ create table Docenza (
 			\hline
 		\end{tabular}
 	\end{center}
-	Quindi, possiamo concludere che la non raggiungibilità della forma normale di Boyce e Codd può essere dovuta a un'analisi non sufficientemente accurata dell'applicazione. 
+	Quindi, possiamo concludere che la non raggiungibilità della forma normale di Boyce e Codd può essere dovuta a un'analisi non sufficientemente accurata dell'applicazione.
 	\section{Progettazione di basi di dati e normalizzazione}
 	La teoria della normalizzazione può essere utilizzata come base per operazioni di verifica di qualità di schemi, sia nella fase di progettazione concettuale sia in quella di progettazione logica. \\
 	Le attività di progettazione sono sepre soggette a errori e incompletezze, e quindi una revisione delle relazioni ottenuti in sede di progettazzione logica pùo portare all'individuazione di imprecisioni nella formulazione dello schema concettuale: la verifica spesso risulta semplice, perchè l'individuazione delle dipendenze funzionali e delle chiavi deve essere svolta nell'ambito di una singola relazione, che corrisponde a un'entità o un'associazione già analizzata nella progettazione concettuale. In questi contesti, la struttura delle dipendenze risulta relativamente semplice ed è quindi possibile individuare direttamente la decomposizione necessaria per ottenere la terza forma normale.
@@ -2795,7 +2797,7 @@ create table Docenza (
 		\includegraphics[width=0.5\textwidth]{figura9_17}
 	\end{figure}
 	La decomposizione è accettabile perchè conserva le dipendenze ed è senza perdita. \\
-	È opportuno, quindi, decomporre le associazioni non binarie sulle quali sia definita qualche dipendenza il cui secondo membro contiene più di un'entità, ovvero è opportuno decomporre un'associazione ternaria se su di essa è definita una dipendenza funzionale il cui primo membro è costituito da un'entità e il secondo membro dalle altre due. 
+	È opportuno, quindi, decomporre le associazioni non binarie sulle quali sia definita qualche dipendenza il cui secondo membro contiene più di un'entità, ovvero è opportuno decomporre un'associazione ternaria se su di essa è definita una dipendenza funzionale il cui primo membro è costituito da un'entità e il secondo membro dalle altre due.
 	\subsection{Ulteriori decomposizioni di schemi concettuali}
 	Anche il caso in cui non esiste, per una relazione, una buona decomposizione in forma normale di Boyce e Codd, può essere esaminato nell'ambito della progettazione concettuale. Supponiamo di avere il seguente schema:
 	\begin{figure}[H]
