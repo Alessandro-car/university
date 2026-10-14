@@ -361,26 +361,26 @@ Si una una struttura dati per rappresentare la *frontiera*, detta _fringe_, dei 
 - si estende il percorso con ogni arco uscente dall'ultimo nodo;
 - si aggiungono alla frontiera i percorsi ottenuti.
 
-#algoritmo(title: "Algoritmo di ricerca generico")[
-  + procedure  Search($G, s, g o a l$)
-  + // riga vuota
-  + Input
-  + #h(2em) $G$: grafo con insiemi di nodi $N$ e di archi $A$
-  + #h(2em) $s$: nodo di partenza
-  + #h(2em) $g o a l$: funzione booleana sui nodi
-  + Output
-  + #h(2em) percorso da $s$ a un nodo per il quale $g o a l$ sia vera
-  + #h(2em) oppure $perp$ quando non ci sono percorsi / soluzioni
-  + Local
-  + #h(2em) $f r o n t i e r a$: insieme di percorsi
-  +
-  + $f r o n t i e r a <- {chevron.l s chevron.r}$
-  + `while` $f r o n t i e r a != emptyset$ `do`
-  + #h(2em) selezionare (e rimuovere) $chevron.l n_0, ..., n_k chevron.r$ da $f r o n t i e r a$
-  + #h(2em) `if` $g o a l(n_k)$ `then`
-  + #h(4em) `return` $chevron.l n_0, ..., n_k chevron.r$
-  + #h(2em) $f r o n t i e r a <- f r o n t i e r a union {chevron.l n_0, ..., n_k, n chevron.r : chevron.l n_k, n chevron.r in A}$
-  + `return` $perp$
+#algoritmo(title: [Algoritmo di ricerca generico])[
+  #pseudocode-list[
+    + *procedure* $"Search"(G, s, "goal")$
+    + *Input*
+      + $G$: grafo con insiemi di nodi $N$ e di archi $A$
+      + $s$: nodo di partenza
+      + $"goal"$: funzione booleana sui nodi
+    + *Output*
+      + percorso da $s$ a un nodo per il quale $"goal"$ sia vera
+      + oppure $bot$ quando non ci sono percorsi / soluzioni
+    + *Local*
+      + $"frontiera"$: insieme di percorsi
+    + $"frontiera" <- {chevron.l s chevron.r}$
+    + *while* $"frontiera" != emptyset$ *do*
+      + selezionare (e rimuovere) $chevron.l n_0, dots, n_k chevron.r$ da $"frontiera"$
+      + *if* $"goal"(n_k)$ *then*
+        + *return* $chevron.l n_0, dots, n_k chevron.r$
+      + $"frontiera" <- "frontiera" union {chevron.l n_0, dots, n_k, n chevron.r : chevron.l n_k, n chevron.r in A}$
+    + *return* $bot$
+  ]
 ] <alg-ricerca>
 
 Come descritto nell'@alg-ricerca, l'inizializzazione parte dal nodo $s$.
@@ -463,46 +463,46 @@ DFS effettua una ricerca limitata fino a una data _profondità_ come per le iter
 Il _fallimento_ della ricerca in profondità limitata può essere:
 - _innaturale_: per raggiungimento del limite di profondità e in tal caso la ricerca riparte, dopo aver incrementato il limite;
 - _naturale_: quando l'intero spazio di ricerca è esaurito non esiste soluzione a nessun livello di profondità.
-```python
-  procedure ID_search(G, s, goal)
-  Input
-    G: grafo con insiemi di nodi N e di archi A
-    s: nodo di partenza
-    goal: funzione booleana sugli stati
-  Output
-    cammino da s a un nodo per il quale goal sia vero
-    ovvero ⊥ altrimenti
-  Local
-    raggiunta_max_profondita: boolean
-    limite_profondita: integer
-
-    procedure Ricerca_a_profondita_limitata(⟨n_0,...,n_k⟩, b)
-    Input
-      ⟨n_0,...,n_k⟩: percorso
-      b: integer {b ≥ 0}
-    Output
-      percorso fino a nodo-obiettivo di lunghezza k + b
-
-      if b > 0 then
-        for each ⟨n_k,n⟩ ∈ A do
-          risultato ← Ricerca_a_profondita_limitata(⟨n_0,...,n_k,n⟩, b - 1)
-          if risultato ≠ ⊥ then
-            return risultato
-      else if goal(n_k) then
-        return ⟨n_0,...,n_k⟩
-      else if n_k ha vicini then {fallimento innaturale}
-        raggiunta_max_profondita ← true
-      return ⊥
-
-  limite_profondita ← 0
-  repeat
-    raggiunta_max_profondita ← false
-    risultato ← Ricerca_a_profondita_limitata(⟨s⟩, limite_profondita)
-    if risultato ≠ ⊥ then
-      return risultato
-    limite_profondita ← limite_profondita + 1
-  until not raggiunta_max_profondita
-  return ⊥ {fallimento naturale}```
+#algoritmo(title: [Ricerca Iterative Deepening])[
+  #pseudocode-list[
+    + *procedure* $"ID_search"(G, s, "goal")$
+    + *Input*
+      + $G$: grafo con insiemi di nodi $N$ e di archi $A$
+      + $s$: nodo di partenza
+      + $"goal"$: funzione booleana sugli stati
+    + *Output*
+      + cammino da $s$ a un nodo per il quale $"goal"$ sia vero
+      + ovvero $bot$ altrimenti
+    + *Local*
+      + $"raggiunta_max_profondita"$: boolean
+      + $"limite_profondita"$: integer
+    + *procedure* $"Ricerca_a_profondita_limitata"(chevron.l n_0, dots, n_k chevron.r, b)$
+      + *Input*
+        + $chevron.l n_0, dots, n_k chevron.r$: percorso
+        + $b$: integer $\{b >= 0\}$
+      + *Output*
+        + percorso fino a nodo-obiettivo di lunghezza $k + b$
+      + *if* $b > 0$ *then*
+        + *for each* $angle.l n_k, n chevron.r in A$ *do*
+          + $"risultato" <- "Ricerca_a_profondita_limitata"(chevron.l n_0, dots, n_k, n chevron.r, b - 1)$
+          + *if* $"risultato" != bot$ *then*
+            + *return* $"risultato"$
+      + *else if* $"goal"(n_k)$ *then*
+        + *return* $chevron.l n_0, dots, n_k chevron.r$
+      + *else if* $n_k$ ha vicini *then* $\{ "fallimento innaturale" \}$
+        + $"raggiunta_max_profondita" <- "true"$
+      + *return* $bot$
+    + $"limite_profondita" <- 0$
+    + *repeat*
+      + $"raggiunta_max_profondita" <- "false"$
+      + $"risultato" <- "Ricerca_a_profondita_limitata"(chevron.l s chevron.r, "limite_profondita")$
+      + *if* $"risultato" != bot$ *then*
+        + *return* $"risultato"$
+      + $"limite_profondita" <- "limite_profondita" + 1$
+    + *until not* $"raggiunta_max_profondita"$
+    + *return* $bot$ $\{ "fallimento naturale" \}$
+  ]
+] <alg:id-search>
 La procedura $"Ricerca_a_profondita_limitata"$ implementa una DFS a profondità limitata: trova percorsi di lunghezza $k + b$, dove $k$ è la lunghezza del percorso e $b >= 0$; viene chiamato a profondità crescenti. I percorsi vengono trovati nello stesso ordine della BFS: si controlla di aver trovato un obiettivo solo se $b = 0$.\
 Per assicurare di fallire quando anche la BFS fallirebbe, si tiene traccia dei casi in cui un limite amggiore potrebbe aiutare a trovare una soluzione. La ricerca _fallisce inaturalmente_ se ha esaurito tutto lo spazio di ricerca e non sono stati tagliati percorsi per limite raggiungo; se $"raggiunta_max_profondita"$, falsa al momento della chiamata, diventa vera alla fine, il limite può essere incrementato per la successiva iterata.
 
@@ -610,36 +610,36 @@ Per l'efficienza di $A^*$, $h$ è tanto migliore quanto più ridce la cardinalit
 L'idea di questo algoritmo è combinare l'effic ienza in spazio delle strategie in profondità con informazione euristica. Risulta efficace quando esistono molti cammini verso un nodo-obiettivo. Questo algoritmo assume che $h(n)$ sia ammissibile. \
 Questo algoritmo memorizza il percorso di costo minimo verso un nodo-obiettivo trovato e il suo costo che diventa un _limite_: un percorso $p : c o s t(p) + h(p) >= l i m i t e$ aggiorando _limite_; si continua poi a cercare un'eventuale soluzione migliore.\
 Si genera così una sequenza di soluzioni via via migliori restituendo quella finale: l'algoritmo viene tipicamente implementato usando la DFS per la ricerca in profondità limitata dal valore di _limite_.
-```python
-  procedure DFBranchAndBound(G, s, goal, h, limite_0)
-  Input
-    G: grafo con nodi N e archi A
-    s: nodo di partenza
-    goal: funzione di test dei nodi
-    h: euristica sui nodi
-    limite_0: limite iniziale (∞ se non specificato)
-  Output
-    percorso di costo minimo da s a un nodo obiettivo se esiste una
-    soluzione di costo minore di limite_0, oppure ⊥
-  Local
-    percorso_migliore: percorso o ⊥
-    limite: numero reale non negativo
-
-    procedure cbsearch(⟨n_0,...,n_k⟩)
-      if cost(⟨n_0,...n_k⟩) + h(n_k) < limite then
-        if goal(n_k) then
-          percorso_migliore ← ⟨n_0,...,n_k⟩
-          limite ← cost(⟨n_0,...,n_k⟩)
-        else
-          for each ⟨n_k,n⟩ ∈ A do
-            cbsearch(⟨n_0,...,n_k,n⟩)
-
-  {main}
-  percorso_migliore ← ⊥
-  limite ← limite_0
-  cbsearch(⟨s⟩)
-  return percorso_migliore```
-
+#algoritmo(title: [Ricerca Depth-First Branch and Bound])[
+  #pseudocode-list[
+    + *procedure* $"DFBranchAndBound"(G, s, "goal", h, "limite"_0)$
+    + *Input*
+      + $G$: grafo con nodi $N$ e archi $A$
+      + $s$: nodo di partenza
+      + $"goal"$: funzione di test dei nodi
+      + $h$: euristica sui nodi
+      + $"limite"_0$: limite iniziale ($infinity$ se non specificato)
+    + *Output*
+      + percorso di costo minimo da $s$ a un nodo obiettivo se esiste una
+      + soluzione di costo minore di $"limite"_0$, oppure $bot$
+    + *Local*
+      + $"percorso_migliore"$: percorso o $bot$
+      + $"limite"$: numero reale non negativo
+    + *procedure* $"cbsearch"(chevron.l n_0, dots, n_k chevron.r)$
+      + *if* $"cost"(chevron.l n_0, dots, n_k chevron.r) + h(n_k) < "limite"$ *then*
+        + *if* $"goal"(n_k)$ *then*
+          + $"percorso_migliore" <- chevron.l n_0, dots, n_k chevron.r$
+          + $"limite" <- "cost"(chevron.l n_0, dots, n_k chevron.r)$
+        + *else*
+          + *for each* $chevron.l n_k, n chevron.r in A$ *do*
+            + $"cbsearch"(chevron.l n_0, dots, n_k, n chevron.r)$
+    + #text(fill: luma(130))[{main}]
+    + $"percorso_migliore" <- bot$
+    + $"limite" <- "limite"_0$
+    + $"cbsearch"(chevron.l s chevron.r)$
+    + *return* $"percorso_migliore"$
+  ]
+] <alg:df-branch-and-bound>
 La procedura _cbsearch_, _cost-bounded search_, comunica attraverso variabili globali; inizialmente, _limite_ è impostata a $"limite"_0$, stima per eccesso del costo d'una soluzione ottimale. \
 _DFBranchAndBound_ restituirà, se esiste, una soluzione ottimale con costo inferiore a $"limite"_0$. Se $"limite"_0$ supera di poco il costo minimo, l'algoritmo non espanderà più archi di $A^*$. La variabile $"limite"_0$ serve a far eliminare percorsi di costo maggiore: trovato un percorso completo, si esplorano solo percorsi con valore di $f$ inferiore a quello del percorso trovato, ossia esattamente i percorsi esplorati da $A^*$ quando trova una soluzione. Quando restituisce $perp$, se $"limite"_0 = infinity$ allora non ci sono soluzioni, se invece $"limite"_0$ è finito allora non ci sono soluzioni di costo inferiore a $"limite"_0$.\
 Combinato con ID l'algoritmo può incrementare via via il limite fino a trovare una soluzione ovvero può mostrare che non c'è soluzione. \
@@ -686,30 +686,31 @@ La compelssità dei controlli aggiuntivi per la verifica della presenza di un no
 === Potatura di Percorsi Multipli
 Spesso più di un percorso porta a uno stesso nodo. Occorre quindi _eliminare_ dalla fronteira ogni percorso che porti a un nodo per il quale ne esista già un altro (di costo inferiore). \
 Una strategia di *multiple-path pruning* (MPP) può essere implementata gestendo una lista di nodi terminali di percorsi già esplorati, detta *closed list* o _explored set_: inzialmente essa è buota poi, selezionato un percorso $chevron.l n_0, dots, n_k chevron.r$ della frontiera, se $n_k$ è già nella lista esso può essere scartato, altrimenti si aggiunge $n_k$ alla lista e si prosegue.
-```python
-procedure SearchMPP(G, s, goal)
-	Input
-    - G: grafo con nodi N e archi A
-    - s: nodo di partenza
-    - goal: funzione booleana sui nodi
-  Output
-    - cammino da s a un nodo per cui goal è vero
-    - oppure ⊥ se non ci sono cammini soluzione
-  Variabili locali
-    - frontier: insieme di cammini
-    - explored: insieme di nodi esplorati
-
-  frontier := {⟨s⟩}
-  explored := {}
-  while frontier != {} do
-    seleziona e rimuovi ⟨n_0, ..., n_k⟩ da frontier
-    if n_k ∉ explored then
-      explored := explored ∪ {n_k}
-      if goal(n_k) then
-        return ⟨n_0, ..., n_k⟩
-      frontier := frontier ∪ {⟨n_0, ..., n_k, n⟩ : ⟨n_k, n⟩ ∈ A}
-  return ⊥
-```
+#algoritmo(title: [Ricerca con Multiple-Path Pruning])[
+  #pseudocode-list[
+    + *procedure* $"SearchMPP"(G, s, "goal")$
+    + *Input*
+      + $G$: grafo con nodi $N$ e archi $A$
+      + $s$: nodo di partenza
+      + $"goal"$: funzione booleana sui nodi
+    + *Output*
+      + cammino da $s$ a un nodo per cui $"goal"$ è vero
+      + oppure $bot$ se non ci sono cammini soluzione
+    + *Local*
+      + $"frontier"$: insieme di cammini
+      + $"explored"$: insieme di nodi esplorati
+    + $"frontier" <- {chevron.l s chevron.r}$
+    + $"explored" <- emptyset$
+    + *while* $"frontier" != emptyset$ *do*
+      + selezionare e rimuovere $chevron.l n_0, dots, n_k chevron.r$ da $"frontier"$
+      + *if* $n_k in.not "explored"$ *then*
+        + $"explored" <- "explored" union {n_k}$
+        + *if* $"goal"(n_k)$ *then*
+          + *return* $chevron.l n_0, dots, n_k chevron.r$
+        + $"frontier" <- "frontier" union {chevron.l n_0, dots, n_k, n chevron.r : chevron.l n_k, n chevron.r in A}$
+    + *return* $bot$
+  ]
+] <alg:search-mpp>
 Si noti che questa strategia non garantisce che non eliminato un percorso di costo minimo. Per garantire di preservare le soluzioni ottimali vi sono alcune alternative:
 - assicurare che il primo percorso trovato per un dato nodo si ottimale quindi gli altri si possono eliminare;
 - se nella frontiera si dovesse inserire un percorso $p = chevron.l s, dots, n, dots, m chevron.r$, ma fosse già presente $p'=chevron.l s, dots, n chevron.r $ meno costoso della parte fino a $n$ in $p$, si può eliminare $p$ oppure sostituire in $p$ tale parte con $p'$.
@@ -911,7 +912,7 @@ Rispetto a Generate-And-Test, i test anticipati consentono di potare sotto-alber
       + $"sols" <- emptyset$
       + *for* $"val" in "dom"("var")$ *do*
         + $"sols" <- "sols" union$
-        + #h(3em) $"DFS_solver"(V_s backslash {"var"}, C_s backslash c e, {"var" = "val"} union "contesto_parziale")$
+        + #h(2em) $"DFS_solver"(V_s backslash {"var"}, C_s backslash c e, {"var" = "val"} union "contesto_parziale")$
       + *return* $"sols"$
   ]
 ] <alg:risolutore-csp-dfs>
@@ -934,7 +935,7 @@ L'idea di base è quella di rendere la rete consistente restringendo i domini. A
       + selezionare e rimuovere $chevron.l X, c chevron.r$ da $"inconsistenti"$
       + ${Y_1, dots, Y_k} <- "ambito"(c) backslash {X}$
       + $N D <- {x | x in "dom"[X] and exists y_1 in "dom"[Y_1], dots, y_k in "dom"[Y_k]:$
-      + #h(3em) $c(X = x, Y_1 = y_1, dots, Y_k = y_k)}$
+      + #h(2em) $c(X = x, Y_1 = y_1, dots, Y_k = y_k)}$
       + *if* $N D != "dom"[X]$ *then*
         + $"inconsistenti" <- "inconsistenti" union {chevron.l Z, c' chevron.r | {X, Z} subset.eq "ambito"(c'), c' != c, Z != X}$
         + $"dom"[X] <- N D$
@@ -972,8 +973,8 @@ Nel seguente schema di algoritmo si integra l'approccio basato sulla consistenza
       + $"dom"_1 <-$ copia di $"dom"_0$ con $"dom"_1[X] = D_1$
       + $"dom"_2 <-$ copia di $"dom"_0$ con $"dom"_2[X] = D_2$
       + $"inconsistenti" <- { chevron.l Z, c' chevron.r | {X, Z} subset.eq "ambito"(c'), Z != X }$
-    + *return* $"Con_Solve"(chevron.l V_s, "dom"_1, C_s chevron.r, "inconsistenti")$ *or*
-    + #h(3em) $"Con_Solve"(chevron.l V_s, "dom"_2, C_s chevron.r, "inconsistenti")$
+      + *return* $"Con_Solve"(V_s, "dom"_1, C_s, "inconsistenti")$ *or*
+      + #h(2em) $"Con_Solve"(V_s, "dom"_2, C_s, "inconsistenti")$
   ]
 ] <alg:risolutore-ricorsivo-consistenza>
 L'algoritmo fornisce tutte le soluzioni:
@@ -1065,20 +1066,20 @@ Per avere una o tutte le soluzioni a partire dalla soluzione del CSP ridotto: si
 #algoritmo(title: [Eliminazione di Variabili])[
   #pseudocode-list[
     + *procedure* $"VE_CSP"(V_s, C_s)$
-    + *Input:*
+    + *Input*
       + $V_s$: insieme di variabili
       + $C_s$: insieme di vincoli su $V_s$
-    + *Output:*
+    + *Output*
       + relazione contenente tutte le assegnazioni consistenti
     + *if* $|V_s| = 1$ *then*
       + *return* join di tutte le relazioni in $C_s$
     + *else*
-      + Selezionare $X in V_s$ da eliminare
+      + selezionare $X in V_s$ da eliminare
       + $C X <- {c in C_s | X in "ambito"(c)}$
       + $R <-$ join di tutti i vincoli in $C X$
       + $N R <-$ proiezione di $R$ sulle variabili $V_s backslash {X}$
       + $S <- "VE_CSP"(V_s backslash {X}, (C_s backslash C X) union {N R})$
-    + *return* $R join S$
+      + *return* $R join S$
   ]
 ] <alg:eliminazione-variabili>
 Seguono alcune osservazioni:
@@ -1088,23 +1089,23 @@ VE può essere combinato con algoritmi basati su consistenza da usare per sempli
 == Ricerca Locale
 Nel caso di spazi molto grandi, o infiniti, non è pensabile una ricerca sistematica sull'intero spazio. Si può puntare su metodi _mediamente efficienti_ per trovare soluzioni, ma _senza garanzie_ di ritrovamento anche quando esistono. Perciò tali metodi sono utili quando si sa che, verosimilmente, ce ne sono. \
 La classe dei metodi di *ricerca locale*, comunemente investigati nell'ambito della _ricerca operativa_ e dell'_AI_, comprende molte tecniche, con uno stesso schema-base:
-#algoritmo(title: [Schema della #smallcaps[Ricerca Locale]])[
+#algoritmo(title: [Schema della Ricerca Locale])[
   #pseudocode-list[
     + *procedure* $"Local_search"(V_s, "dom", C_s)$
-    + *Input:*
+    + *Input*
       + $V_s$: insieme di variabili
       + $"dom"$: funzione che restituisce il dominio di una variabile
       + $C_s$: insieme di vincoli da soddisfare
-    + *Output:*
+    + *Output*
       + assegnazione totale che soddisfa i vincoli
-    + *Local:*
-      + $A$ dizionario di valori indicizzato dalle variabili in $V_s$
-    + *repeat* #text(fill: luma(150))[ $brace.l "try" brace.r$]
+    + *Local*
+      + $A$: dizionario di valori indicizzato dalle variabili in $V_s$
+    + *repeat* #text(fill: luma(130))[{try}]
       + *for each* $X in V_s$ *do*
         + $A[X] <-$ valore (casuale) da $"dom"(X)$
-      + #text(fill: luma(150))[ $brace.l "walk" brace.r$]
+      + #text(fill: luma(130))[{walk}]
       + *while not* $"ferma_walk"()$ *and* $A$ non soddisfa $C_s$ *do*
-        + Selezionare $Y in V_s$ e un valore $w in "dom"(Y)$
+        + selezionare $Y in V_s$ e un valore $w in "dom"(Y)$
         + $A[Y] <- w$
       + *if* $A$ soddisfa $C_s$ *then*
         + *return* $A$
@@ -1217,27 +1218,25 @@ Anche questi metodi sono definiti per gestire _popolazioni_ di individui. Restan
     + *Output*
       + assegnazione totale che soddisfa i vincoli
     + *Local*
-      + $P o p, N P o p$: insieme di assegnazioni
+      + $"Pop", "NPop"$: insieme di assegnazioni
       + $T$: numero reale
-    + $P o p <-$ insieme di $k$ assegnazioni totali casuali
+    + $"Pop" <-$ insieme di $k$ assegnazioni totali casuali
     + $T$ inizializzato in base a $S$
     + *repeat*
-      + *if* $exists A in P o p$ che soddisfa tutti i vincoli in $C_s$ *then*
+      + *if* $exists A in "Pop"$ che soddisfa tutti i vincoli in $C_s$ *then*
         + *return* $A$
-      + $N P o p <- emptyset$
+      + $"NPop" <- emptyset$
       + *repeat* $k/2$ volte
-        + $A_1 <- "Random_selection"(P o p, T)$
-        + $A_2 <- "Random_selection"(P o p, T)$
+        + $A_1 <- "Random_selection"("Pop", T)$
+        + $A_2 <- "Random_selection"("Pop", T)$
         + $N_1, N_2 <- "Crossover"(A_1, A_2)$
-        + $N P o p <- N P o p union {"mutate"(N_1), "mutate"(N_2)}$
-      + $P o p <- N P o p$
+        + $"NPop" <- "NPop" union {"mutate"(N_1), "mutate"(N_2)}$
+      + $"Pop" <- "NPop"$
       + $T$ viene aggiornato in base a $S$
     + *until* terminazione
-    + #h(0pt)
-    + *procedure* $"Random_selection"(P o p, T)$
-      + selezionare $A$ da $P o p$ con probabilità proporzionale a $e^(-h(A)/T)$
+    + *procedure* $"Random_selection"("Pop", T)$
+      + selezionare $A$ da $"Pop"$ con probabilità proporzionale a $e^(-h(A)/T)$
       + *return* $A$
-    + #h(0pt)
     + *procedure* $"Crossover"(A_1, A_2)$
       + selezionare casualmente un intero $i$, $1 <= i < |V_s|$
       + $N_1 <- {(X_j = v_j) in A_1 | j <= i} union {(X_j = v_j) in A_2 | j > i}$
@@ -1559,13 +1558,13 @@ La seguente procedura trova $C$, l'_insieme delle conseguenze_ di _KB_:
     + *Output*
       + insieme di tutte le conseguenze logiche di $K B$
     + *Local*
-      + $C$ insieme di atomi
-      + $C <- emptyset$
+      + $C$: insieme di atomi
+    + $C <- emptyset$
     + *repeat*
       + selezionare $h <- a_1 and dots and a_m$ da $K B$
-      + #h(3em) tale che $forall i: a_i in C$ e $h in.not C$
+      + #h(2em) tale che $forall i: a_i in C$ e $h in.not C$
       + $C <- C union {h}$
-      + *until* nessuna clausola selezionabile
+    + *until* nessuna clausola selezionabile
     + *return* $C$
   ]
 ] <alg:procedura-bottom-up>
@@ -1661,19 +1660,19 @@ Si parte da un insieme $G$ (_goal_) di _atomi da dimostrare_, quindi:
 - si ha una terminazione con successo se $G = emptyset$
 #algoritmo(title: [Algoritmo Top-Down])[
   #pseudocode-list[
-    + *non-deterministic procedure* $"Prove_DC_TD"(K B, Q u e r y)$
+    + *non-deterministic procedure* $"Prove_DC_TD"(K B, "Query")$
     + *Input*
       + $K B$: insieme di clausole definite
-      + $Q u e r y$ insieme di atomi da dimostrare
+      + $"Query"$: insieme di atomi da dimostrare
     + *Output*
-      + *yes* se $K B models Q u e r y$, altrimenti fallisce (no)
+      + *yes* se $K B models "Query"$, altrimenti fallisce (*no*)
     + *Local*
-      + $G$ insieme di atomi
-    + $G <- Q u e r y$
+      + $G$: insieme di atomi
+    + $G <- "Query"$
     + *repeat*
       + selezionare un atomo $a in G$
       + scegliere da $K B$ una clausola definita $a <- B$ con $a$ come testa
-      + #text(fill: rgb("558B2F"), style: "italic")[{se possibile, altrimenti il tentativo fallisce}]
+      + #text(fill: luma(130))[{se possibile, altrimenti il tentativo fallisce}]
       + $G <- (G backslash {a}) union B$
     + *until* $G = emptyset$
     + *return yes*
@@ -1781,12 +1780,12 @@ L'algoritmo da usare può essere schematizzato come segue:
   #pseudocode-list[
     + *procedure* $"Debug_false"(g, K B)$
     + *Input*
-      + $K B$ base di conoscenza
-      + $g$ atomo: $K B tack g$ ma falso nell'interpretazione intesa
+      + $K B$: base di conoscenza
+      + $g$: atomo tale che $K B tack g$ ma falso nell'interpretazione intesa
     + *Output*
       + clausola in $K B$ che risulta falsa
-    + Trovare $g <- a_1 and dots.c and a_k in K B$ usata per dimostrare $g$
-    + Chiedere all'utente se ogni $a_i$ sia vero o meno
+    + trovare $g <- a_1 and dots.c and a_k in K B$ usata per dimostrare $g$
+    + chiedere all'utente se ogni $a_i$ sia vero o meno
     + *if* l'utente indica un $a_i$ falso *then*
       + *return* $"Debug_false"(a_i, K B)$
     + *else if* l'utente risponde che tutti gli $a_i$ sono veri *then*
@@ -1800,13 +1799,12 @@ Tale atomo segnala il caso di una o più _clausole mancanti_ tra gli assiomi del
   #pseudocode-list[
     + *procedure* $"Debug_missing"(g, K B)$
     + *Input*
-      + $K B$ base di conoscenza
-      + $g$ atomo: $K B cancel(tack) g$ ma $g$ vero nell'interpretazione intesa
+      + $K B$: base di conoscenza
+      + $g$: atomo tale che $K B cancel(tack) g$ ma $g$ vero nell'interpretazione intesa
     + *Output*
       + atomo per il quale manchi una clausola utile
-    + *if* $exists g <- a_1 and dots.c and a_k in K B$ con tutti gli $a_i$ veri nell'interpretazione intesa \
-      #h(1.5em) *then*
-      + Selezionare $a_i$ che non può essere dimostrato
+    + *if* $exists g <- a_1 and dots.c and a_k in K B$ con tutti gli $a_i$ veri nell'interpretazione intesa *then*
+      + selezionare $a_i$ che non può essere dimostrato
       + *return* $"Debug_missing"(a_i, K B)$
     + *else*
       + *return* $g$
@@ -1950,13 +1948,13 @@ Si estende l'algoritmo bottom-up per clausole definite:
       + insieme di conflitti
     + *Local*
       + $C$: insieme di coppie atomo/insieme di assumibili
-      + $C <- {chevron.l a, {a} chevron.r | a in A s}$
+    + $C <- {chevron.l a, {a} chevron.r | a in A s}$
     + *repeat*
       + selezionare la clausola $h <- b_1 and dots and b_m in K B$ tale che:
-      + #h(3em) per ogni $i$ $chevron.l b_i, A_i chevron.r in C$ e $chevron.l h, A chevron.r in.not C$, dove $A = A_1 union dots union A_m$
+      + #h(2em) per ogni $i$, $chevron.l b_i, A_i chevron.r in C$ e $chevron.l h, A chevron.r in.not C$, dove $A = A_1 union dots union A_m$
       + $C <- C union {chevron.l h, A chevron.r}$
     + *until* nessun'altra selezione possibile
-    + *return* ${A | chevron.l f a l s e, A chevron.r in C}$
+    + *return* ${A | chevron.l "false", A chevron.r in C}$
   ]
 ] <alg:bottom-up-conflitti>
 ==== Implementazione Top-Down
@@ -1972,8 +1970,8 @@ L'implementazione top-down deriva dall'omologa per clausole definite, con due _d
     + *Output*
       + un conflitto
     + *Local*
-      + $G$ insieme di atomi (che implicano $f a l s e$)
-    + $G <- {f a l s e}$
+      + $G$: insieme di atomi (che implicano $"false"$)
+    + $G <- {"false"}$
     + *repeat*
       + selezionare un atomo $a in G$ tale che $a in.not A s$
       + scegliere una clausola $a <- B$ di $K B$ con $a$ come testa
