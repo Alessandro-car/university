@@ -1,7 +1,7 @@
 \documentclass[12pt, letterpaper]{report}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
-\usepackage{amsmath}	
+\usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{tabularx}
 \usepackage{amssymb}
@@ -14,7 +14,7 @@
 \usepackage{xfrac}
 \usepackage{lipsum}
 \usepackage{bbm}
-\usepackage{hyperref}	
+\usepackage{hyperref}
 \usepackage{amsthm}
 \usepackage{tabularx}
 \usepackage{amssymb}
@@ -99,8 +99,8 @@
 	\nameref{#1}\egroup}
 
 \newcommand{\nmu}{}
-
-\begin{document}	
+\graphicspath{{images/}}
+\begin{document}
 
 	{
 		\let\cleardoublepage\clearpage
@@ -109,7 +109,7 @@
 	}
 	\chapter{Insiemi}
 	\section{Definizione di un insieme e appartenenza a un insieme}
-	\begin{definition}{\nmu Insieme}{insieme}	
+	\begin{definition}{\nmu Insieme}{insieme}
 		Un insieme è una famiglia di oggetti, detti elementi dell'insieme.
 		Per definire un insieme dobbiamo stabilire un criterio per dire se un elemento appartiene all'insieme o no.
 	\end{definition}
@@ -125,7 +125,7 @@
 	\begin{description}
 		\item[Notazione:] \hfill \\ Per gli insiemi si usa la lettera MAIUSCOLA. \\Per gli elementi si usa la lettera MINUSCOLA. \\ Se un elemento appartiene all'insieme si usa il simbolo $\in$, ad esempio 3 $\in$ $\mathbbm{N}$.
 	\end{description}
-	\begin{definition}{\nmu Insieme vuoto}{insieme_vuoto}	
+	\begin{definition}{\nmu Insieme vuoto}{insieme_vuoto}
 			L'insieme vuoto è l'unico insieme che non ha elementi. Il simbolo dell'insieme vuoto è:
 			\begin{center}
 				$\emptyset$
@@ -148,7 +148,7 @@
 		\end{enumerate}
 	\end{description}
 	\section{Inclusione, uguaglianza, intersezione e unione di un insieme}
-	\begin{definition}{\nmu Inclusione}{inclusione}	
+	\begin{definition}{\nmu Inclusione}{inclusione}
 		Siano \textit{A} e \textit{B} due insiemi. Si dice che \textit{A} è incluso in \textit{B} se ogni elemento di \textit{A} è elemento di \textit{B}. L'inclusione si indica con il simbolo:
 		\begin{center}
 			$A \subseteq B$
@@ -156,7 +156,7 @@
 		Se invece non è incluso si indica con:
 		\begin{center}
 			$A \not \subseteq B$
-		\end{center}	
+		\end{center}
 	\end{definition}
 	\begin{description}
 		\item Alcuni esempi sono:
@@ -176,13 +176,13 @@
 		$\emptyset \subseteq A$
 		\\$A \subseteq A$
 	\end{center}
-	
+
 	\end{note}
 	\begin{note}{}{}
-	Il simbolo appartiene è per gli elementi, il simbolo dell'inclusione è per gli insiemi.	
+	Il simbolo appartiene è per gli elementi, il simbolo dell'inclusione è per gli insiemi.
 	\end{note}
-	
-	\begin{definition}{\nmu Inclusione propria}{inclusione_propria}	
+
+	\begin{definition}{\nmu Inclusione propria}{inclusione_propria}
 		Sia $A \subseteq B$. Si esiste un elemento di \textit{B} che non è in \textit{A} allora si dice che \textit{A} è incluso propriamente o è sottoinsieme proprio di \textit{B}.
 		L'inclusione propria si indica con:
 		\[
@@ -195,16 +195,16 @@
 \end{center}
 
 	\end{note}
-	\begin{definition}{\nmu Insiemi uguali}{insiemi_uguali}	
+	\begin{definition}{\nmu Insiemi uguali}{insiemi_uguali}
 		Sia \textit{A} e \textit{B} insiemi. \textit{A} e \textit{B} sono insiemi uguali se contengono gli stessi elementi, ovvero se:
 		\[
-		A \subseteq B 
+		A \subseteq B
 		\]
 		\[
 		B \subseteq A
 		\]
 		\[
-		A = B		
+		A = B
 		\]
 		Se non sono uguali:
 		\[
@@ -233,11 +233,11 @@
 		\item \textbf{Elemento neutro}: $\exists!$ 0 $\in \mathbbm{N} \mid \forall a \in \mathbbm{N}$ allora a + 0 = 0 + a = a.
 	\end{itemize}
 	Le prime tre proprietà sono le stesse per la moltiplicazione, la proprietà dell'elemento neutro è sempre uguale ma vale per il numero 1.
-	\begin{definition}{\nmu Intersezione}{intersezione}	
-		Sia \textit{A} e \textit{B} insiemi. L'insieme intersezione è costituito da tutti gli elementi che appartengono sia ad \textit{A} che a \textit{B} 
+	\begin{definition}{\nmu Intersezione}{intersezione}
+		Sia \textit{A} e \textit{B} insiemi. L'insieme intersezione è costituito da tutti gli elementi che appartengono sia ad \textit{A} che a \textit{B}
 		L'intersezione si indica con si indica con:
 		\[
-		A \cap B = {x \mid x \in A \hspace{0.2cm} e \hspace{0.2cm}x \in B} 
+		A \cap B = {x \mid x \in A \hspace{0.2cm} e \hspace{0.2cm}x \in B}
 		\]
 	\end{definition}
 	\noindent
@@ -247,10 +247,10 @@
 		\item \textit{D}: Insieme dei numeri dispari = $\{2n + 1 \mid n \in \mathbbm{Z}\}$;
 		\item $P \cap D = \emptyset$
 	\end{itemize}
-	\begin{definition}{\nmu Insiemi disgiunti}{insiemi_disgiunti}	
+	\begin{definition}{\nmu Insiemi disgiunti}{insiemi_disgiunti}
 		Due insiemi \textit{A} e \textit{B} si dicono disgiunti se $A \cap B = \emptyset$
 	\end{definition}
-	\begin{definition}{\nmu Unione}{unione}	
+	\begin{definition}{\nmu Unione}{unione}
 		Siano \textit{A} e \textit{B} due insiemi. L'insieme unione di \textit{A} e \textit{B} è l'insieme costituito da tutti gli che sono in \textit{A} (inclusivo) o in \textit{B}.
 		L'unione di due insiemi si indica con:
 		\[
@@ -283,7 +283,7 @@
 		\item $(A \cap B) \cup C = (A \cup C) \cap (B \cup C)$
 	\end{enumerate}
 	\section{Complementare, leggi di Demorgan, differenza, insiemi delle parti e prodotto cartesiano}
-	\begin{definition}{\nmu Complementare}{complementare}	
+	\begin{definition}{\nmu Complementare}{complementare}
 		Siano \textit{A} e \textit{B} due insiemi e $B \subseteq A$. Il complementare di \textit{B} in \textit{A} è l'insieme costituito da tutti gli che sono in \textit{A} ma non sono in \textit{B}.
 		Il complementare di due insiemi si indica con:
 		\[
@@ -331,18 +331,18 @@
 			\item $C_{A}(B \cap C) \subseteq C_{A}(B) \cup C_{A}(C)$
 				\begin{enumerate}
 					\item Dobbiamo dimostrare che $\forall x \in C_{A}(B \cap C)$ si ha che $x \in C_{A}(B) \cup C_{A}(C)$
-					\item Sia $x \in C_{A}(B \cap C)$ dato che $B \subseteq A$ e $C \subseteq A$, $x \in A$, $x \notin B \ o \ x \notin C$, allora $x \in C_{A}(B) \cup C_{A}(C)$ 
+					\item Sia $x \in C_{A}(B \cap C)$ dato che $B \subseteq A$ e $C \subseteq A$, $x \in A$, $x \notin B \ o \ x \notin C$, allora $x \in C_{A}(B) \cup C_{A}(C)$
 				\end{enumerate}
 			\item $C_{A}(B) \cup C_{A}(C) \subseteq C_{A}(B \cap C)$
 				\begin{enumerate}
 					\item Dobbiamo dimostrare che $\forall x \in C_{A}(B) \cup C_{A}(C)$ si ha che $x \in C_{A}(B \cap C)$
 					\item Sia $x \in C_{A}(B) \cup C_{A}(C)$ o $x \in C_{A}(B) \ o \ x \in C_{A}(C)$, allora $x \in A, x \notin B \ o \ x \notin C$ e $x \in C_{A}(B \cap C)$
-					
+
 				\end{enumerate}
 		\end{enumerate}
-	
+
 	\end{proof}
-	\begin{definition}{\nmu Insieme differenza}{insieme_differenza}	
+	\begin{definition}{\nmu Insieme differenza}{insieme_differenza}
 		Siano \textit{A} e \textit{B} due insiemi. L'insieme differenza tra \textit{A} e \textit{B} è l'insieme di tutti gli elementi che sono in \textit{A} e non sono in \textit{B}.
 		L'insieme differenza si indica con:
 		\[
@@ -358,7 +358,7 @@
 	\[
 		A \backslash B = C_{A}(A \cap B)
 	\]
-	\begin{definition}{\nmu Prodotto cartesiano}{prod_cartesiano}	
+	\begin{definition}{\nmu Prodotto cartesiano}{prod_cartesiano}
 		Siano \textit{A} e \textit{B} due insiemi. Il prodotto cartesiano di \textit{A} per \textit{B} è l'insieme degli elementi costituito da tutte le coppie ordinate $(a, b)$ con $a$ appartenente ad \textit{A} e $b$ appartenente a \textit{B}.
 		Il prodotto cartesiano si indica con:
 		\[
@@ -370,7 +370,7 @@
 		\mathbbm{R} \times \mathbbm{R} = \{(x, y) \mid x \in \mathbbm{R} \ e \ y \in \mathbbm{R}\}
 	\]
 	Questo rappresenta le coordinate del diagramma cartesiano.
-	\begin{definition}{\nmu Insieme delle parti}{insieme_parti}	
+	\begin{definition}{\nmu Insieme delle parti}{insieme_parti}
 		Siano \textit{A} un insieme. L'insieme delle parti di \textit{A} è l'insieme dei sottoinsiemi di \textit{A}. Gli elementi dell'insieme delle parti di $A$ sono tutti e soli sottoinsiemi di $A$.
 		L'insieme delle parti si indica con:
 		\[
@@ -386,7 +386,7 @@
 	\textbf{Esempio:}
 	$A = \{a, b, c, d\}$
 	\\ $\wp(A)$ = \{$\emptyset$, A = \{a, b, c, d\}, \{a\}, \{b\}, \{c\}, \{d\}, \{a, b\}, \{a, c\}, \{a, d\}, \{b, c\},\{b, d\}, \{d, c\}, \{a, b, c\}, \{a, b, d\}, \{a, c, d\}, \{a, c, d\}, \{b, c, d\}\}
-	
+
 	\chapter{Logica}
 	\section{Proposizioni, definizione di negazione, congiunzione e disgiunzione, implicazione}
 	Una proposizione logica è un'affermazione di cui si può stabilire se è vera o falsa, solo una delle due.
@@ -396,10 +396,10 @@
 		\item Il cane è un mammifero. Questa proposizione è vera, quindi 1 o V o T.
 		\item X è un numero positivo. Questa non è una proposizione perché non si può stabilire se vera o falsa.
 	\end{itemize}
-	\begin{definition}{\nmu Negazione}{negazione}	
+	\begin{definition}{\nmu Negazione}{negazione}
 		Sia $P$ una proposizione. La negazione di $P$ è una proposizione che è vera se $P$ è falsa e falsa se $P$ è vera.
 		I simboli della negazione sono:
-		
+
 		\[
 		\overline P \ oppure \ ^\neg P
 		\]
@@ -424,7 +424,7 @@
 			\item $\overline S: \forall x \in \mathbbm{N} \ e \ \forall y \in \mathbbm{Z} \mid x + y + 4 = 0$
 		\end{itemize}
 	\end{enumerate}
-	\textbf{Tavola di verità}	
+	\textbf{Tavola di verità}
 	\\
 	\\
 	\begin{tabular} {c|c}
@@ -434,7 +434,7 @@
 		F & V \\
 	\end{tabular}
 
-	\begin{definition}{\nmu Congiunzione}{congiunzione}	
+	\begin{definition}{\nmu Congiunzione}{congiunzione}
 		Sia $P$ e $Q$ due proposizioni. La proposizione congiunzione di $P$ e $Q$, si legge "P e Q" è una proposizione che è vera solo quando entrambe sono vere ed è falsa solo quando entrambe sono false.
 		I simboli della congiunzione sono:
 		\[
@@ -453,7 +453,7 @@
 		F & F & F\\
 	\end{tabular}
 	\\
-	\\	
+	\\
 	\textbf{Esempio: }
 	\begin{enumerate}
 		\item $P:$ 6 è un numero pari. V
@@ -462,7 +462,7 @@
 			\item $P \wedge Q: $ 6 è un numero pari ed è multiplo di 4 è falsa.
 		\end{itemize}
 	\end{enumerate}
-	\begin{definition}{\nmu Disgiunzione}{disgiunzione}	
+	\begin{definition}{\nmu Disgiunzione}{disgiunzione}
 		Sia $P$ e $Q$ due proposizioni. La proposizione disgiunzione di $P$ e $Q$, che si legge "P o Q", è una proposizione che è falsa solo quando entrambe sono false, altrimenti è vera.
 		I simboli della disgiunzione sono:
 		\[
@@ -492,8 +492,8 @@
 	\begin{tabular}{c|c|c}
 		$\mathbf{P}$ & $\mathbf{\overline P}$ & $\mathbf{P \wedge \overline P}$ \\
 		\hline
-		V & F & F\\ 
-		F & V & F\\ 
+		V & F & F\\
+		F & V & F\\
  	\end{tabular}
 	\\
 	\textbf{Nota: }
@@ -504,14 +504,14 @@
 	\begin{tabular}{c|c|c}
 	$\mathbf{P}$ & $\mathbf{\overline P}$ & $\mathbf{P \vee \overline P}$ \\
 	\hline
-	V & F & V\\ 
-	F & V & V\\ 
+	V & F & V\\
+	F & V & V\\
 	\end{tabular}
 	\\
 	\textbf{Nota: }
 	\\
 	Proposizione sempre vera si chiama TAUTOLOGIA.
-	\begin{definition}{\nmu Implicazione}{implicazione}	
+	\begin{definition}{\nmu Implicazione}{implicazione}
 		Sia $P$ e $Q$ due proposizioni. La proposizione implicazione di $P$ e $Q$, che si legge "se P allora Q", è una proposizione che è falsa solo se P è vera e Q è falsa ed è vera altrimenti.
 		I simboli dell'implicazione sono:
 		\[
@@ -543,7 +543,7 @@
 	\\
 	IF...THEN di programmazione perchè se in programmazione la condizione dell'if fallisce il programma non esegue più il costrutto mentre in matematica la proposizione rimane comunque vera.
 	\newpage
-	\begin{definition}{\nmu Doppia implicazione}{doppia_implicazione}	
+	\begin{definition}{\nmu Doppia implicazione}{doppia_implicazione}
 		Sia $P$ e $Q$ due proposizioni. La doppia implicazione di $P$ e $Q$, che si legge "P se e solo se Q", è una proposizione che è vera quando P e Q sono entrambe vere o entrambe false.
 		I simboli dell'implicazione sono:
 		\[
@@ -645,7 +645,7 @@
 		F & V & V & F & F & V & V & V\\
 		F & V & F & F & F & V & V & V\\
 		F & F & V & F & F & V & V & V\\
-		F & F & F & F & F & F & F & F\\ 
+		F & F & F & F & F & F & F & F\\
 	\end{tabular}
 	\\
 	\\
@@ -654,14 +654,14 @@
 	\textbf{Esercizio: }Dimostrare $(P \wedge Q) \vee R \iff (P \vee R) \wedge (Q \vee R)$
 	\\
 	\\
-	
+
 
 	\newpage
 	\textbf{Esercizio:} $\exists s \in \mathbbm{N} \mid \forall b \in \mathbbm{Z} \ \exists q \in \mathbbm{R}$ con $b + s - q = 0$.
 	\begin{itemize}
 		\item $q = b + s \in \mathbbm{R}$
 		\item $\exists s = 0 \in \mathbbm{N} \mid \ \forall b \in \mathbbm{Z} \ \exists q = b \in \mathbbm{R}$
-		\item $b + s - q = b + 0 - b = 0$. P è vera		
+		\item $b + s - q = b + 0 - b = 0$. P è vera
 	\end{itemize}
 
 	$\overline P: \forall s \in \mathbbm{N} \ \exists b \in \mathbbm{Z} \mid \forall q \in \mathbb{R} \ b + s - q \not = 0$.
@@ -679,17 +679,17 @@
 	\textbf{Esercizio:} $S: \forall x \in \mathbbm{Z} \ \exists t \in \mathbbm{N} \ e \ \exists y \in \mathbbm{N} \mid x = t^2 + y$
 	\\
 	S è falsa perché $x \in \mathbbm{Z}$ e può essere negativo mentre $t \in \mathbbm{N} \ e \ y \in \mathbbm{N}$ pertanto $t^2 + y \geq 0$.
-	\\ 
+	\\
 	$\overline S: \exists x \in \mathbbm{Z} \mid \forall t \in \mathbbm{N} \ e \ \forall y \in \mathbbm{N} \ x \not = t^2 + y$
 	\\
 	\textbf{Esercizio:} $S: \forall x \in \mathbbm{Z} \ \exists t \in \mathbbm{N} \ e \ \exists y \in \mathbbm{N} \mid x^2 = t^2 + y$
 	\\
 	$\forall x \in \mathbbm{Z} \ \exists t = 0 \in \mathbbm{N}$ e $\exists y = x^2$
-	\\ 
+	\\
 	$\overline S: \exists x \in \mathbbm{Z} \mid \forall t \in \mathbbm{N} \ e \ \forall y \in \mathbbm{N} x \not = t^2 + y$
 	\chapter{Funzioni}
 	\section{Definizione di funzione, funzioni che coincidono, immagine, controimmagine, grafico}
-	\begin{definition}{\nmu Funzione}{funzione}	
+	\begin{definition}{\nmu Funzione}{funzione}
 		Siano $A$ e $B$ due insiemi non vuoti. Una funzione dall'insieme $A$ all'insieme $B$ è una legge che associa ad ogni elemento di $A$ un unico elemento dell'insieme $B$.
 		\\
 		Simbolo della funzione:
@@ -732,7 +732,7 @@
 			\end{itemize}
 	\end{enumerate}
 
-	\begin{definition}{\nmu Funzioni uguali}{funzioni_uguali}	
+	\begin{definition}{\nmu Funzioni uguali}{funzioni_uguali}
 		Due funzioni si dicono uguali se hanno stesso insieme di partenza, stesso insieme di arrivo e stessa legge.
 	\end{definition}
 	\textbf{Esempio: }
@@ -760,8 +760,8 @@
 	\textbf{Esempio di funzione IDENTICA o IDENTITÀ: }
 	\\
 	$\forall A \ insieme \ non \ vuoto \ \exists \ la \ funzione \ I_{d_{A}}: A \to A \ \forall a \in A \ I_{d_{A}}(a) = a$, cioè ogni elemento viene mandato in se stesso.
-	
-	\begin{definition}{\nmu Immagine}{immagine}	
+
+	\begin{definition}{\nmu Immagine}{immagine}
 		L'immagine di una funzione $f: A \to B$ si indica con $Im(f)$ o $f(A)$ ed è il sottoinsieme di $B$ costituito da tutte le immagini degli elementi di $A$, ovvero:
 		\\
 		$f(A) \subseteq B \ f(A) = \{b \in B \mid \exists a \in A \ con \ f(a) = b \}$
@@ -771,7 +771,7 @@
 		f(A') = \{b \in B \mid \exists a \in A' \ con \ f(a) = b\} = \{f(a) \mid a \in A'\}
 		\]
 	\end{definition}
-	
+
 	\textbf{Esempio: }
 	\\
 	$g: \mathbbm{Z} \to \mathbbm{Z} \ \forall s \in \mathbbm{Z} \ g(s) = 4s$
@@ -780,7 +780,7 @@
 	\\
 	$g(\mathbbm{Z}) = \{b \in \mathbbm{Z} \mid \exists a \in \mathbbm{Z} \ g(a) = b\} = \{b \in \mathbbm{Z} \mid \exists a \in \mathbbm{Z} \ con \ 4a = b\}$
 	\\
-	$g(A') = \{b \in \mathbbm{Z} \mid \exists a \in A' \ con \ g(a) = b\} = \{b \in \mathbbm{Z} \mid \exists a \in A' \ con \ 4a = b\}$	
+	$g(A') = \{b \in \mathbbm{Z} \mid \exists a \in A' \ con \ g(a) = b\} = \{b \in \mathbbm{Z} \mid \exists a \in A' \ con \ 4a = b\}$
 	$g(A') = \{4, -4, -12, 16, 0\}$.
 	\\
 	\textbf{Esempio: }
@@ -788,8 +788,8 @@
 	$f: \mathbbm{N} \to \mathbbm{N} \ \forall n \in \mathbbm{N} \ con \ f(n) = n + 3$
 	\\
 	$f(\mathbbm{N}) = \mathbbm{N} \backslash \{0, 1, 2\}$
-	
-	\begin{definition}{\nmu Controimmagine}{controimmagine}	
+
+	\begin{definition}{\nmu Controimmagine}{controimmagine}
 		Siano $f: A \to B$ una funzione e $Y \subseteq B$. La controimmagine di $Y$ oppure immagine inversa di $Y$, è il sottoinsieme di $A$ costituito da tutti gli elementi la cui immagine è in $Y$.
 		\\
 		Simbolo della controimmagine:
@@ -799,10 +799,10 @@
 		$f^{-1}(Y) \subseteq A = \{a \in A \mid f(a) \in Y\}$
 		\\
 		In particolare $f^{-1}(B) = \{a \in A \mid f(a) \in B\} = A$
-	\end{definition}	
+	\end{definition}
 	\textbf{Proprietà: }
 	\\
-	Siano $f: A \to B$ funzione. $X, X' \subseteq A \ e \ Y, Y' \subseteq B$. 
+	Siano $f: A \to B$ funzione. $X, X' \subseteq A \ e \ Y, Y' \subseteq B$.
 	\\
 	Allora:
 	\begin{enumerate}
@@ -831,7 +831,7 @@
 	$f(\{0, -2\}) = \{0, 4\}$
 	\\
 	$f(X) \cap f(X') = \{0, 4\} \not \subseteq f(X \cap X') = \{0\}$
-	
+
 	\begin{proof}{Dimostrazion di $f(X \cup X') {=} f(X) \cup f(X')$} \quad \\
 		Dobbiamo dimostrare due cose:
 		\begin{enumerate}
@@ -849,10 +849,10 @@
 					\begin{itemize}
 						\item Sia $b \in f(X) \cup f(X') \\ \Rightarrow b = f(a) \ con \ a \in X \ o \ a \in X' \\ \Rightarrow b = f(a) \ con \ a \in X \cup X' \\ \Rightarrow b \in f(X \cup X')$
 					\end{itemize}
-				\end{itemize} 
+				\end{itemize}
 		\end{enumerate}
 	\end{proof}
-	
+
 	\begin{proof}{Dimostrazione di $f^{-1}(Y \cap Y') {=} f^{-1}(Y) \cap f^{-1}(Y')$}
 		Dobbiamo dimostrare due cose:
 		\begin{enumerate}
@@ -872,7 +872,7 @@
 				\end{itemize}
 		\end{enumerate}
 	\end{proof}
-	
+
 	\begin{proof}{Dimostrazione di $f^{-1}(Y \cup Y') {=} f^{-1}(Y) \cup f^{-1}(Y')$ } \quad \\
 		Dobbiamo dimostrare due cose:
 		\begin{enumerate}
@@ -892,19 +892,19 @@
 			\end{itemize}
 		\end{enumerate}
 	\end{proof}
-	
+
 	\begin{definition}{\nmu Grafico}{grafico}
 		Il grafico  di una funzione $f: A \to B$ è il sottoinsieme del prodotto cartesiano $A \times B$ costituito dalle coppie ordinate $(a, f(a))$, al variare di $a \in A$.
-	\end{definition}	
+	\end{definition}
 	Prendendo l'esempio precedente il grafico è $\{(a, a^2) \in \mathbbm{R} \times \mathbbm{R} \mid a \in \mathbbm{R}\}$
 	\section{Funzione iniettiva, suriettiva, biunivoca}
-	\begin{definition}{\nmu Funzione iniettiva}{func_iniettiva}	
+	\begin{definition}{\nmu Funzione iniettiva}{func_iniettiva}
 		Sia $f: A \to B$ una funzione $f$ è detta iniettiva se elementi distinti di A hanno immagini distinte in B.
-		
+
 		\[
 		\forall a, a' \in A \ se \ a' \neq a \Rightarrow f(a) \neq f(a')
 		\]
-		Questo equivale a dire che se $f(a) = f(a') \Rightarrow a = a'$  
+		Questo equivale a dire che se $f(a) = f(a') \Rightarrow a = a'$
 	\end{definition}
 	\textbf{Osservazione: }
 	\\
@@ -934,7 +934,7 @@
 	\\
 	$f: \mathbbm{Z} \to \mathbbm{Z} \ \forall x \in \mathbbm{Z} \ f(x) = \mid x \mid$
 	\\
-	$\mid x \mid$ = 
+	$\mid x \mid$ =
 	$\begin{cases*}
 		-x & se $x < 0$ \\
 		\phantom{-}x & se $x \geq 0$
@@ -963,10 +963,10 @@
 	f è iniettiva.
 	\\
 	$b \in B \ f^{-1}(b)$ può contenere al massimo un elemento.
-	\begin{definition}{\nmu Funzione suriettiva}{func_suriettiva}	
+	\begin{definition}{\nmu Funzione suriettiva}{func_suriettiva}
 		Sia $f: A \to B$ una funzione $f$ è detta suriettiva se $f(A) = B$ cioè se l'immagine di f è tutto B.
 		$\forall b \in B \  \exists a \in A \mid b = f(a)$.
-		Questo ci dice che la controimmagine $f^{-1}(b)$ è sempre $f^{-1}(b) \neq \emptyset$.   
+		Questo ci dice che la controimmagine $f^{-1}(b)$ è sempre $f^{-1}(b) \neq \emptyset$.
 	\end{definition}
 	\textbf{Osservazione: }
 	\\
@@ -984,7 +984,7 @@
 	\\
 	\textbf{Secondo esempio: }
 	\\
-	$g: \mathbbm{R} \to \mathbbm{R} \ \forall s \in \mathbbm{R} \ g(s) = 2s^2 - 4$. 
+	$g: \mathbbm{R} \to \mathbbm{R} \ \forall s \in \mathbbm{R} \ g(s) = 2s^2 - 4$.
 	\\
 	g è suriettiva? g è iniettiva?
 	\\
@@ -996,7 +996,7 @@
 	\\
 	$\forall b  \in \mathbbm{R} \ \exists a \in \mathbbm{R} \mid g(a) = b$
 	\\
-	$g(a) = b \\ \Rightarrow 2a^2 - 4 = b \\ \Rightarrow 2a^2 = b + 4 \\ \Rightarrow a^2 = \frac{b - 4}{2} \\ \Rightarrow a = \sqrt{\frac{b-4}{2}} \ o \ a = -\sqrt{\frac{b - 4}{2}} \ \forall b \in \mathbbm{R} \ ?$. 
+	$g(a) = b \\ \Rightarrow 2a^2 - 4 = b \\ \Rightarrow 2a^2 = b + 4 \\ \Rightarrow a^2 = \frac{b - 4}{2} \\ \Rightarrow a = \sqrt{\frac{b-4}{2}} \ o \ a = -\sqrt{\frac{b - 4}{2}} \ \forall b \in \mathbbm{R} \ ?$.
 	\\
 	No perchè $\sqrt{\frac{-50 + 4}{2}} \notin \mathbbm{R}$, quindi non è suriettiva
 	\\
@@ -1010,8 +1010,8 @@
 	\\
 	$f: \mathbbm{R} \to \mathbbm{R} \ \forall x \in \mathbbm{R} \ f(x) = c * x + d$
 	\\
-	f è suriettiva? 
-	\\ 
+	f è suriettiva?
+	\\
 	$\forall b \in \mathbbm{R} \ \exists a \in \mathbbm{R} \mid f(a) = b \\ \Rightarrow c * a + d = b \\ \Rightarrow c *a = b - d \\ \Rightarrow \ se \ c \neq 0 \ a = \frac{b - d}{c}$. Quindi con $c \neq 0$ è suriettiva.
 	\\
 	Se $c = 0 \ f(x) = d \ \forall x \in \mathbbm{R}$ è una funzione costante e non è suriettiva.
@@ -1020,16 +1020,16 @@
 	\\
 	$h: \mathbbm{R} \to \mathbbm{R} \ \forall t \in \mathbbm{R} \ h(t) = 5t^3 + 2$.
 	\\
-	h è iniettiva? 
-	\\ 
+	h è iniettiva?
+	\\
 	$\forall a, a' \in \mathbbm{R} \ h(a) = h(a') \Rightarrow a = a'$ ?.
 	\\
 	$h(a) = h(a') \\ \Rightarrow 5a^3 + 2 = 5(a')^3 + 2 \\ \Rightarrow 5a^3 = 5(a')^3 \\ \Rightarrow a^3 = (a')^3 \\ \Rightarrow a = a'$.
 	\\
 	h è iniettiva.
 	\\
-	h è suriettiva? 
-	\\ 
+	h è suriettiva?
+	\\
 	$\forall b \in \mathbbm{R} \ \exists a \in \mathbbm{R} \mid b = h(a)$ ?
 	\begin{align*}
 		h(a) &= b \\
@@ -1038,9 +1038,9 @@
 		\Rightarrow a^3 &= \frac{b - 2}{5} \\
 		\Rightarrow a &= \sqrt[3]{\frac{b-2}{5}} \in \mathbb{R} \ \forall b \in \mathbb{R}
 	\end{align*}
-	\begin{definition}{\nmu Funzione biettiva}{func_biettiva}	
+	\begin{definition}{\nmu Funzione biettiva}{func_biettiva}
 		Sia $f: A \to B$ una funzione. $f$ si dice biettiva se è iniettiva e suriettiva.
-		
+
 		\[
 		\forall b \in B \ \exists! a \in A \mid f(a) = b
 		\]
@@ -1086,7 +1086,7 @@
 		\item \textbf{f è biettiva:} No perchè la funzione non è nè iniettiva nè suriettiva.
 	\end{enumerate}
 	\section{Composizione di funzioni}
-	\begin{definition}{\nmu Composizione di funzione}{comp_func}	
+	\begin{definition}{\nmu Composizione di funzione}{comp_func}
 		Siano $f: A \to B \ e \ g: B \to C$ due funzioni. La funzione composizione $g \ composto \ f$ oppure $g \ dopo \ f$ si indica con:
 		\[
 		g \circ f
@@ -1137,7 +1137,7 @@
 				\begin{proof}{Dimostrazione della proprietà dell'iniettività}
 					f e g sono iniettive $\Rightarrow \\$ f è iniettiva: $\forall a, a' \in A \ f(a) = f(a') \Rightarrow a = a' \\$ g è iniettiva: $\forall b, b' \in B \ g(b) = g(b') \Rightarrow b = b'$ \\ Queste due sono vere.
 					\\
-					$g \circ f: A \to C$ è iniettiva. \\ 
+					$g \circ f: A \to C$ è iniettiva. \\
 					$\forall a, a' \in A \ (g \circ f)(a) = (g \circ f)(a') \Rightarrow a = a'$.
 					\\
 					$(g \circ f)(a) = (g \circ f)(a') \Rightarrow g(f(a)) = g(f(a')) \Rightarrow $ g è iniettiva, quindi $f(a) = f(a') \Rightarrow a = a'$.
@@ -1147,10 +1147,10 @@
 				\begin{proof}{Dimostrazione della proprietà della suriettivià}
 					f e g sono suriettive $\Rightarrow \\$ f è suriettiva: $\forall b \in B \ \exists a \in A \mid f(a) = b \\$ g è suriettiva: $\forall c \in C \ \exists b \in B \mid g(b) = c$ \\ Queste due sono vere.
 					\\
-					$g \circ f: A \to C$ è suriettiva. \\ 
+					$g \circ f: A \to C$ è suriettiva. \\
 					$\forall b \in B \ \exists c \in C \mid (g \circ f)(a) = c$.
 					\\
-					$(g \circ f)(a) = c \Rightarrow g(f(a)) = c$. \\ 
+					$(g \circ f)(a) = c \Rightarrow g(f(a)) = c$. \\
 					Dato che f è suriettiva e quindi $f(a) = b$ e g è suriettiva quindi $g(b) = c$, questo equivale a dire:
 					\\
 					$g(f(a)) = c \Rightarrow g(b) = c$ e quindi $(g \circ f)(a)$ è suriettiva.
@@ -1178,7 +1178,7 @@
 			\end{itemize}
 		\item $\exists h \circ g$? $\exists g \circ h$?
 			\begin{itemize}
-				\item $\mathbf{\exists g \circ h ?}$ $h: \mathbbm{R} \to \mathbbm{R} \neq g: \mathbbm{Q} \to \mathbbm{R}$ 
+				\item $\mathbf{\exists g \circ h ?}$ $h: \mathbbm{R} \to \mathbbm{R} \neq g: \mathbbm{Q} \to \mathbbm{R}$
 				\item $\mathbf{\exists h \circ g ?}$ $g: \mathbbm{Q} \to \mathbbm{R} = h: \mathbbm{R} \to \mathbbm{R}$, quindi esiste.
 				\\
 				$h \circ g: \mathbbm{Q} \to \mathbbm{R} \ \forall a \in \mathbbm{Q} \\ (h \circ g)(a) = h(g(a)) \Rightarrow h(\sqrt{a^2 + 2}) = \frac{1}{3}(\sqrt{a^2 + 2})^5 - \frac{2}{7}$.
@@ -1187,7 +1187,7 @@
 	\section{Funzione inversa}
 		\begin{definition}{\nmu Funzione inversa}{func_inversa}
 			Sia $f: A \to B$ una funzione. \\
-			 La funzione $f$ si dice invertibile se: 
+			 La funzione $f$ si dice invertibile se:
 			 \[\exists g: B \to A \mid f \circ g = Id_{B} \ e \ se \ g \circ f = Id_{A}
 			 \]
 			Se la funzione $f$ è invertibile esiste una unica funzione $g$ con tali proprietà.
@@ -1241,7 +1241,7 @@
 			\item $g: \mathbbm{N} \to \mathbbm{R} \ \forall n \in \mathbbm{N}  \ g(n) = \frac{2n - 1}{n + 4}$
 			\begin{itemize}
 				\item \textbf{Iniettiva}: $\forall a, a' \in \mathbbm{N} \ g(a) = g(a') \Rightarrow a = a' \\ g(a) = g(a') \Rightarrow \frac{2a - 1}{a + 4} = \frac{2a'- 1}{a' - 4} \Rightarrow (2a - 1)(a' + 4) = (2a' - 1)(a + 4) \Rightarrow 2aa' + 8a - a' - 4 = 2a'a + 8a'-a-4 \Rightarrow 8a - a' = 8a' - a \Rightarrow 9a = 9a' \Rightarrow a = a'$
-				\item \textbf{Suriettiva}: $\forall b \in \mathbbm{R} \ \exists a \in \mathbbm{N} \mid g(a) = b \\ g(a) = b \Rightarrow \frac{2a - 1}{a + 4} = b \Rightarrow 2a - 1 = b(a + 4) \Rightarrow 2a - 1 = ba + 4b \Rightarrow 2a - ba = 4b + 1 \Rightarrow a = \frac{4b - 1}{2 - b} \in \mathbbm{N} \forall b \in \mathbbm{R}$ ? No, perchè se b = 2 allora non esiste la funzione 
+				\item \textbf{Suriettiva}: $\forall b \in \mathbbm{R} \ \exists a \in \mathbbm{N} \mid g(a) = b \\ g(a) = b \Rightarrow \frac{2a - 1}{a + 4} = b \Rightarrow 2a - 1 = b(a + 4) \Rightarrow 2a - 1 = ba + 4b \Rightarrow 2a - ba = 4b + 1 \Rightarrow a = \frac{4b - 1}{2 - b} \in \mathbbm{N} \forall b \in \mathbbm{R}$ ? No, perchè se b = 2 allora non esiste la funzione
 				\item \textbf{Biettiva:} No perchè è iniettiva ma non è suriettiva e quindi $\nexists g^{-1}: \mathbbm{R} \to \mathbbm{N}$.
 				\item Sia $f: \mathbbm{R} \to \mathbbm{R} \ \forall t \in \mathbbm{R} \ f(t) = \frac{2}{5}t^5 + 1$
 				\begin{itemize}
@@ -1258,7 +1258,7 @@
 		\\
 		$A$ contiene 3 elementi e $B$ ne contiene 4.
 		\begin{definition}{\nmu Equipotenza}{equipotenza}
-		Due insiemi $A$ e $B$ si dicono \textit{equipotenti} o hanno la stessa cardinalità se esiste una funzione biettiva tra loro. 
+		Due insiemi $A$ e $B$ si dicono \textit{equipotenti} o hanno la stessa cardinalità se esiste una funzione biettiva tra loro.
 		\end{definition}
 		\begin{definition}{\nmu $J_n$}{j_N}
 			$\forall n \in \mathbbm{N}^* \ J_n = \{1, 2, ..., n\}. \\ J_1 = \{1\}, J_2 = \{1, 2\}$
@@ -1276,7 +1276,7 @@
 			\item Se A e B sono finiti $\mid A \mid = \mid B \mid$ allora $f: A \to B$ è iniettiva $\iff$ è suriettiva.
 		\end{enumerate}
 		\begin{definition}{\nmu Insieme infinito}{insieme_inf}
-			Un insieme $A \neq \emptyset$ è infinito se $A$ non è finito $\iff \exists $ un sottoinsieme proprio con stessa cardinalità $\iff \exists $ funzioni $A: \to A$ che sono iniettive ma non suriettive.  
+			Un insieme $A \neq \emptyset$ è infinito se $A$ non è finito $\iff \exists $ un sottoinsieme proprio con stessa cardinalità $\iff \exists $ funzioni $A: \to A$ che sono iniettive ma non suriettive.
 		\end{definition}
 		\textbf{Esempio: }
 		\\
@@ -1298,11 +1298,11 @@
 			\item $A = \emptyset$ allora $\wp(A) = \{\emptyset\}$;
 			\item $A = \{a\}$ allora $\wp(A) = \{\{\emptyset\}\ , \{a\}\}$;
 			\item $A = \{a, b\}$ allora $\wp(A) = \{\{\emptyset\}, \{a\}, \{b\}, \{a, b\}\}$;
-			
-			\item $A = \{a, b, c\}$ allora $\wp(A) = \{\{\emptyset\}\ , \{a\}, \{b\}, \{a, b\}, \{c\}, \{a, c\}, \{b, c\}, \{a,b,c\}\}$;			
+
+			\item $A = \{a, b, c\}$ allora $\wp(A) = \{\{\emptyset\}\ , \{a\}, \{b\}, \{a, b\}, \{c\}, \{a, c\}, \{b, c\}, \{a,b,c\}\}$;
 		\end{enumerate}
 		\begin{theorem}{\nmu Insieme delle parti}{insieme_parti}
-			Se $\mid A \mid = n$ allora $\mid \wp(A) \mid = 2^n \ \forall n \in \mathbbm{N}$.  
+			Se $\mid A \mid = n$ allora $\mid \wp(A) \mid = 2^n \ \forall n \in \mathbbm{N}$.
 		\end{theorem}
 		Tuttavia, questo teorema è facile da dimostrare con valori di $n$ non troppo grandi, ma $\mathbbm{N}$ è infinito.
 		Per dimostrare questo $\forall n \in \mathbbm{N}$ applichiamo il \textbf{principio di induzione.}
@@ -1312,26 +1312,26 @@
 		\section{Principio di Induzione - Prima forma}
 		Enunciamo il principio di Induzione di prima forma.
 		\begin{itemize}
-			\item \textbf{Base induzione:} Dimostrare che $P(0)$ è vera. 
+			\item \textbf{Base induzione:} Dimostrare che $P(0)$ è vera.
 			\item \textbf{Passo induttivo:} Dimostrare che $\forall k \in \mathbbm{N} \ P(k) \ vera \ \Rightarrow P(k + 1) \ vera$
 		\end{itemize}
 		Allora $P(n)$ vera $\forall n \in \mathbbm{N}$.
 		\section{Principio di Induzione - Seconda forma}
 		\begin{itemize}
-			\item \textbf{Base induzione:} Dimostrare che $P(0)$ è vera. 
+			\item \textbf{Base induzione:} Dimostrare che $P(0)$ è vera.
 			\item \textbf{Passo induttivo:} Dimostrare che $\forall k \in \mathbbm{N} \ P(0), P(1),...,P(k)\ vera \ \Rightarrow P(k + 1) \ vera$
 		\end{itemize}
 		Allora $P(n)$ vera $\forall n \in \mathbbm{N}$.
 		\section{Principio di induzione generalizzato - Prima forma}
 		Dimostrare che $P(n)$ vera $\forall n \in \mathbbm{N} \ n \geq n_0$
 		\begin{itemize}
-			\item \textbf{Base induzione:} Dimostrare che $P(n_0)$ è vera. 
+			\item \textbf{Base induzione:} Dimostrare che $P(n_0)$ è vera.
 			\item \textbf{Passo induttivo:} Dimostrare che $\forall k \in \mathbbm{N} \ k \geq n_0 \ P(k)\ vera \ \Rightarrow P(k + 1) \ vera$
 		\end{itemize}
 		Allora $P(n)$ vera $\forall n \in \mathbbm{N} \ n \geq n_0$.
 		\section{Principio di induzione generalizzato - Seconda forma}
 		\begin{itemize}
-			\item \textbf{Base induzione:} Dimostrare che $P(n_0)$ è vera. 
+			\item \textbf{Base induzione:} Dimostrare che $P(n_0)$ è vera.
 			\item \textbf{Passo induttivo:} Dimostrare che $\forall k \in \mathbbm{N} \ k \geq n_0 \ P(n_0),...,P(k)\ vera \ \Rightarrow P(k + 1) \ vera$
 		\end{itemize}
 		Allora $P(n)$ vera $\forall n \in \mathbbm{N} \ n \geq n_0$.
@@ -1367,11 +1367,11 @@
 				$2^0 + 2^1 + ... + 2^{k + 1}$ equivale a $2^0 + 2^1 + ... + 2^k + 2^{k + 1}$ e sappiamo che $2^0 + 2^1 + ... + 2^k = P(k) = 2^{k + 1} - 1$ che è vera. Quindi: \\
 				$P(k + 1): 2^{k + 1} - 1 + 2^{k + 1} = 2*2^{k + 1} - 1 = 2^{k + 1 + 1} - 1 \Rightarrow P(k + 1)$ è vera.
 			\end{itemize}
-			Per il principio di induzione $\forall n \in \mathbbm{N} \ P(n)$ è vera. 	
+			Per il principio di induzione $\forall n \in \mathbbm{N} \ P(n)$ è vera.
  		\end{enumerate}
  		\begin{proof}{Dimostrazione del teorema dell'\namerefl{th:insieme_parti}} \quad \\
  			Se $\mid A \mid = n$ allora $\mid \wp(A) \mid = 2^n \ \forall n \in \mathbbm{N}$.  \\
- 			Dimostriamolo applicando il principio di induzione. 
+ 			Dimostriamolo applicando il principio di induzione.
  			\begin{itemize}
  				\item \textbf{Base induzione:} Dimostrare che $P(0)$ è vera. \\
  				$P(0)$: $\mid A \mid \ = 0$ allora $\mid \wp(A) \mid \ = 2^0 = 1$ che è vera perchè se $\mid A \mid \ = 0 \Rightarrow A = \emptyset$ e $\wp(A) = \{\emptyset\}$ dove la cardinalità è 1.
@@ -1385,7 +1385,7 @@
  					\item Se $X \subseteq A$ contiene $a_{k + 1}$ allora $X = \{a_{k + 1}\} \ \cup \ C, C = \{a_1, a_2, ..., a_k\}$ e dato che $P(k)$ è vera abbiamo $2^k$ sottoinsiemi.
  				\end{itemize}
  				Allora in tutto ci sono $2^k + 2^k = 2*2^k = 2^{k + 1}$ sottoinsiemi $\Rightarrow \mid \wp(A) \mid \ = 2^{k + 1} \Rightarrow P(k + 1)$ è vera.
- 			\end{itemize} 
+ 			\end{itemize}
  			Allora $P(n)$ è vera $\forall n \in \mathbbm{N}$.
  		\end{proof}
  		\chapter{Successioni}
@@ -1426,7 +1426,7 @@
  				a_n = a_{n - 1} + 3 \hspace{0.7cm} n > 0
  			\end{cases}$
  			\\
- 			$a_0 = 1 \\ a_1 = a_{1 - 1} + 3 = a_0 + 3 = 1 + 3 = 4 \\ a_2 = a_{2 - 1} + 3 = a_1 + 3 = 4 + 3 = 7$. \\ 
+ 			$a_0 = 1 \\ a_1 = a_{1 - 1} + 3 = a_0 + 3 = 1 + 3 = 4 \\ a_2 = a_{2 - 1} + 3 = a_1 + 3 = 4 + 3 = 7$. \\
  			Questa è una successione definita per ricorsione.
  		\end{enumerate}
  		\begin{definition}{\nmu Successione ricorsiva}{succ_ricorsiva}
@@ -1460,12 +1460,12 @@
  			 $\{a_n\}_{n \in \mathbbm{N}} = \begin{cases}
  				a_0 = 1 \\
  				a_n = a_{n - 1} \cdot n \hspace{0.7cm} n > 0
- 			\end{cases}$		
+ 			\end{cases}$
  		\end{enumerate}
  		 \begin{definition}{\nmu Formula chiusa}{formula_chiusa}
  			La formula chiusa di una successione ricorsiva è una formula che esprime il termine n\_esimo in funzione di n e non dei termini precedenti.
  		\end{definition}
- 	
+
  		Data $\{a_n\}_{n \in \mathbbm{N}}$ successione ricorsiva. \\
  		$\{b_n\}_{n \in \mathbbm{N}}$ è la formula chiusa se $\forall n \in \mathbbm{N} \ a_n = b_n$
  		\\
@@ -1479,7 +1479,7 @@
  			\\
  			$\{b_n\}_{n \in \mathbbm{N}} \hspace{0.5cm} b_n = x + n \cdot d$ è la formula chiusa.
  			\\
- 			Applichiamo il P.I per dimostrare che $\forall n \in \mathbbm{N} \ \ P(n):a_n = b_n$ è vera. 
+ 			Applichiamo il P.I per dimostrare che $\forall n \in \mathbbm{N} \ \ P(n):a_n = b_n$ è vera.
  			\begin{itemize}
  				\item \textbf{Base induzione:} Dimostrare che $P(0)$ è vera. \\
  				$P(0): a_0 = b_0 \\ a_0 = x \\ b_0 = x + 0 \cdot d = 0 \\ \Rightarrow a_0 = b_0$ e $P(0)$ è vera.
@@ -1488,7 +1488,7 @@
  				\\
  				$a_{k + 1} = a_{k + 1 - 1} + d = a_k + d = b_k + d = x + k \cdot d + d = x + (k + 1) \cdot d = b_{k + 1} \\ \Rightarrow P(k + 1)$ vera \\
  				$\Rightarrow P(n)$ vera $\forall n \in \mathbbm{N}$.
- 			\end{itemize} 
+ 			\end{itemize}
  			\item $x,d \in \mathbbm{R}^*$ fissati.
  			\\
  			$\{a_n\}_{n \in \mathbbm{N}} = \begin{cases}
@@ -1508,7 +1508,7 @@
  				\\
  				$a_{k + 1} = d \cdot a_{k + 1 - 1} = d \cdot a_k = d \cdot b_k = d \cdot x \cdot d^k = x \cdot d^{k + 1} = b_{k + 1} \\ \Rightarrow P(k + 1)$ vera.
  				\\
- 				$\Rightarrow P(n)$ vera $\forall n \in \mathbbm{N}$ 
+ 				$\Rightarrow P(n)$ vera $\forall n \in \mathbbm{N}$
  			\end{itemize}
  			\item $\{a_n\}_{n \in \mathbbm{N}} = \begin{cases}
  				a_0 = 1 \\
@@ -1572,7 +1572,7 @@
  		1) I dischi vanno spostati uno alla volta. \\
  		2) Non pu`o mai accadere che un disco di diametro maggiore sia poggiato su un disco di diametro inferiore. \\
  		Quale è il numero minimo delle mosse con n dischi per raggiungere lo scopo del gioco? \\
- 		Se n = 0, allora 0 mosse;\\ 
+ 		Se n = 0, allora 0 mosse;\\
  		se n = 1 allora 1 mossa, dobbiamo spostare un solo disco. \\
  		Se n = 2 allora 3 mosse: spostiamo il disco piccolo su un asta vuota, poi spostiamo il disco grande su l’altra asta libera, e infine mettiamo il disco piccolo sul disco grande.
  		Indichiamo con $a_n$ = numero delle mosse. \\
@@ -1605,7 +1605,7 @@
   		\textbf{Esempi:}
   		\begin{enumerate}
   			\item $\mathlarger{\sum_{i = 0}^{n}i} = 0 + 1 + 2 + ... + n$
-  			\item $\mathlarger{\sum_{i = 1}^{4}i^2} = 1^2 + 2^2 + 3^2 + 4^2 = 1 + 4 + 9 + 16 = 30$ 
+  			\item $\mathlarger{\sum_{i = 1}^{4}i^2} = 1^2 + 2^2 + 3^2 + 4^2 = 1 + 4 + 9 + 16 = 30$
   		\end{enumerate}
   		\textbf{\color{red}Proprietà:}
   		\begin{enumerate}
@@ -1616,7 +1616,7 @@
   			\item \textbf{Proprietà fondamentale:} \\ $\mathlarger{\sum_{i=0}^{n}a_i} = a_0 + a_1 + ... + a_t + a_{t + 1} + ... + a_n = \mathlarger{\sum_{i = 0}^{t}a_i} + \mathlarger{\sum_{i = t + 1}^{n}a_i}$
   			\item $\mathlarger{\sum_{i=0}^{k+1}} = a_0 + a_1 + ... + a_k + a_{k + 1} = \mathlarger{\sum_{i = 0}^{k}a_i} + \mathlarger{\sum_{i=k+1}^{k+1}a_i} = \mathlarger{\sum_{i=0}^{k}} + a_{k+1}$
   		\end{enumerate}
-  		\textbf{Esempi:} 
+  		\textbf{Esempi:}
   		\begin{enumerate}
   			\item Dimostrare $\forall n \in \mathbbm{N} \ P(n) = \mathlarger{\sum_{i = 0}^{n}\biggl(\frac{1}{2}\biggl)^i} = 2 - \mathlarger{\frac{1}{2^n}}$. \\
   			Applichiamo il PI.
@@ -1640,7 +1640,7 @@
   				$P(0): \mathlarger{\frac{1}{2}\sum_{i = 0}^{0}3^i} = \mathlarger{\frac{3^{0 + 1} - 1}{4}}$ \\
   				$\mathlarger{\frac{1}{2}\sum_{i = 0}^{0}3^i = \frac{1}{2} \cdot 3^0 = \frac{1}{2}}$ \\
   				$\mathlarger{\frac{3^{0 + 1} - 1}{4} = \frac{3 - 1}{4} = \frac{1}{2}}$ \\
-  				Sono uguali quindi $P(0)$ vera. 
+  				Sono uguali quindi $P(0)$ vera.
   				\item \textbf{Passo induttivo:} Dimostrare che $\forall n \in \mathbbm{N} \ P(n)$ vera $\Rightarrow P(k + 1)$ vera. \\
   				$P(k) = \mathlarger{\frac{1}{2}\sum_{i = 0}^{k}3^i = \frac{3^{k + 1} - 1}{4}}$ vera\\
   				$P(k+1) = \mathlarger{\frac{1}{2}\sum_{i = 0}^{k+1}3^i = \frac{3^{k + 2} - 1}{4}}$ da dimostrare.\\
@@ -1665,7 +1665,7 @@
   				$\Rightarrow P(n)$ vera $\forall n \in \mathbbm{N}$.
   			\end{itemize}
   		\end{enumerate}
-  		
+
   		\chapter{Combinatoria}
   		\section{Regola della somma}
   		Siano $A$ e $B$ due insiemi finiti, cioè $A \cap B = \emptyset$ \\
@@ -1732,7 +1732,7 @@
   				$\bm{D(n, n)} = n \cdot (n - 1) \cdot (n - 2) \cdot \; \cdots \; \cdot 1 = \bm{n!}$. Modi di scegliere $n$ elementi distinti tra $n$ con ordine importante. \\
   				$\bm{D(n, k) = }$ numero di funzioni iniettiva da un insieme con $k$ elementi in un insieme con $n$ elementi. \\
   				\textbf{Caso particolare: } dove $k = n$. \\
-  				$\bm{D(n, n) = }$ numero di funzioni iniettive da un insieme con $n$ elementi in un insieme con $n$ elementi = funzioni biettive da un insieme con $n$ elementi in un insieme con $n$ elementi = $\bm{n!}$. 
+  				$\bm{D(n, n) = }$ numero di funzioni iniettive da un insieme con $n$ elementi in un insieme con $n$ elementi = funzioni biettive da un insieme con $n$ elementi in un insieme con $n$ elementi = $\bm{n!}$.
   				\\
   				\textbf{Esempio:} Scrivere funzioni iniettive tutte da $A = \{2, 3\}$ e $B = \{x, y, z\}$. \\
   				$|A| = 2$ e $|B| = 3$. \\
@@ -1745,8 +1745,8 @@
   				\item Scegliere $k$ elementi distinti con ordine non importante, in questo caso si parla di \textbf{Combinazioni semplici di $n$ oggetti di classe $k$}. \\
   				In quanti modi possiamo fare questa scelta? \\
   				Questo è uguale al numero di sottoinsiemi con $k$ elementi in un insiemi con $n$ elementi. \\
-  				Si calcola con il \textbf{\textit{coefficiente binomiale}} e si indica $\mathlarger{\binom{n}{k}}$ e si ha 
-  				\[\mathlarger{\binom{n}{k}}= \mathlarger{\frac{n!}{k! \cdot (n - k)!}} =  \mathlarger{\frac{D(n, k)}{k!}}\] 
+  				Si calcola con il \textbf{\textit{coefficiente binomiale}} e si indica $\mathlarger{\binom{n}{k}}$ e si ha
+  				\[\mathlarger{\binom{n}{k}}= \mathlarger{\frac{n!}{k! \cdot (n - k)!}} =  \mathlarger{\frac{D(n, k)}{k!}}\]
   				Questo perchè sappiamo che il numero di ordinare $k$ elementi è $k!$, quindi il coefficiente binomiale non è altro che il numero delle coppie ordinate, le $k$-ple, dato da $D(n, k)$ diviso il numero di ordinare le $k$-uple che è $k!$. \\
   				\\
   				\textbf{Esempio:} $\mathlarger{\binom{5}{3} = \frac{5!}{3! \cdot (5 - 3)!} = \frac{5!}{3! \cdot 2!}} = 10$ \\
@@ -1760,17 +1760,17 @@
   					\item $\mathlarger{\binom{n}{k} = \binom{n}{n - k} = \frac{n!}{(n - k!) \cdot (n - (n - k))!} = \frac{n!}{(n - k)! \cdot k!}}$
   					\item $\mathlarger{\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}}$.
   				\end{enumerate}
-  				\begin{proof}{Dimostrazione di: \[\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}\]} \quad \\	
-  					
+  				\begin{proof}{Dimostrazione di: \[\binom{n + 1}{k} = \binom{n}{k} + \binom{n}{k - 1}\]} \quad \\
+
 					$\mathlarger{\binom{n + 1}{k} = \frac{(n + 1)!}{k! \cdot (n + 1 - k)!}}$ \\
-					
-					$\\ \mathlarger{\binom{n}{k-1} = \frac{n!}{(k - 1)!  (n - k + 1)!}}= \mathlarger{\frac{n!}{(k - 1)! (n-k+1)(n-k)!}} \\$ \\ 
+
+					$\\ \mathlarger{\binom{n}{k-1} = \frac{n!}{(k - 1)!  (n - k + 1)!}}= \mathlarger{\frac{n!}{(k - 1)! (n-k+1)(n-k)!}} \\$ \\
 					$\\ \mathlarger{\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!} = \frac{n!}{k(k - 1)! \cdot (n - k)!}} \\$ \\
 					$\\ \mathlarger{\binom{n}{k} + \binom{n}{k - 1} = \frac{n!(n-k+1) + n!k}{k(k - 1)!\cdot (n-k+1)(n-k)!}} = \\ \\ \mathlarger{\frac{n!(n + 1)}{k(k - 1)!\cdot (n-k+1)(n-k)!} = \frac{(n+1)!}{k!\cdot (n+1-k)!} = \binom{n + 1}{k}}$
   				\end{proof}
   				Perchè si chiamano coefficienti binomiali?\\
   				Perchè esiste la \textbf{Formula di Newton} che dice: \\
-  				$\forall n \in \mathbbm{N} \hspace{0.5cm} (x + y)^n = \mathlarger{\sum_{k=0}^{n}\binom{n}{k}x^ky^{n - k}}$. 
+  				$\forall n \in \mathbbm{N} \hspace{0.5cm} (x + y)^n = \mathlarger{\sum_{k=0}^{n}\binom{n}{k}x^ky^{n - k}}$.
   					\begin{proof}{Dimostrazione del teorema dell'\namerefl{th:insieme_parti} con coefficiente binomiale} \quad \\
   						$\wp(A) = \{x \mid x \subseteq A\}$ \\
   						Se $|A| = n \quad x \subseteq A$ puoi avere $0,1,2 \dots n$ elementi \\
@@ -1778,7 +1778,7 @@
   						$|\wp(A)| = \mathlarger{\sum_{k=0}^{n}\binom{n}{k}=\sum_{k=0}^{n}\binom{n}{k}1^k\cdot1^{n-k}=(1+1)^n}$ \\
   						Questo corrisponde alla formula di Newton.
   					\end{proof}
-  				
+
   				\textbf{Esercizio:} \\
   				Ci sono 4 amici. In quanti modi possiamo:
   				\begin{itemize}
@@ -1792,7 +1792,7 @@
   				\textbf{Secondo esercizio:} Ci sono 20 studenti. In quanti modi possiamo:
   				\begin{itemize}
   					\item Formare un comitato di 3 studenti: Dobbiamo scegliere un sottoinsieme con 3 studenti tra 20 persone con ordine non importante: $\mathlarger{\binom{20}{3} = \frac{20!}{3! \cdot 17!}}$
-  					\item Assegnare un 24, 22, 26 a studenti distinti: \\ $D(20, 3) = 20 \cdot (20 - 1) \cdot (20 - 3 + 1) = 20 \cdot 19 \cdot 18$ 
+  					\item Assegnare un 24, 22, 26 a studenti distinti: \\ $D(20, 3) = 20 \cdot (20 - 1) \cdot (20 - 3 + 1) = 20 \cdot 19 \cdot 18$
  					\item Formare 4 gruppi di 5 studenti: $\mathlarger{\frac{\binom{20}{5} \cdot \binom{15}{5} \cdot \binom{10}{5} \cdot \binom{5}{5}}{4!}}$ dove $4!$ è il numero di modi per ordinare 4 gruppi e lo dividiamo perchè l'ordine non importa.
  					\item Formare 5 gruppi di 4 studenti: $\mathlarger{\frac{\binom{20}{4} \cdot \binom{16}{4} \cdot \binom{12}{4} \cdot \binom{8}{4} \cdot \binom{4}{4}}{5!}}$
    				\end{itemize}
@@ -1820,28 +1820,28 @@
   				$A = \{x, y\} \quad B = \{1,2,3\}$. Scrivere tutte le funzioni possibili che sono $3^2=9$. \\
   				\item Scegliere $k$ elementi tra $n$ elementi anche con ripetizione e l'ordine non è importante. Questo si chiama \textbf{Combinazione con ripetizione di $n$ oggetti di classe $k$}. \\
   				In quanti modi possiamo scegliere $k$ elementi tra $n$ elementi anche con ripetizione e l'ordine non è importante? \\
-  				La formula è: 
+  				La formula è:
   				\[
   				\mathlarger{\binom{n+k-1}{k} = \frac{(n+k-1)!}{k!(n+k-1-k)!}}
   				\]
   				\textbf{Esempio:} $A = \{a, b\} \; n = 2$, vogliamo scegliere 5 elementi anche con ripetizione e l'ordine non è importante, quindi n = 2 e k = 5. \\
   				$\mathlarger{\binom{2+5-1}{5} = \binom{6}{5} = \frac{6!}{5! \cdot 1!} = 6}$ \\
-  				I possibili modi sono: $aaaaa$, $aaaab$, $aaabb$, $aabbb$, $abbbb$, $bbbbb$. 
+  				I possibili modi sono: $aaaaa$, $aaaab$, $aaabb$, $aabbb$, $abbbb$, $bbbbb$.
   				\\
-  				\textbf{Esempio:} In quanti modi posso distribuire 5 caramelle a 2 bambini. \\ 
+  				\textbf{Esempio:} In quanti modi posso distribuire 5 caramelle a 2 bambini. \\
   				In questo caso l'ordine di come distribuisco le caramelle ai 2 bambini non è importante, l'importante è che la somma delle caramelle date fa 5.
   				\\
   				\textbf{Secondo esempio:} In quanti modi possiamo distribuire 12 caramelle a 2 bambini e in quanti modi possiamo distribuire 12 caramelle a 2 bambini dandone almeno una ad $A$ e due a $B$? \\
   				1. Distribuire 12 caramelle: \\
   				$\mathlarger{\binom{n + k - 1}{k} = \binom{2+12-1}{12} = \binom{13}{12} = \frac{13!}{12! \cdot 1!} = 13}$. \\
   				2. In questo caso dobbiamo togliere il caso in cui $A$ ha 0 caramelle e $B$ che ne 0 e che ne ha 1, quindi in tutto avremo 10 casi. Questo si può fare dando 1 caramella ad $A$ e 2 a $B$, in questo modo ora avremo 9 caramelle, quindi: \\
-  				$\mathlarger{\binom{2 + 9 -1}{9} = \binom{10}{9} = \frac{10!}{9! \cdot 1!} = 10}$. 
+  				$\mathlarger{\binom{2 + 9 -1}{9} = \binom{10}{9} = \frac{10!}{9! \cdot 1!} = 10}$.
   				\\
   				\textbf{Esercizio:} Distribuire 35 caramelle a 5 bambini e fare le stesse dandone almeno 1 a testa.
   				\\
   				1. Nel primo caso abbiamo $k=35$ e $n=5$, quindi: \\ $\mathlarger{\binom{5+35-1}{35} = \binom{39}{35} = \frac{39!}{35! \cdot 4!}}$.
   				2. Nel secondo caso ne diamo 1 a testa, quindi le caramelle disponibili sono 30, di conseguenza $k=30$ e $n=5$, quindi: \\
-  				$\mathlarger{\binom{30+5-1}{30}=\binom{34}{30} = \frac{34!}{30! \cdot 4!}}$ 
+  				$\mathlarger{\binom{30+5-1}{30}=\binom{34}{30} = \frac{34!}{30! \cdot 4!}}$
   			\end{enumerate}
   		\end{enumerate}
   		\chapter{Relazione}
@@ -1856,7 +1856,7 @@
   		\textbf{Esempio:} $A = \mathbbm{Q} \quad \mathscr{R} \subseteq \mathbbm{Q} \times \mathbbm{Q}$ \\
   		$\mathscr{R} = \{(a,b) \in \mathbbm{Q} \times \mathbbm{Q} \mid 2b-6a=4\}$ \\
   		Stessa cosa di dire: $\forall a,b \in \mathbbm{Q} \quad a\mathscr{R}b \iff 2b-6a=4$ \\
-  		$(1,5) \in \mathscr{R}$ cioè $1\mathscr{R}5$? \\ 
+  		$(1,5) \in \mathscr{R}$ cioè $1\mathscr{R}5$? \\
   		$2 \cdot 5 - 6 \cdot 1 = 10 - 6 = 4$, quindi si $1\mathscr{R}5$. \\
   		Se non è in relazione si scrive $\centernot{\mathscr{R}}$.
   		\\
@@ -1870,7 +1870,7 @@
   		Se $\mathscr{R}=A \times A$ si parla di relazione totale, quindi tutti gli elementi sono in relazione tra loro. \\
   		Se $\mathscr{R} = \{(a,a) \mid a \in A\}$ si parla di relazione identica o identità, quindi un elemento è solo in relazione con se stesso. \\
   		\section{Relazioni di ordine parziale}
-  		 \begin{definition}{\nmu Relazione di ordine parziale}{rel_ordine_parziale}	
+  		 \begin{definition}{\nmu Relazione di ordine parziale}{rel_ordine_parziale}
   			Una relazione $\mathscr{R}$ sull'insieme $A \neq \emptyset$ si dice \textit{relazione di ordine parziale o di ordine}, se verifica le seguenti proprietà:
   			\begin{enumerate}
   				\item Proprietà riflessiva: $\forall a \in A$ allora $a\mathscr{R}a$
@@ -1883,14 +1883,14 @@
   			\item Per non essere riflessiva basta che $\exists a \in A \mid a \centernot{\mathscr{R}}a$
   			\item Per non essere \textbf{antisimmetrica} basta che $\exists a,b \in A$ con $a\mathscr{R}b$ e $b\mathscr{R}a$ ma $a \neq b$
   			\item Per non essere \textbf{transitiva} $\exists a,b,c \in A$ con $a\mathscr{R}b$ e $b\mathscr{R}c$ ma $a\centernot{\mathscr{R}}c$
-  		\end{enumerate} 
+  		\end{enumerate}
   		\textbf{Esempi:}
   		\begin{enumerate}
   			\item $A = \{s, t, r, x, v\} \quad \mathscr{R} \subseteq A \times A$. \\
   			$\mathscr{R} = \{(s,s), (s, t), (t, t), (r, r), (x, t), (t, s), (t, v)\}$ \\
-  			$\mathscr{R}$ è relazione di ordine parziale? 
+  			$\mathscr{R}$ è relazione di ordine parziale?
   			\begin{itemize}
-  				\item $\mathscr{R}$ è riflessiva?\\ 
+  				\item $\mathscr{R}$ è riflessiva?\\
   				$\forall a \in A \quad a\mathscr{R}a?$ No perchè $(x,x) \notin \mathscr{R}\ x\centernot{\mathscr{R}}x$. Quindi non è di ordine parziale.
   				\item $\mathscr{R}$ è antisimmetrica? \\
   				$\forall a, b \in A\ a\mathscr{R}b \ e \ b\mathscr{R}a \Rightarrow a = b$ ? $(s, t) \in \mathscr{R} \ e \ (t, s) \in \mathscr{R}$ ma $t \neq s$, quindi non è antisimmetrica.
@@ -1902,7 +1902,7 @@
   			$\forall a,b \in \mathbbm{N} \quad a \mathscr{R}b \iff a \leq b \iff \exists x \in \mathbbm{N} \mid b = a + x$ \\
   			$\mathscr{R}$ è di ordine parziale?
   			\begin{itemize}
-  				\item $\mathscr{R}$ è riflessiva? \\ 
+  				\item $\mathscr{R}$ è riflessiva? \\
   				$\forall a \in A \quad a \mathscr{R} a$? $a\mathscr{R}a \iff \exists x \in \mathbbm{N} \mid a = a + x$, quindi se $x = 0 \Rightarrow a=a \ e \ a\mathscr{R}a$ quindi è riflessiva
   				\item $\mathscr{R}$ è antisimmetrica? \\
   				 $\forall a,b \in \mathbbm{N}$ se $a\mathscr{R}b \ e \ b\mathscr{R}a \Rightarrow a=b$ ? \\
@@ -1918,8 +1918,8 @@
   			\end{itemize}
   			$\mathscr{R}$ è di ordine parziale.
   		\end{enumerate}
- 
-  		 \begin{definition}{\nmu Relazione di POSET}{rel_poset}	
+
+  		 \begin{definition}{\nmu Relazione di POSET}{rel_poset}
   			Un insieme $A \neq \emptyset$ si dice \textit{parzialmente ordinato} (POSET) se è definita su $A$ una relazione di ordine parziale. \\
   			Notazione:
   			\[
@@ -1928,34 +1928,34 @@
   			Questo indica un insieme parzialmente ordinato.
   		\end{definition}
   		\textbf{Esempio:} Nel caso di prima $(\mathbbm{N}, \mathscr{R} = \leq) = (\mathbbm{N}, \leq)$ insieme parzialmente ordinato.
-  		\begin{definition}{\nmu Relazione totalmente ordinata}{rel_totalmente_ordinata}	
+  		\begin{definition}{\nmu Relazione totalmente ordinata}{rel_totalmente_ordinata}
   		Un insieme $A$ si dice \textit{totalmente ordinato} se è parzialmente ordinato e se ogni coppia di elementi è confrontabile, ovvero se $\forall a, b \in A$ è vero che $a\mathscr{R}b$ oppure $b\mathscr{R}a$
   		\end{definition}
   		\textbf{Esempio:} Nell'esercizio di prima $(\mathbbm{N}, \leq) \quad \forall a,b \in \mathbbm{N}$ o $\exists x \in \mathbbm{N} \mid b = a + x$ oppure $\exists y \in \mathbbm{N} \mid a = b + y$, quindi $(\mathbbm{N}, \leq)$ è totalmente ordinato. \\
   		\textbf{Esempio:} \\
-  		Sia $A = \mathbbm{Z} \quad \mathscr{R} = \{(x, y) \in \mathbbm{Z} \times \mathbbm{Z} \mid x \cdot y \ dispari\}$ \\ 
+  		Sia $A = \mathbbm{Z} \quad \mathscr{R} = \{(x, y) \in \mathbbm{Z} \times \mathbbm{Z} \mid x \cdot y \ dispari\}$ \\
   		$\forall x, y \in \mathbbm{Z} \quad x \mathscr{R}y \iff x \cdot y \ dispari$ \\
   		La relazione è di ordine parziale, riflessiva, antisimmetrica, transitiva e di ordine totale?
   		\begin{itemize}
   			\item $\mathscr{R}$ è riflessiva? \\
-  			 $\forall x \in \mathbbm{Z} \quad x\mathscr{R}x$? $x\mathscr{R}x \iff x \cdot x$ dispari? \\ 
+  			 $\forall x \in \mathbbm{Z} \quad x\mathscr{R}x$? $x\mathscr{R}x \iff x \cdot x$ dispari? \\
   			 Falso perchè $\exists x = 2 \in \mathbbm{Z} \mid 2 \cdot 2 = 4$.
-  			 \item $\mathscr{R}$ è antisimmetrica? \\ 
+  			 \item $\mathscr{R}$ è antisimmetrica? \\
   			 $\forall x,y \in \mathbbm{Z}$ se $x\mathscr{R}y \ e \ y\mathscr{R}x \Rightarrow x = y$ ? \\
   			 $x\mathscr{R}y \Rightarrow x \cdot y \ dispari$ \\
   			 $y\mathscr{R}x \Rightarrow y \cdot x \ dispari$ \\
-  			 Questo ci dice che $y=x$? \\ 
+  			 Questo ci dice che $y=x$? \\
   			 No, perchè $\exists 3,5 \in \mathbbm{Z}$ con $3\mathscr{R}5 \ e \ 5\mathscr{R}3$ ma $x \neq y \Rightarrow \mathscr{R}$ non è antisimmetrica.
   			 \item $\mathscr{R}$ è transitiva? \\
   			  $\forall x,y,z \in \mathbbm{Z}$ se $x\mathscr{R}y \ e y\mathscr{R}z \Rightarrow x\mathscr{R}z$ ? \\
   			 $x\mathscr{R}y \Rightarrow x \cdot y \ dispari$ \\
   			 $y\mathscr{R}z \Rightarrow y \cdot z \ dispari$ \\
-  			 Questo dice che $x \cdot z$ è dispari? \\ 
+  			 Questo dice che $x \cdot z$ è dispari? \\
   			 Dire che $x \cdot y$ dispari vuol dire che $x$ è dispari e $y$ è dispari, stessa cosa per $y \cdot z$, quindi il prodotto tra $x \cdot z$ è dispari quindi $\mathscr{R}$ è transitiva.
   		\end{itemize}
 		La relazione non è di ordine parziale e di conseguenza non è di ordine totale.
 		\section{Relazioni di equivalenza}
-		 \begin{definition}{\nmu Relazioni di equivalenza}{rel_equivalenza}	
+		 \begin{definition}{\nmu Relazioni di equivalenza}{rel_equivalenza}
 			Un relazione $\mathscr{R}$ su un'insieme $A \neq \emptyset$ si dice relazione di equivalenza se valgono le seguenti proprietà:
 			\begin{enumerate}
 				\item $\mathscr{R}$ è riflessiva: $\forall a \in A \quad a \mathscr{R} a$
@@ -1984,14 +1984,14 @@
 			\item  $A = \mathbbm{N} \quad \forall a,b \in \mathbbm{N}\ a \mathscr{R} b \iff \exists x \in \mathbbm{N} \mid b = a \cdot x$ \\
 			$\mathscr{R}$ è simmetrica? $\forall a,b \in A$ se $a \mathscr{R} b$ allora $b \mathscr{R} a$ \\
 			$a \mathscr{R} b \Rightarrow \exists x \in \mathbbm{N} \mid b = a \cdot x$ vera \\
-			$b \mathscr{R} a \Rightarrow \exists y \in \mathbbm{N} \mid a = b \cdot y$ da dimostrare. \\ 
+			$b \mathscr{R} a \Rightarrow \exists y \in \mathbbm{N} \mid a = b \cdot y$ da dimostrare. \\
 			No, perchè $4 \mathscr{R} 2$ ma $2 \centernot{\mathscr{R}} 4$
 			\item Se $A \neq \emptyset $ e $\mathscr{R}$ è la relazione totale \\
 			$\mathscr{R}$ è una relazione riflessiva, simmetrica e transitiva $\Rightarrow \mathscr{R}$ è di equivalenza. \\
 			\textbf{\color{red} Ogni relazione totale è relazione di equivalenza}
 			\item Se $A \neq \emptyset$ e $\mathscr{R}$ è la relazione identità, quindi ogni elemento è in relazione solo con se stesso $\Rightarrow \exists a \mathscr{R} a$ allora $\mathscr{R}$ è una relazione riflessiva e di conseguenza, visto che gli elementi sono in relazione sono con se stessi, la relazione è anche simmetrica e transitiva e quindi è \textbf{di equivalenza}. \\
 			\textbf{\color{red} Ogni relazione identità è relazione di equivalenza}
-			\item $A = $ insieme delle rette nel piano $\forall  a,b \in A\ a \mathscr{R} b \iff a$ e $b$ sono parallele, $a // b$, quindi hanno stesso coefficiente angolare o stessa distanza tra loro o stessa direzione. \\ 
+			\item $A = $ insieme delle rette nel piano $\forall  a,b \in A\ a \mathscr{R} b \iff a$ e $b$ sono parallele, $a // b$, quindi hanno stesso coefficiente angolare o stessa distanza tra loro o stessa direzione. \\
 			$\mathscr{R}$ è riflessiva? $\mathscr{R}$ è simmetrica? $\mathscr{R}$ è antisimmetrica? $\mathscr{R}$ è transitiva? $\mathscr{R}$ è di ordine parziale, di equivalenza e di ordine totale? \\
 			\begin{itemize}
 				\item $\mathscr{R}$ è riflessiva? $\forall a \in A \quad a \mathscr{R} a$? \\
@@ -2005,7 +2005,7 @@
 				\item $\mathscr{R}$ è transitiva? $\forall a,b,c \in A$ se $a \mathscr{R} b$ e $b \mathscr{R} c$ allora $a \mathscr{R} c$ ? \\
 				$a \mathscr{R} b \Rightarrow$ $a$ parallela a $b$\\
 				$b \mathscr{R} c \Rightarrow$ $b$ parallela a $c$\\
-				Questo implica che $a$ è parallela a $c$ e quindi $a \mathscr{R} c$ e $\mathscr{R}$ è transitiva 
+				Questo implica che $a$ è parallela a $c$ e quindi $a \mathscr{R} c$ e $\mathscr{R}$ è transitiva
 			\end{itemize}
 			$\mathscr{R}$ non è di ordine parziale ma è di equivalenza
 		\end{enumerate}
@@ -2016,7 +2016,7 @@
 		$\mathscr{R}$ è riflessiva? $\mathscr{R}$ è simmetrica? $\mathscr{R}$ è antisimmetrica? $\mathscr{R}$ è transitiva? $\mathscr{R}$ è di ordine parziale, equivalenza e di ordine totale?
 		\begin{itemize}
 			\item $\mathscr{R}$ è riflessiva? $\forall a \in \mathbbm{Z}\ a \mathscr{R} a$? \\
-			$a \mathscr{R} a \iff \exists k \in \mathbbm{Z} \mid a - a = k \cdot n \quad 0 = k \cdot n$. \\ Si, $\exists k = 0 \Rightarrow \mathscr{R}$ è riflessiva.  
+			$a \mathscr{R} a \iff \exists k \in \mathbbm{Z} \mid a - a = k \cdot n \quad 0 = k \cdot n$. \\ Si, $\exists k = 0 \Rightarrow \mathscr{R}$ è riflessiva.
 			\item $\mathscr{R}$ è simmetrica? $\forall a,b \in \mathbbm{Z}$ se $a \mathscr{R} b$ allora $b \mathscr{R} a$ ? \\
 			$a \mathscr{R} b \Rightarrow \exists k \in \mathbbm{Z} \mid a - b = k \cdot n$ vera\\
 			$b \mathscr{R} a \Rightarrow \exists z \in \mathbbm{Z} \mid b - a = z \cdot n$ da dimostrare\\
@@ -2033,7 +2033,7 @@
 		\end{itemize}
 		$\mathscr{R}$ non è di ordine parziale e quindi non è di ordine totale. $\mathscr{R}$ è di equivalenza.
 		\section{Classe di equivalenza e insieme quoziente}
-		\begin{definition}{\nmu Classe di equivalenza}{classe_equivalenza}	
+		\begin{definition}{\nmu Classe di equivalenza}{classe_equivalenza}
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$. \\
 			Si definisce classe di equivalenza modulo $\mathscr{R}$ di un elemento $a \in A$ l'insieme di tutti gli elementi di $A$ che sono in relazione con $a$. \\
 			Notazione:
@@ -2050,7 +2050,7 @@
 			$a \in A \quad [a]_\mathscr{R} = \{b \in A \mid a \mathscr{R} b\} = \{a\}$
 			\item $A = \{$ insieme delle rette del piano $\}$ e $\mathscr{R} = //$ relazione di parallelismo tra le rette. \\
 			$s$ retta in $A$ $[s]_\mathscr{R} = \{t\ retta \mid s \mathscr{R} t\} = \{$ fascio di rette parallele ad $s\}$, cioè tutte le rette con stesso coefficiente angolare ad $s$.
-			\item $A = \mathbbm{Z} \quad n \in \mathbbm{N}^*$ \\ 
+			\item $A = \mathbbm{Z} \quad n \in \mathbbm{N}^*$ \\
 			$\forall a, b \in \mathbbm{Z} \quad a \mathscr{R} b \iff \exists k \in \mathbbm{Z} \mid a - b = k \cdot n$ \\
 			$a \in \mathbbm{Z} \quad [a]_\mathscr{R} = \{b \in \mathbbm{Z} \mid a \mathscr{R} b\} = \{b \in \mathbbm{Z} \mid \exists k  \in \mathbbm{Z} \mid a - b = k \cdot n\} = \{b \in \mathbbm{Z} \mid \exists k \in \mathbbm{Z} \mid b = a - k \cdot n\}$
 		\end{enumerate}
@@ -2072,7 +2072,7 @@
 				\item $\forall a, b \in A$ si ha che $[a]_\mathscr{R} \neq [b]_\mathscr{R} \iff [a]_\mathscr{R} \cap [b]_\mathscr{R} \neq \emptyset$, cioè se due classi sono diverse, allora sono disgiunte, cioè non hanno elementi in comune
 			\end{enumerate}
 		\end{theorem}
-		\begin{definition}{\nmu Partizione di un insieme}{partizione_insieme}	
+		\begin{definition}{\nmu Partizione di un insieme}{partizione_insieme}
 			Sia $A \neq \emptyset$. \\
 			Una partizione dell'insieme $A$ è una famiglia di sottoinsiemi $\{A_i\}$ tali che :
 			\begin{enumerate}
@@ -2081,17 +2081,17 @@
 				\item $\cup A_i = A$
 			\end{enumerate}
 		\end{definition}
-		\begin{theorem}{}{}	
+		\begin{theorem}{}{}
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$. \\
 			Le classi di equivalenza di $\mathscr{R}$ costituiscono una partizione di $A$ e viceversa: ogni partizione definisce una relazione di equivalenza
 		\end{theorem}
 		\textbf{Esempio:} Sia $A = \mathbbm{Z}$ \\
 		$\forall a, b \in \mathbbm{Z} \quad a \mathscr{R} b \iff \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k$ \\
-		$\mathscr{R}$ è riflessiva? simmetrica? antisimmetrica? transitiva? di ordine parziale e totale? di equivalenza? $[a]_\mathscr{R}$? 
+		$\mathscr{R}$ è riflessiva? simmetrica? antisimmetrica? transitiva? di ordine parziale e totale? di equivalenza? $[a]_\mathscr{R}$?
 		 \\
 		\begin{itemize}
 		\item $\mathscr{R}$ è riflessiva? $\forall a \in \mathbbm{Z}\ a \mathscr{R} a$? \\
-			$a \mathscr{R} a \iff \exists k \in \mathbbm{Z} \mid 3a + 8a = 11k$ Si, perchè otteniamo $11a = 11k \Rightarrow \exists k = a \in \mathbbm{Z} \Rightarrow \mathscr{R}$ è riflessiva.  			
+			$a \mathscr{R} a \iff \exists k \in \mathbbm{Z} \mid 3a + 8a = 11k$ Si, perchè otteniamo $11a = 11k \Rightarrow \exists k = a \in \mathbbm{Z} \Rightarrow \mathscr{R}$ è riflessiva.
 			\item $\mathscr{R}$ è simmetrica? $\forall a,b \in \mathbbm{Z}$ se $a \mathscr{R} b$ allora $b \mathscr{R} a$ ? \\
 			$a \mathscr{R} b \Rightarrow \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k$ vera\\
 			$b \mathscr{R} a \Rightarrow \exists z \in \mathbbm{Z} \mid 3b + 8a = 11z$ da dimostrare\\
@@ -2100,7 +2100,7 @@
 			\item $\mathscr{R}$ è antisimmetrica? $\forall a,b \in A$ se $a \mathscr{R} b$ e $b \mathscr{R} a \Rightarrow a = b$? \\
 			$a \mathscr{R} b \Rightarrow \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k$ vera\\
 			$b \mathscr{R} a \Rightarrow \exists z \in \mathbbm{Z} \mid 3b + 8a = 11z$ vera \\
-			Se le sommiamo si ottiene: $11a + 11b = 11k + 11z \Rightarrow a + b = k + z$ Se $k = 0$ e $z = 0$ allora $a + b = 0 \Rightarrow a = -b \Rightarrow a \neq b$ quindi $\mathscr{R}$ non è antisimmetrica, infatti $0 \mathscr{R} 11$ e $11 \mathscr{R} 0$ ma sono diversi fra loro 
+			Se le sommiamo si ottiene: $11a + 11b = 11k + 11z \Rightarrow a + b = k + z$ Se $k = 0$ e $z = 0$ allora $a + b = 0 \Rightarrow a = -b \Rightarrow a \neq b$ quindi $\mathscr{R}$ non è antisimmetrica, infatti $0 \mathscr{R} 11$ e $11 \mathscr{R} 0$ ma sono diversi fra loro
 		\item $\mathscr{R}$ è transitiva? $\forall a,b,c \in A$ se $a \mathscr{R}$ e $b \mathscr{R} c$ allora $a \mathscr{R} c$ ? \\
 			$a \mathscr{R} b \Rightarrow \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k$ vera\\
 			$b \mathscr{R} c \Rightarrow \exists z \in \mathbbm{Z} \mid 3b + 8c = 11z$ vera\\
@@ -2109,7 +2109,7 @@
 		\end{itemize}
 		$\mathscr{R}$ non è di ordine parziale e quindi non è di ordine totale ma è relazione di equivalenza. \\
 		$[a]_\mathscr{R} = \{b \in \mathbbm{Z} \mid a \mathscr{R} b\} = \{b \in \mathbbm{Z} \mid \exists k \in \mathbbm{Z} \mid 3a + 8b = 11k\} = \\ = \{b \in \mathbbm{Z} \mid \exists k \in \mathbbm{Z} \mid b = \dfrac{11k - 3a}{8}\}$
-		\begin{definition}{\nmu Insieme quoziente}{insieme_quoziente}	
+		\begin{definition}{\nmu Insieme quoziente}{insieme_quoziente}
 			Sia $\mathscr{R}$ una relazione di equivalenza su $A \neq \emptyset$. \\
 			Si definisce l'insieme quoziente di $A$ rispetto ad $\mathscr{R}$ l'insieme delle classi di equivalenza. \\
 			Notazione:
@@ -2141,7 +2141,7 @@
 			\item $A \neq \emptyset$ e $\mathscr{R}$ relazione totale. \\
 			$\forall a,b \in A$ è vero che $a\mathscr{R}b$. \\
 			$a \in A \quad [a]_\mathscr{R} = \{b \in A \mid a \mathscr{R} b\} = A$. \\
-			$\sfrac{A}{\mathscr{R}} = \{[a]_\mathscr{R}\}$ perchè gli elementi sono tutti equivalenti fra loro quindi le classi di equivalenza sono uguali e basta prenderne solo una. 
+			$\sfrac{A}{\mathscr{R}} = \{[a]_\mathscr{R}\}$ perchè gli elementi sono tutti equivalenti fra loro quindi le classi di equivalenza sono uguali e basta prenderne solo una.
 			\item $A \neq \emptyset$ e $\mathscr{R}$ relazione identità. \\
 			$\forall a,b \in A$ è solo vero che $a\mathscr{R}a$. \\
 			$a \in A \quad [a]_\mathscr{R} = \{a \in A \mid a\mathscr{R}a\} = a$. \\
@@ -2151,9 +2151,9 @@
 			Precedentemente abbiamo dimostrato che è di equivalenza. \\
 			Con $a = 0$ abbiamo $[0]_\mathscr{R} = \{b \in \mathbbm{Z} \mid 0 \mathscr{R} b\} = \{b \in \mathbbm{Z} \mid \exists k \in \mathbbm{Z}\ \text{t.c}\ -b = k \cdot n\}$ \\
 			Il nostro problema è capire l'insieme quoziente e questa è una cosa che affronteremo più tardi. \\
-		\end{enumerate}		
+		\end{enumerate}
 		\chapter{Divisione in $\mathbbm{Z}$}
-		\begin{definition}{\nmu Divisione in $\mathbbm{Z}$}{divisione_z}	
+		\begin{definition}{\nmu Divisione in $\mathbbm{Z}$}{divisione_z}
 			Sia $a, b \in \mathbbm{Z}$. \\
 			Diremo che $a$ divide $b$ e scriveremo $a|b$ se esiste un numero intero $c \in \mathbbm{Z}$ tale che $b = a \cdot c$ \\
 			Se $a$ non divide $b$, scriveremo $a\centernot{|}b$
@@ -2163,37 +2163,37 @@
 		Se $a\centernot{|}b$, $b$ non è multiplo, $b$ non è divisibile, $a$ non è un divisore. \\
 		\textbf{Esempi:}
 		\begin{enumerate}
-			\item $3|5$ ? $\exists c \in \mathbbm{Z} \mid 5 = 3 \cdot c$ ? No, perchè $c = \dfrac{5}{3} \notin \mathbbm{Z}$ 
+			\item $3|5$ ? $\exists c \in \mathbbm{Z} \mid 5 = 3 \cdot c$ ? No, perchè $c = \dfrac{5}{3} \notin \mathbbm{Z}$
 			\item $3|9$ ? Si, perchè $9 = 3 \cdot 3$
 		\end{enumerate}
 		\textbf{Osservazioni:}
 		\begin{enumerate}
 			\item $a|b \implies \exists c \in \mathbbm{Z} \mid b = a \cdot c$ se $a \neq 0$ $c = \dfrac{b}{a} \in \mathbbm{Z}$
-			\item $\forall a \in \mathbbm{Z}$ è vero che $1|a$ perchè $\exists c=a \in \mathbbm{Z} \quad a = 1 \cdot a$, quindi $a$ è multiplo di 1 e 1 è divisore di ogni numero 
+			\item $\forall a \in \mathbbm{Z}$ è vero che $1|a$ perchè $\exists c=a \in \mathbbm{Z} \quad a = 1 \cdot a$, quindi $a$ è multiplo di 1 e 1 è divisore di ogni numero
 			\item $a|1$? $\exists c \in \mathbbm{Z} \mid 1 = a \cdot c$ ? $a \cdot c = 1$ solo se $a=1$ e $a=-1$, quindi $a|1$ se a=1 oppure a=-1
-			\item $\forall a \in \mathbbm{Z}$ e $\forall c \in \mathbbm{Z} \quad a|a \cdot c$, questo ci dice che ogni numero divide i suoi multipli 
+			\item $\forall a \in \mathbbm{Z}$ e $\forall c \in \mathbbm{Z} \quad a|a \cdot c$, questo ci dice che ogni numero divide i suoi multipli
 			\item $\forall a \in \mathbbm{Z}$ è vero che $a|0$. $\exists c \in \mathbbm{Z} \mid 0 = a \cdot c$ ? Si, $c = 0$. \\
 			0 è multiplo di qualsiasi numero.
-			\item $0|a$? $\exists c \in \mathbbm{Z} \mid a = 0 \cdot c$, questo ci dice che lo zero divide solo lo zero, $0=0 \cdot c \quad \forall c \in \mathbbm{Z}$ 
+			\item $0|a$? $\exists c \in \mathbbm{Z} \mid a = 0 \cdot c$, questo ci dice che lo zero divide solo lo zero, $0=0 \cdot c \quad \forall c \in \mathbbm{Z}$
 			\item Se $a,b \in \mathbbm{Z}^*$ sono tali che $a|b$ e $b|a$. \\
-			$a|b \implies \exists c \in \mathbbm{Z} \mid b = a \cdot c$ \\ 
+			$a|b \implies \exists c \in \mathbbm{Z} \mid b = a \cdot c$ \\
 			$b|a \implies \exists h \in \mathbbm{Z} \mid a = b \cdot h$ \\
 			$a = b \cdot h = a \cdot c \cdot h \Rightarrow 1 = c \cdot h$ \\
-			Quindi $c=h=1$ o $c=h=-1 \implies b = a \cdot c \implies b = a \cdot 1 = a$ oppure $b = a \cdot (-1) = -a \implies$ se $a|b$ e $b|a$ allora $a=\pm b$ si dice che $a$ e $b$ sono associati 
-			\item Se $a|b$ allora $\forall t \in \mathbbm{Z} \quad a \cdot t|b \cdot t$ 
+			Quindi $c=h=1$ o $c=h=-1 \implies b = a \cdot c \implies b = a \cdot 1 = a$ oppure $b = a \cdot (-1) = -a \implies$ se $a|b$ e $b|a$ allora $a=\pm b$ si dice che $a$ e $b$ sono associati
+			\item Se $a|b$ allora $\forall t \in \mathbbm{Z} \quad a \cdot t|b \cdot t$
 		\end{enumerate}
 		\begin{theorem}{\nmu Combinazione lineare o T.C.L}{comb_lineare}
 				Siano $a,b,c \in \mathbbm{Z}$. Se $c|a$ e $c|b$ allora $\forall x,y \in \mathbbm{Z}$ si ha che $c|ax + by$. \\
 			$ax + by$ si chiama combinazione lineare di $a$ e $b$.
 		\end{theorem}
-		\textbf{Esempio:} Se $2|a$ e $2|b$ allora $2|ax + by$ 
-		
-		\begin{proof}{Dimostrazione del teorema della \namerefl{th:comb_lineare}} \quad \\		
+		\textbf{Esempio:} Se $2|a$ e $2|b$ allora $2|ax + by$
+
+		\begin{proof}{Dimostrazione del teorema della \namerefl{th:comb_lineare}} \quad \\
 			$c|a$ e $c|b$ allora: \\
 			$c|a \implies \exists h \in \mathbbm{Z} \mid a = ch$ \\
 			$c|b \implies \exists t \in \mathbbm{Z} \mid b = ct$ \\
 			$\forall x, y \in \mathbbm{Z} \quad ax + by = chx + cty = c \cdot (hx + ty) \implies c | ax + by$ perchè $(hx + ty) \in \mathbbm{Z}$. \\
-			Questo è vero perchè $c|ax + by$ significa che $\exists k \in \mathbbm{Z} \mid ax + by = ck$ e $\exists k = (hx + ty) \in \mathbbm{Z}$. 
+			Questo è vero perchè $c|ax + by$ significa che $\exists k \in \mathbbm{Z} \mid ax + by = ck$ e $\exists k = (hx + ty) \in \mathbbm{Z}$.
 		\end{proof}
 		\textbf{Esercizio}: Dimostrare che $\forall n \in \mathbbm{N} \quad 3|4^n + 2$. \\
 		$P(n): 3|4^n + 2 \quad \forall n \in \mathbbm{N}$ dimostrare che è vera. \\
@@ -2213,9 +2213,9 @@
 			$3|3 \cdot 4^k$ vera \\
 			$3|4^k + 2$ si perchè è uguale a $P(k)$ \\
 			Con il T.C.L, $3|somma$ ovvero $3|3\cdot 4^k + 4^k + 2 = 4^{k + 1} + 2 \implies P(k + 1)$ vera. \\
-			$P(n)$ vera $\forall n \in \mathbbm{N}$  
+			$P(n)$ vera $\forall n \in \mathbbm{N}$
 		\end{itemize}
-		\begin{theorem}{\nmu Divisione in $\mathbbm{Z}$}{teorema_divisione_Z}	
+		\begin{theorem}{\nmu Divisione in $\mathbbm{Z}$}{teorema_divisione_Z}
 			Siano $a,b$ numeri interi in $\mathbbm{Z}$ con $b \neq 0$. \\
 			Allora esistono e sono univocamente determinati $q,r \in \mathbbm{Z}$ tali che: \[a = b \cdot q + r \qquad \qquad 0 \leq r \leq |b|\]
 			Dove $q$ = quoziente e $r$ = resto.
@@ -2227,7 +2227,7 @@
 			\item \textbf{Primo caso: } $a \geq 0 \quad b > 0$ \\
 			$a = 73 \quad b = 5 \quad 73 = 5 \cdot 14 + 3$
 			\item \textbf{Secondo caso: } $a \geq 0 \quad b < 0$ \\
-			$a = 111 \quad b = -5 \quad 111 = 5 \cdot 22 + 1 \implies 111 = (-5) \cdot (-22) + 1$ 
+			$a = 111 \quad b = -5 \quad 111 = 5 \cdot 22 + 1 \implies 111 = (-5) \cdot (-22) + 1$
 			\item \textbf{Terzo caso: } $a \leq 0 \quad b > 0$ \\
 			$a = -82 \quad b = 4 \quad 82 = 4 \cdot 20 + 2 \implies -82 = 4 \cdot (-20) - 2$ ma non va bene perchè il resto è negativo, quindi: \\
 			$-82 = 4 \cdot (-21) + 2$ e ora va bene.
@@ -2236,13 +2236,13 @@
 			$-97 = -16 \cdot 6 -1 + 6 - 6 = 6 \cdot (-16 - 1) -1 + 6 = -17 \cdot 6 + 5 \implies -97 = 17 \cdot (-6) + 5$
 		\end{enumerate}
 		\section{Massimo comune divisore}
-		\begin{definition}{\nmu Massimo comune divisione}{mcm}	
+		\begin{definition}{\nmu Massimo comune divisione}{mcm}
 			Siano $a,b \in \mathbbm{Z}$ non entrambi nulli. Un massimo comun divisore tra $a$ e $b$ è un intero $d \in \mathbbm{Z}$ tale che:
 			\begin{enumerate}
 				\item $d|a$ e $d|b$ quindi divide entrambi
 				\item $\forall d' \in \mathbbm{Z}$ tale che $d'|a$ e $d'|b$ allora $d'|d$ allora d è il massimo divisore
 			\end{enumerate}
-			Simbolo: 
+			Simbolo:
 			\[
 			MCD(a,b)
 			\]
@@ -2259,16 +2259,16 @@
 			\item $MCD(0,0)$ non esiste, perchè ogni numero li divide
 			\item $\forall a \in \mathbbm{Z} \quad 1|a \implies MCD(a,b)$ male che va è 1
 			\item Se $a \neq 0 \quad MCD(a, 0) = |a|$ \\
-			\item $MCD(a,b) = MCD(a, -b) = MCD(-a, b) = MCD(-a, -b)$ 
+			\item $MCD(a,b) = MCD(a, -b) = MCD(-a, b) = MCD(-a, -b)$
 			\item Se $b|a \quad MCD(a, b) = |b|$
 			\item Se $d = MCD(a,b)$ allora $MCD\Bigl(\dfrac{a}{d}, \dfrac{b}{d}\Bigl ) = 1$
-		\end{enumerate} 
-		\begin{definition}{\nmu Numeri coprimi}{numeri_coprimi}	
+		\end{enumerate}
+		\begin{definition}{\nmu Numeri coprimi}{numeri_coprimi}
 			Siano $a,b \in \mathbbm{Z}$ non entrambi nulli. \\
-			$a$ e $b$ si dicono \textit{coprimi} se $MCD(a,b) = 1$, cioè sono primi fra loro 
+			$a$ e $b$ si dicono \textit{coprimi} se $MCD(a,b) = 1$, cioè sono primi fra loro
 		\end{definition}
 		\section{Minimo comune multiplo}
-		\begin{definition}{\nmu Minimo Comune Multiplo}{min_com_mul}	
+		\begin{definition}{\nmu Minimo Comune Multiplo}{min_com_mul}
 			Siano $a,b \in \mathbbm{Z}^*$.\\
 			Un minimo comune multiplo tra $a$ e $b$ è un numero intero $m \in \mathbbm{Z}$ tale che:
 			\begin{enumerate}
@@ -2290,9 +2290,9 @@
 		\textbf{Come sono legati $MCD(a,b)$ e $mcm(a,b)$?} \\
 		\textbf{Formula:} \[a \cdot b = MCD(a, b) \cdot mcm(a,b)\] \\
 		\textbf{Esempio:} $a = 12 \quad b = 18 \quad MCD(12,18) = 6 \quad mcm(12,18) = 36$ quindi secondo la formula: $12 \cdot 18 = 6 \cdot 36$
-		\begin{theorem}{\nmu Idendità di Bézout}{Bézout}	
+		\begin{theorem}{\nmu Idendità di Bézout}{Bézout}
 			Per ogni coppia di interi $a,b \in \mathbbm{Z}$ non entrambi nulli esiste il $MCD(a,b)$ e può essere scritto come \textit{combinazione lineare di $a$ e $b$}, ovvero $\exists x,y \in \mathbbm{Z} \mid MCD(a,b) = ax + by$, questa equazione qua si chiama \textbf{\textit{identità di Bézout}}
-		\end{theorem} 
+		\end{theorem}
 		\begin{proof}{Dimostrazione dell'\namerefl{th:Bézout}} \quad \\
 			Per dimostrare questa l'identità di Bézout utilizziamo \textit{l'algoritmo di Euclide.} \\
 			\textbf{Possibili casi:}
@@ -2303,7 +2303,7 @@
 				$MCD(a,a) = a = a \cdot 1 + b \cdot 0$
 			\end{enumerate}
 			Possiamo assumere $a$ e $b$ positivi per le proprietà del Massimo Comun Divisore, quindi $a > b > 0$. \\
-			\textbf{Passi dell'algoritmo:} 
+			\textbf{Passi dell'algoritmo:}
 			\begin{enumerate}
 				\item Dividiamo $a$ per $b$. \\
 				$\exists\ q_1, r_1 \in \mathbbm{Z} \mid a = b \cdot q_1 + r_1 \quad 0 \leq r_1 \leq b$ \\
@@ -2311,7 +2311,7 @@
 				Se $r1 \neq 0$ si prosegue al passo 2.
 				\item Dividiamo $b$ per $r_1$. \\
 				$\exists\ q_2, r_2 \in \mathbbm{Z} \mid b = r_1 \cdot q_2 + r_2 \quad 0 \leq r2 \leq r1$ \\
-				Se $r_2 \neq 0$ si prosegue al passo 3. 
+				Se $r_2 \neq 0$ si prosegue al passo 3.
 				\item Divido $r_1$ per $r_2$. \\
 				$\exists\ q_3, r_3 \in \mathbbm{Z} \mid r_1 = r_2 \cdot q_3 + r_3 \quad 0 \leq r_3 \leq r_2$
 				\item[$n$ - 1.] Dividiamo $r_{n - 3}$ per $r_{n - 2}$. \\
@@ -2344,7 +2344,7 @@
 			Questo lo dimostriamo utilizzando l'algoritmo percorrendolo nel senso corretto. \\
 			Passo 1: $r_1$ è la combinazione lineare di $a$ e $b$ e lo sostituisco nel passo 2. \\
 			Passo 2: $r_2$ è la combinazione lineare di $a$ e $b$ e sostituisco $r_n$ come combinazione lineare di $a$ e $b$.
-		\end{proof}		
+		\end{proof}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $a = 200$ e $b = 16$, trovare MCD e identità di Bézout. \\
@@ -2374,15 +2374,15 @@
 			$160 = 50 \cdot 3 + 10 \implies 10 = 160 - 3 \cdot 50 = 11b - 2a - 3(3a - 16b) = 59b - 11a$ \\
 			$10 = -11a + 59b = 3110(-11) + 580(59)$ ma i nostri numeri sono $-3110$ e $-580$, quindi: \\
 			$10 = -3110(11) - 580(-59) \quad x = 11$ e $y = -59$
-		\end{enumerate} 
+		\end{enumerate}
 		\chapter{Equazioni diofantee}
-			\begin{definition}{\nmu Equazioni diofantee}{eq_diofantee}	
-				Una equazione diofantea è una equazione della forma: 
+			\begin{definition}{\nmu Equazioni diofantee}{eq_diofantee}
+				Una equazione diofantea è una equazione della forma:
 				\[
 				ax + by = c \quad \quad a,b,c \in \mathbbm{Z}
 				\]
 				della quale cerchiamo soluzioni intere, cioè trovare $x_0, y_0  \in \mathbbm{Z}$ tale che $a \cdot x_0 + b \cdot y_0 = c$
-			\end{definition} 
+			\end{definition}
 			\textbf{Esempi:}
 			\begin{enumerate}
 				\item $7x + 10y = 0$ \\
@@ -2396,7 +2396,7 @@
 				Non ha soluzioni, perchè $2x + 4y$ è sempre pari e non potrà mai dare un numero dispari.
 			\end{enumerate}
 			\begin{theorem}{\nmu Equazioni diofantee}{teorema_eq_diofantee}
-							L'equazione diofantea: 
+							L'equazione diofantea:
 				\[
 				ax + by = c \quad \quad a,b,c \in \mathbbm{Z}
 				\]
@@ -2409,14 +2409,14 @@
 					($\Longleftarrow$) Se $MCD(a,b) | c \implies \exists k \in \mathbbm{Z} \mid c = MCD(a,b) \cdot k$ \\
 					L'identità di Bézout ci dice che $\Rightarrow \exists \alpha, \beta \in \mathbbm{Z} \mid a\cdot \alpha + b \cdot \beta = MCD(a,b)$\\
 					Moltiplichiamo per $k$ e otteniamo $a \cdot \alpha \cdot k + b \cdot \beta \cdot k = MCD(a,b) \cdot k = c$ quindi $a \cdot \alpha \cdot k$ e $b \cdot \beta \cdot k$ è soluzione.
-				\end{proof} 
-			\end{theorem} 
-			\begin{theorem}{}{}	
-				Sia: 
+				\end{proof}
+			\end{theorem}
+			\begin{theorem}{}{}
+				Sia:
 				\[
 				ax + by = c \quad \quad a,b,c \in \mathbbm{Z}
 				\]
-				una equazione diofantea e sia $(x_0, y_0)$ una soluzione. Allora tutte e sole le soluzioni intere dell'equazione diofantea sono: 
+				una equazione diofantea e sia $(x_0, y_0)$ una soluzione. Allora tutte e sole le soluzioni intere dell'equazione diofantea sono:
 				\[
 				(x,y) = \Bigl(x_0 - \dfrac{b}{MCD(a,b)} \cdot t, y_0 + \dfrac{a}{MCD(a,b)} \cdot t\Bigr) \quad \forall t \in \mathbbm{Z}
 				\]
@@ -2426,15 +2426,15 @@
 					$
 					ax + by = a\Bigl(x_0 + \dfrac{b}{MCD(a,b)} \cdot t\Bigr) + b\Bigl(y_0 + \dfrac{a}{MCD(a,b)} \cdot t\Bigr)
 					\\ = ax_0 - \dfrac{a \cdot b}{MCD(a,b)} \cdot t + by_0 + \dfrac{b \cdot a}{MCD(a,b)} \cdot t \\
-					= ax_0 + by_0 = c 
+					= ax_0 + by_0 = c
 					$
 					Questo perchè $(x_0,y_0)$ è soluzione. \\
-					\textbf{Osservazione:} $t \in \mathbbm{Z}$ quindi funziona anche la formula: 
+					\textbf{Osservazione:} $t \in \mathbbm{Z}$ quindi funziona anche la formula:
 					\[
 					(x,y) = \Bigl(x_0 + \dfrac{b}{MCD(a,b)} \cdot t, y_0 - \dfrac{a}{MCD(a,b)} \cdot t\Bigr) \quad \forall t \in \mathbbm{Z}
 					\]
-				\end{proof} 
-			\end{theorem} 
+				\end{proof}
+			\end{theorem}
 			\textbf{Esempi:}
 			\begin{enumerate}
 				\item $7x + 10y = 0 \quad (x_0, y_0) = (0, 0) \quad MCD(7,10) = 1$ \\
@@ -2446,7 +2446,7 @@
 				$585(2) + 165(-7) = 15$, per l'identità di Bézout, se moltiplico per 2, ottengo: \\
 				$585(4) + 165(-14) = 30$ quindi $(4,-14)$ è soluzione per il teorema visto prima. \\
 				$(x,y) = (4 - \frac{165}{15}t, -14 + \frac{585}{15}t) = (4 - 11t, -14 + 39t) \quad \forall t \in \mathbbm{Z}$
-			\end{enumerate} 
+			\end{enumerate}
 			\textbf{Osservazione:} $ax + by = c$ e $d = MCD(a,b) | c$ quindi $d | a$, $d | b$ e $d | c$, possiamo semplificare dividendo per $d$. Prendendo l'esempio di prima: \\
 			$585x + 165y = 30 \quad MCD(585, 165) = 15$ \\
 			$15|30$ allora divido tutto per 15 e ottengo: $39x + 11y = 2$ \\
@@ -2472,12 +2472,12 @@
 			$13 = 7 + 6 \Rightarrow 6 = 13 - 7 = b - a + 2b = 3b - a$ \\
 			$7 = 6 + 1 \Rightarrow 1 = 7 - 6 = a - 2b - 3b + a = 2a - 5b$, moltiplico per 2: $2 = 4a - 10b \Rightarrow (4, -10)$ è soluzione \\
 			$(x,y) = (4 - 13t, -10 + 33t) \quad \forall t \in \mathbbm{Z}$
-		\section{Numeri primi} 
+		\section{Numeri primi}
 		\begin{definition}{\nmu Numeri primi}{num_primi}
 			Un numero $p \in \mathbbm{Z}$ con $p \neq 0,1,-1$ si dice primo se è divisibile solo per $1, -1, -p, +p$ equivalentemente se $\forall a,b \in \mathbbm{Z}$ se $p|a \cdot b$ allora $p|a$ o $p|b$, cioè se $p$ divide un prodotto allora deve dividere uno dei due fattori.
-		\end{definition} 
+		\end{definition}
 		\textbf{Esempi:} $3|36$ vero $3|4 \cdot 9 \Rightarrow 3|4$ o $3|9$ vero \\
-		
+
 		\textbf{Osservazione:} Se $p$ è primo e $p = a \cdot b \quad \forall a,b \in \mathbbm{Z}$ solo se $p = 1 \cdot p$ oppure $(-1) \cdot (-p)$ oppure $p \cdot 1$ oppure $(-p) \cdot (-1)$ quindi $a,b$ sono divisori di $p$.
 		\textbf{Osservazione:} Se $n$ non è primo allora $\exists a,b \in \mathbbm{Z}$ con $1 < |a| < n$ e $1 < |b| < n$ e $n = a \cdot b$ \\
 		\textbf{Esempio:} $n = 48 \Rightarrow 48 = 6 \cdot 8$ oppure $48 = 4 \cdot 12$ \\
@@ -2491,7 +2491,7 @@
 				Applichiamo il principio d'induzione generalizzato.
 				\begin{itemize}
 					\item \textbf{Base induzione:} Dimostrare che $P(2)$ è vera \\
-					$P(2):$ 2 ammette fattorizzazione, vero $2 = 2^1$ 
+					$P(2):$ 2 ammette fattorizzazione, vero $2 = 2^1$
 					\item \textbf{Passo induttivo:} Dimostrare che $\forall k \geq 2$ $P(2), P(3), \dots, P(k)$ vera $\implies P(k + 1)$ vera \\
 					$P(2), P(3), \dots P(k)$ vera $\implies$ i numeri $2,3, \dots, k$ ammettono fattorizzazione \\
 					$P(k + 1)$: il numero $k + 1$ ammette fattorizzazione è da dimostrare \\
@@ -2504,9 +2504,9 @@
 						Quindi $k + 1 = a \cdot b = P_1^{h_1} \cdots P_s^{h_s} \cdot q_1^{t_1} \cdots q_t^{k_t}$ mettendo insieme i primi uguali otteniamo la fattorizzazione di $k + 1 \implies P(k + 1)$ è vera $\implies P(n)$ vera $\forall n \geq 2$
 					\end{itemize}
 				\end{itemize}
-			\end{proof} 
-		\end{theorem} 
-		\textbf{Esempi:} 
+			\end{proof}
+		\end{theorem}
+		\textbf{Esempi:}
 		\begin{itemize}
 			\item $n = 3600 = 36 \cdot 100$ \\
 			$36 = 6 \cdot 6 = 2 \cdot 3 \cdot 2 \cdot 3 = 2^2 \cdot 3^2$ \\
@@ -2517,7 +2517,7 @@
 		\begin{enumerate}
 			\item Trovare i divisori
 			\item Massimo Comun Divisore \\
-			Come? 
+			Come?
 			\begin{enumerate}
 				\item \textbf{Esempio:} $n = 18$ tutti i divisori di $18$ positivi \\
 				$c|18 \implies 18 = c \cdot qualcosa$ \\
@@ -2530,7 +2530,7 @@
 				\textbf{Esempio:} $a=4080 \quad b=225$ \\
 				Fattorizzazione $4080 = 408 \cdot 10 = 102 \cdot 4 \cdot 2 \cdot 5  = 51 \cdot 2 \cdot 2^2 \cdot 2 \cdot 5 = 3 \cdot 17 \cdot 2^4 \cdot 5 = 2^4 \cdot 3 \cdot 5 \cdot 17$ \\
 				Fattorizzazione: $225 = 45 \cdot 5 = 5 \cdot 9 \cdot 5 = 3^2 \cdot 5^2$ \\
-				$MCD(4080, 225) = 3 \cdot 5$, cioè il prodotto dei primo che compaiono in entrambe le fattorizzazioni con l'esponente minore  
+				$MCD(4080, 225) = 3 \cdot 5$, cioè il prodotto dei primo che compaiono in entrambe le fattorizzazioni con l'esponente minore
 			\end{enumerate}
 		\end{enumerate}
 		\begin{theorem}{}{}
@@ -2541,8 +2541,8 @@
 				Questo numero $n$ non è divisibile per $P_i \forall i = 1, \dots, s$ \\
 				Infatti se $P_i | n$ dato che $P_i | P_1 \cdot P_2 \cdots P_s$ perchè è un suo multiplo avremmo che per il T.C.L $\implies P_i | n - P_1 \cdot P_2 \cdots P_s$ ovvero $P_i | 1 \implies Pi= \pm 1$ ed è assurdo perchè $P_i$ è primo $\implies$ nessuno $P_i$ divide $n$. \\
 				Per il teorema fondamentale dell'aritmetica, $n$ è primo o prodotto di numeri primi e quindi devono esistere numeri primi che non sono inclusi tra $P_1$ e $P_s$ e questo è assurdo.
-			\end{proof} 
-		\end{theorem} 
+			\end{proof}
+		\end{theorem}
 		\textbf{Esempi:} $2$ e $3$ sono primi e $n = 2 \cdot 3 + 1 = 7$ ma 2 e 3 non dividono 7 in quanto 7 è un numero primo che non è nella lista $2,3$ \\
 		$3$ e $5$ sono primi e $n = 3 \cdot 5 + 1 = 16$ e 3 e 5 non dividono 16 in quanto $16 = 2^4 \implies \exists 2$ numero primo $\neq 3$ e $\neq 5$. \\
 		\section{Crivello di Eratostele}
@@ -2582,7 +2582,7 @@
 				31 & $\centernot{32}$ & $\centernot{33}$ & $\centernot{34}$ & $\centernot{35}$ & $\centernot{36}$ & 37 & $\centernot{38}$ & $\centernot{39}$ & $\centernot{40}$ \\
 				41 & $\centernot{42}$ & 43 & $\centernot{44}$ & $\centernot{45}$ & $\centernot{46}$ & 47 & $\centernot{48}$ & 49 & $\centernot{50}$
 			\end{tabular}
-			\item Procedo fino a $\sqrt{n}$ (se $n$ non è primo $n = a \cdot b$ con $a \leq \sqrt{n}$ e $b \leq \sqrt{n}$) \\ 
+			\item Procedo fino a $\sqrt{n}$ (se $n$ non è primo $n = a \cdot b$ con $a \leq \sqrt{n}$ e $b \leq \sqrt{n}$) \\
 			\begin{tabular}{c c c c c c c c c c}
 				$\centernot{1}$ & $\underline{2}$ & $\underline{3}$ & $\centernot{4}$ & $\underline{5}$ & $\centernot{6}$ & $\underline{7}$ & $\centernot{8}$ & $\centernot{9}$ & $\centernot{10}$ \\
 				11 & $\centernot{12}$ & 13 & $\centernot{14}$ & $\centernot{15}$ & $\centernot{16}$ & 17 & $\centernot{18}$ & 19 & $\centernot{20}$ \\
@@ -2595,16 +2595,16 @@
 		\textbf{Osservazione:} Questo metodo aiuta a trovare la fattorizzazione in primi di $n$: se $n$ non è cancellato è primo, in caso contrario, troviamo un numero primo che lo divide \\
 		(Cercare per curiosità il metodo di Eratostene)
 		\chapter{Congruenze modulo $n$}
-		\textbf{Problema in sospeso:} Abbiamo definito su $\mathbbm{Z}$ una relazione: $\forall a,b \in \mathbbm{Z} \quad a\mathscr{R}b \iff \exists k \in \mathbbm{Z} \mid a - b = k \cdot n$, cioè $n|a-b$ e abbiamo visto che questa è una relazione di equivalenza ma non sapevamo descrivere $[a]_\mathscr{R}$ classi di equivalenza e l'insieme quoziente $\sfrac{\mathbbm{Z}}{\mathscr{R}}$. 
+		\textbf{Problema in sospeso:} Abbiamo definito su $\mathbbm{Z}$ una relazione: $\forall a,b \in \mathbbm{Z} \quad a\mathscr{R}b \iff \exists k \in \mathbbm{Z} \mid a - b = k \cdot n$, cioè $n|a-b$ e abbiamo visto che questa è una relazione di equivalenza ma non sapevamo descrivere $[a]_\mathscr{R}$ classi di equivalenza e l'insieme quoziente $\sfrac{\mathbbm{Z}}{\mathscr{R}}$.
 		\begin{itemize}
-			\item Questa relazione si chiama congruenza modulo $n$ 
+			\item Questa relazione si chiama congruenza modulo $n$
 			\item Prendiamo $n \geq 2$ perchè se $n = 0$ abbiamo $0|a-b \implies a-b=0 \implies a=b$ cioè $a$ è in relazione solo con se stesso \\
 			Se $n = 1$ abbiamo $1|a-b$ ma 1 divide ogni numero quindi questo ci dice che $\forall a,b \in \mathbbm{Z}\ a$ e $b$ sono in relazione, cioè è una relazione totale.
 			\item Se $a\mathscr{R}b$ scriveremo $a \equiv b \pmod{n}$ e si legge $a$ è congruente a $b$ modulo $n$
 			\item la classe di equivalenza $[a]_\mathscr{R}$ si indica $[a]_n$ e l'insieme quoziente $\sfrac{\mathbbm{Z}}{\mathscr{R}}$ si indica $\mathbbm{Z}_n$ \\
 			$[a]_n$ = classe di equivalenza di $a=\{x \in \mathbbm{Z} \mid x \mathscr{R} a\} = \{x \in \mathbbm{Z} \mid x \equiv a \pmod{n}\} =\ ??$ \\
 			$\mathbbm{Z}_n$ = insieme delle classi di equivalenza = $\{[a]_n \mid a \in \mathbbm{Z}\} =\ ??$ \\
-			\textbf{Osservazioni:} $n \geq 2$ fissato $a \equiv b \pmod{n} \iff n | a - b$ 
+			\textbf{Osservazioni:} $n \geq 2$ fissato $a \equiv b \pmod{n} \iff n | a - b$
 			\begin{enumerate}
 				\item Sia $a \in \mathbbm{Z}$. Se dividiamo $a$ per $n$ otteniamo $a = n \cdot q + r$ con $0 \leq r < n$ \\
 				$a - r = n \cdot q \implies n | a - r \Rightarrow a \equiv r \pmod{n}$ \\
@@ -2630,17 +2630,17 @@
 			$[17]_5 = [2]_5$ perchè $17 = 5 \cdot 3 + 2$ \\
 			$[-11]_5 = [4]_5$ perchè $-11 = 5 \cdot (-3) + 4$
 			\item $n = 12 \quad \mathbbm{Z}_n = \{[0]_{12}, \dots, [11]_{12}\}$ \\
-			$[100]_{12} = [4]_{12}$ perchè $100 = 12 \cdot 8 + 4$ 
-		\end{enumerate} 
+			$[100]_{12} = [4]_{12}$ perchè $100 = 12 \cdot 8 + 4$
+		\end{enumerate}
 		\begin{theorem}{\nmu Congruenza modulo $n$}{congr_modulo_n}
 			La relazione di congruenza modulo $n$ è compatibile con la somma e il prodotto in $\mathbbm{Z}$: \\
-			Se, $\forall a,b,c,d \in \mathbbm{Z}$, $a \equiv b \pmod{n}$ e $c \equiv d \pmod{n}$ allora: 
+			Se, $\forall a,b,c,d \in \mathbbm{Z}$, $a \equiv b \pmod{n}$ e $c \equiv d \pmod{n}$ allora:
 			\begin{itemize}
-				\item $a + c \equiv b + d \pmod{n}$ 
+				\item $a + c \equiv b + d \pmod{n}$
 				\item $a \cdot c \equiv b \cdot d \pmod{n}$
 			\end{itemize}
-			
-		\end{theorem} 
+
+		\end{theorem}
 		\textbf{Proprietà}: Sia $a \equiv b \pmod{n}$ allora:
 		\begin{enumerate}
 			\item $a^m \equiv b^m \pmod{n} \quad \forall m \geq 1$ \\
@@ -2650,31 +2650,31 @@
 			\item $a - b \equiv 0 \pmod{n}$ come nelle equazioni possiamo spostarlo al primo membro ed equivale a dire $n|a-b$ \\
 			\textbf{Esempio:} $14 \equiv 6 \pmod{8} \implies 14 - 6 \equiv 0 \pmod{8}$
 			\item $\forall k \in \mathbbm{Z} \quad k \cdot n \equiv 0 \pmod{n}$ ed è vero anche il contrario, cioè $0 \equiv k \cdot n \pmod{n}$ e $a + k \cdot n \equiv b \pmod{n}$ e $a \equiv b + k \cdot n \pmod{n}$ \\
-			\textbf{Esempio:} $-32 \equiv ? \pmod{5}$ per capirlo, possiamo sommarlo ad un multiplo di 5, ad esempio: $-32 + 20 = -12 + 15 = 3 \implies -32 \equiv 3 \pmod{5}$ 
+			\textbf{Esempio:} $-32 \equiv ? \pmod{5}$ per capirlo, possiamo sommarlo ad un multiplo di 5, ad esempio: $-32 + 20 = -12 + 15 = 3 \implies -32 \equiv 3 \pmod{5}$
 		\end{enumerate}
 		\begin{theorem}{\nmu Divisione nella congruenza}{div_congr}
 			Se $a \cdot c \equiv b \cdot c \pmod{n}$ allora $a \equiv b \pmod{\dfrac{n}{MCD(c, n)}}$ \\
 			In particolare se $MCD(c, n) = 1$ allora $a \equiv b \pmod{n}$
-		\end{theorem} 
+		\end{theorem}
 		\textbf{Esempi:} $14 \equiv 6 \pmod{8} \implies 7 \cdot 2 \equiv 3 \cdot 2 \pmod{8} \implies 7 \equiv 3 \pmod{\dfrac{8}{MCD(2, 8)}} \implies 7 \equiv 3 \pmod{4}$ \\
-		$6 \equiv 28 \pmod{11} \implies 3 \cdot 2 \equiv 14 \cdot 2 \pmod{\dfrac{11}{MCD(2, 11)}} \implies 3 \equiv 14 \pmod{11}$ perchè il MCD è 1 
+		$6 \equiv 28 \pmod{11} \implies 3 \cdot 2 \equiv 14 \cdot 2 \pmod{\dfrac{11}{MCD(2, 11)}} \implies 3 \equiv 14 \pmod{11}$ perchè il MCD è 1
 		\begin{theorem}{\nmu Piccolo teorema di Fermat}{piccolo_fermat}
 			Se $a \in \mathbbm{Z}$ e $p$ è un numero primo allora $a^p \equiv a \pmod{p}$, cioè un numero elevato alla potenza $p$ è congruente a se stesso modulo $p$ \\
 			\textbf{Esempio:} $p = 23 \quad 100^{23} = 100 \pmod{23}$ \\
 			Si chiama \textit{piccolo} perchè esisto un altro teorema più famoso: l'equazione $x^n + y^n = z^n$ non ammette soluzioni intere non banali per $n \geq 3$, per curiosità informarsi meglio sulla storia.
-		\end{theorem} 
+		\end{theorem}
 		\textbf{Osservazione:} Se $MCD(a,p) = 1 \quad a^p \equiv a \pmod{p} \implies a^{p-1} \cdot a \equiv 1 \cdot a \pmod{p}$, ora dividiamo per $a$ e otteniamo $a^{p-1} \equiv 1 \pmod{\dfrac{p}{MCD(a,p)}} \implies a^{p-1} \equiv 1 \pmod{p}$ ad esempio: $100^{22} \equiv 1 \pmod{23}$
 		\begin{definition}{\nmu Funzione di Eulero}{func_eulero}
 			La funzione di Eulero è la funzione $\varphi: \mathbbm{N}^* \to \mathbbm{N}$ tale che $\varphi(n)$ è il numero degli interi positivi minori o uguali ad $n$ e coprimi con $n$, ovvero conta quanti sono gli elementi $a \in \mathbbm{N} \quad 1 \leq a \leq n$ e $MCD(a,n) = 1$
-		\end{definition}  
+		\end{definition}
 		\textbf{Esempi:} $n = 1 \quad \varphi(1) \quad 1 \leq a \leq 1 \quad MCD(a, 1) = 1$, siccome è solo 1 elemento $\varphi(1) = 1$ \\
 		Se $n = 2 \quad \varphi(2)? \quad 1 \leq a \leq 2 \quad MCD(a, 2) = 1$, quindi solo l'elemento 1 e $\varphi(2) = 1$ \\
-		Se $n = 3$ abbiamo $1,2,3$ e quindi sono solo due elementi tali che $MCD(a, 3) = 1$ e quindi $\varphi(3) = 2$ \\ 
-		$\varphi(2^3 \cdot 5^7 \cdot 7^8) =\ ?$ \\ 
-		\textbf{Proprietà della funzione di Eulero}: 
+		Se $n = 3$ abbiamo $1,2,3$ e quindi sono solo due elementi tali che $MCD(a, 3) = 1$ e quindi $\varphi(3) = 2$ \\
+		$\varphi(2^3 \cdot 5^7 \cdot 7^8) =\ ?$ \\
+		\textbf{Proprietà della funzione di Eulero}:
 		\begin{enumerate}
 			\item $\forall$ numero primo $p \quad \varphi(p) = p - 1$
-			\item $\forall$ numero primo $p$ e $\forall h \geq 1 \quad \varphi(p^h) = p^h - p^{h - 1}$ 
+			\item $\forall$ numero primo $p$ e $\forall h \geq 1 \quad \varphi(p^h) = p^h - p^{h - 1}$
 			\item $\forall a,b$ se $MCD(a,b) = 1 \quad \varphi(a \cdot b) = \varphi(a) \cdot \varphi(b)$
 		\end{enumerate}
 		\textbf{Esempi:}
@@ -2692,7 +2692,7 @@
 		\begin{theorem}{\nmu Teorema di Eulero Fermat}{eulero_fermat}
 			Sia $a \in \mathbbm{Z}$ e $MCD(a, n) = 1$ allora $a^{\varphi(n)} \equiv 1 \pmod{n}$ \\
 			\textbf{Osservazione:} Se $n$ è primo $\varphi(p) = p - 1 \quad a^{p-1} \equiv 1 \pmod{p}$ e questo è uguale al piccolo teorema di fermat
-		\end{theorem}  
+		\end{theorem}
 		\textbf{Esempi/esercizi:} Stabilire se le seguenti congruenze sono vere:
 		\begin{itemize}
 			\item $11^{48} \equiv 1 \pmod{104} \quad n = 104 \quad a = 11 \quad \varphi(104) = 48$ \\
@@ -2716,7 +2716,7 @@
 			$60 = 20 \cdot 3 = 10 \cdot 2 \cdot 3 = 5 \cdot 2 \cdot 2 \cdot 3 = 2^2 \cdot 3 \cdot 5$ \\
 			$\varphi(60) = \varphi(2^2 \cdot 3 \cdot 5) = \varphi(2^2) \cdot \varphi(3) \cdot \varphi(5) = (2^2 -2^1) \cdot (3-1) \cdot (5-1) = 16$ \\
 			Per il teorema di Eulero Fermat $49^{16} \equiv 1 \pmod{60}$ \\
-			$33 = 16 \cdot 2 + 1$ quindi $49^{33} = 49^{16 \cdot 2  + 1} = 49^{16 \cdot 2} \cdot 49 = (49^{16})^2 \cdot 49 \equiv 1^2 \cdot 49 \equiv 49 \pmod{60}$, quindi $49^{33} \equiv 49 \pmod{60}$ ma $49^{33} \equiv 2 \pmod{60}$ è falsa perchè i resti sono diversi 
+			$33 = 16 \cdot 2 + 1$ quindi $49^{33} = 49^{16 \cdot 2  + 1} = 49^{16 \cdot 2} \cdot 49 = (49^{16})^2 \cdot 49 \equiv 1^2 \cdot 49 \equiv 49 \pmod{60}$, quindi $49^{33} \equiv 49 \pmod{60}$ ma $49^{33} \equiv 2 \pmod{60}$ è falsa perchè i resti sono diversi
 		\end{itemize}
 		\subsection{Criteri di divisibilità}
 		Sia $x = 2345 = 2$ migliaia 3 centinaia 4 decine e 5 unità, cioè $2 \cdot 10^3 + 3 \cdot 10^2 + 4 \cdot 10 + 5$
@@ -2744,19 +2744,19 @@
 		\subsection{Congruenze lineari}
 		\begin{definition}{\nmu Congruenza lineare}
 			Sia $a, b \in \mathbbm{Z}$ e $n \geq 2$. \\
-			Una congruenza lineare nell'incognita $x$ è un'espressione della forma: 
+			Una congruenza lineare nell'incognita $x$ è un'espressione della forma:
 			\[
 			ax \equiv b \pmod{n}
-			\] 
+			\]
 			Una soluzione della congruenza lineare è intero $x_0 \in \mathbbm{Z}$ tale che \[ax_0 \equiv b \pmod{n}\]
-		\end{definition} 
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $7x \equiv 1 \pmod{3} \quad x_0 = 1$ è soluzione \\
 			$7\cdot 1 = 7 \equiv 1 \pmod{3}$
 			\item $30x \equiv 1 \pmod{2}$
 			\item $18x \equiv 16 \pmod{44}$
-			\item $104x \equiv 24 \pmod{600}$ 
+			\item $104x \equiv 24 \pmod{600}$
 		\end{enumerate}
 		\textbf{Dobbiamo:}
 		\begin{enumerate}
@@ -2768,17 +2768,17 @@
 			\begin{proof}\quad \\
 				$ax \equiv b \pmod{n} \iff n | ax - b \iff$
 				$\exists h \in \mathbbm{Z} \mid ax - b = nh \iff \exists h \in \mathbbm{Z} \mid ax - nh = b$, questa adesso è una equazione diofantea e ammette soluzione $\iff MCD(a,n) | b$
-			\end{proof} 
-		\end{theorem} 
+			\end{proof}
+		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
-			\item $7x \equiv 1 \pmod{3} \quad MCD(7,3) = 1 | 1 \implies \exists$ soluzione 
-			\item $30x \equiv 1 \pmod{2} \quad MCD(30, 2) = 2 \centernot{|} 1$, non esistono soluzioni 
+			\item $7x \equiv 1 \pmod{3} \quad MCD(7,3) = 1 | 1 \implies \exists$ soluzione
+			\item $30x \equiv 1 \pmod{2} \quad MCD(30, 2) = 2 \centernot{|} 1$, non esistono soluzioni
 			\item $18x \equiv 16 \pmod{44} \quad MCd(18, 44) = 2 | 16 \implies \exists$ soluzione
 			\item $104x \equiv 24 \pmod{600}$ \\
 			$104 = 52 \cdot 2 = 26 \cdot 2 \cdot 2 = 2 \cdot 2 \cdot 2 \cdot 13 = 2^3 \cdot 13$ \\
 			$600 = 6 \cdot 100 = 2 \cdot 3 \cdot 10 \cdot 10 = 2 \cdot 3 \cdot 2 \cdot 5 \cdot 2 \cdot 5 = 2^3 \cdot 3 \cdot 5^2$ \\
-			$MCD(104, 600) = 2^3 = 8 | 24 \implies \exists$ soluzione 
+			$MCD(104, 600) = 2^3 = 8 | 24 \implies \exists$ soluzione
 		\end{enumerate}
 		\begin{theorem}{\nmu Teorema sulle soluzioni}{soluzioni}
 			Se $x_0$ è soluzione della congruenza lineare $ax \equiv b \pmod{n}$, allora esistono infinite soluzioni e sono:
@@ -2789,8 +2789,8 @@
 			Tra queste soluzioni: $x_0, x_0 + \dfrac{n}{d}, x_0 + 2 \cdot \dfrac{n}{d}, \dots, x_0 + (d - 1) \cdot \dfrac{n}{d}$, queste sono $d$ soluzioni non congruenti fra loro modulo $n$ e tutte le altre soluzioni sono congruenti a queste. \\
 			$ax \equiv b \pmod{n}$ ammette $d$ soluzioni distinte modulo $n$. \\
 			\textbf{Osservazione importante:} Se $d=MCD(a,n)=1$. Le soluzioni sono $x_0 + nt \quad \forall t \in \mathbbm{Z}$ esiste unica soluzione, $x_0$, modulo $n$ e tutte le altre soluzioni sono congruenti ad $x_0$ modulo $n$ ovvero $x \equiv x_0 \pmod{n}$
-		\end{theorem} 
-		\textbf{Esempi:} 
+		\end{theorem}
+		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $7x \equiv 1 \pmod{3} \quad MCD(7,3) = 1 \quad x_0 = 1$ è soluzione. \\
 			Tutte le soluzioni sono $1 + 3t \quad \forall t \in \mathbbm{Z}$ ed è uguale a scrivere $x \equiv 1 \pmod{3}$
@@ -2802,7 +2802,7 @@
 			$a=9 \quad b=22$ \\
 			$22 = 9 \cdot 2 + 4$ \\
 			$9 = 4 \cdot 2 + 1$ \\
-			$1 = MCD(9, 22)$ \\ 
+			$1 = MCD(9, 22)$ \\
 			Applichiamo l'identità di Bézout: \\
 			$4 = 22 - 9 \cdot 2 = b - 2a$ \\
 			$1 = 9 - 4\cdot 2 = a - 2b + 4a = 5a - 2b$ \\
@@ -2817,7 +2817,7 @@
 			\item \textbf{divido per $d$}: $ax \equiv b \pmod{n}$ e $d=MCD(a,n)|b$ \\
 			Dividiamo tutto per $d$ \\
 			$\dfrac{a}{d}x \equiv \dfrac{b}{d} \pmod{\dfrac{n}{d}}$ ora $MCD\Bigl(\dfrac{a}{d}, \dfrac{n}{d}\Bigl) = 1 | \dfrac{b}{d}$ e ammette unica soluzione modulo $\dfrac{n}{d}$ \\
-			\textbf{Esempi precedenti:} 
+			\textbf{Esempi precedenti:}
 			\begin{enumerate}
 				\item $18x \equiv 16 \pmod{44} \quad MCD(18,44)=2|16$ \\
 				Dividiamo per 2:
@@ -2828,7 +2828,7 @@
 				Dividiamo per 8:  $8 \cdot 13x \equiv 8 \cdot 3 \pmod{8 \cdot 75}$ \\
 				$13x \equiv 3 \pmod{75}$. \\
 				Risolviamo questa congruenza: $75|13x-3 \implies \exists h \in \mathbbm{Z} \mid 13x - 3 = 75h \implies 13x - 75h = 3$ \\
-				$a=13 \quad b=75$ \\ 
+				$a=13 \quad b=75$ \\
 				$75 = 13 \cdot 5 + 10$ \\
 				$13 = 10 + 3$ \\
 				$10 = 3 \cdot 3 + 1$ \\
@@ -2850,15 +2850,15 @@
 				$x \equiv 3 \pmod{5}$
 				\item $14x \equiv 6 \pmod{4}$ consideriamo i resti nella divisione per 4\\
 				$14 = 4 \cdot 3 + 2$ \\
-				$6 = 4 + 2$ \\ 
+				$6 = 4 + 2$ \\
 				$2x \equiv 2 \pmod{4}$ dividiamo tutto per 2
 				$x \equiv 1 \pmod{\dfrac{4}{MCD(2,4)}} \implies x \equiv 1 \pmod{2}$
 				\item $19x \equiv 3 \pmod{8}$ \\
 				$19 = 8 \cdot 2 + 3$ \\
 				$3x \equiv 3 \pmod{8}$ dividiamo per 3 e $MCD(3,8) = 1$, quindi: $x \equiv 1 \pmod{8}$
-			\end{enumerate} 
+			\end{enumerate}
 			\item \textbf{Tentativi:} Per $n$ piccolo si può provare a risolvere per tentativi \\
-			\textbf{Esempi:} 
+			\textbf{Esempi:}
 			\begin{enumerate}
 				\item $3x \equiv 1 \pmod{7} \quad MCD(3,7)=1$ questo mi dice che la congruenza ha unica soluzione modulo 7 e tutte le altre sono congruente a quell'unica soluzione \\
 				$x_0$ può essere $0,1,2,3,4,5,6$ e l'unica che da resto 1 è se $x_0 = 5$ quindi: $x \equiv 5 \pmod{7}$
@@ -2876,7 +2876,7 @@
 		\end{enumerate}
 		\subsection{Sistemi di congruenze lineari}
 		\begin{definition}{\nmu Sistemi di congruenze lineari}{sistemi_congr}
-			Un sistema di congruenze lineari è dato da: 
+			Un sistema di congruenze lineari è dato da:
 			\[
 			\begin{cases}
 				a_1x \equiv b_1 \pmod{n_1} \\
@@ -2885,7 +2885,7 @@
 				a_rx \equiv b_r \pmod{n_r}
 			\end{cases}
 			\]
-			Una soluzione di un sistema è $x_0 \in \mathbbm{Z}$ che risolve tutte le congruenze 
+			Una soluzione di un sistema è $x_0 \in \mathbbm{Z}$ che risolve tutte le congruenze
 		\end{definition}
 		\textbf{Osservazione:} Ogni congruenze del sistema deve ammettere soluzione, altrimenti non esistono soluzioni del sistema. Inoltre, serve una compatibilità. Esempio: $\begin{cases}
 			x \equiv 1 \pmod{10}  \\
@@ -2893,7 +2893,7 @@
 		\end{cases}$ \\
 		Questo ci dice che nella prima congruenza la $x$ sarà dispari mentre nella seconda sarà pari e quindi non ci sono soluzioni perchè non c'è compatibilità.
 		\begin{theorem}{}{}
-						Dato un sistema: 
+						Dato un sistema:
 			$\begin{cases}
 				a_1x \equiv b_1 \pmod{n_1} \\
 				a_2x \equiv b_2 \pmod{n_2} \\
@@ -2906,13 +2906,13 @@
 				\vdots \\
 				x \equiv c_r \pmod{n'_r}
 			\end{cases}$ \\
-			Quindi sono spariti i coefficienti davanti alle $x$. 
+			Quindi sono spariti i coefficienti davanti alle $x$.
 			\begin{proof} \quad \\
 				Ogni congruenza del sistema ammette soluzioni, $\forall i = 1, \dots, r \quad a_ix \equiv b_i \pmod{n_i} \quad MCD(a_i, n_i) | b_i$.\\
-				Sia $d_i = MCD(a_i, n_i)$. \\ 
-				Dividiamo per $d_i: \dfrac{a_i}{d_i}x \equiv \dfrac{b_i}{d_i} \pmod{\dfrac{n_i}{d_i}}$, adesso questa congruenza ammette una sola soluzione, $c_i$, modulo $\dfrac{n_i}{d_i}$, perchè l'MCD ora vale 1. 
+				Sia $d_i = MCD(a_i, n_i)$. \\
+				Dividiamo per $d_i: \dfrac{a_i}{d_i}x \equiv \dfrac{b_i}{d_i} \pmod{\dfrac{n_i}{d_i}}$, adesso questa congruenza ammette una sola soluzione, $c_i$, modulo $\dfrac{n_i}{d_i}$, perchè l'MCD ora vale 1.
 			\end{proof}
-		\end{theorem} 
+		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $\begin{cases}
@@ -2942,15 +2942,15 @@
 				\vdots \\
 				x \equiv c_r \pmod{n_r}
 			\end{cases}$ \\
-			un sistema di congruenze lineari tale che $MCD(n_i, n_j) = 1 \quad \forall i \neq j$. Allora il sistema ammette una unica soluzione modulo $n_1 \cdot n_2 \cdots n_r$. Se $MCD(n_i, n_j) \neq 1$, questo teorema non ci dice che non esistono soluzioni, ma per risolvere dobbiamo applicare metodi più complicati che noi non affronteremo. 
+			un sistema di congruenze lineari tale che $MCD(n_i, n_j) = 1 \quad \forall i \neq j$. Allora il sistema ammette una unica soluzione modulo $n_1 \cdot n_2 \cdots n_r$. Se $MCD(n_i, n_j) \neq 1$, questo teorema non ci dice che non esistono soluzioni, ma per risolvere dobbiamo applicare metodi più complicati che noi non affronteremo.
 				\begin{tcolorbox}[colframe=green!75!black, colback=white!5!white, title=DIM del teorema cinese di resti, fonttitle=\bfseries]
 				Sia $N = n_1 \cdot n_2 \cdots n_r$ il prodotto tra tutti gli $n$. \\
 				Sia $N_i = \dfrac{n_1 \cdot n_2 \cdots n_r}{n_i}$ il prodotto tra tutti tranne $n_i$ \\
 				$\forall i = 1, \dots, r$ risolviamo $N_ix \equiv c_i \pmod{n_i}$ e $MCD(N_i, n_i) = 1$ perchè $N_i$ è il prodotto tra tutti gli $n$ tranne $n_i$, quindi $\exists$ soluzione ed è unica modulo $n_i$ che chiamiamo $x_i$. \\
-				Allora $x_0 = N_1 \cdot x_1 + N_2 \cdot x_2 + \cdots + N_r \cdot x_r$ è soluzione del sistema infatti: \\ 
-				$x_0 = N_1 \cdot x_1 + N_2 \cdot x_2 + N_i \cdot x_i + \cdots + N_r \cdot x_r \equiv N_i \cdot x_i \equiv c_i \pmod{n_i}$. \\ 
+				Allora $x_0 = N_1 \cdot x_1 + N_2 \cdot x_2 + \cdots + N_r \cdot x_r$ è soluzione del sistema infatti: \\
+				$x_0 = N_1 \cdot x_1 + N_2 \cdot x_2 + N_i \cdot x_i + \cdots + N_r \cdot x_r \equiv N_i \cdot x_i \equiv c_i \pmod{n_i}$. \\
 				Tutte le soluzioni sono $x \equiv N_i \cdot x_1 + N_2 \cdot x_2 + \cdots + N_r \cdot x_r \pmod{N}$
-			\end{tcolorbox} 
+			\end{tcolorbox}
 		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
@@ -2961,7 +2961,7 @@
 			$N = 5 \cdot 3 = 15$ \\
 			$N_1 = \dfrac{5 \cdot 3}{5} = 3$ \\
 			$N_2 = \dfrac{5 \cdot 3}{3} = 5$ \\
-			Le due congruenze da risolvere saranno: 
+			Le due congruenze da risolvere saranno:
 			\begin{itemize}
 				\item $N_1x\equiv 2 \pmod{5}$ \\
 				$3x \equiv 2 \pmod{5}$ \\
@@ -2974,7 +2974,7 @@
 			\item $\begin{cases}
 				11x \equiv 9 \pmod{8} \\
 				71x \equiv 142 \pmod{7} \\
-				88x \equiv 2 \pmod{5} 
+				88x \equiv 2 \pmod{5}
 			\end{cases}$ \\
 			$MCD(11, 8) = 1$ \\
 			$MCD(71,7) = 1$ \\
@@ -3002,25 +3002,25 @@
 			$N_1 = \dfrac{8 \cdot 7 \cdot 5}{8} = 35$ \\
 			$N_2 = \dfrac{8 \cdot 7 \cdot 5}{7} = 40$ \\
 			$N_3 = \dfrac{8 \cdot 7 \cdot 5}{5} = 56$ \\
-			Le nostre congruenze da risolvere quindi sono: 
+			Le nostre congruenze da risolvere quindi sono:
 			\begin{itemize}
 				\item $N_1x \equiv 3 \pmod{8}$\\
 				$35x \equiv 3 \pmod{8}$ \\
 				$35 = 4 \cdot 8 + 3$ \\
 				$3x \equiv 3 \pmod{8}$ \\
 				$x_1 = 1$
-				\item $N_2x \equiv 2 \pmod{7}$ \\ 
+				\item $N_2x \equiv 2 \pmod{7}$ \\
 				$40x \equiv 2 \pmod{7}$ \\
 				$40 = 7 \cdot 5 + 5$ \\
 				$5x \equiv 2 \pmod{7}$ \\
 				$x_2 = 6$ è soluzione
-				\item $N_3x \equiv 1 \pmod{5}$ 
+				\item $N_3x \equiv 1 \pmod{5}$
 				$56x \equiv 1 \pmod{5}$ \\
 				$56 = 55 + 1$ \\
 				$x \equiv 1 \pmod{5}$ \\
 				$x_3 = 1$
- 			\end{itemize} 
- 			
+ 			\end{itemize}
+
  			Allora $x = N_1 \cdot x_1 + N_2 \cdot x_2 + N_3 \cdot x_3$ \\
  			$x = 35 \cdot 1 + 40 \cdot 6 + 56 \cdot 1 = 35 + 240 + 56$ \\
  			$x = 35 + 240 + 56 \pmod{280}$ che è uguale a dire $x \equiv 51 \pmod{280}$
@@ -3034,8 +3034,8 @@
 		\chapter{Strutture algebriche}
 		\begin{definition}{\nmu Operazione o legge di composizione}{operazione_composizione}
 			Sia $A$ un insieme non vuoto. Un'operazione su $A$ è una funzione \[*: A \times A \to A \quad \forall a,b \in A \quad *(a,b) = a*b \in A\]
-			La coppia $(A, *)$ è detta \textbf{struttura algebrica}. 
-		\end{definition} 
+			La coppia $(A, *)$ è detta \textbf{struttura algebrica}.
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $A = \mathbbm{N} \quad *=+ \quad *:\mathbbm{N} \times \mathbbm{N} \to \mathbbm{N}$ \\
@@ -3070,7 +3070,7 @@
 		\subsection{Associativa}
 		\begin{definition}{\nmu Struttura algebrica associativa}{struct_alg_associativa}
 			Sia $(A, *)$ una struttura algebrica. L'operazione $*: A \times A\to A$ è detta associativa se $\forall a,b,c \in A \quad (a * b) * c = a * (b * c)$
-		\end{definition} 
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $+ \quad (a+b) + c = a + (b + c)$ \\
@@ -3083,20 +3083,20 @@
 			$\forall a,b,c \in \mathbbm{Z} \quad (a*b)*c = a*(b*c)$ ? \\
 			$(a*b)*c = (2ab + a + b)*c = 2(2ab+a+b)\cdot c + (2ab+a+b)+c = 4abc + 2ac+ 2bc+2ab+a+b+c$ \\
 			$a*(b*c) = a*(2bc + b + c) = 2(2bc+b+c) \cdot a + (2bc+b+c)+a = 4bca + 2ba + 2ca + 2bc+b+c+a$ \\
-			I risultati sono uguali perchè possiamo scambiare addendi. 
+			I risultati sono uguali perchè possiamo scambiare addendi.
 			\item $A=\mathbbm{Q} \quad *:\mathbbm{Q} \times \mathbbm{Q} \to \mathbbm{Q}$ \\
 			$\forall x,y \in \mathbbm{Q} \quad x \cdot y = x \cdot y + x$ \\
 			L'operazione è associativa? \\
 			$\forall a,b,c \in \mathbbm{Q} \quad (a*b)*c = a*(b*c)$ \\
 			$(a*b)*c = (a \cdot b + a)*c = (a \cdot b + a)\cdot c + a \cdot b + a = abc + ac + ab + a$  \\
 			$a*(b*c) = a*(b \cdot c + b) = (b \cdot c + b) \cdot a + b \cdot c + b = bca + ba + bc + b$ \\
-			Questi non sono uguali e quindi $*$ non è associativa. 
+			Questi non sono uguali e quindi $*$ non è associativa.
 		\end{enumerate}
 		\subsection{Commutativa}
 		\begin{definition}{\nmu Struttura algebrica commutativa}{struct_alg_comm}
 			Sia $(A, *)$ una struttura algebrica. L'operazione $*: A \times A\to A$ è detta commutativa se $\forall a,b \in A \quad (a * b) = (b * a)$ \\
 			In tal caso $(A, *)$ è detta struttura algebrica commutativa
-		\end{definition} 
+		\end{definition}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $a+b = b +a$ \\
@@ -3136,7 +3136,7 @@
 				$((a,b) * (c,d))* (e,f) = (a+c, 2bd)*(e,f) = (a+c+e, 2 \cdot 2bd \cdot f)$ \\
 				$(a,b)*((c,d) * (e, f)) = (a,b)*(c+e, 2df) =(a+c+e, 2b \cdot 2df) = (a+c+e, 2 \cdot 2 \cdot bdf)$ \\
 				Adesso sono uguali, quindi l'operazione è associativa
-			\end{itemize}		
+			\end{itemize}
 		\end{enumerate}
 		\subsection{Elemento neutro}
 		\begin{definition}{\nmu Elemento neutro}{el_neutro}
@@ -3152,20 +3152,20 @@
 			\item $\mathbbm{N} \quad *=+ \quad \exists e \in \mathbbm{N}$ tale che $\forall a \in \mathbbm{N} \quad a+e=e+a=a$? \\
 			Si, $e=0$, quindi $(\mathbbm{N}, +), (\mathbbm{Z}, +), (\mathbbm{Q}, +), (\mathbbm{R}, +)$ ammettono $e=0$ come elemento neutro.
 			\item $\mathbbm{N} \quad *=\cdot \quad \exists e \in \mathbbm{N}$ tale che $\forall a \in \mathbbm{N} \quad a\cdot e = e \cdot a = a$ \\
-			Si, $\exists e=1 \in \mathbbm{N}$ quindi $(\mathbbm{N}, \cdot), (\mathbbm{Z}, \cdot), (\mathbbm{Q}, \cdot), (\mathbbm{R}, \cdot)$ ammettono $e=1$ come elemento neutro. 
+			Si, $\exists e=1 \in \mathbbm{N}$ quindi $(\mathbbm{N}, \cdot), (\mathbbm{Z}, \cdot), (\mathbbm{Q}, \cdot), (\mathbbm{R}, \cdot)$ ammettono $e=1$ come elemento neutro.
 			\item $\mathbbm{Z} \quad *=- \quad \exists e \in \mathbbm{Z}$ tale che $\forall a \in \mathbbm{Z} \quad a-e=e-a=a$ ?\\
-			Non esiste elemento neutro. 
+			Non esiste elemento neutro.
 			\item $A = \{f: B \to B\} \quad *=\circ \quad \exists e \in \mathbbm{A} $ tale che $\forall f \in A \quad f \circ e = e \circ f = f$ ? \\
 			Si, $e=Id_B$, cioè la funzione identità che è $Id_B: B \to B$ quindi manda ogni elemento in se stesso.
 		\end{enumerate}
 		\textbf{Osservazione:} Se l'elemento neutro esiste in $(A, *)$ questo è unico. Se ci fossero 2 elementi neutri $e_1$ ed $e_d \in \mathbbm{A} \quad e_1 = e_1 * e_2 = e_2$ \\
-		\textbf{Esempi:} 
+		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $\mathbbm{Z} \forall a,b \in \mathbbm{Z} \quad a*b = 2ab + a +b$ \\
 			$\exists e \in \mathbbm{Z} \mid \forall a \in \mathbbm{Z} \quad a*e=e*a=a$ ? \\
 			Visto che questa operazione abbiamo detto essere commutativa, basta studiare solo una tra $a*e$ o$e*a$. \\
 			$e*a = 2ea + e + a = a \implies 2ea + e = 0 \implies e(2a + 1)$ \\
-			$e=0$ è elemento neutro. 
+			$e=0$ è elemento neutro.
 			\item $\mathbbm{Q} \quad \forall x,y \in \mathbbm{Q} \quad x*y=x\cdot y + x$ \\
 			$\exists e \in \mathbbm{Q} \mid \forall a \in \mathbbm{Q} \quad a*e=e*a=a$ \\
 			$a*e = a \implies ae + a = a \implies ae = 0 \implies e=0$  \\
@@ -3178,7 +3178,7 @@
 			$(a,b)*(e_1, e_2) = (a+e_1, 2be_2)$ \\
 			$\begin{cases}
 				a+e_1 = a \implies e_1 = 0 \\
-				2be_2 = b \implies 2e_2 = 1 \implies e_2 = \dfrac{1}{2} 
+				2be_2 = b \implies 2e_2 = 1 \implies e_2 = \dfrac{1}{2}
 			\end{cases}$ \\
 			$\Bigl(0, \dfrac{1}{2} \Bigl) \notin \mathbbm{Z} \times \mathbbm{Z} \implies \nexists$ elemento neutro, se fossimo in $\mathbbm{Q} \times \mathbbm{Q}$ funzionerebbe.
 			\item \textbf{Monoide delle parole in informatica} \\
@@ -3192,15 +3192,15 @@
 			$\forall w \in A \quad w * \emptyset = \emptyset * w = w$ \\
 			Inoltre l'operazione è associativa. \\
 			$\forall w_1, w_2, w_3 \in A \quad (w_1 * w_2) * w_3 = w_1 * (w_2 * w_3)$ \\
-			$(A, *)$ è un monoide.  
-		\end{enumerate} 
+			$(A, *)$ è un monoide.
+		\end{enumerate}
 		\section{Elemento invertibile}
 		\begin{definition}{\nmu Elemento invertibile}{el_invertibile}
 			Sia $(A, *)$ una struttura algebrica con elemento neutro. \\
 			Un elemento neutro $a$ si dice invertibile se $\exists a' \in A \mid a*a'=a'*a=e$
 		\end{definition}
-		\textbf{Osservazione:} Se non c'è elemento neutro non esistono elementi invertibili. 
-		\textbf{Esempi:} 
+		\textbf{Osservazione:} Se non c'è elemento neutro non esistono elementi invertibili.
+		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $(N, +) \quad a \in \mathbbm{N}$ è invertibile? \\
 			$\exists a' \in N \mid a+a'=a'+a=0 \quad a'=-a \in \mathbbm{N}$ solo se $a=0$ \\
@@ -3216,20 +3216,20 @@
 				Vogliamo dimostrare che $b=c$. Allora: \\
 				$b=b*e$ \\
 				Sappiamo che $a*c=e$ quindi $b=b*e=b*(a*c) = (b*a)*c$ perchè è associativa. Ora $b*a=e$ quindi $b=(b*a)*c = e*c = c$ quindi abbiamo dimostrato che $b=c$ \\
-				\textbf{Osservazioni:} L'elemento neutro $e$ è sempre invertibile e si ha che $e*e=e$ quindi l'inverso di $e$ è $e$. 
+				\textbf{Osservazioni:} L'elemento neutro $e$ è sempre invertibile e si ha che $e*e=e$ quindi l'inverso di $e$ è $e$.
 				\begin{itemize}
 					\item Se $*=+ \quad e=0$ e l'elemento inverso di $a$ si chiama \textit{opposto} e si indica con $-a$
 					\item Se $*=\cdot \quad e=1$ e l'elemento inverso di $a$ si denota con $a^{-1}$.
 				\end{itemize}
 			\end{proof}
 		\end{theorem}
-		\textbf{Esempi:} 
+		\textbf{Esempi:}
 		\begin{enumerate}
-			\item $(\mathbbm{N}, +)$ unico elemento invertibile è $e=0$ 
+			\item $(\mathbbm{N}, +)$ unico elemento invertibile è $e=0$
 			\item $(\mathbbm{Z}, +) \quad a \in \mathbbm{Z} \quad \exists a' \in \mathbbm{Z} \mid a + a' = a' + a = 0 \quad a'=-a$ \\
 			Tutti gli elementi sono invertibili, lo stesso vale per $(\mathbbm{Q}, +)$ e $(\mathbbm{R}, +)$ ogni elemento $a$ è invertibile e l'inverso è $-a$.
 			\item $(\mathbbm{N}, \cdot)$ l'elemento neutro è 1, $a$ è invertibile? \\
-			$\exists a' \in \mathbbm{N} \mid a \cdot a' = a' \cdot a = 1 \implies a' = \dfrac{1}{a} \in A \iff a=1$ è invertibile e l'inverso è sempre 1 
+			$\exists a' \in \mathbbm{N} \mid a \cdot a' = a' \cdot a = 1 \implies a' = \dfrac{1}{a} \in A \iff a=1$ è invertibile e l'inverso è sempre 1
 			\item $(\mathbbm{Z}, \cdot)$, $a$ è invertibile? \\
 			$\exists a' \in \mathbbm{Z} \mid a \cdot a' = a' \cdot a = 1 \implies a' = \dfrac{1}{a} \in \mathbbm{Z} \iff a=1$ e l'inverso è 1 o $a=-1$ e l'inverso è -1.
 			\item $(\mathbbm{Q}, \cdot)$, $a$ è invertibile? \\
@@ -3252,15 +3252,15 @@
 			$\forall a,b,c \in A \quad a*(b*c) = (a*b)*c$ \\
 			$a*(b*c) = a * \Bigl(-bc +  \dfrac{1}{2}b + \dfrac{1}{2}c\Bigl) = -a\Bigl(-bc + \dfrac{1}{2}b + \dfrac{1}{2}c\Bigl) + \dfrac{1}{2}a + \dfrac{1}{2}\Bigl(-bc + \dfrac{1}{2}b + \dfrac{1}{2}c\Bigl) = abc -\dfrac{1}{2}ab - \dfrac{1}{2}ac + \dfrac{1}{2}a -\dfrac{1}{2}bc + \dfrac{1}{4}b +\dfrac{1}{4}c$ \\
 			$(a*b)*c = \Bigl(-ab + \dfrac{1}{2}a + \dfrac{1}{2}b\Bigl) *c = -\Bigl(-ab+\dfrac{1}{2}a+\dfrac{1}{2}b\Bigl)c + \dfrac{1}{2}\Bigl(-ab+\dfrac{1}{2}a + \dfrac{1}{2}b\Bigl) + \dfrac{1}{2}c = abc-\dfrac{1}{2}ac-\dfrac{1}{2}bc -\dfrac{1}{2}ab + \dfrac{1}{4}a + \dfrac{1}{4}b + \dfrac{1}{2}c$ \\
-			I due risultati sono diversi quindi non è associativa. 
+			I due risultati sono diversi quindi non è associativa.
 			\item \textbf{Commutativa:} \\
 			$\forall a,b \in \mathbbm{Q} \quad a*b=b*a$ \\
 			$a*b = -ab + \dfrac{1}{2}a + \dfrac{1}{2}b$ \\
 			$b*a=-ba + \dfrac{1}{2}b + \dfrac{1}{2}a$ \\
-			Sono uguali perchè $(\mathbbm{Q}, +)$ e $(\mathbbm{Q}, \cdot)$ sono commutative quindi l'operazione è commutativa. 
+			Sono uguali perchè $(\mathbbm{Q}, +)$ e $(\mathbbm{Q}, \cdot)$ sono commutative quindi l'operazione è commutativa.
 			\item \textbf{Elemento neutro:} \\
 			$\exists e \in \mathbbm{Q} \mid \forall a \in \mathbbm{Q} \quad a*e=e*a=a$ \\
-			$a*e=-ae+\dfrac{1}{2}a +\dfrac{1}{2}e=a \implies e\Bigl(-a + \dfrac{1}{2}\Bigl) = a - \dfrac{1}{2}a \implies e\Bigl(-a + \dfrac{1}{2}\Bigl) = \dfrac{1}{2}a \implies e = \Bigl(\dfrac{1}{2}a\Bigl)\backslash\Bigl(-a + \dfrac{1}{2}\Bigl)$ ed è impossibile perchè $e$ dipende da $a$ questo ci dice che non esiste elemento neutro, di conseguenza non esiste neanche l'elemento invertibile. 
+			$a*e=-ae+\dfrac{1}{2}a +\dfrac{1}{2}e=a \implies e\Bigl(-a + \dfrac{1}{2}\Bigl) = a - \dfrac{1}{2}a \implies e\Bigl(-a + \dfrac{1}{2}\Bigl) = \dfrac{1}{2}a \implies e = \Bigl(\dfrac{1}{2}a\Bigl)\backslash\Bigl(-a + \dfrac{1}{2}\Bigl)$ ed è impossibile perchè $e$ dipende da $a$ questo ci dice che non esiste elemento neutro, di conseguenza non esiste neanche l'elemento invertibile.
 		\end{itemize}
 	\chapter{Gruppi}
 		\begin{definition}{\nmu Gruppo}{gruppo}
@@ -3273,9 +3273,9 @@
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $(\mathbbm{N}, +)$ non è un gruppo perchè solo lo zero è invertibile, mentre $(\mathbbm{Z}, +), (\mathbbm{Q}, +). (\mathbbm{R}, +)$ sono gruppi
-			\item $(\mathbbm{N}, \cdot)$ non è gruppo perchè solo -1 è invertibile, così come $(\mathbbm{Z},\cdot), (\mathbbm{Q}, \cdot), (\mathbbm{R}, \cdot)$ non sono gruppi perchè lo 0 non è invertibile. 
-			\item $(\mathbbm{Q}^*,\cdot)$ e $(\mathbbm{R}^*, \cdot)$ sono gruppi 
-			\item $(A = {f: B \to B \mid \text{biettive}}, \circ)$ sappiamo che $\circ$ è associativa, $Id_B$ è biettiva, composizione di biettiva è biettiva.  
+			\item $(\mathbbm{N}, \cdot)$ non è gruppo perchè solo -1 è invertibile, così come $(\mathbbm{Z},\cdot), (\mathbbm{Q}, \cdot), (\mathbbm{R}, \cdot)$ non sono gruppi perchè lo 0 non è invertibile.
+			\item $(\mathbbm{Q}^*,\cdot)$ e $(\mathbbm{R}^*, \cdot)$ sono gruppi
+			\item $(A = {f: B \to B \mid \text{biettive}}, \circ)$ sappiamo che $\circ$ è associativa, $Id_B$ è biettiva, composizione di biettiva è biettiva.
 		\end{enumerate}
 		\textbf{Esercizio:} $A = \mathbbm{Q} \times \mathbbm{Q} \quad *: A \times A \to A$ \\
 		$\forall (s,t), (x,y) \in A \quad (s,t)*(x,y) = (3xs, t + 5+ y)$ \\
@@ -3285,7 +3285,7 @@
 			$\forall (a,b),(c,d), (e,f) \in A \quad ((a,b) * (c,d)) * (e,f) = (a,b) * ((c,d) * (e,f))$ \\
 			$((a,b) * (c,d)) * (e,f) = (3ca, b + 5 + d) * (e,f) = (3e3ca, b + 5 + d + 5 + f)$ \\
 			$(a,b) * ((c,d) * (e,f)) = (a,b)*(3ec, d + 5 + f) = (3 \cdot 3eca, b + 5 + d + 5 f) = (3e3ca, b + 5 + d + 5 +f)$ \\
-			Sono uguali quindi l'operazione è associativa 
+			Sono uguali quindi l'operazione è associativa
 			\item \textbf{Commutativa} \\
 			$\forall (a,b), (c,d) \quad (a,b)*(c,d) = (c,d)*(a,b)$ \\
 			$(a,b)*(c,d) = (3ca, b + 5 +d)$ \\
@@ -3298,7 +3298,7 @@
 				3e_1a=a \implies 3e_1 = 1 \implies e_1 = \dfrac{1}{3} \in \mathbbm{Q}\\
 				b+5+e_2=b \implies 5 + e_2=0 \implies e_2=-5 \in \mathbbm{Q}
 			\end{cases}$ \\
-			Quindi esiste elemento neutro. $\Bigl(\dfrac{1}{3}, -5\Bigl) \in \mathbbm{Q} \times \mathbbm{Q}$. 
+			Quindi esiste elemento neutro. $\Bigl(\dfrac{1}{3}, -5\Bigl) \in \mathbbm{Q} \times \mathbbm{Q}$.
 			\item \textbf{(1,1) è invertibile?} \\
 			$\exists (a,b) \in A \mid (1,1)*(a,b) = (a,b) * (1,1) = \Bigl(\dfrac{1}{3}, -5\Bigl)$ \\
 			$(a,b) * (1,1) = (3a, b +5 +1) = \Bigl(\dfrac{1}{3}, -5\Bigl)$ \\
@@ -3326,7 +3326,7 @@
 		\begin{enumerate}
 			\item $(Z, +), (Q, +), (R, +)$ sono gruppi abeliani infiniti.
 			\item $(Q^*, \cdot), (R^*, \cdot)$ sono gruppi abeliani infiniti
-			\item $(A={f:B \to B |\text{biettiva}}, \circ)$ Se $B$ è finito e $|B| = n$, allora l'insieme delle funzioni biettiva $B \to B$ contiene $n!$ per la combinatoria. 
+			\item $(A={f:B \to B |\text{biettiva}}, \circ)$ Se $B$ è finito e $|B| = n$, allora l'insieme delle funzioni biettiva $B \to B$ contiene $n!$ per la combinatoria.
 		\end{enumerate}
 		\section{Operazioni compatibili con relazioni di equivalenza}
 		\begin{definition}{\nmu Relazione compatibile}{rel_compatibile}
@@ -3346,7 +3346,7 @@
 			$\forall a,b,c,d \in A$ se $a\mathscr{R}b \quad a \equiv b \pmod{n}$ e $c\mathscr{R}d \quad c \equiv d \pmod{n}$ allora $a+c \equiv b+d \pmod{n}$ \\
 			$\sfrac{A}{\mathscr{R}} = \sfrac{\mathbbm{Z}}{\text{congruenza modulo n}} = \mathbbm{Z}_n = \{[0]_n, [1]_n, \dots, [n-1]_n\}$ ci sono $n$ elementi  \\
 			$+:\mathbbm{Z}_n \times \mathbbm{Z}_n \to \mathbbm{Z}_n \quad \forall [a]_n, [b]_n \in \mathbbm{Z}_n \quad [a]_n + [b]_n = [a + b]_n$ \\
-			Dato che $(\mathbbm{Z}, +)$ è un gruppo abeliano, cioè commutativo, allora $(\mathbbm{Z}_n, +)$ è un gruppo commutativo $\forall n \geq 2$ 
+			Dato che $(\mathbbm{Z}, +)$ è un gruppo abeliano, cioè commutativo, allora $(\mathbbm{Z}_n, +)$ è un gruppo commutativo $\forall n \geq 2$
 			\begin{enumerate}
 				\item $n=4 \quad \mathbbm{Z}_4 = \{[0]_4, [1]_4, [2]_4, [3]_4\}$ \\
 				$[3]_4 + [3]_4 = [3 + 3]_4 = [6]_4 = [2]_4$ perchè 6 nella divisione 4 ha resto 2 e quindi 6 e 2 hanno stesso resto nella divisione per 4, quindi $6 \equiv 2 \pmod{4}$ \\
@@ -3383,7 +3383,7 @@
 		\end{enumerate}
 		\section{Sottogruppi}
 		\begin{definition}{\nmu Sottogruppo}{sottogruppo}
-			Un sottogruppo di un gruppo, $(G, *)$, è un sottoinsieme $H$ non vuoto che è un gruppo rispetto alla stessa operazione: 
+			Un sottogruppo di un gruppo, $(G, *)$, è un sottoinsieme $H$ non vuoto che è un gruppo rispetto alla stessa operazione:
 			\begin{itemize}
 				\item $\forall a,b \in H \quad a*b \in H$
 				\item $\text{elemento neutro $e$ di $G$}, e \in H$
@@ -3408,13 +3408,13 @@
 				\item $g^0$ è l'elemento neutro;
 				\item $g^t$ è $g * g * g * \cdots * g \quad t$ volte se $t > 0$;
 				\item $g^{-n} = g^{-1} * g^{-1} * \cdots * g^{-1} \quad n$ volte dove $g^{-1}$ è l'inverso di $g$
-			\end{itemize} 
+			\end{itemize}
 		\end{theorem}
 		\textbf{Esempi:}
 		\begin{enumerate}
 			\item $g = 2 \quad \langle2\rangle = \{2^t \mid t \in \mathbbm{Z}\} = \{2^0 = e, 2^1, 2^2, 2^{-1}, 2^{-2}, \dots \}$
 			\item $(G, *) \quad e$ elemento neutro $\langle e \rangle = \{e^t \mid t \in \mathbbm{Z}\} = \{e\}$
-		\end{enumerate}	  
+		\end{enumerate}
 		\textbf{Osservazione:} In ogni gruppo $(G, *)$, il sottogruppo generato dall'elemento neutro, $e$, contiene solo $e$, quindi $\langle e \rangle = \{e\}$
 		\begin{definition}{\nmu Ordine o periodo di un elemento}{ordine_periodo_el}
 			Sia $(G, *)$ un gruppo e sia $g \in G$ un elemento. \\
@@ -3427,12 +3427,12 @@
 		\textbf{Esempio:} Nel caso di prima $\langle2\rangle = \{2^t \mid t \in \mathbbm{Z}\} \quad o(2) = \infty$ \\
 		$\langle e \rangle = \{e^t \mid t \in \mathbbm{Z}\} = \{e\} \quad o(e) = |\langle e \rangle| = 1$
 		\begin{theorem}{}{}
-			Sia $(G, *)$ un gruppo e sia $g \in G$ un elemento. 
+			Sia $(G, *)$ un gruppo e sia $g \in G$ un elemento.
 			\begin{enumerate}
 				\item se $o(g)$ è infinito allora tutte le potenze di $g$ sono distinte tra loro: $g^t \neq g^s \quad t \neq s$
 				\item se $o(g) = n$ Allora $n$ è il più piccolo naturale positivo tale che:
 				\begin{itemize}
-					\item $g^n = e$ 
+					\item $g^n = e$
 					\item esistono solo $n$ potenze distinte $g^0, g^1, g^2, \dots, g^{n - 1}$
 					\item $g^t = g^s \iff t \equiv s \pmod{n}$
 				\end{itemize}
@@ -3441,18 +3441,18 @@
 		\end{theorem}
 		\textbf{Esempio:}
 		\begin{enumerate}
-			\item $(\mathbbm{Z}^*_7, \cdot) \quad [2]_7 \quad \langle [2]_7 \rangle = \{[2]_7^t \mid t \in \mathbbm{Z}\}$ 
+			\item $(\mathbbm{Z}^*_7, \cdot) \quad [2]_7 \quad \langle [2]_7 \rangle = \{[2]_7^t \mid t \in \mathbbm{Z}\}$
 			\begin{itemize}
-				\item $[2]_7^0 = [2^0]_7 =[1]_7 = [2]^1_7 = [2]_7$ quindi $[1]_7 = e$ 
+				\item $[2]_7^0 = [2^0]_7 =[1]_7 = [2]^1_7 = [2]_7$ quindi $[1]_7 = e$
 				\item $[2]_7^1 = [2]_7$
-				\item $[2]^2_7 = [2]_7 \cdot [2]_7 = [2 \cdot 2]_7 = [4]_7$ 
-				\item $[2]^3_7 = [2]_7^2 \cdot [2]_7 = [8]_7 = [1]_7 = e$ 
+				\item $[2]^2_7 = [2]_7 \cdot [2]_7 = [2 \cdot 2]_7 = [4]_7$
+				\item $[2]^3_7 = [2]_7^2 \cdot [2]_7 = [8]_7 = [1]_7 = e$
 			\end{itemize}
 			Quindi $\langle 2 \rangle = \{[2]^0_7 = [1]_7, [2]_7, [2]^2_7 = [4]_7\}$ \\
 			$o(2) = |\langle 2 \rangle| = 3$
-			\item $[3]_7$ 
+			\item $[3]_7$
 			\begin{itemize}
-				\item $[3]^0_7 = [1]_7 = e$ 
+				\item $[3]^0_7 = [1]_7 = e$
 				\item $[3]^1_7 = [3]_7$
 				\item $[3]^2_7 = [9]_7 = [2]_7$
 				\item $[3]^3_7 = [3]^2_7 \cdot [3]_7 = [27]_7 = [6]_7$
@@ -3470,7 +3470,7 @@
 		\end{definition}
 		Sia $B$ un insieme con $n$ elementi possiamo scrivere: \\
 		$B = \{1, 2, 3, \dots, n\}$ \\
-		Studiare il gruppo $(A = \{f: B\to B \mid biettiva\}, \circ)$ 
+		Studiare il gruppo $(A = \{f: B\to B \mid biettiva\}, \circ)$
 		\section{Gruppo simmetrico}
 		\begin{definition}{\nmu Gruppo simmetrico o di permutazione}{gruppo_simmetrico}
 			Il gruppo delle funzioni biettive su un insieme con $n$ elementi è detto \textit{gruppo simmetrico su $n$ elementi o gruppo di permutazioni di $n$ elementi} si indica con $S_n$ e $|S_n| = n!$
@@ -3526,7 +3526,7 @@
 			\item $\begin{pmatrix}
 				1 & 2 & 3 \\
 				1 & 3 & 2
-			\end{pmatrix}$ 
+			\end{pmatrix}$
 		\end{enumerate}
 		\begin{definition}{\nmu Composizione di gruppi}{gruppo_composizione}
 			Siano $f,g \in S_n$. \\
@@ -3568,7 +3568,7 @@
  		1 & 2 & 3 \\
  		2 & 3 & 1
  		\end{pmatrix}$\\
- 		\textbf{Secondo esempio:} \\ 
+ 		\textbf{Secondo esempio:} \\
  		$n = 8 \quad f = \begin{pmatrix}
  			1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  			8 & 7 & 6 & 5 & 4 & 3 & 2 & 1
@@ -3616,7 +3616,7 @@
  			3 & 1 & 2 \\
  			2 & 3 & 1
  		\end{pmatrix}$ \\
- 		\textbf{Secondo esempio: }\\ 
+ 		\textbf{Secondo esempio: }\\
  		$n = 8 \\ f =\begin{pmatrix}
  			1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  			8 & 7 & 6 & 5 & 4 & 3 & 2 & 1
@@ -3627,10 +3627,10 @@
  		\end{pmatrix} = \begin{pmatrix}
  		1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  		8 & 7 & 6 & 5 & 4 & 3 & 2 & 1
- 		\end{pmatrix}$ 
+ 		\end{pmatrix}$
  		 \begin{definition}{\nmu Ciclo}{ciclo}
  		 	Consideriamo $S_n$ e $1 \leq k \leq n$
- 			Un ciclo di lunghezza $f$ in $S_n$ si indica con: 
+ 			Un ciclo di lunghezza $f$ in $S_n$ si indica con:
  			\[
  			(a_1\ a_2\ \dots\ a_k)\ \text{dove $a_i \in \{1, \dots, n\}$}
  			\]
@@ -3668,7 +3668,7 @@
  		$g = \begin{pmatrix}
  			1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
  			2 & 6 & 7 & 5 & 8 & 1 & 3 & 4
- 		\end{pmatrix} = (1\ 2\ 6)(3\ 7)(4\ 5\ 8)$ 
+ 		\end{pmatrix} = (1\ 2\ 6)(3\ 7)(4\ 5\ 8)$
  		 \begin{theorem}{}{}
  			\begin{enumerate}
  				\item un ciclo di lunghezza $k$ ha ordine $k$;
@@ -3761,7 +3761,7 @@
  		\textbf{Esercizio:} $S_7 \quad h = \begin{pmatrix}
  			1 & 2 & 3 & 4 & 5 & 6 & 7 \\
  			7 & 6 & 5 & 2 & 3 & 4 & 1
- 		\end{pmatrix}$ 
+ 		\end{pmatrix}$
  		\begin{itemize}
  			\item \textbf{$h$ come prodotto di cicli}: \\
  			$(1\ 7)(2\ 6\ 4)(3\ 5)$
@@ -3812,7 +3812,7 @@
  			7 & 6 & 5 & 2 & 3 & 4 & 1
  			\end{pmatrix} = \begin{pmatrix}
  			1 & 2 & 3 & 4 & 5 & 6 & 7 \\
- 			1 & 6 & 3 & 2 & 5 & 4 & 7 
+ 			1 & 6 & 3 & 2 & 5 & 4 & 7
 			\end{pmatrix}$ \\
 			$h^5 = h^4 \circ h = h^{6 - 1} =  h^{-1} = \begin{pmatrix}
 				1 & 2 & 3 & 4 & 5 & 6 & 7 \\
@@ -3827,7 +3827,7 @@
  				\item $(A, \cdot)$ è associativa
  				\item Valgono le proprietà distributive: \[\forall a,b,c \in A \quad a(b+c) = ab + bc \quad (a+b)c = ac + bc\]
  			\end{itemize}
- 			\textbf{Osservazione:} In un anello è importante l'ordine con cui scriviamo le operazioni 
+ 			\textbf{Osservazione:} In un anello è importante l'ordine con cui scriviamo le operazioni
  		\end{definition}
  		\begin{definition}{\nmu Anello unitario}{anello_unitario}
  			Un anello $(A, +, \cdot)$ si dice \textbf{unitario} se $\exists 1 \in A \mid \forall a \in A\ a \cdot 1 = 1 \cdot a = a$, quindi $\exists$ elemento neutro per $\cdot$ ovvero $(A, \cdot)$ è un monoide. \\
@@ -3836,7 +3836,7 @@
 
  		\textbf{Esempi:}
  		\begin{enumerate}
- 			\item $(\mathbbm{N}, +, \cdot)$ è un anello, $(\mathbbm{N}, +)$ è un gruppo abeliano? No, perchè non tutti gli elementi sono invertibili. 
+ 			\item $(\mathbbm{N}, +, \cdot)$ è un anello, $(\mathbbm{N}, +)$ è un gruppo abeliano? No, perchè non tutti gli elementi sono invertibili.
  			\item $(\mathbbm{Z}, +, \cdot)$ ora $(\mathbbm{Z}, +)$ è un gruppo abeliano, è associativa e valgono le proprietà distributive. Inoltre, $(\mathbbm{Z}, +, \cdot)$ è un anello commutativo unitario perchè è commutativa ed $\exists 1 \in \mathbbm{Z} \mid a \cdot 1 = 1 \cdot a = a$. \\
  			Anche $(\mathbbm{R}, +, \cdot)$ e $(\mathbbm{Q}, +, \cdot)$ sono anelli commutativi unitari.
  			\item $(\mathbbm{Z}, \cdot, +)$, $(\mathbbm{Z}, \cdot)$ è un gruppo? No, perchè gli unici elementi invertibili sono $\pm 1$ quindi non è un gruppo.
@@ -3844,7 +3844,7 @@
  		\end{enumerate}
  		 \begin{definition}{\nmu Divisore dello zero}{divisore_zero}
  			In un anello, $(A, +, \cdot)$, un elemento $a \in A$ con $a \neq 0$ si dice divisore dello 0 se $\exists b \in A$ con $b \neq 0$ tale che $a \cdot b = b \cdot a = 0$. \\
- 			In tale caso anche $b$ è divisore dello 0. 
+ 			In tale caso anche $b$ è divisore dello 0.
  		\end{definition}
  		\textbf{Esempi}:
  		\begin{enumerate}
@@ -3861,16 +3861,16 @@
  		\end{enumerate}
  		 \begin{definition}{\nmu Elemento invertibile}{el_invertibile}
  			In un anello unitario $(A, +, \cdot)$ un elemento $a \neq 0$ si dice invertibile se $\exists a' \in A \quad a' \neq 0$ tale che $a \cdot a' = a' \cdot a = 1$ \\
- 			Poichè l'operazione è associativa se $\exists$ l'inverso di $a$ è unico e lo denotiamo con $a^{-1}$ 
+ 			Poichè l'operazione è associativa se $\exists$ l'inverso di $a$ è unico e lo denotiamo con $a^{-1}$
  		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $(\mathbbm{Z}, +, \cdot)$ gli unici elementi invertibili sono $a = \pm 1$
  			\item $(\mathbbm{Q}, +, \cdot)$ e $(\mathbbm{R}, +, \cdot)$ l'elementi invertibile è $a^{-1} = \dfrac{1}{a}$ e sono tutti tranne lo 0
  			\item $(\mathbbm{Z}_n, +, \cdot) \quad (\mathbbm{Z}_n, \cdot)$ gli elementi invertibili sono le classi $[a]_n \mid MCD(a,n) = 1$
- 			\item $(\mathbbm{Z}_p, +, \cdot) \quad (\mathbbm{Z}_p, \cdot)$ tutti gli elementi tranne lo 0 sono invertibili. 
+ 			\item $(\mathbbm{Z}_p, +, \cdot) \quad (\mathbbm{Z}_p, \cdot)$ tutti gli elementi tranne lo 0 sono invertibili.
  		\end{enumerate}
- 		
+
  		 \begin{theorem}
  			In un anello unitario, $(A, +, \cdot)$, se un elemento è invertibile allora non è un divisore dello 0.
  			 \begin{proof} \quad \\
@@ -3882,15 +3882,15 @@
  				Il secondo modo per dimostrarlo è di moltiplicare la seconda equazione per $a^{-1}$: $a^{-1} \cdot (a \cdot b) = a^{-1} \cdot 0$ \\
  				$(a^{-1} \cdot a) \cdot b = 1 \cdot b = b$ e questo dice che $b = 0$ ma è assurdo. \\
  				Quindi in $(\mathbbm{Z}_p, +, \cdot)$ dato che ogni elemento diverso da 0 è invertibile, non ci sono divisori dello 0. \\
- 
- 			\end{proof} 
+
+ 			\end{proof}
  		\end{theorem}
  		Viceversa del teorema non è sempre vero, cioè se non è divisore dello 0 è invertibile? \\
  		$3 \in (\mathbbm{Z}, +, \cdot)$ non è divisore ma non è neanche invertibile. \\
  		\textbf{Proprietà}: In un anello unitario finito, cioè $A$ contiene un numero finito di elementi, ogni elemento diverso da 0 o è invertibile o è un divisore dello 0, ma non entrambi. \\
  		\textbf{Esempi:}
  		\begin{enumerate}
- 			\item $(\mathbbm{Z}_8, +, \cdot) \quad \mathbbm{Z}_8 = \{[0]_8, \dots, [7]_8\}$ 
+ 			\item $(\mathbbm{Z}_8, +, \cdot) \quad \mathbbm{Z}_8 = \{[0]_8, \dots, [7]_8\}$
  			\begin{itemize}
  				\item \textbf{Invertibili?} $[a]_8 \mid MCD(a, 8) = 1$  e sono $[1]_8, [3]_8, [5]_8, [7]_8$
  				\item \textbf{Divisori dello 0?} $[a]_8 \mid MCD(a, 8) \neq 1$ e sono $[2]_8, [4]_8, [6]_8$
@@ -3906,7 +3906,7 @@
  			L'inverso di $[5]_8$ può essere solo o $[5]_8$ o $[7]_8$ \\
  			$[5]_8 \cdot [5]_8 = [25]_8 = [1]_8$ e quindi $[5]_8$ è l'inverso di se stesso. \\
  			L'inverso di $[7]_8$ è $[7]_8$. \\
- 			\item In $(\mathbbm{Z}_10, +, \cdot)$ vogliamo determinare divisori dello 0, invertibili e inverso degli invertibili. 
+ 			\item In $(\mathbbm{Z}_10, +, \cdot)$ vogliamo determinare divisori dello 0, invertibili e inverso degli invertibili.
  			\begin{itemize}
  				\item \textbf{Invertibili}: $[a]_{10} \mid MCD(a, 10) = 1$ \\
  				Gli elementi invertibili sono $[1]_{10}, [3]_{10}, [7]_{10}, [9]_{10}$
@@ -3920,16 +3920,16 @@
  		\end{enumerate}
  		\begin{definition}{\nmu Campo}{campo}
  			Un anello commutativo unitario in cui ogni elemento non nullo è invertibile si chiama \textbf{campo}. \\
- 			Notazione: 
+ 			Notazione:
  			\[
  			(\mathbbm{K}, +, \cdot) \quad \forall a \in \mathbbm{K} \quad a \neq 0\quad \exists a^{-1} \in \mathbbm{K} \mid a \cdot a^{-1} = a^{-1} \cdot a = 1
- 	 			\] 
+ 	 			\]
  		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $(\mathbbm{Z}, +, \cdot)$ è un campo? No perchè non tutti gli elementi diversi da 0 sono invertibili, mentre $(\mathbbm{Q}, +, \cdot)$ e $(\mathbbm{R}, +, \cdot)$ sono campi.
  			\item $(\mathbbm{Z}_p, +, \cdot)$ è un campo con un numero finito di elementi.
- 		\end{enumerate} 
+ 		\end{enumerate}
  		\chapter{Matrici}
  		\begin{definition}{\nmu Matrici}{matrici}
  			Una matrice a coefficienti in un campo $(\mathbbm{K}, +, \cdot)$ del tipo $m \times n$ è una tabella di $m \cdot n$ elementi di $\mathbbm{K}$ organizzati su $m$ righe ed $n$ colonne. \\
@@ -3939,7 +3939,7 @@
  			\]
  			Altri libri indicano con $(m,n)$ o $m \times n$, $M_{m \times n}(\mathbbm{K})$ viene indicato con  $M_{m, n}(\mathbbm{K})$ o $M(m, n,\mathbbm{K})$ ma l'importante è che ci siano prima le righe e poi le colonne.
  		\end{definition}
- 		\textbf{Esempi:} $\mathbbm{K} = \mathbbm{R}$ o $\mathbbm{Q}$ 
+ 		\textbf{Esempi:} $\mathbbm{K} = \mathbbm{R}$ o $\mathbbm{Q}$
  		\begin{enumerate}
  			\item Scrivere una matrice $3 \times 3$ a coefficienti in $\mathbbm{R}$: \\
  			$\begin{pmatrix}
@@ -3952,21 +3952,21 @@
  				6 & 7 & 8 & 9
  			\end{pmatrix} \in M_{2 \times 4}(\mathbbm{R})$
  		\end{enumerate}
- 		In generale $A \in M_{m \times n}(\mathbbm{K})$ si indica: 
+ 		In generale $A \in M_{m \times n}(\mathbbm{K})$ si indica:
  		\[
  		A = (a_{ij}) = \begin{pmatrix}
  			a_{11} & a_{12} \dots a_{1n} \\
  			a_{21} & a_{22} \dots a_{2n} \\
  			a_{m1} & a_{m2} \dots a_{mn}
  		\end{pmatrix} \in M_{m \times n}(\mathbbm{K})
- 		\] 
+ 		\]
  		$a_{ij}$ è l'elemento che si trova al posto $(i, j)$ ovvero riga i-esima e colonna j-esima. La notazione compatta è: $A = (a_{ij}) \in M_{m \times n}(\mathbbm{K})$ \\
  		Alcuni libri al posto di $a_{ij}$ mettono $a^i_j$. \\
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $A = \begin{pmatrix}
  				1 & 0 & -1 \\
- 				3 & 5 & 6 	
+ 				3 & 5 & 6
  			\end{pmatrix} \in M_{2 \times 3}(\mathbbm{R})$ \\
  			$a_{11} = 1 \quad a_{21} = 3 \quad a_{33} = $ non esiste.
  		\end{enumerate}
@@ -3976,24 +3976,24 @@
  		\section{Operazioni sulle matrici}
  		\begin{definition}{\nmu Matrice trasposta}
  			Se $A \in M_{m \times n}(\mathbbm{K})$. \\
- 			La matrice trasposta di $A$  si indica con $A^t$ ed è una matrice in $M_{n \times m}(\mathbbm{K})$ ottenuta scambiando le righe con le colonne. 
- 			
+ 			La matrice trasposta di $A$  si indica con $A^t$ ed è una matrice in $M_{n \times m}(\mathbbm{K})$ ottenuta scambiando le righe con le colonne.
+
  		\end{definition}
  		\textbf{Esempi:}
  		\begin{enumerate}
  			\item $\begin{pmatrix}
  				1 & 2 & 3 \\
  				0 & 1 & -1 \\
- 				2 & \sqrt{2} & \sqrt{3} 
+ 				2 & \sqrt{2} & \sqrt{3}
  			\end{pmatrix} \in M_{3 \times 3}(\mathbbm{R})$ \\
  			La matrice trasposta diventa: \\
  			 $\begin{pmatrix}
  			 	1 & 0 & 2 \\
  			 	3 & 1 & \sqrt{2} \\
- 			 	3 & -1 & \sqrt{3} 
+ 			 	3 & -1 & \sqrt{3}
  			 \end{pmatrix} \in M_{3 \times 3}(\mathbbm{R})$
  		\end{enumerate}
- 		 		
+
  		\begin{definition}{\nmu Matrice quadrata}{matrice_quadrata}
  			Se $m = n$ allora la matrice di dice quadrata e al posto di $M_{m \times n}(\mathbbm{K})$ si usa $M_n(\mathbbm{K})$
  		\end{definition}
@@ -4003,7 +4003,7 @@
  		\textbf{Esempio:} $A = \begin{pmatrix}
  			1 & 3 & 4 \\
  			5 & 6 & 7 \\
- 			8 & 9 & 0 
+ 			8 & 9 & 0
  		\end{pmatrix}$ \\
  		La diagonale è $a_{11}, a_{22}, a_{33}$
  		 \begin{definition}{\nmu Matrice identità}{mat_identita}
@@ -4026,7 +4026,7 @@
  			Sull'insieme delle matrici $M_{m \times n}(\mathbbm{K})$ è possibile definire un'operazione di somma sommando le matrici termine a termine, ovvero:
  			\[
  			+: M_{m \times n}(\mathbbm{K}) \times M_{m \times n}(\mathbbm{K}) \to M_{m \times n}(\mathbbm{K})
- 			\] 
+ 			\]
  			\[
  			\forall A = (a_{ij}), B=(b_{ij}) \in M_{m \times n}(\mathbbm{K}) \quad A + B = (a_{ij} + b_{ij}) \in M_{m \times n}(\mathbbm{K})
  			\]
@@ -4059,7 +4059,7 @@
   		\end{enumerate}
   		\textbf{Proprietà della somma delle matrici:}
   		\begin{enumerate}
-  			\item $+$ è commutativa $\forall A, B \in M_{m \times n}(\mathbbm{K}) \quad A + B = B + A$ 
+  			\item $+$ è commutativa $\forall A, B \in M_{m \times n}(\mathbbm{K}) \quad A + B = B + A$
   			\item $+$ è associativa $\forall A, B, C \in M_{m \times n}(\mathbbm{K}) \quad (A + B) + C = A + (B + C)$.
   			\item $\exists$ elemento neutro in $M_{m \times n}(\mathbbm{K})$ e si indica con 0 ed è la matrice con tutti i coefficienti zero tale che $\forall A \in M_{m \times n}(\mathbbm{K}) \quad A + 0 = 0 + A = A$
   			\item Ogni elemento ammette l'inverso $\forall A = (a_{ij}) \in M_{m \times n}(\mathbbm{K})\ \exists -A = (-a_{ij}) \in M_{m \times n}(\mathbbm{K}) \mid A + (-A) = (-A) + A = 0$
@@ -4076,7 +4076,7 @@
  				-2 & -\dfrac{1}{2} & 0 & 1
   			\end{pmatrix} \in M_{2 \times 4}(\mathbbm{R})$
   		\end{enumerate}
-  		
+
   		 \begin{definition}{\nmu Prodotto numero di matrice}{prod_numero_matrice}
   			Per ogni $\lambda \in \mathbbm{K}$ e $A = (a_{ij}) \in M_{m \times n}(\mathbbm{K})$ è definito il prodotto $\lambda \cdot A = (\lambda a_{ij}) \in M_{m \times n}(\mathbbm{K})$, ottenuto moltiplicando tutti i coefficienti della matrice per il numero $\lambda$.
   		\end{definition}
@@ -4091,13 +4091,13 @@
   				9 & -9 & 12 & 15
   			\end{pmatrix} \in M_{2 \times 4}(\mathbbm{Q})$
   		\end{enumerate}
-  		
+
   		\begin{definition}{\nmu Prodotto tra matrici}{prod_matrici}
   			Due matrici, $A$ e $B$, sono moltiplicabili se e solo se il numero delle colonne di $A$ è uguale al numero di righe di $B$. \\
   			Quindi: $A \in  M_{m \times n}(\mathbbm{K})$ e $B \in M_{n \times s}(\mathbbm{K})$. \\
   			In tal caso il prodotto $A \cdot B$ è una matrice $A \cdot B \in M_{m \times s}(\mathbbm{K})$ ottenuta moltiplicando le righe di $A$ per le colonne di $B$, ovvero al posto di $(i,j)$ di $A \cdot B$ abbiamo \[\sum_{t =  1}^{n}a_{ij}b{tj} = a_{i1} + b_{1j} + a_{i2} + b_{2j} + \dots + a_{in} + b_{nj}\]
   		\end{definition}
-  		\textbf{Esempi:} 
+  		\textbf{Esempi:}
   		\begin{enumerate}
   			\item $A = (2\ 3\ 4\ 5) \in M_{1 \times 4}(\mathbbm{R}) \quad B = \begin{pmatrix}
   				1 \\
@@ -4112,7 +4112,7 @@
 				\dfrac{1}{2} & -\dfrac{3}{4}
 			\end{pmatrix} \in M_{2}(\mathbbm{R}) \quad B = \begin{pmatrix}
 			1 & 2 & 3 \\
-			0 & -1 & -2 
+			0 & -1 & -2
 			\end{pmatrix} \in M_{2 \times 3}(\mathbbm{R})$ \\
 			$\exists A \cdot B = \begin{pmatrix}
 				-5 \cdot 1 + 4 \cdot 0 & -5 \cdot 2 + 4 \cdot (-1) & -5 \cdot 3 + 4 \cdot (-2) \\
@@ -4153,18 +4153,18 @@
 			\textbf{Il prodotto tra matrici non è commutativo}
   		\end{enumerate}
   		In $M_{n \times n}(\mathbbm{K})$, quindi per le matrici quadrate è definita l'operazione di prodotto $\cdot: M_n(\mathbbm{K}) \times M_n(\mathbbm{K}) \to M_n(\mathbbm{K})$ \\
-  		\textbf{Proprietà del prodotto in $M_n(\mathbbm{K})$:} 
+  		\textbf{Proprietà del prodotto in $M_n(\mathbbm{K})$:}
   		\begin{enumerate}
-  			\item il prodotto è associativo $\forall A,B, C \in M_n(\mathbbm{K})\ (A \cdot B) \cdot C = A \cdot (B \cdot C)$ 
+  			\item il prodotto è associativo $\forall A,B, C \in M_n(\mathbbm{K})\ (A \cdot B) \cdot C = A \cdot (B \cdot C)$
   			\item Esiste l'elemento neutro $\exists Id_n = \begin{pmatrix}
   				1 & 0 & \dots & 0 \\
   				0 & 1 & \dots & 0 \\
   				\vdots \\
   				0 & 0 & \dots & 1
-  			\end{pmatrix}$ tale che: \\ 
-  			$\forall A \in M_n(\mathbbm{K}) \quad A \cdot Id_n = Id_n \cdot A = A$  	
+  			\end{pmatrix}$ tale che: \\
+  			$\forall A \in M_n(\mathbbm{K}) \quad A \cdot Id_n = Id_n \cdot A = A$
   			\item Valgono le proprietà distributive: \\
-  			$\forall A,B,C \in M_n(\mathbbm{K}) \quad (A + B) \cdot C = A\cdot C + B \cdot C \quad A \cdot (B + C) = A\cdot B + A \cdot C$	
+  			$\forall A,B,C \in M_n(\mathbbm{K}) \quad (A + B) \cdot C = A\cdot C + B \cdot C \quad A \cdot (B + C) = A\cdot B + A \cdot C$
   		\end{enumerate}
   		Questo ci dice che $(M_n(\mathbbm{K}), +, \cdot)$ è un anello unitario non commutativo per $n > 1$
   		\section{Invertibilità di una matrice}
@@ -4189,28 +4189,28 @@
 			\item Se $n = 2 \quad A = \begin{pmatrix}
 				a_{11} & a_{12} \\
 				a_{21} & a_{22}
-			\end{pmatrix} \quad det(A) = a_{11} \cdot a_{22} - a_{12} \cdot a_{21} \in \mathbbm{K}$ 
+			\end{pmatrix} \quad det(A) = a_{11} \cdot a_{22} - a_{12} \cdot a_{21} \in \mathbbm{K}$
   		\end{enumerate}
   		 \begin{definition}{\nmu Determinante}{determinanate}
   		 	\textbf{Formula regola di Laplace}. \\
-  		 	Sia $A \in M_n(\mathbbm{K})$ una matrice quadrata con $n \geq 2$ il determinante di $A$ si indica con $det(A)$ è un elemento in $\mathbbm{K}$, dato dalla formula: 
+  		 	Sia $A \in M_n(\mathbbm{K})$ una matrice quadrata con $n \geq 2$ il determinante di $A$ si indica con $det(A)$ è un elemento in $\mathbbm{K}$, dato dalla formula:
   		 	\begin{enumerate}
   		 		\item Per ogni riga $i$ fissata: \\
   		 		$det(A) = \mathlarger{\sum_{j = 1}^{n}}a_{ij}*(-1)^{i+j} \cdot det\begin{pmatrix}
   		 		a_{11}	& \vline & a_{13}\\
   		 		a_{21}	& \vline & a_{23}\\
-  		 		& \rule{2cm}{0.4pt}& 
+  		 		& \rule{2cm}{0.4pt}&
   		 		\end{pmatrix}$ \\
   		 		Il determinante di $A$ è la somma dei prodotti degli elementi $a_{ij}$ della riga $i$ moltiplicati per $(-1)^{i + j}$ per il determinante della matrice ottenuta da $A$ eliminando la riga $i$ e la colonna $j$.
   		 		\item Per ogni $j$ fissata: \\
   		 		$det(A) = \mathlarger{\sum_{j = 1}^{n}}a_{ij}*(-1)^{i+j} \cdot det\begin{pmatrix}
   		 			a_{11}	& \vline & a_{13}\\
   		 			a_{21}	& \vline & a_{23}\\
-  		 			& \rule{2cm}{0.4pt}& 
+  		 			& \rule{2cm}{0.4pt}&
   		 		\end{pmatrix}$ \\
   		 		Il determinante di A è la somma dei prodotti degli elementi di $a_{ij}$ della colonna $j$ moltiplicati per $(-1)^{i + j}$ per il determinante della matrice ottenuta da $A$ eliminando colonna $j$ e riga $i$.
-  		 	\end{enumerate} 		 	
-  		 	\textbf{Osservazione:}Si può dimostrare che non dipende dalla scelta dalla riga o della colonna 
+  		 	\end{enumerate}
+  		 	\textbf{Osservazione:}Si può dimostrare che non dipende dalla scelta dalla riga o della colonna
   		 \end{definition}
   		 \textbf{Esempi:}
   		 \begin{enumerate}
@@ -4259,7 +4259,7 @@
   	 		4 & 1
   	 	\end{pmatrix} = 3 \cdot (4 \cdot (-1) - (1)(-1)) + (-1)(-3 - \dfrac{4}{3}) = -9+\dfrac{13}{3} = -\dfrac{14}{3}$
    		\end{enumerate}
-   		\textbf{Per approfondimento guardare regola di Sarus per il determinante delle matrici $3 \times 3$} 
+   		\textbf{Per approfondimento guardare regola di Sarus per il determinante delle matrici $3 \times 3$}
    		 \begin{definition}{\nmu Complementi algebrici}{com_algebrici}
    			Sia $A \in M_n(\mathbbm{K})$ una matrice quadrata. \\
    			Il complemento algebrico dell'elemento $a_{ij}$ della matrice $A$ è il prodotto $(-1)^{i + j} \cdot det($ delle matrice ottenuta eliminando riga $i$ e colonna $j)$
@@ -4294,7 +4294,7 @@
    			\item \textbf{La matrice $A$ è quadrata};
    			\item \textbf{Il determinante di $A$ è diverso da 0}
    		\end{enumerate}
-   		Se queste due condizioni sono verificate per determinare la matrice inversa dobbiamo: 
+   		Se queste due condizioni sono verificate per determinare la matrice inversa dobbiamo:
    		\begin{enumerate}
    			\item calcolare il determinante
    			\item calcolare il complemento algebrico di ogni elemento della matrice
@@ -4324,7 +4324,7 @@
 				\item \textbf{Trasposta della matrice dei complementi algebrici}: \\
 				$\begin{pmatrix}
 					3 & 2 \\
-					-2 & 1 
+					-2 & 1
 				\end{pmatrix}$
 				\item \textbf{Matrice inversa}: \\
 				$A^{-1} =\dfrac{1}{7}\begin{pmatrix}
@@ -4333,7 +4333,7 @@
 				\end{pmatrix} = \begin{pmatrix}
 				\sfrac{3}{7} & \sfrac{2}{7} \\
 				-\sfrac{2}{7} & \sfrac{1}{7}
-				\end{pmatrix}$			
+				\end{pmatrix}$
    			\end{itemize}
    			Per controllare che sia corretto basta effettuare $A \cdot A^{-1} = Id_2 = \begin{pmatrix}
    				1 & 0 \\
@@ -4353,7 +4353,7 @@
    				\end{pmatrix} + 4(-1)^{2+3}det\begin{pmatrix}
    				-6 & 1 \\
    				-2 & -1
-   				\end{pmatrix} = 3(12 - 8)-4(6 + 2) = 12 - 32 = -20 \implies \exists A^{-1}$ 
+   				\end{pmatrix} = 3(12 - 8)-4(6 + 2) = 12 - 32 = -20 \implies \exists A^{-1}$
    				\item \textbf{Calcolo complementi algebrici degli elementi:} \\
    				$a_{11} = (-1)^{1 + 1}det\begin{pmatrix}
    					3 & 4 \\
@@ -4427,7 +4427,7 @@
    	\end{definition}
    	\paragraph{Rappresentazione di un grafo}
    	Viene disegnato un punto per ogni vertice $v \in V$. \\
-   	Di seguito, si congiunge $v$ e $w$ se il lato $l = \{v,w\}$ è un lato del grafo. 
+   	Di seguito, si congiunge $v$ e $w$ se il lato $l = \{v,w\}$ è un lato del grafo.
    	\textbf{Esempi:}
    	\begin{enumerate}
    		\item $V = \{v_1, v_2,v_3, v_4, v_5, v_6\} \quad L=\{l_1=\{v_1, v_6\}, l_2=\{v_1,v_5\}, l_3 = \{v_2,v_3\}, l_4=\{v_5,v_6\}\}$ \\
@@ -4438,8 +4438,8 @@
    			\coordinate (D) at (6,0);
    			\coordinate (E) at (8,0);
    			\coordinate (F) at (10,2);
-   			
-   		
+
+
    			\draw (A) -- (E);
  			\draw (A) -- (F);
    			\draw (B) -- (C);
@@ -4470,16 +4470,16 @@
    		\begin{tikzpicture}
    			\coordinate (A) at (0,0);
    			\coordinate (B) at (2,0);
-   			\coordinate (C) at (0,2);   
-   			\coordinate (D) at (2,2);			
-   			
+   			\coordinate (C) at (0,2);
+   			\coordinate (D) at (2,2);
+
    			\draw (A) -- (B);
    			\draw (A) -- (D);
    			\draw (A) -- (C);
    			\draw (B) -- (A);
    			\draw (B) -- (C);
    			\draw (B) -- (D);
-   			\draw (D) -- (C); 
+   			\draw (D) -- (C);
    			\foreach \x/\y/\label in {
    				0/0/$v_1$,
    				2/0/$v_2$,
@@ -4493,9 +4493,9 @@
    		   		\begin{tikzpicture}
    			\coordinate (A) at (0,2);
    			\coordinate (B) at (1,-1);
-   			\coordinate (C) at (1,1);   
-   			\coordinate (D) at (-1,1);			
-   	
+   			\coordinate (C) at (1,1);
+   			\coordinate (D) at (-1,1);
+
    			\draw (A) -- (B) -- (C) -- (D) -- (B);
    			\draw (A) -- (C);
    			\draw (A) -- (D);
@@ -4512,12 +4512,12 @@
    		\begin{tikzpicture}
    			\coordinate (A) at (4, 2);
    			\coordinate (B) at (5,0);
-   			\coordinate (C) at (6,3);   
-   			\coordinate (D) at (2,3);			
-   			 
+   			\coordinate (C) at (6,3);
+   			\coordinate (D) at (2,3);
+
    			\draw (A) -- (B) -- (C) -- (D) -- (B);
    			\draw (A) -- (C);
-   			\draw (A) -- (D); 
+   			\draw (A) -- (D);
    			\foreach \x/\y/\label in {
    				4/2/$v_1$,
    				5/0/$v_2$,
@@ -4550,17 +4550,17 @@
    		\]
    		dove $d$ sta per degree. Inoltre $v$ si dice \textbf{pari} se $d(v)$ è pari altrimenti si dice \textbf{dispari} e si dice \textbf{isolato} se $d(v)=0$ \\
    		\textbf{Osservazione:} Se $|V|=n$ il grado massimo di un suo vertice è $n-1$
-   	\end{definition} 
+   	\end{definition}
    	\textbf{Esempio:}
    	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
    		\coordinate (B) at (5,0);
-   		\coordinate (C) at (6,3);   
-   		\coordinate (D) at (2,3);			
-   		
+   		\coordinate (C) at (6,3);
+   		\coordinate (D) at (2,3);
+
    		\draw (A) -- (B) -- (C) -- (D) -- (B);
    		\draw (A) -- (C);
-   		\draw (A) -- (D); 
+   		\draw (A) -- (D);
    		\foreach \x/\y/\label in {
    			4/2/$v_1$,
    			5/0/$v_2$,
@@ -4576,14 +4576,14 @@
    		Un grafo si dice completo se per ogni coppia di vertici esiste un lato che li congiunge. \\
    		Quindi se $|V|=n \quad d(v) = n - 1\ \forall v$ vertice $|L| = \mathlarger{\binom{n}{2}} \quad n \geq 2$ \\
    		$\forall n \geq 1$ esiste un unico grado a meno di isomorfismo completo con $n$ vertici e si chiama $K_n$
-   	\end{definition} 
+   	\end{definition}
    	Il grafo dell'esempio precedente è un grafo completo.
    	\begin{theorem}{\nmu Teorema delle strette di mano}{strette_di_mano}
    		Sia $G=(V, L)$ un grafo finito. Allora:
    		\[
    		2|L| = \sum_{v \in V}d(v)
    		\]
-   	\end{theorem} 
+   	\end{theorem}
    	\begin{corollary}
    		In ogni grafo finito, il numero di vertici dispari è pari.
    		\begin{proof} \quad \\
@@ -4601,12 +4601,12 @@
    	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
    		\coordinate (B) at (5,0);
-   		\coordinate (C) at (6,3);   
-   		\coordinate (D) at (2,3);			
-   		
+   		\coordinate (C) at (6,3);
+   		\coordinate (D) at (2,3);
+
    		\draw (A) -- (B) -- (C) -- (D) -- (B);
    		\draw (A) -- (C);
-   		\draw (A) -- (D); 
+   		\draw (A) -- (D);
    		\foreach \x/\y/\label in {
    			4/2/$v_1$,
    			5/0/$v_2$,
@@ -4621,9 +4621,9 @@
    	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
    		\coordinate (B) at (5,0);
-   		\coordinate (C) at (6,3);   
-   		\coordinate (D) at (2,3);			
-   		
+   		\coordinate (C) at (6,3);
+   		\coordinate (D) at (2,3);
+
    		\draw (A) -- (D) -- (B) -- (C);
    		\foreach \x/\y/\label in {
    			4/2/$v_1$,
@@ -4663,12 +4663,12 @@
    	   	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
    		\coordinate (B) at (5,0);
-   		\coordinate (C) at (6,3);   
-   		\coordinate (D) at (2,3);			
-   		
+   		\coordinate (C) at (6,3);
+   		\coordinate (D) at (2,3);
+
    		\draw (A) -- (B) -- (C) -- (D) -- (B);
    		\draw (A) -- (C);
-   		\draw (A) -- (D); 
+   		\draw (A) -- (D);
    		\foreach \x/\y/\label in {
    			4/2/$v_1$,
    			5/0/$v_2$,
@@ -4683,9 +4683,9 @@
    	\begin{tikzpicture}
    		\coordinate (A) at (4, 2);
    		\coordinate (B) at (5,0);
-   		\coordinate (C) at (6,3);   
-   		\coordinate (D) at (2,3);			
-   		
+   		\coordinate (C) at (6,3);
+   		\coordinate (D) at (2,3);
+
    		\draw (A) -- (D) -- (B) -- (C);
    		\foreach \x/\y/\label in {
    			4/2/$v_1$,
@@ -4709,9 +4709,9 @@
    		\begin{tikzpicture}
    			\coordinate (A) at (0, 0);
    			\coordinate (B) at (2,0);
-   			\coordinate (C) at (0,2);   
-   			\coordinate (D) at (2,2);			
-   			
+   			\coordinate (C) at (0,2);
+   			\coordinate (D) at (2,2);
+
    			\draw (A) -- (B) -- (D) -- (C) -- (A);
    			\foreach \x/\y/\label in {
    				0/0/$v_1$,
@@ -4736,7 +4736,7 @@
     		\begin{tikzpicture}
     			\coordinate (A) at (0, 0);
     			\coordinate (B) at (2,0);
-    			
+
     			\draw (A) -- (B);
     			\foreach \x/\y/\label in {
     				0/0/$v_1$,
@@ -4750,8 +4750,8 @@
     		\begin{tikzpicture}
     			\coordinate (A) at (0, 0);
     			\coordinate (B) at (2,0);
-    			\coordinate (C) at (1,-2);   
-    			
+    			\coordinate (C) at (1,-2);
+
     			\draw (A) -- (C) -- (B);
     			\foreach \x/\y/\label in {
     				0/0/$v_1$,
@@ -4766,9 +4766,9 @@
     		\begin{tikzpicture}
     			\coordinate (A) at (0, 0);
     			\coordinate (B) at (2,0);
-    			\coordinate (C) at (0,-2);   
-    			\coordinate (D) at (2,-2);			
-    			
+    			\coordinate (C) at (0,-2);
+    			\coordinate (D) at (2,-2);
+
     			\draw (A) -- (C) -- (B) -- (D) -- (A);
     			\foreach \x/\y/\label in {
     				0/0/$v_1$,
@@ -4784,10 +4784,10 @@
     		\begin{tikzpicture}
     			\coordinate (A) at (1, 0);
     			\coordinate (B) at (3,0);
-    			\coordinate (C) at (0,-2);   
+    			\coordinate (C) at (0,-2);
     			\coordinate (D) at (2,-2);
-    			\coordinate (E) at (4,-2);			
-    			
+    			\coordinate (E) at (4,-2);
+
     			\draw (A) -- (C);
     			\draw (A) -- (D);
     			\draw (A) -- (E);
@@ -4805,7 +4805,7 @@
     				\node[above left] at (\x,\y) {\label};
     			}
     		\end{tikzpicture}
-    	\end{itemize}  
+    	\end{itemize}
     \end{itemize}
     \begin{definition}{\nmu Grafo planare}
     	Un grafo si dice planare se può essere disegnato su un piano "senza incroci", ovvero i lati si incontrano solo nei vertici.
@@ -4815,14 +4815,14 @@
     	\begin{tikzpicture}
     		\coordinate (A) at (2, 0);
     		\coordinate (B) at (0,-2);
-    		\coordinate (C) at (4,-2);   
+    		\coordinate (C) at (4,-2);
     		\coordinate (D) at (1,-4);
-    		\coordinate (E) at (3,-4);	
-    		
-    		\draw (A) -- (B) -- (C) -- (A);		
+    		\coordinate (E) at (3,-4);
+
+    		\draw (A) -- (B) -- (C) -- (A);
     		\draw (B) -- (D) -- (C) -- (E) -- (D) -- (A) -- (E);
     		\draw (B) -- (E);
-    		
+
     		\foreach \x/\y/\label in {
     			2/0/$v_1$,
     			0/-2/$v_2$,
@@ -4835,25 +4835,25 @@
     		}
     	\end{tikzpicture}
     	\item $k_{3,3}$: \\
-    	
+
     	\begin{tikzpicture}
     		\coordinate (A) at (0, 0);
     		\coordinate (B) at (2,0);
-    		\coordinate (C) at (4,0);   
+    		\coordinate (C) at (4,0);
     		\coordinate (D) at (0,-2);
-    		\coordinate (E) at (2,-2);	
+    		\coordinate (E) at (2,-2);
     		\coordinate (F) at (4, -2);
-    		
+
     		\draw (A) -- (D) -- (B) -- (D) -- (C) -- (D);
     		\draw (A) -- (E) -- (B) -- (E) -- (C) -- (E);
     		\draw (A) -- (F) -- (B) -- (F) -- (C) -- (F);
-    		
+
     		\foreach \x/\y/\label in {
     			0/0/$v_1$,
     			2/0/$v_2$,
     			4/0/$v_3$,
     			0/-2/$w_1$,
-    			2/-2/$w_2$, 
+    			2/-2/$w_2$,
     			4/-2/$w_3$
     		}{
     			\fill (\x,\y) circle (2pt);
@@ -4868,7 +4868,7 @@
     	$k_{3,3}$ ha 6 vertici di grado 3. \\
     	Se il grafo contenesse $k_5$ o $k_{3,3}$ dovrebbe avere almeno o 5 vertici di grado 4 o 6 vertici di grado 3.
     \end{theorem}
-    
+
     \begin{definition}{\nmu Albero}{albero}
     	Un albero è un grafo connesso privo di circuiti. \\
     	Equivalentemente:
@@ -4878,11 +4878,11 @@
     		\item $G$ è connesso ed ha $|L| = |V| - 1$ lati.
     	\end{itemize}
     \end{definition}
-    \textbf{Problema:} 
+    \textbf{Problema:}
     \begin{itemize}
     	\item $\exists$ un albero con $n$ vertici di grado $d_1, d_2, \dots, d_n$ ?    	\item $\exists$ un grafo?
     \end{itemize}
-    Per \textbf{l'albero} la risposta è semplice: 
+    Per \textbf{l'albero} la risposta è semplice:
     \begin{itemize}
     	\item Se $n \geq 2$ e $d_1, \dots, d_n$ sono tali che $1 \leq d_i \leq n - 1 \quad \forall i = 1, \dots, n$
     	\item $\mathlarger{\sum_{i=1}^{n}d(v_i) = 2|L|}$
