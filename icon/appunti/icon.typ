@@ -1865,15 +1865,70 @@ $
 === Diagnosi basata sulla consistenza
 Lo scopo della diagnosi è quello di determinare possibili guasti in base a un modello del sistema, una base di conoscenza, e a osservazioni aggiuntive sul sistema stesso. \
 In sostanza si fanno assunzioni sul funzionamento normale, considerando quindi assumibili in assenza di guasti. Si derivano i componenti _anormali_, ossia i conflitti, le anomalie nel sistema.
-#esempio(title: "Impianto elettrico, continuo.")[
-Si consideri la base di conoscenza dell'@es:impianto_elettrico. Si aggiungono:
-- assunzioni di normalità tramite _assumibili_: atomi _ok\*_ per ogni componente;
-- osservazioni fornite dall'utente che specificano le posizioni effettive (_su / giu_) dei deviatori, lo stato delle luci (_lit / spenta_), $dots$;
-- vincoli d'integrità utili a definire stati reciprocamente incompatibili come, ad esempio, che sia possibile un solo stato per i punti-luce:
-$
-"false" <- s p e n t a_(l_1) and a c c e s a_(l_1)
-$
-*CONTINUARE ESEMPIO*
+#esempio[
+  (impianto elettrico, cont.) Si riconsideri la base di conoscenza _@es:impianto_elettrico _. Si aggiungono:
+
+  - _assunzioni_ di normalità tramite _assumibili_: atomi _ok_`*` per ogni componente (dev'essere in buono stato per funzionare);
+  - _osservazioni_ fornite dall'utente che specificano le posizioni effettive (_su_ / _giu_) dei deviatori, lo stato delle luci (_lit_ / _spenta_),...;
+  - _vincoli d'integrità_ utili a definire stati reciprocamente incompatibili come, ad esempio, che sia possibile un solo stato per i punti-luce: \
+    _false_ $<-$ _spenta\_l1_ $and$ _accesa\_l1._
+
+  _KB_ risultante:
+
+  - _luce\_l1._
+  - _luce\_l2._
+  - _alimentazione\_esterna._
+  - _alimentata\_l1_ $<-$ _alimentato\_c0._
+  - _alimentato\_c0_ $<-$ _alimentato\_c1_ $and$ _su\_d2_ $and$ _ok\_d2._
+  - _alimentato\_c0_ $<-$ _alimentato\_c2_ $and$ _giu\_d2_ $and$ _ok\_d2._
+  - _alimentato\_c1_ $<-$ _alimentato\_c3_ $and$ _su\_d1_ $and$ _ok\_d1._
+  - _alimentato\_c2_ $<-$ _alimentato\_c3_ $and$ _giu\_d1_ $and$ _ok\_d1._
+  - _alimentata\_l2_ $<-$ _alimentato\_c4._
+  - _alimentato\_c4_ $<-$ _alimentato\_c3_ $and$ _su\_d3_ $and$ _ok\_d3._
+  - _alimentata\_$p_1$_ $<-$ _alimentato\_c3._
+  - _alimentato\_c3_ $<-$ _alimentato\_c5_ $and$ _ok\_f1._
+  - _alimentata\_$p_2$_ $<-$ _alimentato\_c6._
+  - _alimentato\_c6_ $<-$ _alimentato\_c5_ $and$ _ok\_f2._
+  - _alimentato\_c5_ $<-$ _alimentazione\_esterna._
+  - _accesa\_l1_ $<-$ _luce\_l1_ $and$ _alimentata\_l1_ $and$ _ok\_l1._
+  - _accesa\_l2_ $<-$ _luce\_l2_ $and$ _alimentata\_l2_ $and$ _ok\_l2._
+
+  vincoli d'integrità:
+
+  - _false_ $<-$ _spenta\_l1_ $and$ _accesa\_l1._
+  - _false_ $<-$ _spenta\_l2_ $and$ _accesa\_l2._
+
+  osservazioni:
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [
+      - _su\_d1._
+      - _su\_d2._
+      - _su\_d3._
+    ],
+    [
+      - _spenta\_l1._
+      - _spenta\_l2._
+    ]
+  )
+
+  dichiarazioni:
+
+  - `assumable` _ok\_f1,ok\_f2,ok\_d1,ok\_d2,ok\_d3,ok\_l1,ok\_l2._
+
+  Tutto considerato, ci sono due conflitti minimali:
+
+  1. {_ok\_f1,ok\_d1,ok\_d2,ok\_l1_}
+  2. {_ok\_f1,ok\_d3,ok\_l2_}
+
+  Pertanto:
+
+  1. _KB_ $models not$ _ok\_f1_ $or not$ _ok\_d1_ $or not$ _ok\_d2_ $or not$ _ok\_l1_ \
+     quindi almeno un componente fra _f1,$d_1$,$d_2$,l1_ ha un guasto;
+  2. _KB_ $models not$ _ok\_f1_ $or not$ _ok\_d3_ $or not$ _ok\_l2_ \
+     ossia almeno uno tra _f1,$d_3$,l2_ non funziona.
 ]
 Dato l'insieme dei conflitti, l'utente può diagnosticare il problema: ciò è anche utile a farsi un'idea della numerosità dei possibili guasti. \
 Nella *diagnosi basata su consistenza* (CBD) dato un insieme di conflitti, cioè un insieme di assumbili con almeno un elemento in ogni conflitti, si costruisce una diagnosi che sarà *minimale* se nessun suo sotto-insieme è una diagnosi. Intuitivamente, una sola delle diagnosi minimali è quella giusta: qualla contenente solo conflitti falsi nell'interpretazione intesa.
@@ -1952,11 +2007,92 @@ $
 a <=> b_1 or dots.c or b_n
 $
 detta _complemnto di Clark_ delle clausole per $a$. Si noti che se non ci sono regole per $a$, il complemento sarà $a <=> "false"$. \
-Il *complemento di Clark* della base di conoscenza ricomprende i complementi di tutti gli atomi della base. \
-*INSERIRE ESEMPIO SLIDE*
+Il *complemento di Clark* della base di conoscenza ricomprende i complementi di tutti gli atomi della base.
+#esempio[
+  Si consideri la base di conoscenza precedente con le clausole:
+
+  - _giu\_d1._
+  - _su\_d2._
+  - _ok\_f1._
+  - _alimentata\_l1_ $<-$ _alimentato\_c0._
+  - _alimentato\_c0_ $<-$ _alimentato\_c1_ $and$ _su\_d2._
+  - _alimentato\_c0_ $<-$ _alimentato\_c2_ $and$ _giu\_d2._
+  - _alimentato\_c1_ $<-$ _alimentato\_c3_ $and$ _su\_d1._
+  - _alimentato\_c2_ $<-$ _alimentato\_c3_ $and$ _giu\_d1._
+  - _alimentato\_c3_ $<-$ _alimentazione\_esterna_ $and$ _ok\_f1._
+  - _alimentazione\_esterna._
+
+  Si noti che non sono definite clausole per _su\_d1_ e _giu\_d2_. \
+  _Completamento_ della base di conoscenza:
+
+  - _giu\_d1_ $<=>$ _true._
+  - _su\_d1_ $<=>$ _false._
+  - _su\_d2_ $<=>$ _true._
+  - _giu\_d2_ $<=>$ _false._
+  - _ok\_f1_ $<=>$ _true._
+  - _alimentata\_l1_ $<=>$ _alimentato\_c0._
+  - _alimentato\_c0_ $<=>$ (_alimentato\_c1_ $and$ _su\_d2_) $or$ (_alimentato\_c2_ $and$ _giu\_d2_).
+  - _alimentato\_c1_ $<=>$ _alimentato\_c3_ $and$ _su\_d1._
+  - _alimentato\_c2_ $<=>$ _alimentato\_c3_ $and$ _giu\_d1._
+  - _alimentato\_c3_ $<=>$ _alimentazione\_esterna_ $and$ _ok\_f1._
+  - _alimentazione\_esterna_ $<=>$ _true._
+
+  Così, ad esempio, _su\_d1_ è falso, _alimentato\_c1_ è falso e _alimentato\_c2_ è vero.
+]
 ==== Negazione come Fallimento
 Un *letterale* è un atomo o la negazione di un atomo. Con il completamento si possono dimostrare negazioni di proposizioni, quindi la negazione può essere ammessa anche nel corpo delle clausole. Si considereranno clausole definite estese contenenti nel corpo letterali. La _negazione sotto assunzione di conoscenza completa_, detta anche *negation as failure (NaF)*, verrà denotata con $tilde a$ per distinguerla dalla negazione classica. Sotto CWA, il corpo $g$ è una conseguenza di $K B$ se e solo se $K B' models g$, dove $K B'$ è il completamento di $K B$. Si noti come $tilde a$ nel corpo di una clausola diventi $not a$ nel completamento. \
-*INSERIRE ESEMPIO SLIDE* \
+#esempio[
+  Si consideri l'assiomatizzazione vista in precedenza. Si semplifica la rappresentazione chiedendo all'utente di indicare solo i deviatori _su_, gli altri saranno _giu_ per default. Analogamente, si potrebbe specificare che i fusibili sono _funzionanti_ a meno che non risultino _rotti_. \
+  Regole da aggiungere:
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [
+      - _giu\_d1_ $<- tilde.op$ _su\_d1._
+      - _giu\_d2_ $<- tilde.op$ _su\_d2._
+      - _giu\_d3_ $<- tilde.op$ _su\_d3._
+    ],
+    [
+      - _ok\_f1_ $<- tilde.op$ _rotto\_f1._
+      - _ok\_f2_ $<- tilde.op$ _rotto\_f2._
+    ]
+  )
+
+  Per rappresentare lo stato della figura, l'utente specifica:
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [
+      - _su\_d2._
+    ],
+    [
+      - _su\_d3._
+    ]
+  )
+
+  Il sistema può inferire che $d_1$ dev'essere in posizione _giu_ e i due fusibili non sono guasti. Completamento:
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [
+      - _giu\_d1_ $<=> not$ _su\_d1._
+      - _giu\_d2_ $<=> not$ _su\_d2._
+      - _giu\_d3_ $<=> not$ _su\_d3._
+      - _ok\_interruttore1_ $<=> not$ _rotto\_interruttore1._
+      - _ok\_interruttore2_ $<=> not$ _rotto\_interruttore2._
+    ],
+    [
+      - _su\_d1_ $<=>$ _false._
+      - _su\_d2_ $<=>$ _true._
+      - _su\_d3_ $<=>$ _true._
+      - _rotto\_interruttore1_ $<=>$ _false._
+      - _rotto\_interruttore2_ $<=>$ _false._
+    ]
+  )
+]
 Con la NAF, le basi di conoscenza non acicliche diventa problematiche dal punto di vista semantico. Ad esempio, data la base non aciclica:
 - $a <- tilde b$
 - $b <- tilde a$
@@ -1999,7 +2135,34 @@ Si ha una definzione ricorsiva del *fallimento*: $p$ fallisce se fallisce il cor
     + *until* non ci sono altre selezioni possibili
   ]
 ] <alg:naf-bottom-up>
-*INSERIRE ESEMPIO SLIDE*
+#esempio[
+  Si considerino le clausole:
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [
+      1. $p <- q and tilde.op r.$
+      2. $p <- s.$
+      3. $q <- tilde.op s.$
+    ],
+    [
+      #set enum(start: 4)
+      1. $r <- tilde.op t.$
+      2. $t.$
+      3. $s <- w.$
+    ]
+  )
+
+  Una possibile sequenza di letterali aggiunti a $C$ è la seguente:
+
+  - $C = {t}$ #h(1fr) 5. (fatto)
+  - $C = {t, tilde.op r}$ #h(1fr) $t in C$ e 4.
+  - $C = {t, tilde.op r, tilde.op w}$ #h(1fr) non ci sono clausole per $w$
+  - $C = {t, tilde.op r, tilde.op w, tilde.op s}$ #h(1fr) $tilde.op w in C$ e 6.
+  - $C = {t, tilde.op r, tilde.op w, tilde.op s, q}$ #h(1fr) $tilde.op s in C$ e 3.
+  - $C = {t, tilde.op r, tilde.op w, tilde.op s, q, p}$ #h(1fr) $q in C$, $tilde.op r in C$ e 1.
+] <es-bottom-up>
 ==== Procedura Top-Down + NAF
 La procedura TD è analoga a quella delle clausole definite, ma procede per NAF. È non-deterministca e, come tale, si può implementare come ricerca di scelte di successo: selezionato un atomo $tilde a$, parte una nuova dimostrazione per $a$; se questa fallisce allora $tilde a$ ha successo altrimenti l'algoritmo fallisce: deve tentare altre scelte se possibile.
 #algoritmo(title: [Algoritmo top-down di dimostrazione con NAF])[
@@ -2027,7 +2190,17 @@ La procedura TD è analoga a quella delle clausole definite, ma procede per NAF.
     + *return yes*
   ]
 ] <alg:naf-top-down>
-*INSERIRE ESEMPIO SLIDE* \
+#esempio[
+  Data la base di conoscenza nell'@es-bottom-up la query `ask` $p$:
+
+  - $G = {p}$ -- inizializzazione
+  - $G = {q, tilde.op r}$ -- sostituzione con il corpo di 1.;
+  - $G = {tilde.op s, tilde.op r}$ -- sostituendo $q$ con il corpo della 3.;
+  - $G = {tilde.op r}$ -- selezionato ed eliminato $tilde.op s$ la dim. di $s$ _fallisce_;
+  - $G = {}$ -- selezionato $tilde.op r$, la dim. di $r$ _fallisce_ poiché, usando la 4., si deve provare il sotto-goal $tilde.op t$, si tenta quindi di dimostrare $t$; data 5., tale dim. ha _successo_ immediato, e quella di $tilde.op t$ _fallisce_. non ci sono altre regole per $r$. da cui il successo di $tilde.op r$ che può essere eliminato.
+
+  Essendo $G$ vuoto l'output sarà `yes`.
+]
 Quanto detto vale solo enl caso di fallimento finito: nessuna conclusione è possibile in caso di divergenza. Ad esempio, data una base di conoscenza con la sola regola $p <- p$ e la query $"ask" p$, l'algoritmo non converge: il completamento è $p <=> p$ ma, pur potendosi accertare l'indimostrabilità di $p$, una procedura corretta non può concludere $tilde p$ poichè non segue logicamente dal completamento.
 == Abduzione
 L'*abduzione* è una forma di ragionamento nella quale si fanno ipotesi, ossia assunzioni, al fine di spiegare osservazioni. Le ipotesi da farsi possono implicare le osservazioni fatte: se verificate, esse giustificano quanto osservato ma non si devono introdurre _contraddizioni_ poichè queste giustificherebbero qualsiasi conclusione. \
@@ -2041,8 +2214,43 @@ Si dice *scenario* di $chevron.l K B, A chevron.r$ un insieme di abducibili $H s
 Una *spiegazione* della proposizione $g$ da $chevron.l K B, A chevron.r$ è uno scenario $H subset.eq A$ che, assieme a $K B$, abbia $g$ come conseguenza, quindi:
 - $K B union H models g$ e
 - $K B union H cancel(models) "false"$
-Essa è *minimale* se $H$ non contiene altre spiegazioni: per ogni altra $H'$ di $g$ da $chevron.l K B, A chevron.r$ deve risultare $H' subset.not H$.\
-*INSERIRE ESEMPIO SLIDE*
+Essa è *minimale* se $H$ non contiene altre spiegazioni: per ogni altra $H'$ di $g$ da $chevron.l K B, A chevron.r$ deve risultare $H' subset.not H$.
+#esempio[
+  Si consideri una base di conoscenza con assumibili per la _diagnosi medica_:
+
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    [
+      - _bronchite_ $<-$ _influenza._
+      - _bronchite_ $<-$ _fumatore._
+      - _tosse_ $<-$ _bronchite._
+      - _affanno_ $<-$ _bronchite._
+      - _febbre_ $<-$ _influenza._
+    ],
+    [
+      - _febbre_ $<-$ _infezione._
+      - _mal\_di\_gola_ $<-$ _influenza._
+      - _false_ $<-$ _fumatore_ $and$ _non\_fumatore._
+      - `assumable` _fumatore, non\_fumatore, influenza, infezione._
+    ]
+  )
+
+  Se si osserva _affanno_ (respiro affannoso), due spiegazioni minime, {_influenza_} e {_fumatore_}, che implicano _bronchite_ e _tosse_ (tosse). \
+  Se si osservano _affanno_ $and$ _febbre_, spiegazioni minimali: {_influenza_} e {_fumatore,infezione_}. \
+  Se si osservano _affanno_ $and$ _non\_fumatore_, spiegazione minimale: {_influenza,non\_fumatore_}. Anche {_fumatore_} potrebbe spiegare _affanno_, ma il vincolo la rende inconsistente rispetto a _non\_fumatore_ osservato.
+]
+
+#esempio[
+  Si consideri la base di conoscenza:
+
+  - _allarme_ $<-$ _manomissione._
+  - _allarme_ $<-$ _incendio._
+  - _fumo_ $<-$ _incendio._
+
+  Se si osserva _allarme_, spiegazioni minimali sono: {_manomissione_} e {_incendio_}. \
+  Se si osservano _allarme_ $and$ _fumo_, la spiegazione minimale è solo {_incendio_}. Difatti avendo osservato _fumo_ non c'è bisogno di ipotizzare _manomissione_ per spiegare _allarme_, è già spiegato da _incendio_.
+]
 ==== Diagnosi Abduttiva
 La _diagnosi abduttiva (AbD)_ formula iptoesi su problemi riscontrati e funzionamento normale. \
 Confrontandola con quella basata su consistenza (CbD):
