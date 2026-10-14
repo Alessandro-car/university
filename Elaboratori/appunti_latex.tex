@@ -97,6 +97,7 @@
 	\nameref{#1}\egroup}
 
 \newcommand{\nmu}{}
+\graphicspath{{images/}}
 
 \begin{document}
 	{
@@ -106,11 +107,11 @@
 	}
 	\chapter{I calcolatori}
 	\section{Introduzione e caratteristiche dei calcolatori, legge di Moore, tipologie di computer}
-		Un calcolatore è una macchina in grado di svolgere dei compiti per le persone eseguendo le istruzioni che le vengono assegnate. \\ 
+		Un calcolatore è una macchina in grado di svolgere dei compiti per le persone eseguendo le istruzioni che le vengono assegnate. \\
 		L'industria del computer avanza più velocemente di tutte le altre. Il principale cavalo di battaglia è la capacità di integrare giorno dopo giorno sempre più transistor all'interno dei chip. Avere più transistor significa avere memorie più grande e processori più potenti.
-		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=Legge di Moore, fonttitle=\bfseries]	
+		\begin{tcolorbox}[colframe=blue!75!black, colback=white!5!white, title=Legge di Moore, fonttitle=\bfseries]
 			La legge di Moore afferma che il numero dei transistor in un chip raddoppia ogni 18 mesi, infatti si è passati ad avere un numero di 1000 transistor negli anni '60 ad averne 50 miliardi nel 2020.
-		\end{tcolorbox} 
+		\end{tcolorbox}
 		La crescita in numero dei transistor in un chip comporta ad avere transistor sempre più piccoli e questo è un problema quando il loro spessore sarà di pochi atomi e saranno così piccoli per essere affidabili. \\
 		La legge di Moore ha creato un \textbf{circolo virtuoso} perchè gli avanzamenti tecnologici portano a prodotti migliori e più economici che portano alla creazione di nuove applicazioni che creano nuovi mercati e fanno sorgere nuove società. Queste generano competizione che crea la domanda economica per avere tecnologie migliori grazie a cui sconfiggere la concorrenza. \\
 		Un altro fattore che guida lo sviluppo tecnologico è la \textbf{legge del software di Nathan} che afferma che: "Il software è come un gas. Si espande fino a riempire il recipiente in cui è contenuto" e quindi, se il software continua ad acquisire sempre più funzionalità questo porta alla richiesta di processori sempre più veloci, memorie più grandi e supporti di I/O di maggiore capacità
@@ -171,7 +172,7 @@
 		L'IBM introdusse una famiglia di computer, il \textbf{System/360}, basata su circuiti integrati e in grado di svolgere calcoli scientifici e commerciali. In una famiglia di computer, il software scritto per un modello più piccolo poteva essere tranquillamente eseguito su un modello più grande. \\
 		Una caratteristica importante del 360 era lo spazio di indirizzi pari a $2^24$ che all'epoca appariva come una quantità di memoria infinita
 		Un'altra innovazione fu la \textbf{multiprogrammazione} grazie a cui è possibile avere più programmi in memoria allo stesso tempo.
-		\subsection{Quarta generazione - Integrazione a grandissima scala}	
+		\subsection{Quarta generazione - Integrazione a grandissima scala}
 		Negli anni '80 la tecnologia \textbf{VLSI} permise di inserire in un unico chip un numero sempre maggiore di transistor, fino ad arrivare a milioni di transistor. e questo portò allo sviluppo di computer sempre più piccoli e veloci, perchè prima per poter far funzionare i computer bisognava disporre di \textbf{centri di calcolo}, mentre con questa tecnologia ognuno poteva disporre del proprio calcolatore, dando via all'epoca dei \textbf{personal computer}. Successivamente si diffuse per i processori 8080 il sistema operativo \textbf{CP/M} che aveva un file system e una serie di istruzioni che l'utente doveva scrivere con la tastiera per farle leggere da un interprete di comandi. \\
 		Un altro dei primi PC fu \textbf{Apple}. \\
 		Nel 1981 venne introdotto il \textbf{PC IBM} costruito solo di componenti commerciali e divenne il computer più venduto della storia ed era in grado di schiacciare tutti gli altri. \\
@@ -251,7 +252,7 @@
 			\item \textbf{MIPS}: presenza un'architettura ISA RISC (Reduced Instruction Set Computer), spesso utilizzata in sistemi embedded e sistemi specializzati.
 		\end{itemize}
 		\subsection{Livello 3 - Sistema operativo}
-		Il sistema operativo è il software che funge da intermediario tra l'utente e l'hardware e tra il software applicativo e l'hardware. 
+		Il sistema operativo è il software che funge da intermediario tra l'utente e l'hardware e tra il software applicativo e l'hardware.
 		Il suo scopo è quello di gestire le risorse del computer e garantire che i vari programmi possano funzionare in modo corretto ed efficiente.
 		I livelli 2 e 3 sono interpretati e i livelli successivi sono compilati. \\
 		I tre livelli inferiori non sono progettati per essere utilizzati dal programmatore medio, ma concepiti per eseguire interpreti e traduttori necessari come supporto per i livelli più alti. \\
@@ -292,7 +293,7 @@
 			\item Z, Zetabyte, $10^{21}$B;
 			\item Y, Yottabyte, $10^{24}$B;
 		\end{itemize}
-		Un \textbf{sistema numerico} viene determinato per mezzo di: 
+		Un \textbf{sistema numerico} viene determinato per mezzo di:
 		\begin{itemize}
 			\item Un numero limitato di simboli;
 			\item Regole per costruire i numeri
@@ -312,7 +313,7 @@
 			\item \textbf{Complemento a 2:} dove il bit più a sinistra indica il segno. Per trasformare un numero positivo in negativo si codifica il numero in complemento a 1 e si aggiunge 1 al risultato.
 			Il complemento a 2 di un numero binario è $2^n-(N)_2$.
 			Il campo dei numeri rappresentabili è $-(2^{n-1}) \leq x \leq (2^{n-1} - 1)$, in quanto lo $0$ è positivo;
-		\end{enumerate} 
+		\end{enumerate}
 		\section{Rappresentazione digitale dei segnali}
 		Una \textbf{grandezza analogica} assume valori continui in un intervallo, cioè può assumere infiniti valori e di conseguenza un segnale analogico è più denso di uno digitale.
 		\\
@@ -357,7 +358,7 @@
 		La profondità dell'immagine è il numero di bit che utilizziamo per rappresentare il colore di un singolo pixel dell'immagine.
 		\begin{center}
 			Numero di bit per immagine = dimensione $\times$ profondità
-		\end{center} 
+		\end{center}
 		Nel caso delle immagini le operazioni di campionamento e quantizzazione si applicano nello spazio (2D) invece che nel tempo e il \textbf{campionamento} consiste nel dividere l'immagine in sottoinsiemi regolari per ognuno dei quali si dovrà prelevare un campione che si considera rappresentativo per tutto il sottoinsieme.
 		\\
 		La \textbf{quantizzazione} è la codifica del colore associato a ogni pixel, i formati più recenti utilizzano 32 bit, di cui 8 per rappresentare le tre componenti fondamentali RGB, altri 8 per gestire le trasparenze.
@@ -375,7 +376,7 @@
 		\begin{enumerate}
 			\item \textbf{Lunghezza del filmato} in secondi;
 			\item \textbf{Risoluzione grafica}, più fitta è la griglia per digitalizzare i singoli fotogrammi maggiore sarà la risoluzione;
-			\item \textbf{L'ampiezza della 'palette'} di colori utilizzata, una palette ristretta rende i colori troppo poco realistici; 
+			\item \textbf{L'ampiezza della 'palette'} di colori utilizzata, una palette ristretta rende i colori troppo poco realistici;
 			\item \textbf{Numero di frame per secondo}, un numero limitato di fotogrammi fa apparire l'immagine poco fluida;
 			\item \textbf{Qualità dell'audio}.
 		\end{enumerate}
@@ -400,7 +401,7 @@ L'architettura di Von Neumann estesa include altre componenti:
 		\item Stampanti;
 	\end{itemize}
 	\item BUS.
-\end{itemize}			
+\end{itemize}
 \subsection{Scheda madre}
 La scheda madre raccoglie tutta la circuiteria elettronica e i collegamenti di interfaccia fra i vari componenti principali di un calcolatore, fra questi i bus di espansione e le interfacce verso l'esterno ed è responsabile della trasmissione e temporizzazione corretta dei segnali.\\
 I principali componenti montati sulla scheda madre sono:
@@ -420,7 +421,7 @@ I componenti collegati tramite cavi alla scheda madre sono:
 \subsection{Oscillatore}
 L'oscillatore principale sulla scheda madre, o più semplicemente, \textbf{oscillatore di sistema}, fornisce la frequenza di base per il funzionamento della CPU e di altri dispositivi come il chipset, la RAM o altri componenti.\\
 Quest'oscillatore è basato su un cristallo di quarzo che genera il segnale di clock per il sistema. Questo segnale viene inviato alla CPU e ad altri componenti per sincronizzare tutte le operazioni del sistema. \\
-\textbf{Moltiplicatore di clock della CPU}: La CPU prende il segnale di clock dalla scheda madre e lo moltiplica internamente per raggiungere la sua frequenza operativa. Questo processo è noto come \textbf{multiplying clock (Phase-Locked Loop (PLL))}. 
+\textbf{Moltiplicatore di clock della CPU}: La CPU prende il segnale di clock dalla scheda madre e lo moltiplica internamente per raggiungere la sua frequenza operativa. Questo processo è noto come \textbf{multiplying clock (Phase-Locked Loop (PLL))}.
 \subsection{CPU e i suoi registri}
 La CPU è il "cervello" del computer e il suo compito è quello di  eseguire le istruzioni di un programma presente in memoria principale. \\
 La CPU è composta da parti distinte:
@@ -493,7 +494,7 @@ La CPU esegue le istruzioni rispettando un specifico algoritmo, chiamato \textbf
 \begin{enumerate}
 	\item \textbf{instruction fetch:} cioè il recupero di un'istruzione dalla memoria;
 	\item \textbf{decode:} cioè l'interpretazione dell'istruzione e l'attivazione delle funzioni associate;
-	\item \textbf{execute:} cioè l'esecuzione dell'istruzione e la memorizzazione del risultato.	
+	\item \textbf{execute:} cioè l'esecuzione dell'istruzione e la memorizzazione del risultato.
 \end{enumerate}
 I passi che compie la CPU per eseguire un'operazione sono:
 \begin{enumerate}
@@ -523,7 +524,7 @@ I principi di progettazione sono:
 	I calcolatori moderni ricorrono a diversi espedienti per massimizzare le loro prestazioni, uno fra questi consiste nel cercare di iniziare a eseguire più istruzioni al secondo. Per fare ciò, il parallelismo gioca un ruolo importante nelle prestazioni, infatti è possibile emettere un gran numero di lente istruzioni in un breve intervallo di tempo solo se si riescono a eseguire più istruzioni allo stesso tempo. \\
 	Le istruzioni non sempre vengono emesse nello stesso ordine in cui appaiono nel programma e non è necessario che termino nello stesso ordine, però, se un istruzione imposta il valore in un registro e una seconda istruzione deve leggere il dato da quel registro è necessario che la seconda istruzione venga eseguita dopo la prima.
 	\item \textbf{Le istruzioni devono essere facili da decodificare} \\
-	Un limite sulla frequenza di emissione di istruzioni è il percorso di decodifica e tutto ciò che può aiutare questo processo si rivela utile come rendere le istruzioni regolari, di lunghezza fissa e con pochi campi. 
+	Un limite sulla frequenza di emissione di istruzioni è il percorso di decodifica e tutto ciò che può aiutare questo processo si rivela utile come rendere le istruzioni regolari, di lunghezza fissa e con pochi campi.
 	\item \textbf{Solo le istruzioni Load e Store fanno riferimento alla memoria} \\
 	Uno dei modi più semplici per dividere le operazioni passi separati è che quello di richiedere che gli operandi vengano prelevati dai registri e siano memorizzati al loro interno. L'operazione di spostamento degli operandi alla memoria viene compiuta da apposite istruzioni. Visto che l'accesso in memoria richiede tempo, queste operazioni possono essere sovrapposte dall'esecuzione di altre istruzioni. Questo porta alla conclusione che solo le istruzioni LOAD e STORE dovrebbero far riferimento alla memoria.
 	\item \textbf{Molti registri disponibili} \\
@@ -617,7 +618,7 @@ I problemi di questa soluzione è la generazione dei ritardi per la contesa tra 
 \paragraph{Pipeline: Prelievo anticipato della destinazione o prefetch branch target} Quando viene riconosciuto un salto condizionato viene anche prelevata anticipatamente la sua destinazione. L'indirizzo è quindi mantenuto fino a quando si dovrà eseguire l'istruzione di salto, in modo che, se occorre compiere il salto, l'indirizzo è già stato prelevato.
 \paragraph{Pipeline: Buffer circolare o loop buffer} Si tratta di una piccola e veloce memoria che contiene le ultime $n$ istruzioni prelevate con il fetch. Se occorre effettuare un salto l'hardware controlla se la destinazione si trova nel buffer. In caso affermativo la successiva istruzione viene prelevata dal buffer. \\
 I vantaggi di questo approccio è che anticipando il fetch è possibile avere già nella memoria circolare alcune istruzioni evitando di dover far riferimento in memoria alcune volte e nei cicli se le istruzioni dell'intero ciclo riescono a stare nel buffer circolare si ha un massimo vantaggio.
-\paragraph{Pipeline: Predizione di salto o branch prediction} 
+\paragraph{Pipeline: Predizione di salto o branch prediction}
 \begin{itemize}
 	\item Previsione di saltare sempre ed è un approccio statico;
 	\item Previsione di non saltare mai ed è un approccio statico;
@@ -646,7 +647,7 @@ La differenza tra un processore SIMD e un processore vettoriale è che un proces
 Sono possibili vari schemi d'implementazione, il più semplice dei quali consiste nell'avere un singolo bus con più CPU, tutte connesse a un'unica memoria. Ovviamente, se un gran numero di processori veloci tenta di accedere costantemente alla memoria attraverso lo stesso bus si generano dei conflitti. Per evitare questi problemi sono stati sviluppati diversi schemi, uno tra questi è quello di un'architettura in cui ogni processore possiede una propria memoria locale, non accessibile agli altri. Questa memoria è utilizzata per contenere il codice del programma e quei dati che non devono essere condivisi. L'accesso a questa memoria non utilizza il bus principale.
 \paragraph{Multicomputer} Se da un lato è relativamente semplice costruire multiprocessori composti da un modesto numero di processori è decisamente più complicato realizzarne di più grandi, perchè è difficile connetterli tutti alla memoria. Per evitare questi problemi, è stata abbandonata l'idea di avere una memoria condivisa e molti progettisti hanno costruito sistemi composti da un gran numero di calcolatori interconnessi, ciascuno dotato di memoria privata. Questi sono detti \textbf{multicomputer}, in questi sistemi le CPU hanno un legame lasco detto \textit{loosely coupled}. \\
 Le CPU dei multicomputer comunicano inviandosi messaggi e nel caso di sistemi molto grandi, dato che non è efficiente connettere mutualmente tutti i calcolatori, si utilizzano diverse topologie come griglie 2D e 3D, alberi e anelli e i messaggi tra due calcolatori per spostarsi da sorgente a destinazione devono passare attraverso uno o più macchina intermedie. \\
-Visto che è facile programmare i multiprocessori e i multicomputer sono facili da costruire, molte ricerche sono indirizzate alla realizzazione di sistemi ibridi che uniscano le qualità di entrambi. 
+Visto che è facile programmare i multiprocessori e i multicomputer sono facili da costruire, molte ricerche sono indirizzate alla realizzazione di sistemi ibridi che uniscano le qualità di entrambi.
 \paragraph{Legge di Andahl}  Sia $P$ un processo e supponiamo che sia costituito da una frazione seriale $f_s$ realizzabile in un tempo $T_s$ e da una frazione $f_p$ realizzabile in parallelo in un tempo $T_p$ dove ovviamente $f_s + f_p = 1$ \\
 Sia $T_1$ e $T_n$ rispettivamente il tempo di esecuzione del processo su 1 ed $n$ processori:
 \[
@@ -661,12 +662,12 @@ Lo speed-up $S(n)$ con $n$ processori è pari a $\dfrac{T_1}{T_n}$, la \textbf{l
 S(n) = \dfrac{T_1}{T_n} = \dfrac{1}{f_s + \dfrac{f_p}{n}} = \dfrac{1}{f_s + \dfrac{1 - f_s}{n}} = \dfrac{n}{nf_s + 1 - f_s}
 \]
 \section{Memoria principale}
-La memoria è quella parte del calcolatore dove sono memorizzati programmi e dati. 
+La memoria è quella parte del calcolatore dove sono memorizzati programmi e dati.
 \subsection{Locazioni di memoria}
 La memoria è costituita da un certo numero di \textbf{celle o locazioni} in ciascuna delle quali si può memorizzare informazioni. \\
 Ciascuna cella ha un numero chiamato \textbf{indirizzo} attraverso il quale qualsiasi programma può riferirsi ad essa.
 Tutte le celle contengono lo stesso numero di bit, quindi, se una cella contiene $k$ bit potrà assumere al massimo $2^k$ valori.
-Attualmente si usa considerare raggruppamenti di bit in \textbf{byte} che sono raggruppati in \textbf{word} che è un'unità di misura della quantità di dati che un processore può elaborare.			
+Attualmente si usa considerare raggruppamenti di bit in \textbf{byte} che sono raggruppati in \textbf{word} che è un'unità di misura della quantità di dati che un processore può elaborare.
 \subsection{Ordinamento dei byte}
 All'interno di una parola i byte possono essere numerati da sinistra a destra, la notazione \textbf{big endian}, cioè dal byte più significativo al meno significativo o da destra a sinistra, la notazione \textbf{little endian}, cioè dal byte meno significativo al più significativo.
 \begin{figure}[h]
@@ -699,7 +700,7 @@ Questo limite teorico può essere utilizzato nel \textbf{codice di Hamming}.
 \section{Memoria cache}
 La memoria cache è localizzata logicamente fra la memoria principale e la CPU, fisicamente ci sono diversi posti possibili dove può essere collocata. \\
 La memoria cache è una memoria di piccole dimensioni ma estremamente veloce. Quando la CPU necessita di una parola, la cerca nella cache e solo nel caso non la trova accede alla memoria centrale. \\
-L'idea è quella di mantenere nella cache le parole di memoria più utilizzate in modo da ridurre il tempo medio di accesso alla memoria dalla parte della CPU. \\ 
+L'idea è quella di mantenere nella cache le parole di memoria più utilizzate in modo da ridurre il tempo medio di accesso alla memoria dalla parte della CPU. \\
 Il buon funzionamento delle memoria cache è dipeso dalla capacità di conservare in essa le informazioni che saranno necessarie. \\
 Una delle tecniche più efficaci per migliorare sia la larghezza di banda sia la latenza è l'uso di più cache. Una tecnica elementare che funziona in modo efficace consiste nell'introdurre due cache separate, una per le istruzioni e una per i dati. \\
 Il sistema con due cache distinte per i dati e per le istruzioni, chiamato a \textbf{cache separata}, fornisce vari vantaggi. Innanzitutto è possibile far partire le operazioni di memoria indipendentemente per ciascuna cache, raddoppiando la larghezza di banda del sistema. \\
@@ -710,7 +711,7 @@ L'osservazione secondo la quale i riferimenti alla memoria fatti in un breve int
 \begin{itemize}
 	\item \textbf{Principio di località spaziale:} se in un certo istante viene referenziato un indirizzo di memoria è molto probabile che in instanti immediatamente successivi possano venire referenziati indirizzi vicini.
 	\item \textbf{Principio di località temporale:} se in un certo istante viene referenziato un indirizzo di memoria è altamente probabile che in istanti immediatamente successivi lo stesso indirizzo possa essere nuovamente referenziato.
-\end{itemize}	
+\end{itemize}
 Se durante un piccolo intervallo di tempo una parola è letta o scritta \textit{k} volte, il calcolatore dovrà effettuare:
 \begin{itemize}
 	\item 1 riferimento alla memoria centrale che è più lento $+$ 1 accesso non riuscito alla memoria cache;
@@ -726,7 +727,7 @@ Il vantaggio nell'uso della cache è quantificabile in:
 \[
 \dfrac{t_{cache}}{t_{memory}} = \dfrac{(c+m)+(k-1)c}{km}
 \]
-Nel caso più generale, definiamo con \textbf{\textit{h}} il numero di richieste che la memoria cache è in grado di soddisfare, questo concetto prende il nome di \textit{hit ratio} ed equivale a: 
+Nel caso più generale, definiamo con \textbf{\textit{h}} il numero di richieste che la memoria cache è in grado di soddisfare, questo concetto prende il nome di \textit{hit ratio} ed equivale a:
 \[
 \dfrac{number \; of \; hits}{number \; of \; hits \quad + \quad number \; of \; misses} = h \hspace{1cm} 0 \leq h \leq 1
 \]
@@ -737,8 +738,8 @@ Con queste possiamo calcolare il tempo medio di accesso alla cache che equivale 
 Tempo \; medio \; di \; accesso \; = c + (1-h)m
 \]
 Se $h = 0$ allora il tempo medio di accesso equivale a $c + m$, cioè il tempo per controllare la cache senza trovare nulla e il tempo per accedere alla memoria principale. \\
-Se $h = 1$, la miss ratio equivale a 0 e il tempo medio di accesso alla cache equivale proprio al tempo per far riferimento alla cache.		
-Esistono due tipologie di cache: 
+Se $h = 1$, la miss ratio equivale a 0 e il tempo medio di accesso alla cache equivale proprio al tempo per far riferimento alla cache.
+Esistono due tipologie di cache:
 \begin{itemize}
 	\item \textbf{cache a corrispondenza diretta};
 	\item \textbf{cache set-associative}.
@@ -748,7 +749,7 @@ Questa è la tipologia di cache più semplice dive ciascun elemento della cache 
 \begin{itemize}
 	\item il bit \textit{Valid} che indica se l'elemento è valido oppure no. All'avvio del sistema tutti gli elementi della cache sono marcati come non validi;
 	\item il campo \textit{Tag} che è un valore univoco a 16 bit e corrisponde alla linea di memoria dalla quale provengono i dati;
-	\item il campo \textit{Data} che contiene una copia del dato della memoria. 
+	\item il campo \textit{Data} che contiene una copia del dato della memoria.
 \end{itemize}
 In questa tipologia di cache una data parola di memoria può essere memorizzata in un'unica posizione della cache. Per memorizzare e prelevare dati dalla cache, l'indirizzo è diviso in quattro campi:
 \begin{itemize}
@@ -764,11 +765,11 @@ Un problema che si potrebbe riscontrare nelle cache a corrispondenza a diretta �
 Una soluzione a questo problema è quello di consentire che in ciascun elemento della cache ci possano essere due o più linee. Una cache con \textit{n} possibili elementi per ciascun indirizzo è chiamata \textbf{cache set-associative a \textit{n} vie}. \\
 Queste cache sono più complesse di quelle a corrispondenza diretta, infatti è necessario controllare un insieme di \textit{n} elementi per verificare se la linea richiesta è presente nella cache. \\
 L'uso di questa tipologia di cache pone il progettista di fronte a una scelta: quando viene portata all'interno della cache una nuova linea, quale delle presenti deve essere scartata? \\
-Un algoritmo che nella maggior parte delle situazioni funziona abbastanza bene è detto \textbf{LRU} che è analogo a quello utilizzato negli algoritmi di sostituzione delle pagine nel modulo di gestione della memoria tramite memoria virtuale. \\ 
-Infine, anche le operazioni di scrittura pongono un particolare problema nell'uso della cache. Quando un processore scrive una parola e questa è presente nella cache, deve aggiornare la parola oppure scaricare l'elemento della cache. La soluzione adottata è quella di aggiornare la cache. Ma cosa possiamo dire riguardo l'aggiornamento della copia nella memoria centrale? Ci sono diversi approcci per aggiornare la copia nella memoria centrale. \\ 
-Il primo è il \textbf{write-through} che è l'approccio più semplice. Utilizzando questo approccio la copia dell'elemento in memoria centrale viene aggiornato non appena viene modificato l'elemento in cache. Questo metodo è anche il più affidabile, d'altra parte, però, questa tecnica richiede molto traffico verso la memoria, per questo si tende ad utilizzare un altro metodo chiamato \textbf{write-back} o \textbf{write-deferred} cioè \textbf{scrittura ritardata}. Utilizzando questa tecnica, la copia dell'elemento in memoria centrale non viene aggiornato non appena viene modificato l'elemento nella cache, ma viene aggiornato solo quando lo si ritiene opportuno. \\ 
+Un algoritmo che nella maggior parte delle situazioni funziona abbastanza bene è detto \textbf{LRU} che è analogo a quello utilizzato negli algoritmi di sostituzione delle pagine nel modulo di gestione della memoria tramite memoria virtuale. \\
+Infine, anche le operazioni di scrittura pongono un particolare problema nell'uso della cache. Quando un processore scrive una parola e questa è presente nella cache, deve aggiornare la parola oppure scaricare l'elemento della cache. La soluzione adottata è quella di aggiornare la cache. Ma cosa possiamo dire riguardo l'aggiornamento della copia nella memoria centrale? Ci sono diversi approcci per aggiornare la copia nella memoria centrale. \\
+Il primo è il \textbf{write-through} che è l'approccio più semplice. Utilizzando questo approccio la copia dell'elemento in memoria centrale viene aggiornato non appena viene modificato l'elemento in cache. Questo metodo è anche il più affidabile, d'altra parte, però, questa tecnica richiede molto traffico verso la memoria, per questo si tende ad utilizzare un altro metodo chiamato \textbf{write-back} o \textbf{write-deferred} cioè \textbf{scrittura ritardata}. Utilizzando questa tecnica, la copia dell'elemento in memoria centrale non viene aggiornato non appena viene modificato l'elemento nella cache, ma viene aggiornato solo quando lo si ritiene opportuno. \\
 Sempre riguardo le operazioni di scrittura c'è un altro problema: cosa fare se si verifica una scrittura in una locazione di memoria che in quel momento non è memorizzato in cache? Bisogna portare il dato in cache o basta scriverlo in memoria? Nessuna delle due soluzioni è migliore dell'altra ma la maggior parte dei progetti ritardano la scrittura in memoria e portano i dati in cache solo quando si verifica un errore in scrittura: questa tecnica viene chiamata \textbf{write allocation}. \\
-Quando si usa una cache a corrispondenza diretta, si tende a non allocare un elemento della cache ad ogni operazione di scrittura perchè andrebbe a complicare un`organizzazione che dovrebbe risultare semplice. 
+Quando si usa una cache a corrispondenza diretta, si tende a non allocare un elemento della cache ad ogni operazione di scrittura perchè andrebbe a complicare un`organizzazione che dovrebbe risultare semplice.
 \subsection{Assemblaggio e tipi di memoria}
 Fino ai primi anni '90, le memorie erano prodotto, vendute e installate in un unico chip. \\
 Dopo gli anni '90 venne adottata un'organizzazione diversa, vari chip, di 8 o 16 elementi, venivano montati su una scheda a circuiti stampati venduta singolarmente. Questa organizzazione è chiamata \textbf{SIMM} (Single Inline Memory Module) oppure \textbf{DIMM} (Dual Inline Memory Module) a seconda che abbia i connettori allineati su uno o due lati della scheda. Le SIMM sono poco utilizzate adesso e trasferiscono 32 bit per ciclo di clock; le DIMM invece hanno generalmente 120 contatti per lato, rispetto ai soli 72 delle SIMM, e trasferiscono 64 bit per ciclo di clock. Le DIMM più diffuse sono le DDR3, la terza versione delle Double Data Rate. \\
@@ -782,14 +783,14 @@ Qui segue un esempio di SIMM e DIMM:
 \section{Memoria Secondaria}
 La memoria centrale non è mai troppo grande, infatti si vorrebbero memorizzare più informazioni rispetto alle reali capacità.
 \subsection{Gerarchie di memoria}
-La soluzione che viene adottata per memorizzare una grande quantità di dati consiste nell'organizzare gerarchicamente la memoria, come mostrato nella figura: 
+La soluzione che viene adottata per memorizzare una grande quantità di dati consiste nell'organizzare gerarchicamente la memoria, come mostrato nella figura:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.00\textwidth]{gerarchia_memoria}
 \end{figure}
 Muovendosi verso il basso della gerarchia aumentano tre parametri fondamentali:
 \begin{enumerate}
-	\item il \textbf{tempo di accesso} aumenta man mano che si scende, infatti ai registri delle CPU è possibile accedere in pochi nanosecondi, le cache in tempo che è multiplo di quelle dei registri delle CPU, la memoria centrale è accessibile in una decina di nanosecondi, mentre il tempo di accesso ai dischi è di almeno 10ms e il tempo di accesso per i dischi ottici è sull'ordine dei secondi; 
+	\item il \textbf{tempo di accesso} aumenta man mano che si scende, infatti ai registri delle CPU è possibile accedere in pochi nanosecondi, le cache in tempo che è multiplo di quelle dei registri delle CPU, la memoria centrale è accessibile in una decina di nanosecondi, mentre il tempo di accesso ai dischi è di almeno 10ms e il tempo di accesso per i dischi ottici è sull'ordine dei secondi;
 	\item la \textbf{capacità di memorizzazione} aumenta, infatti i registri possono immagazzinare circa 128 byte, le cache pochi MB; le memoria centrali da decina a migliaia di MB e dischi magnetici possono arrivare anche a decine di GB;
 	\item i \textbf{costi unitari} diminuiscono, i costi della memoria centrale è dell'ordine euro/MB, quelli dei dischi magnetici sono 100 volte inferiori e ancora più bassi quelli dei nastri magnetici.
 \end{enumerate}
@@ -823,9 +824,9 @@ La tecnologia evolse e negli anni '80 si passò alle unità \textbf{IDE}, Integr
 Utilizzando 4 bit per la testina, 6 bit per il settore e 10 bit per il cilindro, un'unità poteva contenere 16 testine, 63 settori e 1024 cilindri per un totale di 1.032.192 settori che rappresentava una capacità massima di 504MB. \\
 Le unità IDE si evolsero nelle unità \textbf{EIDE}, Extended IDE, che avevano uno schema di indirizzamento chiamato \textbf{LBA}, Logical Block Addressing, che numerava i settori da 0 fino a $2^{28} - 1$. Questo schema richiedeva che il controllore convertisse gli indirizzi LBA negli indirizzi della testina, del cilindro e del settore e avevano una capacità massima di 128GB. \\
 Lo standard EIDE si evolse, il suo successore fu \textbf{ATA-3}, la versione successiva era \textbf{ATAPI-4} e \textbf{ATAPI-5} con una velocità di trasferimento rispettivamente di 33MB/s e 66MB/s. \\
-Con \textbf{ATAPI-6} la dimensione degli LBA fu portato a 48 bit e lo standard \textbf{ATAPI-7} usa l'interfaccia \textbf{serial ATA} per trasferire un bit alla volta su un connettore a 7 pin a una velocità di 150 MB/s e che dovrebbe raggiungere 1.5 GB/s. 
+Con \textbf{ATAPI-6} la dimensione degli LBA fu portato a 48 bit e lo standard \textbf{ATAPI-7} usa l'interfaccia \textbf{serial ATA} per trasferire un bit alla volta su un connettore a 7 pin a una velocità di 150 MB/s e che dovrebbe raggiungere 1.5 GB/s.
 \subsection{Dischi SCSI}
-I dischi SCSI, Small Computer System Interface, sono differenti da quelli IDE per quanto riguarda l'organizzazione di cilindri, tracce e settori, ma hanno una diversa interfaccia e una velocità di trasferimento dati molto più elevata. Dei dischi SCSI sono state standardizzate versioni sempre più veloci come mostrato nella figura: 
+I dischi SCSI, Small Computer System Interface, sono differenti da quelli IDE per quanto riguarda l'organizzazione di cilindri, tracce e settori, ma hanno una diversa interfaccia e una velocità di trasferimento dati molto più elevata. Dei dischi SCSI sono state standardizzate versioni sempre più veloci come mostrato nella figura:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.00\textwidth]{dischi_SCSI}
@@ -836,14 +837,14 @@ I controllori SCSI possono funzionare come inziatori o destinatari di comunicazi
 \subsection{RAID}
 Spesso si utilizza l'elaborazione parallela per velocizzare le prestazioni della CPU. Inoltre, fu anche suggerita l'idea di un'organizzazione a sei dischi per migliorare le prestazioni, l'affidabilità o entrambe. Questa idea fu adottata velocemente e portò a una nuova classe di dispositivi I/O chiamata \textbf{RAID}, Redundant Array of Inexpensive/Independent Disks. \\
 L'idea di funzionamento del RAID, consiste nell'installare vicino ad un calcolatore, solitamente un server di grandi dimensioni, un contenitore pieno di dischi, di sostituire il controllore del dischi con un controllore RAID e di continuare le normale operazioni, un RAID quindi dovrebbe apparire come un singolo disco capiente con prestazioni e affidabilità elevate. \\
-Tutti i RAID, che appaiono al software come singolo disco, hanno la proprietà di distribuire i dati sulle diverse unità per permetterne la gestione parallela. I RAID hanno dei livelli, solitamente quelli più utilizzati sono quelli che vanno dal livello 0 al livello 5, ogni livello ha un'organizzazione differente con diverse caratteristiche di affidabilità e prestazioni.  
+Tutti i RAID, che appaiono al software come singolo disco, hanno la proprietà di distribuire i dati sulle diverse unità per permetterne la gestione parallela. I RAID hanno dei livelli, solitamente quelli più utilizzati sono quelli che vanno dal livello 0 al livello 5, ogni livello ha un'organizzazione differente con diverse caratteristiche di affidabilità e prestazioni.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.75\textwidth]{RAID_0}
 	\caption{RAID livello 0}
 \end{figure}
 Nel RAID di livello 0, il disco virtuale simulato dal RAID è visto che se fosse suddiviso in \textit{strip} consecutive in modo ciclico e questo modo di distribuire le unità è chiamato \textbf{striping}, se ad esempio il software deve leggere un blocco di dati costituito da 4 strip consecutive, il controllore RAID divide questo comando in quattro comandi separati e li farà eseguire in parallelo, in questo modo si ottiene un I/O parallelo senza che il software ne sia a conoscenza. \\
-Il RAID di livello 0 lavora meglio quando le richieste sono di grandi dimensioni mentre lavora peggio con i sistemi operativi che richiedono i dati di un settore alla volta, dove il risultato sarà comunque corretto ma le prestazioni sono minori. 
+Il RAID di livello 0 lavora meglio quando le richieste sono di grandi dimensioni mentre lavora peggio con i sistemi operativi che richiedono i dati di un settore alla volta, dove il risultato sarà comunque corretto ma le prestazioni sono minori.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.00\textwidth]{RAID_1}
@@ -887,7 +888,7 @@ I CD-R non sono stati sostituiti completamente anche perchè il fatto che un CD-
 Negli anni '90, con il miglioramento della tecnologie, sono stati sviluppati dischi ottici più economici e con capacità maggiore. Inoltre, in questo periodo, Hollywood stava cercando un modo per sostituire le videocassette analogiche con dei dischi ottici in modo da offrire una qualità maggiore e più economici in termini di costi e di spazio occupato. \\
 Perciò, furono ideati ai DVD, Digital Video Disk ma che ora significa Digital Versatile Disk. I DVD sono progettati in modo molto simile ai CD, le novità riguardano l'uso di pit più piccoli, una spirale più stretta e un laser rosso. \\
 Questi miglioramenti permettono una capacità che arriva fino a 4,7 GB e una velocità di 1,4 MB/S. Utilizzando la compressione MPEG-2 un disco DVD può memorizzare 133 minuti di video a schermo intero, con otto versioni di colonne sonore e sottotitoli in 32 lingue diverse. \\
-Tuttavia, per memorizzare maggiori informazioni sono stati definiti quattro formati: 
+Tuttavia, per memorizzare maggiori informazioni sono stati definiti quattro formati:
 \begin{enumerate}
 	\item singolo lato, singolo strato, 4,7GB;
 	\item singolo lato, doppio strato, 8,5 GB;
@@ -895,7 +896,7 @@ Tuttavia, per memorizzare maggiori informazioni sono stati definiti quattro form
 	\item doppio lato, doppio strato, 17 GB.
 \end{enumerate}
 Esistono queste versioni a causa di politica perchè Philips e Sony volevano dischi a singolo lato e doppio strato, mentre Toshiba e Time Warner volevano dischi a doppio lato e doppio strato ma Philips e Sony credevano che la gente non fosse disposta a girare i dischi e infatti avevano ragione. \\
-La tecnologia a doppio strato ha uno stato riflettente nella parte bassa, coperto da uno semiriflettente. A seconda del punto in cui il laser è messo a fuoco, questo rimbalza su un livello oppure sull'altro, il livello più basso richiede che \textit{pit} e \textit{land} siano leggermente più grandi per essere leggibili in modo affidabile, infatti la sua capacità è inferiore rispetto allo strato superiore. \\ 
+La tecnologia a doppio strato ha uno stato riflettente nella parte bassa, coperto da uno semiriflettente. A seconda del punto in cui il laser è messo a fuoco, questo rimbalza su un livello oppure sull'altro, il livello più basso richiede che \textit{pit} e \textit{land} siano leggermente più grandi per essere leggibili in modo affidabile, infatti la sua capacità è inferiore rispetto allo strato superiore. \\
 I dischi a doppio lato sono creati prendendo due dischi a singolo lato e incollandoli uno contro l'altro. \\
 I DVD sono stati pensati principalmente per film, infatti tra le funzionalità troviamo l'omissione in tempo reale di scene scabrose, l'audio a sei canali e il supporto per \textit{Pan-and-Scan} che permette di decidere come tagliare le bande laterali dei film. Un altro aspetto è la scelta intenzionale di rendere incompatibili i dischi previsti per gli Stati Uniti rispetto a quelli previsti per l'Europa e altri continenti, in quanto i nuovi film escono sempre prima negli Stati Uniti.
 \subsection{Blu-Ray}
@@ -904,7 +905,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		\section{Porte logiche}
 			La base hardware di tutti i calcolatori digitali è costituita da delle \textbf{porte logiche}, che sono dei piccolo dispositivi digitali, ciascuno dei quali calcola una diversa funzione di questi segnali. \\
 			Le porte logiche più semplici sono NOT, AND, OR e sono i principali elementi costitutivi del livello logico digitale e con le coppie, \textbf{(NOT, AND)} e \textbf{(NOT, OR)}  è possibile costruire qualsiasi altra porta logica. \\
-			Il funzionamento delle singole porte logiche rientrano nel campo dei \textbf{livello dei dispositivi} che si trova al di sotto del livello logico digitale.	
+			Il funzionamento delle singole porte logiche rientrano nel campo dei \textbf{livello dei dispositivi} che si trova al di sotto del livello logico digitale.
 		\section{Logica proposizionale: le proposizioni}
 			Le frasi affermative hanno una caratteristica che le differenzia dalle altre: possono essere \textbf{vere} o \textbf{false}.
 			Nella logica proposizionale queste sono chiamate \textbf{proposizioni}.
@@ -915,7 +916,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			Una funzione booleana ha una o più variabili di input e genera un valore di output che dipende soltanto dai valori di queste variabili. \\
 			Una funzione booleana può essere descritta mediante una tabella di $2^n$ righe dato che esistono $2^n$ possibili combinazioni di input e ogni riga indica il valore della funzione per una data combinazione degli input, questa tabella prende il nome di \textbf{tabella di verità}. \\
 			La \textbf{tabella di verità} non è l'unico modo per descrivere una funzione booleana, anzi, diventa un metodo inefficiente nel momento in cui il numero di variabili di input diventa elevato. \\
-			Una funzione booleana, può essere descritta come una somma di prodotti, ad esempio: 
+			Una funzione booleana, può essere descritta come una somma di prodotti, ad esempio:
 			\[
 			f: ABC + \overline{A}BC + \overline{ABC}
 			\]
@@ -932,7 +933,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			L'operatore NOT restituisce il valore inverso a quello in entrata, in altre parole se in ingresso riceve la variabile booleana A restituisce il suo valore complementato.
 			\\
 			\\
-			
+
 			\begin{tabular} {c|c}
 				\textbf{A} & $\mathbf{\overline{A}}$ \\
 				\hline
@@ -985,7 +986,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\subsection{Operatore XOR - Somma modulo 2}
 			L'operatore XOR, detto anche \textbf{OR Esclusivo} o \textbf{somma modulo 2}, restituisce come valore 1 se e solo se il numero degli operandi con valore 1 è \textbf{dispari}, mentre restituisce 0 in tutti gli altri i casi.
 			\\
-			Tabella di verità con due variabili booleane: 
+			Tabella di verità con due variabili booleane:
 			\\
 			\\
 			\begin{tabular}{c|c|c}
@@ -1076,7 +1077,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\end{table}
 			\begin{proof}{Dimostrazione prima legge di Demorgan: \[
 					\overline{A * B} = \overline{A} + \overline{B}
-					\]} 
+					\]}
 			\begin{center}
 			\begin{tabular}{c|c|c|c|c|c|c}
 				$\mathbf{A}$ & $\mathbf{B}$ & $\mathbf{A * B}$ & $\mathbf{\overline{A * B}}$ & $\mathbf{\overline{A}}$ & $\mathbf{\overline{B}}$ & $\mathbf{\overline{A} + \overline{B}}$ \\
@@ -1103,18 +1104,18 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\section{Circuiti logici digitali elementari}
 			Ai giorni d'oggi sono pochi i circuiti costruiti porta per porta in quanto i componenti elementari sono rappresentati da moduli contenenti un certo numero di porte.
 			\subsection{Circuiti integrati}
-			Le porte logiche vengono vendute in unità chiamate \textbf{circuiti integrati} o \textbf{chip} e non è altro che un pezzo rettangolare di silicio la cui grandezza dipende dal numero di porte necessarie per implementare i componenti del chip. Questi chip sono montati in supporti di plastica che possono essere anche più grandi dei circuiti ospitati nel caso in cui siano necessari molti pin contatti per collegare il chip al mondo esterno. Solitamente i chip più piccoli, come la RAM, utilizzano un supporto di tipo \textbf{DIP} cioè a due file di pin, mentre i circuiti più grandi utilizzano un supporto di tipo \textbf{PGA} con dei pin simili a quelli di supporti di tipo DIP, o utilizzano un supporto di tipo \textbf{LGA}, che hanno invece piccoli pad piatti sul fondo del chip che si inserisce applicando una forza rivolta verso il basso, la CPU ne è un esempio. 
+			Le porte logiche vengono vendute in unità chiamate \textbf{circuiti integrati} o \textbf{chip} e non è altro che un pezzo rettangolare di silicio la cui grandezza dipende dal numero di porte necessarie per implementare i componenti del chip. Questi chip sono montati in supporti di plastica che possono essere anche più grandi dei circuiti ospitati nel caso in cui siano necessari molti pin contatti per collegare il chip al mondo esterno. Solitamente i chip più piccoli, come la RAM, utilizzano un supporto di tipo \textbf{DIP} cioè a due file di pin, mentre i circuiti più grandi utilizzano un supporto di tipo \textbf{PGA} con dei pin simili a quelli di supporti di tipo DIP, o utilizzano un supporto di tipo \textbf{LGA}, che hanno invece piccoli pad piatti sul fondo del chip che si inserisce applicando una forza rivolta verso il basso, la CPU ne è un esempio.
 			\section{Reti combinatorie}
 			Molte applicazioni della logica digitale richiedono un circuito, chiamato \textbf{rete combinatoria} con più input e più output, dove gli output sono determinati dalle varie combinazioni degli input, ed esistono anche circuiti che generano un valore di output che non dipendono solo dalle variabili d'ingresso ma anche dei valori memorizzati nel caso in cui un circuito contiene elementi di memoria, come il Latch.
 			\subsection{Multiplexer}
-			Il multiplexer si occupa di dirigere $2^n$ segnali di ingresso in un singolo segnale di uscita secondo $n$ linee di controllo. Queste input di controllo permettono di selezionare un segnale di ingresso che viene "instradato" verso l'esterno. \\ 
-			Una possibile applicazione di questo circuito è la conversione dei dati da parallelo a seriale, infatti se si immettono 8 bit di dati nelle linee di input e si fa variare il valore delle linee di controllo da 000 a 111, si ottengono sulla linea degli output gli 8 bit in serie, la conversione da parallelo a seriale lo si riscontra nelle tastiere: quando si prema un tasto viene generato un numero a 7 o 8 bit che deve essere inviato su un collegamento seriale come la USB. 
+			Il multiplexer si occupa di dirigere $2^n$ segnali di ingresso in un singolo segnale di uscita secondo $n$ linee di controllo. Queste input di controllo permettono di selezionare un segnale di ingresso che viene "instradato" verso l'esterno. \\
+			Una possibile applicazione di questo circuito è la conversione dei dati da parallelo a seriale, infatti se si immettono 8 bit di dati nelle linee di input e si fa variare il valore delle linee di controllo da 000 a 111, si ottengono sulla linea degli output gli 8 bit in serie, la conversione da parallelo a seriale lo si riscontra nelle tastiere: quando si prema un tasto viene generato un numero a 7 o 8 bit che deve essere inviato su un collegamento seriale come la USB.
 			\\
 			\begin{figure}[H]
 				\centering
 				\includegraphics[width=1.00\textwidth]{multiplexer}
 				\caption{Circuito logico del multiplexer}
-			\end{figure} 
+			\end{figure}
 			Le tre linee di controllo $S_0, S_1, S_2$ della figura generano un numero a 3 bit che specifica quale delle 8 otto linee di input deve essere instradato verso l'OR e quindi verso l'uscita. Tra le 8 otto linee di input, 7 di queste, indipendentemente dal valore generato dalle 3 linee di controllo generano sempre valore 0, mentre quella rimanente produrrà o 0 o 1, a seconda del valore della linee di ingresso selezionata.
 			\subsection{Decodificatore}
 			Il decodificatore accetta come input $n$ segnali di ingresso, che generano un numero a $n$ bit che sarà poi utilizzato dal decodificatore per impostare una sola dei $2^n$ segnali di uscita. \\
@@ -1123,7 +1124,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 				\centering
 				\includegraphics[width=1.00\textwidth]{Decodificatore}
 				\caption{Circuito logico e tabella di verità del decodificatore}
-			\end{figure} 
+			\end{figure}
 			\subsection{Comparatori}
 			Il comparatore permette di confrontare due stringhe di bit. Il circuito è basato sulla porta logica XOR che può produrre i seguenti valori:
 			\begin{itemize}
@@ -1146,13 +1147,13 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\end{figure}
 			\section{Circuiti per l'aritmetica}
 			\subsection{Registri a scorrimento}
-			I registri a scorrimento sono costituiti da una catena di celle di memoria a 1 bit interconnesse fra loro e ad ogni impulso di clock essi consentono lo scorrimento da una cella a quella immediatamente adiacente. 
+			I registri a scorrimento sono costituiti da una catena di celle di memoria a 1 bit interconnesse fra loro e ad ogni impulso di clock essi consentono lo scorrimento da una cella a quella immediatamente adiacente.
 			\begin{figure}[H]
 				\centering
 				\includegraphics[width=1.00\textwidth]{registri_scorrimento}
 				\caption{Registro a scorrimento con 8 input e 8 output}
 			\end{figure}
-			Il circuito in figura, presenta 8 input e 8 output. Gli input sono collegati alle linee 
+			Il circuito in figura, presenta 8 input e 8 output. Gli input sono collegati alle linee
 			$D$, mentre l'output, che corrisponde all'input traslato di un bit, è disponibile sulle linee $S$. La linea di controllo $C$ ha valore 0 se lo spostamento deve avvenire verso sinistra e 1 il contrario. \\
 			Nel caso di uno spostamento a sinistra viene inserito uno 0 nel bit 7 e nel caso di spostamento a destra viene inserito uno 0 nel bit 0. \\
 			Nel circuito, per tutti i bit che non sono all'estremità c'è una coppia di porte AND, quando $C = 1$ la porta che si trova a destra viene abilitata e dato che questa porta è collegata all'input della porta OR alla sua destra, si ottiene uno scorrimento verso destra. Se $C = 0$ accade il contrario, cioè viene attivata la porta AND a sinistra.
@@ -1177,7 +1178,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\end{figure}
 			\subsection{Full adder}
 			Il full adder o sommatore completo è un circuito logico con tre ingressi e due uscite.
-			Questo circuito, è capace di sommare due bit tenendo conto di un eventuale riporto precedente.\\ 
+			Questo circuito, è capace di sommare due bit tenendo conto di un eventuale riporto precedente.\\
 			\textbf{Tabella di verità full adder: } \\ \\
 			\begin{tabular}{c|c|c|c|c}
 				\textbf{A} & \textbf{B} & $\mathbf{C_{in}}$ & \textbf{S} & $\mathbf{C_o}$ \\
@@ -1235,7 +1236,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 				$\mathbf{S}$ & $\mathbf{R}$ & $\mathbf{Q}$ & $\mathbf{\overline Q}$ \\
 				\hline
 				0 & 0 & 1 & 0 & \multirow{2}{*}{Set state} \\
-				1 & 0 & 1 & 0 & \\ 
+				1 & 0 & 1 & 0 & \\
 				\hline
 				0 & 0 & 0 & 1 & \multirow{2}{*}{Reset state}\\
 				0 & 1 & 0 & 1 & \\
@@ -1297,7 +1298,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			A sinistra, in corrispondenza delle linee di indirizzo, troviamo 4 porte AND che formano un decodificatore che serve per scegliere la parola sulla quale operare. \\
 			Quando l'operazione di scrittura è selezionata, l'output di questa porta guida tutti i segnali CK relativi alla parola selezionata, caricando i dati di input nei flip-flop che costituiscono la parola stessa. \\
 			Quando viene attivata l'operazione di lettura, vengono disabilitate tutte le porte di scrittura. La linea per la selezione della parola scelta abilita la porta AND alla quale sono collegati i bit Q della parola selezionata, spedendo i dati alle porte OR. \\
-			Anche se si potrebbe pensare di collegare le tre porte OR alle linee di output, è un approccio che si evita in quanto il chip avrebbe cercato di spedire in output i dati in caso di lettura e scrittura, forzando ogni linea ad assumere un certo valore e interferendo con i dati di input, per questo abbiamo bisogno di connettere le porte OR in caso di lettura e di disconnetterle in caso di scrittura. \\ 
+			Anche se si potrebbe pensare di collegare le tre porte OR alle linee di output, è un approccio che si evita in quanto il chip avrebbe cercato di spedire in output i dati in caso di lettura e scrittura, forzando ogni linea ad assumere un certo valore e interferendo con i dati di input, per questo abbiamo bisogno di connettere le porte OR in caso di lettura e di disconnetterle in caso di scrittura. \\
 			Quello di cui abbiamo bisogno è di un \textbf{buffer non invertente} che presenta un dato di input, un dato di output e un input di controllo, quando il controllo è alto il buffer funge da collegamento, quando è basso il circuito si comporta come un circuito aperto. \\
 			Analogamente al buffer non invertente, esiste il \textbf{buffer invertente} che si comporta come un normale invertitore quando il controllo ha valore alto e disconnette l'output quando il controllo ha valore basso. \\
 			I buffer inoltre amplificano il segnale e possono guidare più input allo stesso tempo e a volte vengono usati nei circuiti proprio per questo.
@@ -1331,14 +1332,14 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			Un tipo di EEPROM è la \textbf{memoria flash} che è cancellabile a blocchi e riscrivibile. \\ \\
 			\textbf{FPGA} \\
 			Gli \textbf{FPGA} (Field-programmable gate array) sono circuiti integrati che contengono una logica programmabile e permettono di formare un circuito logico arbitrario semplicemente caricando l'FPGA con i dati di configurazione appropriati. Il vantaggio principale di questi circuiti è la possibilità di costruire nuovi circuiti hardware in poche ore, senza aspettare mesi di fabbricazione dei circuiti integrati, che però, sono più vantaggiosi in termini di costi, velocità e consumo e proprio per questi vantaggi gli FPGA vengono utilizzati solo per la prototipazione e la progettazione di applicazioni su piccola scala. \\
-			Il vantaggio principale degli FPGA è che si può costruire artigianalmente a casa in un'ora, mentre il più efficiente design completamente personalizzato deve essere fabbricato a partire dal silicio e questo potrebbe richiedere anche più di un mese.			
+			Il vantaggio principale degli FPGA è che si può costruire artigianalmente a casa in un'ora, mentre il più efficiente design completamente personalizzato deve essere fabbricato a partire dal silicio e questo potrebbe richiedere anche più di un mese.
 			\section{Chip della CPU e BUS}
 			Tutte le CPU moderne sono contenute in unico chip, rendendo ben definita l'interazione con il resto del sistema. Ogni chip di CPU ha un insieme di pin attraverso il quale passano tutte le relative comunicazioni verso il mondo esterno. Alcuni pin spediscono i segnali della CPU, altri ricevono quelli del mondo esterno e altri fanno entrambe le cose. \\
 			I pin di una CPU possono essere divisi in tre tipologie: indirizzi, dati e controlli. Questi pin poi sono collegati ai pin della memoria o dei dispositivi I/O tramite i bus. \\
 			La CPU per prelevare un'istruzione ne imposta l'indirizzo sui suoi pin di indirizzamento e poi asserisce una o più linee di controllo per informare la memoria che vuole leggere una parola. La memoria poi risponde inviando la parola sui pin della CPU dedicati ai dati e segnalando che l'operazione è completata, così la CPU accetta la parola ed esegue l'istruzione. \\
 			Due parametri che definiscono le prestazioni di una CPU sono il numero di pin d'indirizzo e quindi il numero di locazioni di memoria indirizzabili pari a $2^n$ con $n$ bit d'indirizzo e il secondo parametro è il numero di pin di dati cioè in un'unica operazione a CPU può leggere o scrivere una parola a $m$ bit se ha $m$ pin di dati. \\
 			Come già detto precedentemente, la CPU è dotata di pin di controllo, i quali regolano il flusso e la temporizzazione dei dati da e verso la CPU, e possono essere utilizzati anche in vari altri modi. Tutte le CPU hanno pin per l'alimentazione, oltre a un segnale di clock e altri pin che variano da chip a chip. \\
-			I pin di controllo, comunque, possono raggruppati in 6 categorie: 
+			I pin di controllo, comunque, possono raggruppati in 6 categorie:
 			\begin{enumerate}
 				\item \textbf{controllo del bus}: questi mandano sul bus dei segnali della CPU per notificare quando la CPU vuole compiere un'azione e la CPU utilizza questi pin per comunicare con il resto del sistema dicendo quali operazioni vuole eseguire;
 				\item \textbf{interrupt}: questi sono degli input che giungono alla CPU dalle periferiche quando un dispositivo di I/O ha completato la propria operazione e asserisce un segnale su uno di questi pin in modo da intterompere la CPU e permetterle di utilizzare il dispositivo;
@@ -1355,29 +1356,29 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\end{figure}
 			 \paragraph{BUS del calcolatore}
 			 Un \textbf{bus} è un collegamento elettrico che unisce diversi dispositivi. I bus possono essere classificati in base alla loro funzione, alcuni sono interni alla CPU per trasferire dati da e verso l'ALU, altri sono esterni e servono per collegarla con la memoria o con dispositivi I/O. \\
-			 I primi PC avevano un unico bus esterno, il \textbf{bus di sistema} che era composto da 50 a 100 fili paralleli che si inserivano nella scheda madre e i connettori erano opportunamente distanziati per inserire memorie o schede I/O. Adesso i processori hanno un bus specifico per la CPU e la memoria e almeno un altro bus per le periferiche. ad esempio: 
+			 I primi PC avevano un unico bus esterno, il \textbf{bus di sistema} che era composto da 50 a 100 fili paralleli che si inserivano nella scheda madre e i connettori erano opportunamente distanziati per inserire memorie o schede I/O. Adesso i processori hanno un bus specifico per la CPU e la memoria e almeno un altro bus per le periferiche. ad esempio:
 			 \begin{figure}[H]
 			 	\centering
 			 	\includegraphics[width=1.00\textwidth]{bus_CPU}
 			 	\caption{Sistema di un calcolate con più bus}
-			 \end{figure} 
+			 \end{figure}
 			 All'interno della CPU possono essere utilizzati i bus che si preferiscono, per i bus esterni, invece, bisogna definire delle regole di funzionamento che devono essere rispettate dai dispositivi collegati a loro, questo consente che anche schede progettate da altri produttori possono collegarsi al bus. L'insieme di queste regole viene chiamato \textbf{protocollo del bus}. Inoltre, devono essere definite le specifiche meccaniche ed elettriche in modo che le schede prodotte da terze parti abbiano dei connettori compatibili con quelli della scheda madre. \\
 			 Esistono diversi bus ampiamente utilizzati, come: l'\textbf{Omnibus} utilizzato dal PDP-8, l'\textbf{Unibus} dal PDP-11, il \textbf{Multibus} dall'8086, il \textbf{Nubus} dal Macintosh, il \textbf{bus PCI} da molti PC, il \textbf{bus SCSI} da molti PC e workstation e l'\textbf{Universal Serial Bus} dai PC moderni. \\
 			 Alcune periferiche che si collegano al bus sono attive e possono iniziare un trasferimento, i \textbf{master} mentre altri sono in attesa di una richiesta, gli \textbf{slave}. \\
 			 Molto spesso i segnali digitali generati dalle periferiche sono tropo deboli per alimentare un bus, per questo molti master sono connessi al bus con un chip chiamato \textbf{driver del bus} che funge da amplificatore, mentre gli slave sono collegati attraverso un \textbf{ricevitore del bus}. Per le periferiche che possono essere sia master che slave si utilizza un chip chiamato \textbf{trasmettitore-ricevitore del bus}. Un'altra possibilità che permette di ottenere lo stesso risultato consiste nell'agganciare la periferica al bus tramite un \textbf{collettore aperto}. \\
-			 Anche il bus ha i propri indirizzi, i propri dati e le proprie linee di controllo e non è necessario che vi sia una corrispondenza fra i pin del bus e quelli della CPU. 
+			 Anche il bus ha i propri indirizzi, i propri dati e le proprie linee di controllo e non è necessario che vi sia una corrispondenza fra i pin del bus e quelli della CPU.
 			 \\ \\
-			 \paragraph{Ampiezza del BUS} 
+			 \paragraph{Ampiezza del BUS}
 			 Un parametro da considerare durante la progettazione del bus è la sua ampiezza, maggiore è il nu ero di linee d'indirizzo di un bus, maggiore sarà la quantità di memoria che la CPU potrà indirizzare direttamente. \\
 			 Il problema è che bus più larghi richiedono un numero maggiore di fili rispetto a quelli più stretti. Questo significa anche una maggiore occupazione di spazio e la necessità di utilizzare connettori più grandi. Dato che questi fattori rendono il bus più costoso è necesssario trovare un compromesso tra la dimensione massima di memoria e il costo del sistema. \\
 			 Esistono due modi per aumentare la larghezza di banda dei dati su un bus: diminuire il periodo di clock oppure aumentare la larghezza dei dati sul bus. Un'altra soluzione è quella di aumentare la velocità del bus, ma questo poi causerebbe il \textbf{disallineamento del bus}, cioè i segnali su linee distinte viaggiano a velocità diverse. \\
 			 Un altro problema quando si intende velocizzare il bus è la perdita della retrocompatibilità, infatti schede progettate con bus più lenti non funzioneranno con il nuovo bus. Perciò la tecnica più adottata è quella di aggiungere nuove linee di dati che però non genera un'architettura semplice e ordinata. \\
 			 Per evitare il problema di bus troppo ampi spesso i progettisti usano un \textbf{bus multiplexato} dove vengono utilizzate un certo numero di linee, sia per le linee d'indirizzo e quelle dei dati. All'inizio di un operazione sul bus le linee sono utilizzate per gli indirizzi, mentre in seguito vengono usate per i dati. L'uso del bus multiplexato riduce l'ampiezza del bus ma rende il sistema più lento perchè con un normale bus, con le linee separate, è possibile spedire gli indirizzi e i dati allo stesso tempo.
 			 \\ \\
-			 \paragraph{Temporizzazione del BUS} 
+			 \paragraph{Temporizzazione del BUS}
 			 I bus in base alla loro temporizzazione possono essere suddivisi in due categorie: i bus sincroni e bus asincroni.
-			 
-			 \subparagraph{Bus sincroni} 
+
+			 \subparagraph{Bus sincroni}
  			 I bus sincroni hanno una linea regolata da un clock di sistema dove viaggia un'onda quadra con frequenza che da 5Mhz a 133Mhz e tutte le operazioni del bus richiedono un certo numero di questi cicli
 			 \begin{figure}[H]
 			 	\centering
@@ -1393,7 +1394,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			 Lavorare con i bus sincroni è facile per via dei loro intervalli temporali discreti però presentano alcuni problemi. \\
 			 Innanzitutto, qualsiasi operazione si svolge in tempi multipli del clock del bus, quindi se una CPU e una memoria sono in grado di completare un trasferimento in 3,1 cicli sono obbligate ad allungare il tempo a 4 cicli. \\
 			 Inoltre, una volta scelto un ciclo di bus e appositamente costruite le memorie e le schede di I/O è difficile trarre vantaggio dagli sviluppi della tecnologia che si verificheranno, cioè, se un bus sincrono ha un insieme eterogeneo di dispositivi, la velocità del bus deve essere regolata alla velocità della periferica più lenta. \\
-			 Nonostante questo, la maggior parte dei bus è sincrona, in quanto è più facile da realizzare. 
+			 Nonostante questo, la maggior parte dei bus è sincrona, in quanto è più facile da realizzare.
 			 \subparagraph{Bus asincroni}
 			 I bus asincroni non hanno un clock di sistema e i cicli di bus possono avere una lunghezza qualsiasi e non devono essere necessariamente uguali nella comunicazione tra dispositivi. \\
 			 \begin{figure}[H]
@@ -1403,7 +1404,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			 Il master del bus, invece di legare ogni operazione al clock, dopo aver inserito l'indirizzo, $\overline{MREQ}, \overline{RD}$ e tutto ciò che è necessario, asserisce un segnale speciale chiamato $\overline{MSYN}$, Master SYNchronization. Quando lo slave vede questo segnale esegue il lavoro richiesto alla massima velocità possibile e una volta terminato il lavoro asserisce $\overline{SSYN}$, Slave SYNchronization. \\
 			 Quando il master vede che $\overline{SSYN}$ è stato asserito, sa che i dati sono disponibili e quindi può memorizzarli e poi nega $\overline{MREQ}, \overline{RD}, \overline{MSYN}$ e quando lo slave vede che $\overline{MSYN}$ è negato nega $\overline{SSYN}$ e ora si attende il master successivo. \\
 			 Notiamo quindi che l'asserzione di $\overline{MSYN}$ ha come effetto l'asserzione delle linee dei dati ed il fatto che lo slave asserisce $\overline{SSYN}$ e anche questa asserzione provoca l'asserzione di $\overline{MREQ}, \overline{RD}, \overline{MSYN}$ e l'asserzione di quest'ultimo provoca la negazione di $\overline{SSYN}$ e queste cause ed effetti nei diagrammi di temporizzazione è rappresentato con delle frecce. \\
-			 Un insieme di segnali che coordina in questo modo due dispositivi con lo scopo di non farli interferire è chiamato \textbf{full handshake}: 
+			 Un insieme di segnali che coordina in questo modo due dispositivi con lo scopo di non farli interferire è chiamato \textbf{full handshake}:
 			 \begin{enumerate}
 			 	\item $\overline{MSYN}$ è asserito;
 			 	\item $\overline{SSYN}$ è asserito in risposta a $\overline{MSYN}$;
@@ -1411,10 +1412,10 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			 	\item $\overline{SSYN}$ è negato in risposta alla negazione di $\overline{MSYN}$.
 			 \end{enumerate}
 			 I full handshake non dipendono dalla temporizzazione ma ogni evento è causato da un evento precedente e non da un impulso di clock. \\
-			 \paragraph{Arbitraggio del BUS} 
-			 Finora ci è sempre capitata la situazione in cui la CPU era l'unico master del bus, ma non è cosi, anche i dispositivi I/O possono diventare master o anche i coprocessori e quindi nel caso in cui più dispositivi vogliono diventare master nello stesso istante c'è bisogno di una forma di \textbf{arbitraggio del bus} che può essere centralizzato o decentralizzato. 
+			 \paragraph{Arbitraggio del BUS}
+			 Finora ci è sempre capitata la situazione in cui la CPU era l'unico master del bus, ma non è cosi, anche i dispositivi I/O possono diventare master o anche i coprocessori e quindi nel caso in cui più dispositivi vogliono diventare master nello stesso istante c'è bisogno di una forma di \textbf{arbitraggio del bus} che può essere centralizzato o decentralizzato.
 			 \subparagraph{Arbitraggio centralizzato}
-			 Analizziamo la seguente figura di una forma di arbitraggio centralizzato: 
+			 Analizziamo la seguente figura di una forma di arbitraggio centralizzato:
 			 \begin{figure}[H]
 			 	\centering
 			 	\includegraphics[width=1.00\textwidth]{daisy_chain}
@@ -1422,7 +1423,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			 In questo schema un singolo arbitro del bus determina chi sarà il prossimo master. In molte CPU l'arbitro è integrato nel chip stesso, in altre, invece, bisogna utilizzare un chip separato. \\
 			 Il bus contiene un'unica richiesta OR-cablata che in qualsiasi momento può essere asserita da uno o più dispositivi. L'arbitro ha solo la capacità di distinguere se c'è stata o meno una richiesta. \\
 			 Quando l'arbitro vede una richiesta di utilizzo del bus, lo concede asserendo la linea per la concessione del bus. A questa linea sono collegati in serie tutti i dispositivi I/O e quando il dispositivo più vicino all'arbitro vede la concessione, controlla se ne ha fatto richiesta, in caso affermativo se ne impossessa, in caso negativo, propaga la concessione sulla linea in direzione del prossimo dispositivo che effettuerà la stessa procedura. Questo schema è chiamato \textbf{collegamento a festone} o \textbf{daisy chaining}. \\
-			 Molti bus, per aggirare il fatto che le priorità sono implicitamente definita in base alla distanza dall'arbitro, definiscono dei livelli di priorità e per ciascun dispositivo esiste una linea per effettuare la richiesta e una per segnalare la concessione, come in figura. 
+			 Molti bus, per aggirare il fatto che le priorità sono implicitamente definita in base alla distanza dall'arbitro, definiscono dei livelli di priorità e per ciascun dispositivo esiste una linea per effettuare la richiesta e una per segnalare la concessione, come in figura.
 			 \begin{figure}[H]
 			 	\centering
 			 	\includegraphics[width=1.00\textwidth]{arbitro_centr_2livelli}
@@ -1431,31 +1432,31 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			 Alcuni arbitri hanno una terza linea che viene asserita da un dispositivo nel momento in cui accetta una concessione e si impadronisce del bus. Subito dopo aver asserito questa linea di conferma, il dispositivo può negare le linee di richiesta e di concessione così altri dispositivi possono richiedere il bus mentre il primo lo sta ancora utilizzando e nel momento in cui termina il master successivo è già stato selezionato. \\
 			 Questo schema prevede maggiori componenti logici ma c'è un miglior utilizzo dei cicli di bus. \\
 			 Nei sistemi in cui la memoria è collegata al bus principale e la CPU deve competere con i dispositivi I/O ad ogni ciclo, alla CPU viene assegnata priorità più bassa così da utilizzare il bus quando nessun altro lo vuole e anche perchè i dispositivi di I/O devono acquisire il bus molto velocemente per non perdere i dati. \\
-			 
+
 			 \subparagraph{Arbitraggio decentralizzato}
 			 Un'altra soluzione è la decentralizzazione dell'arbitraggio del bus. Ad esempio, un calcolatore potrebbe avere 16 linee di richiesta, ciascuna con la propria priorità e quando un dispositivo vuole utilizzare il bus asserisce la linea di richiesta. Tutti i dispositivi monitorano tutte le linee di richiesta in modo che alla fine di ogni ciclo di bus ognuno di loro può sapere se ne aveva fatto richiesta e se aveva priorità più elevata e quindi se può utilizzare il bus. Questo richiede più linee di bus ma evita il costo dell'arbitro e un altro limite è che il numero di dispositivi deve essere pari a quello delle linee del bus. \\
-			 Un altro tipo di decentralizzazione del bus, utilizza solamente tre linee: 
+			 Un altro tipo di decentralizzazione del bus, utilizza solamente tre linee:
 			 \begin{figure}[H]
 			 	\centering
 			 	\includegraphics[width=1.00\textwidth]{bus_decentralizzato}
 			 \end{figure}
 			 La prima linea del bus è una linea OR-cablata per effettuare le richieste al bus. La seconda linea è chiamata BUSY ed è asserita dal master corrente, la terza è utilizzata per arbitrare il bus ed è un collegamento a festone tra i dispositivi. \\
-			 Quando nessun dispositivo richiede al bus la linea di arbitraggio, che è asserita, viene propagata verso tutti i dispositivi. Per acquisire i bus un dispositivo deve controllare se il bus è inattivo e se il segnale dell'arbitraggio che sta ricevendo, IN, è asserito, in caso contrario non può diventare master e nega OUT. Se IN è asserito, il dispositivo nega OUT in modo che il dispositivo successivo veda IN negato e neghi anche lui il proprio OUT e così faranno tutti i dispositivi e solo uno rimarrà con IN asserito e OUT negato e diventerà il master del bus, asserirà BUSY e OUT e inzierà il trasferimento. 
-			 \paragraph{Operazioni del BUS} 
+			 Quando nessun dispositivo richiede al bus la linea di arbitraggio, che è asserita, viene propagata verso tutti i dispositivi. Per acquisire i bus un dispositivo deve controllare se il bus è inattivo e se il segnale dell'arbitraggio che sta ricevendo, IN, è asserito, in caso contrario non può diventare master e nega OUT. Se IN è asserito, il dispositivo nega OUT in modo che il dispositivo successivo veda IN negato e neghi anche lui il proprio OUT e così faranno tutti i dispositivi e solo uno rimarrà con IN asserito e OUT negato e diventerà il master del bus, asserirà BUSY e OUT e inzierà il trasferimento.
+			 \paragraph{Operazioni del BUS}
 			 Di solito viene trasferita una parola alla volta durante le operazioni in memoria. Tuttavia, quando si utilizza la cache, è meglio prelevare in una volta sola un'intera linea di cache, perchè, spesso, i trasferimenti in blocchi possono essere effettuati in modo più efficiente rispetto a una sequenza di trasferimenti individuali. All'inizio della lettura di un blocco il master del bus comunica allo slave quante parole devono essere trasferite inserendo il conteggio delle parole sulle linee dei dati. Lo slave genera in output a ogni ciclo una nuova parola finchè il contatore non si sia esaurito. \\
 			 Esistono anche altri tipi di cicli di bus. Per esempio su un sistema multiprocessore con due o più CPU sullo stesso bus è necessario assicurarsi che soltanto una CPU utilizzi delle strutture dati critiche della memoria. Una soluzione consiste nell'avere in memoria una variabile che vale 0 quando nessuna CPU sta utilizzando la struttura dati e 1 quando è in uso. Se una CPU vuole acquisire accesso alla struttura dati deve leggere il valore della variabile e settarla a 1, se vale 0. Può capitare, però, che le CPU, leggano la variabile nello stesso istante e quindi entrambe leggeranno che la variabile vale 0 e le setteranno a 1 pensando che di essere l'unica CPU che sta utilizzando la struttura dati.\\
 			 Per evitare questo, i sistemi multiprocessore hanno uno speciale ciclo di bus \textbf{leggi-modifica-scrivi} che consente a una qualsiasi CPU d leggere, analizzare e riscrivere una parola in memoria senza rilasciare il bus. In questo modo nessun'altra CPU interferirà. \\
 			 Un'altra operazione importante serve a \textbf{gestire gli interrupt}. Quando la CPU ordina a un dispositivo I/O di effettuare un'operazione si aspetta un interrupt a fine operazione e per segnalare questi interrupt si utilizza il bus. \\
-			 Visto che più dispositivi potrebbero voler generare un interrupt nello stesso momento, si assegna una priorità ai dispositivi e si utilizza un arbitro centralizzato per dare priorità al dispositivo per cui la temporizzazione è più critica. Nei chip basati su processori Intel il chipset incorpora il controllore di interrupt 8259A: 
+			 Visto che più dispositivi potrebbero voler generare un interrupt nello stesso momento, si assegna una priorità ai dispositivi e si utilizza un arbitro centralizzato per dare priorità al dispositivo per cui la temporizzazione è più critica. Nei chip basati su processori Intel il chipset incorpora il controllore di interrupt 8259A:
 			 \begin{figure}[H]
 			 	\centering
 			 	\includegraphics[width=1.00\textwidth]{8259A}
-			 \end{figure} 
+			 \end{figure}
 			 Questo chip ha 8 input IR, Interrupt Request, con i quali si possono collegare fino a 8 dispositivi I/O e quando un dispositivo vuole causare un interrupt asserisce la propria linea di input. Quando uno o più input sono asseriti, il chip asserisce INT, INTerrupt, che pilota il pin di interrupt sulla CPU, quando la CPU è pronta per  gestire l'interrupt spedisce un impulso su INTA, INTerrupt Acknowledge, a questo punto il chip deve specificare quale input ha causato l'interrupt generando in output il suo numero sul bus dei dati. L'hardware della CPU utilizza quel numero come indice all'interno di una tabella, \textbf{vettore di interrupt}, per cercare l'indirizzo della procedura da eseguire per poter gestire l'interrupt.
 			 Il chip ha al suo interno vari registri che la CPU può utilizzare e i pin $\overleftarrow{RD}, \overleftarrow{WR}, \overline{CS}\ e \ \overline{AD}$. Quando il software ha gestito l'interrupt ed è pronto per accettarne uno nuovo scrive un codice speciale all'interno di uno di questi registri. \\
 			 Quando sono presenti più di 8 dispositivi di I/O si possono utilizzare a cascata più chip 8259A, come il chip Intel ICH10, incorpora due chip 8259A, quindi ICH10 dispone di 15 interrupt esterni e non 16 perchè un interrupt viene utilizzato per connettere in cascata il secondo 8259A al primo.
 			 \section{Interfacce}
-			 Le interfacce I/O rappresentano la modalità con la quale il calcolatore comunica con il mondo esterno. 
+			 Le interfacce I/O rappresentano la modalità con la quale il calcolatore comunica con il mondo esterno.
 			 \subsection{Interfacce di I/O}
 			 Dei chip molto comuni sono gli UART, gli USART, i controllori dei dischi e i PIO. Una \textbf{UART}, Universal Asynchronous Receiver Transmitter, è un'interfaccia che può leggere un byte da un bus di dati e generarlo in output, bit per bit, su una linea seriale per un terminale, oppure può ricevere input da un terminale. Una \textbf{USART}, Universal Synchronous Asynchronous Receiver Transmitters, possono gestire trasmissioni sincrone, oltre a supportare le funzionalità dell'UART. Dato che le interfacce UART hanno perso di importanza, analizzeremo le interfacce PIO come chip di I/O.
 			 \paragraph{Interfacce PIO}
@@ -1486,7 +1487,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			 Questo approccio può essere usato anche per la RAM con indirizzi della forma 10000xxxxxxxxxxx, mentre per gli indirizzi del chip PIO è più complicato perchè gli indirizzi sono della forma 111111111xx. \\
 			 Se il calcolatore è veramente composto dalla CPU, da due chip di memoria e dal chip PIO, allora gli indirizzi li possiamo decodificare in modo più semplice, perchè sappiamo che gli indirizzi della EPROM hanno uno 0 nel bit più significativo, A15 e quindi possiamo collegare $\overline{CS}$ direttamente ad esso. \\
 			 Per la RAM, dobbiamo decodificare due bit, 10, e per il chip PIO, analogamente dobbiamo decodificare i bit 11.  \\
-			 Questa è chiamata \textbf{decodifica parziale dell'indirizzo}: 
+			 Questa è chiamata \textbf{decodifica parziale dell'indirizzo}:
 			 \begin{figure}[H]
 			 	\centering
 			 	\includegraphics[width=1.00\textwidth]{decodifica_parziale}
@@ -1494,11 +1495,11 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		\chapter{Espressioni logiche e mappe di Karnugh}
 			\section{Forma normale disgiuntiva e congiuntiva}
 			\begin{itemize}
-				\item Un'espressione logica è detta in \textbf{\textit{forma normale disgiuntiva}} o \textit{DNF}(Disjuncitive normal form) o \textit{in prima forma canonica} se è una disgiunzione di clausole, dove ogni clausola è una congiunzione di letterali, quindi: 
+				\item Un'espressione logica è detta in \textbf{\textit{forma normale disgiuntiva}} o \textit{DNF}(Disjuncitive normal form) o \textit{in prima forma canonica} se è una disgiunzione di clausole, dove ogni clausola è una congiunzione di letterali, quindi:
 				\[
 				AB + B\overline{C} + A\overline{B}C
 				\]
-				\item Un'espressione logica è detta in \textbf{\textit{forma normale congiuntiva}} o \textit{CNF}(Conjunctive normal form) o \textit{seconda forma canonica} se è una congiunzione di clausole, dove ogni clausola è una disgiunzione di letterali, quindi: 
+				\item Un'espressione logica è detta in \textbf{\textit{forma normale congiuntiva}} o \textit{CNF}(Conjunctive normal form) o \textit{seconda forma canonica} se è una congiunzione di clausole, dove ogni clausola è una disgiunzione di letterali, quindi:
 				\[
 				(A + B)(B + \overline{C})(A + \overline{B} + C)
 				\]
@@ -1547,9 +1548,9 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 						1 & 1 & 0 & 1 \\
 						1 & 1 & 1 & 1 \\
 					\end{tabular} \\ \\
-					Quindi: 
+					Quindi:
 					\[
-					f = \overline{A}\cdot\overline{B}\cdot\overline{C} + \overline{A}\cdot B \cdot\overline{C} + \overline{A}\cdot B \cdot C + A \cdot B \cdot\overline{C} + A \cdot B \cdot C 
+					f = \overline{A}\cdot\overline{B}\cdot\overline{C} + \overline{A}\cdot B \cdot\overline{C} + \overline{A}\cdot B \cdot C + A \cdot B \cdot\overline{C} + A \cdot B \cdot C
 					\]
 				Per riscriverla in \textbf{\textit{\color{red}prodotto di maxtermini}} bisogna moltiplicare tutti i maxtermini della combinazioni dove la funzione assume valore 0, quindi nel caso della funzione di prima:
 				\[
@@ -1565,7 +1566,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 				\end{itemize}
 				Nel caso di prima dove $f$ era:
 				\[
-				f = \overline{A}\cdot\overline{B}\cdot\overline{C} + \overline{A}\cdot B \cdot\overline{C} + \overline{A}\cdot B \cdot C + A \cdot B \cdot\overline{C} + A \cdot B \cdot C 
+				f = \overline{A}\cdot\overline{B}\cdot\overline{C} + \overline{A}\cdot B \cdot\overline{C} + \overline{A}\cdot B \cdot C + A \cdot B \cdot\overline{C} + A \cdot B \cdot C
 				\]
 				$=\overline{A}\cdot\overline{B}\cdot\overline{C} + \overline{A}B(C + \overline{C}) + AB(\overline{C} + C)$ \\
 				Ora possiamo applicare la complementazione forma OR di $\overline{C} + C$ che equivale a 1 e quindi: \\
@@ -1578,7 +1579,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 				Il \textbf{\textit{teorema di Shannon}}, enunciato prima da George Boole, consente di scomporre una funzione booleana complessa in funzioni più semplici. \\
 				Data una funzione $f$ in $n$ variabili, si ha che:
 				\[
-				f(v_1, v_2, ..., v_n) = v_1 \cdot f(1, v_2, ..., v_n) + \overline{v_1} \cdot f(0, v_2, ..., v_n) 
+				f(v_1, v_2, ..., v_n) = v_1 \cdot f(1, v_2, ..., v_n) + \overline{v_1} \cdot f(0, v_2, ..., v_n)
 				\]
 				La funzione complessa composta in partenza da $n$ variabili viene trasformata in una somma di due prodotti, aventi una funzione di $n - 1$ variabili. \\
 				Applicare il teorema di Shannon su tutte le variabili, con tutte le sue semplificazioni, ci riporta alla somma di mintermini della funzione. \\
@@ -1594,7 +1595,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 					\item generazione degli implicanti e dell'espressione finale
 				\end{enumerate}
 				\begin{karnaugh-map}(label=corner)[4][4][1][B][A][D][C]
-					
+
 				\end{karnaugh-map} \\
 				Questo è un esempio della mappa di Karnaugh, le variabili sono disposte lungo il lato superiore e il lato sinistro della tabella, ci sono massimo due variabili per lato, se c'è una variabile, i lati vengono divisi in due parti, se ce ne sono 2 i lati vengono divisi in 4 parti.
 				\\
@@ -1611,7 +1612,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 				\end{enumerate}
 				I raggruppamenti di $2^k$ elementi prendono il nome di \textbf{\textit{k-cubi}} \\
 				La griglia è da considerarsi come un piano, bensì come un \textbf{toro}, pertanto i raggruppamenti possono attraversa i bordi della mappa sia verticalmente che orizzontalmente, passando da un lato a quello opposto. \\
-				
+
 				\begin{tabular}{c|c|c|c|c}
 					$A$ & $B$ & $C$ & $D$ & $f$ \\
 					\hline
@@ -1632,7 +1633,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 					1 & 1 & 1 & 0 & 0 \\
 					1 & 1 & 1 & 1 & 1 \\
 				\end{tabular} \\ \\
-				Prendendo questa tavola di verità, si riportano nella mappa di Karnaugh i mintermini e seguono degli esempi di raggruppamenti validi: \\ 
+				Prendendo questa tavola di verità, si riportano nella mappa di Karnaugh i mintermini e seguono degli esempi di raggruppamenti validi: \\
 				\begin{karnaugh-map}(label=corner)[4][4][1][B][A][D][C]
 					\minterms{3, 4, 5, 12, 13, 14, 15, 8, 10}
 					\implicant{4}{13}
@@ -1653,7 +1654,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 				Quindi: $f = \overline{A}D + CD + \overline{B}C\overline{D} + AB\overline{C}\ \overline{D}$.  \\
 				In questo esempio ogni implicante è \textbf{primo} cioè che non implica un altro implicante, vedere il pdf per degli esempi di implicanti non primi. \\ \\
 				In una funzione booleana è possibile avere delle configurazioni il cui output, per diverse ragioni, non ci interessa. Questa condizione prende il nome di \textbf{condizione di indifferenza}. Queste condizioni sono generalmente indicate con la lettera greca phi $\phi$ che idealmente rappresenta uno 0 e un 1 sovrapposti, ma anche con X, $\Delta$, *, ... \\
-				Queste condizioni rappresentano un \textbf{jolly} e verranno considerate se aiutano a costituire un raggruppamento o a costituire un raggruppamento migliore, se non forniscono alcun contributo non vengono considerate, ad esempio: 
+				Queste condizioni rappresentano un \textbf{jolly} e verranno considerate se aiutano a costituire un raggruppamento o a costituire un raggruppamento migliore, se non forniscono alcun contributo non vengono considerate, ad esempio:
 				\begin{karnaugh-map}(label=corner)[4][4][1][B][A][D][C]
 					\terms{5}{$\color{green}\phi$}
 					\terms{11, 10}{$\color{red}\phi$}
@@ -1667,7 +1668,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 					\minterms{0, 3, 5, 6, 15, 8, 9, 10}
 					\implicant{0}{6}
 					\implicant{12}{10}
-				\end{karnaugh-map} \\ 
+				\end{karnaugh-map} \\
 				La possiamo riscrivere come somma di due mappe, se C = 0 e se C = 1: \\
 				\begin{karnaugh-map}(label=corner)[4][2][1][B][A][D]
 					\minterms{0, 3, 5, 6}
@@ -1715,7 +1716,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		Solitamente, anche quando i registri d'uso generale sono completamente intercambiabili, è usuale che i sistemi operativi o i compilatori adottino convenzioni nel modo di utilizzarli.
 		Inoltre, ci sono registri specializzati visibili solo in modalità kernel, che controllano cache, memoria, dispositivi I/O ecc e possono essere utilizzati solo dal sistema operativo. \\
 		Il \textbf{registro dei flag} è un ibrido tra la modalità kernel e la modalità utente, questo contiene codici di condizione che riflettono lo stato del risultato dell'operazione più recente, utili per le istruzioni di confronto e di salto condizionato. Alcuni di questi codici possono essere: N posto a 1 se il risultato è negativo, Z posto a 1 se il risultato è 0 ecc. \\
-		Il PSW non contiene soltanto codici di condizione ma anche campi che indicano la modalità di macchina, i bit di traccia, il livello di priorità della CPU e lo stato di attivazione degli interrupt. 
+		Il PSW non contiene soltanto codici di condizione ma anche campi che indicano la modalità di macchina, i bit di traccia, il livello di priorità della CPU e lo stato di attivazione degli interrupt.
 		\section{Tipologie di architetture per microprocessori}
 			\subsection{Architettura CISC}
 			L'architettura CISC, \textbf{C}omplex \textbf{I}nstruction \textbf{S}et \textbf{C}omputer è formata da un set di istruzioni contente istruzioni in grado di eseguire operazioni complesse, come lettura, modifica e salvataggio di un dato in memoria tramite singola istruzione e spesso vengono tradotte le istruzioni das CISC a un lotto di operazioni elaborate come RISC. \\
@@ -1743,17 +1744,17 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			Nello shifting, i bit che fuoriescono dalla parola si perdono e gli spazi vuoti che si generano nella direzione opposta vengono riempiti con zeri, a differenza delle operazioni di rotazione che non provocano perdita di informazione. \\
 			Le moltiplicazioni e le divisioni per $2^k$ sono un'applicazione importante dello shifting e sono possibili anche shifting e rotazioni verso destra con'\textbf{\textit{estensione del segno}}, cioè le posizioni vuote generate vengono riempite con il bit del segno originale.
 			\begin{figure}[H]
-				\centering 
+				\centering
 				\includegraphics[width=0.85\textwidth]{SHIFT_ROTAZIONE}
 			\end{figure}
 			La rotazione è utile per l'impacchettamento di sequenza di bit in parole e per il loro spacchettamento. Se si vuole esaminare una parola bit per bit, la si può rotare di 1 bit alla volta ed esaminare ogni volta il bit di segno, dopo aver esaminato tutti i bit la parola ritorna nella sua forma originale.
-			\item le \textbf{operazioni binarie} che producono un risultato dalla combinazione dei due operandi e tra queste operazioni ci sono anche le operazioni booleane come \textbf{AND, OR e NOT} e a volte si trovano anche \textbf{XOR, NOR e NAND}. Tutte queste operazioni sono \textbf{\textit{bitwise}}, cioè effettuano il calcolo bit a bit. 
+			\item le \textbf{operazioni binarie} che producono un risultato dalla combinazione dei due operandi e tra queste operazioni ci sono anche le operazioni booleane come \textbf{AND, OR e NOT} e a volte si trovano anche \textbf{XOR, NOR e NAND}. Tutte queste operazioni sono \textbf{\textit{bitwise}}, cioè effettuano il calcolo bit a bit.
 		\end{itemize}
 		Un uso importante dell'AND è l'\textbf{\textbf{estrazione della parola}}. Questo avviene tramite l'utilizzo di un AND tra il dato originale e una costante, la \textbf{maschera}, che identifica la parola da estrarre. La maschera è composta da 1 dove ci sono i bit da estrarre e di 0 negli altri bit:
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=1.0\textwidth]{ESTRAZIONE_AND}
-		\end{figure} 
+		\end{figure}
 		Il risultato viene fatto scorrere di 16 bit verso destra in modo da isolare il carattere da estrarre all'estremità destra della parola.\\
 		L'OR, invece, viene usato per \textbf{\textit{impacchettare bit in una parola}}:
 		\begin{figure}[H]
@@ -1830,7 +1831,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		Questi $(n + k)$ bit possono essere spezzati in $(n - 1)$ bit di OPCODE e $(k + 1)$ bit d'indirizzo, in questo modo stiamo dimezzando il numero di operazioni possibili e stiamo raddoppiando il numero d'indirizzi di memoria disponibili. \\
 		In alternativa, possiamo spezzare questi $(n + k)$ bit in $(n + 1)$ bit di OPCODE e $(k - 1)$ bit d'indirizzo, così facendo stiamo raddoppiando il numero di operazioni possibili e stiamo dimezzando il numero d'indirizzi di memoria disponibili. \\
 		Dopo questo breve esempio, si può introdurre il concetto di \textbf{\textit{codice operativo estensibile}}. \\
-		Supponiamo di avere una macchina le cui istruzioni sono lunghe 16 bit, destinando 4 bit all'OPCODE e 4 bit per singolo indirizzo, pertanto otteniamo: 
+		Supponiamo di avere una macchina le cui istruzioni sono lunghe 16 bit, destinando 4 bit all'OPCODE e 4 bit per singolo indirizzo, pertanto otteniamo:
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=1.00\textwidth]{Codice_OP_Estensibile}
@@ -1870,7 +1871,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		Un metodo per specificare un operando in memoria è darne l'indirizzo completo. Come l'indirizzamento immediato, l'indirizzamento diretto presenta dei limiti perchè l'istruzione accederà sempre alla stessa locazione di memoria, quindi se da una parte il contenuto può cambiare la locazione no. Per questo l'indirizzamento diretto serve solo ad accedere a variabili globali il cui indirizzo è noto in fase di compilazione e non può essere un indirizzo contenuto all'interno di una procedura, in quanto l'allocazione avverrebbe durante l'invocazione della funzione stessa.
 		\subsection{Indirizzamento a registro}
 		L'indirizzamento a registro ha un funzionamento analogo all'indirizzamento diretto, ma specifica un registro invece di una locazione di memoria, questa è la modalità d'indirizzamento più usata dato che i registri sono veloci in accesso e hanno indirizzi brevi.
-		Nelle architetture load/store, ovvero le architetture dove si può operare solo tramite operandi su registri, tutte le istruzioni utilizzano questa modalità, a meno delle istruzioni LOAD e STORE che caricano/scaricano dati in memoria da/verso un registro. 
+		Nelle architetture load/store, ovvero le architetture dove si può operare solo tramite operandi su registri, tutte le istruzioni utilizzano questa modalità, a meno delle istruzioni LOAD e STORE che caricano/scaricano dati in memoria da/verso un registro.
 		\subsection{Indirizzamento a registro indiretto}
 		In questa modalità, l'operando proviene o è destinato alla memoria, ma il suo indirizzo non è incorporato nell'istruzione perchè l'indirizzo è contenuto in un registro, questo prende il nome di \textbf{puntatore}. Il vantaggio è proprio la capacità di referenziare la memoria senza che l'indirizzo di memoria sia incorporato all'interno dell'istruzione stessa, inoltre la stessa istruzione può essere utilizzata su diverse parole in memoria, semplicemente variando il valore contenuto nel registro.
 		\subsection{Indirizzamento indicizzato}
@@ -1884,7 +1885,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		Come precedentemente detto, è consigliabile rendere le istruzioni macchina il più corte possibile. Il limite alla riduzione degli indirizzi equivale a non averne per nulla, come l'istruzione IADD e queste istruzioni sono possibili in associazione con uno stack.\\
 		Uno degli esempi pratici di utilizzo è legato alla \textbf{\textit{notazione polacca inversa}}.
 		\subsection{Notazione polacca inversa}
-		Solitamente scriviamo le operazioni algebriche utilizzando la \textbf{notazione infissa}, cioè quando l'operatore è posto tra gli operandi, cioè: 
+		Solitamente scriviamo le operazioni algebriche utilizzando la \textbf{notazione infissa}, cioè quando l'operatore è posto tra gli operandi, cioè:
 		\[
 		A + B
 		\]
@@ -1912,7 +1913,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 			\end{tabular}
 		\end{center}
 		Per valutare una formula in notazione polacca inversa, quando trovo un valore lo aggiungo in cima allo stack, quando trovo un operando prendo i due valori in cima allo stack, effettuo l'operazione tra questi due e inserisco il risultato in cima allo stack.\\
-		Segue un esempio più complesso, data l'espressione $(8+2\times5)/(1+3\times2-4)$: 
+		Segue un esempio più complesso, data l'espressione $(8+2\times5)/(1+3\times2-4)$:
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=1.00\textwidth]{Notazione_polacca_inversa}
@@ -1950,7 +1951,7 @@ I Blu-Ray sono un'evoluzione dei DVD e potrebbero diventare obsoleti a causa di 
 		\begin{enumerate}
 			\item $F = \overline{\overline{A} * B} \oplus \overline{C + A} + $
 			\\ \textbf{Tabella di verità: }
-			\\ 
+			\\
 			\\
 			\begin{tabular}{c|c|c|c|c|c|c|c|c}
 				A & B & C & $\overline{A}$ & $\overline{A} * B$& $\overline{\overline{A} * B}$& C + A & $\overline{C + A}$ & $ \overline{\overline{A} * B} \oplus \overline{C + A}$ \\
