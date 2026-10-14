@@ -639,6 +639,58 @@ Per calcolare il punteggio tramite coseno si utilizza il seguente algoritmo:
 ] <alg:cosine-score>
 Il tf-idf weighting ha diverse varianti:
 #figure(
-image("images/tf-idf-varianti.png", width: 70%),
+image("images/tf-idf-varianti.png", width: 90%),
 caption: [Varianti del tf-idf weighting]
+) <fig:varianti_tf_idf>
+Alcuni motori di ricerca consentono di avere sistemi di classificazioni diversi per documenti e query. Si usa una specifica notazione per specificare il sistema di classificazione usato per le query e per i documenti, ed è il seguente _ddd.qqq_ utilizzando gli acronimi della @fig:varianti_tf_idf . Uno schema di pesatura comunemente usato è _lnc.ltc_. Lo schema lnc per i documenti è il term frequency logaritmico (_l_), senza inverse document frequency (_n_) e con normalizzazione del coseno (_c_). Per la query invece si adotta il term frequency logaritmico (_l_), l'inverse document frequency (_t_) e la normalizzazione del coseno.
+=== Riepilogo
+Il ranking nello spazio vettoirlae permette di:
+- rappresentare la query come un vettore pesato (tf-idf);
+- ciascun documento viene rappresentato come un vettore pesato tf-idf;
+- viene calcolato il punteggio di somiglianza del coseno tra il vettore della query e il vettore di ciascun documento;
+- i documenti vengono ordinati rispetto alla query in base al punto ottenuto;
+- vengono restituiti all'utente i primi $K$ documenti.
+== Integrazione di conoscenza lessicale: WordNet
+WordNet è un'ontologia linguistica che rappresenta in maniera esplicita e formale la conoscenza linguistica umana. L'obiettivo di WordNet è quello di consentire la ricerca concettuale nei dizionari e il risultato è quello di aver definito un database lessicale. \
+WordNet è un'ontologia linguistica top-level in quanto rappresenta la conoscenza linguistica che presenta due aspetti fondamentali:
+- _senso comune_: costituisce una forma di conoscenza di senso comune.
+- _versatilità d'uso_: può essere impiegata trasversalmente in qualsiasi dominio.
+=== Utilizzo di WordNet
+Sistemi per Information Retrieva e Text Categorization utilizzano la conoscenza linguistica di WordNet per aggiungere "semantica" al processo di ritrovamento/categorizzazione. \
+La memoria lessicale umana si suddivide in quattro parti ognuna rispettivamente dedicata a: nomi, verbi, aggettivi e avverbi. Gli ideatori di WordNet, ispirandosi a tale teoria, hanno suddiviso in modo analogo la conoscenza lessicale.
+=== Concetto di parola
+La parola è un'associazione fra una word form e una word meaning:
+- _word form_: espressione fisica della parola ovvero l'insieme di lettere che la costituisce;
+- _word meaning_: concetto lessicale che la word form vuole esprimere ovvero il suo significato sottinteso.
+WordNet realizza il mapping tra word form e word meaning.
+#figure(
+image("images/wordnet.png", width: 70%),
+caption: [Mapping tra word form e word meaning]
 )
+Una word form è *polisemica* se ad essa possono essere associate più word meaning. Due word form sono *sinonimi* se ad esse è associata la stessa word meaning. \
+Lo scopo principale di WordNet è quello di riuscire a trasferire ad un computer tutta la conoscenza linguistica (le word form, le word meaning e il mapping fra queste). La rappresentazione delle word form, in una forma comprensibile ad un calcolatore, non ha suscitato molti problemi. \
+Ogni word meaning è rappresentata dall'insieme delle word form che possono essere usate per esprimerla: _synset_. Un synset associato ad una word form consente all'utente di inferire la semantica della word form in esame purchè conosca la semantica di almeno una word form elencata nel synset.
+#figure(
+image("images/synset.png", width: 70%),
+caption: [Synset]
+)
+Se una parola è polisemica, viene applicato l'algoritmo di disambiguazione *WSD (Word Sense Disambiguation)*.
+=== Synset Semantic Similarity
+La metrica di Leacock-Chodorow introduce un approccio per quantificare la somiglianza tra due synset $a$ e $b$ sfruttando la struttura tassonomica di WordNet.
+#algoritmo(title: [Funzione SINSIM])[
+  #pseudocode-list[
+    + *function* $"SINSIM"(a, b)$
+    	+ $N_p <-$ the number of nodes in path $p$ from $a$ to $b$
+    	+ $D <-$ maximum depth of the taxonomy
+    	+ $r <- -log(N_p / 2D)$
+    + *return* $r$
+  ]
+] <alg:sinsim>
+Sia dato il seguente esempio:
+#figure(
+image("images/leacock_chodorow.png", width: 70%)
+)
+Per la coppia $S I N S I M("cat", "mouse")$, il percorso attraversa 5 nodi e applicando la formula con $D= 16$ si ottiene il valore $log(5/32) = 0.806$. \
+*VEDERE SLIDE PRECEDENTI ALLA 111*. \
+
+
