@@ -1,7 +1,7 @@
 \documentclass[12pt]{report}
 \usepackage[italian]{babel}
 \usepackage[most]{tcolorbox}
-\usepackage{amsmath}	
+\usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{tabularx}
@@ -90,7 +90,7 @@
 
 \newcommand{\nmu}{}
 
-\begin{document}	
+\begin{document}
 	{
 		\let\cleardoublepage\clearpage
 		\maketitle
@@ -110,10 +110,10 @@
 	In $\mathbbm{Z}$ la sottrazione si può fare, anzi vale una proprietà importante:
 	\[
 	\forall a \in \mathbbm{Z}\ \exists !\ b \in \mathbbm{Z} \mid a + b = 0
-	\] 
+	\]
 	Ovvero ogni elemento ha il suo inverso: $b = -a$. \\
 	In $\mathbbm{Z}$ non si possono fare le divisioni. \\
-	Allora è stato introdotto l'insieme $\mathbbm{Q} = \{ \frac{m}{n} \mid m \in \mathbbm{Z}, n \in \mathbbm{N}^*\}$ 
+	Allora è stato introdotto l'insieme $\mathbbm{Q} = \{ \frac{m}{n} \mid m \in \mathbbm{Z}, n \in \mathbbm{N}^*\}$
 	\begin{definition}{$\mathbbm{Q}$ relazione di equivalenza}{q_rel_equivalenza}
 		Dati $\frac{p}{q}, \frac{p'}{q'} \in \mathbbm{Q}$. \\
 		$\frac{p}{q}$ è equivalente a $\frac{p'}{q'} \iff pq'=qp'$. \\
@@ -168,7 +168,7 @@
 	\begin{enumerate}
 		\item $\forall a,b,c \in \mathbbm{R}$ se $a \leq b$ allora $a + c \leq b + c$
 		\item $\forall a,b \in \mathbbm{R}$ e $\forall c \geq 0$, se $a \leq b$ allora $a \cdot c \leq b \cdot c$. \\
-		Se $c < 0$ allora cambia anche il verso della disuguaglianza. 
+		Se $c < 0$ allora cambia anche il verso della disuguaglianza.
 	\end{enumerate}
 	Facciamo un passo indietro e riprendiamo il concetto di relazione d'ordine. \\
 	Sia $X$ un insieme. Si definisce relazione ogni sottoinsieme $\mathscr{R} \subset X \times X$. \\
@@ -177,7 +177,7 @@
 	\begin{enumerate}
 		\item Proprietà \textbf{riflessiva}: $\forall a \in X \quad a \mathscr{R} a$
 		\item Proprietà \textbf{antisimmetrica}: $\forall a, b \in X$ se $a \mathscr{R} b$ e $b \mathscr{R} a \Rightarrow a = b$
-		\item Proprietà \textbf{transitiva}: $\forall a, b, c \in X$ se $a \mathscr{R} b$ e $b \mathscr{R} c \Rightarrow a \mathscr{R} c$ 
+		\item Proprietà \textbf{transitiva}: $\forall a, b, c \in X$ se $a \mathscr{R} b$ e $b \mathscr{R} c \Rightarrow a \mathscr{R} c$
 	\end{enumerate}
 	Vediamo ora di capire come è definita la relazione d'ordine $\leq$ su $\mathscr{R}$. \\
 	Prendiamo $r$, una \textbf{retta orientata}. Una retta orientata ha 3 proprietà:
@@ -194,14 +194,14 @@
 	\begin{tikzpicture}
 		% Disegno della retta
 		\draw[->] (-3,0) -- (3,0); % Rea orizzontale che va da -3 a 3
-		
+
 		% Aggiungi i punti
 		\filldraw (0,0) circle (2pt); % Punto origine
 		\node at (0,0.5) {o}; % Etichetta origine
-		
+
 		\filldraw (-2,0) circle (2pt); % Punto P prima dell'origine
 		\node at (-2,0.5) {p}; % Etichetta punto P
-		
+
 		\filldraw (2,0) circle (2pt); % Punto Q dopo l'origine
 		\node at (2,0.5) {q}; % Etichetta punto Q
 	\end{tikzpicture} \\
@@ -216,7 +216,7 @@
 	\end{note}
 	\textbf{Notazioni di intervalli di $\mathbbm{R}$}:
 	\begin{itemize}
-		\item $[a,b] = \{x \in \mathbbm{R} \mid a \leq x \leq b\}$, intervallo chiuso limitato di estremi $a$ e $b$; 
+		\item $[a,b] = \{x \in \mathbbm{R} \mid a \leq x \leq b\}$, intervallo chiuso limitato di estremi $a$ e $b$;
 		\item $\left]a,b\right[ = \{x \in \mathbbm{R} \mid a < x < b\}$, intervallo aperto limitato di estremi $a$ e $b$.
 		\item $\left]a,b\right] = \{ x \in \mathbbm{R} \mid a < x \leq b\}$
 		\item $[a, b [ = \{x \in \mathbbm{R} \mid a \leq x < b\}$
@@ -224,25 +224,25 @@
 	\paragraph{Intervalli illimitati e forme indeterminate}: \\
 	Per parlare di intervalli \textbf{illimitati}, bisogna introdurre il concetto di $\pm \infty$ e $\infty \notin \mathbbm{R}$ e $\forall x \in \mathbbm{R} \quad -\infty < x < +\infty$. \\
 	Si può definire "$\mathbbm{R}$ ampliato": $\overline{\mathbbm{R}} = \mathbbm{R} \cup \{+\infty, -\infty\}$ \\
-	Su $\overline{\mathbbm{R}}$ si possono definire +, $\cdot$, $\leq$ esattamente come su $\mathbbm{R}$ e in più: 
+	Su $\overline{\mathbbm{R}}$ si possono definire +, $\cdot$, $\leq$ esattamente come su $\mathbbm{R}$ e in più:
 	\begin{enumerate}
 		\item $\forall x \in \mathbbm{R} \quad x + (+\infty) = +\infty$ e $x + (-\infty) = -\infty$
 		\item $\forall x \neq 0 \quad x \cdot (+\infty) = \begin{cases}
 			+\infty \ se \ x > 0 \\
 			-\infty \ se \ x < 0
-		\end{cases}$ \\ 
+		\end{cases}$ \\
 		$x \cdot (-\infty) = \begin{cases}
 			+\infty \ se \ x < 0 \\
 			-\infty \ se \ x > 0
 		\end{cases}$
-		\item $+\infty + (+\infty) = +\infty$ 
-		\item $-\infty + (-\infty) = -\infty$ 
+		\item $+\infty + (+\infty) = +\infty$
+		\item $-\infty + (-\infty) = -\infty$
 		\item $\pm\infty \cdot (\pm\infty) = +\infty$
 		\item $\pm\infty \cdot (\mp\infty) = -\infty$
-		\item $\forall a \in \mathbbm{R} \quad \dfrac{a}{\pm\infty} = 0$ 
+		\item $\forall a \in \mathbbm{R} \quad \dfrac{a}{\pm\infty} = 0$
 		\item $\dfrac{a}{0} = \begin{cases}
 			+\infty \quad a > 0 \\
-			-\infty \quad a < 0 
+			-\infty \quad a < 0
 		\end{cases}$
 	\end{enumerate}
 	Sono invece, \textbf{forme indeterminate}:
@@ -293,11 +293,11 @@
 	\end{definition}
 	\begin{theorem}{}{max_min_insieme}
 		Sia $E \subset \mathbbm{R}$. \\
-		Se esiste $\overline{x} = minE$ o se esiste $\overline{\overline{x}} = maxE$, allora esso è unico. 
+		Se esiste $\overline{x} = minE$ o se esiste $\overline{\overline{x}} = maxE$, allora esso è unico.
 		\begin{proof} \quad \\
-			Supponiamo per assurdo che esistono: 
+			Supponiamo per assurdo che esistono:
 			\begin{itemize}
-				\item $\overline{x_1} = minE \implies \overline{x_1} \in E \ e \ \forall x \in E \ x \geq \overline{x_1}$ 
+				\item $\overline{x_1} = minE \implies \overline{x_1} \in E \ e \ \forall x \in E \ x \geq \overline{x_1}$
 				\item $\overline{x_2} = minE \implies \overline{x_2} \in E \ e \ \forall x \in E \ x \geq \overline{x_2}$
 			\end{itemize}
 			Siccome $\overline{x_2} \in E$ e $\overline{x_1}$ è un minorante di $E$, per definizione allora $\overline{x_2} \geq \overline{x_1}$. \\
@@ -327,7 +327,7 @@
 		\end{cases}$
 	\end{definition}
 	Le definizioni precedenti sono ben poste se esiste $min\{k \in \mathbbm{R} \mid k \ \text{maggiorante di $E$}\}$ o esiste $max\{k \in \mathbbm{R} \mid k \ \text{minorante di $E$}\}$ e questo è assicurato da: \\
-	\textbf{$(\mathbbm{R}_3)$: Assioma di completezza}. 
+	\textbf{$(\mathbbm{R}_3)$: Assioma di completezza}.
 	\begin{definition}{\nmu Assioma di completezza}{assioma_completezza}
 		Sia $E \subset \mathbbm{R}$, $E \neq \emptyset$, limitato superiormente. \\
 		Allora $\exists \ min\{k \in \mathbbm{R} \mid k \ \text{è maggiorante di $E$}\} = supE \in \mathbbm{R}$. \\
@@ -372,7 +372,7 @@
 		\[
 		-|x| \leq x \leq |x|
 		\]
-		Analogamente per $y$, $r = |y|$: 
+		Analogamente per $y$, $r = |y|$:
 		\[
 		-|y| \leq y \leq |y|
 		\]
@@ -402,15 +402,15 @@
 		\end{cases}
 		\]
 	\end{definition}
-	\textbf{Proprietà}: $\forall a.b \in \mathbbm{R}, n, m \in \mathbbm{N}$ 
+	\textbf{Proprietà}: $\forall a.b \in \mathbbm{R}, n, m \in \mathbbm{N}$
 	\begin{enumerate}
 		\item $a^n \cdot a^m = a^{n + m}$ \\
 		\item $(a^n)^m = a^{n \cdot m}$ \\
 		\item $(a \cdot b)^n = a^n \cdot b^n$
-		\item Se $0 \leq a \leq b$ allora $0 \leq a^n \leq b^n$ 
+		\item Se $0 \leq a \leq b$ allora $0 \leq a^n \leq b^n$
 		\item $a^n \geq 0 \quad \forall a \in \mathbbm{R}$ se $n$ è pari
 		\item $a^n \geq 0 \iff a \geq 0$ se n dispari
-		\item Se $a \geq 1$ allora $a^n \geq 1 \quad \forall n \in \mathbbm{N}$ 
+		\item Se $a \geq 1$ allora $a^n \geq 1 \quad \forall n \in \mathbbm{N}$
 		\item Se $0 \leq a \leq 1$ allora $0 \leq a^n \leq 1 \quad \forall n \in \mathbbm{N}$
 	\end{enumerate}
 	\section{Potenze a esponente intero}
@@ -428,7 +428,7 @@
 		Questo $x$ si chiama radice n-sima aritmetica di $y$ e si denota con:
 		\[
 		\sqrt[n]{y} \quad \text{oppure} \quad y^{\frac{1}{n}}
-		\]    
+		\]
 	\end{theorem}
 	\begin{note}{}{}
 		Cosa succede se $y < 0$? \\
@@ -438,7 +438,7 @@
 		\]
 		Se $n$ è pari: $x^n = y$ non ha soluzioni quindi non esiste la radice n-sima di un numero negativo se $n$ è pari. \\
 		Se $n$ è dispari: $x^n = y$ ha senso e in questo caso esiste $\sqrt[n]{y} = -\sqrt[n]{-y}$ nel senso del teorema precedente.
-	\end{note} 
+	\end{note}
 	\section{Potenze con esponente razionale}
 	\begin{definition}{\nmu Potenza a esponente razionale}{pow_esponente_razionale}
 		Sia $a > 0$ e sia $q \in \mathbbm{Q}, q = \dfrac{m}{n}$ con $m \in \mathbbm{Z}$ e $n \in \mathbbm{N} \quad n \neq 0$ \\
@@ -457,8 +457,8 @@
 	\begin{enumerate}
 		\item $a^p \cdot a^q = a^{p + q}$
 		\item $(a \cdot b)^p = a^p \cdot b^p$
-		\item $(a^p)^q = a^{p \cdot q}$ 
-		\item $a^p > 0 \quad \forall p \in \mathbbm{Q}$ 
+		\item $(a^p)^q = a^{p \cdot q}$
+		\item $a^p > 0 \quad \forall p \in \mathbbm{Q}$
 		\item $0 < a < b$ allora $\begin{cases}
 			a^p < b^p \quad p>0 \\
 			a^p > b^p \quad p <0
@@ -477,12 +477,12 @@
 		Se $0 < a < 1$, $r \in \mathbbm{R} \quad \frac{1}{a} > 1$. Allora:
 		\[
 		a^r = \dfrac{1}{(\frac{1}{a})^r}
-		\] 
+		\]
 		Se $a = 1$ allora $1^r = 1$ e se $a=0$ allora $0^r = 0\iff r > 0$.
 	\end{definition}
 	Le proprietà enunciate precedentemente nella sezione riguardante le potenze con i numeri razionali valgono anche per esponenti reali con $p, q \in \mathbbm{R}$.
 	\chapter{Logaritmi}
-	Si definisce \textbf{base} ogni numero reale, $a \in \mathbbm{R} \mid a >0$ e $a \neq 1$. 	
+	Si definisce \textbf{base} ogni numero reale, $a \in \mathbbm{R} \mid a >0$ e $a \neq 1$.
 	Sia $a$ una base e $y > 0$. \\
 	Vogliamo risolvere l'equazione:
 	\[
@@ -519,12 +519,12 @@
 			In questo caso $\log_a{(x \cdot y)} = \log_a{(|x \cdot y|)} = \log_a{(|x| \cdot |y|)} = \log_a{(|x|)} + \log_a{(|y|)}$
 		\end{note}
 		\item $\log_a{(\frac{1}{x})} = -\log_a{x}$
-		\item $\log_a{(\frac{x}{y})} = \log_a{x} - \log_a{y}$ 
+		\item $\log_a{(\frac{x}{y})} = \log_a{x} - \log_a{y}$
 		\begin{proof} \quad \\
 			$\log_a{(\frac{x}{y})} = \log_a{(x \cdot \frac{1}{y})}=^{(1)}\log_a{x} + \log_a{(\frac{1}{y})} =^{(2)}\log_a{x}-\log_a{y}$
 		\end{proof}
 		\begin{note}{}{}
-			Se $\frac{x}{y}>0$ ma non si hanno informazioni sui segni di $x$ e $y$ allora: 
+			Se $\frac{x}{y}>0$ ma non si hanno informazioni sui segni di $x$ e $y$ allora:
 			\[
 			\log_a{(\frac{x}{y})} = \log_a{(|x|)} - \log_a{(|y|)}
 			\]
@@ -550,7 +550,7 @@
 		$\log_{3}{(\sqrt{27 \cdot \sqrt{3}})} = \log_3{(\sqrt{3^3 \cdot 3^\frac{1}{2})}} = \log_3{(\sqrt{3^{3 + \frac{1}{2}}})} = \log_3{(\sqrt{3^\frac{7}{2}})} = \log_3{(3^\frac{7}{2})^\frac{1}{2}} = \log_3{(3)^\frac{7}{4}} = \frac{7}{4}\log_3{3} = \frac{7}{4}$
 	\end{exercise}
 	\chapter{Funzioni}
-	\begin{definition}{Definzione di una funzione}{funzione}  
+	\begin{definition}{Definzione di una funzione}{funzione}
 		Per definire una funzione servono tre elementi:
 		\begin{enumerate}
 			\item $A$ insieme, detto \textit{insieme di partenza} o \textit{dominio}
@@ -559,7 +559,7 @@
 		\end{enumerate}
 		Le funzioni si denotano con:
 		\[
-		f: A \to B  
+		f: A \to B
 		\]
 	\end{definition}
 	Nel corso di Analisi Matematica studieremo due tipologie di funzioni:
@@ -567,8 +567,8 @@
 		\item $f: \mathbbm{R} \to \mathbbm{R}$ \textit{funzioni reali di variabili reali};
 		\item $f: \mathbbm{N} \to \mathbbm{R}$ \textit{successioni}
 	\end{enumerate}
-	In generale così definiremo le funzioni definite nel loro \textbf{dominio naturale}, ossia il più grande sottoinsieme di $\mathbbm{R}$ in cui abbia senso calcolare le funzioni. L'insieme di arrivo, invece, è sempre $\mathbbm{R}$. 
-	
+	In generale così definiremo le funzioni definite nel loro \textbf{dominio naturale}, ossia il più grande sottoinsieme di $\mathbbm{R}$ in cui abbia senso calcolare le funzioni. L'insieme di arrivo, invece, è sempre $\mathbbm{R}$.
+
 	\begin{definition}{Codominio}{codominio}
 		Sia:
 		\[
@@ -600,7 +600,7 @@
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$ una funzione. \\
 		La funzione $f$ si dice \textit{limitata superiormente} o \textit{limitata inferiormente} se $f(D)$ è limitato superiormente o inferiormente, ossia:
 		\[
-		\exists M \in \mathbbm{R} \mid \forall x \in D, f(x) \leq M    
+		\exists M \in \mathbbm{R} \mid \forall x \in D, f(x) \leq M
 		\]
 		oppure
 		\[
@@ -620,7 +620,7 @@
 		\[
 		\underset{x \in D}{inf}\ f(x)
 		\]
-		
+
 	\end{definition}
 	\begin{definition}{Massimo e minimo di una funzione}{max_min_funzione}
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$ limitata. \\
@@ -638,7 +638,7 @@
 			\item $\forall x \in D \quad f(x) \leq M$
 			\item $\exists x_1 \in D \mid M = f(x_1)$
 		\end{enumerate}
-		$m = \underset{x \in D}{min}\ f(x) \iff$ 
+		$m = \underset{x \in D}{min}\ f(x) \iff$
 		\begin{enumerate}
 			\item $\forall x \in D \quad f(x) \geq m$
 			\item $\exists x_2 \in D \mid m=f(x_2)$
@@ -716,7 +716,7 @@
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$. \\
 		$f$ si dice \textit{monotona decrescente} se $\forall x, y \in D \mid x < y$ si ha $f(x) \geq f(y)$
 	\end{definition}
-	
+
 	\begin{tikzpicture}
 		\begin{axis}[
 			axis lines=middle,
@@ -730,7 +730,7 @@
 			\addplot[thick, blue] {x <= 1 ? 1 : 2 - x};
 		\end{axis}
 	\end{tikzpicture}
-	
+
 	\begin{definition}{Funzione monotona strettamente decrescente}{funzione_strett_desc}
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$. \\
 		$f$ si dice \textit{strettamente monotona decrescente} se $\forall x, y \in D \mid x < y$ si ha $f(x) > f(y)$
@@ -753,7 +753,7 @@
 		Supponiamo che $f(D) \subset D'$. \\
 		Si definisce la funzione composta: \[g \circ f: D \to \mathbbm{R} \mid \forall x \in D (g \circ f)(x) = g(f(x))\]
 	\end{definition}
-	Non sempre si può calcolare $g \circ f$, l'ipotesi che $f(D) \subset D'$ è indispensabile. Inoltre, anche ammesso che tutto sia ammissibile, $f \circ g \neq g \circ f$. 
+	Non sempre si può calcolare $g \circ f$, l'ipotesi che $f(D) \subset D'$ è indispensabile. Inoltre, anche ammesso che tutto sia ammissibile, $f \circ g \neq g \circ f$.
 	\section{Funzioni iniettive, suriettive e invertibili}
 	\begin{definition}{Funzione ridotta}{funzione_ridotta}
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$ e supponiamo che $f(D) \subset \mathbbm{R}$ e $f(D) \neq \mathbbm{R}$. \\
@@ -764,14 +764,14 @@
 	\end{definition}
 	\begin{definition}{Funzione restrizione}{funzione_restrizione}
 		Sia $f: D \to \mathbbm{R}$ e sia $D' \subset D, D' \neq D$. \\
-		Si definisce \textit{restrizione} di $f \subset D'$ la funzione: 
+		Si definisce \textit{restrizione} di $f \subset D'$ la funzione:
 		\[
 		f|_{D'}: D' \to \mathbbm{R}
 		\]
 		ovvero \textit{restrizione di $f$ a $D'$}
 	\end{definition}
 	\begin{definition}{Funzione sueriettiva}{funzione_suriettiva}
-		Sia $f: D \to \mathbbm{R}$. \\ 
+		Sia $f: D \to \mathbbm{R}$. \\
 		$f$ si dice \textit{suriettiva} se $f(D) = \mathbbm{R}$
 	\end{definition}
 	\begin{note}{}{}
@@ -779,7 +779,7 @@
 	\end{note}
 	\begin{definition}{Funzione iniettiva}{funzione_iniettiva}
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$. \\
-		$f$ si dice \textit{iniettiva} se: $\forall x_1, x_2 \in D$ se $x_1 \neq x_2$ allora $f(x_1) \neq f(x_2)$ oppure equivalenmtemente se: $\forall x_1, x_2 \in D \mid f(x_1) = f(x_2)$ risulta che $x_1 = x_2$ 
+		$f$ si dice \textit{iniettiva} se: $\forall x_1, x_2 \in D$ se $x_1 \neq x_2$ allora $f(x_1) \neq f(x_2)$ oppure equivalenmtemente se: $\forall x_1, x_2 \in D \mid f(x_1) = f(x_2)$ risulta che $x_1 = x_2$
 	\end{definition}
 	\begin{tikzpicture}
 		\begin{axis}[
@@ -810,14 +810,14 @@
 		\[
 		f^{-1}: f(D) \to D
 		\]
-		definita nel seguente modo: 
+		definita nel seguente modo:
 		\[
-		\forall y \in f(D), f^{-1}(y)\ \text{è l'unico}\ x \in D \mid f(x) = y \quad 
+		\forall y \in f(D), f^{-1}(y)\ \text{è l'unico}\ x \in D \mid f(x) = y \quad
 		\]
 	\end{definition}
 	\begin{note}{}{}
 		$\forall x \in D \quad f^{-1}(f(x)) = x$ e $\forall y \in f(D) \quad f(f^{-1}(y)) = y$. \\
-		Inoltre, per disegnare graficamente la funzione inversa, basta disegnare la prima bisettrice che va dal primo al terzo quadrante e si ribalta il grafico di $f$. 
+		Inoltre, per disegnare graficamente la funzione inversa, basta disegnare la prima bisettrice che va dal primo al terzo quadrante e si ribalta il grafico di $f$.
 	\end{note}
 	\begin{tikzpicture}
 		\begin{axis}[
@@ -831,30 +831,30 @@
 			width = 10cm,
 			height = 10cm
 			]
-			
+
 			% Original function f(x) = x^2 + 1 for x >= 0
 			\addplot[domain=0:2.5, blue, thick, samples=100] {x^2 + 1};
-			
+
 			% Inverse function f^{-1}(x) = \sqrt{x-1}
 			\addplot[domain=1:7, red, thick, samples=100] {sqrt(x-1)};
-			
+
 			% Line y = x (bisector)
 			\addplot[domain=-5:5, black, dashed] {x};
-			
+
 			% Legend
 			\legend{$f(x) = x^2 + 1$, $f^{-1}(x) = \sqrt{x-1}$, $y = x$}
-			
+
 		\end{axis}
 	\end{tikzpicture}
 	\begin{theorem}{}{monotonia_e_iniettiva}
 		Sia $f: D \subset \mathbbm{R} \to \mathbbm{R}$ e $f$ è strettamente crescetnte oppure strettamente decrescente. \\
-		Allora $f$ è iniettiva e $f^{-1}$ è strettamente crescente se $f$ è strettamente crescente oppure $f^{-1}$ è strettamente decrescente se $f$ è strettamente decrescente. 
+		Allora $f$ è iniettiva e $f^{-1}$ è strettamente crescente se $f$ è strettamente crescente oppure $f^{-1}$ è strettamente decrescente se $f$ è strettamente decrescente.
 		\begin{proof}
 			Siano $x, y \in D$ tali che $x \neq y$. \\
 			\textbf{Tesi:} $f(x) \neq f(y)$. \\
 			Se $x \neq y$ possono succedere solo due cose:
 			\begin{enumerate}
-				\item $x < y \implies f(x) < f(y)$ 
+				\item $x < y \implies f(x) < f(y)$
 				\item $y < x \implies f(y) < f(x)$
 			\end{enumerate}
 			In ogni caso, $f(x) \neq f(y)$ allora $f$ è iniettiva. \\
@@ -866,8 +866,8 @@
 			La tesi quindi diventa: $x_1 < x_2$.  \\
 			Supponiamo per assurdo che: $x_1 \geq x_2$.
 			\begin{enumerate}
-				\item $x_1 = x_2 \implies f(x_1) = f(x_2) \implies y_1 = y_2$ e questo è assurdo perchè $y_1 < y_2$ 
-				\item $x_1 > x_2 \implies f(x_1) > f(x_2) \implies y_1 > y_2$ e questo è assurdo perchè $y_1 < y_2$ 
+				\item $x_1 = x_2 \implies f(x_1) = f(x_2) \implies y_1 = y_2$ e questo è assurdo perchè $y_1 < y_2$
+				\item $x_1 > x_2 \implies f(x_1) > f(x_2) \implies y_1 > y_2$ e questo è assurdo perchè $y_1 < y_2$
 			\end{enumerate}
 			Allora necessariamente $x_1 < x_2$
 		\end{proof}
@@ -882,13 +882,13 @@
 		\end{array}$ \\
 	\end{definition}
 	Se $n=1$ la funzione diventa $f(x) = x$ rappresentata dal seguente grafico: \\
-	\begin{center}    
+	\begin{center}
 		\begin{tikzpicture}
 			\begin{axis}[
 				axis lines = middle,
 				xlabel = \(x\),
 				ylabel = \(y\),
-				grid = both, 
+				grid = both,
 				]
 				\addplot[domain=-5:5, samples=100, color=red] {x};
 			\end{axis}
@@ -913,7 +913,7 @@
 				width=12cm,
 				height=8cm
 				]
-				
+
 				\addplot[
 				domain=-4:4,
 				samples=100,
@@ -921,7 +921,7 @@
 				thick,
 				] {x^3};
 				\addlegendentry{$y = x^3$}
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -970,28 +970,28 @@
 	\begin{assignment}{}{} \quad \\
 		$\sqrt[3]{x^3 + 1} = x + 1$
 		\begin{exercise}{}{} \quad \\
-			$(\sqrt[3]{x^3 + 1})^3 = (x+1)^3 \\ 
+			$(\sqrt[3]{x^3 + 1})^3 = (x+1)^3 \\
 			x^3 + 1 = x^3 + 1 + 3x^2 + 3x \\
 			3x^2 + 3x = 0 \\
 			x^2 + x = 0 \\
 			x(x + 1) = 0 \\
 			x = 0 \vee x=-1
-			$ 
+			$
 		\end{exercise}
 	\end{assignment}
 	\begin{assignment}{}{} \quad \\
 		$\sqrt[3]{x^3 + 1} \leq x + 1$
 		\begin{exercise}{}{} \quad \\
-			$(\sqrt[3]{x^3 + 1})^3 \leq (x+1)^3 \\ 
+			$(\sqrt[3]{x^3 + 1})^3 \leq (x+1)^3 \\
 			x^3 + 1 \leq x^3 + 1 + 3x^2 + 3x \\
 			3x^2 + 3x \geq 0 \\
 			x^2 + x \geq 0 \\
 			x(x + 1) = 0 \\
 			x \leq -1 \vee x\geq 0
-			$ 
+			$
 		\end{exercise}
 	\end{assignment}
-	
+
 	\begin{assignment}{}{} \quad \\
 		$\sqrt[5]{\dfrac{x^2-1}{x+2}} < 1$
 		\begin{exercise}{}{} \quad \\
@@ -1001,13 +1001,13 @@
 			\dfrac{x^2-1-x-2}{x+2} < 0 \\
 			\dfrac{x^2-x-3}{x+2} < 0 \\
 			\text{Numeratore:}\\
-			x^2-x-3 \geq 0 \\ 
+			x^2-x-3 \geq 0 \\
 			x_{1/2} = \dfrac{1 \pm \sqrt{1 - 4(1)(-3)}}{2} = \dfrac{1 \pm \sqrt{13}}{2} \\
 			\text{Denominatore:} \\
 			x + 2 > 0 \\
 			x > -2 \\
 			\text{Fare grafico dei segni}
-			$ 
+			$
 		\end{exercise}
 	\end{assignment}
 	\paragraph{Funzione potenza n-esima con $n$ pari} \quad \\
@@ -1043,10 +1043,10 @@
 	\end{center}
 	Proprietà della funzione potenza con $n$ pari:
 	\begin{itemize}
-		\item $\forall x \in \mathbbm{R} \quad x^n \geq 0$. 
-		\item $f$ non è iniettiva e quindi non è invertibile su $\mathbbm{R}$ 
+		\item $\forall x \in \mathbbm{R} \quad x^n \geq 0$.
+		\item $f$ non è iniettiva e quindi non è invertibile su $\mathbbm{R}$
 	\end{itemize}
-	Consideriamo $f|_{[0, +\infty[}$, in questo intervallo $f$ è strettamente crescente e quindi iniettiva e invertibile. 
+	Consideriamo $f|_{[0, +\infty[}$, in questo intervallo $f$ è strettamente crescente e quindi iniettiva e invertibile.
 	\paragraph{Funzione radice n-esima con $n$ pari} \quad \\
 	Sia $f(x) = x^n$ con $n$ pari e consideriamo la funzione restrizione $f|_{[0,+\infty[}$ iniettiva e invertibile. \\
 	La funzione inversa:
@@ -1078,7 +1078,7 @@
 				thick,
 				] {x^(1/2)};
 				\addlegendentry{$y = \sqrt[2]{x}$}
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -1151,7 +1151,7 @@
 				x + 3 > x^2 + 2x + 1
 			\end{cases}; \begin{cases}
 				x \geq -1 \\
-				0 > x^2 + x - 2 
+				0 > x^2 + x - 2
 			\end{cases} ; \begin{cases}
 				x \geq 1 \\
 				x^2 + x - 2 < 0
@@ -1175,7 +1175,7 @@
 	Esempi sul quaderno.
 	\subsection{Funzione esponenziale e funzione logaritmo}
 	\begin{definition}{\nmu Potenza con esponente reale}{pow_esp_reale}
-		
+
 		Sia $x \in \mathbbm{R}, a > 1$, allora:
 		\[a^x = sup\{a^q | q \in \mathbbm{Q}, q \leq x\}\]
 		Se $0 < a < 1$ allora:
@@ -1197,15 +1197,15 @@
 		\[
 		\begin{array}{l}
 			exp_a: \mathbbm{R} \to \mathbbm{R} \\
-			\phantom{exp_a:\ }x \mapsto a^x 
+			\phantom{exp_a:\ }x \mapsto a^x
 		\end{array}
 		\]
 		e il codominio $exp_a(\mathbbm{R}) = ]0, +\infty[$
 	\end{definition}
-	\textbf{Proprietà}: 
+	\textbf{Proprietà}:
 	\begin{enumerate}
-		\item Se $a>1 \quad exp_a$ è \textbf{strettamente monotona crescente} 
-		\item Se $0<a<1 \quad exp_a$ è \textbf{srettamente monotona decrescente} 
+		\item Se $a>1 \quad exp_a$ è \textbf{strettamente monotona crescente}
+		\item Se $0<a<1 \quad exp_a$ è \textbf{srettamente monotona decrescente}
 	\end{enumerate}
 	\begin{center}
 		\begin{tikzpicture}
@@ -1223,23 +1223,23 @@
 				grid style = {line width=.1pt, draw=gray!10},
 				major grid style = {line width=.2pt,draw=gray!50},
 				]
-				
+
 				% Caso a > 1
 				\addplot[blue, thick] {2^x};
 				\addlegendentry{$f(x) = 2^x$ $(a > 1)$}
-				
-				
+
+
 				% Caso 0 < a < 1
 				\addplot[green!60!black, thick] {(1/2)^x};
 				\addlegendentry{$f(x) = \left(\frac{1}{2}\right)^x$ $(0 < a < 1)$}
-				
+
 				% Punto comune (0,1)
 				\addplot[black, mark=*, only marks] coordinates {(0,1)};
 				\node[anchor=south west] at (axis cs:0,1) {$(0,1)$};
-				
+
 				% Line y=0 (asintoto orizzontale)
 				\addplot[gray, dashed] {0};
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -1249,7 +1249,7 @@
 		\[
 		\begin{array}{l}
 			\log_a: ]0, +\infty[ \to \mathbbm{R}  \\
-			\phantom{log_a:\ } x \mapsto \log_a(x) 
+			\phantom{log_a:\ } x \mapsto \log_a(x)
 		\end{array}
 		\]
 		ove per $\log_a(x)$ intendiamo l'unico valore $y \in \mathbbm{R} \mid a^y = x$
@@ -1271,18 +1271,18 @@
 				major grid style = {line width=.2pt,draw=gray!50},
 				restrict y to domain = -3:3,
 				]
-				
+
 				% Caso a > 1
 				\addplot[blue, thick] {ln(x)/ln(2)};
 				\addlegendentry{$f(x) = \log_2 x$ $(a > 1)$}
-				
+
 				% Caso 0 < a < 1
 				\addplot[green!60!black, thick] {ln(x)/ln(1/2)};
 				\addlegendentry{$f(x) = \log_{1/2} x$ $(0 < a < 1)$}
 				% Punto comune (1,0)
 				\addplot[black, mark=*, only marks] coordinates {(1,0)};
 				\node[anchor=north west] at (axis cs:0.5,-0.3) {$(1,0)$};
-				
+
 				% Asintoto verticale
 				\addplot[gray, dashed, domain=0:0.1] {-3};
 				\addplot[gray, dashed, domain=0:0.1] {-2};
@@ -1291,11 +1291,11 @@
 				\addplot[gray, dashed, domain=0:0.1] {1};
 				\addplot[gray, dashed, domain=0:0.1] {2};
 				\addplot[gray, dashed, domain=0:0.1] {3};
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
-	La funzione logaritmo se $a>1$ la funzione è \textbf{strettamente monotona crescente}, se $0<a<1$ la funzione è \textbf{strettamente monotona decrescente}. 
+	La funzione logaritmo se $a>1$ la funzione è \textbf{strettamente monotona crescente}, se $0<a<1$ la funzione è \textbf{strettamente monotona decrescente}.
 	\begin{assignment}{}{} \quad \\
 		$4^x = 16$
 		\begin{exercise}{}{} \quad \\
@@ -1311,7 +1311,7 @@
 			$x = \log_4(20)$
 		\end{exercise}
 	\end{assignment}
-	
+
 	\begin{assignment}{}{} \quad \\
 		$4^x < 20$
 		\begin{exercise}{}{} \quad \\
@@ -1320,7 +1320,7 @@
 		\end{exercise}
 		Applichiamo la funzione $\log_4$ ad ambo i membri e il segno di disuguaglianza rimane lo stesso perchè $\log_4$ è una funzione \textbf{strettamente crescente}
 	\end{assignment}
-	
+
 	\begin{assignment}{}{} \quad \\
 		$(\frac{1}{2})^x > 32$
 		\begin{exercise}{}{} \quad \\
@@ -1338,34 +1338,34 @@
 		\begin{tikzpicture}[scale=1.5]
 			% Draw grid (light blue)
 			\draw[step=1cm,gray!30,thin] (-2.5,-2.5) grid (3.5,2.5);
-			
+
 			% Draw coordinate axes
 			\draw[->,thick] (-2.5,0) -- (3.5,0) node[right] {$x$};
 			\draw[->,thick] (0,-2.5) -- (0,2.5) node[above] {$y$};
-			
+
 			% Draw the first circle (centered at origin)
 			\draw[thick] (0,0) circle (1.5);
-			
+
 			% Draw the second circle/arc (in red)
 			\draw[thick, red] (1.5,0) arc (0:90:1.5);
-			
+
 			% Label points
 			\node[below left] at (0,0) {$O$};
 			\node[below] at (1.5,0) {$A$};
 			\node[below] at (3,0) {$A'$};
-			
+
 			% Draw radius and angle
 			\draw[thick] (0,0) -- (1.5,0);
 			\draw[thick] (0,0) -- (0,1.5);
-			
+
 			% Label angle
 			\draw[->, angle radius=0.5cm] (0,0) -- (45:1cm); % Angolo a 45 gradi
 			\node at (0.5,0.3) {$\alpha$};
-			
+
 			% Label curves
 			\node[right] at (1.5,1) {$l$};
 			\node[right] at (3,1) {$l'$};
-			
+
 		\end{tikzpicture}
 	\end{center}
 	$l$ è la lunghezza dell'arco $AP$. Se consideriamo un raggio $r'>r$ all'angolo $\alpha$ corrisponde un arco $A'P'$ di lunghezza $l' > l$. \\
@@ -1397,38 +1397,38 @@
 	\paragraph{Circonferenza goniometrica, seno e coseno} \quad \\
 	La circonferenza goniometrica è la circonferenza di centro $(0;0)$, raggio $r=1$ e orientata positivamente in senso antiorario. Segue il grafico della circonferenza goniometrica:\\
 	\begin{center}
-		
+
 		\begin{tikzpicture}
-			
+
 			% Disegnare la circonferenza goniometrica
 			\draw[thick] (0,0) circle(2);
-			
+
 			% Disegnare l'asse x e l'asse y
 			\draw[thick,->] (-3,0) -- (3,0) node[right] {$x$};
 			\draw[thick,->] (0,-3) -- (0,3) node[above] {$y$};
-			
+
 			% Disegnare il punto P sulla circonferenza (angolo alpha)
 			\draw[fill] ({2*cos(30)},{2*sin(30)}) circle (2pt); % Punto P
 			\node at ({2*cos(30) + 0.1},{2*sin(30)}) [below right] {$P(\cos \alpha, \sin \alpha)$};
-			
+
 			\node[below left] at (0,0) {$O$};
-			
+
 			% Disegnare l'arco AP
 			\draw[thick,->] (0,0) -- ({2*cos(30)},{2*sin(30)}); % Arco da O a P
-			
+
 			% Disegnare le rette parallele agli assi x e y passanti per P
 			\draw[thick, dashed] ({2*cos(30)},0) -- ({2*cos(30)},{2*sin(30)}); % Retta parallela all'asse x
 			\draw[thick, dashed] (0,{2*sin(30)}) -- ({2*cos(30)},{2*sin(30)}); % Retta parallela all'asse y
-			
+
 			\node at ({2*cos(30)},0) [below] {$h_x$}; % Punto sulla retta parallela all'asse x
 			\node at (0,{2*sin(30)}) [left] {$h_y$};
-			
+
 			\draw[thick,->] (2.5,1.0) arc[start angle=0, end angle=90, radius=1.0];
-			
+
 			% Etichettare l'angolo alpha
 			\draw[thick] (0.5,0) arc[start angle=0, end angle=30, radius=0.5]; % Angolo alpha
 			\node at (0.7,0.2) {$\alpha$};
-			
+
 		\end{tikzpicture}
 	\end{center}
 	Sia $X_0$ la misura di $\wideparen{AP}$ espressa in	radianti. Quindi $x_0 \in [0, 2\pi[$.
@@ -1455,7 +1455,7 @@
 	\paragraph{Archi associati} \quad \\
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1.00\textwidth]{angoli_associati}
+		\includegraphics[width=1.00\textwidth]{images/angoli_associati}
 	\end{figure}
 	\begin{itemize}
 		\item \textbf{Coseno}:
@@ -1470,7 +1470,7 @@
 			\item $\sin(\pi + x_0) = -\sin(x_0)$
 			\item $\sin(2\pi - x_0) = -\sin(x_0)$
 		\end{enumerate}
-		
+
 	\end{itemize}
 	\paragraph{Seno e coseno di angoli noti}
 	\begin{itemize}
@@ -1572,7 +1572,7 @@
 				]
 				% Funzione arcocoseno
 				\addplot[blue, thick] {rad(acos(x))};
-				
+
 				% Linee tratteggiate per indicare i limiti del dominio (opzionali)
 				\draw[dashed, gray] (-1, 0) -- (-1, 3.1416);
 				\draw[dashed, gray] (1, 0) -- (1, 0);
@@ -1625,7 +1625,7 @@
 		\[
 		\begin{array}{l}
 			\arcsin: [-1,1] \to [-\frac{\pi}{2}, \frac{\pi}{2}] \\
-			\phantom{\arcsin:\ }x \mapsto \arcsin(x)		
+			\phantom{\arcsin:\ }x \mapsto \arcsin(x)
 		\end{array}
 		\]
 		ove $\arcsin$ è cosi definita:
@@ -1636,7 +1636,7 @@
 	\begin{note}{}{}
 		L'equazione $\sin(x)=y$ ammette infinite soluzioni in $\mathbbm{R}$, perchè la funzione $\sin$ è periodica, ma la soluzione è unica in $[-\frac{\pi}{2}, \frac{\pi}{2}]$ perchè $\sin$ è iniettiva in $[-\frac{\pi}{2}, \frac{\pi}{2}]$.
 	\end{note}
-	
+
 	\begin{center}
 		\begin{tikzpicture}
 			\begin{axis}[
@@ -1660,11 +1660,11 @@
 				]
 				\addplot[blue, thick] {rad(asin(x))};
 				\legend{$\arcsin(x)$}
-				
+
 				% Linee verticali asintotiche
 				\draw[dashed, red] (-1,-1.65) -- (-1,1.65);
 				\draw[dashed, red] (1,-1.65) -- (1,1.65);
-				
+
 				% Annotazioni del dominio
 				\node[below] at (0,-1.8) {Dominio: $[-1,1]$};
 				\node[left] at (-1.15,0) {$-1$};
@@ -1682,40 +1682,40 @@
 			% Coordinate axes
 			\draw[thin, gray!50] (-1.2,0) -- (1.5,0);
 			\draw[thin, gray!50] (0,-1.2) -- (0,1.2);
-			
+
 			% Labels for axes limits
 			\node[below left] at (-1,0) {$-1$};
 			\node[below right] at (1,0) {$1$};
 			\node[left] at (0,1) {$1$};
 			\node[left] at (0,-1) {$-1$};
-			
+
 			% Unit circle
 			\draw[thick] (0,0) circle (1);
-			
+
 			% Angle alpha
 			\coordinate (O) at (0,0);
 			\coordinate (A) at (0.6,0);
 			\coordinate (P) at (0.6,0.8);
-			
+
 			% Draw angle
 			\draw[gray] (0,0) -- (A);
 			\draw (0,0) -- (P);
 			\draw (P) -- (1.2, 1.5);
 			\draw[gray] (0.15,0) arc (0:53:0.15);
-			
+
 			% Draw perpendicular from P to x-axis
 			\draw[gray!70] (P) -- (A);
-			
+
 			% Draw perpendicular from P to y-axis
 			\draw[gray!70] (P) -- (0.0,0.8);
-			
+
 			% Draw tangent line
 			\draw[blue, thick] (1.0,0) -- (1.0,1.6);
-			
+
 			% Right triangle showing tan(alpha)
 			\draw[gray!70] (1,0) -- (1.2,0);
 			\draw[gray!70] (1,0) -- (P);
-			
+
 			% Labels
 			\node[left] at (O) {O};
 			\node[below] at (A) {A};
@@ -1724,16 +1724,16 @@
 			\node[below] at (1.2,0) {C};
 			\node[above] at (1.2,1.2) {T};
 			\node[above left] at (0,0.8) {B};
-			
+
 			% Measurements
 			\node[gray] at (0.1,0.4) {$\sin \alpha$};
 			\node[gray] at (0.3,-0.15) {$\cos \alpha$};
 			\node[right] at (1.2,0.8) {$\tan \alpha$};
 			\node at (0.35,0.65) {$r=1$};
-			
+
 		\end{tikzpicture}
 	\end{center}
-	Sia $x_0 \in [0, \pi[,\ x_0 \neq \frac{\pi}{2}$ e $\rho_{CP} = x_0$. \\ 
+	Sia $x_0 \in [0, \pi[,\ x_0 \neq \frac{\pi}{2}$ e $\rho_{CP} = x_0$. \\
 	Tracciamo la retta tangente in $A$ alla circonferenze goniometrica. Si prolunga il raggio $OP$. Sia $T$ il punto d'intersezione tra la retta tangente in $A$ alla circonferenza goniometrica e la retta a cui il raggio $OP$ appartiene. \\
 	Si chiamata \textbf{tangente} di $x_0$ la lunghezza con segno del segmento $CT$ e si denota con il simbolo:
 	\[
@@ -1748,7 +1748,7 @@
 	\end{itemize}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1.00\textwidth]{tangente_periodica}
+		\includegraphics[width=1.00\textwidth]{images/tangente_periodica}
 	\end{figure}
 	Se $x \notin [0, \pi[$, allora esiste $x_0 \in [0, \pi[$ e $k \in \mathbbm{Z}$ tale che $x = x_0 + k\pi$ e $\tan(x)=\tan(x_0)$. \\
 	Inoltre, si può dimostrare che $\forall x \in \mathbbm{R} \quad \tan(x) = \frac{\sin(x)}{\cos(x)}$
@@ -1782,21 +1782,21 @@
 				samples=1000,
 				restrict y to domain=-6.5:6.5,
 				]
-				
+
 				% Asintoti verticali
 				\addplot[red, dashed] coordinates {(-1.5708, -5) (-1.5708, 5)};
 				\addplot[red, dashed] coordinates {(1.5708, -5) (1.5708, 5)};
-				
+
 				\addplot[red, dashed] coordinates {(4.71239, -5) (4.71239, 5)};
 				\addplot[red, dashed] coordinates {(-4.71239, -5) (-4.71239, 5)};
 				% Funzione tangente
 				\addplot[blue, thick] {tan(deg(x))};
-				
-				
+
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
-	
+
 	Dal grafico notiamo alcune proprietà:
 	\begin{enumerate}
 		\item $\tan$ è una funzione periodica di periodo $\pi$ e quindi non è invertibile;
@@ -1813,7 +1813,7 @@
 			\arctan: \mathbbm{R} \to ]-\frac{\pi}{2}, \frac{\pi}{2}[
 		\end{array}
 		\]
-		tale che $\forall y \in \mathbbm{R} \quad \arctan(y)$ è l'unica $x \in ]-\frac{\pi}{2}, \frac{\pi}{2}[$ soluzione di $\tan(x)=y$  
+		tale che $\forall y \in \mathbbm{R} \quad \arctan(y)$ è l'unica $x \in ]-\frac{\pi}{2}, \frac{\pi}{2}[$ soluzione di $\tan(x)=y$
 	\end{definition}
 	\begin{note}{}{}
 		In generale l'equazione $\tan(x)=y$ ha infinite soluzioni ma è unica in $]-\frac{\pi}{2}, \frac{\pi}{2}[$
@@ -1838,17 +1838,17 @@
 				samples=100,
 				domain=-6:6,
 				]
-				
+
 				% Asintoti orizzontali
 				\addplot[red, dashed] coordinates {(-6, 1.5708) (6, 1.5708)};
 				\addplot[red, dashed] coordinates {(-6, -1.5708) (6, -1.5708)};
-				
+
 				% Funzione arcotangente
 				\addplot[blue, thick] {atan(x)/180*pi};
-				
+
 				% Etichetta della funzione
 				\node[right] at (axis cs:1, 0.5) {$f(x) = \arctan x$};
-				
+
 				% Punti notevoli
 				\addplot[mark=*, only marks, mark size=2pt] coordinates {
 					(-1, -0.7854)
@@ -1863,7 +1863,7 @@
 	\end{center}
 	Dal grafico notiamo alcune proprietà:
 	\begin{enumerate}
-		\item $\underset{x \in \mathbbm{R}}{sup\ } \arctan(x)=\frac{\pi}{2}$ 
+		\item $\underset{x \in \mathbbm{R}}{sup\ } \arctan(x)=\frac{\pi}{2}$
 		\item $\underset{x \in \mathbbm{R}}{inf\ } \arctan(x)=-\frac{\pi}{2}$
 	\end{enumerate}
 	Esiste anche $\cot(x)=\frac{\cos(x)}{\sin(x)} \quad \forall x \neq k\pi, k \in \mathbbm{Z}$. \\
@@ -1887,14 +1887,14 @@
 			major grid style = {line width=.2pt,draw=gray!50},
 			restrict y to domain = -3:3,
 			]
-			
+
 			% Caso a > 1
 			\addplot[blue, thick] {ln(x)/ln(3)};
 			% Caso 0 < a < 1
 			% Punto comune (1,0)
 			\addplot[black, mark=*, only marks] coordinates {(1,0)};
 			\node[anchor=north west] at (axis cs:0.5,-0.3) {$(1,0)$};
-			
+
 			% Asintoto verticale
 			\addplot[gray, dashed, domain=0:0.1] {-3};
 			\addplot[gray, dashed, domain=0:0.1] {-2};
@@ -1903,7 +1903,7 @@
 			\addplot[gray, dashed, domain=0:0.1] {1};
 			\addplot[gray, dashed, domain=0:0.1] {2};
 			\addplot[gray, dashed, domain=0:0.1] {3};
-			
+
 		\end{axis}
 	\end{tikzpicture} \\
 	Sia $g(x) = \log_{3}(x) + 5$ \\
@@ -1922,15 +1922,15 @@
 			major grid style = {line width=.2pt,draw=gray!50},
 			restrict y to domain = -5:10,
 			]
-			
+
 			% Caso a > 1
 			\addplot[blue, thick] {ln(x)/ln(3) + 5};
 			% Caso 0 < a < 1
 			% Punto comune (1,0)
 			\addplot[black, mark=*, only marks] coordinates {(1,5)};
 			\node[anchor=north west] at (axis cs:0.5,4.3) {$(1,5)$};
-			
-			
+
+
 			% Asintoto verticale
 			\addplot[gray, dashed, domain=0:0.1] {-3};
 			\addplot[gray, dashed, domain=0:0.1] {-2};
@@ -1939,11 +1939,11 @@
 			\addplot[gray, dashed, domain=0:0.1] {1};
 			\addplot[gray, dashed, domain=0:0.1] {2};
 			\addplot[gray, dashed, domain=0:0.1] {3};
-			
+
 		\end{axis}
 	\end{tikzpicture}\\
 	Il grafico ottenuto è una \textbf{traslazione verso l'alto} del grafico di $\log_{3}(x)$. \\
-	
+
 	Sia $f(x)=x^2$ \\
 	\begin{tikzpicture}
 		\begin{axis}[
@@ -1965,7 +1965,7 @@
 			color=red,
 			thick,
 			] {x^4};
-			
+
 		\end{axis}
 	\end{tikzpicture} \\
 	Sia $g(x)=x^2 - 1$ \\
@@ -1989,7 +1989,7 @@
 			color=red,
 			thick,
 			] {x^4 - 1};
-			
+
 		\end{axis}
 	\end{tikzpicture} \\
 	Il grafico ottenuto è una \textbf{traslazione verso il basso} di 1 del grafico di $x^2$. \\
@@ -2013,14 +2013,14 @@
 			major grid style = {line width=.2pt,draw=gray!50},
 			restrict y to domain = -3:3,
 			]
-			
+
 			% Caso a > 1
 			\addplot[blue, thick] {ln(x)/ln(3)};
 			% Caso 0 < a < 1
 			% Punto comune (1,0)
 			\addplot[black, mark=*, only marks] coordinates {(1,0)};
 			\node[anchor=north west] at (axis cs:0.5,-0.3) {$(1,0)$};
-			
+
 			% Asintoto verticale
 			\addplot[gray, dashed, domain=0:0.1] {-3};
 			\addplot[gray, dashed, domain=0:0.1] {-2};
@@ -2029,9 +2029,9 @@
 			\addplot[gray, dashed, domain=0:0.1] {1};
 			\addplot[gray, dashed, domain=0:0.1] {2};
 			\addplot[gray, dashed, domain=0:0.1] {3};
-			
+
 		\end{axis}
-	\end{tikzpicture} \\ 
+	\end{tikzpicture} \\
 	Sia $g(x) = \log_{3}(x - 3)$ \\
 	\begin{tikzpicture}
 		\begin{axis}[
@@ -2048,13 +2048,13 @@
 			major grid style = {line width=.2pt,draw=gray!50},
 			restrict y to domain = -3:3,
 			]
-			
+
 			% Caso a > 1
 			\addplot[blue, thick] {ln(x - 3)/ln(3)};
 			% Caso 0 < a < 1
 			% Punto comune (1,0)
 			\addplot[black, mark=*, only marks] coordinates {(4,0)};
-			
+
 			% Asintoto verticale
 			\addplot[gray, dashed, domain=0:0.1] {-3};
 			\addplot[gray, dashed, domain=0:0.1] {-2};
@@ -2063,7 +2063,7 @@
 			\addplot[gray, dashed, domain=0:0.1] {1};
 			\addplot[gray, dashed, domain=0:0.1] {2};
 			\addplot[gray, dashed, domain=0:0.1] {3};
-			
+
 		\end{axis}
 	\end{tikzpicture} \\
 	Il grafico si ottiene \textbf{traslando a destra} il grafico di $f$. \\
@@ -2088,7 +2088,7 @@
 			color=red,
 			thick,
 			] {x^4};
-			
+
 		\end{axis}
 	\end{tikzpicture} \\
 	Sia $g(x)=(x + 2)^2$ \\
@@ -2111,7 +2111,7 @@
 			color=red,
 			thick,
 			] {(x + 2)^4};
-			
+
 		\end{axis}
 	\end{tikzpicture} \\
 	Il grafico ottenuto è una \textbf{traslazione verso sinistra} il grafico di $f$  \\
@@ -2195,7 +2195,7 @@
 			major grid style={line width=.2pt,draw=gray!50},
 			axis line style={->},
 			legend pos=north west,
-			]		
+			]
 			\addplot[blue, domain=-2*pi:2*pi, samples=100, thick] {2 * sin(deg(x))};
 		\end{axis}
 	\end{tikzpicture} \\
@@ -2295,7 +2295,7 @@
 		Per le successioni si usa una notazione diversa da quelle delle funzioni. Le successioni si denotano nel seguente modo:
 		\[
 		\{a_n\}_{n \in \mathbbm{N}}
-		\] 
+		\]
 		ove $a_n = f(n)$
 	\end{definition}
 	\textbf{Esempio: $\{n^2\}_{n \in \mathbbm{N}}$}
@@ -2349,7 +2349,7 @@
 			\[
 			\underset{n \in \mathbbm{N}}{inf}\ a_n
 			\]
-			Se $\{a_n\}_{n \in \mathbbm{N}}$ non è limitata inferiormente per definizione: 
+			Se $\{a_n\}_{n \in \mathbbm{N}}$ non è limitata inferiormente per definizione:
 			\[
 			\underset{n \in \mathbbm{N}}{inf}\ a_n = -\infty
 			\]
@@ -2377,7 +2377,7 @@
 			\item \textbf{Monotona decrescente} se $\forall n \in \mathbbm{N}$
 			\[
 			a_n \geq a_{n + 1}
-			\]		
+			\]
 			\item \textbf{Strettamente monotona decrescente} se $\forall n \in \mathbbm{N}$
 			\[
 			a_n > a_{n + 1}
@@ -2406,7 +2406,7 @@
 	\subsection{Limite di una successione}
 	\begin{definition}{\nmu Successione convergente}{succ_convergente}
 		Sia $\{a_n\}_{n \in \mathbbm{N}}$ una successione. \\
-		$\{a_n\}_{n \in \mathbbm{N}}$ si dice \textbf{convergente} se: \[\exists l \in \mathbbm{R} \mid \forall \varepsilon > 0:\ |a_n - l| < \varepsilon\ \textbf{definitivamente}\] 
+		$\{a_n\}_{n \in \mathbbm{N}}$ si dice \textbf{convergente} se: \[\exists l \in \mathbbm{R} \mid \forall \varepsilon > 0:\ |a_n - l| < \varepsilon\ \textbf{definitivamente}\]
 		cioè se:
 		\[
 		\forall \varepsilon > 0 \quad \exists n_0 \in \mathbbm{N} \mid \forall n \geq n_0 \quad |a_n - l| < \varepsilon
@@ -2474,9 +2474,9 @@
 			\]
 			applichiamo la disuguaglianza triangolare:
 			\[
-			|a_{\overline{n}} - l_1 | + |a_{\overline{n}} - l_2| \leq \varepsilon + \varepsilon = 2\varepsilon 
+			|a_{\overline{n}} - l_1 | + |a_{\overline{n}} - l_2| \leq \varepsilon + \varepsilon = 2\varepsilon
 			\]
-			Abbiamo provato che $\forall \varepsilon > 0 \quad |l_1 - l_2| < 2\varepsilon \Rightarrow l_1 - l_2 = 0 \implies l_1 = l_2$ e questo è assurdo. 
+			Abbiamo provato che $\forall \varepsilon > 0 \quad |l_1 - l_2| < 2\varepsilon \Rightarrow l_1 - l_2 = 0 \implies l_1 = l_2$ e questo è assurdo.
 		\end{proof}
 	\end{theorem}
 	\textbf{Esempi}:
@@ -2496,7 +2496,7 @@
 			$\mathlarger{\lim_{n \to +\infty}}\frac{n+1}{n-1}=1 \quad \forall\varepsilon > 0 \quad |\frac{n+1}{n-1} - 1|<\varepsilon\ \text{definitivamente, cioè } \exists n_0 \in \mathbbm{N} \mid \forall n \geq n_0$
 			\[
 			\frac{n+1}{n-1} - 1 < \varepsilon
-			\] 
+			\]
 			Risolviamo la disuguaglianza nell'incognita $n$. \\
 			$\frac{n + 1 -n + 1 - n\varepsilon + \varepsilon}{n - 1} < 0$ \\
 			\begin{itemize}
@@ -2541,11 +2541,11 @@
 		Si dicono \textbf{regolari} tutte le successioni convergenti o divergenti. \\
 		Si dicono \textbf{oscillanti} o \textbf{irregolari} tutte le successioni che non hanno limite all'infinito.
 	\end{definition}
-	\textbf{Esempio:} 
+	\textbf{Esempio:}
 	\begin{itemize}
 		\item $\{(-1)^n\}_{n \in \mathbbm{N}}$ allora $\centernot{\exists} \lim_{n \to +\infty}(-1)^n$ e quindi è irregolare.
 		\item $\{\sin n\}_{n \in \mathbbm{N}}$ è una successione irregolare.
-		\item $\{\cos n\}_{n \in \mathbbm{N}}$ è una successione irregolare. 
+		\item $\{\cos n\}_{n \in \mathbbm{N}}$ è una successione irregolare.
 		\item $\{\tan n\}_{n \in \mathbbm{N}}$ è una successione irregolare.
 	\end{itemize}
 	Quindi l'irregolarità delle successioni dipende dalla periodicità della funzione. \\
@@ -2572,21 +2572,21 @@
 	Vediamo il comportamento della successione geometrica se $q \in [0, +\infty]$. \\
 	Se $q=0 \implies \mathlarger{\lim_{n \to +\infty}}0^n=\mathlarger{\lim_{n \to +\infty}}0=0$. \\
 	Se $q=1 \implies \mathlarger{\lim_{n \to +\infty}}1^n=\mathlarger{\lim_{n \to +\infty}}1=1$ \\
-	Se $\mathbf{q > 1}$, allora la successione $\{q^n\}_{n \in \mathbbm{N}}$ è monotona crescente quindi possiamo applicare il teorema \namerefl{th:regolarita_succ_monotone}: 
+	Se $\mathbf{q > 1}$, allora la successione $\{q^n\}_{n \in \mathbbm{N}}$ è monotona crescente quindi possiamo applicare il teorema \namerefl{th:regolarita_succ_monotone}:
 	\[
 	\exists \lim_{n \to +\infty}q^n=\underset{n \to +\infty}{sup}\ q^n=+\infty
 	\]
 	\textbf{Esempio:} $\mathlarger{\lim_{n \to +\infty}}2^n=+\infty$. \\
-	Se $\mathbf{0 < q < 1}$. Allora $\{q^n\}_{n \in \mathbbm{N}}$ è una successione monotona decrescente. Per il teorema \namerefl{th:regolarita_succ_monotone}: 
+	Se $\mathbf{0 < q < 1}$. Allora $\{q^n\}_{n \in \mathbbm{N}}$ è una successione monotona decrescente. Per il teorema \namerefl{th:regolarita_succ_monotone}:
 	\[
 	\exists \lim_{n \to +\infty}q^n=\underset{n \to +\infty}{inf}\ q^n=0
 	\]
-	Allora $\forall q \geq 0$: 
+	Allora $\forall q \geq 0$:
 	\[
 	\lim_{n \to +\infty}q^n=\begin{cases}
 		0\phantom{+\infty} \quad 0 \leq q \leq 1 \\
 		1\phantom{+\infty} \quad q = 1 \\
-		+\infty\phantom{0} \quad q>1 
+		+\infty\phantom{0} \quad q>1
 	\end{cases}
 	\]
 	Più in generale:\[
@@ -2619,7 +2619,7 @@
 	\]
 	\section{Teoremi algebrici per il calcolo dei limiti}
 	Dobbiamo capire come operare con i limiti di successioni. \\
-	Siano $\{a_n\}_{n \in \mathbbm{N}}$ e $\{b_n\}_{n \in \mathbbm{N}}$ due successioni tali che: 
+	Siano $\{a_n\}_{n \in \mathbbm{N}}$ e $\{b_n\}_{n \in \mathbbm{N}}$ due successioni tali che:
 	\[
 	\lim_{n \to +\infty}a_n = l_1 \in \overline{\mathbbm{R}}
 	\]
@@ -2628,11 +2628,11 @@
 	\]
 	Allora:
 	\begin{enumerate}
-		\item $\mathlarger{\lim_{n \to +\infty}}(a_n \pm b_n) = l_1 \pm l_2$ 
-		\item $\mathlarger{\lim_{n \to +\infty}}(a_n \cdot b_n) = l_1l_2$ 
-		\item $\mathlarger{\lim_{n \to +\infty}}\dfrac{a_n}{b_n}=\frac{l_1}{l_2}$ con $b_n \neq 0, l_2 \neq 0$ 
+		\item $\mathlarger{\lim_{n \to +\infty}}(a_n \pm b_n) = l_1 \pm l_2$
+		\item $\mathlarger{\lim_{n \to +\infty}}(a_n \cdot b_n) = l_1l_2$
+		\item $\mathlarger{\lim_{n \to +\infty}}\dfrac{a_n}{b_n}=\frac{l_1}{l_2}$ con $b_n \neq 0, l_2 \neq 0$
 		\item $\mathlarger{\lim_{n \to +\infty}}(a_n)^{b_n}=(l_1)^{l_2}$ \\
-		Tranne che nel caso delle forme indeterminate: 
+		Tranne che nel caso delle forme indeterminate:
 		\[[+\infty -\infty], \biggl[\frac{0}{0}\biggr], \biggl[\frac{\pm\infty}{\pm\infty}\biggr], [0 \cdot (\pm \infty)], [1^{\pm\infty}], [0^0], [\pm\infty^0]\]
 	\end{enumerate}
 	\begin{assignment}{}{}
@@ -2657,7 +2657,7 @@
 			$\mathlarger{\lim_{n \to +\infty}}\dfrac{n^3(1+\frac{3}{n^2})}{n^2(1 + \frac{1}{n^2})} = \mathlarger{\lim_{n \to +\infty}}n=+\infty$ perchè $\frac{1}{n^2}$ converge a 0 in quanto $n^{-2}$.
 		\end{exercise}
 	\end{assignment}
-	
+
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\dfrac{n^2 + 3n + 1}{3n^2+2n}$
 		\begin{exercise}{}{}
@@ -2665,7 +2665,7 @@
 			$\mathlarger{\lim_{n \to +\infty}}\dfrac{n^2(1 + \frac{3}{n} + \frac{1}{n^2})}{n^2(3 + \frac{2}{n})} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{3}=\frac{1}{3}$.
 		\end{exercise}
 	\end{assignment}
-	
+
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\dfrac{n^4 + 1}{3n^5+3n^2}$
 		\begin{exercise}{}{}
@@ -2674,21 +2674,21 @@
 		\end{exercise}
 	\end{assignment}
 	\paragraph{Regola generale} \quad \\
-	Nel calcolo dei limiti di successioni di "polinomi", l'unico termine che dà contributo al limite è quello di grado maggiore. Gli altri termini, ai fini del limite, si possono trascurare. \\ 
+	Nel calcolo dei limiti di successioni di "polinomi", l'unico termine che dà contributo al limite è quello di grado maggiore. Gli altri termini, ai fini del limite, si possono trascurare. \\
 	In particolare, se il termine di grado maggiore si trova al numeratore il valore del limite sarà $+\infty$ o $-\infty$, se si trova al denominatore il valore del limite è 0, se il termine di grado maggiore si trova sia al numeratore che al denominatore allora il valore del limite è un numero reale. \\
 	\textbf{Esercizi a casa}:
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\frac{\sqrt{n^2+3n} + n}{2n + 3} = 1$
 	\end{assignment}
-	
+
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt[3]{n^3+1} + 3n = +\infty$
 	\end{assignment}
-	
+
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt{n^2+n} + n = +\infty$
 	\end{assignment}
-	
+
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt{n^2+n}- n$
 	\end{assignment}
@@ -2701,7 +2701,7 @@
 	Ad esempio:
 	\[
 	\lim_{n \to +\infty}\sqrt{n^2 - 2n + 2} - n=\lim_{n \to +\infty}\frac{(\sqrt{n^2 - 2n + 2} - n)(\sqrt{n^2 - 2n + 2} + n)}{\sqrt{n^2 - 2n + 2} + n}
-	\] 
+	\]
 	\[
 	\lim_{n \to +\infty}\frac{(\sqrt{n^2 - 2n + 2})^2 - n^2}{\sqrt{n^2} + n} = \lim_{n \to +\infty}\frac{n^2 -2n + 2 -n^2}{n + n} = \lim_{n \to +\infty}\frac{-2n}{2n}=-1
 	\]
@@ -2709,7 +2709,7 @@
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt{n + 3}-\sqrt{n + 2}$
 		\begin{exercise}{}{}
 			$\mathlarger{\lim_{n \to +\infty}}\sqrt{n + 3}-\sqrt{n + 2}=+\infty - \infty$ \\
-			$\mathlarger{\lim_{n \to +\infty}}\frac{(\sqrt{n + 3} - \sqrt{n + 2})(\sqrt{n + 3} + \sqrt{n + 2})}{\sqrt{n + 3} + \sqrt{n + 2}}=\mathlarger{\lim_{n \to +\infty}}\frac{(\sqrt{n+3})^2 - (\sqrt{n + 2})^2}{\sqrt{n} + \sqrt{n}} = \mathlarger{\lim_{n \to +\infty}}\frac{n + 3 -n - 2}{2\sqrt{n}} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{2\sqrt{n}}=0$  
+			$\mathlarger{\lim_{n \to +\infty}}\frac{(\sqrt{n + 3} - \sqrt{n + 2})(\sqrt{n + 3} + \sqrt{n + 2})}{\sqrt{n + 3} + \sqrt{n + 2}}=\mathlarger{\lim_{n \to +\infty}}\frac{(\sqrt{n+3})^2 - (\sqrt{n + 2})^2}{\sqrt{n} + \sqrt{n}} = \mathlarger{\lim_{n \to +\infty}}\frac{n + 3 -n - 2}{2\sqrt{n}} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{2\sqrt{n}}=0$
 		\end{exercise}
 	\end{assignment}
 	\begin{assignment}{}{}
@@ -2728,7 +2728,7 @@
 	\begin{note}{}{}
 		Il metodo di razionalizzazione si applica quando il coefficiente del termine di grado maggiore dei due polinomi è uguale, in caso contrario non è necessario razionalizzare. \\
 		Vedi gli esempi precedenti.
-	\end{note} 
+	\end{note}
 	\textbf{Esercizi a casa:}
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt{3n^2+2n+1}-2n$
@@ -2739,15 +2739,15 @@
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt{9n^2+2n}-3n$
 	\end{assignment}
-	
+
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\sqrt{9n^2+2n}-2n$
 	\end{assignment}
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\log(2n+1)-\log n = +\infty - \infty$
 		\begin{exercise}{}{}
-			$\mathlarger{\lim_{n \to +\infty}}\log(2n+1)-\log n = \mathlarger{\lim_{n \to +\infty}}\log(\frac{2n + 1}{n})=\mathlarger{\lim_{n \to +\infty}}\log(\frac{n(2 + \frac{1}{n})}{n}) = \log 2$ 
-		\end{exercise} 
+			$\mathlarger{\lim_{n \to +\infty}}\log(2n+1)-\log n = \mathlarger{\lim_{n \to +\infty}}\log(\frac{2n + 1}{n})=\mathlarger{\lim_{n \to +\infty}}\log(\frac{n(2 + \frac{1}{n})}{n}) = \log 2$
+		\end{exercise}
 	\end{assignment}
 	\subsection{Forma indeterminata $1^{\pm\infty}$}
 	\begin{assignment}{}{}
@@ -2755,8 +2755,8 @@
 		\begin{exercise}{}{}
 			$\mathlarger{\lim_{n \to +\infty}}(\frac{n}{n + 1})^n = 1^{+\infty}$ forma indeterminata.\\
 			Abbiamo visto che $\mathlarger{\lim_{n \to +\infty}}(1 + \frac{1}{n})^n = e$ ma $(\frac{n}{n + 1})$ è l'inverso di $1 + \frac{1}{n}$, quindi:\\
-			$\mathlarger{\lim_{n \to +\infty}}(\frac{n}{n + 1})^n = \mathlarger{\lim_{n \to +\infty}}(\frac{n+1}{n})^{-n} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{(\frac{n+1}{n})^n} = \frac{1}{e}$ 		 
-		\end{exercise} 
+			$\mathlarger{\lim_{n \to +\infty}}(\frac{n}{n + 1})^n = \mathlarger{\lim_{n \to +\infty}}(\frac{n+1}{n})^{-n} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{(\frac{n+1}{n})^n} = \frac{1}{e}$
+		\end{exercise}
 	\end{assignment}
 	Più in generale, se $\{a_n\}_{n \in \mathbbm{N}}$ è una successione tale che:
 	\[
@@ -2778,10 +2778,10 @@
 	\end{assignment}
 	\subsection{Teorema della permanenza del segno}
 	\begin{theorem}{\nmu Permanenza del segno - Prima versione}{perm_segno_uno}
-		
+
 		Sia $\{a_n\}_{n \in \mathbbm{N}}$ una successione, tale che:
 		\[
-		\lim_{n \to +\infty}a_n = l \gtrless 0 
+		\lim_{n \to +\infty}a_n = l \gtrless 0
 		\]
 		Allora $a_n \gtrless 0$ \textbf{definitivamente}, cioè:
 		\[
@@ -2849,7 +2849,7 @@
 		\lim_{n \to +\infty}c_n = l
 		\]
 		\begin{proof}\quad \\
-			Sia $\varepsilon > 0$. 
+			Sia $\varepsilon > 0$.
 			\begin{enumerate}
 				\item$\mathlarger{\lim_{n \to +\infty}}a_n = l$ indica che:
 				\[
@@ -2874,7 +2874,7 @@
 			\]
 			e questo è vero perchè:
 			\[
-			l - \varepsilon < a_n \leq c_n \leq b_n < l + \varepsilon 
+			l - \varepsilon < a_n \leq c_n \leq b_n < l + \varepsilon
 			\]
 		\end{proof}
 	\end{theorem}
@@ -2911,12 +2911,12 @@
 		\lim_{n \to +\infty}a_n \cdot b_n = 0
 		\]
 		Ad esempio: \[
-		\lim_{n \to +\infty}\frac{\sin n}{n}=\lim_{n \to +\infty}\sin n \cdot \frac{1}{n} = 0 
+		\lim_{n \to +\infty}\frac{\sin n}{n}=\lim_{n \to +\infty}\sin n \cdot \frac{1}{n} = 0
 		\]
 	\end{theorem}
 	\section{Confronto e stime asintotiche}
 	\begin{definition}{\nmu Successione infinitesima e infinita}{succ_infinitesima_infinita}
-		Sia $\{a_n\}_{n \in \mathbbm{N}}$ una successione. 
+		Sia $\{a_n\}_{n \in \mathbbm{N}}$ una successione.
 		$\{a_n\}_{n \in \mathbbm{N}}$ si dice \textit{infinitesima} se:
 		\[
 		\lim_{n \to +\infty}a_n = 0
@@ -2969,7 +2969,7 @@
 	\[
 	\lim_{n \to +\infty}\frac{a^n}{n^\alpha} = +\infty
 	\]
-	ossia $\{a^n\}_{n \in \mathbbm{N}}$ è un infinito di ordine superiore a $\{n^\alpha\}_{n \in \mathbbm{N}}$. 
+	ossia $\{a^n\}_{n \in \mathbbm{N}}$ è un infinito di ordine superiore a $\{n^\alpha\}_{n \in \mathbbm{N}}$.
 	\begin{note}{}{}
 		Tranne che nel caso di differenza di infiniti equivalenti, ai fini del limite si possono trascurare gli infiniti di ordine inferiore.
 	\end{note}
@@ -2980,28 +2980,28 @@
 	Sia $\{a_n\}_{n \in \mathbbm{N}}$ una successione tale che $a_n \geq 0 \quad \forall n \in \mathbbm{N}$. Supponiamo che esista:
 	\[
 	\lim_{n \to +\infty}\frac{a_{n + 1}}{a_n} = l \in \overline{\mathbbm{R}}
-	\]  
+	\]
 	Allora:
 	\begin{itemize}
-		\item se $l < 1$ allora $\mathlarger{\lim_{n \to +\infty}}a_n = 0$ 
+		\item se $l < 1$ allora $\mathlarger{\lim_{n \to +\infty}}a_n = 0$
 		\item se $l > 1$ allora $\mathlarger{\lim_{n \to +\infty}}a_n = +\infty$
 		\item se $l=1$ il criterio non dà alcune informazione su $\mathlarger{\lim_{n \to +\infty}}a_n$
 	\end{itemize}
-	\subsection{Confronto tra fattoriale e esponenziale} 
+	\subsection{Confronto tra fattoriale e esponenziale}
 	Usiamo il criterio del rapporto per confrontare $\{n!\}_{n \in \mathbbm{N}}$ con $\{a^n\}_{n \in \mathbbm{N}}$ con $a > 1$. \\
 	Verifichiamo che $\mathlarger{\lim_{n \to +\infty}}\frac{3^n}{n!} = 0$ \\
 	Consideriamo la successione \[a_n = \Bigl\{\frac{3^n}{n!}\Bigr\}_{n \in \mathbbm{N}}\] \\
-	Applichiamo il criterio de rapporto: 
+	Applichiamo il criterio de rapporto:
 	\[
-	\lim_{n \to +\infty}\frac{a_{n + 1}}{a_n} = \lim_{n \to +\infty}\frac{3^{n+1}}{(n+1)!} \cdot \frac{n!}{3^n} = \lim_{n \to +\infty}\frac{3 \cdot 3^n}{(n + 1)n!}\cdot \frac{n!}{3^n} = \lim_{n \to +\infty}\frac{3}{n+1}=0 
+	\lim_{n \to +\infty}\frac{a_{n + 1}}{a_n} = \lim_{n \to +\infty}\frac{3^{n+1}}{(n+1)!} \cdot \frac{n!}{3^n} = \lim_{n \to +\infty}\frac{3 \cdot 3^n}{(n + 1)n!}\cdot \frac{n!}{3^n} = \lim_{n \to +\infty}\frac{3}{n+1}=0
 	\]
 	Allora per il criterio del rapporto $\mathlarger{\lim_{n \to +\infty}}a_n = 0$. \\
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{n \to +\infty}}\frac{n! + 2^n}{(n + 2)!}$ \\
 		$\{n!\}_{n \in \mathbbm{N}}$ è un infinito di ordine superiore a $2^n$ e quindi si può trascurare.
 		\begin{exercise}{}{}
-			$\mathlarger{\lim_{n \to +\infty}}\frac{n! + 2n}{(n + 2)!}=\mathlarger{\lim_{n \to +\infty}}\frac{n!}{(n + 2)!}\\\mathlarger{\lim_{n \to +\infty}}\frac{n!}{(n + 2)(n + 1)n!} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{(n + 2)(n + 1)} = 0$ 
-		\end{exercise} 
+			$\mathlarger{\lim_{n \to +\infty}}\frac{n! + 2n}{(n + 2)!}=\mathlarger{\lim_{n \to +\infty}}\frac{n!}{(n + 2)!}\\\mathlarger{\lim_{n \to +\infty}}\frac{n!}{(n + 2)(n + 1)n!} = \mathlarger{\lim_{n \to +\infty}}\frac{1}{(n + 2)(n + 1)} = 0$
+		\end{exercise}
 	\end{assignment}
 	\paragraph{Confronto tra fattoriale e potenza} \quad \\
 	Infine, confrontiamo le successione $\{n!\}_{n \in \mathbbm{N}}$ con $\{n^n\}_{n \in \mathbbm{N}}$. \\
@@ -3010,7 +3010,7 @@
 	\]
 	Usiamo il criterio del rapporto.
 	\[
-	\lim_{n \to +\infty}\frac{(n+1)!}{(n+1)^{n + 1}} \cdot \frac{n^n}{n!} = \lim_{n \to +\infty}\frac{(n + 1)n!}{(n + 1)^n \cdot (n + 1)} \cdot \frac{n^n}{n!} = \lim_{n \to +\infty}\frac{n^n}{(n + 1)^n} = \lim_{n \to +\infty}\Bigl(\frac{n}{n + 1}\Bigr)^n 
+	\lim_{n \to +\infty}\frac{(n+1)!}{(n+1)^{n + 1}} \cdot \frac{n^n}{n!} = \lim_{n \to +\infty}\frac{(n + 1)n!}{(n + 1)^n \cdot (n + 1)} \cdot \frac{n^n}{n!} = \lim_{n \to +\infty}\frac{n^n}{(n + 1)^n} = \lim_{n \to +\infty}\Bigl(\frac{n}{n + 1}\Bigr)^n
 	\]
 	\[
 	= \lim_{n \to +\infty}\Bigl(\frac{n + 1}{n}\Big)^{-n} = \lim_{n \to +\infty}\frac{1}{\Bigl(1 + \frac{1}{n}\Bigr)^n} = \frac{1}{e}
@@ -3044,14 +3044,14 @@
 		Si dice che $\{a_n\}_{n \in \mathbbm{N}}$ è un infinitesimo di ordine inferiore a $\{b_n\}_{n\in\mathbbm{N}}$ se:
 		\[
 		\lim_{n \to +\infty}\frac{a_n}{b_n} = \pm\infty
-		\] 
+		\]
 		Infine, $\{a_n\}_{n \in \mathbbm{N}}$ e $\{b_n\}_{n \in \mathbbm{N}}$ non sono infinitesimi confrontabili se:
 		\[
 		\centernot{\exists} \lim_{n \to +\infty}\frac{a_n}{b_n}
 		\]
 	\end{definition}
 	\begin{note}{}{}
-		Ai fini del limite, tranne che nel caso di differenza di infinitesimi equivalenti, si può sostituire con un altro ad esso equivalente. 
+		Ai fini del limite, tranne che nel caso di differenza di infinitesimi equivalenti, si può sostituire con un altro ad esso equivalente.
 	\end{note}
 	\chapter{Funzioni continue}
 	\section{Limiti di funzione di variabile reale}
@@ -3085,7 +3085,7 @@
 		\[
 		\lim_{x \to x_0}f(x) = l \iff \forall \text{sucessione $\{x_n\}_{n \in \mathbbm{N}}$ t.c } x_n \in \mathbbm{N}, x_n \neq x_0 \ \forall n\in\mathbbm{N} \]
 		\[
-		\text{ e tale che } \lim_{n \to +\infty}x_n = x_0  
+		\text{ e tale che } \lim_{n \to +\infty}x_n = x_0
 		\]
 		risulta:
 		\[
@@ -3124,37 +3124,37 @@
 		]x_0 - r, x_0[ \quad r > 0
 		\]
 		Se $x_0 = +\infty$ ogni intervallo del tipo $]M, +\infty[$ si dice intorno di $+\infty$. \\
-		Se $x_0 = -\infty$ ogni intervallo del tipo $]-\infty, M[$ si dice intorno di $-\infty$ 
+		Se $x_0 = -\infty$ ogni intervallo del tipo $]-\infty, M[$ si dice intorno di $-\infty$
 	\end{definition}
 	\begin{definition}{\nmu Funzione che ammette una proprietà definitivamente}{func_prop_definitivamente}
 		Sia $f: \mathbbm{R}\backslash\{x_0\} \to \mathbbm{R}$, ove $x_0 \in \overline{\mathbbm{R}}$. \\
 		$f$ ammette una proprietà \textbf{definitivamente} per $x \to x_0$ se:
 		\[
 		\exists U\ \text{intorno di $x_0$ } \mid \forall x \in I \cap U \quad x \neq x_0 \quad f(x)\ \text{verifica quella proprietà}
-		\] 
+		\]
 	\end{definition}
-	Per esempio, se io considero $f(x) = \frac{1}{x^2 - 1}$ $f$ è positiva per $x \to 2$. 
+	Per esempio, se io considero $f(x) = \frac{1}{x^2 - 1}$ $f$ è positiva per $x \to 2$.
 	\begin{definition}{\nmu Definizione topologica di limite}{limite_topologico}
 		Sia $x_0 \in \overline{\mathbbm{R}}, l \in \overline{\mathbbm{R}}$. \\
 		Sia $f: I \backslash \{x_0\}\to \mathbbm{R}$. \\
 		Si dice che: \\
 		$
-		\mathlarger{\lim_{x \to x_0}}f(x) = l \iff \forall\ V$ intorno di $l$ risulta che  $f(x) \in V$ definitivamente per $x \to x_0$ 
-		
-		
+		\mathlarger{\lim_{x \to x_0}}f(x) = l \iff \forall\ V$ intorno di $l$ risulta che  $f(x) \in V$ definitivamente per $x \to x_0$
+
+
 		Se $x$ è 'vicino' a $x_0$ allora $f(x)$ è vicino a $l$. \\
 		Allora più esplicitamente: \\
-		$	
+		$
 		\mathlarger{\lim_{x \to x_0}}f(x) = l \iff \forall V$ intorno di $l$ $\exists U$ intorno di $x_0 \mid \forall x \in I \cap U \quad x \neq x_0 \quad f(x) \in V$
 	\end{definition}
 	\begin{definition}{\nmu Limite destro}{limite_destro}
-		
+
 		Sia $x_0 \in \mathbbm{R}$. Diremo che: \\
 		$
 		\mathlarger{\lim_{x \to x_0^+}}f(x) = l \iff \forall V$ intorno di $l$ $f(x) \in V$ definitivamente per $x \to x_0^+$ \\
 		ossia $\exists U\text{ intorno destro di $x_0$} \mid \forall x \in I \cap U \quad x \neq x_0 \quad f(x) \in V$
 	\end{definition}
-	
+
 	\begin{definition}{\nmu Limite sinistro}{limite_sinistro}
 		Sia $x_0 \in \mathbbm{R}$. Diremo che: \\
 		$
@@ -3186,14 +3186,14 @@
 				\addplot[blue, thick] {1/x};
 				\addplot[blue, thick, domain=0.1:5] {1/x};
 				\addlegendentry{$f(x) = \frac{1}{x}$}
-				
+
 				% Asintoti
 				\draw[dashed, red] (0,-5) -- (0,5) node[above] {$x=0$};
 				\draw[dashed, red] (-5,0) -- (5,0) node[right] {$y=0$};
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
-	
+
 	$\mathlarger{\lim_{x \to0^+}}\frac{1}{x}= +\infty \quad \mathlarger{\lim_{x \to0^-}}\frac{1}{x}=-\infty$
 	\begin{definition}{\nmu Funzione continua}{funzione_continua}
 		Sia $f: I \to \mathbbm{R}$, $I$ intervallo, $x_0 \in I$. \\
@@ -3206,7 +3206,7 @@
 	\end{definition}
 	\section{Limiti delle funzioni elementari}
 	\subsection{Funzione potenza}
-	Sia $f(x) = x^n$ 
+	Sia $f(x) = x^n$
 	\begin{center}
 		\begin{tikzpicture}
 			\begin{axis}[
@@ -3224,12 +3224,12 @@
 				legend pos=south east,
 				legend style={cells={anchor=west}}
 				]
-				
+
 				\addplot[blue, thick] {x^2};
 				\addlegendentry{$f(x) = x^2$}
-				
+
 				\addplot[red, thick] {x^3};
-				\addlegendentry{$f(x) = x^3$} 	
+				\addlegendentry{$f(x) = x^3$}
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -3240,7 +3240,7 @@
 	$\mathlarger{\lim_{x \to +\infty}}x^n = +\infty \quad \mathlarger{\lim_{x \to -\infty}}x^n = -\infty$ \\
 	$\forall x_0 \in \mathbbm{R} \quad \mathlarger{\lim_{x \to x_0}}x^n = x_0^n$
 	\subsection{Funzione radice $n$-esima}
-	Sia $f(x) = \sqrt[n]{x}$   		
+	Sia $f(x) = \sqrt[n]{x}$
 	\begin{center}
 		\begin{tikzpicture}
 			\begin{axis}[
@@ -3261,11 +3261,11 @@
 				% Radice quadrata
 				\addplot[red, thick] {sqrt(x)};
 				\addlegendentry{$f(x) = \sqrt[2]{x}$}
-				
+
 				% Radice cubica (permette valori negativi di x)
 				\addplot[blue, thick, domain=-2:5] {sign(x)*abs(x)^(1/3)};
 				\addlegendentry{$f(x) = \sqrt[3]{x}$}
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -3296,15 +3296,15 @@
 				legend style={cells={anchor=west}}
 				]
 				% Funzione esponenziale con diverse basi
-				
+
 				\addplot[red, thick] {0.5^x};
 				\addlegendentry{$f(x) = \frac{1}{2}^x$}
-				
+
 				\addplot[blue, thick] {exp(x)};
 				\addlegendentry{$f(x) = e^x$}
-				
+
 				% Asintoto per x tendente a -infinito
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -3334,20 +3334,20 @@
 				legend style={cells={anchor=west}},
 				unbounded coords=jump
 				]
-				
+
 				\addplot[red, thick] {ln(x)};
 				\addlegendentry{$f(x) = \ln{x} = \log_e{x}$}
-				
-				
+
+
 				\addplot[blue, thick] {ln(x)/ln(0.5)};
 				\addlegendentry{$f(x) = \log_{\frac{1}{2}}{x}$}
-				
+
 				% Asintoto verticale
 				\draw[dashed, black] (0,-3) -- (0,3) node[above] {$x=0$};
-				
+
 				% Linea y=0
 				\addplot[black, dashed, thin] {0};
-				
+
 				% Punto (1,0) presente in tutte le funzioni logaritmiche
 				\addplot[black, only marks, mark=*] coordinates {(1,0)};
 				\node[above right] at (axis cs:1,0) {$(1,0)$};
@@ -3384,21 +3384,21 @@
 				]
 				% Funzione seno
 				\addplot[blue, thick] {sin(deg(x))};
-				
+
 				% Punti caratteristici
 				\addplot[black, only marks, mark=*] coordinates {
 					(0,0)
 					(1.5708,1) (4.71239,-1) (-1.5708,-1) (-4.71239,1)
 					(3.14159,0) (6.28318,0) (-3.14159,0) (-6.28318,0)
 				};
-				
+
 				% Linee tratteggiate che evidenziano periodo e ampiezza
 				\draw[red, dashed] (0,-1.2) -- (0,1.2);
 				\draw[red, dashed] (3.14159,-1.2) -- (3.14159,1.2);
 				\draw[red, dashed] (6.28318,-1.2) -- (6.28318,1.2);
 				\draw[red, dashed] (-3.14159,-1.2) -- (-3.14159,1.2);
 				\draw[red, dashed] (-6.28318,-1.2) -- (-6.28318,1.2);
-				
+
 				\draw[green, dashed] (-6.28318,1) -- (6.28318,1);
 				\draw[green, dashed] (-6.28318,-1) -- (6.28318,-1);
 			\end{axis}
@@ -3406,7 +3406,7 @@
 	\end{center}
 	$\centernot{\exists}\mathlarger{\lim_{x \to \pm\infty}}\sin x$ \\
 	$\forall x_0 \in \mathbbm{R} \quad \mathlarger{\lim_{x \to x_0}}\sin x = \sin x_0$
-	\subsection{Funzione coseno} 
+	\subsection{Funzione coseno}
 	Sia $f(x) = \cos x$
 	\begin{center}
 		\begin{tikzpicture}
@@ -3429,21 +3429,21 @@
 				]
 				% Funzione seno
 				\addplot[blue, thick] {cos(deg(x))};
-				
+
 				% Punti caratteristici
 				\addplot[black, only marks, mark=*] coordinates {
 					(0,1)
 					(1.5708,0) (4.71239,0) (-1.5708,0) (-4.71239,0)
 					(3.14159,-1) (6.28318,1) (-3.14159,-1) (-6.28318,1)
 				};
-				
+
 				% Linee tratteggiate che evidenziano periodo e ampiezza
 				\draw[red, dashed] (0,-1.2) -- (0,1.2);
 				\draw[red, dashed] (3.14159,-1.2) -- (3.14159,1.2);
 				\draw[red, dashed] (6.28318,-1.2) -- (6.28318,1.2);
 				\draw[red, dashed] (-3.14159,-1.2) -- (-3.14159,1.2);
 				\draw[red, dashed] (-6.28318,-1.2) -- (-6.28318,1.2);
-				
+
 				\draw[green, dashed] (-6.28318,1) -- (6.28318,1);
 				\draw[green, dashed] (-6.28318,-1) -- (6.28318,-1);
 			\end{axis}
@@ -3452,7 +3452,7 @@
 	$\centernot{\exists}\mathlarger{\lim_{x \to \pm\infty}}\cos x$ \\
 	$\forall x_0 \in \mathbbm{R} \quad \mathlarger{\lim_{x \to x_0}}\cos x = \cos x_0$
 	\subsection{Funzione tangente}
-	Sia $f(x) = \tan x$ 
+	Sia $f(x) = \tan x$
 	\begin{center}
 		\begin{tikzpicture}
 			\begin{axis}[
@@ -3473,17 +3473,17 @@
 				samples=1000,
 				restrict y to domain=-6.5:6.5,
 				]
-				
+
 				% Asintoti verticali
 				\addplot[red, dashed] coordinates {(-1.5708, -5) (-1.5708, 5)};
 				\addplot[red, dashed] coordinates {(1.5708, -5) (1.5708, 5)};
-				
+
 				\addplot[red, dashed] coordinates {(4.71239, -5) (4.71239, 5)};
 				\addplot[red, dashed] coordinates {(-4.71239, -5) (-4.71239, 5)};
 				% Funzione tangente
 				\addplot[blue, thick] {tan(deg(x))};
-				
-				
+
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -3514,11 +3514,11 @@
 				restrict y to domain=-1.65:1.65,
 				]
 				\addplot[blue, thick] {rad(asin(x))};
-				
+
 				% Linee verticali asintotiche
 				\draw[dashed, red] (-1,-1.65) -- (-1,1.65);
 				\draw[dashed, red] (1,-1.65) -- (1,1.65);
-				
+
 				% Annotazioni del dominio
 				\node[below] at (0,-1.8) {Dominio: $[-1,1]$};
 				\node[left] at (-1.15,0) {$-1$};
@@ -3548,11 +3548,11 @@
 				]
 				% Funzione arcocoseno
 				\addplot[blue, thick] {rad(acos(x))};
-				
+
 				% Linee tratteggiate per indicare i limiti del dominio (opzionali)
 				\draw[dashed, gray] (-1, 0) -- (-1, 3.1416);
 				\draw[dashed, gray] (1, 0) -- (1, 0);
-				
+
 			\end{axis}
 		\end{tikzpicture}
 	\end{center}
@@ -3579,17 +3579,17 @@
 				samples=100,
 				domain=-6:6,
 				]
-				
+
 				% Asintoti orizzontali
 				\addplot[red, dashed] coordinates {(-6, 1.5708) (6, 1.5708)};
 				\addplot[red, dashed] coordinates {(-6, -1.5708) (6, -1.5708)};
-				
+
 				% Funzione arcotangente
 				\addplot[blue, thick] {atan(x)/180*pi};
-				
+
 				% Etichetta della funzione
 				\node[right] at (axis cs:1, 0.5) {$f(x) = \arctan x$};
-				
+
 				% Punti notevoli
 				\addplot[mark=*, only marks, mark size=2pt] coordinates {
 					(-1, -0.7854)
@@ -3603,7 +3603,7 @@
 		\end{tikzpicture}
 	\end{center}
 	$\forall x_0 \in \mathbbm{R} \quad \mathlarger{\lim_{x \to x_0}}\arctan x = \arctan x_0$ \\
-	$\mathlarger{\lim_{x \to +\infty}}\arctan x = \frac{\pi}{2} \quad \mathlarger{\lim_{x \to -\infty}}\arctan x= -\frac{\pi}{2}$  
+	$\mathlarger{\lim_{x \to +\infty}}\arctan x = \frac{\pi}{2} \quad \mathlarger{\lim_{x \to -\infty}}\arctan x= -\frac{\pi}{2}$
 	\section{Proprietà sui limiti di funzione}
 	\begin{theorem}{\nmu Proprietà dei limiti di funzioni}{prop_lim_func}
 		Siano $f, g: I \backslash \{x_0\} \to \mathbbm{R}$ \\
@@ -3656,7 +3656,7 @@
 		Siano $f, g, h$ tre funzioni definite definitivamente per $x \to x_0$ ove $x_0 \in \overline{\mathbbm{R}}$. \\
 		Supponiamo che:
 		\begin{enumerate}
-			\item $\mathlarger{\lim_{x \to x_0}} f(x) = \mathlarger{\lim_{x \to x_0}}h(x) = l \in \overline{\mathbbm{R}}$ 
+			\item $\mathlarger{\lim_{x \to x_0}} f(x) = \mathlarger{\lim_{x \to x_0}}h(x) = l \in \overline{\mathbbm{R}}$
 			\item $f(x) \leq g(x) \leq h(x)$
 		\end{enumerate}
 		Allora:
@@ -3668,7 +3668,7 @@
 	\begin{assignment}{}{}
 		$\mathlarger{\lim_{x \to 0}}\frac{\sin x}{x} = 1$ \\
 		$f(x) = \frac{\sin x}{x}$ è una funzione pari, in quanto la funzione $\sin x$ e la funzione $\frac{1}{x}$ sono entrambe dispari, quindi se dimostriamo che $\mathlarger{\lim_{x \to 0^+}}\frac{\sin x}{x} = 1$ la tesi è verificata. \\
-		Sia $0 < x < \frac{\pi}{2}$. 
+		Sia $0 < x < \frac{\pi}{2}$.
 		Graficamente abbiamo che:
 		\[\sin x < x < \tan x\] e possiamo dividere tutto per $\sin x$ e la disuguaglianza diventa $1 < \frac{x}{\sin x} < \frac{1}{\cos x}$. \\
 		A noi interessa $\frac{\sin x}{x}$ e quindi facendo i reciproci la disuguaglianza diventa \[\cos x < \frac{\sin x}{x} < 1\]
@@ -3684,7 +3684,7 @@
 		\[
 		\lim_{x \to x_0}f(x) \cdot g(x) = 0
 		\]
-		\textbf{Esempio}: 
+		\textbf{Esempio}:
 		\[
 		\lim_{x \to +\infty} \frac{\sin x}{x} = 0
 		\]
@@ -3692,7 +3692,7 @@
 	\begin{theorem}{\nmu Cambio di variabili per i limiti}{cambio_variabile}
 		Siano $f,g$ due funzioni definite definitivamente tali che la funzione composta $f \circ g$ ha senso definitivamente per $x \to x_0$. Supponiamo che:
 		\begin{enumerate}
-			\item $\mathlarger{\lim_{x \to x_0}}f(x) = t_0 \in \overline{\mathbbm{R}}$ 
+			\item $\mathlarger{\lim_{x \to x_0}}f(x) = t_0 \in \overline{\mathbbm{R}}$
 			\item $\mathlarger{\lim_{t \to t_0}}g(t) = l \in \overline{\mathbbm{R}}$
 			\item $f(x) \neq t_0$ definitivamente per $x \to x_0$
 		\end{enumerate}
@@ -3724,14 +3724,14 @@
 	\subsection{Confronto fra infiniti}
 	Siano $f,g$ definite definitivamente per $x \to x_0$ e tali che:
 	\begin{enumerate}
-		\item $\mathlarger{\lim_{x \to x_0}}f(x) = \pm\infty$ 
+		\item $\mathlarger{\lim_{x \to x_0}}f(x) = \pm\infty$
 		\item $\mathlarger{\lim_{x \to x_0}}g(x) = \pm\infty$
 	\end{enumerate}
 	Si dice che:
 	\begin{enumerate}
 		\item $f$ è un infinito di ordine superiore a $g$ in $x_0$ se $\mathlarger{\lim_{x \to x_0}}\frac{f(x)}{g(x)} = \pm\infty$
 		\item $f$ è un infinito di ordine inferiore a  $g$ in $x_0$ se $\mathlarger{\lim_{x \to x_0}}\frac{f(x)}{g(x)} = 0$
-		\item $f$ è un infinito dello stesso ordine a $g$ in $x_0$ se $\mathlarger{\lim_{x \to x_0}}\frac{f(x)}{g(x)} = k$ con $k \neq 0$. In particolare, se $k = 1$ si dicono infiniti equivalenti in $x_0$ e si scrive $f  \sim g \quad x \to x_0$ 
+		\item $f$ è un infinito dello stesso ordine a $g$ in $x_0$ se $\mathlarger{\lim_{x \to x_0}}\frac{f(x)}{g(x)} = k$ con $k \neq 0$. In particolare, se $k = 1$ si dicono infiniti equivalenti in $x_0$ e si scrive $f  \sim g \quad x \to x_0$
 	\end{enumerate}
 	Si ha che:
 	\begin{enumerate}
@@ -3748,12 +3748,12 @@
 	Si dice che:
 	\begin{enumerate}
 		\item $f$ è un infinitesimo di ordine superiore a $g$ per $x \to x_0$ se $\mathlarger{\lim_{x \to x_0}}\frac{f(x)}{g(x)} = 0$
-		\item $f$ è un infinitesimo di ordine inferiore a $g$ per $x \to x_0$ se $\mathlarger{\lim_{x \to x_0}}\left|\frac{f(x)}{g(x)}\right|=+\infty$ 
+		\item $f$ è un infinitesimo di ordine inferiore a $g$ per $x \to x_0$ se $\mathlarger{\lim_{x \to x_0}}\left|\frac{f(x)}{g(x)}\right|=+\infty$
 		\item $f$ e $g$ sono infinitesimi dello stesso ordine per $x \to x_0$ se $\mathlarger{\lim_{x \to x_0}}\frac{f(x)}{g(x)} = k$ con $k \neq 0$. In particolare, se $k = 1$, $f$ e $g$ sono infinitesimi equivalenti e si scrive $f \sim g$
 	\end{enumerate}
 	\begin{note}{}{}
 		Possiamo sostituire ogni infinitesimo con un infinitesimo ad esso equivalente tranne che nel caso di differenza di infinitesimi equivalenti.
-	\end{note}	
+	\end{note}
 	Ai fine del limite, si possono trascurare gli infinitesimi di ordine superiore.
 	\section{Limiti notevoli}
 	\begin{enumerate}
@@ -3765,16 +3765,16 @@
 		\par\noindent\rule{\linewidth}{0.5pt}\par
 		\item \[\mathlarger{\lim_{x \to 0}}\frac{\arcsin x}{x} = 1\]
 		Quindi $\arcsin x \sim x$ per $x \to 0$ e più in generale: \[\arcsin g(x) \sim g(x)\] se $\mathlarger{\lim_{x \to 0}}g(x) = 0$
-		
+
 		\par\noindent\rule{\linewidth}{0.5pt}\par
 		\item \[\mathlarger{\lim_{x \to 0}}\frac{\tan x}{x} = 1\] e quindi $\tan x \sim x$ per $x \to 0$ e più in generale: \[\tan g(x) \sim g(x)\] se $\mathlarger{\lim_{x \to 0}}g(x) = 0$
-		
+
 		\par\noindent\rule{\linewidth}{0.5pt}\par
 		\item \[\mathlarger{\lim_{x \to 0}}\frac{\arctan x}{x} = 1\] e quindi $\arctan x \sim x$ per $x \to 0$ e più in generale \[\arctan g(x) \sim g(x)\] se $\mathlarger{\lim_{x \to 0}}g(x) = 0$
-		
+
 		\par\noindent\rule{\linewidth}{0.5pt}\par
 		\item \[\mathlarger{\lim_{x \to 0}}\frac{1 - \cos x}{\frac{1}{2}x^2} = 1\] quindi $1 - \cos x \sim \frac{1}{2}x^2$ per $x \to 0$ e più in generale \[1 - \cos g(x) \sim \frac{1}{2}(g(x))^2\] se $\mathlarger{\lim_{x \to 0}}g(x) = 0$
-		
+
 		\par\noindent\rule{\linewidth}{0.5pt}\par
 		\item \[\mathlarger{\lim_{x \to 0}}\frac{a^x - 1}{\ln a \cdot x} = 1\]
 		Quindi $a^x - 1 \sim \ln a \cdot x$ per $x \to 0$ e più in generale: \[a^{g(x)} - 1 \sim \ln a \cdot g(x)\] se $\mathlarger{\lim_{x \to 0}}g(x) = 0$. \\
@@ -3783,14 +3783,14 @@
 		\lim_{x \to 0}\frac{e^x - 1}{x} = 1
 		\]
 		quindi $e^x - 1 \sim x$ e più in generale: \[e^{g(x)} - 1 \sim g(x)\]
-		
+
 		\par\noindent\rule{\linewidth}{0.5pt}\par
-		\item \[\mathlarger{\lim_{x \to 0}}\frac{\log_a(x + 1)}{\frac{1}{\ln a} \cdot x} = 1\] 
-		
+		\item \[\mathlarger{\lim_{x \to 0}}\frac{\log_a(x + 1)}{\frac{1}{\ln a} \cdot x} = 1\]
+
 		Quindi $\log_a(x + 1) \sim \frac{1}{\ln a} \cdot x$ per $x \to 0$. \\
 		In particolare se $a = e$ allora \[\ln(x + 1) \sim x\]
 		Inoltre, se $\mathlarger{\lim_{x \to 0}}g(x) = 0$ allora: \[\log_a(g(x) + 1) \sim \frac{1}{\ln a}g(x)\] oppure se $a = e$ allora \[\ln(g(x) + 1) \sim g(x)\]
-		
+
 		\par\noindent\rule{\linewidth}{0.5pt}\par
 		\item \[\mathlarger{\lim_{x \to 0}}\frac{(1 + x)^a - 1}{ax} = 1\]
 		Quindi $(1 + x)^a - 1 \sim ax$ per $x \to 0$ e più in generale: \[(1 + g(x))^a - 1\sim ag(x)\] se $\mathlarger{\lim_{x \to 0}}g(x) = 0$
@@ -3800,7 +3800,7 @@
  		\begin{exercise}{}{}
  			Sappiamo che:
  			\begin{enumerate}
- 				\item $\tan x \sim x$ 
+ 				\item $\tan x \sim x$
  				\item $e^{3x^2} - 1 \sim 3x^2$
  				\item $\sin (x^2) \sim x^2$
  				\item $\arcsin(3x) \sim 3x$
@@ -3809,13 +3809,13 @@
  			$\mathlarger{\lim_{x \to 0}}\frac{3x^3}{3x^3} = 1$
  		\end{exercise}
  	\end{assignment}
- 	
+
  	\begin{assignment}{}{}
  		$\mathlarger{\lim_{x \to 0}}\dfrac{\ln(3x^2 + 1) + \arctan x}{x(1 - \cos x)}$
  		\begin{exercise}{}{}
  			Sappiamo che:
  			\begin{enumerate}
- 				\item $\ln(3x^2 + 1) \sim 3x^2$ 
+ 				\item $\ln(3x^2 + 1) \sim 3x^2$
  				\item $\arctan x \sim x$
  				\item $1 - \cos x \sim \frac{1}{2}x^2$
  			\end{enumerate}
@@ -3823,16 +3823,16 @@
  			$\mathlarger{\lim_{x \to 0}}\frac{3x^2 + x}{\frac{1}{2}x^3} = \mathlarger{\lim_{x \to 0}}\frac{x}{\frac{1}{2}x^3} = \mathlarger{\lim_{x \to 0}}\frac{1}{\frac{1}{2}x^2} = +\infty$
  		\end{exercise}
  	\end{assignment}
- 	
+
  	\begin{assignment}{}{}
  		$\mathlarger{\lim_{x \to 0}}\dfrac{\sqrt{1+3x} - e^x}{\sin^2(3x)}$
  		\begin{exercise}{}{}
  			$\mathlarger{\lim_{x \to 0}}\dfrac{\sqrt{1+3x} - e^x}{\sin^2(3x)} = \mathlarger{\lim_{x \to 0}}\dfrac{(1+3x)^\frac{1}{2} -1+1 - e^x}{\sin^2(3x)} = \mathlarger{\lim_{x \to 0}}\dfrac{[(1+3x)^{\frac{1}{2}} - 1] - [e^x - 1]}{\sin^2(3x)}
  			$
- 			
+
  			Sappiamo che:
  			\begin{enumerate}
- 				\item $e^x - 1 \sim x$ 
+ 				\item $e^x - 1 \sim x$
  				\item $(1 + 3x)^{\frac{1}{2}} - 1 \sim \frac{1}{2}(3x) = \frac{3}{2}x$
  				\item $\sin^2(3x) \sim (3x)^2 = 9x^2$
  			\end{enumerate}
@@ -3862,7 +3862,7 @@
  	\begin{definition}{\nmu Asintoto verticale}{asintoto_verticale}
  		Sia $f$ una funzione. \\
  		Sia $x_0 \in \mathbbm{R}$ e $x_0$ non è un punto del dominio di $f$ ma $x_0$ è un estremo di uno degli intervalli che costituiscono $D$. \\
- 		
+
  		Si dice che la retta $x = x_0$ è \textbf{asintoto verticale} destro o sinistro se:
  		\[
  		\lim_{x \to {x_0}^+}f(x)=\pm\infty \quad \lim_{x \to {x_0}^-}f(x) = \pm\infty
@@ -3901,7 +3901,7 @@
   		\lim_{x \to +\infty}(f(x) - mx) = q \in \mathbbm{R}
   		\]
   		oppure per $-\infty$.
-  		
+
   	\end{definition}
   	\begin{note}{}{}
   		A $+\infty$ e $-\infty$ possono succedere diverse cose. \\
@@ -3931,7 +3931,7 @@
   	\begin{definition}{\nmu Funzioni continue}{func_continua}
   		Sia $f: I \to \mathbbm{R}$, $I$ intervallo aperto di $\mathbbm{R}$, $x_0 \in I$. \\
   		$f$ è continua in $x_0$ se $\mathlarger{\lim_{x \to {x_0}}}f(x) = f(x_0)$ \\
-  		$f$ è continua in $I$ se $\forall x_0 \in I\ f$ è continua in $x_0$, ovvero $f$ è continua in ogni punto di $I$. 
+  		$f$ è continua in $I$ se $\forall x_0 \in I\ f$ è continua in $x_0$, ovvero $f$ è continua in ogni punto di $I$.
   	\end{definition}
   	\begin{note}{}{}
   		\begin{itemize}
@@ -3948,7 +3948,7 @@
  	Sia $f: I \to \mathbbm{R}$, $I$ intervallo, $x_0 \in I$.		\begin{enumerate}
  		\item In $x_0$ $f$ ha una \textbf{discontinuità eliminabile} se $\mathlarger{\lim_{x \to {x_0}}} = l \in \mathbbm{R}$ se $l \neq f(x_0)$. \\
  		Ad esempio: \\
- 		
+
  		$f(x)=\begin{cases}
  			\dfrac{\sin x}{x} \quad x \neq 0 \\
  			2 \quad x = 0
@@ -3956,10 +3956,10 @@
  		Nel punto $x_0 = 0$ $f$ ha una discontinuità eliminabile, in quanto $\mathlarger{\lim_{x \to 0}}\dfrac{\sin x}{x} = 1$ e $f(0) = 2$.
  		\item \textbf{Discontinuità di salto o di prima specie}: \\
  		Sia $f: I \to \mathbbm{R}$, $I$ intervallo, $x_0 \in I$. \\
- 		$x_0$ è un punto di \textbf{discontinuità di salto} se: 
+ 		$x_0$ è un punto di \textbf{discontinuità di salto} se:
  		\[
  		\exists \lim_{x \to {x_0}^+}f(x) = l_1 \in \mathbbm{R}
- 		\] 
+ 		\]
  		\[
  		\exists \lim_{x \to {x_0}^-}f(x) = l_2 \in \mathbbm{R}
  		\]
@@ -3967,7 +3967,7 @@
  		Ad esempio: $f(x) = \begin{cases}
  			\phantom{-}1 \quad x \geq 3 \\
  			-2 \quad x < 3
- 		\end{cases}$ \\ 
+ 		\end{cases}$ \\
  		$x_0$ è un punto di discontinuità di salto, infatti $\mathlarger{\lim_{x \to 3^+}}1 = 1$ e $\mathlarger{\lim_{x \to 3^-}}-2 = -2$.
  		\item Punti di \textbf{discontinuità di seconda specie}: \\
  		In tutti i casi non previsti da 1. e 2.	 si parla di discontinuità di seconda specie
@@ -3990,8 +3990,8 @@
  		\end{exercise}
  		Quindi $x_0$ è un punto di discontinuità di prima specie.
  	\end{assignment}
- 	
- 	
+
+
  	\begin{assignment}{}{}
  		Sia $f(x) = \begin{cases}
  			3x + 2 \quad x \geq 2 \\
@@ -4007,10 +4007,10 @@
  		\end{exercise}
  		Quindi $x_0$ è un punto di discontinuità di prima specie.
  	\end{assignment}
- 	
+
  	\textbf{Per casa:} \\
  	\begin{assignment}{}{}
- 		
+
  		Sia $f(x) = \begin{cases}
  			3x - 1 \quad x > 0 \\
  			x^2 + 3a \quad x \leq 0
@@ -4018,7 +4018,7 @@
  		al variare di $a \in \mathbbm{R}$. \\
  		Determinare per quali valori di $a \in R$ $f$ è continua in $x_0 = 0$? \\
  		\begin{exercise}{}{}
- 			
+
  		\end{exercise}
  		Quindi $x_0$ è un punto di discontinuità di prima specie.
  	\end{assignment}
@@ -4029,7 +4029,7 @@
  		Il teorema non garantisce unicità di $x_0$ almeno che $f$ non sia una funzione strettamente crescente o decrescente.
  	\end{theorem}
  	\begin{assignment}{}{}
- 		Determinare il numero di zeri dell'equazione: 
+ 		Determinare il numero di zeri dell'equazione:
  		\[
  		x^5 + x - 1 = 0
  		\]
@@ -4105,13 +4105,13 @@
  	\begin{center}
  		\begin{figure}[H]
  			\centering
- 			\includegraphics[width=.60\textwidth]{derivata_funzione}
+ 			\includegraphics[width=.60\textwidth]{images/derivata_funzione}
  		\end{figure}
  	\end{center}
- 	Sia: 
+ 	Sia:
  	\begin{itemize}
  		\item $A = (x_0, f(x_0))$
- 		\item $B = (x_0 + h, f(x_0 + h))$ 
+ 		\item $B = (x_0 + h, f(x_0 + h))$
  	\end{itemize}
  	Sia $r_{AB}$ la retta passante per $A$ e $B$. L'equazione di $r_{AB}$ è:
  	\[
@@ -4121,7 +4121,7 @@
  	Inoltre $\dfrac{f(x_0 + h) - f(x_0)}{h}$ è il coefficiente angolare di $r_{AB}$ ossia è la tangente dell'angolo che $r_{AB}$ forma con l'asse delle $x$, e dà informazione sull'inclinazione di $r_{AB}$ rispetto all'asse delle $x$. Supponiamo ora di far tendere $x_0 + h$ a $x_0$ ovvero $h \to 0$. Allora $B \to A$ e la retta $r_{AB}$ sarà la retta tangente al grafico di $f$ in $A$. \\
  	Questa si chiama \textbf{derivata} di $f$ in $x_0$ e si denota con:
  	\[
- 	f'(x_0) = \lim_{h \to 0}\dfrac{f(x_0 + h) - f(x_0)}{x_0 + h - x_0} = \lim_{h \to 0}\dfrac{f(x_0 + h) - f(x_0)}{h} 
+ 	f'(x_0) = \lim_{h \to 0}\dfrac{f(x_0 + h) - f(x_0)}{x_0 + h - x_0} = \lim_{h \to 0}\dfrac{f(x_0 + h) - f(x_0)}{h}
  	\]
  	se il limite esiste ed è un numero reale. \\
  	$f'(x_0)$ è il coefficiente angolare della retta tangente al grafico di $f$ in $(x_0, f(x_0))$ e l'equazione della retta tangente è: $y = f(x_0) + f'(x_0)(x -x_0)$
@@ -4156,11 +4156,11 @@
  	\section{Derivate delle funzioni elementari}
  	\begin{enumerate}[label = (\arabic*)]
  		\item $f(x) = c$ ove $c \in \mathbbm{R}$. \\
- 		Allora: 
+ 		Allora:
  		\[
  		f'(x) = 0 \quad \forall x \in \mathbbm{R}
  		\]
- 		Infatti: 
+ 		Infatti:
  		\begin{proof} \quad \\
  			Sia $x_0 \in \mathbbm{R}$. \\
  			$f'(x_0) = \mathlarger{\lim_{h \to 0}}\dfrac{f(x_0 + h) - f(x_0)}{h} = \mathlarger{\lim_{h \to 0}}\dfrac{c - c}{h} = \mathlarger{\lim_{h \to 0}}\dfrac{0}{h} = 0$
@@ -4180,7 +4180,7 @@
  		\[
  		f'(x) = 2x \quad x \in \mathbbm{R}
  		\]
- 		Infatti: 
+ 		Infatti:
  		\begin{proof} \quad \\
  			Sia $x_0 \in \mathbbm{R}$ \\
  			$f'(x_0) = \mathlarger{\lim_{h \to 0}}\dfrac{f(x_0 + h) - f(x_0)}{h} = \mathlarger{\lim_{h \to 0}}\dfrac{(x_0 + h)^2 - {x_0}^2}{h} = \mathlarger{\lim_{h \to 0}}\dfrac{{x_0}^2 + 2hx_0 + h^2 - {x_0}^2 }{h} = \mathlarger{\lim_{h \to 0}}\dfrac{2hx_0 + h^2}{h} = \mathlarger{\lim_{h \to 0}}\dfrac{2hx_0}{h} = 2x_0$
@@ -4194,13 +4194,13 @@
  		Allora:
  		\[
  		f'(x) = \alpha x^{\alpha - 1}
- 		\] 
+ 		\]
  		\item $f(x) = e^x \quad x \in \mathbbm{R}$ \\
  		Allora:
  		\[
  		f'(x) = e^x \quad \forall x \in \mathbbm{R}
  		\]
- 		Infatti: 
+ 		Infatti:
  		\begin{proof} \quad \\
  			Sia $x_0 \in \mathbbm{R}$ \\
  			$f'(x_0) = \mathlarger{\lim_{h \to 0}}\dfrac{f(x_0 + h) - f(x_0)}{h} = \mathlarger{\lim_{h \to 0}}\dfrac{e^{x_0 + h} - e^{x_0}}{h} = \mathlarger{\lim_{h \to 0}}e^{x_0}(\dfrac{e^h - 1}{h}) = e^{x_0}$
@@ -4211,7 +4211,7 @@
  		\item $f(x) = \ln x \quad x > 0$ \\
  		Allora: \[
  		f'(x) = \dfrac{1}{x}
- 		\]  
+ 		\]
  		Infatti:
  		\begin{proof} \quad \\
  			Sia $x_0 \in \mathbbm{R}$ \\
@@ -4227,7 +4227,7 @@
  		Allora: \[f'(x) = \cos x\]
  		\item $f(x) = \cos x$ \\
  		Allora: \[
-		f'(x) = -\sin x 		
+		f'(x) = -\sin x
  		\]
  		\item $f(x) = \tan x$ \\
  		Allora:
@@ -4240,14 +4240,14 @@
 		\item $f(x) = \arccos x \quad -1 \leq x \leq 1$ \\
 		Allora: \[f'(x) = -\dfrac{1}{\sqrt{1 - x^2}}\]
 		\item $f(x) = \arctan x$ \\
-		Allora: \[f'(x) = \dfrac{1}{1+x^2}\] 
+		Allora: \[f'(x) = \dfrac{1}{1+x^2}\]
  	\end{enumerate}
  	\section{Regole per il calcolo delle derivate}
  	Siano $f, g: I \to \mathbbm{R}$ derivabili.\\
  	Allora:
  	\begin{enumerate}[label = (\arabic*)]
- 		\item $(cf)' = cf' \quad c \in \mathbbm{R}$ 
- 		\item $(f + g)'= f'+g'$ 
+ 		\item $(cf)' = cf' \quad c \in \mathbbm{R}$
+ 		\item $(f + g)'= f'+g'$
  		\item $(f \cdot g)' = f'g + fg'$
  		\item Se $g \neq 0\quad \Bigl(\dfrac{f}{g}\Bigr)' = \dfrac{f'g - fg'}{g^2}$ \\
  		In particolare, $\Bigl(\dfrac{1}{g}\Bigr)'=  \dfrac{-g'}{g^2}$
@@ -4287,13 +4287,13 @@
  	\section{Continuità e derivabilità}
  	\begin{theorem}{\nmu Continuità e derivabilità}{continua_e_derivabile}
  		Sia $f: I \to \mathbbm{R}$ con $x_0 \in I$, $f$ derivabile in $x_0$. \\
- 		Allora $f$ è continua in $x_0$. 
+ 		Allora $f$ è continua in $x_0$.
  		\begin{proof} \quad \\
  			Dobbiamo dimostrare che $f$ è continua in $x_0$ ossia:
  			\[
  			\lim_{x \to {x_0}}f(x) = f(x_0)
  			\]
- 			o, equivalentemente 
+ 			o, equivalentemente
  			\[
  			\lim_{x \to {x_0}}(f(x) - f(x_0)) = 0
  			\]
@@ -4318,7 +4318,7 @@
  		Dimostriamo che $f$ non è derivabile in $x_0 = 0$ \\
  		Valutiamo il limite del rapporto incrementale: \\
  		$\mathlarger{\lim_{x \to 0}}\dfrac{f(x) - f(x_0)}{x - x_0} = \mathlarger{\lim_{x \to 0}}\dfrac{|x|}{x}$ \\
- 		Studiamo separatamente: 
+ 		Studiamo separatamente:
  		\[
  		\lim_{x \to 0^+} \dfrac{|x|}{x} \quad \lim_{x \to 0^-}\dfrac{|x|}{x}
  		\]
@@ -4340,13 +4340,13 @@
  		\]
  	\end{note}
  	\section{Punti di non derivabilità}
- 	Sia $f: I \to \mathbbm{R}$, $x_0 \in I$, $f$ è derivabile in $x_0$ se $\exists \mathlarger{\lim_{x \to {x_0}}}\dfrac{f(x) - f(x_0)}{x - x_0} \in \mathbbm{R} \iff \mathlarger{\lim_{x \to {x_0^+}}}\dfrac{f(x) - f(x_0)}{x - x_0} = \mathlarger{\lim_{x \to {x_0^-}}}\dfrac{f(x) - f(x_0)}{x - x_0} \in \mathbbm{R}$. 
+ 	Sia $f: I \to \mathbbm{R}$, $x_0 \in I$, $f$ è derivabile in $x_0$ se $\exists \mathlarger{\lim_{x \to {x_0}}}\dfrac{f(x) - f(x_0)}{x - x_0} \in \mathbbm{R} \iff \mathlarger{\lim_{x \to {x_0^+}}}\dfrac{f(x) - f(x_0)}{x - x_0} = \mathlarger{\lim_{x \to {x_0^-}}}\dfrac{f(x) - f(x_0)}{x - x_0} \in \mathbbm{R}$.
  	\begin{definition}{\nmu Derivata destra e sinistra}{derivata_dx_sx}
  		Si dice, se esiste, \textbf{derivata destra} di $f$ in $x_0$:
  		\[
  		{f'}_+(x_0) = \lim_{x \to {x_0^+}}\dfrac{f(x) - f(x_0)}{x - x_0} \in \mathbbm{R}
  		\]
- 		
+
  		Allo stesso modo si dice, se esiste, \textbf{derivata sinistra} di $f$ in $x_0$:
  		\[
  		{f'}_-(x_0) = \lim_{x \to {x_0^-}}\dfrac{f(x) - f(x_0)}{x - x_0} \in \mathbbm{R}
@@ -4365,40 +4365,40 @@
  		$x_0$ si dice \textbf{punto angoloso} per $f$ se:
  		\[
  		l_1 = \lim_{x \to {x_0^+}}\dfrac{f(x) - f(x_0)}{x - x_0} \neq \lim_{x \to {x_0^-}}\dfrac{f(x) - f(x_0)}{x - x_0} = l_2
- 		\] 
+ 		\]
  		e \textbf{almeno uno dei tra $l_1$ e $l_2$ è un numero reale}.
  		\begin{example}{}{}
  			$f(x)= |x|$ \\
  			$x_0$ è un punto angoloso. \\
- 			Infatti: 
+ 			Infatti:
  			\[
- 			{f'}_+(0) = 1 \quad {f'}_-(0) = -1			
-  			\]			
+ 			{f'}_+(0) = 1 \quad {f'}_-(0) = -1
+  			\]
   			Graficamente avviene questo:
   			\begin{center}
   				\begin{tikzpicture}[scale=1.0]
   					% Griglia di sfondo (opzionale)
   					\draw[very thin,gray!30] (-3,0) grid (3,3);
-  					
+
   					% Disegno degli assi cartesiani
   					\draw[->] (-3,0) -- (3,0) node[right] {$x$};
   					\draw[->] (0,0) -- (0,3) node[above] {$y$};
-  					
+
   					% Etichette sugli assi
   					\foreach \x in {-2,-1,1,2}
   					\draw (\x,0.1) -- (\x,-0.1) node[below] {$\x$};
   					\foreach \y in {1,2}
   					\draw (0.1,\y) -- (-0.1,\y) node[left] {$\y$};
   					\draw (0.1,0) -- (-0.1,0) node[below left] {$O$};
-  					
+
   					% Disegno della funzione valore assoluto f(x) = |x|
   					\draw[thick, blue] (-3,3) -- (0,0) -- (3,3);
-  					
+
   					% Etichetta della funzione
   					\node[blue, right] at (2,2) {$f(x) = |x|$};
   				\end{tikzpicture}
   			\end{center}
-  		\end{example} 
+  		\end{example}
   		\item \textbf{Punto di flesso a tangente verticale} \\
   		Sia $f: I \to \mathbbm{R}$, $x_0 \in I$, $f$ è continua in $x_0$. \\
   		$x_0$ si dice \textbf{punto di flesso a tangente verticale} se:
@@ -4418,21 +4418,21 @@
   				\begin{tikzpicture}[scale=1.0]
   					% Griglia di sfondo (opzionale)
   					\draw[very thin,gray!30] (-3,-3) grid (3,3);
-  					
+
   					% Disegno degli assi cartesiani
   					\draw[->] (-3,0) -- (3,0) node[right] {$x$};
   					\draw[->] (0,-3) -- (0,3) node[above] {$y$};
-  					
+
   					% Etichette sugli assi
   					\foreach \x in {-2,-1,1,2}
   					\draw (\x,0.1) -- (\x,-0.1) node[below] {$\x$};
   					\foreach \y in {-2,-1,1,2}
   					\draw (0.1,\y) -- (-0.1,\y) node[left] {$\y$};
   					\draw (0.1,0) -- (-0.1,0) node[below left] {$O$};
-  					
+
   					% Disegno della funzione radice cubica f(x) = ∛x
   					\draw[thick, red, domain=-2.5:2.5, samples=100, smooth] plot (\x, {sign(\x) * pow(abs(\x), 1/3)});
-  					
+
   					% Etichetta della funzione
   					\node[red, right] at (1.5, 2.5) {$f(x) = \sqrt[3]{x}$};
   				\end{tikzpicture}
@@ -4464,24 +4464,24 @@
   				\begin{tikzpicture}[scale=1.0]
   					% Griglia di sfondo (opzionale)
   					\draw[very thin,gray!30] (-3,-3) grid (3,3);
-  					
+
   					% Disegno degli assi cartesiani
   					\draw[->] (-3,0) -- (3,0) node[right] {$x$};
   					\draw[->] (0,-0.5) -- (0,3) node[above] {$y$};
-  					
+
   					% Etichette sugli assi
   					\foreach \x in {-2,-1,1,2}
   					\draw (\x,0.1) -- (\x,-0.1) node[below] {$\x$};
   					\foreach \y in {1,2}
   					\draw (0.1,\y) -- (-0.1,\y) node[left] {$\y$};
   					\draw (0.1,0) -- (-0.1,0) node[below left] {$O$};
-  					
+
   					% Disegno della funzione f(x) = ∛|x|
   					\draw[thick, purple, domain=-3:3, samples=100, smooth] plot (\x, {pow(abs(\x), 1/3)});
-  					
+
   					% Punto di non derivabilità nell'origine
   					\filldraw[red] (0,0) circle (1.5pt);
-  					
+
   					% Etichetta della funzione in alto a destra
   					\node[purple, right] at (1.5,2.5) {$f(x) = \sqrt[3]{|x|}$};
   				\end{tikzpicture}
@@ -4526,39 +4526,39 @@
  			\item $f$ è continua in $[a,b]$
  			\item $f$ è derivabile in $]a, b[$
  		\end{enumerate}
- 		Allora: 
+ 		Allora:
  		\[
  		\exists x_0 \in ]a,b[ \mid f'(x_0) = \dfrac{f(b)-f(a)}{b-a}
  		\]
  		\textbf{Interpretazione geometrica}: \\
  		Dal punto di vista grafico, $\dfrac{f(b) - f(a)}{b - a}$ è il coefficiente angolare della retta che passa per $(a, f(a))$ e $(b, f(b))$. \\
  		$f'(x_0)$ è il coefficiente angolare della retta tangente al grafico di $f$ in $(x_0, f(x_0))$. \\
- 		Due rette parallele hanno lo stesso coefficiente angolare, quindi il teorema di Lagrange afferma che esiste $x_0 \in ]a, b[$ tale che la retta tangente al grafico di $f$ in $(x_0, f(x_0))$ è parallela alla retta che passa per i due punti $(a, f(a))$ e $(b, f(b))$.   
+ 		Due rette parallele hanno lo stesso coefficiente angolare, quindi il teorema di Lagrange afferma che esiste $x_0 \in ]a, b[$ tale che la retta tangente al grafico di $f$ in $(x_0, f(x_0))$ è parallela alla retta che passa per i due punti $(a, f(a))$ e $(b, f(b))$.
  	\end{theorem}
  	\begin{proof} Dimostrazione del \namerefl{th:teorema_lagrange}. \\
  		La dimostrazione si basa sul \namerefl{th:teorema_rolle}. \\
- 		Consideriamo una funzione: 
+ 		Consideriamo una funzione:
  		\[
  		g: [a, b] \in \mathbbm{R} \mid \forall x \in [a,b] \quad g(x) = f(x) - \dfrac{f(b) - f(a)}{b - a}(x - a)
- 		\] 
+ 		\]
  		Verifichiamo che $g$ soddisfa le ipotesi del \namerefl{th:teorema_rolle}, ovvero:
  		\begin{enumerate}[label=(\arabic*)]
- 			\item $g$ è continua in $[a,b]$ perchè somma di $f$ continua in $[a,b]$ e di un polinomio 
+ 			\item $g$ è continua in $[a,b]$ perchè somma di $f$ continua in $[a,b]$ e di un polinomio
  			\item $g$ è derivabile in $]a, b[$ perchè è somma di $f$ derivabile in $]a, b[$ e di un polinomio.
  			\item $g(a) = g(b)$ \\
  			Infatti: \\
  			$g(a) = f(a) - \dfrac{f(b) - f(a)}{b - a}(a - a) = f(a)$ \\
  			$g(b) = f(b) - \dfrac{f(b) - f(a)}{b - a}(b-a) = f(b) - f(b) + f(a) = f(a)$ \\
  			Abbiamo verificato che $g(a) = g(b)$. \\
- 			Allora è vera la tesi del \namerefl{th:teorema_rolle}: 
+ 			Allora è vera la tesi del \namerefl{th:teorema_rolle}:
  			\[
  			\exists x_0 \in ]a, b[ \mid g'(x_0) = 0
  			\]
  			Calcoliamo $g'$, $\forall x \in ]a, b[ \quad g'(x) = f'(x) - \dfrac{f(b) - f(a)}{b-a}(1-0) = f'(x) - \dfrac{f(b) - f(a)}{b-a}$. \\
- 			Adesso poniamo: $g'(x_0) = 0$ ovvero $f'(x_0) - \dfrac{f(b) - f(a)}{b- a} = 0 \Rightarrow f'(x_0) = \dfrac{f(b) - f(a)}{b - a}$ e quindi abbiamo dimostrato la tesi del \namerefl{th:teorema_lagrange} 
+ 			Adesso poniamo: $g'(x_0) = 0$ ovvero $f'(x_0) - \dfrac{f(b) - f(a)}{b- a} = 0 \Rightarrow f'(x_0) = \dfrac{f(b) - f(a)}{b - a}$ e quindi abbiamo dimostrato la tesi del \namerefl{th:teorema_lagrange}
  		\end{enumerate}
- 	\end{proof}	
- 	
+ 	\end{proof}
+
  	\subsection{Conseguenze del teorema di Lagrange}
  	\begin{theorem}{}{}
  		Sia $f: ]a, b[ \to \mathbbm{R}$ derivabile e tale che $\forall x \in ]a, b[ \quad f'(x) = 0$. \\
@@ -4567,13 +4567,13 @@
  			Verifichiamo che $f$ soddisfa le ipotesi del \namerefl{th:teorema_lagrange}, ovvero:
  			\begin{enumerate}[label=(\arabic*)]
  				\item $f$ è continua in $[a,b]$ per il teorema \namerefl{th:continua_e_derivabile}
- 				\item $f$ è derivabile in $]a, b[$		 
+ 				\item $f$ è derivabile in $]a, b[$
  			\end{enumerate}
- 			allora: 
+ 			allora:
  			\[
  			\exists x_0 \in ]a,b[ \mid f'(x_0) = \dfrac{f(b) - f(a)}{b-a}
  			\]
- 			ma abbiamo detto che $\forall x \in ]a, b[ \quad f'(x) = 0$, quindi l'equazione diventa: 
+ 			ma abbiamo detto che $\forall x \in ]a, b[ \quad f'(x) = 0$, quindi l'equazione diventa:
  			\[
  			0 = \dfrac{f(b) -f(a)}{b-a} \implies f(b) - f(a) = 0 \implies f(a) = f(b)
  			\]
@@ -4586,13 +4586,13 @@
  			1 \quad 1 \leq x \leq 2 \\
  			2 \quad 3 \leq x \leq 4
  		\end{cases}$
- 		La derivata di $f$ è 0, ma non è costante perchè assume valori diversi in intervalli diversi, questo perchè $f$ è definita in $[1, 2]\cup[3, 4]$ che non è un intervallo.	
+ 		La derivata di $f$ è 0, ma non è costante perchè assume valori diversi in intervalli diversi, questo perchè $f$ è definita in $[1, 2]\cup[3, 4]$ che non è un intervallo.
   	\end{note}
   	\begin{theorem}{\nmu Criterio di monotonia}{criterio_monotonia}
   		Sia $f: ]a, b[ \to \mathbbm{R}$ derivabile in $]a,b[$. \\
   		Allora:
   		\begin{enumerate}[label=(\arabic*)]
-  			\item Se $f'(x) \geq 0 \quad \forall x \in ]a, b[$, allora $f$ è monotona crescente. 
+  			\item Se $f'(x) \geq 0 \quad \forall x \in ]a, b[$, allora $f$ è monotona crescente.
   			\item Se $f'(x) > 0 \quad \forall x \in ]a, b[$ allora $f$ è strettamente monotona crescente.
   			\item Se $f'(x) \leq 0 \quad \forall x \in ]a,b[$ allora $f$ è monotona decrescente.
   			\item Se $f'(x) < 0 \quad \forall x \in ]a, b[$ allora $f$ è strettamente monotona decrescente.
@@ -4614,11 +4614,11 @@
   			\[
   			\exists x_0 \in ]x_1, x_2[ \mid f'(x_0) = \dfrac{f(x_2) - f(x_1)}{x_2 - x_1}
   			\]
-  			Allora: 
+  			Allora:
   			\[
   			f(x_2) - f(x_1) = f'(x_0)(x_2 - x_1)
   			\]
-  			Ora $f'(x_0) \geq 0$ e $x_2 - x_1 > 0$ quindi il loro prodotto sarà $\geq 0$ allora $f(x_2) \geq f(x_1)$ 
+  			Ora $f'(x_0) \geq 0$ e $x_2 - x_1 > 0$ quindi il loro prodotto sarà $\geq 0$ allora $f(x_2) \geq f(x_1)$
   		\end{proof}
   	\end{theorem}
   	\begin{definition}{\nmu Punti di massimo o minimo relativi}{max_min_relativi}
@@ -4631,7 +4631,7 @@
   	\end{note}
   	\begin{theorem}{\nmu Teorema di Fermat}{teorema_fermat}
   		Sia $f: I \to \mathbbm{R}$, $I$ intervallo \textbf{aperto}, $x_0 \in I$, punto di massimo (minimo) relativo per $f$. $f$ derivabile in $x_0$. \\
-  		Allora: 
+  		Allora:
   		\[
   		f'(x_0) = 0.
   		\]
@@ -4648,14 +4648,14 @@
   			$f'(x) = 3x^2 \iff x = 0$ \\
   			Ma non è un punto di massimo o minimo relativo. Per determinare i punti di massimo e minimo relativi, mettiamo insieme il \namerefl{th:teorema_fermat} e \namerefl{th:criterio_continuita}. \\
   			Studiamo la disequazione $f'(x) \geq 0$ \\
-  			Supponiamo che: 
+  			Supponiamo che:
   			\begin{itemize}
   				\item $f'(x_0) = 0$
   				\item $f'(x) < 0 \quad x < x_0$, funzione decrescente
   				\item $f'(x) > 0 \quad x > x_0$, funzione crescente.
   			\end{itemize}
   			Allora $x_0$ è un punto di minimo relativo. \\
-  			Supponiamo che: 
+  			Supponiamo che:
   			\begin{itemize}
   				\item $f'(x_0) = 0$
   				\item $f'(x) > 0 \quad x < x_0$, funzione crescente
@@ -4674,7 +4674,7 @@
   		$-1$ è un punto di massimo relativo e $\frac{1}{3}$ è punto di minimo relativo.
   		\begin{note}{}{}
   		  $\mathlarger{\lim_{x \to +\infty}}f(x) = +\infty$ e $\mathlarger{\lim_{x \to -\infty}}f(x) = -\infty$ \\
-  		  quindi $f$ non è limitata e $x_0 = -1$ e $x_1 = \frac{1}{3}$ sono solo punti di massimo e minimi relativi.		  
+  		  quindi $f$ non è limitata e $x_0 = -1$ e $x_1 = \frac{1}{3}$ sono solo punti di massimo e minimi relativi.
   		\end{note}
   	\end{example}
   	\section{Studio di funzione}
@@ -4682,14 +4682,14 @@
   	\begin{definition}{\nmu Funzione convessa}{func_convessa}
   		Sia $f: I \to \mathbbm{R}$, $I$ intervallo di $\mathbbm{R}$. \\
   		$f$ si dice \textit{convessa} se $\forall x_1, x_2 \in I$, il segmento che congiunge $(x_1, f(x_1))$ e $(x_2, f(x_2))$ si trova sopra il grafico di $f$. \\
-  		In simboli: 
+  		In simboli:
   		\[
   		\forall a \in [0, 1] \ e\ \forall x_1, x_2 \in I\quad  f(ax_1 + (1-a)x_2)\leq f(x_1) + (1-a)f(x_2)
   		\]
   	\end{definition}
   	\begin{figure}[H]
   		\centering
-  		\includegraphics[width=0.50\textwidth]{funzione_convessa}
+  		\includegraphics[width=0.50\textwidth]{images/funzione_convessa}
   		\caption{Esempio di funzione convessa}
   	\end{figure}
   	\begin{definition}{\nmu Funzione concava}{func_concava}
@@ -4697,7 +4697,7 @@
   	\end{definition}
   	\begin{figure}[H]
   		\centering
-  		\includegraphics[width=0.40\textwidth]{funzione_concava}
+  		\includegraphics[width=0.40\textwidth]{images/funzione_concava}
   		\caption{Esempio di funzione concava}
   	\end{figure}
   	\begin{theorem}{\nmu Convessità di una funzione}{convessità_funzione}
@@ -4759,7 +4759,7 @@
   		$\mathlarger{\lim_{x \to +\infty}}\dfrac{x - \sin x}{x^3}$ \\
   		Su questo limite non si possono applicare teoria sugli infinitesimi. \\
   		Applichiamo il \namerefl{th:hospital} \\
-  		$\mathlarger{\lim_{x \to +\infty}}\dfrac{1 - \cos x}{3x^2} = \mathlarger{\lim_{x \to +\infty}}\dfrac{\frac{1}{2}x^2}{3x^2} = \dfrac{1}{6}$ 
+  		$\mathlarger{\lim_{x \to +\infty}}\dfrac{1 - \cos x}{3x^2} = \mathlarger{\lim_{x \to +\infty}}\dfrac{\frac{1}{2}x^2}{3x^2} = \dfrac{1}{6}$
   	\end{example}
   	\begin{example}{}{}
   		$\mathlarger{\lim_{x \to 0^+}}x^2\ln x = \mathlarger{\lim_{x \to {0^+}}}\dfrac{\ln x}{\frac{1}{x^2}} \overset{H}{=} \mathlarger{\lim_{x \to 0^+}}\dfrac{\frac{1}{x}}{\frac{-2}{x^3}} = -\mathlarger{\lim_{x \to {0^+}}}\frac{1}{x} \cdot \frac{x^3}{2} = 0$
@@ -4768,9 +4768,9 @@
   		Sia $f: ]a, b[ \to \mathbbm{R}, x_0 \in ]a, b[$ \\
   		$f$ è derivabile in $]a, b[ \backslash \{x_0\}, f$ è continua in $x_0$. Supponiamo che:
   		\[
-  		\exists \lim_{x \to {x_0}}f'(x) \in L \in \mathbbm{R} 
+  		\exists \lim_{x \to {x_0}}f'(x) \in L \in \mathbbm{R}
   		\]
-  		Allora $f$ è derivabile in $x_0$ e $f'(x_0) = L$ 
+  		Allora $f$ è derivabile in $x_0$ e $f'(x_0) = L$
   		\begin{proof} \quad \\
   			$f'(x_0) = \mathlarger{\lim_{x \to {x_0}}}\dfrac{f(x) - f(x_0)}{x - x_0} = [\frac{0}{0}]$ \\
   			Applichiamo il \namerefl{th:hospital} \\
@@ -4835,7 +4835,7 @@
   		Siano $f, g: I \to \mathbbm{R}, x_0 \in I$ \\
   		$f \underset{x \to x_0}{\sim} g$, allora $\mathlarger{\lim_{x \to {x_0}}}\dfrac{f(x)}{g(x)} = 1$ \\
   		$f(x) = g(x) + o(g)$ \\
-  		$o(g)$ è un errore che è un infinitesimo in $x_0$ di ordine superiore a $g$ 
+  		$o(g)$ è un errore che è un infinitesimo in $x_0$ di ordine superiore a $g$
   	\end{theorem}
   	\begin{example}{}{}
   		Abbiamo visto che $\mathlarger{\lim_{x \to 0}}\dfrac{x - \sin x}{x^3} = \frac{1}{6}$ quindi $\mathlarger{\lim_{x \to 0}}\dfrac{x - \sin x}{\frac{1}{6}x^3} = 1$ \\
@@ -4885,11 +4885,11 @@
  		Si definisce \textit{serie numerica} di termine generale $a_n$, l'espressione: \[
  		\sum_{n = 0}^{+\infty}a_n
  		\]
- 		ovvero, somma per $n$ che va da 0 a $+\infty$ di $a_n$.  
+ 		ovvero, somma per $n$ che va da 0 a $+\infty$ di $a_n$.
  	\end{definition}
  	Per dare senso a quest'espressione, occorre definire una nuova successione, detta \textbf{successione delle somme parziali}. \\
  	\begin{definition}{\nmu Successione delle somme parziali}{succ_somme_parziali}
- 		La successione delle somme parziali è cosi fatta: 
+ 		La successione delle somme parziali è cosi fatta:
  		\[
  		s_0 = a_0
  		\]
@@ -4919,7 +4919,7 @@
  		In questo caso, $z$ si chiama \textbf{somma della serie} e si scrive:
  		\[
  		\sum_{n=0}^{+\infty}a_n = z
- 		\]	
+ 		\]
  	\end{definition}
  	\begin{definition}{\nmu Serie divergente}{serie_divergente}
  		Una serie $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ si dice \textbf{divergente} positivamente (negativamente) se:
@@ -4952,7 +4952,7 @@
  		\sum_{n=0}^{+\infty}q^n, \quad q \in \mathbbm{R}
  		\]
  		$\forall n \in \mathbbm{N} \quad s_n = q^0 + q^1 + \dots + q^n = 1 + q + q^2 + \dots + q^n$. \\
- 		Sia $q = 1$, allora $s_n = 1^0 + 1^1+ 1^2 + \dots + 1^n = n + 1$, allora: 
+ 		Sia $q = 1$, allora $s_n = 1^0 + 1^1+ 1^2 + \dots + 1^n = n + 1$, allora:
  		\[
  		\lim_{n \to +\infty}s_n = \lim_{n \to +\infty}n+1=+\infty
  		\]
@@ -4987,7 +4987,7 @@
  			\centernot{\exists}\quad\quad\quad q \leq -1
  		\end{cases}
  		\]
- 		Ricapitolando: 
+ 		Ricapitolando:
  		\[
  		\sum_{n=0}^{+\infty}q^n = \begin{cases}
  			\dfrac{1}{1 - q}\quad |q| < 1 \\
@@ -5030,12 +5030,12 @@
  		Per le serie telescopiche è possibile calcolarsi la successione $\{s_n\}_{n\in \mathbbm{N}}$ delle somme parziali, e quindi studiare il carattere della serie. \\
  		Un esempio di serie telescopica è la \textbf{serie di Mengoli}.
  		\paragraph{Serie di Mengoli} \quad \\
- 		La serie di Mengoli è così fatta: 
+ 		La serie di Mengoli è così fatta:
  		\[
  		\sum_{n=1}^{+\infty}\frac{1}{n(n+1)}
  		\]
  		$\dfrac{1}{n(n+1)} = \dfrac{A}{n} + \dfrac{B}{n+1} = \dfrac{A(n+1) + Bn}{n(n+1)} = \dfrac{An+A+Bn}{n(n+1)} = \dfrac{n(A+B)+A}{n(n+1)}$ \\ \\
- 		Allora: \[n(A + B)+A = 1 
+ 		Allora: \[n(A + B)+A = 1
  		\begin{cases}
  			A+B = 0 \\
  			A = 1
@@ -5078,7 +5078,7 @@
  			-A + B = 1
  		\end{cases}; \begin{cases}
  		A = -B \\
- 		B + B = 1 
+ 		B + B = 1
  		\end{cases} ; \begin{cases}
  		A = -B \\
  		B = \frac{1}{2}
@@ -5086,7 +5086,7 @@
  		A = -\frac{1}{2} \\
  		B = \frac{1}{2}
  		\end{cases}\]
- 		Allora: 
+ 		Allora:
  		\[
  		\frac{1}{(2n+1)(2n-1)} = -\frac{1}{2(2n+1)} + \frac{1}{2(2n-1)}
  		\]
@@ -5098,12 +5098,12 @@
  		Per $n=1$, $s_1 = -\frac{1}{6} + \frac{1}{2} = \frac{1}{3}$ \\ \\
  		Per $n=2$, $s_2 = s_1 - \frac{1}{10} + \frac{1}{6} = \frac{1}{3}-\frac{1}{10}+\frac{1}{6}=\frac{1}{2} - \frac{1}{10} = \frac{2}{5}$ \\ \\
  		Per $n=3$, $s_3 = s_2 - \frac{1}{14} + \frac{1}{10} = \frac{2}{5} - \frac{1}{14} + \frac{1}{10} = \frac{1}{2}-\frac{1}{14}$ \\
- 		$\vdots$ \\ 
+ 		$\vdots$ \\
  		$s_n = \frac{1}{2} - \frac{1}{2(2n+1)}$. \\
- 		Allora: 
+ 		Allora:
  		\[
  		\lim_{n \to +\infty}s_n = \lim_{n \to +\infty}\frac{1}{2} - \frac{1}{2(2n+1)} = \frac{1}{2}
- 		\] 
+ 		\]
  		Quindi:
  		\[
  		\sum_{n=1}^{+\infty}\frac{1}{(2n+1)(2n-1)} = \frac{1}{2}
@@ -5130,15 +5130,15 @@
  					\item Se $e^x - 3 \leq -1$ la serie oscilla: \\
  					$e^x - 3 \leq - 1\implies e^x \leq 2 \implies x \leq \ln(2)$
  				\end{enumerate}
- 				Allora: 
+ 				Allora:
  				\[
  				\sum_{n=0}^{+\infty}(e^x - 3)^n=\begin{cases}
  					\frac{1}{1-(e^x - 3)} \quad \ln(2) < x < \ln(4) \\
  					+\infty \quad\quad\quad x \geq \ln(4) \\
- 					\centernot{\exists} \quad\quad\quad\quad  x < \ln(2) 
+ 					\centernot{\exists} \quad\quad\quad\quad  x < \ln(2)
  				\end{cases}
  				\]
- 			\end{exercise} 
+ 			\end{exercise}
  		\end{assignment}
  		\begin{assignment}
  			Al variare di $x \in \mathbbm{R}$ studiare il carattere della serie:
@@ -5176,12 +5176,12 @@
  					\item Se $\frac{1}{x+1} < -1$ la serie oscilla: \\ \\
  					$\frac{1}{x+1} \leq - 1\implies \frac{x+2}{x+1} \leq 0 \implies -2 \leq x < -1$
 				\end{enumerate}
-				 Allora: 
+				 Allora:
 				\[
 				\sum_{n=0}^{+\infty}(\frac{1}{x+1})^n=\begin{cases}
 					\frac{1}{1-(\frac{1}{x+1})} \quad - 1 < x < 0 \\
 					+\infty \quad\quad\quad  x < -1 \vee x \geq 0 \\
-					\centernot{\exists} \quad\quad\quad  -2 \leq x < -1 
+					\centernot{\exists} \quad\quad\quad  -2 \leq x < -1
 				\end{cases}
 				\]
  			\end{exercise}
@@ -5215,7 +5215,7 @@
  			\lim_{n \to +\infty}a_n=0 \implies \sum_{n=0}^{+\infty}a_n \text{ converge}
  			\]
  			Ad esempio: $\mathlarger{\sum_{n=1}^{+\infty}}\frac{1}{n}$ diverge, ma $\mathlarger{\lim_{n \to +\infty}}\frac{1}{n} = 0$ \\
- 			Si può, però, affermare che: 
+ 			Si può, però, affermare che:
  			\[
  			\lim_{n \to +\infty}a_n \neq 0 \implies \sum_{n=0}^{+\infty}a_n \text{ non converge}
  			\]
@@ -5238,7 +5238,7 @@
  		\end{definition}
  		\begin{theorem}{\nmu Regolarità delle serie a termini positivi}{serie_term_pos_regolari}
  			Sia $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ una serie a termini positivi. \\
- 			Allora: 
+ 			Allora:
  			\[
  			\sum_{n=0}^{+\infty}a_n \text{ è regolare}
  			\]
@@ -5249,7 +5249,7 @@
  				\[
  				\exists \lim_{n \to +\infty}s_n \in \mathbbm{R} \cup \{+\infty\}
  				\]
- 				Allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ converge o diverge positivamente. 
+ 				Allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ converge o diverge positivamente.
   			\end{proof}
  		\end{theorem}
  		\begin{note}{}{}
@@ -5309,7 +5309,7 @@
  			Si può dimostrare che:
  			\[
  			\sum_{n=1}^{+\infty}\frac{1}{n^2} = \frac{\pi^2}{6}
- 			\] 
+ 			\]
  			Quindi il criterio del confronto asintotico non garantisce che se $a_n \sim b_n$, allora:
  			\[
  			\sum_{n=1}^{+\infty}a_n = \sum_{n=1}^{+\infty}b_n
@@ -5329,10 +5329,10 @@
 			\[
 			\sum_{n=1}^{+\infty}\dfrac{(e^\frac{1}{n^3} - 1)}{\sin^2\Bigl(\frac{1}{n}\Bigr)}
 			\]
-			Questa è sicuramente una serie a termini positivi perchè $\sin^2\Bigl(\frac{1}{n}\Bigr) \geq 0$ e $e^\frac{1}{n^3} - 1 \geq 0$. 
-			\begin{exercise}{}{} 
+			Questa è sicuramente una serie a termini positivi perchè $\sin^2\Bigl(\frac{1}{n}\Bigr) \geq 0$ e $e^\frac{1}{n^3} - 1 \geq 0$.
+			\begin{exercise}{}{}
 				Sappiamo che: \begin{itemize}
-					\item $e^\frac{1}{n^3} - 1 \sim \frac{1}{n^3}$ 
+					\item $e^\frac{1}{n^3} - 1 \sim \frac{1}{n^3}$
 					\item $\sin^2\Bigl(\frac{1}{n}\Bigr) \sim \frac{1}{n^2}$
 				\end{itemize}
 				Allora il termine generale della serie diventa: $\frac{1}{n}$, quindi la serie diventa:
@@ -5368,7 +5368,7 @@
 			\]
 		\end{assignment}
 		\subsection{Criterio della radice}
-		
+
 		\begin{theorem}{\nmu Criterio della radice}{criterio_radice}
 			Sia $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ una serie a termini positivi. \\
 			Supponiamo che:
@@ -5377,12 +5377,12 @@
 			\]
 			Allora:
 			\begin{enumerate}[label=(\arabic*)]
-				\item Se $l < 1$, allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n < +\infty$ 
+				\item Se $l < 1$, allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n < +\infty$
 				\item Se $l > 1$, allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n = +\infty$
 				\item Se $l=1$, il criterio della radice non dà informazioni sulla serie e quindi bisogna cambiare criterio.
 			\end{enumerate}
 		\end{theorem}
-		
+
 		\begin{example}{}{}
 			Sia $\mathlarger{\sum_{n=0}^{+\infty}}\dfrac{n^2 \cdot 2^n}{3^n+n}$ serie a termini positivi. \\
 			Applichiamo il criterio della radice: \\
@@ -5393,7 +5393,7 @@
 			$\mathlarger{\lim_{n \to +\infty}}\sqrt[n]{\dfrac{n^2\cdot2^n}{3^n + n}} = \dfrac{2}{3} < 1$ \\
 			Allora per il criterio della radice la serie converge.
 		\end{example}
-		
+
 		\subsection{Criterio del rapporto}
 		\begin{theorem}{\nmu Criterio del rapporto}{criterio_rapporto}
 			Sia $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ una serie a termini positivi con $a_n > 0 \quad \forall n \in \mathbbm{N}$ \\
@@ -5403,7 +5403,7 @@
 			\]
 			Allora:
 			\begin{enumerate}[label=(\arabic*)]
-				\item Se $l < 1$, allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n < +\infty$ 
+				\item Se $l < 1$, allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n < +\infty$
 				\item Se $l > 1$, allora $\mathlarger{\sum_{n=0}^{+\infty}}a_n = +\infty$
 				\item Se $l=1$, il criterio del rapporto non dà informazioni sulla serie e quindi bisogna cambiare criterio.
 			\end{enumerate}
@@ -5414,7 +5414,7 @@
 			Sia $\mathlarger{\sum_{n=0}^{+\infty}}a_n$ una serie. \\
 			$\mathlarger{\sum_{n=0}^{+\infty}}a_n$ \textbf{converge assolutamente} se:
 			\[
-			\sum_{n=0}^{+\infty}|a_n| < +\infty	
+			\sum_{n=0}^{+\infty}|a_n| < +\infty
 			\]
 			che ora è una serie a termini positivi e valgono tutti i criteri studiati precedentemente.
 		\end{definition}
@@ -5429,7 +5429,7 @@
 				-|a_n| \leq a_n \leq |a_n|
 				\]
 				Sommiamo $|a_n|$ a tutti i membri e otteniamo: $-|a_n|+|a_n| \leq a_n + |a_n|\leq |a_n| + |a_n|$, ovvero: $0 \leq a_n+|a_n| \leq 2|a_n|$ \\
-				La serie di termine generale: 
+				La serie di termine generale:
 				\[
 				\sum_{n=0}^{+\infty}a_n+|a_n|
 				\]
@@ -5456,7 +5456,7 @@
 		Se una serie non converge assolutamente, siamo sicuri che la serie non converge? \\
 		\begin{example}{}{}
 			Data la \textbf{serie armonica alternata}:
-			\[\mathlarger{\sum_{n=1}^{+\infty}}\dfrac{(-1)^n}{n}\] 
+			\[\mathlarger{\sum_{n=1}^{+\infty}}\dfrac{(-1)^n}{n}\]
 			Studiamo la convergenza assoluta della serie: \\
 			$\mathlarger{\sum_{n=1}^{+\infty}}|\frac{(-1)^n}{n}| = \mathlarger{\sum_{n=1}^{+\infty}}\dfrac{1}{n} = +\infty$ \\
 			Allora $\mathlarger{\sum_{n=1}^{+\infty}}\dfrac{(-1)^n}{n}$ non converge assolutamente. \\
@@ -5497,14 +5497,14 @@
 			$\mathlarger{\lim_{n \to +\infty}}\frac{1}{n} = 0$ e $\frac{1}{n+1} \leq \frac{1}{n}\ \forall n \geq 1$ \\
 			Allora possiamo applicare il \namerefl{th:criterio_liebnitz} e $\mathlarger{\sum_{n=1}^{+\infty}}\dfrac{(-1)^n}{n} < +\infty$ \\
 		\end{example}
-		Esercizi sul quaderno. 
+		Esercizi sul quaderno.
 		\chapter{Integrali}
 			Il concetto di integrale consente di rispondere a due domande:
 			\begin{enumerate}[label=(\arabic*)]
 				\item Sia $f: [a, b] \to \mathbbm{R}, f \geq 0$
 				\begin{figure}[H]
 					\centering
-					\includegraphics[width=0.50\textwidth]{integrale}
+					\includegraphics[width=0.50\textwidth]{images/integrale}
 				\end{figure}
 				La regione di piano colorata si chiama \textbf{rettangoloide} di base $[a, b]$ associato a $f$. \\
 				Conoscere il concetto di integrale servirà a calcolare l'\textbf{area del rettangoloide}.
@@ -5534,7 +5534,7 @@
 				\[
 				S_n(f) = \sum_{i=1}^{n}f(c_i)(x_i - x_{i - 1})
 				\]
-				Osserviamo che: 
+				Osserviamo che:
 				\[
 				S_n(f) = \frac{1}{n}\sum_{i=1}^{n}f(c_i)
 				\]
@@ -5542,7 +5542,7 @@
 			Segue un grafico di una funzione integrabile secondo Riemann:
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=0.70\textwidth]{integrale_riemann}
+				\includegraphics[width=0.70\textwidth]{images/integrale_riemann}
 			\end{figure}
 			\begin{definition}{\nmu Funzione integrabile}{func_integrabile}
 				Si dice che la funzione $f$ è \textbf{integrabile secondo Riemann} in $[a,b]$ se:
@@ -5560,14 +5560,14 @@
 				$\int_{a}^{b}f(x)dx \in \mathbbm{R}$ \\
 				quindi la variabile di integrazione $x$ è "muta", ad esempio:
 				\[
-				\int_{a}^{b}f(t)dt = \int_{a}^{b}f(x)dx								
+				\int_{a}^{b}f(t)dt = \int_{a}^{b}f(x)dx
 				\]
 			\end{note}
 			\section{Classi di funzione integrabili}
 			Le classi di funzioni integrabili sono le seguenti:
 			\begin{enumerate}[label=(\arabic*)]
 				\item Sia $f:[a,b] \to \mathbbm{R}$ \textbf{monotona} in $[a, b]$. Allora $f$ è integrabile
-				\item Sia $f: [a, b] \to \mathbbm{R}$ \textbf{continua} in $[a, b]$ che per il \namerefl{th:teorema_weierstrass} $f$ è limitata. Allora $f$ è integrabile. 
+				\item Sia $f: [a, b] \to \mathbbm{R}$ \textbf{continua} in $[a, b]$ che per il \namerefl{th:teorema_weierstrass} $f$ è limitata. Allora $f$ è integrabile.
 				\begin{note}{}{}
 					Tutte le funzioni elementari sono integrabili.
 				\end{note}
@@ -5582,7 +5582,7 @@
 				\]
 				$f$ non è integrabile in $[0, 1]$ \\
 				Sia $n \in \mathbbm{N} \quad \{x_0, \dots, x_n\}$ partizioni di $[0, 1]$ tali che $(x_i - x_{i - 1}) = \frac{1}{n}$ \\
-				$c_1, \dots, c_n \in \mathbbm{Q} \quad c_i \in [x_{i - 1}, x_i] \quad \forall i = 1, \dots, n$ \\ 
+				$c_1, \dots, c_n \in \mathbbm{Q} \quad c_i \in [x_{i - 1}, x_i] \quad \forall i = 1, \dots, n$ \\
 				Allora:
 				\[
 				S_n(f) = \frac{1}{n}\sum_{i=1}^{n}f(c_i) = \frac{1}{n} \cdot n = 1
@@ -5610,7 +5610,7 @@
 				In particolare $\int_{a}^{b}\alpha dx = \alpha(b - a)$
 				\begin{figure}[H]
 					\centering
-					\includegraphics[width=0.7\textwidth]{integrale_costante}
+					\includegraphics[width=0.7\textwidth]{images/integrale_costante}
 				\end{figure}
 				\item Sia $r \in [a, b]$. Allora:
 				\[
@@ -5623,7 +5623,7 @@
 				\]
 				In particolare se $f \leq g$ allora:
 				\[
-				\int_{a}^{b}f(x)dx \leq \int_{a}^{b}g(x)dx 
+				\int_{a}^{b}f(x)dx \leq \int_{a}^{b}g(x)dx
 				\]
 				\item $|\int_{a}^{b}f(x)dx| \leq \int_{a}^{b}|f(x)|dx$ \\
 				Questa proprietà è nota come \textbf{disuguaglianza triangolare per l'integrale}
@@ -5632,7 +5632,7 @@
 			Sia $f: [a, b] \to \mathbbm{R}$ \textbf{continua}, $f \geq 0$ \\
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=0.7\textwidth]{area_rettangoloide}
+				\includegraphics[width=0.7\textwidth]{images/area_rettangoloide}
 			\end{figure}
 			$R_f = \{(x, y) \in \mathbbm{R} \times \mathbbm{R} \mid a \leq x \leq b, 0 \leq y \leq f(x)\}$. \\
 			Il \textbf{rettangoloide} di base $[a, b]$ associata a $f$ \\
@@ -5644,7 +5644,7 @@
 				Cosa succede se $f$ cambia segno? \\
 				\begin{figure}[H]
 					\centering
-					\includegraphics[width=0.4\textwidth]{integrale_func_neg}
+					\includegraphics[width=0.4\textwidth]{images/integrale_func_neg}
 				\end{figure}
 				$R_f = $ Area $T_1 + $ Area $T_3$ - Area $T_2$
 			\end{note}
@@ -5656,7 +5656,7 @@
 				\frac{1}{b-a}\int_{a}^{b}f(x)dx = f(c)
 				\]
 				$\frac{1}{b-a}\int_{a}^{b}f(x)dx$ si chiama \textbf{media integrale di $f$}. \\
-				Notiamo che: 
+				Notiamo che:
 				\[
 				\int_{a}^{b}f(x)dx = f(c)(b-a)
 				\]
@@ -5737,7 +5737,7 @@
 				\int \alpha dx = \alpha x + c
 				\]
 				\par\noindent\rule{\linewidth}{0.5pt}\par
-				
+
 				\item $\forall \alpha \neq -1$ \[
 				\int x^\alpha dx = \frac{x^{\alpha+1}}{\alpha+1} + c
 				\]
@@ -5758,7 +5758,7 @@
 				\int e^xdx = e^x + c
 				\]
 					\par\noindent\rule{\linewidth}{0.5pt}\par
-				
+
 				\item \[
 				\int \frac{1}{x^2 + 1}dx = \arctan x + c
 				\]
@@ -5787,11 +5787,11 @@
 			Sia $f: I \to \mathbbm{R}$ continua e sia $g: J \to \mathbbm{R}$ derivabile. \\
 			$g(J) \subset I$ e quindi ha senso:
 			\[
-			f \circ g: J \to \mathbbm{R}	
+			f \circ g: J \to \mathbbm{R}
 			\]
 			Sia $F: I \to \mathbbm{R}$ una primitiva di $f$. Ha senso:
 			\[
-			F \circ g: 
+			F \circ g:
 			\]
 			$F \circ g$ è derivabile perchè $F$ e $g$ sono derivabili. \\
 			$(F \circ g)'(x) = F'(g(x)) \cdot g'(x) = f(g(x)) \cdot g'(x)$.
@@ -5832,7 +5832,7 @@
 				\]
 				\par\noindent\rule{\linewidth}{0.5pt}\par
 				\item \[
-				\int \frac{1}{\sqrt{1 - g(x)^2}}g'(x)dx =\arcsin (g(x)) + c 
+				\int \frac{1}{\sqrt{1 - g(x)^2}}g'(x)dx =\arcsin (g(x)) + c
 				\]
 				\[
 				\phantom{\int \frac{1}{\sqrt{1 - g(x)^2}}g'(x)dx} = -\arccos(g(x))+c
@@ -5879,7 +5879,7 @@
 				Allora:
 				\[
 				F(x_0 + h) - F(x_0) = hf(c)
-				\] 
+				\]
 				Dividiamo per $h$:
 				\[
 				\frac{F(x_0 + h) -F(x_0)}{h} = f(c)
@@ -5913,7 +5913,7 @@
 				tale che $\forall x \in [a,b] \quad F_a(x) = \int_{a}^{x}f(t)dt$ è una primitiva di $f$. \\
 				Per la proprietà delle primitive, $\exists c \in \mathbbm{R} \mid \forall x \in [a,b]$ \[
 				G(x) = F_a(x) + c = \int_{a}^{x}f(t)dt + c
-				\] 
+				\]
 				In particolare, se $x=a$:
 				\[
 				G(a) = \int_{a}^{a}f(t)dt + c = c
@@ -5933,9 +5933,9 @@
 				\int_{\ln 2}^{\ln 3}xe^{3x^2}dx
 				\]
 				Calcoliamo: $\int xe^{3x^2}dx = \frac{1}{6}\int 6xe^{3x^2}dx = \frac{1}{6}e^{3x^2} + c$ \\
-				Allora: 
+				Allora:
 				\[
-				\int_{\ln 2}^{\ln 3}xe^{3x^2}dx = \Bigl[\frac{1}{6}e^{3x^2}\Bigr]_{\ln 2}^{\ln 3} = \frac{1}{6}e^{3(\ln3)^2} - \frac{1}{6}e^{3(\ln2)^2} = \dots 
+				\int_{\ln 2}^{\ln 3}xe^{3x^2}dx = \Bigl[\frac{1}{6}e^{3x^2}\Bigr]_{\ln 2}^{\ln 3} = \frac{1}{6}e^{3(\ln3)^2} - \frac{1}{6}e^{3(\ln2)^2} = \dots
 				\]
 			\end{example}
 			\begin{example}{}{}
@@ -5976,7 +5976,7 @@
 				Poniamo $t = \ln x$ e $dt = \frac{1}{x}dx$. \\
 				Se $x = e \implies t = \ln e = 1$ e se $x = e^2 \implies t = \ln e^2 = 2\ln e = 2$, allora:
 				\[
-				\int_{1}^{2}t\ dt =[\frac{t^2}{2}]_{1}^{2} 
+				\int_{1}^{2}t\ dt =[\frac{t^2}{2}]_{1}^{2}
 				\]
 			\end{example}
 			\subsection{Sostituzioni speciali}
@@ -6005,17 +6005,17 @@
 		\subsection{Integrazione per parti}
 		Sia $f, g: I \to \mathbbm{R}$ derivabili con derivata continua. \\
 		$(fg)' = f'g + fg'$ \\
-		Integriamo: 
+		Integriamo:
 		\[
 		\int (fg)'(x)dx = \int f'(x)g(x)dx + \int f(x)g'(x)dx
 		\]
-		Allora: 
+		Allora:
 		\[
 		f(x)g(x) = \int f'(x)g(x)dx +\int f(x)g'(x)
 		\]
 		Di qui si ricava la \textbf{formula di integrazione per parti}.
 		\[\int f'(x)g(x)dx = f(x)g(x) - \int f(x)g'(x)dx\]
-		$f'(x)$ si chiama \textbf{fattore differenziale} e $g(x)$ si chiama \textbf{fattore finito}. 
+		$f'(x)$ si chiama \textbf{fattore differenziale} e $g(x)$ si chiama \textbf{fattore finito}.
 		Inoltre:
 		\[
 		\int_{a}^{b}f'(x)g(x)dx = \Bigl[f(x)g(x)\Bigr]_{a}^{b} - \int_{a}^{b}f(x)g'(x)dx
@@ -6045,7 +6045,7 @@
 			$g(x) = x^2 \implies g'(x) = 2x$ \\
 			Allora:
 			$\int x^2\cos x\ dx = x^2\sin x - \int 2x\sin x\ dx$ \\
-			Adesso poniamo: \\ 
+			Adesso poniamo: \\
 			$f'(x) = \sin x \implies f(x) = -\cos x$ \\
 			$g(x) = 2x \implies g'(x) = 2$ \\
 			Allora:
@@ -6077,7 +6077,7 @@
 			$f'(x) = 1 \implies f(x) = x$ \\
 			$g(x) = \ln x \implies g'(x) = \frac{1}{x}$ \\
 			Allora:
-			\\ 
+			\\
 			$\int \ln x = x\ln x - \int \frac{x}{x}dx= x\ln x - x$ \\
 			Allora: \\
 			$\int \ln^2x\ dx = x\ln^2x - 2(x\ln x - x) + c$
@@ -6094,7 +6094,7 @@
 		$\int e^x\cos x\ dx = e^x\cos x - \int e^x(-\sin x)dx = e^x\cos x + \int e^x\sin x\ dx$ \\
 		Integriamo di nuovo per parti mantenendo la stessa scelta per il fattore differenziale. \\
 		$\int e^x\cos x\ dx = e^x\cos x + \int e^x\sin x\ dx = e^x\cos x + e^x\sin x - \int e^x\cos x\ dx$ \\
-		$2\int e^x\cos x\ dx = e^x\cos x + e^x\sin x \implies \int e^x\cos x\ dx = \dfrac{e^x\cos x+ e^x\sin x}{2} + c$	
+		$2\int e^x\cos x\ dx = e^x\cos x + e^x\sin x \implies \int e^x\cos x\ dx = \dfrac{e^x\cos x+ e^x\sin x}{2} + c$
 		\subsection{Integrali di funzioni razionali}
 		\paragraph{Grado numeratore inferiore a quello del denominatore} \quad \\
 		\begin{example}{}{}
@@ -6103,7 +6103,7 @@
 		\paragraph{Grado numeratore maggiore o uguale a quello del denominatore} \quad \\
 		\begin{example}{}{}
 			$\mathlarger{\int \frac{x+1}{2x+3}dx}$ \\
-			In questo caso si prosegue in questo modo: 
+			In questo caso si prosegue in questo modo:
 			\[
 			\frac{P(x)}{P_1(x)} = Q(x) + \frac{R(x)}{P_1(x)}
 			\]
@@ -6115,7 +6115,7 @@
 			\end{itemize}
 			Nel nostro caso (vedere dalle slide): \\
 			$\dfrac{x+1}{2x+3} = \dfrac{1}{2} - \dfrac{1}{2(2x + 3)}$, quindi: \\
-			$\mathlarger{\int \frac{x+1}{2x+3}dx = \int\frac{1}{2}dx - \int\frac{1}{2(2x + 3)}dx = \frac{1}{2}x - \frac{\ln|2x + 3|}{4} + c} $ 
+			$\mathlarger{\int \frac{x+1}{2x+3}dx = \int\frac{1}{2}dx - \int\frac{1}{2(2x + 3)}dx = \frac{1}{2}x - \frac{\ln|2x + 3|}{4} + c} $
 		\end{example}
 		\paragraph{Denominatore di secondo grado}
 		\subparagraph{Metodo dei fratti semplici} \quad \\
@@ -6153,7 +6153,7 @@
 		\paragraph{Denominatore di secondo grado con $\Delta = 0$}
 		Sia:
 		\[
-		ax^2+bx+c		
+		ax^2+bx+c
 		\]
 		un polinomio di 2\^ grado con $\Delta = 0$, quindi l'equazione ha una sola soluzione $x=-\dfrac{-b}{2a}$ \\
 		\begin{example}{}{}
@@ -6171,16 +6171,16 @@
 			\[
 			\int\frac{x+2}{x^2-2x+1}dx = \int\frac{x+2}{x-1}^2dx
 			\]
-			Questo si può risolvere come: 
+			Questo si può risolvere come:
 			\[
 			\frac{x+2}{x^2-2x+1} = \frac{A}{x-1} + \frac{B}{(x-1)^2} = \frac{A(x-1) + B}{(x-1)^2} = \dots
 			\]
 			Un altro modo per risolvere il seguente integrale è:
 			\[
-			\int\frac{x+2}{x^2 - 2x + 1} = \frac{1}{2}\int\frac{2(x+2)}{x^2 - 2x + 1}dx = \frac{1}{2}\int\frac{2(x+2)-2+2}{x^2-2x+1}dx = \frac{1}{2}\int\frac{2x-2+6}{x^2 - 2x + 1}dx = 
+			\int\frac{x+2}{x^2 - 2x + 1} = \frac{1}{2}\int\frac{2(x+2)}{x^2 - 2x + 1}dx = \frac{1}{2}\int\frac{2(x+2)-2+2}{x^2-2x+1}dx = \frac{1}{2}\int\frac{2x-2+6}{x^2 - 2x + 1}dx =
 			\]
 			\[
-			\frac{1}{2}\int\frac{2x - 2}{x^2 -2x + 1}dx + \frac{1}{2}\int\frac{6}{x^2 + 2x + 1}dx =\] 
+			\frac{1}{2}\int\frac{2x - 2}{x^2 -2x + 1}dx + \frac{1}{2}\int\frac{6}{x^2 + 2x + 1}dx =\]
 			\[\frac{\ln|x^2 - 2x + 1|}{2} + \frac{1}{2}\int\frac{6}{x^2 + 2x + 1}dx = \frac{\ln|x-1|^2}{2} + 3\int\frac{1}{(x-1)^2}dx = \ln|x-1| - 	\frac{3}{x-1} + c
 			\]
 		\end{example}
@@ -6194,7 +6194,7 @@
 		\begin{example}{}{}
 			Calcolare:
 			\[
-			\int\frac{1}{x^2 + 3}dx = \frac{1}{3}\int\frac{1}{\frac{x^2}{3} + 1}dx = \frac{1}{3}\int\frac{1}{\Bigl(\frac{x}{\sqrt{3}}\Bigr)^2 + 1}dx = \frac{1}{\sqrt{3}}\int\frac{\frac{1}{\sqrt{3}}}{\Bigl(\frac{x}{\sqrt{3}}\Bigr)^2 + 1}dx = \frac{\arctan(\frac{x}{\sqrt{3}})}{\sqrt{3}} + c 
+			\int\frac{1}{x^2 + 3}dx = \frac{1}{3}\int\frac{1}{\frac{x^2}{3} + 1}dx = \frac{1}{3}\int\frac{1}{\Bigl(\frac{x}{\sqrt{3}}\Bigr)^2 + 1}dx = \frac{1}{\sqrt{3}}\int\frac{\frac{1}{\sqrt{3}}}{\Bigl(\frac{x}{\sqrt{3}}\Bigr)^2 + 1}dx = \frac{\arctan(\frac{x}{\sqrt{3}})}{\sqrt{3}} + c
 			\]
 		\end{example}
 		\begin{example}{}{}
@@ -6207,7 +6207,7 @@
 		Per parlare di integrali definiti abbiamo considerato:
 		\[
 		f:[a,b] \to \mathbbm{R} \ \text{limitate}
-		\]		
+		\]
 		Si può parlare del concetto di integrale nel caso di:
 		\begin{enumerate}[label=(\arabic*)]
 			\item funzioni \textbf{non} limitate;
@@ -6251,13 +6251,13 @@
 		\[
 		\int_{a}^{b}f(x)dx = \lim_{h \to {0^+}}\int_{a+h}^{b}f(x)dx
 		\]
-		ove il limite esiste. 
+		ove il limite esiste.
 		\begin{example}{}{}
 			Sia $f: ]0, 1] \to \mathbbm{R} \quad f(x) = \frac{1}{x^\alpha} \quad \alpha > 0$ \\
 			Per quali $\alpha > 0$ esiste:
 			\[
 			\int_{0}^{1}\frac{1}{x^\alpha}dx
-			\] 
+			\]
 			Studiamo il caso $\alpha = 1$, allora:
 			\[
 			\int_{0}^{1}\frac{1}{x}dx \quad ??
@@ -6278,7 +6278,7 @@
 				\frac{1}{1-\alpha} \quad 1-\alpha > 0 \implies \alpha< 1 \\
 				+\infty \quad 1-\alpha<0 \implies \alpha \geq 1
 			\end{cases}
-			\] 
+			\]
 		\end{example}
 		Sia $f: [a, +\infty[ \to \mathbbm{R}$ continua. \\
 		Vogliamo dare un senso al:
@@ -6305,7 +6305,7 @@
 		\end{note}
 		Se $f: \mathbbm{R} \to \mathbbm{R}$ allora:
 		\[
-		\int_{-\infty}^{+\infty}f(x)dx = \int_{a}^{+\infty}f(x)dx + \int_{-\infty}^{a}f(x)dx 
+		\int_{-\infty}^{+\infty}f(x)dx = \int_{a}^{+\infty}f(x)dx + \int_{-\infty}^{a}f(x)dx
 		\]
 		tranne che nel caso di forme indeterminata $[+\infty-\infty]$. \\
 		\begin{example}{}{}
@@ -6333,7 +6333,7 @@
 			\int_{1}^{+\infty}\frac{1}{x^\alpha}dx = \lim_{h \to +\infty}\int_{1}^{h}\frac{1}{x^\alpha}dx = \lim_{h \to +\infty}\Bigl[ \frac{1}{1-\alpha} - \frac{h^{1 - \alpha}}{1 -\alpha}\Bigr] = \begin{cases}
 				\frac{1}{\alpha - 1} \quad 1 - \alpha<0 \implies \alpha > 1\\
 				+\infty \quad 1-\alpha > 0 \implies \alpha < 1
-			\end{cases} 
+			\end{cases}
 			\]
 			Ricapitolando:
 			\[
@@ -6379,7 +6379,7 @@
 			\]
 			Se $x > 1$ allora $x^2>x$ quindi $-x^2 < -x$ e $e^{-x^2} < e^{-x}$ quindi se:
 			\[
-			\int_{1}^{+\infty}e^{-x}dx < +\infty, \text{allora: } \int_{1}^{+\infty}e^{-x^2}dx < +\infty 
+			\int_{1}^{+\infty}e^{-x}dx < +\infty, \text{allora: } \int_{1}^{+\infty}e^{-x^2}dx < +\infty
 			\]
 			questo vale per il criterio del confronto. \\
 			$\mathlarger{\int_{1}^{+\infty}e^{-x}dx = \lim_{h \to +\infty}\int_{0}^{h}e^{-x}dx = \lim_{h \to +\infty}[-e^{-x}]^h_1 = \lim_{h \to +\infty}-e^{-h} e^{-1}} = -e^{-\infty} + e^{-1} = e^{-1} < +\infty$ \\
