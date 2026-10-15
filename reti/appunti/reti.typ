@@ -87,7 +87,7 @@ Considerati assieme, i protocolli dei vari livelli sono detti *pila di protocoll
 #figure(
 image("images/protocol_stack.png", width: 40%),
 caption: [Pila di protocolli di Internet]
-)
+) <fig:tcp-ip>
 
 Analizziamo brevemente i vari livelli:
 - il livello di _applicazione_ è la sede delle applicazioni di rete e dei relativi protocolli. Per quanto riguarda Internet, questo livello include molti protocolli, come HTTP che consente la richiesta e il trasferimento dei documenti web, SMTP che consente il trasferimento dei messaggi di posta elettronica e FTP che consente il trasferimento di file tra due sistemi remoti. I pacchetti di informazione vengono chiamati *messaggi*.
@@ -363,4 +363,114 @@ Per garantire disponibilità e affidabilità, i record DNS appena creati devono 
 Le query utilizzate dai server secondari per allinearsi al primario sono principalmente due:
 - *AXFR*: per richiedere una copia completa e integrale dei record della zona.
 - *IXFR*: per richiedere un trasferimento incrementale, ottenendo solamente le modifiche più recenti.
+= Livello di Trasporto
+== Introduzione e servizi a lviello di trasporto
+Un protocollo a livello di trasporto mette a disposizione una *comunicazione logica* tra processi applicativi di host differenti. \
+Per comunicazione logica si intende, dal punto di vista dell'applicazione, che tutto proceda come se gli host che eseguono i processi fossero direttamente conessi. I processi applicativi usano la comunicazione logica fornita dal livello di trasporto per scambiare messaggi, senza preocupparsi dei dettagli dell'infrastruttura fisica utilizzata per trasposrtarli. \
+I protocolli a livello di trasporto sono implementati nei sistemi periferici, ma non nei router della rete. Nel mittente, il livello di trasporto converte i messaggi che riceve da un processo applicativo in pacchetti a livello di trasposrto, noti come *segmenti*. Questo avviene spezzando i messaggi applicativi in parti più piccole e aggiungendo a ciascuna di esse un'intestazione di trasporto per creare un segmento. Il livello di rete del ricevente estrae il segmento del datagramma e lo passa al livello di trasporto. Quest'ultimo elabora il segmento ricevuto, rendendo disponibili all'applicazione destinataria i dati del segmento. \
+Internet fornisce due protocolli a livello di trasporto, TCP e UDP, che forniscono servizi diversi alle applicazioni che ne fanno uso.
+=== Relazione tra i livello di trasporto e di rete
+Il livello di trasposrto è collocato sopra quello di rete nella pila di protocolli, ricordiamo la *@fig:tcp-ip*. Un livello di trasporto mette a disposizione una comunicazione logica tra processi che vengono eseguiti su host diversi, un protocollo a livello di rete fornisce comunicazione logica tra host. La distinzione è sottile, ma importante. Determinati servizi possono essere garantiti da un protocollo di trasporto anche se il sottostante protocollo di rete non offre un servizio corrispondente. Ad esempio, un protocollo di trasporto può offrirre il servizio di trasferimento dati affidabile anche quando il sottostante protocollo di rete non lo è. Considerando un altro aspetto, un protocollo di trasposrto può usare la cifratura per garantire che i messaggi delle applicazioni non vengano letti da intrusi, anche quando il livello di rete non può garantire la riservatezza dei segmenti a livello di trasporto.
+=== Panoramica del livello di trasporto di Internet
+Internet mette a disposizione del livello di applicazione due protocolli. Uno è *UDP*, _User Datagram Protocol_, che fornisce alle applicazioni un servizio non affidabile e non orientate alla connessione, l'altro è *TCP*, _Transmission Control Protocol_, che offre un servizio affidabile e orientato alla connessione. \
+Prima di entrare nel dettaglio dei due protocolli è meglio analizzare brevemente il livello di rete. Il protocollo di rete in Internet ha un nome: IP (Internet Protocol). Tale protocollo fornisce comunicazione logica tra host. Il suo modello di servizio prende il nome di *best-effort delivery service* o, *best-effort*. Questo significa che IP fa del suo meglio per consegnare i segmenti tra host comunicanti ma non offre garanzie. NOn assicura né la consegna dei segmenti né il rispetto dell'ordine originario e non garantisce neppure l'integrità dei dati all'interno dei segmenti. Per queste ragioni si dice che IP offra un *servizio non affidabile*. \
+Il compito dei protocolli TCP e UDP è l'estensione del servizio di consegna di IP "tra sistemi periferici" a quello di consegna "tra processi in esecuzione sui sistemi periferici". Il passaggio, da consegna host-to-host a consegna process-to-process, viene detto *multiplexing* e *demultiplexing a livello di trasporto*. Inoltre, TCP e UDP, forniscono un controllo di integrità includendo campi per il riconoscimento di errori nelle intestazioni dei propri segmenti. UDP, come IP, costituisce un servizio inaffidabile: non garantisce che i dati inviati da un processo arrivino intatti (e neanche che arrivino) al processo destinatario. \
+TCP offre diversi servizi aggiuntivi. Innanzitutto, fornisce un *trasferimento dati affidabile* e, quindi, garantisce che i dati vengano trasferiti da un processo a un altro in modo corretto e ordinato. Pertanto TCP converte il servizio inaffidabile tra sistemi periferici, tipico di IP, in un servizio affidabile di trasporto dati tra processi. TCP fornisce anche il *controllo di congestione*, un servizio offerto alle applicazioni e a Internet nel suo complesso. In pratica, evita che le connessioni TCP intasino i collegamenti e i rotuer tra gli host comunicanti con un'eccessiva quantità di traffico. Questo è reso possibile regolando la velocità alla quale il lato mittente della connessione TCP immette traffico in rete. Il traffico UDP, al contrario, non viene regolato. Le applicazioni che usano UDP possono spedire a qualsiasi velocià desiderata e per tutto il tempo voluto.
+== Multiplexing e demultiplexing
+Analizziamo il servizio di multiplexing e demultiplexing in Internet, anche se è un servizio presente in tutte le reti di calcolatori. \
+Nell'host destinatario il livello di trasposrto riceve segmenti dal livello di rete immediatamente sottostante. Il livello di trasposrto ha il compito di consegnare i dati di questi segmenti al processo applicativo appropriato in esecuzione nell'host. Esaminiamo come viene realizzato. \
+Ricordiamo che un processo può gestire una o più *socket*, attraverso le quali i dati fluiscono dalla rete al processo e viceversa. Di conseguenza, il livello di trasposrto nell'host di ricezione non trasferisce i dati direttamente a un processo, ma a una socket che fa da intermediario. Siccome, a ogni dato istante, può esserci più di una socket nell'host di ricezione, ciascuna avrà un identifcatore univoco il cui formato dipende dal fatto che si tratti di socket UDP o TCP. \
+Vediamo come l'host in ricezione indirizzi verso la socket appropriata il segmento a livello di trasporto in arrivo. Ciascun segmento a lviello di trasporto ha vari campi che permettono di fare ciò. Nel lato del ricevente, il livello di trasporto esamina questi campi per identificare la socket di ricezione e quindi vi dirige il segmento. Il compito di trasportare i dati dei segmenti a livello di trasporto verso la giusta socket viene detto *demultiplexing*. Il compito di radunare frammenti di dati da diverse socket sull'host di origine e incapsulare ognuno con intestazioni a livello di trasporto per creare dei segmenti e passarli al livello di rete, viene detto *multiplexing*. \
+Le funzioni di multiplexing e demultiplexing hanno specifico interesse ogni volta che un protocollo a un qualsiasi livello è utilizzato da più entità al livello immediatamente superiore. \
+Vediamo come le funzioni di multiplexing e demultiplexing vengono realizzati negli host. Da quanto visto in precedenza, il multiplexing a livello di trasporto richiede
++ che le socket abbiano identificatori unici
++ ogni segmenti presenti campi che indichino la socket cui va consegnato il segmento.
+Questi sono, come indicati nella figura seguente, il *campo del numero di porta* e il *campo del numero di porta di destinazione*.
+#figure(
+image("images/tcp.png", width: 90%),
+caption: [I campi del numero di porta di origine e di destinazione nei segmenti a livello di trasporto]
+)
+I segmenti UDP e TCP presentano anche altri campi. I numeri di porta sono di 16 bit e vanno da 0 a 65535, quelli che vanno da 0 a 1023 sono chiamati *numeri di porta noti* e sono riservati per essere usati da protocolli applicativi ben noti, come HTTP (porta 80), FTP (porta 21) e così via. L'elenco dei numeri di porta noti è fornito nell'RFC 1700. Le porte da 1024 a 49151 sono *porte registrate*, _registered ports_, che sono registrate da IANA su richiesta di terze parti. Queste sono dette anche _porte utente_, perchè utilizzabili da applicazioni non di sistema. Le porte da 49152 a 65535 sono dette *porte private* o *dinamiche* che vengono assegnate automaticamente e temporaneamente quando un'app client avvia una connessione.
+=== Multiplexing e demultiplexing non orientati alla connessione
+Descriviamo il processo di multiplexing/demultiplexing sul protocollo UDP. Supponiamo che un processo nell'host _A_, con porta UDP 19157, voglia inviare un blocco di dati applicativi a un processo con porta UDP 46428 nell'host _B_. Il livello di trasporto di  _A_ crea un segmento che include i dati applicativi, i numeri di porta di origine e di destinazione e altri valori. Il livello di trasporto passa, il segmenti risultante al livello di rete, che lo incapsula in un datagramma IP, ed effettua un tentivo best-effort di consegna del segmento all'host in ricezione. Se il segmento arriva all'host _B_, il suo livello di trasporto esamina il numero di porta di destinazione del segmento e lo coonsegna alla propria socket identificata da tale porta. L'host _B_ potrebbe avere in esecuzione più processi, ciascuno con la propria socket UDP e relativo numero di porta. Quando i segmenti UDP giungono dalla rete, l'host _B_ dirigie ciascun segmento alla socket appropriata. \
+Una socket UDP viene identificata da una coppia formata da indirizzo IP e numero di porta di destinazione. Due segmenti UDP che hanno diversi indirizzi IP e/o diversi numeri di porta, ma hanno stesso indirizzo IP e stesso numero di porta di destinazione, vengono diretti allo stesso protocollo di destinazione tramite la medesima socket. \
+Il numero di porta di origine serve come parte di un "indirizzo di ritorno": quando _B_ vuole restituire il segmento ad _A_, la porta di destinazione del segmento da _B_ verso _A_ assumerà il valore della porta di origine del segmento da _A_ verso _B_. L'indirizzo di ritorno completo è costituito dall'indirizzo IP di _A_ più il numero di porta di origine.
+=== Multiplexing e demultiplexing orientati alla connessione
+Per comprendere il demultiplexing TCP, dobbiamo analizzare le socket TCP e come si stabiliscono connessioni TCP. Una differenza tra socket TCP e UDP risiede nel fatto che la prima è identificata da quattro parametri: indirizzo IP di origine, numero di porta di origine, indirizzo IP di destinazione e numero di porta di destinazione. Pertanto, quando un segmento TCP giunge dalla rete in un host, quest'ultimo utilizza i quattro valori per dirigere il segmento verso la socket appropriata. Al contrario di UDP, due segmenti TCP in arrivo, aventi indirizzi IP di origine o numero di porta di origine diversi, vengono diretti a due socket differenti, anche a fronte di indirizzo IP e porta di destinazione uguali, con l'eccezione dei segmenti TCP che trasportano la richiesta per stabilire la connessione. \
+L'host server può ospitare più socket TCP contemporanee collegate a processi diversi, ognuna identificata da una specifica quaterna di valori. Quando il segmento TCP arriva all'host, i quattro campi citati prima vengono utilizzati per fare demultiplexing e dirigere il segmento verso la socket appropriata. \
+La situazione è schematizzata nella seguente figura:
+#figure(
+image("images/demultiplexing_tcp.png", width: 70%),
+caption: [Due client usano stesso numero di porta di destinazione per comunicare con stessa applicazione sul web server]
+)
+== Trasporto non orientato alla connessione: UDP
+Il protocollo UDP fa il minimo che un protocollo di trasporto debba fare. A parte la funzionalità di multiplexing/demultiplexing e una forma di controllo degli errori molto semplice, non aggiunge nulla a IP. Quando lo sviluppatore sceglie UDP anzichè TCP, l'applicazione dialoga quasi in modo diretto con IP. UDP prende i messaggi dal processo applicativo, aggiunge il numero di porta di origine e di destinazione per il multiplexing/demultiplexing, aggiunge altri due piccoli campi e passa il segmento risultante a livello di rete. Questi incapsula il segmento in un datagramma IP e quindi effettua un tentativo di consegnarlo all'host di destinazione in modalità best-effort. Se il segmento arriva a destinazione, UDP utilizza il numero di porta di destinaizone per consegnare i dati del segmento al processo applicativo corretto. Notiamo che in UDP non esiste handhsaking tra le entità di invio di ricezione a lviello di trasporto. Infatti si dice che UDP è _non orientato alla connessione_. \
+DNS è un tipico esempio di protocollo applicativo che utilizza UDP. \
+Ci sono diversi motivi per i quali uno svilupattore dovrebbe scegliere di costruire un'aplicazione su UDP anzichè su TCP.
+- _Controllo più preciso a livello di applicazione su quali dati sono inviati e quando_. Non appena un processo applicativo passa dei dati a UDP, quest'ultimo li impacchetta in un segmento che trasferisce immediatamente al livello di rete. TCP, invece, dispone di un meccanismo di controllo della congestione che ritarda l'invio a livello di trasposrto quando uno o più collegamenti tra origine e destinazione diventano eccessivamente congestionati. TCP continua, inoltre, a inviare il segmenti fino a quando viene notificata la sua ricezione da parte della destinazione. Dato che le applicazioni in tempo reale spesso richiedono una velocità minima di invio e non sopportano ritardi eccessivi e tollerano una certa perdita di dati, il modello TCP non si adatta bene a queste esigenze.
+- _Nessuna connessione stabilita_. TCP utilizza un handshake a tre vie prima di iniziare il trasferimento dei dati. UDP invece invia dati a raffica senza alcun preliminare formale. Pertanto, UDP non introduce alcun ritardo nello stabilire una connessione. Questo è, probabilemente, il motivo per cui DNS utilizza UDP anzichè TCP. HTTP, invece, usa TCP, dato che l'affidabilità risulta critica per le pagine web con testo. Il protocollo QUIC (Quick UDP Internet Protocol) utilizza UDP come protocollo di trasporto e implementa l'affidabilità in un protocollo a livello di applicazione.
+- _Nessun stato di connessione_. TCP mantiene lo stato della connessione nei sistemi perferici. Questo stato include buffer di ricezione di invio, parametri per il controllo di congestione e parametri sul numero di sequenza e di acknowledgement. UDP, invece, n on conserva lo stato della connessione e non tiene traccia di questi parametri. Per questo motivo, un server dedicato a una particolare applicazione può generalmente supportare molti più client attivi quando l'applicazione utilizza UDP anzichè TCP.
+- _Minor spazio usato per l'intestazione del pacchetto_. L'intestazione dei pacchetti TCP aggiunge 20 byte, mentre UDP solo 8.
+La seguente figura elenca alcune diffuse applicazioni per Internet e i relativi protocolli di trasporto usati.
+#figure(
+image("images/protocolli_trasporto.png", width: 70%),
+caption: [Protocolli di trasporto delle più diffuse applicazioni Internet]
+)
+Prima di analizzare la struttura dei segmenti UDP menzionamio che le applicazioni possono ottenere un trasferimento dati affidabile anche con UDP. Ciò avviene se l'affidabilità è insita nell'applicazione stessa. Il protocollo QUIC utilizza UDP come protocollo di trasporto e implementa l'affidabilità in un protocollo a livello di applicazione. Avere affidabilità direttamente nell'applicazione consentirebbe ai processi applicativi di comunicare in modo affidabile senza essere soggetti ai vincoli sulla velocità di trasmissione imposti dai meccanismi del controllo di congestione di TCP.
+=== Struttura dei segmenti UDP
+L'RFC 768 definisce la struttura dei segmenti UDP, come mostrato nella seguente figura:#figure(
+image("images/segmenti_UDP.png", width: 90%),
+caption: [Struttura dei segmenti UDP]
+)
+L'intestazione UDP presenta solo quattro campi di due byte ciascuno. Il campo _Lunghezza_ specifica il numero di byte del segmento UDP. Un valore esplicito di lunghezza è necessario perchè la grandezza del campo _Dati_ può essere diversa tra un segmento e quello successivo. L'host ricevente utilizza il checksum per verificare se sono avvenuti errori nel segmento. In realtà, oltre che sul segmento UDP, il checksum è calcolato anche su alcuni campi dell'intestazione IP.
+=== Checksum UDP
+Il checksum UDP server per il ritrovamento degli errori. In altre parole, viene utilizzato per determinare se i bit del segmento UDP sono stati alterati durante il loro trasferimento da sorgente a destinazione. Il lato mittente UDP effettua il complemento a 1 della somma di tutte le parole da 16 bit nel segmento, e l'eventuale riporto finale viene sommato al primo bit. Tale risultato viene posto nel campo _Checksum_ del segmento UDP.
+#esempio[
+Supponiamo di avere le seguenti tre parole di 16 bit
+$
+0110011001100000 \
+0101010101010101 \
+1000111100001100
+$
+La somma delle prime due è:
 
+$
+  #table(
+    columns: 2,
+    align: (right, left),
+    stroke: none,
+    inset: (x: 2pt, y: 3pt),
+    [$0110011001100000$], [$+$],
+    [$0101010101010101$], [$=$],
+    table.hline(),
+    [$1011101110110101$], [],
+  )
+$
+Sommando la terza parola al risultato precedente otteniamo:
+$
+#table(
+    columns: 2,
+    align: (right, left),
+    stroke: none,
+    inset: (x: 2pt, y: 3pt),
+    [$1011101110110101$], [$+$],
+    [$1000111100001100$], [$=$],
+    table.hline(),
+    [$0100101011000010$], [],
+  )
+$
+Notiamo che il riporto di quest'ultima è stato sommato al primo bit. Il complemento a 1 si ottiene convertendo i bit 0 in 1 e viceversa. Di conseguenza, il checksum sarà $1011010100111101$. In ricezione, si sommano le tre parole iniziali e il checksum. Se non ci sono errori nel pacchetto, l'addizione darà $#{"1" * 16}$, altrimenti se un bit vale 0 sappiamo che è stato introdotto almeno un errore nel pacchetto.
+]
+Il motivo per il quale UDP metta a disposizione un checksum è che non c'è garanzia che tutti i collegamenti tra origine e destinazione controllino gli errori. Inoltre, anche se i segmenti fossero trasferiti correttametne lungo un collegamento, si potrebber verificare un errore mentre il segmento si trova nella memoria di un router. Dato che non sono garantiti né affidabilità del singolo collegamento né il rilevamento di errori in memoria, UDP deve mettere a disposizione a livello di trasporto un meccanismo di verificare su base end-to-end se si vuole che il servizio trasferimento dati sia ing rado di rilevare eventuali errori. Questo è un esempio del principio *end-to-end* nella progettazione di sistemi in base al quale, dato che determinate funzionalità devono essere implementate su base end-to-end, le funzioalità posizionate ai livelli inferiori possono diventare ridondanti o di scarso valore se confrontate con le stesse funzioanalità offerete dai livelli superiori.  \
+UDP non a nulla per risolvere le situazioni di errore; alcune implementazioni UDP si limitano a scartare il segmento danneggiato, altre lo trasmettono all'applicazione con un avvertimento.
+== Trasporto orientato alla connessione: TCP
+Per offrire trasferimento dati affidabile, TCP si basa su principi fondamentali come la rilevazione degli errori, le ritrasmissioni, gli acknowledgement cumulativi, i contatori e i campi nell'intestazione per numeri di sequenza e acknowledgement.
+=== Connessione TCP
+TCP viene detto *orientato alla connessione* in quanto, prim di effettuare lo scambio dei dati, i processi devono effettuare l'handshake, ossia devono inviarsi reciprocamente alcuni segmenti preliminari per stabilire i parametri del successivo trasferimento dati. \
+La connessione TCP non è un circuito end-to-end TDM o FDM, come in una rete a commutazione di circuito, in quanto lo stato della connessione riside completamente nei due sistemi perfierici e non negli elementi di rete intermedi, questi ultimi non salvano lo stato della connessione TCP. \
+Una connessione TCP offre un *servizio full-duplex*: su una connessione TCP tra il processo _A_ su un host e il processo _B_ su un altro host, i dati a livello di applicazione possono fluire dal processo _A_ al processo _B_ nello stesso momento in cui fluiscono in direzione opposta. Una connessione TCP è anche *punto a punto*, ossia ha luogo tra singolo mittente e singolo destinatario. \
+Per instaurare una connessione TCP, il client invia per primo uno speciale segmento TCP; il server rispende con un secondo segmento speciale TCP; infine il client risponde con un terzo segmento speciale. I primi due non trasportano payload, ossia non hanno dati a livello applicativo; il terzo può invece trasportare informzioni utili. Dato che i due host si scambiano tre segmenti, questa procedura viene chiamata *handshake a tre vie*. \
+Una volta instaurata una connessione TCP, i due processi applicativi si possono scambiare dati. Consideriamo l'invio di dati dal processo client al processo server. Il primo manda un flusso di dati attraverso la socket. Questi, quando hano attraversato il punto di uscita, sono nelle mani di TCP in esecuzione nel client. TCP dirige i dati al *buffer di invio* della connessione, uno dei buffer riservato durante l'handshake a tre vie, da cui, preleverà blocchi di dati e li passerà al livello di rete. \
+Le specifiche TCP non indicano quando TCP debba inviare i dati nel buffer, ma afferma che TCP dovrebbe spedire tali dati in segmenti quando è più conveniente. La massima quantità di dati prelevabili e posizionabili in un segmento viene limitata dalla *dimensione massima di segmento (MSS)*. Questo valore viene impostato determinando prima la lunghezza del grame più grande che può essere inviato a livello di collegamento dall'host mittente locale, la cossidetta *unità trasmissiva massima (MTU)* e poi scegliendo un MSS tale che il segmento TCP stia all'interno di un singolo frame a livello di collegamento, considerando anche la lunghezza dell'intestazione TCP/IP normalmente pari a 40 byte. \
+TCP accoppia ogni blocco di dati del client a un'intestazione TCP, andando a formare *segmenti TCP*. Questi vengono passati al sottostante livello di rete, dove sono incapsulati nei datagrammi IP a livello di rete che vengono poi immessi nella rete. Quando all'altro capo TCP riceve un segmento, i dati dael segmento vengono memorizzati nel buffer di ricezione della connessione TCP. Ogni lato della connessione presenta un proprio buffer di invio e di ricezione.
+=== Struttura dei segmenti TCP
