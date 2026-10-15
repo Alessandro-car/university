@@ -690,7 +690,38 @@ Sia dato il seguente esempio:
 #figure(
 image("images/leacock_chodorow.png", width: 70%)
 )
-Per la coppia $S I N S I M("cat", "mouse")$, il percorso attraversa 5 nodi e applicando la formula con $D= 16$ si ottiene il valore $log(5/32) = 0.806$. \
-*VEDERE SLIDE PRECEDENTI ALLA 111*. \
-
-
+Per la coppia $S I N S I M("cat", "mouse")$, il percorso attraversa 5 nodi e applicando la formula con $D= 16$ si ottiene il valore $log(5/32) = 0.806$.
+=== Relazioni tra synset
+Wordnet organizza i concetti attraverso due tipi fondamentali di relazioni semantiche che catturano la struttura della conoscenza lessicale umana. Queste relazioni sono:
+- *Iperonimia/Iponimia*. Relazioni gerarchica *_is_a_* che esprimono specializzazione tra concetti.
+- *Meronimia/Olonimia*. Relazioni *parte-tutto* che descrivono come gli elementi costituiscono strutture più complesse.
+==== Iperonimia e Iponimia: la Gerarchia
+#definizione(title: "Iperonimia")[
+L'_iperonimia_ rappresenta una relazione _is_a_ asimettrica transitiva. Un synset _Y_ è iperonimo di $X$ se $X$ è un tipo di $Y$.
+]
+L'_iponimia_ è la relazione inversa: $X$ è iponimo di $Y$ se $X$ rappresenta un tipo più specifico di _Y_. \
+Analizziamone le proprietà.
+- *Asimmetria*: se $X$ è iponimo di $Y$, $Y$ non può essere iponimo di $X$.
+- *Transitività*: se $A$ è iponimo di $B$ e $B$ è iponimo di $C$, allora $A$ è iponimo di $C$.
+- *Ereditarietà*: gli iponimi ereditano le proprietà dei loro iperonimi (nodi superiori della tassonomia).
+==== Profondità e Ampiezza della Gerarchia
+La struttura gerarchica di WordNet varia significativamente tra domini semantici, riflettendo diversi livelli di specificità. Si possono avere 16 livelli massimi, ovvero la profondità massima della gerarchia per sostantivi. Ci possono essere 8 livelli medi che è la profondità tipica della maggior parte delle gerarchia e ci possono essere 25.000 synset foglia, ovvero concetti terminal senza iponimi.
+==== Meronimia e Olonimia: Relazioni parte-tutto
+Le relazioni parte-tutto catturano la composizione strutturale degli oggetti e sono fondamentali per comprendere la struttura fisica e funzionale delle entità. Le diverse tipologie di *meronimia* sono le seguenti.
+- *Part-Meronym* (Parte-Tutto strutturale). Riguarda i componenti fisici e strutturali di un oggetto. Ad esempio una "ruota" è parte di un "automobile".
+- *Member-Meronym* (Membro - Collezione). Riguarda l'appartenenza di un elemento individuale a un gruppo o collezione. Ad esempio un "albero" è membro di una "foresta".
+- *Substance-Meronym* (Materiale - Sostanza). Riguarda la materia prima o il materiale costitutivo con cui è fatto un oggetto. Ad esempio il "legno" è la sostanza di un "tavolo".
+#esempio(title: "Struttura di un albero")[
+#figure(
+image("images/meronimia.png", width: 70%),
+caption: [Esempi di meronimia]
+)
+]
+==== Differenze Formali tra le relazioni.
+Analizziamo le differenze fra le relazioni di iperonimia/iponimia rispetto a quelle di meronimia/olonimia. Le relazioni di iperonimia/iponimia sono delle relazioni tassonomiche, sono transitive e godono della proprietà di ereditarietà. Le relazioni di meronimia indicano una relazione compositiva, la transitività è limitata, non c'è ereditarietà ed esiste una dipendenza strutturale.
+==== Applicazioni nel Natural Language Processing
+Le relazioni semantiche sono fondamentali per numerose applicazioni di elaborazione del linguaggio naturale e rappresentazione della conoscenza. Sono impoeranti per i seguenti motivi.
+- *Disambiguazione del senso*. Le gerarchie aiutano a risolvere l'ambiguità lessicale attraverso vincoli semantici.
+- *Espansione di Query*. Gli iperonimi e iponimi migliorano il recupero dell'informazione.
+- *Inferenza Semantica*. Le relazioni permettono di dedurre proprietà implicite e inferenze logiche.
+- *Similarity Semantica*. La distanza nella gerarchia quantifica la similarità concettuale.
