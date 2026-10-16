@@ -474,3 +474,132 @@ Una volta instaurata una connessione TCP, i due processi applicativi si possono 
 Le specifiche TCP non indicano quando TCP debba inviare i dati nel buffer, ma afferma che TCP dovrebbe spedire tali dati in segmenti quando è più conveniente. La massima quantità di dati prelevabili e posizionabili in un segmento viene limitata dalla *dimensione massima di segmento (MSS)*. Questo valore viene impostato determinando prima la lunghezza del grame più grande che può essere inviato a livello di collegamento dall'host mittente locale, la cossidetta *unità trasmissiva massima (MTU)* e poi scegliendo un MSS tale che il segmento TCP stia all'interno di un singolo frame a livello di collegamento, considerando anche la lunghezza dell'intestazione TCP/IP normalmente pari a 40 byte. \
 TCP accoppia ogni blocco di dati del client a un'intestazione TCP, andando a formare *segmenti TCP*. Questi vengono passati al sottostante livello di rete, dove sono incapsulati nei datagrammi IP a livello di rete che vengono poi immessi nella rete. Quando all'altro capo TCP riceve un segmento, i dati dael segmento vengono memorizzati nel buffer di ricezione della connessione TCP. Ogni lato della connessione presenta un proprio buffer di invio e di ricezione.
 === Struttura dei segmenti TCP
+Esaminiamo la struttura dei segmenti TCP. Il segmento TCP consiste di campi _Intestazione_ e di un campo contenente un blocco di dati proveniente dall'applicazione. Come detto prima, la MSS limita la dimensione massima del campo _Dati_ di un segmento. TCP, quando invia un file di grandi dimensioni, di solito frammenta il file in porizioni di dimensione MSS. \
+La seguente figura mostra la *struttura dei segmenti TCP*.
+#figure(
+image("images/struttura_tcp.png", width: 70%),
+caption: [Struttura dei segmenti tcp]
+) <fig:struttura_tcp>
+Come in UDP, l'intestazione include *numeri di porta origine* e di *destinazione*, utilizzati per il multiplexing/demultiplexing dei dati da e verso le applicazioni del livello superiore, e un campo *Checksum*. L'intestazione dei segmenti TCP comprende poi i seguenti campi.
+- Il campo *Numero di sequenza* e il campo *Numero di acknowledgement*, entrambi di 32 bit, vengono utilizzati dal mittente e dal destinatario TCP per implementare il trasferimento dati affidabile.
+- Il campo *Finestra di ricezione*, di 16 bit, viene utilizzato per il controllo di flusso.
+- Il campo *Lunghezza dell'intestazione*, di 4 bit, specifica la lunghezza dell'intestazione TCP in multipli di 32 bit. L'intestazione TCP ha lunghezza variabile a causa del campo delle opzioni TCP. Generalmente il campo opzioni è vuoto e quindi la lunghezza consueta è di 20 byte.
+- Il campo *Opzioni*, facoltativo e di lunghezza variabile, viene utilizzato quando mittente e destinatario negoziono la dimensione massima del segmento (MSS) o come fattore di scala per la finestra nelle reti ad alta velocità. Inoltre, viene definita l'opzione di time-stamping.
+- Il campo *Flag* è di 6 bit. Il bit *ACK* viene usato per indicare che il valore trasportato nel campo di acknowledgement è valido. I bit *RST, SYN* e *FIN* vengono utilizzati per impostare e chiudere la connessione. I bit *CWR* ed *ECE* sono usati nel controllo di congestione esplicito. Se il bit *PSH* ha valore 1 il destinatario dovrebbe inviare immediatamente i dati al livello superiore. Infine, si utilizza il bit *URG* per indicare nel segmento la presenza di dati che l'enetità mittente a livello superiore ha marcato come "urgenti". La posizione dell'ultimo byte di dati urgenti viene denotata dal campo *Puntatore ai dati urgenti*, di 16 bit. Quando ci sono dati urgenti, TCP deve informare l'entità destinataria al livello superiore e passarle un puntatore alla fine dei dati urgenti.
+==== Numeri di sequenza e numeri di acknowledgement
+Due tra i campi più importanti dell'intestazione del segmento TCP contengono il numero di sequenza e il numero di acknowledgement, che rappresentano una parte critica del servizio di trasferimento dati affidabile proprio di TCP. \
+TCP vede i dati come un flusso di byte non strutturati, ma ordinati. L'uso dei numeri di sequenza in TCP riflette questa visione, in quanto i numeri di sequenza si applicano al flusso di byte trasmessi. Il *numero di sequenza per un segmento* è pertanto il numero nel flusso di byte del primo byte del segmento. \
+Consideriamo ora i numeri di acknowledgement. Ricordiamo che TCP è full-duplex, di conseguenza l'host _A_ può contemporaneamente inviare e ricevere dasti dall'host _B_. I segmenti che provengono dall'Host _B_ presentano un numero di sequenza relativo ai dati che fluiscono da _B_ ad _A_. Il _numero di acknowledgement che l'host A attende dall'host B_. Consideriamo alcuni esempi. \
+Supponiamo che l'host _A_ abbia ricevuto da _B_ tutti i byte numerati da 0 a 535 e che _A_ stia per mandare un segmento all'host _B_. L'host _A_ è in attesa del byte 536 e dei successivi byte nel flusso di dati di _B_. Pertnato, l'host _A_ scrive 536 nel campo di acknowledgement del segmento che spedisce a _B_. \
+Supponiamo, adesso, che l'host _A_ abbia ricevuto un segmento dall'host _B_ contenente i byte da 0 a 535 e un altro segmento contenente i byte da 900 a 1000 ma, per qualche motivo, non ha ricevuto i byte da 536 a 899. In questo esempio, l'host _A_ sta ancora attendendo il byte 546 per ricreare il flusso di dati di _B_. Perciò il prossimo segmento di _A_ destinato a _B_ conterrà 536 nel campo del numero di acknowledgement. Dato che TCP effettua l'acknowledgement solo dei byte fino al primo byte mancante nel flusso, si dice che tale protocollo offre *acknowledgement cumulativi*. \
+Se un host, ad esempio, riceve prima il terzo segmento e non il secondo, ovvero arrivano in disordine, gli RFC non impongono regole su questo aspetto e lasciano la decisione a chi implementa TCP. Esistono due scelte:
++ il destinatario scarta immediatamente i segmenti non ordinati;
++ il destinatario mantiene i byte non ordinati e attende quelli mancanti per colmare i vuoti.
+Chiaramente, la seconda scelta è più efficiente in termini di banda occupata e rappresenta l'approccio solitamente utilizzato.
+==== Telnet
+Telnet è un protocollo a livello di applicazione per il login remoto che utilizza TCP. Oggigiorno molti utenti preferiscono usare il protocollo SSH, _secure shell_, anzichè Telnet, in quanto con quest'ultimo i dati inviati non vengono criptati rendendolo vulnerabile agli attacchi di intercettazione. \
+Una comunicazione Telnet avviene nel seguente modo mostrato in figura.
+#figure(
+	image("images/telnet.png", width: 70%),
+	caption: [Numeri di sequenza e acknowledgement per applicazioni Telnet su TCP]
+)
+Notiamo che ogni carattere immesso dall'utente verrà spedito all'host remoto che restituirà una copia di ciascun carattere. \
+Notiamo che vengono spediti tre segmenti. Il primo è inviato dal client al server e contiente nel campo dati il byte ascii per la lettera 'C'. Il campo numero di sequenza del primo segmento contiene 42 e, inoltre, visto che il client non ha ancora rivevuto dati dal server, questo primo segmento avrà 79 nel proprio campo di acknowledgement. \
+Il secondo segmento spedito dal server al client ha un duplice scopo. Innanzitutto, fa un acknowledgement dei dati ricevuti dal server. Ponendo 43 nel camo di acknowledgement, il server indica al client di aver ricevuto con successo i primi 42 byte e di attendere i byte dal 43 in poi. L'altra finalità di questo segmento è di mandare indietro una "eco" della lettera 'C'. Il secondo segmento ha numero di sequenza 79, ossia il numero iniziale del flusso di dati da server a client in questa connessione TCP. Notiamo che l'acknowledgement dei dati dal client al server viene trasportato in un segmento che a sua volta trasporta dati dal server al client; si dice che tale acknowledgement è *piggybacked* sul segmento dati dal server al client. \
+Il terzo segmento viene inviato dal client al server e ha come scopo dare un acknowledgement ai dati inviati dal server. Il segmento ha 80 nel suo campo di numero di acknowledgement, in quanto il client ha ricevuto con successo il flusso di byte fino al numero di sequenza 79 e ora è in attesa dei byte dall'80 in avanti.
+=== Timeout e stima del tempo di andata e ritorno (RTT)
+TCP utilizza un meccanismo di timeout e ritrasmissione per recuperare i segmenti persi. Sebbene tutto questo sia concettualmente semplice, l'implementazione crea alcuni problemi. La questione più ovvia è la durata degli intervalli di timeout. Il timeout dovrebbe essere più grande del tempo di andata e riutorno sulla connessione (*RTT, Round-Trip Time*), ossia del tempo trascorso da quando si invia un segmento a quando se ne riceve l'acknowledgement, altrimenti ci sarebbero trasmissioni inutili. Il problema è di quanto dovrebbe essere maggiore e come dovrebbe essere stimato RTT.
+==== Stima del tempo di andata e ritorno (RTT)
+L'RTT misurato di un segmento, denotato come `SampleRTT`, è la quantità di tempo che intercorre tra l'istante di invio del segmento e quello di ricezione dell'acknowledgement del segmento. ANzichè misurare un `SampleRTT` per ogni segmento, la maggior parte delle implementazioni TCP eeffettua una sola misurazione di `SampleRTT` alla volta. Ossia, in ogni instante di tempo, `SampleRTT` viene valutato per uno solo dei segmenti trasmessi e per cui non si è ancora ricevuto acknowledgement, il che comporta approssimativamente la misurazione di un nuovo valore di `SampleRTT` a ogni RTT. Inoltre, TCP non calcola mai il `SimpleRTT` per i segmenti ritrasmessi. \
+Ovviamente, i campioni variano da segmento a segmento in base alla congestione nei router e al diverso carico sui sistemi periferici. A causa di tale fluttuazione, ogni valore di `SampleRTT` può essere atipico. \
+Per effettuare una stima risulta naturale calcolare una media dei valori si `SampleRTT`, che TCP chiama `EstimatedRTT`. Quando si ottiene un nuovo `SampleRTT`, TCP aggiorna  `EstimatedRTT` secondo la formula:
+$
+"EstimatedRTT" = (1 - alpha) dot.c "EstimatedRTT" + alpha dot.c "SampleRTT"
+$
+Il valore raccomandato per $alpha$ è 0.125. \
+Si noti che `EstimatedRTT` è una media ponderata dei valori `SampleRTT`. Tale media attribuisce maggiore importanza ai campioni recenti rispetto a quelli vecchi. In statistica, tale media è detta *media mobile esponenziale ponderata* (EWMA, Exponential Weighted Moving Average). \
+Oltre ad avere una stima di RTT è importante possedere una misura della sua variabilità. La variazione è denotata con `DevRTT` e calcolata come:
+$
+"DevRTT" = (1 - beta) times "DevRTT" + beta dot.c bar "SampleRTT" - "EstimatedRTT" bar
+$
+Il valore suggerito per $beta$ è 0.25s.
+==== Impostazione e gestione del timeout di ritrasmissione
+Dati i valori di `EstimatedRTT` e `DevRTT` bisogna capire quali valori bisogna utilizzare per l'intervallo di timeout in TCP. L'intervallo non può essere inferiore a `EstimatedRTT`. Ma l'intervallo stesso non deve essere molto maggiore di `EstimatedRTT`, altrimenti TCP non ritrasmetterebbe rapidamente il segmento perduto, il che comporterebbe gravi ritardi sul trasferimento dei dati. Quindi bisogna impostare il timeout a `EstimatedRTT` più un certo margine che dovrebbe essere grande quanto c'è molta fluttuazione nei valori di `SampleRTT` e piccolo in caso contrario. Qui entra in gioco il valore di `DevRTT`. L'intervallo di timeout viene calcolato come segue:
+$
+"TimeoutInterval" = "EstimatedRTT" + 4 dot.c "DevRTT"
+$
+In RFC 6298 viene raccomandato un valore iniziale di `TimeoutInterval` pari a 1 secondo. Inoltre, quando si verifica un timeout, `TimeoutInterval` vien raddoppiato per evitare un timeout prematuro riferito a un segmento successivo per cui si riceverà presto un acknowledgement. Quando si riceve un segmento ed `EstimatedRTT` viene aggiornato,  `TimeoutInterval` viene ricalcolato secondo la formula precedente.
+=== Trasferimento dati affidabile
+TCP crea un *servizio di trasporto dati affidabile* al di sopra del servizio inaffidabile e best-effort di IP, assicurando che il flusso di byte che i processi leggono dal buffer di ricezione TCP non sia alterato. \
+Presentiamo una descrizione molto semplificata di un mittente TCP che fa uso solo di timeout per recuperare i segmenti persi e poi una più completa che utilizza anche gli acknowledgement duplicati. Supponiamo che i dati vengano inviati solo in una direzione, da $A$ a $B$, e che il primo stia trasmettendo file di grandi dimensioni. \
+Esistono tre eventi principali relativi alla trasmissione e ritrasmissione dei dati: dati provenienti dall'applicazione, timeout e ricezione di un ACK. Quando si verifica il primo evento, TCP incapsula i dati che gli giungono dall'applicazione in un segmento e lo passa a IP. Inoltre, se il timer non è gia in funzione per qualche altro segmento, TCP lo avvia quando il segmento viene passato a IP. È utile pensare che il timer sia associato al più vecchio segmento che non ha ricevuto acknowledgement. L'intervallo di scandenza per il timer è il `TimeoutInterval`. \
+Il secondo evento è il timeout, cui TCP risponde ritrasmettendo il segmento che lo ha causato e quindi riavviato il timer. \
+Il terzo evento, che deve essere gestito dal mittente TCP, è l'arrivo del segmento di acknowledgement con un valore valido nel campo ACK. Quando si verifica tale evento, TCP confronta il valore di ACK con la propria variabile `SendBase`. La variabile di stato TCP `SendBase` è il numero di sequenza del più vecchio byte che non ha ancora ricevuto un acknowledgement. Di conseguenza $"SendBase" - 1$ è il numero di sequenza dell'ultimo byte che si sa essere ricevuto correttamente e nell'ordin giusto. Tutto ciò è rappresentato nel seguente algoritmo:
+#algoritmo(title: [Algoritmo del mittente TCP])[
+  #text(size: 9pt, style: "italic")[/* Ipotizziamo che il mittente non subisca imposizioni dal controllo di flusso o di congestione TCP, che i dati dall'alto abbiano dimensione inferiore a MSS e che il trasferimento dati avvenga in un'unica direzione */]
+  #v(0.5em)
+  #pseudocode-list[
+    + $text("NextSeqNum") <- text("InitialSeqNumber")$
+    + $text("SendBase") <- text("InitialSeqNumber")$
+    + *loop* (per sempre) *do*
+      + *switch* (evento) *do*
+        + *evento:* dati ricevuti dall'applicazione a livello superiore crea il segmento TCP con numero di sequenza $text("NextSeqNum")$
+          + *if* il timer attualmente non è in funzione *then*
+            + avvia il timer
+          + passa il segmento a IP
+          + $text("NextSeqNum") <- text("NextSeqNum") + text("lunghezza(dati)")$
+        + *evento:* timeout del timer
+          + ritrasmetti il segmento che non ha ricevuto ACK con il più piccolo numero di sequenza
+          + avvia il timer
+        + *evento:* ACK ricevuto, con valore del campo ACK pari a $y$
+          + *if* $y > text("SendBase")$ *then*
+            + $text("SendBase") <- y$
+            + *if* esistono attualmente segmenti senza ACK *then*
+              + avvia il timer
+  ]
+] <alg:mittente-tcp>
+L'ACK si riferisce a uno o più segmenti che precedentemente non avevano ricevuto conferma. Quindi, il mittente aggiorna la propria variabile `SendBase` e poi, se non ci sono segmenti che necessitano di acknowledgement, riavvia il timer.
+==== Scenari interessanti
+Abbiamo visto coem TCP fornisca un trasferimento dati affidabile. Per comprendere come funziona il protocollo consideriamo qualche scenario. Consideriamo la seguente figura:
+#figure(
+image("images/scenario_tcp.png", width: 70%),
+caption: [Ritrasmissione dovuta alla perdita di un acknowledgement]
+)
+Questa figura mostra un caso in cui l'host _A_ spedisce un segmento all'host _B_. Dopo aver inviato il segmento, _A_ attende un segmento da _B_ con numero di acknowledgement 100. Sebbene il segmento sia stato ricevuto da _B_, l'acknowledgement sul percorso inverso viene smarrito. In questo caso si verifica l'evento di timeout e l'host _A_ ritrasmette lo stesso segmento. Quando l'host _B_ riceve la ritrasmissione, rileva dal numero di sequenza che il segmento contiene dati che sono stati già ricevuti. Quindi, l'host _B_ scarta i byte del segmento ritrasmesso. \
+Consideriamo adesso la seguente figura.
+#figure(
+image("images/scenario2_tcp.png", width: 70%),
+caption: [Segmento 100 non ritrasmesso]
+)
+In questa figura _A_ invia due segmenti. Supponiamo che entrambi arrivino intatti a _B_ e che questo invii due acknowledgement separati per i segmenti, il primo numero 100, il secondo 120. Supponiamo che nessuno degli acknowledgement arrivi all'host _A_ prima del timeout. Quando si verifica il timeout, l'host _A_ rispedisce il primo segmento e riavvia il timer. Fino a quando l'ACK el secondo segmento non arriva prima el nuovo timeout, il secondo segmento non sarà ritrasmesso. \
+Consideriamo ora la seguente figura.
+#figure(
+image("images/scenario3_tcp.png", width: 70%),
+caption: [Acknowledgement cumulativo che evita le ritrasmessioni del primo segmento]
+)
+In questa figura l'host _A_ invia due segmenti, esattamente come nell'esempio precedente. L'acknowledgement del primo segmento viene perso nella rete ma, appena prima dell'evento di timeout, l'host _A_ riceve un acknowledgement con numero 120. È pertanto, a conoscenza che l'host _B_ ha ricevuto tutto fino al byte 119, quindi non rispedisce nessuno dei due segmenti.
+==== Raddoppio dell'intervallo di timeout
+Vediamo alcune varianti utilizzate dalla maggior parte delle implementazioni TCP. Las prima riguarda la lunghezza dell'intervallo di timeout dopo la scadenza di un timer. Con questa modifica, in tutti i casi in cui si verifica un timeout, TCP, ritrasmette il segmento con il più basso numeri di sequenza che non abbia ancora ricevuto acknowledgement. Ogni volta che questo si verifica, TCP imposta il successivo intervallo di timeout al doppio del valore precedente. Di conseguenza, gli intervalli crescono esponenzialmente a ogni ritrasmissione. \
+Questa modifica offre una forma limitata di controllo di congestione. La scadenza del timer viene causata, probabilemente, dalla congestione nella rete, ossia troppi pacchetti arrivano presso una (o più) code dei router nel percorso tra l'origine e la destinazione, provocando eliminazioni di pacchetti o lunghi ritardi di accodamento.
+==== Ritrasmissione rapida
+Uno dei problemi legati alle ritrasmissioni è che il periodo di timeout può rilevarsi relativamente lungo. Quando si smarrisce un segmento, il lungo periodo di timeout impone al mittente di ritardare il nuovo invio del pacchetto perso, aumentando il ritardo end-to-end. Però, il mittente potrebbe rilevare la perdita dei pacchetti ben prima che si verifichi l'evento di timeout grazie agli *ACK duplicati* relativi a un segmento il cui ACK è già stato ricevuto dal mittente. \
+Quando il destinatario TCP riceve un segmento con numero di sequenza superiore al successivo numero di sequenza atteso e in ordine, rileva un buco nel flusso di dati, ossia un segmento mancante. Tale vuoto potrebbe essere il risultato di segmenti persi o riordinati all'interno della rete. Il destinatario non può inviare un acknowledgement negativo esplicito al mittente, dato che TCP non lo prevede, ma si limita a mandare nuovamente un acknowledgement relativo all'ultimo byte di dati che ha ricevuto in ordine. \
+Dato che in molti casi il mittente invia un gran numero di segmenti, se uno di questi viene smarrito ci saranno molti ACK duplicati. Se il mittente TCP riceve tre ACK duplicati per lo stesso dato, consdiera questo evento come indice che il successivo segmento sia andato perduto. Nel caso incui siano stati ricevuti tre ACK duplicati, il mittente TCP effettua una *ritrasmissione rapida*, ripredendno il segmento mancante prima che scada il timer. In TCP con ritrasmissione rapida il seguente frammento di codice sostituisce l'evento di ACK ricevuto nell'@alg:mittente-tcp.
+#algoritmo(title: [Gestione ACK e Ristrasmissione Rapida])[
+  #pseudocode-list[
+    + *evento:* ACK ricevuto, con valore del campo ACK pari a $y$
+      + *if* $y > text("SendBase")$ *then*
+        + $text("SendBase") <- y$
+        + *if* esistono attualmente segmenti senza ACK *then*
+          + avvia il timer
+      + *else* #text(fill: luma(150))[/* un ACK duplicato per un segmento */]
+        + incrementa il numero di ACK duplicati ricevuti per $y$
+        + *if* numero di ACK duplicati ricevuti per $y = 3$ *then*
+          + #text(fill: luma(150))[/* ritrasmissione rapida */]
+          + rispedisci il segmento con numero di sequenza $y$
+  ]
+] <alg:gestione-ack-rapida>
+==== Go-Back-N (GBN) o ripetizione selettiva (SR)?
+Ci chiediamo se TCP sia un protocollo GBN o SR. Ricordiamo che gli acknowledgement TCP sono cumulativi e che i segiemtni ricevuti correttamente, ma in modo disordinato, non vengono notificati singolarmente dal destinario. Quindi, il mittente TCP deve solo memorizzare il numero di sequenza più basso tra i byte trasmessi che non hanno ancora ricevuto acknowledgement (`SendBase`) e il numero di sequenza del successivo byte da inviare (`NextSeqNum`). In questo senso, TCP assomiglia molto a un protocollo di tipo GBN ma esistono molte differenze chiave. Molte implementazioni TCP memorizzano in un buffer i segmenti ricevuti correttamente, ma non in ordine. Consideriamo che il mittente invia una sequenza di segmenti $1, 2, dots, N$ che arrivano al destinatario in ordine e senza errori. Ipotizziamo che l'acknowledgement per il pacchetto $n < N$ vada perduto, ma che i restanti $N - 1$ giugano al mittente prima dei rispettivi timeout. In questo esempio GBN ritrasmetterebbe non solo il pacchetto $n$, ma anche tutti i pacchetti da $n + 1$ a $N$. TCP, invece, ritrasmetterebbe solo il segmento $n$. Inoltre, TCP nbon ritrasmetterebbe neppure questo segmento se ricevesse l'acknowledgement del segmento $n + 1$ prima  della scandenza del timeout del segmento $n$. \
+Una modifica proposta di TCP, è l'*acknowledgement selettivo* che consente al destinatario di mandare acknowledgement in modo selettivo per i segmenti non in ordine anzichè cumulativamente per l'ultimo segmento ricevuto senza errori e nell'ordine giusto. Se combinato con la ritrasmissione selettiva, TCP è molto simile a un generico protocollo SR. Quindi, il meccanismo di ripristino degli errori è classifcato come un ibrido tra GBN e SR.
+=== Controllo di flusso
