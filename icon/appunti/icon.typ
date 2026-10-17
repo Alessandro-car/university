@@ -2259,3 +2259,430 @@ Confrontandola con quella basata su consistenza (CbD):
 Il ragionamento abduttivo è basato su assunzioni e si realizza mediante le procedure su clausole di Horn:
 - con la procedura BU si calcolano spiegazioni minimali per ogni atomo, essa è ulteriormente specialzizabile con il pruning delle spiegazioni dominate;
 - con la procedura TD si trovano spiegazioni di un $g$ generando i conflitti, ma mirando a dimostrare $g$ anzichè _false_: la spiegazione minimale di $g$ sarà un insieme minimale di assumibili raccolti nella prova.
+= Rappresentazione e Ragionamento Relazionale
+Nel rappresentare la struttura del mondo, è utile ragionare in termini di individui e relazioni. \
+Gli *individui* sono entità, cose, oggetti del dominio, e potranno essere _concreti_ (persone, edifici, ecc.), _immaginari_ (unicorni, programmi che superano il Turing test, ecc.) o anche _concetti astratti_, come i processi (ad esempio la lettura di un libro) o  altri concetti (come corsi di studio, istanti di tempo, ecc.). \
+Le *relazioni* specificano verità riguardanti gli individui. Possono essere _proprietà_, vere o false, dei singoli individui oppure _proposizioni_ che possono vere o false indipendentemente da specifici individui, e anche associazioni che possono intercorrere tra più individui. \
+Con questa rappresentazione il ragionamento su più istanze potrà risultare più semplice in quanto più generale.
+#esempio[
+Nella rappresentazione proposizionale della domotica, si consideravano atomi senza una vera struttura interna, come $"su_d"_2$, $"su_d"_3$ e $"ok_d"_2$. La rappresentazione non risulta sufficiente a esprimere ad esempio che:
+- $"su_d"_2$, $"su_d"_3$ riguardano la stessa proprietà ma individui diversi;
+- $"su_d"_2$, $"ok_d"_2$ riguardano proprietà diverse dello stesso individuo.
+In alternativa si possono rappresentare esplicitamente e separatamente gli individui $d_1, d_2, d_3$ e le rispettive proprietà _su_ e _ok_. Inoltre si potrà usare la relazione binaria $a_3\_p_1$ per collegare individui, indipendentemente dalle loro proprietà.
+]
+I vantaggi della nuova rappresentazione sono molteplici:
+- essa è più naturale poichè sfrutta la struttura delle feature come proprietà degli individui;
+- è utile anche nel caso di _domini sconosciuti_ per i quali non vi sia nessuna conoscenza sugli individui, sul loro numero e carattteristiche: si deve interagire con l'ambiente per apprendere la rappresentazione;
+- consente forme di ragionamento più generali e indipendenti dai singoli invidui, con obiettivo quali la derivazione di conclusioni che valgono per tutti gli individui senza conoscerli necessariamente, la scoperta dell'esistenza di nuovi individui e le loro proprietà, a prescindere dagli altri e, inoltre, la possibilità di rispondere a query che riguardano intere popolazioni e non singoli invidui;
+- rende possibile il trattamento dell'esistenza incerta di individui: nno si conoscono completamente invidui attuali e futuri, nonchè le loro proprietà;
+- rende possibile il ragionamento su un infinito numero di invidui.
+== Simboli e Semantica
+La logica può risultare molto utile nella progettazione di basi di conoscenza. I progettisti devono caratterizzare un particolare mondo formalizzando la cosiddetta *interpretazione intesa*: scegliendo significati per i simboli in base a tale interpretazione e descrivendo ciò che dev'essere vero attraverso una base di conoscenza fatta di clausole. Chiunque conosca il significato dei simboli può interpretare, rispetto a tale modello, le conseguenze logiche derivata dalla base: ciò che è vero in tutti i modelli della base sarà vero, in particolare, nell'interpretazione intesa.  \
+Estendendo il linguaggio delle clausole proposizionali si possono definire atomi con una struttura interna descritti in termini di relazioni e individui. \
+Una *concettualizzazione* è un'associazione fra simboli nella mente e gli individui e le relazioni da essi denotati. \
+Vi è una separazione tra l'aspetto semantico e quello computazionale: la correttezza della base di conoscenza e delle risposte alla query è definita dalla semantica indipendentemente dall'algoritmo di ragionamento, che si può ottimizzare a patto di rimanere semanticamente corretto.
+== Calcolo dei Predicati
+Il *calcolo dei predicati* (_logica dei predicati_ o _logica del primo ordine_) estende il calcolo proposizionale in due modi: gli atomi sono dotati di una loro struttura con la possibilità di includere variabili; inoltre, le variabili logiche sono quantificate.
+==== Sintassi
+Per definire la sintassi, occorre specificare le seguenti nozioni preliminari:
+- *simbolo*: stringa alfanumerica che può includere anche "\_";
+- *variabile logica*: simbolo che inizia con maiuscola o "\_";
+- *costante*: simbolo che inizia con una minuscola o numero o stringa;
+- *simbolo di predicato*: simbolo che inizia con una minuscola. Le costanti e i predicati sono distinguibili in base al contesto;
+- *termine*: variabile o costante;
+- *atomo*: forma _p_ oppure $p(t_1, dots, t_n)$ con _p_ simbolo di predicato e ogni $t_i$ è un termine.
+Una *formula logica* viene definita costruttivamente a partire dagli atomi, usando connettivi logici e quantificatori. Date la variabile $X$ e la formula logica _p_:
+- $forall X quad p$: si dice che $X$ è quantificata *universalmente*;
+- $exists X quad p$: si dice che $X$ è quantificata *esistenzialmente*.
+=== Sematica delle formule logiche di base
+Un'espressione *ground*, o di lviello base, non contiene variabili. Essa è un atomo o, più in generale, una formula che si riferisce solo a precisi individui. \
+Un'*interpretazione* delle espressioni ground è definita da una tripla:
+$
+I = chevron.l D, phi, pi chevron.r
+$
+ove
+- il *dominio* _D_ è un insieme non vuoto di *individui*;
+- la funzione $phi: c |-> phi(c)i in D$ assegna a ogni costante $c$ un individuo di $D$;
+- la funzione $pi: p |-> pi(p)$ assegna a ogni simbolo di predicato $n$-ario $p$ una funzione $pi(p): D^n |-> brace.l "true, false" brace.r$ che per ogni $n$-pla di individui $chevron.l i_1, dots, i_n chevron.r in D^n$, $pi(p)$ specifica se la relazione $p$ sia vera o falsa: $pi(p)(chevron.l i_1, dots, i_n chevron.r) in {"true, false"}$;
+	- $pi$ è una *funzione di ordine superiore* in quanto associa un nome di predicato a una funzione;
+	- se $p$ non ha argomenti (arietà $n = 0$) allora $pi(p)$ sarà una funzione costante: true o false.
+==== Semantica degli atomi ground
+Nell'interpretazione _I_, ogni termine ground _c_ denota un individui $phi(c)$. Nell'interpretazione $I$, l'atomo ground $p(t_1, dots, t_n)$ è *vero* se $pi(p)(chevron.l t'_1, dots, t'_n chevron.r) = "true"$ ed è *falso*, altrimenti.
+=== Semantica: Interpretazione delle Variabili
+Un'*assegnazione* di variabili $rho$ è una funzione dall'insieme delle variabili a $D$ che associa un elemento del dominio a ogni variabile. \
+Data l'interpretazione $I = chevron.l D, phi, pi, chevron.r$ e l'assegnazione $rho$, ogni termine denota un individuo in $D$ interpretato da $phi$ se costante, da $rho$ se variabile. La semantica degli atomi è definita come visto in precedenza, ottenuti associando invidui ai termini.
+==== Semantica della Quantificazione
+Una formula _universalmente quantificata_ $forall X quad p$ è *vera* in un'interpretazione se $p$ è vera per ogni assegnazione di $X$ e sarà falsa se c'è un'assegnazione a $X$ per la quale la formula risulti falsa: la formula $p$ costituisce l'*ambito* di $X$. \
+Una formula esistenzialmente quantificata $exists X quad p$ è *vera* in un'interpretazione se e solo se $p$ è vera per qualche assegnazione di $X$: l'individuo assegnato può dipendere da variabili universalmente quantificate nel cui ambito compaia $exists X quad p$:
+- in $forall Y(exists X quad p)$, $X$ può dipendere da  $Y$;
+- in $exists X(forall Y quad p)$, $X$ non può dipendere da $Y$ poichè $X$ non è nell'ambito di $Y$.
+==== Semantica delle Formule e Conseguenza Logica
+Una *formula* con variabili è *vera* in _I_ se e solo se per qualsiasi assegnazione $rho$ la formula ground ottenuta applicando $rho$ alle sua variabili risulta vera. \
+Una formula si dice *aperta* se ha almeno una variabile non quantificata, per cui la sua semantica non può essere determinata. \
+La nozione di modello e la relazione di *conseguenza logica* fra una data base di conoscenza _KB_ e un goal _g_ si estende al caso delle formule logiche del calcolo dei predicati:
+$
+K B models g "se "g "è vera in ogni modello di" K B
+$
+=== Semantica: la Prospettiva Umana
+Estendendo la metodologia introdotta per le basi di conoscenza proposizionali:
++ si seleziona il dominio del task ossia il mondo da rappresentare, definendo:
+	- $D$ insieme di tutti gli individui cui si farà riferimento e sui quali ragionare
+	- le _relazioni_ da rappresentare;
+		- aspetti specifici del mondo reale (ad esempio la struttura dei cordi e studenti presso un'università);
+		- mondi immaginari o ipotetici;
+		- mondi astratti (ad esempio numeri e insiemi).
++ si associano le _costanti_ del linguaggio a individui del mondo da nominare:
+	- a ogni elemento di $D$ si assegna una costante per riferirvisi, ad esempio _gino_ per un particolare docente, _inf322_ per un corso, ecc;
++ si associa un simbolo di _predicato_ a ogni relazione da rappresentare, associazioni simbolo-significato per costituire l'*interpretazione intesa*:
+	- un simbolo ($n$-ario) denota una funzione $D^n -> brace.l "true, false" brace.r$, basta specificare le $n$-ple per le quali la relazione sia vera. Ad esempio il predicato _insegna_ binario rappresenta una relazione vera tra un individuo e un corso insegnato.
+	- le relazioni possono avere qualunque arietà (anche nulla), ad esempio _is\_red_ è un predicato unario;
++ si definisce l'*assiomatizzazione del dominio*, ossia _formule_ vere nell'interpretazione intesa
+	- *assiomi* del dominio in forma di clausole, ad esempio se la persona denotata da _gino_ insegna il corso denotato da _inf322_, la formula _insegna(gino, inf322)_ sarà vera nell'interpretazione intesa;
++ si possono formulare _query_ riguardanti l'interpretazione intesa:
+	- risposte del sistema da interpretare nella semantica attribuita ai simboli.
+#esempio[
+concettualizzazioni diverse di un colore: il _rosa_.
+- colore come simbolo di predicato unario: atomo vero se l'individuo dell'argomento è rosa: _rosa(i)_;
+- colore come _individuo_: rosa rappresenta il colore rosa, secondo argomento per un predicato binario _colore(i, c)_;
+- a basso livello di dettaglio: le diverse sfumature di rosso risultano indistinguibili, non si considera il colore rosa ma solo _rosso_;
+- aumentando il dettaglio; si considera rosa come termine generale, prevedendo anche _corallo_ o _salmone_.
+]
+== Datalog: Linguaggio Relazione a Regole
+Il *Datalog* estende il linguaggio delle clausole definite proposizionali con la sintassi del calcolo dei predicati. \
+Una *clausola definita* si scrive nella forma:
+$
+h <- a_1 and dots and a_m
+$
+e si legge "_h_ se $a_1$ e $dots$ e $a_m$", dove:
+- l'atomo _h_ è la *testa* della clausola;
+	- se $m > 0$ si dice *regola* e la congiunzione di atomi $a_1 and dots and a_m$ ne costituisce il *corpo*
+	- se $m = 0$ la clausola si dice clausola *atomica* o *fatto*
+- le variabili contenute sonod a intendersi implicitamente quantificate universalmente, ad esempio $h(X) <- b(X, Y)$ è da intendersi come $forall X forall Y (h(X) <- b(X, Y))$, che è equivalente a $forall X (h(X) <- exists Y b(X, Y))$.
+#esempio(title: "Impianto elettrico")[
+Esempio, @es:impianto_elettrico, rivisitato con individui e relazioni.
++ _individui_: secondo il livello di astrazione scelto
+	- ogni deviatore, luce, presa;
+	- ogni cavo tra deviatori o tra deviatore e luce;
+	- si assume un modello di flusso dell'elettricità in cui l'energia fluisca dall'esterno della casa attraverso i cavi e verso le luci, appropriato dovendo determinare se una luce dev'essere accesa o meno, ma potrebbero non esserlo per altri task
++ _nomi_ da dare a ciascun individuo al quale ci si vorrà riferire, ad esempio $c_0$ è il cavo tra la luce $l_1$ e il deviatore $d_2$
++ _relazioni_ da rappresentare: predicato con le interpretazioni intese associate
+	- `luce(L)` è vero se l'individuo denotato da $L$ è una luce;
+	- `accesa(L)` è vero se la luce _L_ è accesa ed emette luce;
+	- `alimentato(W)` è vero se passa corrente attraverso $W$, ossia se $W$ è in tensione;
+	- `su(S)` è vero se il deviatore $S$ è su;
+	- `giu(S)` è vero se il deviatore $S$ è giù;
+	- `ok(E)` è vero se $E$ non è guasto; $E$ salvavita o luce;
+	- `connesso_con(X, Y)` è vero se il componente $X$ è connesso con $Y$ in modo che la corrente passi da $Y$ a $X$
++ base di _assiomi_ per la macchina
+	- _regole_ generali come $"accesa"(L) <- "luce"(L) and "alimentato"(L) and "ok"(L)$ anche ricorsive, come $"alimentato"(X) <- "connesso_con"(X, Y) and  "alimentato"(Y)$ con $"alimentato(esterno)"$.
+	- _fatti_ per la sua configuraszione di un impianto specifico: $"luce"(l_1), "luce"(l_2), "giu"(d_1), "su"(d_2), "ok(interruttore"_1)$ e inoltre:
+		- $"connesso_con"(c_0, c_1) <- "su"(d_2)$
+		- $"connesso_con"(c_0, c_2) <- "giu"(d_2)$
+		- $"connesso_con"(c_1, c_3) <- "su"(d_1)$
+		- $"connesso_con"(c_3, "esterno") <- "ok(interruttore"_1)$
++ la macchina saprà quindi rispondere a query su questo impianto domestico in particolare.
+]
+==== Query con variabili
+Una *query* serve a chiedere se un enunciato sia conseguenza logica di una base di conoscenza. Le query _decisionali_ sono quelle tipiche della logica proposizionali e hanno come risposta `yes` o `no`. Le query _con variabili_ consentono, in aggiunta, di determinare e restituire tuple di individui per le quali la query si avvera. \
+Si dirà *istanza* di una query la formula ottenuta sostituendo termini a variabili: ogni occorrenza di una variabile dev'essere sostituita con uno stesso termine. L'*estrazione della risposta* serve a determinare quali istanze seguano dalla base di conoscenza. Le *risposte* possibili per una query con variabili libere sono:
+- _istanze_ della query che seguono logicamente dalla base, una per ciascuna distinta tupla di valori assegnabile alle variabili della query, oppure
+- `no`, se nessuna istanza segue logicamente dalla base (ciò non significa che la query sia falsa nell'interpretazione intesa).
+#esempio[
+Dati i seguenti fatti riguardanti i paesi del SudAmerica
+
+- _paese(C)_ – vero se $C$ è un paese
+  - _paese(argentina)._
+  - _paese(brasile)._
+  - _paese(cile)._
+  - _paese(paraguay)._
+  - _paese(peru)._
+
+- _superficie(C, A)_ – vero se $C$ ha superficie $A$ in Kmq
+  - _superficie(argentina, 2780400)._
+  - _superficie(brasile, 8515767)._
+  - _superficie(cile, 756102)._
+  - _superficie(paraguay, 406756)._
+  - _superficie(peru, 1285216)._
+
+- _lingua(C, L)_ – vero se $L$ lingua principale di $C$
+  - _lingua(argentina, spagnolo)._
+  - _lingua(brasile, portoghese)._
+  - _lingua(cile, spagnolo)._
+  - _lingua(paraguay, spagnolo)._
+  - _lingua(peru, spagnolo)._
+
+- _confina\_con_$a$($C_1, C_2$) – vero se $C_1$ e $C_2$ confinano e $C_1 <= C_2$ alfabeticamente
+  - _confina\_con_$a$_(\argentina, brasile)._
+  - _confina\_con_$a$_(\argentina, cile)._
+  - _confina\_con_$a$_(\argentina, paraguay)._
+  - _confina\_con_$a$_(\brasile, paraguay)._
+  - _confina\_con_$a$_(\brasile, peru)._
+  - _confina\_con_$a$_(\cile, peru)._
+
+- _confina\_con_($C_1, C_2$) – vero se $C_1$ e $C_2$ confinano
+  - _confina\_con(X, Y)_ $<-$ _confina\_con_$a$_(X, Y)._
+  - _confina\_con(X, Y)_ $<-$ _confina\_con_$a$_(Y, X)._
+
+Si possono formulare le seguenti query per le quali si ottengono le risposte riportate:
+- ask _lingua(cile, spagnolo)._ \
+  risposta: yes;
+- ask _lingua(venezuela, spagnolo)._ \
+  no, la query non è conseguenza logica (conoscenza insufficiente) ma non dice che sia falsa in generale;
+- ask _lingua(X, spagnolo)._ \
+  4 risposte fra cui quella con $X = italic("cile")$ per la quale _lingua(cile, spagnolo)_ risulta conseguenza logica della base di conoscenza;
+- ask _confina\_con_$a$_(paraguay, X)._ \
+  nessuna risposta;
+- ask _confina\_con(paraguay, X)._ \
+  risposte $X = italic("argentina")$ e $X = italic("brasile")$.
+- ask _confina\_con(X, Y)._ \
+  12 risposte;
+- ask _confina\_con(cile, Y)_ $and$ _superficie(Y, A)_ $and$ $A > 2000000$. \
+  si noti che il predicato $>$ (tipicamente predefinito) ha argomenti numerici ed è qui scritto in forma infissa.
+
+Aggiungendo altri fatti
+- _capitale(A, B)_ – vero se $B$ capitale di $A$
+  - _capitale(argentina, buenos\_aires)._
+  - _capitale(cile, santiago)._
+  - _capitale(peru, lima)._
+  - _capitale(brasile, brasilia)._
+  - _capitale(paraguay, asuncion)._
+
+- _nome(E, N)_ – vero se la stringa $N$ è il nome di $E$
+  - _nome(buenos\_aires, "Buenos Aires")._
+  - _nome(santiago, "Santiago")._
+  - _nome(lima, "Lima")._
+  - _nome(brasilia, "Brasilia")._
+  - _nome(asuncion, "Asunción")._
+  - _nome(argentina, "Argentina")._
+  - _nome(cile, "Cile")._
+  - _nome(peru, "Perù")._
+  - _nome(brasile, "Brasile")._
+  - _nome(paraguay, "Paraguay")._
+
+Una query potrebbe chiedere il nome della capitale del Cile: \
+ask _capitale(cile, C)_ $and$ _nome(C, N)._
+]
+== Sostituzioni e Dimostrazioni
+Per implementare il ragionamento su basi di conoscenza e query Datalog si possono generalizzare le procedure bottom-up e top-down per basi di clausole definite proposizionali. Si ponga attenzione al fatto che in clausola Datalog una variabile _libera_ indica che tutte le istanze della clausola dovranno essere vere, al variare delle possibili assegnazioni. Una dimostrazione potrà anche basarsi su istanze diverse di una stessa clausola.
+=== Istanze e Sostituzioni
+Come per le query, un'*istanza* di clausola si ottiene sostituendo variabili con termini uniformemente: ogni occorrenza di una data variabile dev'essere sostituta con lo stesso termine. Una *sostituzione*. Una *sostituzione* specifica, per ciascuna variabile, il termine da sostituire:
+$
+brace.l V_1 slash t_1, dots, V_n slash t_n brace.r
+$
+- ogni $V_i$ è una distinta variabile e ogniu $t_i$ è un termine;
+- ogni $V_i slash t_i$ si dice *binding* per la variabile $V_i$ e si dirà in *forma normale* se nessuna $V_i$ occorre in un $t_j$.
+#esempio[
+Sostituzioni:
+- $brace.l X slash Y, Z slash "cile" brace.r$ è una sostituzione in forma normale;
+- $brace.l X slash Y, Z slash X brace.r$ non è in forma normale: $X$ occorre sia a sinistra sia a destra di associazioni diverse.
+]
+Un'_espressione_ è un termine, un atomo o una clausola. Un'*istanza* $e sigma$ dell'espressione _e_ si ottiene dall'*applicazione* di $sigma = brace.l V_1 slash t_1, dots, V_n slash t_n$ a $e$: ogni occorrenza di $V_i$ va sostituita con $t_i$. L'istanza si dice *ground* se non contiene variabili.
+#esempio[
+Diverse applicazioni di sostituzioni ad atomi:
+
+- _confina\_con(peru, X)_ $\{X \/ italic("cile")\} =$ _confina\_con(peru, cile)_
+- _confina\_con(Y, cile)_ $\{Y \/ italic("peru")\} =$ _confina\_con(peru, cile)_
+- _confina\_con(peru, X)_ $\{Y \/ italic("peru"), Z \/ X\} =$ _confina\_con(peru, X)_
+- $p(X, X, Y, Y, Z)\{X \/ Z, Y \/ italic("brasile")\} = p(Z, Z, italic("brasile"), italic("brasile"), Z)$
+
+Le sostituzioni si applicano anche alle clausole: data $sigma = \{X \/ Y, Z \/ italic("peru")\}$, \
+$[p(X, Y) <- q(italic("peru"), Z, X, Y, Z)] sigma = p(Y, Y) <- q(italic("peru"), italic("peru"), Y, Y, italic("peru"))$
+]
+Un *unificatore* delle espressioni $e_1$ e $e_2$ è una sostituzione $sigma$ tale che
+$
+e_1 sigma = e_2 sigma
+$
+Quando esiste un tale unificatore si dice che $e_1$ e $e_2$ sono _unificabili_ o che si _unificano_.
+#esempio(title:"Esempi di unificatori")[
+- $\{X \/ italic("cile"), Y \/ italic("peru")\}$ è un unificatore per _confina\_con(peru, X)_ e _confina\_con(Y, cile)_ \
+  dalla cui applicazione si ottiene: _confina\_con(peru, cile)_
+- $\{X \/ a, Y \/ b\}$ unificatore di $t(a, Y, c)$ e $t(X, b, c)$ \
+  per cui: $t(a, Y, c)\{X \/ a, Y \/ b\} = t(X, b, c)\{X \/ a, Y \/ b\} = t(a, b, c)$
+
+Diversi unificatori possibili di $p(X, Y)$ e $p(Z, Z)$ sono: \
+$\{X \/ b, Y \/ b, Z \/ b\}$, $\{X \/ c, Y \/ c, Z \/ c\}$, $\{X \/ Z, Y \/ Z\}$, $\{Y \/ X, Z \/ X\}$, ecc.
+
+- i primi due specificano precisamente i valori sostituiti
+- gli altri due sono _più generali_.
+]
+L'*unificatore più generale*, _most general unifier, MGU_ $sigma$ di $e_1$ ed $e_2$ è l'unificatore tale che, considerato qualunque altro loro unificatore $sigma'$, risulta che $e sigma'$ è un'istanza di $e sigma$, per ogni espressione $e$. \
+Si dirà che $e_1$ è una *ridenominazione* di $e_2$ se e solo se esse sono istanze l'una dell'altra, ossia differiscono solo nei nomi delle variabili. Due espressioni unificabili avranno almeno un MGU e, applicando loro degli MGU, si otterranno renaming reciproci: dati $sigma$ e $sigma'$ MGU di $e_1$ ed $e_2$ si ha che $e_1 sigma$ è un renaming di $e_1 sigma'$ (analogamente per $e_2$).
+#esempio[
+Due MGU degli atomi $p(X, Y)$ e $p(Z, Z)$ sono $brace.l X slash Z, Y slash Z brace.r$ e $brace.l Z slash X, Y slash X brace.r$. Applicando entrambi a $p(X, Y)$ si ottengono: $p(X, Y) brace.l X slash Z, Y slash Z brace.r = p(Z, Z)$ e $p(X, Y)brace.l Z slash X, Y slash X brace.r = p(X, X)$ che è un renaming di $p(Z, Z)$.
+]
+=== Procedura Bottom-up con Variabili
+Per estendere la procedura bottom-up proposizionale al Datalog, si deve effettuare preventivamente il *grounding* degli assiomi della base di conoscenza ottenendo le _istanze ground_ delle clausole, sostituendo uniformemente nelle clausole costanti a variabili. Le costanti da considerare sono quelle che occorrono nella base di conoscenza o nella query. Qualora non ve ne fossero, se ne deve inventare una nuova.
+#esempio[
+Data la base di conoscenza con le clausole Datalog;
+- _q(a)_
+- _q(b)_
+- _r(a)_
+- $s(W) <- r(W)$
+- $p(X, Y) <- q(X) and S(Y)$
+Tutte le istanze ground saranno:
+- _q(a)_
+- _q(b)_
+- _r(a)_
+- $s(a) <- r(a)$
+- $s(b) <- r(b)$
+- $p(a, a) <- q(a) and s(a)$
+- $p(a, b) <- q(a) and s(b)$
+- $p(b, a) <- q(b) and s(a)$
+- $p(b, b) <- q(b) and s(b)$
+Applicando la procedura BU proposizionale si derivano atomi _ground_. È facile desumere che possibili conseguenza logiche sono: $q(a), q(b), r(a), s(a), p(a, a), p(b, a)$
+]
+#esempio[
+Data la base di conoscenza con:
+- $p(X, Y)$
+- $g <- p(W, W)$
+e la query $"ask" g$, la procedura BU introduce ad hoc la nuova costante $c$. Il grounding della base sarà:
+- $p(c, c)$
+- $g <- p(c, c)$
+La BU proposizionale deriva $brace.l p(c, c), g brace.r$, per cui la rispota è `yes`. \
+Per la query ask $p(b, d)$, il grounding della base sarà:
+- $p(b, b)$
+- $p(b, d)$
+- $p(d, b)$
+- $p(d, d)$
+- $g <- p(b, b)$
+- $g <- p(d, d)$
+La BU proposizionale deriva $brace.l p(b, b), p(b, d), p(d, b), p(d, d), g brace.r$ per cui la risposta è `yes`.
+]
+Si può dimostrare che la procedura BU, applicata al grounding di una base di conoscenza, è *corretta* e *completa*.
+=== Unificazione
+Dati due termini o atomi, occorre determinare se si unificano e, nel caso, restituire un loro unificatore. \
+Il seguente algoritmo consente di trovare un eventuale MGU di due atomi o termini e, altrimenti, restituisce $perp$ per indicare la mancata unificabilità.
+#algoritmo(title: [Algoritmo di unificazione])[
+  #pseudocode-list[
+    + *procedure* $"Unify"(t_1, t_2)$
+    + *Inputs*
+      + $t_1, t_2$: atomi o termini
+    + *Output*
+      + MGU di $t_1$ e $t_2$ se esiste, altrimenti $bot$
+    + *Local*
+      + $E$: insieme di uguaglianze
+      + $S$: sostituzione
+    + $E <- {t_1 = t_2}$
+    + $S = emptyset$
+    + *while* $E != emptyset$ *do*
+      + selezionare e rimuovere $alpha = beta$ da $E$
+      + *if* $beta$ non identica ad $alpha$ *then*
+        + *if* $alpha$ variabile *then*
+          + sostituire $alpha$ con $beta$ ovunque in $E$ e $S$
+          + $S <- {alpha slash beta} union S$
+        + *else if* $beta$ variabile *then*
+          + sostituire $beta$ con $alpha$ ovunque in $E$ e $S$
+          + $S <- {beta slash alpha} union S$
+        + *else if* $alpha$ è $p(a_1, dots, a_n)$ e $beta$ è $p(b_1, dots, b_n)$ *then*
+          + $E <- E union {a_1 = b_1, dots, a_n = b_n}$
+        + *else return* $bot$
+    + *return* $S$
+  ]
+] <alg:unificazione>
+L'algoritmo lavora su un insieme $E$ di uguaglianze ($alpha = beta$) che implicano e sono implicate dall'unificazione e un insieme $S$ di binding che formeranno la sostituzione cercata. Se $alpha slash beta in S$ allora, per costruzione, $alpha$ sarà una variabile che non appare altrove in $S$ o in $E$. Nel caso in cui $alpha$ e $beta$ siano atomi, essi devono avere stesso simbolo di predicato e stessa arietà, altrimenti l'unificazione fallisce.
+#esempio[
+Volendo unificare $p(X, Y, Y)$ e $p(a, Z, b)$:
+- $E = brace.l p(X, Y, Y) = p(a, Z, b)$ e $S = brace.l brace.r$, inizialmente;
+- $E = brace.l X = a, Y = Z, Y = b brace.r$, dopo la prima iterata;
+- $E = brace.l Y = Z, Y = b brace.r, S = brace.l X slash a brace.r$;
+- $E = brace.l Z = b brace.r, S = brace.l X slash a, Y slash Z brace.r$
+- $E = brace.l brace.r, S = brace.l X slash a, Y slash b, Z slash b$
+Il risultato finale è _S_. \
+Provando a unificare $p(a, Y, Y)$ e $p(Z, Z, b)$:
+- $E = brace.l p(a, Y, Y) = p(Z, Z, b) brace.r, S = brace.l brace.r$, inizialmente;
+- $E = brace.l a = Z, Y = Z, Y = b brace.r$
+- $E = brace.l Y = a, Y = b brace.r$
+- $E = brace.l a = b brace.r$
+resta $a = b$ ma le costanti $a$ e $b$ non sono uficabili, quindi si restituisce $perp$.
+]
+=== Risoluzione Definita con Variabili
+La proceudura top-down proposizionale può essere estesa per gestire le variabili ammettendo istanze di regole nella derivazione. \
+Una *clausola di risposta generalizzata* avrà la forma:
+$
+y e s(t_1, dots, t_k) <- a_1 and a_2 and dots and a_m
+$
+dove $t_1, dots, t_k$ sono termini e gli $a_1, dots, a_m$ sono atomi. \
+L'uso del predicato `yes` consente l'estrazione della risposta, ossia di determinare quali istanze ella query seguano logicamente da una base di clausole definite. \
+Data la query _q_, si considera in partenza la clausola di risposta iniziale:
+$
+y e s(V_1, dots, V_k) <- q
+$
+dove $V_1, dots, V_k$ sono le variabili della query $q$. Intuitivamente, un'istanza di $y e s(V_1, dots, V_k)$ risulta vera se la corrispondente istanza di _q_ è vera. In ogni fase successiva, l'algoritmo
++ seleziona un atomo nel corpo della clausola di risposta corrente;
++ sceglie una clausola di _KB_ la cui testa si unifichi con tale atomo.
+Nella *risoluzione SLD*, avendo selezionato $a_1$ della clausola di risposta generalizata corrente $y e s(t_1, dots, t_k) <- underline(a_1) and a_2 and dots and a_m$, se la clausola scleta dalla base di conoscenza è:
+$
+a <- b_1 and dots and b_p
+$
+con $a_1$ e $a$ unificabili da un MGU $sigma$, la risolvente sarà la nuova clausola di risposta:
+$
+[y e s(t_1, dots, t_k) <- b_1 and dots and b_p and a_2 and dots and a_m]sigma
+$
+Ripetendo passi di risoluzione si ottiene una *derivazione SLD*, ossia una sequenza $gamma_0, gamma_1, dots, gamma_n$ di clausole di risposta in cui:
+- $gamma_0$ è una clausola di risposta corrispondente alla query originaria $q$;
+	date $V_1, dots, V_k$ variabili libere di $q: y e s(V_1, dots, V_k) <- q$
+- ogni $gamma_i$ si ottiene per risoluzione SLD:
+	- selezionando $a_1$ nel corpo di $gamma_(i-1)$;
+	- scegliendo dalla base di conoscenza una copia $a <- b_1 and dots and b_p$ la cui testa $a$ si unifichi con $a_i$ tramite un certo MGU $sigma$;
+	- sostituendo $a_1$ con il corpo $b_1 and dots and b_p$;
+	- applicando $sigma$ alla clausola di risposta risultante;
+- $gamma_n$ sarà la *risposta* della forma $y e s(t_1, dots, t_k) <-$ di una dimostrazione terminata con successo. In risposta alla query si restituirà: $V_1 = t_1, dots, V_k = t_k$ dove i $t_i$ sono i termini determinati dai binding delle variabili della query $V_i$.
+#algoritmo(title: [Algoritmo di dimostrazione top-down per il Datalog])[
+  #pseudocode-list[
+    + *non-deterministic procedure* $"Prove_datalog_TD"(K B, q)$
+    + *Input*
+      + $K B$: insieme di clausole definite
+      + Query $q$: insieme di atomi da provare, con variabili $V_1, dots, V_k$
+    + *Output*
+      + sostituzione $theta$ se $K B models q theta$ altrimenti fallisce
+    + *Local*
+      + $G$: clausola di risposta generalizzata
+    + Impostare $G$ a $"yes"(V_1, dots, V_k) <- q$
+    + *while* $G$ non è una risposta *do*
+      + Sia $G = "yes"(t_1, dots, t_k) <- a_1 and a_2 and dots and a_m$
+      + Selezionare l'atomo $a_1$ nel corpo di $G$
+      + Scegliere una clausola $a <- b_1 and dots and b_p in K B$
+      + ridenominando tutte le variabili con nuovi nomi
+      + Sia $sigma <- "Unify"(a_1, a)$
+      + *if* $sigma = bot$ *then* fallire
+      + Assegna a $G$ la clausola $("yes"(t_1, dots, t_k) <- b_1 and dots and b_p and a_2 and dots and a_m) sigma$
+    + *return* $\{V_1 = t_1, dots, V_k = t_k\}$ dove $G$ è $"yes"(t_1, dots, t_k) <-$
+  ]
+] <alg:datalog-top-down>
+La procedura top down per KB Datalog è non deterministica: si possono trovare tutte le derivazioni tentando altre scelte che portino al successo. Essa fallisce se tutte le scelte portano al fallimento: non esiste alcuna derivazione. \
+La scelta della clausola può essere implementata come algoritmo di ricerca, come nel caso proposizionale, mantenendo la lista degli atomi da dimostrare.
+#esempio(title:"Shakira")[
+Data una base di conoscenza:
+- _luogo\_nascita(shakira, barranquilla)._
+- _luogo\_nascita(P, L)_ $<-$ _parte\_di(S, L)_ $and$ _luogo\_nascita(P, S)._
+- _parte\_di(barranquilla, atlantico)._
+- _parte\_di(atlantico, colombia)._
+- _parte\_di(colombia, america\_del\_sud)._
+
+per rispondere alla query \
+ask _luogo\_nascita(P, colombia)._ \
+si può costruire la _derivazione_ seguente:
+
+- _yes(P)_ $<-$ _luogo\_nascita(P, colombia)._ \
+  risolta con _luogo\_nascita_($P_1, L_1$) $<-$ _parte\_di_($d_1, L_1$) $and$ _luogo\_nascita_($P_1, d_1$). \
+  usando $\{P_1 \/ P, L_1 \/ italic("colombia")\}$;
+
+- _yes(P)_ $<-$ _parte\_di_($d_1$, _colombia_) $and$ _luogo\_nascita_($P, d_1$). \
+  risolta con _parte\_di(atlantico, colombia)._ \
+  usando $\{d_1 \/ italic("atlantico")\}$;
+
+- _yes(P)_ $<-$ _luogo\_nascita(P, atlantico)._ \
+  risolta con _luogo\_nascita_($P_2, L_2$) $<-$ _parte\_di_($d_2, L_2$) $and$ _luogo\_nascita_($P_2, d_2$). \
+  usando $\{P_2 \/ P, L_2 \/ italic("atlantico")\}$;
+
+- _yes(P)_ $<-$ _parte\_di_($d_2$, _atlantico_) $and$ _luogo\_nascita_($P, d_2$). \
+  risolta con _parte\_di(barranquilla, atlantico)._ usando $\{d_2 \/ italic("barranquilla")\}$;
+
+- _yes(P)_ $<-$ _luogo\_nascita(P, barranquilla)._ \
+  risolta con _luogo\_nascita(shakira, barranquilla)._ \
+  usando $\{P \/ italic("shakira")\}$;
+
+- _yes(shakira)_ $<- .$
+]
+== Simboli di Funzione e Strutture dati
+
