@@ -2685,4 +2685,265 @@ si può costruire la _derivazione_ seguente:
 - _yes(shakira)_ $<- .$
 ]
 == Simboli di Funzione e Strutture dati
-
+Il Datalog richiede un nome (simbolo di costante) per ogni individuo sul quale si debba ragionare. Spesso risulta più semplice identificare un individuo indirettamente, ossia _in termini di altri individui_. \
+Considerando una costante per individuo, si può rappresentare solo un numero inito di invididui, fissato alla costruzione della base di conoscenza. Per ragionare su un dominio potenzialmente _infinito_ si fa ricorso alla *programmazione logica*, e in particolare, al linguaggio Prolog.
+#esempio[
+Vediamo alcuni esempi:
++ Riferimenti temporali:
+	- _orari_:
+		- una costante per ogni orario, ad esempio `inizio-lezione: 1.30 p.m.`;
+		- numero di ore dopo mezzanotte e numero di minuti dopo l'ora.
+	- _date_:
+		- una costante per data (sono infinite);
+		- più facile in termini di `anno, mese, giorno`
++ Sistema QA:
+	- se gli individui sono le _frasi_ servirebbero troppi nomi;
+	- se le frasi fossero raprpesentate come sequenze di parole:
+		- nella pratica si potrebbero usare solo un vocabolario finito di parole;
+		- oppure aveva parole costituite come sequenze di sillabe o lettere.
++ Liste (di studenti):
+	- lista come individuo con sue proprietà come `lunghezza, elemento_i`
+	- oppure scegliendo un nome a ciascuna lista, ma è poco pratico;
+	- o definendo le liste in termini dei loro elementi.
+]
+Le funzioni consentono di descrivere individui indirettamente, in termini di altri individui. Alla sintassi si aggiunge la nozione di _simbolo_ di *funzione*, una parola che comincia con una lettera minuscola. Quindi il linguaggio viene esteso nella nozione di *termine* che potrà essere una variabile, una costante o avere la forma
+$
+f(t_1, dots, t_n)
+$
+dove $f$ è un simbolo di funzione ($n$-aria) e i $t_i$ sono termini. Nelle clausole i termini possono comparire esclusivamente all'interno di atomi: le funzioni sono distinte dai predicati. \
+In ogni interpretazione $chevron.l D, phi, pi chevron.r$ la $phi$ dev'essere estesa: si assegna una funzione $D^n |-> D$ a ogni simbolo di funzione $n$-aria: essa, per ogni termien ground, deve specificare l'individuo denotato. Le costanti possono essere viste come funzioni $0$-arie, cioè senza argomenti.
+#esempio[
+Per definire delle date si possono usare
+_costanti_:
+- numeri interi naturali;
+- _gen, feb, mar, apr, mag, giu, lug, ago, set, ott, nov, dic_;
+_funzioni_: (definizione _estensionale_)
+	- _ce_ per date _common era_: $c e(Y, M, D)$ date con anno $Y$, mese $M$ e giorno $D$
+	- _bce_ per date prima della _common era_;
+_predicati_:
+	- _mese(M, N)_ vero se $M$ mese dall'anno con numero d'ordine $N$, ad esempio _mese(gen, 1)_
+	- $italic("precede")(D_1, D_2)$ vero se $D_1$ precede $D_2$
+Il predicato $<$ rappresenta la relazione `minore_di` sugli interi, può essere descritto in termini di clausole, ma più spesso è predefinito.
+]
+==== Programmazione Logica
+Qualunque funzione computabile può essere calcolata usando una base di clausola con simboli di funzione ossia è interpretabile come *programma logico* (adottando una _semantica operazionale_). \
+Il linguaggio dei programmi logici è _Turing equivalente_. Con un solo simbolo di funzione e una sola costante, si può definire un numero infinito di termini o atomi ground che consente di ragionare su un numero di individui potenzialmente infinito. Inoltre, con le funzioni si possono definire le tipiche *strutture dati* per i linguaggi di programmazione.
+#esempio[
+Struttura di albero (con etichette). \
+_funzioni_:
+- _nodo(N, LT, RT):_ denota un nodo interno di un albero con il nome $N$ e due (sotto)-alberi sinistro _LT_ e destro _RT_;
+- _foglia(L)_: indica un nodo-foglia con etichetta _L_;
+_relazioni_ definita in forma ricorsiva:
+- _alla\_foglia(L, T)_ vera se _L_ è l'etichetta di una foglia dell'albero _T_:
+	- _alla\_foglia(L, foglia(L))_
+	- _alla\_foglia(L, nodo(N, LT, RT))_ $<-$ _alla\_foglia(L, LT)_
+	- _alla\_foglia(L, nodo(N, LT, RT))_ $<-$ _alla\_foglia(L, RT)_
+- _al\_nodo(L, T)_ vera se $L$ è l'etichetta di un nodo interno dell'albero $T$:
+	- _al\_nodo(L, nodo(L, LT, RT))_;
+	- _al\_nodo(L, nodo(N, LT, RT))_ $<-$ _al\_nodo(L, LT)_
+	- _al\_nodo(L, nodo(N, LT, RT))_ $<-$ _al\_nodo(L, RT)_
+]
+=== Procedure di Dimostrazioni con Funzioni
+Per gestire i termini con funzioni vanno estese le procedure definite per il Datalog. Il problema principale è che il numero di termini possibili è infinito. \
+Nel definire una procedura bottom-up sulla base di quella per basi di clausole definite proposizionali, se si operasse preventivamente il grounding delle clausole, una clausola potrebbe generare un'infinita sequenza di conseguenza sulla base del numero di termini formabili usando le funzioni. \
+Una procedura ingenua di grounding potrebbe innescare un problema di *starvation*, con clausole che vengano sistematicamente trascurate.
+#esempio[
+Base di conoscenza con le clausole:
++ _num(0)_
++ _num(s(N))_ $<-$ _num(N)_
++ $a <- b$
++ $b$
+Senza selezione fair, nel _forward chaining_ si selezionerebbe prima la 1. e, successivamente, sempre la 2. che porta ripetutamente a derivare una nuova conseguenza ad ogni iterata: non arrivando a selezionare anche 3. e 4., non si potrà mai derivare $a$ o $b$.
+]
+Va pertanto considerata una _proprietà_ come la *fairness* del criterio di selezione delle clausole da elaborare che assicura che ogni clausola della base prima o poi debba essere selezionata. La procedura BU con un criterio di selezione _equo (fair)_ risulta completa: ogni conseguenza potrà essere generata. \
+Per estendere la procedura TD per il Datalog con il trattamento di termini costruiti da funzioni, occorre una procedura di _unificazione_ che possa seguire ricorsivamente la struttura dei termini in profondità, considerando anche le applicazioni di funzioni a diversi livelli. Nell'algoritmo esteso per trovare MGU, una variabile $X$ non potrà unificarsi con termini $t$ (con $t != X$) in cui essa occorre come, ad esempio, $g(f(X))$. Serve quindi un *controllo di occorrenza* aggiuntivo, senza del quale la procedura non risulterebbe più corretta.
+#esempio[
+Data una base di conoscenza con una sola clausola:
+$
+brace.l l t(X, s(X)) brace.r
+$
+nella sua interpretazione intesa il predicato _lt_ corrisponde al classico _minore di_ definito sul dominio degli interi ee la funzione _successore_ $s(X)$ serve a denotare l'intero $X + 1$. \
+Per la query `ask lt(Y, Y)`, la procedura dovrebbe _fallire_: l'atomo è falso nell'interpretazione intesa perchè nessun numero è minore di se stesso. \
+Tuttavia se non si impedisse l'unificazione di $X$ e $s(X)$ (per mancato controllo di occorrenza) la dimostrazione avrebbe successo e la correttezza della procedura sarebbe compromessa.
+]
+In un _algoritmo di unificazione_ con simboli di funzione e _occurs-check_, avendo selezionato $alpha = beta$, si restituisce $perp$ se $alpha$ è una variabile e $beta$ è un termine che la contiene essendo diverso da $alpha$ stesso. Omettendo il controllo, tipicamente per aumentarne l'efficienza, la procedura non sarà più corretta. Una procedura non sound potrebbe derivare un goal _g_ anche quando questo non fosse una conseguenza logica della base di conoscenza.
+#esempio(title: "Risoluzione SLD")[
+Considerata una base di conoscenza con le clausole
++ _append(c(A, X), Y, c(A, Z))_ $<-$ _append(X, Y, Z)_
++ _append(nil, Z, Z)_
+una derivazione per la query
+$
+"ask" italic("append")(F, c(L, n i l), c(l, c(i, c(s, c(t, n i l )))))
+$
+è la seguente:
+- _yes(F, L)_ $<-$ _append(F, c(L, nil), c(l, c(i, c(s, c(t, nil)))))_
+	risolvendo con _append(c($A_1, X_1$), $Y_1$, c($A_1, Z_1$))_ $<-$ _append($X_1, Y_1, Z_1$)_ copia della 1. con variabili ridenominate aggiungendo l'indice 1:
+		- sostituzione: $brace.l F slash c(l, X_1), Y_1 slash (L, n i l), A_1 slash l, Z_1 slash c(i, c(s, c(t, n i l)))$
+- _yes(c(l, $X_1$), L)_ $<-$ _append($X_1$, c(L, nil), c(i, c(s, c(t, nil))))_:
+	risolvendo con _append(c($A_2, X_2$), $Y_2$, c($A_2, Z_2$))_ $<-$ _append($X_2, Y_2, Z_2$)_;
+	- sostituzione: $brace.l X_1 slash c(i, X_2), Y_2 slash c(L, n i l), A_2 slash i, Z_2 slash c(s, c(t, n i l))$;
+- _yes(c(l, c(i, $X_2$)), L)_ $<-$ _append($X_2$, c(L, nil), c(s, c(t, nil))):_
+	rilvendo con _append(c($A_3, X_3$), $Y_3$, c($A_3, Z_3$))_ $<-$ _append($X_3, Y_3, Z_3$)_
+	- sostituzione: $brace.l X_2 slash c(s, X_3), Y_3 slash c(L, n i l), A_3 slash s, Z_3 slash c(t, n i l) brace.r$
+- _yes(c(l, c(i, c(s, $X_3$))), L)_ $<-$ _append($X_3$, c(L, nil), c(t, nil))_:
+	applicabili entrambe le clausole, scegliendo la 1.: si risolve con _append(c($A_4, X_4$), $Y_4$, c($A_4, Z_4$))_ $<-$ _append($X_4, Y_4, Z_4$)_
+	- sostituzione: $brace.l X_3 slash c(t, X_4), Y_4 slash c(L, n i l), A_4 slash t, Z_4 slash n i l$;
+- _yes(c(l, c(i, c(s, c(t, $X_4$)))), L)_ $<-$ _append($X_4$, c(L, nil), nil)_
+qui la dimostrazione fallisce:  le teste delle clausole non si unificano con l'atomo nel corpo. Si torna al punto di scelta precedente:
+- _yes(c(l, c(i, c(s, $X_3$))), L)_ $<-$ _append($X_3$, c(L, nil), c(t, nil))_:
+	scegliendo invece la 2., si risolve con: _append(nil, $Z_5, Z_5$)_;
+	- sostituzione $brace.l Z_5 slash c(t, n i l), X_3 slash n i l, L slash t$;
+- _yes(c(l, c(i, c(s, nil))), t)_ $<-$
+e la dimostrazione ha successo con risposta $F = c(l, c(i, c(s, n i l))), L = t$
+]
+==== Liste: Notazione Prolog
+Abbreviazioni ammesse nella notazione del Prolog:
+- $[ ]$ o _nil_ denotano la lista vuota;
+- $[E bar R]$ è la lista con primo elemento $E$ e resto della lista $R$, scritta anche _cons(E, R)_;
+- semplificazione: $[X bar [Y]]$ si può scrivere $[X, Y]$, se $Y$ è una sequenza di valori: ad esempio $[a]$ per $[a bar []]$, $[b bar [ a bar n i l]]$ e $[a, b bar C]$ per $[a bar [b bar C]]$
+#esempio[
+Definizione che usa la notazione:
+- _append([ A | X], Y, [A | Z])_ $<-$ _append(X, Y, Z)_
+- _append([ ], Z, Z)_
+Data la query $"ask" a p p e n d(F, [L], [l, i, s, t])$ \
+una risposta che si ottiene è $F = [l, i, s], L = t$. \
+La dimostrazione resta la stessa: vengono ridenominate una funzione e una costante.
+]
+== Uguaglianza
+A volte è utile usare più termini per denotare uno stesso individuo: ad esempio i termini $3 * 5, F, 273-258$ e 15 possono denotare lo stesso numero. Altre volte serve che ogni nome si riferisca a un diverso individuoL ad esempio un nome distinto per insegnamenti differenti. Spesso non si sa due nomi denotino lo stesso individuo: ad esempio se `postino_delle_8` e `postino_delle_15` siano la stessa persona. Negli esempi di ragionamento in Datalog presentati in precedenza, tutte le risposte erano valide a prescindere dal fatto che i termini denotassero individui diversi o meno. \
+Può essere utile considerare il predicato speciale "$=$" avente un'interpretazione intesa standard _indipendente_ dal dominio da rappresentare. Dati due termini $t_1$ e $t_2$ si può scrivere l'atomo
+$
+t_1 = t_2
+$
+e sarà vero in un'interpretazione $I$ se e solo se $t_1$ e $t_2$ in $I$ denotano lo stesso individuo. \
+Non si tratta di semplice similarità o identicità ma di _identità_: due nomi per un solo individuo, e non due individui simili del dominio.
+=== Ammettere Asserzioni d'Uguaglianza
+Spesso è utile poter concludere che termini distinti debbano denotare lo stesso individuo. Se non si ammettono atomi con predicato d'uguaglianza come teste delle clausole, un termine può essere uguale solo a se stesso in ogni interpretazione. Per poter derivare relazioni d'uguaglianza, occorrono clausole con questo tipo di atomi nella testa. Le alternative possibili sono:
++ _assiomatizzare_ l'uguaglianza come un qualunque altro predicato: aggiungere clausole che codifichino l'interpretazione del predicato $=$;
++ definire _procedure speciali_ d'inferenza per l'uguaglianza: attraverso regole di riscrittura, si mappano termini diversi che denotino uno setsso individuo su una forma standard.
+=== Unique Names Assumption
+In alternativa dell'assiomatizzazione dell'uguaglianza si può adottare una _convezione_. Nella semantica delle clausole definite data in precedenza, la funzione $phi$ non è necessariamente iniettiva, quindi termini diversi possono denotare lo setsso individuo o individui distinti. \
+Con l'*assunzione di unicità dei nomi*, o _Unique Names Assumption (UNA)_, termini ground diversi denotano individui distinti. Tale assunzione è tipica del contesto delle basi di dati. Per ogni coppia di termini ground distinti $t_1$ e $t_2$ si assumerà:
+$
+t_1 != t_2
+$
+dove $!=$ corrisponde ad assumere la verità di $not(t_1 = t_2)$ in ogni interpretazione. Sotto UNA, un atomo con $!=$ può occorrere nel corpo delle clausole. \
+Quindi sotto UNA, termini ground sono identici solo se si unificano. Ciò non vale per termini non ground, ad esempio l'atomo $a != X$ ha istanze vere nelle quali $X$ assume un certo valore, diciamo $b$, e un'istanza falsa in cui $X$ assume il valore $a$. La UNA è utile a integrare conoscenza proveniente dal database, senza essere costretti ad esplicitare troppe distinzioni, come ad esempio quelle tra le persone con nomi diversi. Tuttavia la UNA risulta inappropriata in certi altri casi, come $2 + 2 != 4$.
+== Assunzione di Conoscenza Completa
+Come visto in precedenza per la Logica Proposizionale, l'*assunzione di conoscenza completa*, consente di derivare conclusioni altrimenti non ammissibili rispetto alla semantica standard della Logica. Così un enunciato che non segua logicamente dalla base di conoscenza potrà essere considerato falso. Come visto in precedenza, questo consente anche di definire una forma di *negazione come fallimento* (NAF). \
+Per estendere l'assunzione di conoscenza completo al caso dei programmi logici con variabili e funzioni si devono considerare: _assiomi d'uguaglianza_, la prorietà di _chiusura del dominio_ e una nozione più sofisticata di _completamento_.
+#esempio[
+Sia data la relazione _student_ definita in una base di conoscenza con le sole clausole:
+- _student(gianni)_
+- _student(mario)_
+- _student(carla)_
+Assumendo che la conoscenza sia completa, i tre individui sarebbero gli unici studenti;
+$
+s t u d e n t(X) <-> X = "gianni" or X = "mario" or X = "carla"
+$
+ossia si potrebbe dire che, se $X$ è _gianni, mario o carla_, allora è uno studente e se $X$ è studente allora dev'essere uno dei tre. \
+L'assunzione di conoscenza completa includa la UNA. Ad esempio, la dimostrazione dell'atomo $not italic("student(gino)")$ richiederebbe di dimostrare $"gino" != "gianni" or  "gino" != "mario" or "gino" != "carla"$, atomi immediatamente provati sotto UNA.
+]
+Dato un predicato _p_, la clausola
+$
+p(t_1, dots, t_k) <- B
+$
+in *forma normale di Clark* diventa
+$
+p(V_1, dots, V_k) <- exists c_1 dots.c exists c_m quad V_1 = t_1 and dots.c and V_k = t_k and B
+$
+dive, se la clausola è atomica allora $B$ sarà _true_, le variabili $c_1, dots, c_m$ sono quelle originaria della clausola mentre le variabili $V_1, dots, V_k$ sono nuove variabili aggiuntive. \
+Ponendo tutte le clausole per il dato predicato $p$ in forma normale, usando uno stesso insieme di nuove variabili si può scrivere:
+$
+p(V_1, dots, V_k) <- B_1, quad dots.c quad p(V_1, dots, V_k) <- B_n
+$
+riassumibili in
+$
+p(V_1, dots, V_k) <- B_1 or dots.c or B_n
+$
+Tale enunciato è equivalente all'insieme di clausole originario. \
+Il *completamento* del predicato _p_ sarà la formula logica:
+$
+forall V_1 dots.c forall V_k p(V_1, dots, V_k) <-> B_1 or dots.c or B_n
+$
+dove, nei corpi, la *negazione come fallimento* ($tilde$)  viene sostituita dlla negazione logica standard ($not$). Dal punto di vista della semantica, $p(V_1, dots, V_k)$ sarà vero se e solo se è vero almeno uno dei corpi $B_i$. \
+Il *completamento* di una base di conoscenza comprende i completamenti di ogni predicato che occorre nella base. \
+Sotto l'assunzione di conoscenza completa, si possono definire relazioni per la cui definizione le clausole definite non sono sufficientemente espressive.
+#esempio[
+Date le clausole considerate in precedenza:
+- _student(gianni)_
+- _student(mario)_
+- _student(carla)_
+la forma normale sarà:
+- _student(V)_ $<- V = $_gianni_
+- _student(V)_ $<- V = $_mario_
+- _student(V)_ $<- V = $_carla_
+Questa definizione è equivalente a
+$
+s t u d e n t(V) <- V = "gianni" or V = "mario" or V = "carla"
+$
+quindi il completamento di _student_ è il seguente
+$
+forall V s t u d e n t(V) <-> V = "gianni" or V = "mario" or V = "carla"
+$
+]
+#esempio(title: "Esami superati")[
+Si consideri la definzione ricorsiva di un predicato
+- $italic("lista_superati([ ], St, MinPass)")$
+- $italic("al_nodo([C|R], St, MinPass)") <- italic("ha_superato(St, C, MinPass)") and italic("al_nodo(R, St, MinPass)")$
+In forma normale, cambiando i nomi delle variabili:
+- $italic("al_nodo(L, S, M)") <- L = [ ]$
+- $italic("al_nodo(L, S, M)") <- exists C exists R L = [C bar R] and italic("ha_superato(S, C, M)") and italic("al_nodo(R, S, M)")$
+Il completamento è il seguente:
+$
+forall L forall S forall M italic("al_nodo(L, S, M)") <-> L = [] or exists C exists R (L = [C bar R] and italic("ha_superato(S, C, M)") and italic("al_nodo(R, S, M)"))
+$
+]
+#esempio[
+Si consideri una base di conoscenza con:
+- _corso(C)_ vero se _C_ è un corso;
+- _iscritto(S, C)_ vero se $S$ è iscritto a $C$.
+Senza assunzione di conoscenza completa, non si potrebbe dimostrare _senza\_iscritti(C)_, vero se non ci sono iscritti al corso _C_. \
+Con l'assunzione, usando la NAF, la definizione sarebbe:
+- _senza\_iscritti(C)_ $<-$ _corso(C)_ $and tilde$ _con\_iscritti(C)_
+- _con\_iscritti(C)_ $<-$ _iscritto(S, C)_
+da cui il completamento risultante è il seguente:
+- $forall C italic("senza_iscritti(C)") <-> italic("corso(C)") and not italic("con_iscritti(C)")$
+- $forall c italic("con_iscritti(C)") <-> exists S italic("iscritto(S, C)")$
+Occorre cautela nell'inclusione di variabili libere in atomi con la NAF: in genere cambiano il significato inteso. Il predicato _con\_iscritti_ serve ad evitare di avere una varibile libera nel contesto di una negazione tipi $tilde italic("iscritto(S, C)")$
+]
+==== Procedure Complete di Dimostrazione con NAF
+Risulta problematico adottare una procedura TD che possa trattare oltre a variabili e funzioni anche la NAF:
+#esempio[
+Si consideri la base di conoscenza:
+- $p(X) <- tilde q(X) and r(X)$
+- $q(a)$
+- $q(b)$
+- $r(d)$
+e la query
+$
+"ask" p(X)
+$
+Per la semantica, ci sarebbe una sola risposta: $X = d$ essendo $r(d)$ e $tilde q (d)$ vere, $p(d)$ segue logicamente dalla base di conoscenza. \
+Ma la dimostrazione di $p(X)$ con la procedura TD fallisce:
+- selezionato $tilde q(X)$, la procedura riesce a dimostrare $q(X)$ con $brace.l X slash a brace.r$
+- mentre $p(X)$ vero se $brace.l X slash d brace.r$ essendo $tilde q(d)$ e $r(d)$
+Questo mostra che la procedura TD risulta _incompleta_ e _non corretta_: ad esempio, aggiungendo alla base di conoscenza la clausola $s(X) <- tilde q(X)$, dal fallimento di $q(X)$ si arriverebbe a poter derivare erroneamnte $s(X)$.
+]
+Per evitare i problemi causati da _variabili libere nei goal negati_ la procedura dovrebbe posticipare tali sotto-obiettivi fino a quando le variabili libere non vengano legate. Qualora ciò non fosse possibile in alcun modo, la dimostrazione del goal si inceppa (_flounders_) e non si potrà concludere nulla su tale goal.
+#esempio[
+Data la base di conoscenza:
+- $p(X) <- tilde q(X)$
+- $q(X) <- tilde r(X)$
+- $r(a)$
+con completamento:
+- $p(X) <-> not q(X)$
+- $q(X) <-> not r(X)$
+- $r(X) <-> X = a$
+e la query
+$
+"ask" p(X)
+$
+Sostituendo $X = a$ ad $r(X)$ si ha $q(X) <-> not (X = a)$ quindi: $p(X) <-> X = a$. \
+La risposta giusta sarebbe $X = a$ ma il differimento del goal non aiuterebbe a trovarla. La procedura dovrebbe essere capace di analizzare i casi nei quali il goal è fallito.
+]
