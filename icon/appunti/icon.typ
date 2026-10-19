@@ -295,7 +295,7 @@ Un *problema di ricerca su uno spazio di stati* comprende:
 	Occorrerà definire:
 	- gli _stati_: posizioni distinte;
 	- le _azioni_: spostamenti da un luogo a un altro nelle vicinanze;
-	- il _problema_ specifico: portarsi da ```A``` a ```G``` (unico stato-obiettivo);
+	- il _problema_ specifico: portarsi da `A` a `G` (unico stato-obiettivo);
 	- la _soluzione_: sequenza di spostamenti.
 ] <es-robot-consegne>
 
@@ -385,7 +385,7 @@ Si una una struttura dati per rappresentare la *frontiera*, detta _fringe_, dei 
 
 Come descritto nell'@alg-ricerca, l'inizializzazione parte dal nodo $s$.
 
-La selezione _non è deterministica_, ha solo impatto sull'efficienza quindi una data strategia di selezione determina il percorso da scegliere. Il ```return``` annidato può essere interpretato come _temporaneo_, continuando si trovano strade alternative; $perp$
+La selezione _non è deterministica_, ha solo impatto sull'efficienza quindi una data strategia di selezione determina il percorso da scegliere. Il `return` annidato può essere interpretato come _temporaneo_, continuando si trovano strade alternative; $perp$
 indica che non vi sono soluzioni; la condizione _goal($n_k$)_ viene testata doo la selezione della frontiera e non all'aggiunta del nuovo nood:
 + a volte esiste un _arco_ vers un nodo-obiettivo ma di _costo elevato_: non sempre conviene terminare restituendo subito il percorso trovato in quanto potrebbe esserci un percorso di costo inferiore;
 + va tenuto conto del fatto che lo stesso test _goal()_ può essere _costoso_; un percorso che termini con un nodo che non sia un nodo-obiettivo e che non abbia vicini andrebbe rimosso.
@@ -483,7 +483,7 @@ Il _fallimento_ della ricerca in profondità limitata può essere:
       + *Output*
         + percorso fino a nodo-obiettivo di lunghezza $k + b$
       + *if* $b > 0$ *then*
-        + *for each* $angle.l n_k, n chevron.r in A$ *do*
+        + *for each* $chevron.l n_k, n chevron.r in A$ *do*
           + $"risultato" <- "Ricerca_a_profondita_limitata"(chevron.l n_0, dots, n_k, n chevron.r, b - 1)$
           + *if* $"risultato" != bot$ *then*
             + *return* $"risultato"$
@@ -2896,7 +2896,9 @@ In forma normale, cambiando i nomi delle variabili:
 - $italic("al_nodo(L, S, M)") <- exists C exists R L = [C bar R] and italic("ha_superato(S, C, M)") and italic("al_nodo(R, S, M)")$
 Il completamento è il seguente:
 $
-forall L forall S forall M italic("al_nodo(L, S, M)") <-> L = [] or exists C exists R (L = [C bar R] and italic("ha_superato(S, C, M)") and italic("al_nodo(R, S, M)"))
+&forall L forall S forall M italic("al_nodo(L, S, M)") <-> L = [space]
+or \
+&exists C exists R (L = [C bar R] and italic("ha_superato(S, C, M)") and italic("al_nodo(R, S, M)"))
 $
 ]
 #esempio[
