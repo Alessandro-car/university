@@ -725,3 +725,68 @@ Le relazioni semantiche sono fondamentali per numerose applicazioni di elaborazi
 - *Espansione di Query*. Gli iperonimi e iponimi migliorano il recupero dell'informazione.
 - *Inferenza Semantica*. Le relazioni permettono di dedurre proprietà implicite e inferenze logiche.
 - *Similarity Semantica*. La distanza nella gerarchia quantifica la similarità concettuale.
+= Relevance Feedback
+Il relevance feedback è il feedback dell'utente sulla rilevanza dei documenti sul set iniziale dei risultati. Il processo di relevance feedback può essere scomposto nelle seguenti fasi.
++ L'utente formula una query (breve e semplice).
++ L'utente marca alcuni risultati come rilevanti o non rilevanti.
++ Il sistema computa una miglior rappresentazione del bisogno informativo basandosi sul feedback ricevuto.
++ Questo processo può ripetersi una o più volte.
+Può essere difficile formulare una buona query quando non si ha una buona conoscenza della collezione, per questo si itera il processo di relevance feedback. \
+Il processo di modifica della query è comunemente riferito come:
+- *relevance feedback*, quando l'utente fornisce informazioni su documenti rilevanti ad una data query, oppure come
+- *query expansion* (_espansioni della query_), quando l'informazione correlata alla query viene usata per espanderla.
+Ci riferiamo ad entrambi come metodi per fornire feedback al sistema. Due approcci comuni dei metodi di feedback sono:
+- *feedback esplicito* (_explicit feedback_), dove le informazioni per la riformulazione della query sono fornite direttamente dagli utenti;
+- *feedback implicito* (_implicit feedback_), dove le informazioni per la riformulazione della query vengono derivate implicitamente dal sistema.
+== Un concetto chiave: il centroide
+Il *centroide* è il centro di una massa di un insieme di punti. Ricordiamo che i documenti vengono rappresentati come punti in uno spazio multi-dimensionale. \
+Il centroide viene definito come segue:
+$
+arrow(u)(C) = (1)/(bar C bar)sum_(d in C)arrow(d)
+$
+dove $C$ è l'insieme dei documenti. Il centroide rappressenta il "documento medio". Il centroide per definizione non è normalizzato. \
+Vediamo come si mettono insieme tutte queste informazioni da un punto di vista operazionale. Utilizziamo un algoritmo, detto *algoritmo di Rocchio*.
+=== Algoritmo di Rocchio
+Definiamo la terminologia riguardante il processo di una data query $q$, come segue:
+- $D_r$ è l'insieme dei documenti rilevanti tra i documenti ritrovati;
+- $N_r$ è la cardinalità dell'insieme $D_r$;
+- $D_n$ è l'insieme dei documenti non rilevanti tra i documenti ritrovati;
+- $N_n$ è la cardinalità dell'insiemem $D_n$
+- $C_r$ è l'insieme dei documenti rilevanti tra tutti i documenti nella collezione;
+- $N$ è il numero di documenti nella collezione
+- $alpha, beta, gamma$ sono delle costanti di accordatura.
+L'algoritmo di rocchio usa il modello a spazio vettoriale per scegliere una query sul feedback di rilevanza. L'algoritmo cerca di separare i documenti rilevanti da quelli non rilevanti, la soluzione è la seguente:
+$
+arrow(q)_(o p t) = 1/(bar C_r bar)sum_(arrow(d)_j in C_r)arrow(d)_j - 1/(N - bar C_r bar)sum_(arrow(d)_j in.not C_r)arrow(d)_j
+$
+ove $arrow(q)_(o p t)$ è ìl vettore della query ottimale. \
+Il problema è che non conosciamo veramente l'insieme dei documenti rilevanti $C_r$. \
+L'insieme $C_r$ non è noto a priori. Per risolvere questo problema, possiamo formulare una query iniziale e cambiare incrementalmente il vettore di query iniziale. \
+Pertanto, l'algoritmo cambia nel seguente modo:
+$
+arrow(q)_m = alpha arrow(q)_0 + (beta) / N_r sum_(arrow(d)_j in D_r)arrow(d)_j - (gamma)/(N_n)sum_(arrow(d)_j in D_n) arrow(d)_j
+$
+ove
+- $D_r$ è l'insieme dei vettori dei documenti rilevanti noti
+- $D_n$ è l'insieme dei vettori dei documenti irrilevanti noti
+- $q_m$ è il vettore della query modificato;
+- $q_0$ è il vettore della query iniziale;
+- $alpha, beta, gamma$ sono i pesi che possono essere scelti a mano oppure possono essere impostati empiricamente.
+La nuova query avanza verso i documenti rilevanti e si allontana dai documenti irrilevanti.
+#figure(
+image("images/rocchio.png", width: 70%),
+caption: [Applicazione dell'algoritmo di Rocchio]
+)
+Ci sono alcune cose che bisogna notare. Ci deve essere un buon tradeoff tra $alpha$, $beta$ e $gamma$ in quanto se abbiamo tanti documenti valutati, vogliamo una $beta$ e una $gamma$ più alti. Alcuni pesi nel vettore della query possono essere negativi, anche se vengono ignorati e vengono impostati a 0. \
+Un feedback positivo è più importante di uno negativo, anche se molti sistemi consentono solo l'uso di feedback positivi. \
+Il feedback può migliorare la precisione.
+=== Problemi del relavance feedback
+I problemi del relavance feedback sono i seguenti.
++ *Inefficienza della query lunghe*.
+	Query molto lunghe sono inefficeinti per i motori di information retrieval per diversi motivi citati di seguito.
+	- Comportano tempi di risposta elevanti per l'utente.
+	- Rappresentano un costo computazionale elevato per il sistema di recupero.
+	Per questo si ricorre ad una soluzione parziale: si ricalcola il peso soltanto di alcuni termini prominenti, ad esempio limitandosi ai primi 20 in base alla frequenza dei termini.
++ *Riluttanza degli utenti*: gli utenti sono spesso riluttanti a fornire un feedback esplicito.
++ *Difficoltà di interpretazione*: dopo aver applicato il relevance feedback, risulta spesso più complesso comprendere il motivo per cui uno specifico documento sia stato recuperato.
++ *Evoluzione del bisogno informativo*: i bisogni informativi possono cambiare durante l'interazione con il sistema.
