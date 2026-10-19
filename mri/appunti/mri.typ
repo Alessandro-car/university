@@ -790,3 +790,29 @@ I problemi del relavance feedback sono i seguenti.
 + *Riluttanza degli utenti*: gli utenti sono spesso riluttanti a fornire un feedback esplicito.
 + *Difficoltà di interpretazione*: dopo aver applicato il relevance feedback, risulta spesso più complesso comprendere il motivo per cui uno specifico documento sia stato recuperato.
 + *Evoluzione del bisogno informativo*: i bisogni informativi possono cambiare durante l'interazione con il sistema.
+== Valutazione delle strategie di relevance feedback
+- _Metriche e grafici_:
+	- Utilizzare la query iniziale $q_0$ per calcolare il grafico di precisione e copertura.
+	- Utilizzare la query modificata $q_m$ per calcolare il grafico di precisione e copertura.
++ Metodo 1: *Valutazione su tutti i documenti della collezione*
+	- Mostra miglioramenti spettacolari, ma si tratta di una forma di "imbroglio"
+	- I documenti già noti come rilevanti ottengono posizioni più elevate nel ranking.
+	- La valutazione deve essere effettuata rispetto a documenti non ancora visti dall'utente
++ Metodo 2: Uso della collezione residura (tutti i documenti meno quelli valutati come rilevanti)
+	- Le metriche risultano solitamente inferiori rispetto a quelle della query originale.
+	- Rappresenta una valutazione più realistica.
+	- Consente di confrontare in modo valido le prestazioni relative.
+- _Riscontro empirico_: un solo ciclo di feedback di rilevanza risulta spesso molto utile, mentre un secondo ciclo offre talvolta solo benefici marginali.
+Il metodo più soddisfacente è quello di utilizzare due collezioni, ognuna con la propria valutazione di rilevanza:
+- $q_0$ e il feedback dell'utente vengono usati sulla prima collezione;
+- $q_m$ viene eseguita sulla seconda collezione e viene valutata.
+Una vera valutazione dell'utilità deve confrontare i metodi a parità di tempo impeigato o a parità di sforzo richiesto dall'utente. Un'alternativa comune al feedback di rilevanza consiste nel permettere all'utente di revisionare e inviare nuovamente la query. Gli utenti potrebbero preferire la revisione e il reinvio della query piuttosto che dover giudicare manualmente la rilevanza dei singoli documenti. \
+Non esistono prove evidenti che il feedback di rilevanza rappresenti l'impiego migliore del tempo dell'utente. \
+Alcuni motori di ricerca offrono funzionalità di pagine simili o correlate, che costituisce una forma elementare di feedback di rilevanza. Ad esempio Google è basato sul link. Altri motodi di ricerca non implementano questa opzione perchè risulta complessa da spiegare all'utente medio, come ad esempio Altheweb. \
+Il motore di ricerca Excite, invece, integrava un vero e proprio sistema di rilevanza, ma è stato successivamente abbandonato a causa dello scarso utilizzo.
+=== Feedback di pseudo-rilevanza
+Il feedback di pseudo-rilevanza automatizza la parte manuale del feedback di rilevanza autentico. L'algoritmo di pseudo-rilevanza è basato sui seguenti passi.
++ Recupera un elenco ordinato di risultati per la query dell'utente.
++ Assume che i primi $k$ documenti siano rilevanti.
++ Esegue il feedback di rilevanza (ad esempio, adottazndo l'algoritmo di Rocchio).
+In media questo algoritmo funziona molto bene ma può fallire drasticamente per alcune query, ad esempio se i primi risultati di una ricerca riguardano tutti un sottoargomento specifico. Diverse iterazioni possono causare la deriva della query e ci si chiede il perchè.
