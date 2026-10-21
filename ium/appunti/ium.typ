@@ -470,6 +470,114 @@ Queste informazioni sono preziose per una corretta evoluzione del prodotto e dov
 ==== Analisi della concorrenza e delle best practice
 Un'altra attività importante nella fase di esplorazione dei requisiti è l'analisi dei prodotti concorrenti, cioè di quei prodotti con i quali il nostro prodotto dovrà confrontarsi e competere. L'analisi della concorrenza potrà essere più o meno ampia, in funzione del numero e della complessità dei prodotti esaminati e del livello di approfondimento dell'esame. Per certi settori, può essere complessa e costosa. Si dovrà esaminare un certo numero di prodotti, per indivuare le caratteristiche più importanti, i punti di forza e debolezza e ciò permetterà di contraddistinguere il prodotto in costruzione in rapporto ad essi e definire, la sua _value proposition_, cioè il valore specifico e distintivo che dovrà fornire ai suoi utenti. Inoltre, quest'analisi permetterà di individuare le _pratiche migliori_ adottate dai prodotti del settore, dalle quali trarre spunti per la formulazione dei requisiti. È utile effettuare quest'analisi all'inizio del progetto.
 ==== Scenari d'uso
-Una tecnica molto utile per aiutarci a immaginare un nuovo prodotto, e a individuarne correttamente i requisiti, è quella d'ipotizzarne dei possibili _scenari d'uso_.  Uno scenario d'uso è una narrazione, in linguaggio comune, di una possibile storia dell'uso del sistema da parte di uno specifico utente, fittizio ma in qualche modo tipico, e descritto in modo molto realistico. \
-*INSERIRE ESEMPIO LIBRO PAG 149* \
-L'impiego degli scenari d'uso è molto utile nella progettazione di un prodotto. Durante la definizione dei requisiti, serve principalmente come mezzo di comunicazione con i diversi stakeholder e, in seguito, con i progettisti e gli sviluppatori. L'ideazione di storie d'uso tipiche e concrete è, infatti, un modo molto efficare per collocare il prodotto, ancora da progettare, nei suoi possibili contesti d'uso reali.
+Una tecnica molto utile per aiutarci a immaginare un nuovo prodotto, e a individuarne correttamente i requisiti, è quella d'ipotizzarne dei possibili _scenari d'uso_.  Uno scenario d'uso è una narrazione, in linguaggio comune, di una possibile storia dell'uso del sistema da parte di uno specifico utente, fittizio ma in qualche modo tipico, e descritto in modo molto realistico.
+#esempio[
+Segue un esempio di uno scenario d'uso.
+#align(center + horizon)[
+  #block(width: 85%)[
+    #emph[
+      "Marco è uno studente universitario. È appassionato di cinema, anche se le sue possibilità economiche sono molto limitate. Sceglie i film da vedere con molta cura e preferisce vederli dalle prime file. Però gli capita spesso che il posto gli sia assegnato d'autorità dal computer della biglietteria, senza possibilità di scelta. Questo succede anche nel multisala vicino a casa sua. Per questo motivo, quando ha saputo che il cinema ha un nuovo sito Internet che permette, agli utenti registrati, di scegliere personalmente il posto, si è subito registrato. Ora, quando vuole andare al cinema, Marco si collega al sito e procede velocemente con l'operazione di prenotazione che è accessibile direttamente dalla home page. Inserisce nome utente e password e il sistema autorizza l'operazione fornendo come risposta le diverse opzioni di scelta. Marco ora può scegliere tra i titoli dei film in programmazione, il giorno della settimana e l'ora. A questo punto gli viene presentata la mappa della sala cinematografica, nella quale sono indicati i posti liberi (in verde) e quelli già prenotati (in rosso). Marco finalmente può scegliere il posto che preferisce facendo clic sulla figura e, dopo averlo confermato, avrà un resoconto dell'operazione, che gli sarà anche inviato con un messaggio di posta elettronica. La sera, almeno 15 minuti prima dell'inizio della proiezione, Marco si presenta alle casse del multisala con un documento d'identità. La cassiera procede a stampare i biglietti prenotati, che Marco paga. A questo punto Marco potrà accomodarsi nella sala cinematografica e vedere la proiezione del film direttamente dalla poltrona prescelta."
+    ]
+  ]
+]
+] <es:scenario_uso>
+L'impiego degli scenari d'uso è molto utile nella progettazione di un prodotto. Durante la definizione dei requisiti, serve principalmente come mezzo di comunicazione con i diversi stakeholder e, in seguito, con i progettisti e gli sviluppatori. L'ideazione di storie d'uso tipiche e concrete è, infatti, un modo molto efficare per collocare il prodotto, ancora da progettare, nei suoi possibili contesti d'uso reali. Ognuno di noi tende ad assumere dei sistemi di riferimento che considera ovvi e quindi non ritiene necessario esplicitare. Poichè i sistemi di riferimento dei nostri interlocutori non sono necessariamente identici ai nostri, è facile che nascano fraintendimenti che nella fase di progettazione possono essere dannosi. \
+Inoltre, quando progettiamo un prodotto, siamo portati inevitabilmente a considerare noi stessi come utenti tipici: tendiamo quindi a modellare il prodotto sui nostri bisogni, abitudini e preferenze. Questo è sbagliato, perchè gli utenti veri del prodotto avranno bisogni, abitudini e preferenze diverse. È molto importante che i protagonisti di uno scenario siano persone concrete che rappresentano in qualche modo gli "utenti archetipi" del sistema. A questi utenti archetipi si da il nome di _personae_. Una persona non dovrebbe essere inventata, ma creata a partire da una ricerca etnografica, come sintesi di varie caratteristiche presenti negli utenti reali, e descritta in un profilo che ne elenca obiettivi, competenze, comportamenti, preferenze, ambiente sociale, stile di vita. \
+È opportuno che, nella formulazione di uno scenario d'uso, sia riportata una storia completa, che non si limiti quindi, alla pura interazione con il sistema, ma che ne consideri il contesto complessivo. In questo modo è facile che emergano requisiti impliciti, che potrebbero altrimenti essere trascurati. Considerando l'*@es:scenario_uso*, la storia di Marco ce ne descrive la motivazione principale (la possibilità di scegliere il posto al cinema) e ci mostra le azioni compiute da Marco dopo aver completato la transazione al computer.  \
+Naturalmente, la storia deve mettere in scena situazioni tipiche. Durante le interviste, si potrà chiedere agli intervistati d'immaginare gli scenari d'uso che ritengono più tipici. Dall'approfondimento di questi scenari potranno emergere requisiti che altrimenti sarebbero trascurati. \
+Gli scenari d'uso possono essere molto utili, ma scegliere quelli realmente significativi da inserire nel documento dei requisiti non è facile. Il rischio maggiore è quello di scadere nell'aneddotica, raccontando storie poco rilevanti per la compresione dei requisiti del prodotto, che quindi non siano di alcuna utilità nelle successive fasi di progettazione. \
+Nel caso di prodotti di nuova concezione, destinati a innovare i comportamenti degli utenti, si realizzano a volte desgli scenari d'uso con delle riprese video.
+== I casi d'uso
+La descrizione dei casi d'uso del sistema costituisce un capitolo molto importante del documento di specifica dei requisiti. Un caso d'uso può essere definito come un insieme di interazioni finalizzate a uno scopo utile, fra uno o più attori e il sistema. Esso ha un nome che, di solito è composto da un verbo, alla terza persona singolare o all'infinito, e ad un complemento, oppure da una frase che descrive sintaticamente lo scopo dell'interazione. Per esempio, in un sito web di e-commerce:
+- Acquita prodotto
+- Modifica il profilo utente
+- Ricercare un prodotto nel catalogo
+- Inserire un nuovo prodotto in catalogo
+- Modificare i dati di un prodotto.
+Un caso d'uso viene invocato da un attore per un particolare scopo e si conlude con successo quando tale scopo è raggiunto. Ogni attore non è una persona concreta, ma rappresenta un particolare ruolo nell'interazione con il sistema. Per esempio, nel sistema di e-commerce, potremmo avere tre attori, denominati `Utente, Utente Registrato, Amministratore del Sistema`. Ciascuno di questi attori invocherà casi d'uso specifici per il suo ruolo. Per esempio, l'`Amministratore del sistema` potrà inserire un nuovo prodotto nel catalogo, mentre l'`Utente` potrà soltanto ricercare un prodotto nel catalogo, senza poterne modificare la descrizione. Se un caso d'uso coinvolge più attori, quello che persegue lo scopo che il caso d'uso deve soddisfare sarà considerato l'_attore principale_. Solitamente, esso è quello che da inizio al caso d'uso con la sua invocazione. \
+Nella seguente tabella sono riassunte le principali tecniche di definizione dei requisiti.
+#figure(
+image("images/tecniche_req.png", width: 70%),
+caption: [Le principali tecniche utilizzate nella fase di esplorazione dei requisiti]
+)
+=== Diagramma dei casi d'uso
+Nel documento dei requisiti, è consigliabile aggiungere all'elenco dei casi d'uso un diagramma riassuntivo, detto _diagramma dei casi_ d'uso, che mostra le relazioni fra gli attori e i casi d'uso del sistema. Un esempio di diagramma dei casi d'uso è rappresentato nella seguente figura:
+#figure(
+image("images/diagramma_caso_uso.png", width: 70%),
+caption: [Un diagramma dei casi d'uso]
+) <fig:diagramma_uso>
+In questi diagrammi, gli attori sono rappresentati con omini stilizzati e i casi d'uso con ellissi. Il nome dell'attore viene indicato sotto l'omino e quello del caso d'uso dentro l'ellissi, come mostrato nella *@fig:diagramma_uso*.\
+Gli attori coinvolti in un caso d'uso non devono necessariamente essere umani: possono anche essere dei sistemi con i quali il caso d'uso interagisce, per inviare o ricevere dati, o per richiedere dei servizi. Anche gli attori non umani sono tradizionalmente rappresentati con degli omini stilizzati: per indicare che non si tratta di persone in carne e ossa, nel diagramma dei casi d'uso viene allora convenzionalmente riportata, sotto il nome dell'attore, la dicitura convezionale "sistema". \
+L'associazione fra un attore e un caso d'uso è rappresentata da un segmento che li congiunge e può indicare una situazione fra le seguenti:
+- l'attore esegue il caso d'uso;
+- l'attore fornisce informazioni al caso d'uso;
+- l'attore riceve informazioni dal caso d'uso.
+A volte, al posto dei segmenti, si utilizzano delle frecce per indicare che l'attore esegue il caso d'uso. Tutto ciò è mostrato nella *@fig:diagramma_uso*. \
+La direzione della freccia non specifica la direzione del flusso dei dati. Per evitare possibili fraintendimenti, si consiglia di limitare l'uso delle recce ai soli casi in cui possano sussistere delle ambiguità su chi invoca che cosa. Nel diagramma di *@fig:diagramma_uso*, poichè il caso d'uso `Acquista Prodotto` è associato a due attori, è stata usata la notazione a freccia per indicare che è l'utente umano, e non il sistema, che lo invoca. Negli altri casi, non sussistendo ambiguità, sono stati usati dei segmenti non orientati. \
+Un diagramma che rappresenta tutti i casi d'uso si chiama _diagramma di contesto_ del sistema, perchè indica i confini dello setsso e tutti gli attori che lo utilizzto. In questo caso, il sistema si indica con un riquadro che circonda i casi d'uso e ne riporta il nome., come è mostrato nella *@fig:diagramma_uso*.
+=== Descrizione dei casi d'uso
+Nel documento dei requisiti, a ogni caso d'uso mostrato nel diagramma dovrebbe essere associata una descrizione, per far comprendere al lettore di che cosa si tratta. Essa dovrebbe essere espressa in un linguaggio semplice e informale, comprensibile a chiunque. Infatti, il documento dei requisiti non viene utilizzato solo dai progettisti del sistema, ma anche dagli stakeholder che contribuiscono alla loro stesura. Questi, nella maggior parte dei casi, non hanno le competenze tecniche necessarie per leggere delle descrizioni in linguaggi troppo formalizzati. Si usa quindi il linguaggio naturale, avendo l'accorgimento di utilizzarlo nel modo meno ambiguo possibile. \
+Si è consolidata la prassi di descrivere un caso d'uso specificandone i diversi scenari d'uso. Questi scenari non fanno riferimento a utenti concreti, con nome e cognome, che operano in specifici contesti, ma agli attori identificati nel diagramma dei casi d'uso, in situazioni generiche, senza riferimento ad alcun contesto specifico. Si tratta di scenari d'uso astratti e ridotti ai minimi termini, che servono esclusivamente a chiarire il significato che il redattore del documento dei requisiti attribuisce ai vari casi d'uso. Alcuni di questi scenari permettono di raggiungere lo scopo, altri portano alla conclusione del caso d'uso senza che lo scopo sia ragiunto. \
+La forma più comune della descrizione di un caso d'uso è esemplificato nella seguente figura, che fa riferimento al solito `Acquista prodotto` del sito web e-commerce. Viene descritto prima lo _scenario principale di successo_, detto anche _corso d'aziona base_, cioè quello che è ritenuto più frequente o importante, e che si conclude con il successo del caso d'uso: l'utente raggiunge il suo scopo. Esso descrive il flusso principale degli eventi d'interazione, espresso come sequenza di _passi_ numerati, ciascuno dei quali corrisponde a un'interazione fra uno o più attori e il sistema.
+#figure(
+image("images/descrizione_caso_uso.png", width: 70%),
+caption: [Descrizione del caso d'uso `Acquista Prodotto`]
+)
+Seguono poi altri scenari, detti _scenari alternativi_. Essi sono descritti come _estensione_ di quello principale, cioè specificando solo le differenze con esso, senza ripetere tutto, per non appesantire troppo la descrizione. \
+Per indicare un'estensione si scrive la _condizione_ che determina il verificarsi di una sequenza d'interazioni alternativa rispetto a quello dello scenario principale, specificandone poi le differenze. Prima di tutto si scrive il numero del passo in cui si può verificare la condizione, con una breve specifica della stessa; quindi si aggiungono dei passi numerati espressi nello stesso stile dello scenario principale. Alla fine si indica da quale passo si rientra nel flusso di eventi base. \
+Ognu passo di uno scenario dovrebbe essere espresso con una frase semplice, che faccia capire chi lo sta eseguendo. Non si dovrebbero mai indicare i dettagli delle azioni di un attore. Inoltre, non si dovrebbero mai descrivere i particolari dell'interaccia utente: bisogna sempre ricordare che si stanno specificando i requisiti di un sistema. Il sistema viene visto come una "scatola nera" e il suo funzionamento interno non viene considerato. In sostanza, un caso d'uso specifica _chi_, _che cosa_ e _perchè_, senza entrare nel merito del funzionamento interno del sistema. \
+Se un caso d'uso ne richiama un altro, il nome di quest'ultimo viene sottolineato, per suggerire un collegamento ipertestuale. \
+L'inclusione puo essere utile per esprimere con un singolo passo una sequenza di passi più elementari, che renderebbe pesante la descrizione dello scenario, oppure, pù spesso, per raccogliere a fattor comune una sequenza di passi che si ripetono più volte nello stesso o in diversi casi d'uso. \
+Nella descrizione dei casi d'uso non è mai consigliabile scendere a un livello di dettaglio troppo basso. Nel documento dei requisiti è conveniente mantenersi a un livello piuttosto generale. Ciò che interessa è dare al lettore un'immagine abbastanza chiara dei diversi casi d'uso, che permetta di comprendere con ragionevole precisione e senza ambiguità ciò che il sistema deve fare. Le descrizioni troppo lunghe e dettagliate finicsono per non essere neppure lette, il che le renderebbe poco utili. Nella fase di progettazione i casi d'uso verranno decomposti nei compiti che lo compongono, e questi nelle azioni elementari che l'utente dovrà effettuare. \
+Gli scenari d'uso sono diversi dai casi d'uso. Gli scenari d'uso hanno lo scopo di illustrare situazioni tipiche di uso del sistema, per farne comprendere la portata e gli e fare emergere eventuali requisiti impliciti. La descrizione dei casi d'uso costituisce un passo successivo alla creazione degli scenari d'uso. In questo passo, s'identificano tutte le interazioni che, a un certo livello di astrazione e dal punto di vista dei vari attori coinvolti, dovranno avere luogo con il sistema, e li si descrive cercando di tener conto delle principali alternative. La descrizione di un caso d'uso non fa riferimento a personaggi concreti, ma a ruoli astratti incarnati dai vari ttori, e contiene solo informazioni sull'interazione che questi hanno con il sistema, senza alcuna informazione aggiuntiva sul contesto. Serono per fissare gli aspetti principali del flusso dell'interazione con il sistema, che dovranno poi essere ulteriormente sviluppati nella fase di progettazione.
+=== Generalizzazione, inclusione, estensione di casi d'uso
+Durante l'organizzazione del documento dei requisiti, per effettuare la descrizione dei casi d'uso del sistema conviene partire dalla formulazione di un primo elenco che verrà modificato per raggiungere un livello di dettaglio soddisfacente. Se i casi d'uso sono troppo dettagliati, si passa a un livello di astrazione maggiore; se sono troppo generali, li si decompone ulteriormente. Il criterio è quello di ottenere una descrizione sufficientemente dettagliata da essere utile per far capire di che cosa si parla, ma non così dettagliata da scoraggiarne la lettura. Alcuni casi d'uso possono rivelarsi casi particolari di altri casi d'uso. La generalizzazione può essere rappresentata graficamente nel diagramma mediante una freccia con la punta a triangolo, come raprpesentano nella seguente figura.
+#figure(
+image("images/generalizzazione.png", width: 70%),
+caption: [Generalizzazione fra attori e casi d'uso]
+)
+La stessa notazione viene usata per rappresentare la relazione di generalizzazione fra attori. \
+Quando un caso d'uso ne utilizza un altro, si dice che lo _include_. Se un caso d'uso è incluso più volte, conviene dargli un nome e descriverlo separatamente. L'inclusione viene rappresentata graficamente con una freccia tratteggiata dal caso d'uso includente al caso d'uso incluso, con l'etichetta `<<include>>`.
+#figure(
+image("images/inclusione.png", width: 70%),
+caption: [Rappresentazione grafica dell'inclusione fra casi d'uso]
+)
+Si dice che un caso d'uso _estende_ un altro caso d'uso quando il suo comportamento *può* essere richiamato all'interno del primo. L'estensione viene rappresentata come segue.
+#figure(
+image("images/estensione.png", width: 70%),
+caption: [Estensione dei casi d'uso]
+)
+== Il documento dei requisiti
+Il documento dei requisiti dovrebbe contenere, prima di ogni requisito specifico relativo al sistema da realizzare, un'approfondita analisi dell'utente e delle sue necessità. In particolare dovrebbe coprire i seguenti temi:
+- _Analisi degli utenti_: a quali categorie di utenti è destinato il prodotto, le loro caratteristiche e quali categorie vanno considerate prioritariamente.
+- _Analisi dei bisogni_: bisogna identificare quali sono le necessità di ciascuna categoria di utentei e quali sono prioritari.
+- _Analisi del contesto d'uso_: bisogna identificare i diversi contesti d'uso del prodotto da parte delle diverse categorie di utenti e quali sono prioritari.
+Queste analisi dovrebbero essere corredate dalla descrizione di acluni scenari d'uso tipici. Gli scenari sono particolarmente importanti per i prodotti di nuova concezione, per i quali non esistono esperienze d'uso consolidate. Dopo questa prima parte generale, si dovrebbe inserire il diagramma dei casi d'uso e descrivere ogni singolo caso d'uso. \
+Una possibile struttura del documento dei requisiti è presente nella seguente figura.
+#figure(
+image("images/doc_req.png", width: 70%),
+caption: [Una possibile struttura del documento dei requisiti]
+)
+==== Generalità
+- Scopo del prodotto. Descrive la natura del prodotto oggetto del documento di requisiti. Specifica sinteticamente gli obiettivi del prodotto, distinguendo quelli principali da quelli secondari, e stabilendone le priorità.
+- Situazione attuale. Specifica se il progetto riguarda un prodotto di nuova realizzazione, o se si tratta di un miglioramento di un prodotto esistente. Nel secondo caso, si elencano i principali punti di forza e di debolezza del prodotto attuale.
+- Caratteristiche degli utenti. Specifica a quali categorie di utenti è destinato il prodotto. Descrive il profilo di ciascuna categoria: comptenze, abilità, esperienze, corsi di addestramento, ecc. Specifica gli obiettivi di ciascuna categoria di utenti in rapporto al prodotto e i diversi ruoli rivestiti nei suoi confronti. In questa sezione s'identificano le classi di attori che verranno utilizzate nella successiva descrizione dei casi d'uso.
+- Contesti d'uso. Descrive i diversi contesti e ambienti d'uso per le diverse categorie di utenti descritte in precedenza. Questi possono includere eventuali standard adottati, il contesto normativo, le caratteristiche dell'ambiente tecnlogico, l'ambiente organizzativo e le caratteristiche dell'ambiente fisico, se rilevanti.
+- Scenari d'uso. Descrive sinteticamente gl scenari d'uso tipici e significativi, che mettano in luce gli aspetti più importanti del prodotto, collocati nel loro contesto.
+- Fattibilità tecnlogica. Indica le tecnlogie che dovranno essere utilizzate nella realizzazione del prodotto e che lo rendono fattibile.
+==== Posizionamento
+- Analisi della concorrenza. Identifica i principali prodotti concorrenti. Per ciascuno, riporta una scheda descrittiva, con la storia, le caratteristiche rilevanti e i principali motivi di successo e d'insuccesso. Include immagini e riferimenti come opportuno. Questa sezione può essere espressa in forma sintetica, allegando eventuale materiale di dettaglio in appendice.
+- Posizionamento competitivo. Specifica quali saranno i punti di forza e gli eventuali putni di debolezza del prodotto in rapporto ai prodotti concorrenti.
+==== Casi d'uso
+- Diagramma dei casi d'uso. Fornisce una visione di sintesi deic asi d'uso del prodotto. Gli attori rappresentati nel diagramma devono corrispondere alle tipologie di utenti descritte nella sezione Generalità.
+- Descrizione dei casi d'uso. Descrive ogni caso d'uso in forma verbale, specificando per ciascuno lo scenario principale di successo e gli scenari alternativi.
+==== Altri requisiti
+- Requisiti per l'esperienza utente. Descrive i requisiti relativi all'interfaccia utente e, più generale, alla _user experience_. Contiene esempi o figure. Specifica come si dovrà valutare, durante il progetto, il soddisfacimento dei requisiti.
+- _Requisiti prestazionali_. Esprime i requisiti relativi alle prestazioni del sistema, anche relativamente alla risorse necessarie per il suo utilizzo.
+- Altri requisiti. Questa sezione, che può essere estesa o suddivisa in ulteriori sezioni, contiene ogni altro requisito, in funzione della natura del prodotto o servizio in esame.
+==== Allegati
+- _Glossario_. Definisce gli eventuali termini tecnici o gergali, specifici dell'organizzazione o del prodotto, utilizzati nel documento.
+- _Altri allegati_. Come necessario.
+- _Riferimento_. Contiene ogni riferimento a pubblicazioni o a materiale di supporto utile per una migliore comprensione del documento.
+
+
