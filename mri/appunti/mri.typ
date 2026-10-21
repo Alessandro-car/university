@@ -816,3 +816,123 @@ Il feedback di pseudo-rilevanza automatizza la parte manuale del feedback di ril
 + Assume che i primi $k$ documenti siano rilevanti.
 + Esegue il feedback di rilevanza (ad esempio, adottazndo l'algoritmo di Rocchio).
 In media questo algoritmo funziona molto bene ma può fallire drasticamente per alcune query, ad esempio se i primi risultati di una ricerca riguardano tutti un sottoargomento specifico. Diverse iterazioni possono causare la deriva della query e ci si chiede il perchè.
+=== Relevance feedback indiretto
+Il feedback di rilevanza indiretto assegna un punteggio più alto a documenti che gli utenti osservano più spesso. I link si cui si fa clic sono considerati presumibilmente rilevanti e questa assunzione si basas sul fatto che i sommari visualizzati siano validi, ecc. \
+Questo tipo di feedback non è necessariamente specifoc per un singolo utente o per una specifica query. Questo aspetto rientra nell'area generale del _clickstream mining_. \
+Oggigiorno questo processo viene gestito come parte integrante del ranking basato sull'apprendimento automatico.
+== Espansione della query
+Nel feedback di rilevanza, gli utenti forniscono input aggiuntivi sui documenti, che veogno usati per riassegnare un peso ai termini della query per quei documenti. Nell'*espansione della query*, l'utente fornisce input aggiuntivi (se è un buon termine o un cattivo termine) su *parole o frasi*.\
+Un esempio sono le cosiddete _search images_ presenti su google:
+#figure(
+image("images/search_images.png", width: 70%),
+)
+Le ricerche correlate, come mostrate nella figura soprastante, sono tecniche di *query assist*. Il processo di query assist viene generalmente effettuato tramite l'analisi dei log delle query e questo processo raccomanda query frequenti e recenti che contengono la stringa parziale digitata dall'utente. Questo viene trattato come un problema di ordinamento in cui ciascuna query precedente è vista come un documento, ordinando per rango quelle che corrispondono alla stringa parziale. \
+Per ampliare la query dell'utente si possono adottare diverse tecniche.
+- *Thesaurus manuale*. Ad esempio, in _MedLine_ peril termine *physician* i sinonimi sono: _doc, doctor, MD, medico, ecc._
+	Il thesaurus può riguardare query correlate anzichè limitarsi ai soli sinonimi.
+- *Analisi globale*: di natura statica, basata sull'interezza dei documenti nella collezione. Solitamente viene applicato il processo di thesaurus derivato in modo automatico e vengono applicate statistiche di co-occorrenza. Alternativamente, si possono effettuare perfezionamenti basatu sul query log mining che è l'approccio comune usato sul Web.
+- *Analisi locale*: di natura dinamica. Vengono analizzati i documenti inclusi nell'insieme dei risultati.
+=== Espansione della query basato su thesaurus
+Per ogni termine $t$ in una query, si espande quella query con sinonimi e parole correlate prese dal thesaurus, ad esempio:
+$
+"feline" -> "feline cat"
+$
+Questo approccio incrementa generalmente la copertura ed è ampiemente utilizzato in ambiti scientifici e ingegneristici. Tuttavia, presenta grossi svantaggi: ha un costo di produzione manuale molto elevato, richiede un aggiornamento costante per seguire l'evoluzione scientifica e rischia di abbassare drasticamente la precisione a causa dell'ambiguità dei termini. Ad esempio, espandere in modo improprio _interest rate_ può portare a risultati distorti come _interest rate fascinate value_. Per mitigare questo problema, i termini aggiunti vengono solitamente pesati meno rispetto a quelli originali.
+= Valutazione dei Sistemi di Ritrovamento
+Ci sono tanti modelli, algoritmi e sistemi di ritrovamento, ma dobbiamo capire quali siano i migliori. \
+Dobbiamo capire quale sia il miglior componente per:
+- funzione di ranking;
+- selezione dei termini;
+- pesatura dei termini.
+È importante capire quanto in baso nella lista ordinata dei risultati un utente debba spingersi per trovare alcuni o tutti i documenti rilevanti.
+== Difficoltà nel valutare sistemi di ritrovamento
+L'efficacia di un sistema di ritrovamento è collegata alla rilevanza degli elementi ritrovati. La rilevanza, tipicamente, non è binaria ma è continua. Anche se fosse binaria, sarebbe difficile effettuare un giudizio. La rilevanza, da un punto di vista umano, è:
+- *soggettiva*: dipende dal giudizio di uno specifico utente;
+- *situazionale*: dipende dagli bisogni attuali di un utente;
+- *cognitiva*: dipende dalla percezione e dal comportamento umano;
+- *dinamico*: ci sono cambiamenti nel corso del tempo;
+- *contestuale*: influenzata dallo stato dell'utente, come mood, tempo disponibile, ecc.
+=== Pardigma di Cranfield
+La valutazione dei sistemi di ritrovamento è il risultato di un esperimento condotto al college di Cranfield da un bibliotecario, Cyrill Cleverdon. \
+Le intuizioni tratte da questi esperimenti costituiscono ancoa oggi la base fondamentale per la valutazione dei sistemi di ritrovarmento. Cleverdon prese in considerazione un nuovo sistema di indicizzazione denominato _Uniterm_. Il sistema prevedeva l'anaalisi di 40.000 intestazioni di argomento, che portarono a 7.000 parole distinte. Successivamente, venne eseguito un test che consisteva nell'indicizzare manualmente 200 documenti utilizzando il sistema _Uniterm_, chiedendo poi di eseguire alcune query. \
+Il cuore del *paradigma di Cranfield* risiede nell'utilizzo di una *collezione di riferimento di test*, composta strutturalmente da tre elementi fondamentali:
++ un insieme di documenti;
++ delle query;
++ dei relativi giudizi di rilevanza.
+In questo contesto, il concetto di rilevanza viene intesto in senso stretto come _rilevanza tematica_, verificando se un documento contenga informazioni che vertono sullo stesso argomento della query. \
+Questo impianto metodologico ha trovato concreta realizzazione nella nota collezione *Cranfield 2*, la quale raccoglieva 1400 articoli di ricerca in lingua inglese appartenenti ad un unico dominio accompagnati da 221 argomento o query di test. L'aspetto cruciale di questa metodologia è che l'utilizzo di una collezione di riferimento standardizzata permette di impiegare lo stesso identico set di documenti e query per valutare e confrontare diversi sistemi di ranking. Di conseguenza, l'uniformità di questa configurazione garantisce una valutazione rapida ed efficiente di nuove funzioni di ranking. \
+All'interno del paradigam di Cranfield, la procedura operativa per la valutazione comparativa dei sistemi si sviluppa attraverso una sequenza logica strutturata in diverse fasi.
++ Vengono selezionati diversi sistemi di ritrovamento da confrontare.
++ Vengono utilizzati i sistemi scelti per produrre liste pesate dei documenti, dette _runs_, per ogni query.
++ Vengono calcolati l'efficicacia di ogni strategia per ogni query nella collezione di test come la funzione di ritrovamento dei documenti ritrovati.
++ I punteggi ottenuti vengono mediati su tutte le query, calcolando l'efficacia globale del sistema o della strategia.
++ Vengono usati i punteggi del passo prendente per classificare i sistemi di ritrovamento tra loro
++ (opzionale, per determinare l'approccio migliore) Vengono eseguiti test statistici per determinare se le differenze tra il punteggio di efficacia per i sistemi e il loro punteggio  è rilevante.
+==== Human Labeld Corpus (Test collection)
+La costruzione di una collezione di test da parte di esseri umani richiede una metodologia rigorosa che parte da un corpus inziale di documenti. Su questa base si raccolgono differenti bisogni informativi, i quali vanno tenuti distinti dalle semplice query, specifici per quel determinato corpus. Successivamente, uno o più esperti umani si occupano di etichettare in modo esauistivo i documenti rilevanti associati a ciascun bisogno informativo. Tale approccio si basa tipicamente su giudizi di rilevanza di tipo binario e comporta uno sforzo umano considerevole, in particolare quando si opera su corpus di grandi dimensioni.
+== Benchmark standard di rilevanza
+Nel panorama dell'Information Retrieval, per superare i limiti dei primi esperimenti e disporre di banchi di prova su larga scala, sono stati definiti dei *becnhmark standard di rilevanza*. Il punto di riferimento fondamentale è costituito dalla *TREC, Text Retrieval Conference*, un grande sistema di test, forte di una collezione di un millione di documenti e di una serie annuale di workshop dedicati.\
+Con l'espansione della rete, la ncessità di valutare sistemi su scala Web ha portato allo sviluppo di corpus imponenti, tra cui la collezione *ClueWeb09*, che raccoglie più di un miliardo di pagine web in dieci lingue distribuite su vari domini. A competere figurano altre importanti colezioni, come:
+- *ILST*
+- *UCKS*
+- *MEDLARS*
+Oltre a corpus storici, nel panorama dei benchmark standard rientrano raccolte di documenti di riferimento come *Reuters*. All'interno di questi contesti vengono definiti specific compiti di recupero, espressi talvolta sotto forma di query. Per effettuare la valutazione, esperti umani si occupano di etichettare cianscun documento rispetto a ogni query, distiguendolo in rilevante o non rilevante. Tale attività di giudizio viene condotta almeno su sottoinsiemi di documenti, mediante una tecnica nota come _pooling_, restituiti da alcuni sistemi per quella specifica query.
+== Precisione e richiamo
+Per valutare l'efficacia di un sistema di Information Retrieval, si fa affidamento a due metriche fondamentali: la *precisione* e la *copertura (recall)*. \
+Questi parametri vengono definiti analizzando la relazione tra l'intera collezione di documenti, l'insiemi dei documenti realmente rilevanti per un dato bisogno informativo e l'insieme dei documenti effettivamente recuperati dal sistema. Attraverso una rappresentazione a insiemi o una matrice di contigenza, è possibile suddividere i risultati i documenti recuperati e rilevanti, recuperati ma irrilevanti, non recuperati ma rilevanti, e infine non recuperati e irrilevanti.
+#figure(
+image("images/rapp_insieme.png", width: 70%),
+caption: [Insiemi di documenti rilevanti e non]
+)
+#figure(
+image("images/mat_doc.png", width: 70%),
+caption: [Matrice di contingenza]
+)
+La *precisione* misura l'esattezza dei risultati restituiti e si calcola nel seguente modo:
+$
+"precision" = ("Number of relevant documents retrived") / ("Total number of documents retrieved")
+$
+In altre parole, indica quale percentuale dei risultati forniti sia effettivamente pertinente per l'utente. \
+La *copertura* misura la completezza del processo di recupero e si determina nel seguente modo:
+$
+"recall" = ("Number of relevant documents retrieved") / ("Total number of relevant documents")
+$
+Tale metrica evidenzia la capacità del sistema di individuare quanta parte dell'informazione utile disponibile sia stata effettivamente portata alla luce. \
+Trasformiamo la matrice di contigenza nel seguente modo:
+#figure(
+image("images/mat_doc2.png", width: 70%),
+)
+Calcoliamo la precisione e la copertura nel seguente modo:
+$
+"precision" = ("Number of relevant documents retrived") / ("Total number of documents retrieved") = ("TP") / ("TP + FP")
+$
+$
+"recall" = ("Number of relevant documents retrieved") / ("Total number of relevant documents") = ("TP") / ("TP + FN")
+$
+Approfondendo ulteriormente il concetto di *precisione* e *copertura*, possiamo definirli formalmente anche attraverso la probabilità condizionata e le specifiche capacità del sistema:
+- Precisione:
+	- Rappresenta la frazione di documenti recuperati che risulta effettivametne rilevante.
+	- Corrisponde alla capacità del sistema di collocare i documenti più pertinenti ai vertici della graduatoria.
+	- Dal punto di vista probabilistico, si esprime come la probabilità che un documento sia rilevante dato che è stato recuperato: $P("rilevante" bar "recuperato")$
+- Copertura:
+	- Rappresenta la frazione di documenti rilevanti che viene effettivamente recuperata dal sistema.
+	- Riflette la capacità della ricerca di individuare *tutti* gli elementi pertineti presenti all'interno del corpus.
+	- Dal punto di vista probabilistico, si esprime come la probabilità che un documento sia stato recuperato dato che è rilevante: $P("recuperato" bar "rilevante")$
+Analizzando il comportamento di precisione e copertura, sorge spontaneo chiedersi quale sia il livello di copertura di una query nel caso in cui venissero recuperati tutti i documenti della collezione. Adottando questa strategia estrema è possibile ottenere una copertura elevata, sebbene associata a una precisione molto bassa. \
+La copertura costituisce una funzione non decrescente rispetto al numero di documenti recuperati. Questa proprietà si spiega osservando che, incrementando la quantità di documenti restituiti, se il documento aggiunto è rilevante aumentano i veri positivi e diminuiscono i falsi negativi, mentre se è irrilevante aumentano i fasli positivi e diminuiscono i veri negativi: in entrambi i casi, il rapporto che definisce la copertura non subisce diminuzioni. \
+Per contro, in un sistema efficiente, la precisione tende tipicamente a diminuire all'aumentare del numero di documenti recuperati o dalla copertura stessa. Sebbene questo comportamento non raprpesenti un teorema matematico rigoroso, gode di una fortissima e costnate conferma empirica. \
+La determinazione della copertura presenta notevoli difficoltà pratiche, principalmente perchè il numero totale di elementi rilevanti all'interno di un'intera collezione non è sempre disponibile. Per superare questo ostacolo e stimare tale valore, si ricorre solitamente a due approcci principali:
+- *Campionamento del database*: si estrae un campione rappresentativo attraverso la base di dati e si effettuano giudizi di rilevanza su questi specifici elementi.
+- *Aggregazioni di algoritmi multipli*: si applicano diversi algoritmi di recupero allo stesso database a fronte della medesima query, assumendo che l'insieme aggregato degli elementi rilevanti restituiti dai vari sistemi costituisca l'intero insieme di riferimento.
+Il seguente grafo mette in relazione la copertura e la precisione ed evidenzia chiaramente il tradeoff tra queste due metriche.
+#figure(
+image("images/tradeoff.png", width: 70%),
+caption: [Tradeoff tra precisione e copertura]
+)
+In uno scenario ideale, si vorrebbe raggiungere il punto in cui entrambe le metriche assumono valore massimo pari a 1. \
+Tuttavia, nella realtà operativa i sistemi si muovono lungo una curva di compromesso:  - *Alta precisione e bassa copertura*: concentrandosi sui primi risultati, il sistema restituisce documenti rilevanti ma rischia di tralasciarne molti altri che potrebbero rivelarsi utili.
+- *Alta copertura e bassa precisione*: cercando di includere la maggior parte dei documenti pertinenti (ad esempio espandendo il recupero), il sistema intercetta i documenti rilevanti ma finisce per includere una grande quantità di materiale irrilevante o "spazzatura" (junk).
+== Precisione
+
+
+
