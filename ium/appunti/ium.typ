@@ -530,15 +530,153 @@ Gli utenti possono essere molto diversi a seconda dell'età, livello di istruzio
 image("images/smiley.png", width: 70%),
 caption: [Uno smiley metro]
 )
-==== Questionari
-I _questionari_ permettono di raccogliere informazinoi in forma strutturata, elaborabili con metodi statistici. Essi possono essere distribuiti ai destinatari in vari modi. Per esempio, si possono predisporre di questionari compilabili online. È così possibile raggiungere una popolazione potenzialmente molto ampia di utenti, anche se, di solito, il tasso di risposta è piuttosto basso. Esistono numerosi strumenti software, che permettono, da un lato, di costruire facilmente il questionario e, dall'altro, di elaborare i risultati e produrre una visione di sintesi attraverso grafici e diagrammi. \
-Una tecnica molto usata nei questionari destinati a raccogliere le opinioni degli utenti è la scala di Likert. Il questionario è composto da una serie di affermazioni. collegati alle opinioni su cui si vuole indagare, per ciascuna delle quali sono possibili cinque risposte: _completamente d'accordo, d'accordo, incerto, in disaccordo, in completo disaccordo_. A ciscuno è associato un numero compreso tra 1 e 5. Con questi valori si può calcolare la media delle risposte a ciascun gruppo di affermazioni correlate a uno stesso argomento.
-==== Focus group
-I _focus group_ sono interiviste di gruppo, che hanno lo scopo di mettere a fuoco uno specifico argomento e di far emergere i diversi punti di vista dei partecipanti o, a volte, un punto di vista condiviso fra tutti. Sono normalmente condotti da un animatore che guida la discussione e un osservatore che esamina le dinamiche di relazione del gruppo e prende appunti. La conduzione di un focus group non è compito banale e richiede esperienza. È necessario evitare che il gruppo "sfugga di mano". Quando emergerà il leader naturale, tenderà a monopolizzare la discussione e a trascinare il gruppo sulle sue posizioni. Il conduttore dovrà evitare che l'incontro diventi un'occasione di sfogo di critiche poco attinenti al tema. Occorre fare in modo che tutti possano esprimere le loro idee e che non sorgano conflitti fra conduttori e membri del gruppo, che potrebbero danneggiare lo svolgimento del successivo progetto.
+=== Focus group
+Spesso le interviste vengono condotte da un intervistatore con un intervistato, ma succede spesso che vengano intervistati gruppi di persona. Una forma di intervista di gruppo usata a volte nelle attività di Interaction Design è il focus group. Normalmente vengono coinvolte da tre a dieci persone e la discussione è condotta da un facilitatore esperto. \
+I partecipanti vengono selezionti in modo da costituire un campione rappresentativo della popolazione target. \
+Il vantaggio è che consente di sollevare argomenti diversi o particolarmente delicati che altrimenti potrebbero sfuggire. I focus group consentono alle persone di esporre le proprie prospettive. Viene sviluppato un programma prestabilito che guidi la discussione, ma si lascia abbastanza flessibilità perchè il facilitatore guida a stimolare la discussione, incoraggiando le persone a partecipare. La discussione di solito viene registrata per essere poi sottoposta ad analisi e i partecipanti possono essere invitati a sviluppare ulteriormente i loro commenti in un secondo momento.
+=== Pianificazione e conduzione di un'intervista
+La pianificazione di un'intervistsa comporta lo sviluppo di una serie di domande o di temi da coprire, la raccolta dell'eventuale documentazione da consegnare all'intervistato, la verifica del corretto funzionamento delle apparecchiature di registrazione, la strutturazione dell'intervista e l'organizzazione di un momento o di una sede opportuna per l'incontro.
+==== Sviluppo delle domande per l'intervista
+Le domande possono essere aperte o chiuse. Quelle aperte sono più adatte quando l'obiettivo della sessione è esplorativo; quelle chiuse sono più adatte se si conoscono già in anticipo le risposte possibili. Un'intervista non strutturata è costituita principalmente da domande aperte; un'intervista strutturata da domande chiuse. La semi-strutturata può usarle entrambe. \
+Ci sono delle linee guida per formulare le domande:
+- domande lunghe o composte possono essere difficili da ricordare o possono creare confusione, perciò è opportuno dividerle in domande distinte;
+- gli intervistati possono non comprendere il gergo tecnico o un linguaggio complesso e potrebbero vergognarsi di ammetterlo, perciò è bene spiegare le cose in modo semplice;
+- cercare di formulare le domande in modo neutro.
+Quando si raccolgono le risposte a domande chiuse, è utile elencare le risposte possibili con caselle da spuntare.
+==== Conduzione dell'intervista
+Prima di iniziare, è bene assicurarsi che gli obiettivi dell'intervista siano stati spiegati all'intervistato e che questi acconsenta a procedere. Sapere quaclosa dell'intervistato e del suo ambiente prima dell'intervista renderà più facile metterlo a suo agio, in particolare se l'intervista si svolge in un contesto che non è familiare. \
+Nel corso dell'intervista, è meglio ascoltare, rispondere con simpatia ma senza influenzare, e dare l'imprensione di apprezzare l'intervista. \
+La sequenza tipica di un'intervista è la seguente:
+- un'introduzione, in cui l'intervistatore si presenta e spiega perchè conduce l'intervista, rassicura l'intervistato in merito a eventuali preoccupazioni di ordine etico e chiede se all'intervistato da fastidio essere registrato;
+- una prima parte di riscaldamento, in cui vengono poste domande facili, che non possono incutere timore;
+- una parte principale, in cui le domande vengono presentate in una sequenza logica, con quelle più approfondite alla fine. In un'intervista semi-strutturata, l'ordine delle domande può variare da partecipante a partecipante, a seconda dell'andamento della conversazione, da quante domande sonda vengono poste e da quello che sembra più naturale;
+- una parte di raffreddamento, costituita da poche domande facili;
+- una parte finale, in cui l'intervistatore ringrazia l'intervistato, spegne il registratore o ripone il blocco degli appunti, segnalando che l'intervista è conclusa.
+==== Altre forme di intervista
+Condurre interviste e focus group in presenza può essere complicato, si può usare però, Skype, Zoom e altri sistemi. \
+Si svilgono in modo simile a quelle faccia a faccia, ma connessioni scadenti e una cattiva acustica possono provocare problemi diversi e i partecipanti possono essere tentati di fare anche altro, invece di concentrarsi sulla sessione in corso. Tra i vantaggi dei focus group e delle interviste da remoto, in particolare quando si svolgono su canali solo audio, rientrano i seguenti principi:
+- i partecipanti sono nel proprio ambiente e sono più rilassati;
+- i partecipanti non devono spostarsi;
+- i partecipanti non devono preoccuparsi degli abiti che indossano;
+- per le interviste che riguardano argomenti delicati, gli intervistati possono rimanere anonimi.
+I partecipanti, inoltre, possono abbandonare la conversazione in qualsiasi momento vogliano, semplicemente troncando la connessione, il che aumenta il senso di sicurezza. \
+Le interviste retrospettive, cioè le interviste che riflettono su un'attività o una sessione di raccolta dati avvenute nel passato recente, possono consentire di verificare se l'intervistatore ha compreso correttamente quello che è successo. Questa pratica prende il nome di _member checking_.
+==== Arricchire l'esperienza dell'intervista
+Le interviste faccia  a faccia spesso si svolgono in una sede neutra, lontano dal normale ambiente dell'intervistato. Questo crea un contesto artificiale, che può rendere più difficile agli intervistati dare risposte complete alle domande. Per ovviare a questo problema, le interviste possono essere arricchite utilizzando strumenti di appoggio. Questi strumenti di appoggio possono essere utilizzati per fornire contesto agli intervistati e per aiutare a fondare i dati in un contesto reale.
+=== Questionari
+Sono una tecnica consolidata per raccogliere dati demografici e le opinioni degli utenti. Sono simili alle interviste, in quanto hanno domande chiuse o aperte, ma, una volta che un questionario è stato predisposto, può essere distribuito a un gran numero di partecipanti senza richiedere ulteriori risorse per la raccolta di dati. \
+Spesso ai potenziali partecipanti viene spedito un messaggio che li rinvia a un questionario online. \
+I questionari ben progettati sono adatti per ottenere risposte a domande specifiche da un gruppo ampio di persone. \
+Le domande del questionario e le domande di un'intervista strutturata sono simili, ma è bene capire in quali casi e perchè bisogna scegliere una tecnica piuttosto che un'altra. \
+Essenzialmente, la differenza sta nella motivazione del partecipanti a rispondere alle domande. Se la sua motivazione è abbastanza forte da completare un questionario senza che altri siano presenti, un questionario sarà appropriato. \
+Se bisogna esercitare un po' di persuasione sul partecipante perchè risponda alle domande, può essere meglio il formato dell'intervista strutturata. \
+È più difficile sviluppare buone domande per un questionario, anzichè per un'intervista strutturata, perchè l'intervistatore non sarà presente per spiegarle o per chiarire le ambiguità. È importante che le domane siano specifiche, ponendo domande chiuse o offrendo una serie di risposte, comprendendo un'opzione "nessuna opinione" o "nessuna di queste". Inoltre, alcuni progettisti di questionari, usano deliberatamente una combinazione di domande negative e positive, perchè questo li aiuta a verificare le intenzioni degli utenti.
+==== Struttura di un questionario
+Molti questionari iniziano chiedendo informazioni demografiche di base (genere, età, luogo di nascita, ecc.) e dettagli sulle esperienza pertinenti (il numero di ore trascorso ogni giorni a effettuare ricerche su Internet, il livello di conoscenza del campo dello studio, ecc). \
+Queste informazioni sono utili per collocare nel contesto le risposte. Devono essere raccolte solo informazioni di contesto che siano pertinenti per l'obiettivo dello studio.
+Successivamente vengono fatte domande che contribuiscono all'obiettivo di raccolta dei dati. Se il questionario è lungo, le domande possono essre suddivise per temi, in modo  da rendere più facile più logica la compilazione. \
+In seguito un'idea su come strutturare il questionario.
+- Pensare all'ordine delle domande. L'impatto di una domanda può essere influenzato dalla posizione in cui si trova fra le altre domande.
+- Valutare se siano necessarie versioni diverse del questionario per popolazioni diverse.
+- Fornire istruzioni chiare su come compilare il questionario, per esempio se si possono saltare delle domande, per rispondervi in seguito. Mirare a una formulazione attenta e a una buona prestazione tipografica.
+- Tenere presente la lunghezza del questionario ed evitare di inserire le domande che non sono pertinenti per gli obiettivi dello studio.
+- Se il questionario è molto lungo, è bene valutare le possibilità di consentire ai partecipanti di abbandonarlo in fasi diverse. Di solito è meglio avere le risposte ad alcune sezioni solamente, piuttosto che non avere alcuna risposta perchè il partecipante ha rinunciato.
+- Pensare all'impaginazione del questionario e al ritmo: per esempio, trovare un equilibrio fra l'uso degli spazi bianchi, e la necessità di mantenere il questionario il più compatto possibile.
+==== Somministrazione di questionari
+Due problemi importanti, quando si usano i questionari, sono raggiungere un campione rappresentativo di partecipanti e assicurarsi un tasso di risposta ragionevole. \
+Di solito vengono scegli meno di 20 utenti, con questo campione di piccole dimensioni si ottengono spesso tassi di completamento dell'ordine del cento per cento, mentre in casi di popolazioni grandi, diventa problematico ottenere questionari completati.\
+Un ritorno del 40 per cento in generale è accettabile per molte indagini. \
+I questionari sono spesso online, ma in alcune situazioni quelli cartacei possono essere più convenienti, per esempio se i partecipanti non hanno accesso a internet. \
+Ogni tanto un breve questionario può essere inviato nel corpo di un'email, ma più spesso i vantaggi della compilazione automatica dei dati e una analisi parziale o totale rendono attraenti i questionari online, che sono interattivi e  possono comprendere caselle di spunta, caselle di selezione, menu a discesa e a comparsa, schermate di aiuto grafica o video. \
+Il problema principale dei questionari online è la difficoltà di ottenere un campione casuale: si basano di solito su campionamenti di convenienza e perciò i loro risultati non si possono generalizzare. \
+I passi per la preparazione di un questionario online sono i seguenti:
++ pianificate la tempistica dell'indagine. Se c'è una scadenza, procedete a ritroso dalla scadenza e programmate quello che deve essere fatto, su base settimanale
++ Progettate il questionario offline. Un documento di puro testo è utile, perchè poi può essere copiato più facilmente nello strumento per le indagini online
++ Programmate l'indagine online. Quanto tempo richiederà dipende dalla complessità del design
++ Effettuare un test, sia per essere sicuri che lo strumento si comporti come previsto, sia per verificare le domande stesse. Questo comprende anche ottenere feedback da esperti di contenuti, esperti di indagini statistiche e potenziali partecipanti
++ Reclutate i partecipanti. Possono avere motivi diversi per prendere parte all'indagine.
+Dei siti utili per la creazione di questonari sono *questionpro.com* oppure *surveymonkey.com*.
+=== Formato di domanda e risposta
+Si possono scegliere, per domande e risposte, formati diversi. Nel caso di una domanda chiusa, può essere appropriato indicare una sola risposta, oppure indicarne diverse. A volte è meglio chiedere agli utenti di dare una risposta che si collochi all'interno diun certo intervallo. La scelta del formato più adatto per domande e risposta rende più facile ai partecipanti rispondere chiaramente. \
+Ci sono diversi formati:
+- Caselle di spunta e intervalli;
+- scale di valutazione:
+	- scale Likert;
+	- scale del differenziale semantico.
+==== Caselle di spunta e intervalli
+L'intervallo delle risposte a domande di carattere demografico è prevedibile. per la nazionalità, esiste un numero finito di alternative, e chiedere ai partecipanti di scegliere una risposta da un elenco predefinito ha senso per raccogliere questa informazione. \
+In intervalli come l'età, spesso ci si riferisce con intervalli, come 15-20, 20-24. scrivere gli intervalli in questo modo è sbagliato, chi ha 20 anni quale delle due caselle barra? per questo si fanno intervalli che non comprendono numeri uguali, per es: 15-20, 21-25. \
+Gli intervalli non devono avere sempre numeri predefiniti; supponiamo di fare un sistema che controlli le idee politiche dei partecipanti, saranno necessari intervalli di età almeno ogni 10 anni. supponiamo di avere un sito per l'assicurazione sulla vita, è probabile che qui ci siano persone di età compresa fra i 21 e 65 anni, per questo possono venir creati solo 3 intervalli.
+==== Scale di valutazione
+Esistono vari tipi di scale di valutazione, ciascuna delle quali ha il proprio scopo. Due scale di uso comune sono le Likert e quelle del differenziale semantico. Il loro scopo è sollecitare risposte a una domanda che possano essere messe a confronto. Vanno bene per invitare le persone a dare un giudizio, per esempio su quanto facile, quanto usabile e simili. \
+Le scale Likert si basano sulla scelta di un insieme di affermazioni che rappresentano un ventaglio di possibili opinioni, mentre le scale del differenziale semantico si basano sulla scelta di coppie di parole che rappresentino il ventaglio delle opinioni possibili. Le scale Likert si usano più spesso, perchè identificare affermazioni che i partecipanti possano comprendere in modo coerente è più facile che identificare coppie semantiche che i partecipanti interpretino nel modo previsto.
+==== Scale Likert
+Sono usate per misurare opinioni, atteggiamenti e convinzioni e di conseguenza sono ampiamente impiegate per valutare la soddisfazione degli utenti nei confronti del prodotto. Ad esempio, le opinioni degli utenti sull'uso dei colori in un sito web potrebbero essere valutate con una scala Likert che usi una serie di numeri
+
++ L'uso del colore è eccellente
+#figure(
+image("images/likert.png", width: 70%),
+caption: [Esempio di utilizzo della scala Likert]
+)
+In entrambi i casi, ai partecipanti si deve chiedere di scegliere la casella, il numero o la frase opportuna. I passi per progettare una scala likert sono i seguenti:
++ Raccogliere una serie di brevi affermazioni sul tema da indagare. es: Questo pannello di controllo è chiaro
++ Decidere la scala. Qui ci sono tre aspetti da considerare. Quanti punti servono sulla scala? Deve essere una scala discreta o continua? Come può essere rappresentata la scala?
++ Selezionate le voci per il questionario finale, e riformulare le frasi quanto serve per renderle chiare.
+Non esiste un modo giusto o sbagliato di ordinare i numeri; i ricercatori preferiscono disporre le scale in senso contrario, con 1 come livello minimo a sinistra e 5 come massimo a destra
+==== Scale del differenziale semantico
+Le scale del differenziale semantico esplorano una serie di atteggiamenti bipolari relativamente a un particolare elemento, ciascuno rappresentato da una coppia di aggettivi.
+Al partecipante viene chiesto di scegliere un punto fra i due estremi per indicare quanto è d'accordo o meno con i due poli. \
+Il punteggio per l'indagine si calcola sommando i punteggi per ciascuna coppia bipolare. Poi i punteggi vengono calcolati per gruppi di partecipanti.
+#figure(
+image("images/diff_semantico.png", width: 70%),
+caption: [Scala del differenziale semantico]
+)
+Quali scale usare: tre, cinque, sette punti o più? \
+Fra gli aspetti da affrontare quando si progettano scale Likert e di differenziale semantico rientrano anche il numero di punti necessari sulla scala, il modo in cui devono essere presenti e in quale forma.\
+Molti questionari usano scale a sette o cinque punti, ed esistono anche scale a tre soli punti; alcune addirittura ne usano nove. Vi sono buoni argomenti a favore di ciascuna posizione. I sostenitori delle scale lunghe sostengono che aiutano a discriminare meglio.  \
+Un altro aspetto da considerare è se dare alla scala un numero pari o dispari di punti. Un numero dispari presenta un punto centrale chiaro, mentre un numero pari costringe i partecipanti a prendere una decisione e sbilanciarsi. \
+Le linee guida che proponiamo noi sono le seguenti.
+- Quanti punti sulla scala?
+	Usate un piccolo numero di punti, tre per esempio, quando le possibilità sono molto limitate, come nelle risposte del tipo Sì/No.
+#figure(
+image("images/diff_semantico2.png", width: 70%),
+)
+=== Osservazioni
+L'osservazione è utile in qualsiasi fase dello sviluppo di un prodotto. Nelle fasi iniziali del design, l'osservazione aiuta i designer a comprendere contesti, attività e obiettivi degli utenti. \
+Gli utenti possono essere osservati direttamente dal ricercatore mentre svolgono le loro attività, oppure indirettamente attraverso registrazioni delle attività, che vengono studiate in un secondo tempo.
 ==== Osservazioni sul campo
-Non sempre gli utenti sono in graado di spiegare quali sono le modalità di uso desiderate per il prodotto nella loro attività quotidiana. Potrebbero anche avere un'immagine distorta di come si comportano nelle varie situazioni d'uso reali. Questo è normale perchè un utente non è interessato a conoscere la natura e la frequenza dei compiti che svole quotidianamente, li svolge e basta. Uno studio sul campo per apprendere come gli utenti si comportano nella realtà può essere molto istruttivo e riservare alcune sorprese. Questo può essere molto costoso, considerando anche la possibile varietà delle diverse tipologie di utenti.
-==== Suggerimenti spontanei degli utenti
-Queste informazioni sono preziose per una corretta evoluzione del prodotto e dovrebbero sempre essere sistematicamente raccolte e classificate. Una fonta molto importante d'informazioni di questo tipo è costituita dai _form_ di discussione relativi ai vari prodotti. È possibile, inoltre, attivare un sito sul quale gli utenti segnalano spontaneamente miglioramenti desiderabili e votano i suggerimenti proposti.
+L'osservazione sul campo può aiutare a completare i dettagli di come gli utenti si comportano e come usano la tecnologia, e permette di cogliere sfumature che non si riescono ad apprezzare con altre forme di indagine. La conoscenza del contesto offre informazioni importanti per capire perchè le attività si svolgano proprio in quel determinato modo. Potrebbe risultare difficile svolgerla, e può produrre una quantitò molto elevata di dati. \
+Ogni raccolta di dati deve avere un obiettivo ben definito, ma è importante che una sessione di osservazione sia ben focalizzata, perchè le cose che succedono sono davvero molte. Nell'osservazione, va sempre rispettato un equilibrio attento fra farsi guidare dagli obiettivi ed essere aperti alla possibilità di modificare, in funzione di quello che si apprende in merito alla situazione.
+==== Strutturazione di quadri di riferimento per l'osservazione sul campo
+Nel corso di un'osservazione, gli eventi possono essere complessi e mutare rapidamente. Gli osservatori hanno molte cose a cui pensare, perciò molti esperti hanno un quadro di riferimento che permette di strutturare e focalizzare l'osservazione. Questo quadro può essere molto semplice. Per esempio, segue un quadro di riferimento da usare negli studi id valutazione:
+- la persona: chi usa la tecnologia in ogni dato istante?
+- il luogo: dove viene utilizzata?
+- la cosa: che cosa fanno le persone con la tecnologia?
+Gli osservatori esperti possono preferire un sistema più dettagliato:
+- spazio: qual è lo spazio fisico, come è configurato?
+- attori: quali sono i nomi e i dettagli pertinenti delle persone coinvolte?
+- attività: che cosa fanno gli attori?
+- oggetti: quali oggetti fisici sono presenti?
+- atti: quali sono le singole azioni specifiche?
+- eventi: quello che si osserva fa parte di un evento speciale?
+- tempo: qual è la successione degli eventi?
+- obiettivi: che cosa cercano di realizzare gli attori?
+- stato d'animo: qual è l'umore del gruppo e dei singoli?
+Questo sistema è generale, nel contesto dell'interaction design, deve essere leggermente modificato.
+
+==== Grado di partecipazione
+A seconda del tipo, il grado di partecipazione nell'ambiente dello studio varia, lungo uno spettro che va dall'interno a un estremo fino all'esterno all'estremo opposto. \
+Dove ricada lungo questo spettro un particolare studio dipende dagli obiettivi e dai problemi. \
+Un osservatore che adotti un approccio proprio all'estremo "esterno" dello spettro è un osservatore passivo e non avrà alcuna parte nell'ambito dello studio.
+Un osservatore che adotti un approccio all'altro estremo dello spettro, come "Interno" è un osservatore partecipante. È un ruolo difficile, dato che essere osservatori richiede anche un certo livello di distacco, mentre per essere partecipanti bisogna assumere un ruolo diverso. Per un osservatore partecipante è importante mantenere i due ruoli separati, in modo che gli appunti dell'osservazione siano oggettivi, pur mantenendo la partecipazione.
+==== Pianificazione e conduzione di osservazioni sul campo
+La scelta di un quadro di riferimento è importante, ma ci sono altre decisioni da prendere, fra cui il livello di partecipazione da adottare, come registrare i dati, come farsi accettare nel gruppo sotto studio, come gestire aspetti delicati come differenze culturali o l'accesos a spazi privati e come garantire che lo studio usi prospettive diverse. \
+Un modo per soddisfare a quest'ultimo requisito è lavorare in team, che può avere benefici.
+- Ciascuna persona può concentrarsi su persone diverse o su parti diverse del contesto, comprendo così un terreno più ampio.
+- Osservazione e riflessione si possono intrecciare più facilmente, se gli osservatori sono più di 1.
+- È probabile che si generino dati più affidabili.
+Una volta che si è nel bel mezzo di un'osservazione, sorgono altri problemi che bisogna prendere in considerazione. \
+L'osservazione è anche un'attività stancante, ma alla fine di ogni giornata è importante controllare appunti e registrazioni e riesaminare osservazioni ed esperienze. Se non lo si fa, si potrebbero perdere informazioni importanti quando gli eventi del giorno successivo tenderanno a cancellare il ricordo di quelli del giorno prima.
 ==== Analisi della concorrenza e delle best practice
 Un'altra attività importante nella fase di esplorazione dei requisiti è l'analisi dei prodotti concorrenti, cioè di quei prodotti con i quali il nostro prodotto dovrà confrontarsi e competere. L'analisi della concorrenza potrà essere più o meno ampia, in funzione del numero e della complessità dei prodotti esaminati e del livello di approfondimento dell'esame. Per certi settori, può essere complessa e costosa. Si dovrà esaminare un certo numero di prodotti, per indivuare le caratteristiche più importanti, i punti di forza e debolezza e ciò permetterà di contraddistinguere il prodotto in costruzione in rapporto ad essi e definire, la sua _value proposition_, cioè il valore specifico e distintivo che dovrà fornire ai suoi utenti. Inoltre, quest'analisi permetterà di individuare le _pratiche migliori_ adottate dai prodotti del settore, dalle quali trarre spunti per la formulazione dei requisiti. È utile effettuare quest'analisi all'inizio del progetto.
 ==== Scenari d'uso
