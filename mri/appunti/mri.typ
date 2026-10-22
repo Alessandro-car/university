@@ -904,7 +904,7 @@ image("images/mat_doc2.png", width: 70%),
 )
 Calcoliamo la precisione e la copertura nel seguente modo:
 $
-"precision" = ("Number of relevant documents retrived") / ("Total number of documents retrieved") = ("TP") / ("TP + FP")
+"precision" = ("Number of relevant documents retrieved") / ("Total number of documents retrieved") = ("TP") / ("TP + FP")
 $
 $
 "recall" = ("Number of relevant documents retrieved") / ("Total number of relevant documents") = ("TP") / ("TP + FN")
@@ -932,7 +932,262 @@ caption: [Tradeoff tra precisione e copertura]
 In uno scenario ideale, si vorrebbe raggiungere il punto in cui entrambe le metriche assumono valore massimo pari a 1. \
 Tuttavia, nella realtà operativa i sistemi si muovono lungo una curva di compromesso:  - *Alta precisione e bassa copertura*: concentrandosi sui primi risultati, il sistema restituisce documenti rilevanti ma rischia di tralasciarne molti altri che potrebbero rivelarsi utili.
 - *Alta copertura e bassa precisione*: cercando di includere la maggior parte dei documenti pertinenti (ad esempio espandendo il recupero), il sistema intercetta i documenti rilevanti ma finisce per includere una grande quantità di materiale irrilevante o "spazzatura" (junk).
-== Precisione
+=== Limiti nell'utilizzo della precisione e della copertura
+L'utilizzo delle metriche di precisione e copertura comporta diverse difficoltà pratiche che è necessario considerare. Prima di tutto, per ottenere una valutazione significativa, è opportuno calcolare la media su sistemi estesi di query e grandi collezioni di documenti. Il processo richiede inoltre valutazioni umane della rilevanza, sebbene le persone non si rivelino sempre valutatrici affidabili. Un'ulteriore limitazione deriva dal fatto che tali valutazioni devono solitametne essere binarie, il che rende complessa l'eventuale gestione di giudizi più sfumati. \
+Infine, i dati rischiano di risultare fortemente distorti dalla collezione e dalla paternità dei testi, con la conseguenza che i risultati ottenuti in un determinato dominio potrebbero non essere facilmente trasferibili a un altro.
+== Accuratezza
+Data una query, un sistema, detto *classifier* o _classificatore_, classifica ogni documento come _rilevante_ o _non rilevante_. L'*accuratezza* del classificatore è calcolata come segue:
+$
+"accuracy" = ("TP" + "TN") / ("TP" + "FP" + "TN" + "FN")
+$
+L'accuratezza è una misura di precisione comunemente usata nel lavoro del classificazione in machine learning, ma nell'ambito dell'Information Retrieval questa misura non è molto utile.
+== Misura F1
+La *misura F1* è una misura di efficacia che tiene conta sia della copertura e sia della precisione. Viene effettuata una media armonica tra copertura e precisione:
+$
+F = (2 P R) / (P + R) = 2 / ((1 / R) + (1/P))
+$
+Confrontandola con la media aritmetica, entrambi i valori devono essere alti affinchè la media armonica sia alta. \
+La misura F1 è la generalizzazione della misura $F_beta$, ove $beta$ è un parametro che serve a dare più o meno peso a uno dei due parametri (precisione o copertura).
+$
+F_beta = (1 + beta^2)P R / (beta^2 P + R) = (1 + beta^2) / ((beta^2 / R) + (1 / P))
+$
+Analizziamo il comportamento di questa misura in base al valore di $beta$:
+- $beta = 1$: uguale compromesso tra precisione e copertura ($F_beta = F$)
+- $beta > 1$: la copertura ha più peso;
+- $beta < 1$: la precisione ha più peso;
+- $beta = 0$: $F_beta = P$
+A completamento di questa misura di valutazione, viene spesso definita anche la misura $E$, la quale si calcola semplicemente come il complemento a uno della misura $F_beta$. $
+E = 1 - F_beta
+$
+== Curva di precisione-copertura
+Quando si passa alla *valutazione dei risultati ordinati*, l'approccio metodologico deve adattarsi alla natura della risposta fornita dal sistema. Un sistema di Information Retrieval può restituire un numero variabile di risultati, modificando il proprio comportamento oppure considerando differenti sottoinsiemi dei migliori documenti restituiti a vari livelli di copertura. Attraverso questa variazione sistematica, il valutatore è in grado di tracciare e produrre una curva di precisione-copertura. \
+Consideriamo il seguente esempio.
+#figure(
+image("images/prec-rec.png", width: 70%),
+)
+ove 1000 rappresenta il numero di documenti rilevanti per la data query. \
+La curva di precisione-copertura che ne deriva è la seguente.
+#figure(
+image("images/prec_rec_curve.png", width: 70%),
+caption: [Curva di precisione-copertura]
+)
+Analizzare il grado di precisione-copertura relativo a una singola query non risulta particolarmente utile nè significativo. Per ottenere una valutazione affidabile e complessiva delle prestazioni, è infatti necessario calcolare la media della performance estesa a un intero sistema di query. Tuttavia, questo processo di aggregazione fa emergere una questione tecnica rilevante: i calcoli di precisione e copertura restituiscono soltanto determinati punti discreti sul grafico. Di conseguenza, si pone il problema metodologico di stabilire come determinare i valori intermedi, ovvero come interpolare correttametne lo spazio compreso tra i diversi punti calcolati.
+#esempio[
+Consideriamo la seguente tabella:
+#let rows = (
+  (1, 588, true, $R = 1/6 = 0.167; quad P = 1/1 = 1$),
+  (2, 589, true, $R = 2/6 = 0.333; quad P = 2/2 = 1$),
+  (3, 576, false, none),
+  (4, 590, true, $R = 3/6 = 0.5; quad P = 3/4 = 0.75$),
+  (5, 986, false, none),
+  (6, 592, true, $R = 4/6 = 0.667; quad P = 4/6 = 0.667$),
+  (7, 984, false, none),
+  (8, 988, false, none),
+  (9, 578, false, none),
+  (10, 985, false, none),
+  (11, 103, false, none),
+  (12, 591, false, none),
+  (13, 772, true, $R = 5/6 = 0.833; quad P = 5/13 = 0.38$),
+  (14, 990, false, none),
+)
 
+#table(
+  columns: (auto, auto, auto, auto),
+  align: center + horizon,
+  inset: (x: 8pt, y: 5pt),
+  // borders only around the first three columns; labels column has none
+  stroke: (x, y) => if x < 3 { 0.5pt } else { none },
+  table.header([*n*], [*doc \#*], [*relevant*], []),
+  ..rows
+    .map(r => (
+      [#r.at(0)],
+      [#r.at(1)],
+      [#if r.at(2) [x]],
+      table.cell(align: left, if r.at(3) != none { r.at(3) } else { [] }),
+    ))
+    .flatten(),
+)
+Consideriamo ora questa tabella:
+#let rows = (
+  (1, 588, true, $R = 1/6 = 0.167; quad P = 1/1 = 1$),
+  (2, 576, false, none),
+  (3, 589, true, $R = 2/6 = 0.333; quad P = 2/3 = 0.667$),
+  (4, 342, false, none),
+  (5, 590, true, $R = 3/6 = 0.5; quad P = 3/5 = 0.6$),
+  (6, 717, false, none),
+  (7, 984, false, none),
+  (8, 772, true, $R = 4/6 = 0.667; quad P = 4/8 = 0.5$),
+  (9, 321, true, $R = 5/6 = 0.833; quad P = 5/9 = 0.556$),
+  (10, 498, false, none),
+  (11, 113, false, none),
+  (12, 628, false, none),
+  (13, 772, false, none),
+  (14, 592, true, $R = 6/6 = 1.0; quad P = 6/14 = 0.429$),
+)
 
+#table(
+  columns: (auto, auto, auto, auto),
+  align: center + horizon,
+  inset: (x: 8pt, y: 5pt),
+  // borders only around the first three columns; labels column has none
+  stroke: (x, y) => if x < 3 { 0.5pt } else { none },
+  table.header(
+    [*n*], [*doc \#*], [*relevant*],
+    table.cell(align: left)[
+      Let total \# of relevant docs be = 6 \
+      Check each new recall point:
+    ],
+  ),
+  ..rows
+    .map(r => (
+      [#r.at(0)],
+      [#r.at(1)],
+      [#if r.at(2) [x]],
+      table.cell(align: left, if r.at(3) != none { r.at(3) } else { [] }),
+    ))
+    .flatten(),
+)
+L'ultima tabella ha una precisione e una copertura migliore. Tuttavia, la prima tabella risulta preferibile, nonostante i valori di precisione e copertura siano inferiori, in quanto i documenti li posiziona meglio.
+]
+=== Interpolazione una curva di precisione-copertura
+Per risolvere il problema dell'interpolazione tra i punti discreti di un grafico di performance e consentire l'aggregazione dei dati tra query differenti, si ricorre all'interpolazione della curva di copertura e precisione. \
+Il metodo standard consiste nell'interpolare un valore di precisione in corrispondenza di specifici livelli standard di copertura definiti nell'insieme $r_j in brace.l 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0 brace.r$ dove $r_0 = 0.0$ e $r_(10) = 1.0$.\
+Formalmente, la regola di interpolazione stabilisce che la precisione interpolata al $j$-esimo livello standard di copertura, indicata come $P(r_j)$, è definita come il valore massimo di precisione noto tra tutti i livelli di copertura superiori o uguali a $r_j$:
+$
+P(r_j) = max_(forall r bar r_j <= r)P(r)
+$
+#esempio[
+Consideriamo la seguente curva:
+#figure(
+image("images/curva1.png", width: 70%)
+)
+dove i pallini bianchi rappresentano la prima query. Applicando la formula ho potuto calcolare gli 11 valori di precisione. Ad ogni valore di recall va preso il massimo valore di precisione. Man mano che si va avanti per forza di cose la curva scende verso il basso, non si può mai ottenere un salto, è una crescita costante o decrescente. La curva ad un certo punto va a 0, questo accade quando il sistema non ritrova tutti i documenti rilevanti. Se i documenti rilevanti vengono trovati allora la curva non andrà mai a 0. \
+Consideriamo la seguente curva:
+#figure(
+image("images/curva2.png", width: 70%)
+)
+Rispetto alla prima curva, questa è peggiore perchè la prima presenta una precisione massima per più documenti rilevanti trovati.
+]
+Le curve di precisione-copertura sono una particolare forma di metrica che consentono di valutare la funzione di ranking.
+== Precisione media
+La precisione media calcola la media dei valori di precisione ottenuti in corrispoendenza delle posizioni $p$ in cui viene effettivamente recuperato un documento rilevante. \
+Formalmente, data una query per cui vengono recuperati $m$ documenti rilevanti, la precisione media si esprime come la media delle precisioni calcolate nei ranghi in cui compaioni i documenti pertinenti:
+$
+A P = (1) / (m)sum_(k=1)^m "Precision"(p = k)
+$
+=== MAP
+Per estendere la valutazione delle prestazioni a un intero insieme di queru, si introuduce la *Mean Average Precision, MAP*, la quale si ottiene calcolando la media dei valori di precisione media registrati su un insieme complessivo di interrogazioni. \
+Formalmente, considerando un totale di $n$ query all'interno del testo, dove ciascuna $j$-esima query è associata a un numero $m_j$ di documenti rilevanti, la formula della MAP aggrega le prestazioni su tutte le richieste effettuate:
+$
+"MAP" = 1 / n sum_(j=1)^1 1/(m_j)sum_(k=1)^(m_j)"Precision"(p = k)
+$
+In questo modo, la metrica riesce a sintetizzare in un unico valore complessivo e robusto l'efficacia dell'intero sistema di recupero, tenendo conto sia della qualità del ranking per le singole query sia del compertamento su molteplici bisogni informativi differenti. \
+Nonostante la MAP raprpesenti una metrica solida e ampiamente diffusa, essa presenta intriseci limiti strutturali che ne evidenziano l'insufficienza in determinati contesti di valutazione. Il problema fondamentale risiede nel fatto che la media aritmetica tende a mascherare le variazioni di performance sulle singole query.
+Consideriamo il seguente esempio:
+#align(center)[
+#table(
+  columns: (auto, auto, auto),
+  align: (left, center, center),
+  stroke: none,
+  inset: (x: 10pt, y: 6pt),
+  [], [IRS1], [IRS2],
+  [Q1], [0.02], [0.06],
+  [Q2], [0.4], [0.3],
+  [Q3], [0.3], [0.3],
+  [Q4], [0.18], [0.24],
+  [MAP], [0.225], [0.225],
+)
+]
+Nonostante le differenze puntaili nei risultati delle singole interrogazioni, se si calcola la media aritmetica di entrambi i sistemi si ottiene esattamente lo stesso identico punteggio di MAP pari a 0.225. \
+Questo limite dimostra che la MAP può restituire valutazioni globali identiche per sistemi che si comportano in modo diverso sulle singole query, occultando le difficoltà specifiche incontrate dal sistema su determinati bisogni informativi e giustificando lanecessità di metriche complementari come la *GMAP*.
+=== GMAP
+Per ovviare ai limiti della media aritemcica utilizzata nella MAP, si introduce la *Geometric Mean Average Precision, GMAP*. Questa metrica si calcola utilizzando la media geometrica dei valori di precisione media associato alle diverse query. \
+Dal punto di vsita matematico e opeartivo, la GMAP presenta caratteristiche peculiari:
+- gli incrementi nei valori pìu bassi esercitano un impatto molto più forte sul valore finale, poichè la formula si basa su un prodotto di valori anzichè su una somma.
+- Risulta ideale per testare i sistemi in presenza di query difficili, ovvero quelle situazioni in cui viene recuperato un numero eseguo di documenti rilevanti.
+$
+"GMAP" = root(n, product_n "AP"_n)
+$
+Consideriamo il seguente esempio:
+#align(center)[
+  #table(
+    columns: (auto, auto, auto),
+    align: (left, center, center),
+    stroke: none,
+    inset: (x: 10pt, y: 6pt),
+    [], [IRS1], [IRS2],
+    [Q1], [0.02], [0.06],
+    [Q2], [0.4], [0.3],
+    [Q3], [0.3], [0.3],
+    [Q4], [0.18], [0.24],
+    [MAP], [0.225], [0.225],
+    [GMAP], [0.144], [0.19],
+  )
+]
+Riprendendo il confronto tra i due sistemi di recupero ($"IRS"_1$ e $"IRS"_2$) precedentemente analizzati, l'utilizzo della *GMAP* (_Geometric Mean Average Precision_) permette di superare i limiti strutturali della media aritmetica della MAP. Sebbene entrambi i sistemi ottenessero lo stesso identico punteggio di MAP pari a $0.225$, l'applicazione della media geometrica riflette efficacemente le differenze di performance sulle singole query.
 
+- Nel caso del sistema $"IRS"_1$, caratterizzato da valori di precisione media sulle singole query pari a $0.02$ ($"Q"_1$), $0.4$ ($"Q"_2$), $0.3$ ($"Q"_3$) e $0.18$ ($"Q"_4$), il calcolo della GMAP produce un valore complessivo pari a $0.144$.
+- Per il sistema $"IRS"_2$, che presenta valori di $0.06$ ($"Q"_1$), $0.3$ ($"Q"_2$), $0.3$ ($"Q"_3$) e $0.24$ ($"Q"_4$), la GMAP risulta pari a $0.19$.
+
+Questo confronto dimostra come la GMAP riesca a penalizzare maggiormente i sistemi che falliscono sulle query difficili --- dando un peso preponderante ai valori più bassi a causa della natura moltiplicativa della formula --- evidenziando così la superiorità complessiva del secondo sistema ($"IRS"_2$) in termini di robustezza e stabilità su tutte le interrogazioni.
+== Precision\@k
+Nonostante i grafici offrano una visualizzazione dettagliata, gli utenti e i valutatori richiedono spesso delle misure di sintesi immediate. Per rispondere a questa esigenza si ricorre alla precisione a un livello di recupero fisso, nota come *Precision\@k*. Questa metrica calcola la precisione considerando esclusivamente i primi $k$ risultati restituiti dal sistema (valori comunemente impiegati sono $k = 10$ oppure $k = 20$).\
+L'utilizzo di questa misura presenta importanti vantaggi e svantaggi operativi:
+
+- *Vantaggi:*
+  - Si adatta in modo ottimale alla maggior parte dei contesti di ricerca sul Web, dove l'utente si aspetta di trovare buoni riscontri già nella prima o nelle prime due pagine di risultati.
+  - Risulta utile per stimare un valore di taglio (_cutoff_) $k$.
+- *Svantaggi:*
+  - Si presta difficilmente al calcolo di medie affidabili e introduce la criticità di un parametro $k$ arbitrario.
+  - Essendo una misura basata su insiemi (_set-based measure_), non effettua alcuna distinzione tra differenti ordinamenti interni a parità di documenti rilevanti recuperati.
+  - La scelta del parametro $k$ può risultare fuorviante e condizionare l'affidabilità della valutazione; ad esempio, se $k = 10$ ma il numero totale di documenti rilevanti per quella query è pari a $5$, la metrica $"Precision@10"$ non potrà mai raggiungere il valore massimo di $1$, neppure nel caso di un sistema di IR perfetto. \
+	*VEDERE TUTTI GLI ESEMPI SALTATI DAL PROF* \
+== R-precision
+Per ovviare ai limiti derivanti dalla scelta arbitraria di un parametro fisso $k$ come nella Precision\@k, si introduce la metrica della *R-precision*. Questa misura calcola la precisione esattamente alla $R$-esima posizione della graduatoria, dove $R$ rappresenta il numero totale di documenti rilevanti associati a quella specifica query.
+\
+Tra le sue caratteristiche principali si evidenziano:
+- Un sistema ideale può raggiungere un punteggio massimo pari a $1.0$.
+- La misura della R-precision risulta particolarmente utile per osservare il comportamento di un algoritmo a livello di singole query.
+- I valori di R-precision possono essere mediati sull'intero insieme delle query per ottenere una valutazione complessiva del sistema.
+Consideriamo il seguente esempio:
+#align(center)[
+  #table(
+    columns: (auto, auto, auto),
+    align: center + horizon,
+    inset: (x: 8pt, y: 4pt),
+    stroke: 0.5pt,
+    table.header([*n*], [*doc \#*], [*relevant*]),
+    [1], [588], [x],
+    [2], [589], [x],
+    [3], [576], [],
+    [4], [590], [x],
+    [5], [986], [],
+    [6], [592], [x],
+    table.hline(stroke: 1.5pt),
+    [7], [984], [],
+    [8], [988], [],
+    [9], [578], [],
+    [10], [985], [],
+    [11], [103], [],
+    [12], [591], [],
+    [13], [772], [x],
+    [14], [990], [],
+  )
+]
+Analizzando la tabella dei risultati ordinati restituiti dal sistema:
+- Nelle prime $R$ posizioni (cioè fino a $n = 6$), i documenti rilevanti contrassegnati dalla "x" si trovano alle posizioni $1$, $2$, $4$ e $6$.
+- All'interno di questo cutoff pari a $6$, il sistema ha recuperato correttamente $4$ documenti rilevanti su un totale di $6$.
+- Di conseguenza, la *R-precision* si calcola come il rapporto $4\/6$, ottenendo un valore pari a $0.67$.
+== Mean Reciprocal Rank (MRR)
+Per valutare l'efficacia dei motori di ricerca quando l'obiettivo principale è misurare la capacità di restituire documenti rilevanti ai primissimi ranghi della graduatoria, si introduce il concetto di *Mean Reciprocal Rank (MRR)*. In questo specifico contesto, la copertura non rappresenta una metrica adeguata, e ci si interroga se la Precision\@k sia effettivamente lo strumento ideale per rispondere a questa esigenza. \
+Per soddisfare la necessità di una metrica più sensibile alla posizione del ranking, si introduce il concetto di *Reciprocal Rank, RR*, definito formalmente come il reciproco della posizione in cui viene recuperato il primo documento rilevante. \
+La *Mean Reciprocal Rank* rappresenta la media dei valori di Reciprocal Rank calcolati su un intero insieme di query. \
+La MRR viene calcolata come segue.
+$
+"MRR" = 1/(bar Q bar)sum_(i=1)^(bar Q bar) 1 / ("rank"_i)
+$
+ove $bar Q bar$ indica il numero totale di query nell'insieme di test e $"rank"_i$ rappresenta la posizione in cui compare il primo documento rilevante per la $i$-esima query. \
+*VEDERE ESEMPI SLIDE 50, 52, 53*. \
+La MRR rappresenta una metrica ottimale nei casi in cui l'interesse primario sia focalizzato sul reperimento della *prima risposta corretta*. Tali contesti applicativi includono in particolare:
+- I sistemi di Question-Answering (QA).
+- Le ricerche di tipo navigazionale, ossia le interrogazioni rivolte ai motori di ricerca alla ricerca di siti specific, tra cui le query basate su URL, le home-page query e le named-page query.
