@@ -1141,7 +1141,31 @@ L'utilizzo di questa misura presenta importanti vantaggi e svantaggi operativi:
   - Si presta difficilmente al calcolo di medie affidabili e introduce la criticità di un parametro $k$ arbitrario.
   - Essendo una misura basata su insiemi (_set-based measure_), non effettua alcuna distinzione tra differenti ordinamenti interni a parità di documenti rilevanti recuperati.
   - La scelta del parametro $k$ può risultare fuorviante e condizionare l'affidabilità della valutazione; ad esempio, se $k = 10$ ma il numero totale di documenti rilevanti per quella query è pari a $5$, la metrica $"Precision@10"$ non potrà mai raggiungere il valore massimo di $1$, neppure nel caso di un sistema di IR perfetto. \
-	*VEDERE TUTTI GLI ESEMPI SALTATI DAL PROF* \
+#esempio[
+Consideriamo i seguenti sistemi:
+#figure(
+image("images/precisionk.png", width: 50%)
+)
+Bisogna capire quale tra $I R S_1$ ed $I R S_2$ sia migliore. Calcoliamo la copertura dei due sistemi:
+$
+"recall" = ("documenti rilevanti ritrovati")/("documenti totali rilevanti") \
+"recall("I R S_1")" = 3/5 = "recall("I R S_2")"
+$
+Notiamo che la copertura dei sistemi è uguale, quindi non possiamo utilizzare questa metrica. Analizziamo la precisione:
+$
+"precision" = ("documenti rilevanti trovati")/("documenti totali ritrovati") \
+"precision"(I R S_1) = 3/10 = "precision"(I R S_2)
+$
+La precisione è uguale per entrambi. Calcoliamo la precisione e la copertura per ogni posizione $p$ e otteniamo il seguente risultato:
+#figure(
+image("images/precisionk2.png", width: 70%),
+)
+Se la precisione di $I R S_1 > I R S_2$ allora anche la copertura sarà maggiore. Da questo possiamo costruire il grafico di copertura-precisione:
+#figure(
+image("images/precisionk3.png", width: 50%),
+)
+Quindi, si conclude che il sistema $I R S_1$, rappresentato dalla linea magenta, mantenga prestazioni complessivamente migliori rispetto a $I R S_2$, rappresentato dalla liena verde, poichè i suoi documenti rilevanti sono concentrati più in alto nella graduatoria.
+]
 == R-precision
 Per ovviare ai limiti derivanti dalla scelta arbitraria di un parametro fisso $k$ come nella Precision\@k, si introduce la metrica della *R-precision*. Questa misura calcola la precisione esattamente alla $R$-esima posizione della graduatoria, dove $R$ rappresenta il numero totale di documenti rilevanti associati a quella specifica query.
 \
@@ -1187,7 +1211,53 @@ $
 "MRR" = 1/(bar Q bar)sum_(i=1)^(bar Q bar) 1 / ("rank"_i)
 $
 ove $bar Q bar$ indica il numero totale di query nell'insieme di test e $"rank"_i$ rappresenta la posizione in cui compare il primo documento rilevante per la $i$-esima query. \
-*VEDERE ESEMPI SLIDE 50, 52, 53*. \
+#esempio[
+Consideriamo l'immagine proposta:
+#figure(
+image("images/mrr1.png", width: 50%)
+)
+Analizzando quest'immagine, possiamo osservare un ulteriore limite metodologico delle metriche basate su sistemi come la Precision\@k.
+- Nel confronto tra i due sistemi $I R_1$ e $I R_2$, intuitivamente percepiamo che il sistema $I R_2$ risulta migliore, poichè posiziona i documenti rilevanti più in altro rispetto a $I R_1$
+- Tuttavia, se calcoliamo la Precision\@5 considerando un taglio a $k = 5$, entrambi i sistemi ottengono lo setsso identico punteggio: $"Precision@5"(q, I R_2) = 2/5 = 0.4$ e $"Precision@"(q, I R_1) = 2/5=0.4$.
+Questo esempio dimostra chiaramente che metriche come la Precision\@k non fanno alcuna distinzione tra differenti ordinamenti interni dei risultati, fallendo nel cogliore la qualità del ranking quando il numero di elementi rilevanti all'interno della soglia è identica. \
+Consideriamo ora la seguente immagine:
+#figure(
+image("images/mrr2.png", width: 50%),
+)
+L'immagine evidenzia come la metrice del Reciprocal Rank, RR, riesca a cogliere le differenze di ordinamento tra i due sistemi, superando i limiti visti in precedenza con la Precision\@k.
+- Nel sistema $I R_2$, il primo documento rilevante compare subito alla prima posizione, restituendo un valore di $R R(q, I R_2) = 1/1 = 1$
+- Nel sistema $I R_1$, invece, il primo documento rilevante compare soltanto alla quarta posizione, producendo un valore di $R R(q, I R_1) = 1 / 4 = 0.25$.
+Questo dimostra che il sistema $I R_2$ è effettivametne migliore rispetto a $I R_1$ secondo questa metrica, poichè premia in modo sensibile la capacità di posizionare un risultato utile ai primissimi ranghi della graduatoria.
+]
 La MRR rappresenta una metrica ottimale nei casi in cui l'interesse primario sia focalizzato sul reperimento della *prima risposta corretta*. Tali contesti applicativi includono in particolare:
 - I sistemi di Question-Answering (QA).
 - Le ricerche di tipo navigazionale, ossia le interrogazioni rivolte ai motori di ricerca alla ricerca di siti specific, tra cui le query basate su URL, le home-page query e le named-page query.
+#esempio[
+Consideriamo la seguente tabella:
+#align(center)[
+  #table(
+    columns: (auto, auto, auto, auto, auto),
+    align: (left + horizon, left + horizon, left + horizon, left + horizon, left + horizon),
+    inset: (x: 10pt, y: 8pt),
+    stroke: 0.5pt,
+    table.header(
+      table.cell(align: center + horizon)[Query],
+      table.cell(align: center + horizon)[Results],
+      table.cell(align: center + horizon)[Correct \ response],
+      table.cell(align: center + horizon)[Rank],
+      table.cell(align: center + horizon)[Reciprocal \ Rank],
+    ),
+    [cat], [catten, \ cati, *cats*], [cats], [3], [1/3],
+    [torus], [torii, *tori*, \ toruses], [tori], [2], [1/2],
+    [virus], [*viruses*, \ virii, viri], [viruses], [1], [1],
+  )
+]
+Consideriamo un insieme di tre query al'interno della tabella:
+- Per la query _cat_, la risposta corretta _cats_ compare alla terza posizione nella lista dei risultati, restituendo un valore di RR pari a $1/3$.
+- Per la query _torus_, la risposta corretta _tori_ si trova alla seconda posizione, generano un valore di RR pari a $1/2$.
+- Per la query _virus_, la risposta corretta _viruses_ appare direttamente al primo posto ottentendo un valore di $RR$ pari a 1.
+Mediando i valori ottenuti per la tre query, il calcolo della MRR risulta pari a
+$
+(1 / 3 + 1 / 2 + 1)/3 = 11/18 approx 0.61
+$
+]
