@@ -738,3 +738,130 @@ QUIC utilizza UDP come protocollo del livello di trasporto ed è progettato per 
 - *Orientato alla connessione e sicuro*. QUIC è un protocollo orientato alla connessione tra due endpoint. Ciò richiede una fase di handshaking tra gli endpoint. Due parti dello stato di connessione sono gli ID dell'origine e della destinazione della connessione. Tutti i pacchetti QUIC sono crittografati e QUIC combina l'handshake e la cifratura. In questo modo richiede 1 RTT prima di inviare i dati, in TCP invece sono necessari 2 RTT. La cifratura del traffico è *obbligatoria* ed è basata su TLS.
 - *Flussi (Streams)*. QUIC consente il multiplexing di diversi flussi a livello di applicazione attraverso una singola connessione QUIC; inoltre, una volta stabilita una connessione QUIC, nuovi flussi possono essere raggiunti rapidamente. Un flusso è un'astrazione per la consegna bidirezionale affidabile e in ordine dei dati tra due endpoint QUIC. In HTTP/3, per ogni oggetto in una pagina web ci sarebbe un flusso diverso. Ogni connessione ha un ID e ogni flusso all'interno di una connessione ha un ID di flusso; entrambi questi ID sono contenuti in un'intestazione del pacchetto QUIC.
 - *Trasferimento dati affidabile e con controllo di congestione*. QUIC fornisce un trasferimento dati affidabile a ogni flusso QUIC separatamente. Dal momento che TCP fornisce un servizio di consegna dei byte affidabile e in ordine, le richieste HTTP multiple devono essere consegnate in ordine al server HTTP destinazione. Pertanto, se i byte di una richiesta HTTP vengono persi, le restanti richieste HTTP non possono essere consegnate finchè tali byte non vengono ritrasmessi e ricevuti correttamente da TCP sul server HTTP: il cosidetto problema del blocco HOL affrontato in precedenza. Poichè QUIC fornisce una consegna in ordine e affidabile per flusso, un segmento UDP perso influisce solo sui flussi i cui dati sono stati trasportati in tale segmento; i messaggi HTTP di altri flussi possono continuare a essere ricevuti e consegnati dall'applicazione. QUIC fornisce un trasferimento dati affidabile utilizzando meccanismi di acknowledgement simili a quelli di TCP. Il controllo di congestione di QUIC si basa su TCP NewReno, una piccola variante del protocollo TCP Reno.
+= Livello di rete
+== Panoramica del livello di rete
+Consideriamo la seguente figura:
+#figure(
+image("images/rete.png", width: 80%),
+caption: [Livello di rete]
+) <fig:livello_rete>
+Consideriamo la funzione svolta dal livello di rete e il ruolo dei router nell'ambito di una trasmissione da H1 a H2. Dal lato del mittente, il livello di rete in H1 prende i segmenti dal livello di trasporto, li incapsula in un datagramma, cioè un pacchetto a livello di rete, che trasmette al proprio router vicino, R1. Dal lato di destinazione, il livello di rete in H2 riceve i datagrammi dal proprio router vicino R2, estrae i segmenti e li consegna al livello di trasporto. Nel tragitto, il ruolo primario del piano dei dati di ciascun router intermedio è quello di inoltrare il datagramma da link d'ingresso a link d'uscita, mentre quello del piano di controllo è coordinare queste azioni di inoltro locali in modo che alla fine i datagrammi vengano instradati da estremo a estremo su percorsi di router tra mittente e destinatario.
+=== Inoltro e instradamento: piano dei dati e piano di controllo
+Il ruolo principale del livello di rete è quello di trasferire pacchetti da un host a un altro. Per fare questo è possibile identificare due importanti funzioni.
+- *Inoltro* (_forwarding_). Quando un router riceve un pacchetto, lo deve trasferire sull'appropriato collegamento di uscita. Per esempio, un pacchetto che arriva dall'host H1 al router R1, deve essere inoltrato al successivo router sul percorso verso H2. L'inoltro è una funzione implementata nel piano dei dati. Nel caso più generale, un pacchetto può anche essere bloccato o duplicato e inviato su più collegamenti di uscita.
+- *Instradamento* (_routing_). Il livello di rete deve determinare il percorso che i pacchetti devono seguire tramite *algoritmi di instradamento*, detti _algoritmi di routing_. Un algoritmo di routing determina il percorso, ad esempio, dei pacchetti da H1 a H2 della *@fig:livello_rete*. La funzione di instradamento è implementata nel piano di controllo del livello di rete.
+I termini _inoltro_ e _instradamento_ sono solitamente considerati sinonimi ma hanno significati diversi. Con *inoltro* si fa riferimento all'azione locale con cui il router trasferisce i pacchetti da un'interfaccia di ingresso a quella di uscita. Poichè l'inoltro avviene su scala temporale molto piccola, è usualmente implementato in hardware. Con *instradamento* si denota il processo globale di rete che determina i percorsi dei pacchetti nel loro viaggio dalla sorgente alla destinazione. Poichè l'instradamento avviene su scale temporali più grandi, è usualmente implementato in software. \
+Per inoltrare i pacchetti, i router estraggono da uno o più campi dell'intestazione i loro valori che utilizzano come indice della *tabella di inoltro*, detta _tabella di forwarding_ o _forwarding table_, un elemento chiave di qualsiasi router. Il risultato indica a quale interfaccia di uscita il pacchetto debba essere diretto.
+==== Piano di controllo: l'approccio tradizionale
+La configurazione delle tabelle di inoltro nei router costituiscono un argomento cruciale che evidenzia l'interazione tra inoltro e instradamento. L'algoritmo di instradamento determina i valori inseriti nelle tabelle di inoltro dei router. Le funzioni di instradamento nei router comunicano tra di loro per determinare i valori da inserire nelle tabelle di inoltro. Le comunicazioni avvengono tramite messaggi di un protocollo di instradamento. \
+I diversi scopi delle funzioni di inoltro e di instradamento possono essere descritti considerando il caso di una rete in cui tutte le tabelle di inoltro siano configurate direttamente da un operatore di rete, fisicamente presenti presso i router. In questo caso non sarebbe richiesto alcun protocollo di instradamento. Gli operatori dovrebbero interagire tra loro assicurandosi che i pacchetti raggiungano le proprie destinazioni. Probabilmente la configurazione effettuata da operatori umani sarebbe soggetta a errori e molto più lenta nella risposta ai cambiamenti della topologia di rete rispetto a un protocollo di instradamento.
+==== Piano di controllo: l'approccio SDN
+L'approccio di implementare la funzionalità di instradamento in cui ogni router ha una componente di instradamento che comunica con la corrispettiva negli altri router, è stato tradizionalmente adottato dalle aziende produttrici di router. \
+La seguente figura mostra un approccio alternativo in cui un controller remoto, separato fisicamente dai router, calcola e distribuisce le tabelle di inoltro a tutti i router. In questo caso la funzionalità di instradamento del piano di controllo è separata fisicamente dal router; il dispositivo di instradamento effettua solo l'inoltro, mentre il controller remoto calcola e distribuisce le tabelle di inoltro. Il controller remoto potrebbe essere implementato in un data center remoto con elevata affidabilità e ridondanza e potrebbe essere gestito da un ISP o da una terza parte. \
+I router e il controller remoto potrebbero comunicare scambiandosi messaggi contenenti le tabelle di inoltro e altre informazioni di instradamento. Il piano di controllo mostrato nella seguente figura è il nucleo del *Software-Defined Networking (SDN)*, nel quale la rete è gestita da un software perchè il controller che calcola le tabelle di introlo e interagisce coi router è implementato in software.
+#figure(
+image("images/sdn.png", width: 80%),
+caption: [Un controller remoto determina e distribuisce i valori delle tabelle di inoltro]
+)
+=== Modelli di servizio del livello di rete
+Consideriamo i servizi che il livello di rete può offrire. Il *modello di servizio del livello di rete*, definisce le caratteristiche del trasporto end-to-end di pacchetti tra host di origine e di destinazione. \
+Consideriamo alcuni servizi che il livello di rete potrebbe offrire:
+- *Consegna garantita*. Questo servizio assicura che il pacchetto giunga, prima o poi, alla propria destinazione.
+- *Consegna garantita con ritardo limitato*. Questo servizio non solo garantisce la consegna del pacchetto, ma anche il rispetto di un limite di ritardo specificato.
+- *Consegna ordinata*. Questo servizio garantisce che i pacchetti giungano alla destinazione nell'ordine in cui sono stati inviati.
+- *Banda minima garantita*. Questo servizio a livello di rete emula il comportamento di un collegamento trasmissivo con bit rate specificato tra host di invio e di destinazione, anche se il percorso end-to-end può attraversare diversi collegamenti fisici. Finchè l'host di inviuo trasmette bit a una velocità inferiore al bit rate specificato, non si verifica perdita di pacchetti.
+- *Servizi di sicurezza*. Il livello di rete dell'host sorgente può cifrare tutti i datagrammi invati; il livello di rete nell'host di destinazione ha il compito di decifrarli. Con questo tipo di servizio, la riservatezza viene fornita a tutti i segmenti del livello di trasporto.
+Questa è solo una lista parziale. \
+Il livello di rete di Internet mette a disposizione un solo servizio, noto come *servizio best-effort*, ossia con "massimo impegno possibile". Con questo servizio, non c'è garanzia che i pacchetti vengano ricevuti nell'ordine in cui sono stati inviati, così come non è garantita la loro eventuale consegna. Non c'è garanzia del ritardo end-to-end, così come non c'è garanzia su una larghezza di banda minima garantita. Altre architetture di rete hanno definito e implementato modelli di servizi che vanno oltre il servizio best-effort di Internet. Nonostante lo sviluppo di alternative, il modello di servizio best-effort combinato con un'adeguata larghezza di banda e protocolli a livello di applicazione in grado di adattarsi alla banda, come il protocollo DASH, si è dimostrato sufficientemente buono da supportare una stupefacente gamma di applicazioni quali i servizi di streaming video, applicazioni di video-over-IP e di conferenza in tempo reale.
+== Panoramica sui router
+Analizziamo le architetture dei router per trasferire i pacchetti dai collegamenti di ingresso a quelli in uscita. La seguente figura presenta una visione ad alto livello di una generica architettura di router in cui si possono identificare quattro componenti.
+#figure(
+image("images/router.png", width: 70%),
+caption: [Architettura di un router]
+)
+- *Porto di ingresso* (_input port_). Svolgono le funzioni a livello fisico di terminazione di un collegamento in ingresso al router; svolgono anche funzioni a livello di collegamento, necessarie per interoperare con le anologhe funzini all'altro capo del collegamento di ingresso. SVolgono inoltre la cruciale funzione di ricerca, in modo che il pacchetto inoltrato nella *struttura di commutazione* del router esca sulla porta di uscita corretta. I pacchetti di controllo, come quelli che trasportano informazioni sul protocollo di instradamento, sono inoltrati dalla porta di ingresso al *processore di instradamento*. Il termine porta si riferisce alle interfacce fisiche di input e output del router.
+- *Struttura di commutazione* (_switching fabric_). La struttura di commutazione, che connette fisicamente le porte di ingresso a quelle di uscita, è interamente contenuta all'interno del router.
+- *Porte di uscita* (_output port_). Memorizzano i pacchetti che provengono dalla struttura di commutazione e li trasmettono sul collegamento in uscita, operando le funzionalità necessarie del livello di collegamento e fisico. Nei collegamenti bidirezionali, che trasportano traffico in etrambe le direzioni, la porta di uscita è accoppiata, solitamente, alla porta di ingresso di quel collegamento sulla stessa scheda di collegamento, detta _line card_.
+- *Processore di instradamento* (_routing processor_). Esegue le funzioni del piano di controllo. Nei router tradizionali, esegue i protocolli di instradamento, gestisce le tabelle di inoltro e le informazioni sui collegamenti attivi, ed elabora la tabella di inoltro per il router. Nei router SDN, il processore di instradamento è responsabile della comunicazione con il controller remoto, in modo da ricevere le occorrenze della tabella di inoltro e installarle alle porte di ingresso. Inoltre, effettua anche le operazioni di gestione di rete.
+In un router le porte di ingresso, le porte di uscita e la struttura di commutazione sono implementate quasi sempre in hardware specializzato. Un collegamento di input a 100 Gbps e un datagramma IP di 64 byte, la porta di input ha solo 5,12 ns per elaborare il datagramma prima che il successo possa arrivare. Se ci sono $N$ porte su una line card, la pipeline di elaborazione dei datagrammi deve operare $N$ volte più velocemente, cosa impossibile per un'implementazione software su hardware tradizionale. \
+Mentre il piano dei dati opera sulla scala temporale dei nanosecondi, le funzioni di controllo dei router, come l'esecuzione dei protocolli di instradamento, la risposta a eventuali malfunzionamento dei collegamenti comunicanti nel caso di SDN e le funzioni di gestione delle prestazioni, operano sulla scala temporale dei millisecondi o dei secondi. Le funzioni del *piano di controllo* sono solitamente implementate via software ed eseguite sul processore di instradamento.
+=== Elaborazione alle porte di ingresso e inoltro basato sull'indirizzo di destinazione
+La seguente figura fornisce una visione dettagliata delle funzionalità delle porte di ingresso.
+#figure(
+image("images/ing_router.png", width: 70%),
+caption: [Elaborazione alle porte di ingresso]
+)
+La funzione di terminazione della linea e l'elaborazione a livello di colegamento implementano rispettivamente il livello fisico e di collegamento associati a un singolo collegamento di ingresso al router. L'elaborazione effettuata alla porta di ingresso è centrale per la funzionalità del router: qui, utilizando le informazioni della tabella di introlo, viene determinata la porta di uscita a cui dirigere un pacchetto attraverso la struttura di commutazione. La tabella di inoltro viene elaborata e aggiornata dal processore di instradamento o ricevuta da un controller SDN remoto. La tabella di introlo viene copiata sulla line card dal processore di instradamento tramite un bus separato. Essendoci copie locali della tabella di inoltro, la decisione relativa può essere presa dalle porte di ingresso, senza invocare il processore di instradamento centralizzato. \
+Consideriamo il caso in cui l'inoltro sia basato sull'indirizzo di destinazione. Supponiamo che tutti gli indirizzi di destinazione siano a 32 bit. Un'implementazione elementare della tabella di inoltro presenterebbe una riga per ogni possibile indirizzo di destinazione ma, dato che esistono più di 4 miliardi di possibili indirizzi, questa opzione non viene presa in considerazione. \
+Supponiamo che il router abbia quattro collegamenti, numerati da 0 a 3, e che i pacchetti debbano essere inoltrati verso le interfacce di collegamento come segue:
+#align(center)[
+  #table(
+    columns: (auto, auto, auto),
+    align: (left + horizon, left + horizon, center + horizon),
+    inset: (x: 10pt, y: 5pt),
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [], [*Intervallo degli indirizzi di destinazione*], [*Interfaccia*],
+    table.hline(stroke: 0.5pt),
+
+    [da], [11001000 #h(1em) 00010111 #h(1em) 00010000 #h(1em) 00000000],
+    table.cell(rowspan: 2)[0],
+    [a], [11001000 #h(1em) 00010111 #h(1em) 00010111 #h(1em) 11111111],
+
+    [da], [11001000 #h(1em) 00010111 #h(1em) 00011000 #h(1em) 00000000],
+    table.cell(rowspan: 2)[1],
+    [a], [11001000 #h(1em) 00010111 #h(1em) 00011000 #h(1em) 11111111],
+
+    [da], [11001000 #h(1em) 00010111 #h(1em) 00011001 #h(1em) 00000000],
+    table.cell(rowspan: 2)[2],
+    [a], [11001000 #h(1em) 00010111 #h(1em) 00011111 #h(1em) 11111111],
+
+    table.cell(colspan: 2)[altrimenti], [3],
+    table.hline(stroke: 0.8pt),
+  )
+]
+In questo esempio non è necessario avere 4 miliardi di righe nelle tabelle di inoltro dei router. Potremmo avere la seguente tabella con appena 4 voci:
+#align(center)[
+  #table(
+    columns: (auto, auto),
+    align: (left + horizon, center + horizon),
+    inset: (x: 12pt, y: 5pt),
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [*Corrispondenza di prefisso*], [*Interfaccia*],
+    table.hline(stroke: 0.5pt),
+    [11001000 #h(1em) 00010111 #h(1em) 00010], [0],
+    [11001000 #h(1em) 00010111 #h(1em) 00011000], [1],
+    [11001000 #h(1em) 00010111 #h(1em) 00011], [2],
+    [altrimenti], [3],
+    table.hline(stroke: 0.8pt),
+  )
+]
+Con questa struttura il router confronta un *prefisso* dell'indirizzo di destinazione del pacchetto con una riga della tabella; se c'è corrispondenza, il router inoltra il pacchetto al collegamento associato. \
+Un indirizzo di destinazione può corrispondere a più di una riga. Per esempio, i primi 24 bit dell'indirizzo 11001000 00010111 00011000 10101010 corrispondono alla seconda riga della tabella e primi 21 alla terza riga della tabella. Quando si verificano corrispondenze multiple, il router adotta la *regola di corrispondenza a prefisso più lungo*, cioè, viene determinata la corrispondenza più lunga all'interno della tabella e i pacchetti vengono inoltrati all'interfaccia di collegamento associata. \
+La ricerca nella tabella di inoltro è concettualmente più semplice e viene effettuata cercando il più lungo prefisso corrispondente. A tassi di trasmissione di Gigabit, tale ricerca deve essere effettuata in nanosecondi. Quindi, la ricerca va effettuata in hardware e sono necessarie tecniche che vadano oltre la semplice ricerca lineare su grandi tabelle. Bisona anche porre attenzione ai tempi di accesso alla memoria; si ricorre a memorie DRAM integrate direttamente nei processori e SRAM molto veloci. Per la ricerca vengono anche usate le _Ternary Content Address Memories (TCAM)_. Con una TCAM, un indirizzo IP a 32 bit è passato alla memoria che restituisce il contenuto della tupla nella tabella di inoltro corrispondente a quell'indirizzo in un tempo costante. \
+Una volta determinata la porta di output di un pacchetto, può essere inviato alla struttura di commutazione. In altre architetture un pacchetto può essere temporaneamente bloccato prima di entrare nella struttura di commutazione quando essa è utilizzato da altre porte di input. Un pacchettoi bloccato verrà accodato sulla porta di input e schedulato per il passaggio alla struttura di commutazione più tardi. Oltre la ricerca, ci sono altre azioni dell'elaborazione alle porte di input:
++ elaborazione a livello fisico e di collegamento,
++ il numero di versione del pacchetto, il checksum e il tempo di vita devono essere controllati e gli ultimi due campi riscritti,
++ i contatori usati per la gestione di rete vanno aggiornati.
+=== Struttura di commutazione (switching)
+La struttura di commutazione, _switching fabric_, rappresenta il vero e proprio cuore dei router, attraverso il quale i pacchetti vengono commutati (inoltrati) dalla porta di ingresso alla porta di uscita. La commutazione può essere ottenuta in vari modi, come mostrato nella seguente figura.
+#figure(
+image("images/commutazione.png", width: 70%),
+caption: [Tre tecniche di commutazione]
+)
+- *Commutazione in memoria*. I primi e più semplici router erano calcolatori tradizionali, e la commutazione tra porte di ingresso e di uscita veniva effettuata sotto il controllo della CPU. Le porte di ingresso e di uscita funzionavano come dispositivi di I/O. Quando soppraggiungeva un pacchetto, la porta di ingresso ne segnalava l'arrivo tramite interrupt e lo copiava nella memoria del processore di instradamento che procedeva a estrarre dall'intestazione l'indirizzo di destinazione. Tramite tabella di inoltro individuava l'appropriamta porta di uscita nel cui buffer copiava il pacchetto. Due pacchetti non possono essere inoltrati contemporaneamente, anche se hanno porte di destinazioni diverse, perchè può essere solo effettuata un'operazione alla volta di scrittura/lettura tramite bus di sistema. \
+	Anche router attuali effettuano la commutazione in memoria, ma rispetto ai primi router la ricerca dell'indirizzo di destinazione e la memorizzazione del pacchetto nella locazione di memoria opportuna vengono effettuate dai processori direttamente sulle line card di ingresso.
+- *Commutazione tramite bus*. In questo approccio le porte di ingresso trasferiscono un pacchetto direttamente alle porte di uscita tramite un bus condiviso e senza intervento da parte del processore di instradamento. Questo viene tipicamente fatto aggiungendo un'etichetta intera di commutazione al pacchetto che indica la porta locale di output alla quale il pacchetto deve essere trasferito quando viene trasmesso sul bus. Il pacchetto viene ricevuto da tutte le porte di output, ma solo la porta corrispondente all'etichetta lo raccoglierà. Se più pacchetti arrivano contemporaneamente al router, ognuno su porta di input diversa, tutti tranne uno dovranno aspettare. Poichè ciascun pacchetto deve attraversare il bus, la larghezza di banda della commutazione è limitata da quella del bus.
+- *Commutazione attraverso reti di interconnessione*. Un modo per superare la limitazione di banda di un singolo bus condiviso è l'utilizzo di una rete di interconnessione più sofisticata. Una matrice di commutazione, detta _crossbar switch_ è una rete di interconnessione che consiste di $2n$ bus che collegano $n$ porte di ingresso a $n$ porte di uscita. Ogni bus verticale interseca tutti i bus orizzontali a un punto di incrocio che può essere in qualsiasi momento aperto o chiuso dal controller della struttura di commutazione. Quando un pacchetto giunge ad una porta di ingresso $A$ e deve essere inoltrato alla porta $Y$, il controller chiude l'incrocio di $A$ e $Y$ e la porta $A$ invia il pacchetto sul suo bus e solo il bus $Y$ lo riceverà. Un pacchetto di un'altra porta $B$ può essere inoltrato a $X$ nello stesso tempo. La commutazione attraverso rete di interconnessione è in grado di inoltrare più pacchetti in parallelo. Una matrice di commutazione è *non-blocking*: un pacchetto in via di inoltro verso una porta di uscita non viene bloccato a meno che non esista un altro pacchetto in via di inoltro sulla stesssa porta di uscita. Se due pacchetti provenienti da due diverse porte di input sono destinati alla stessa porta dia output, uno dovrà accordarsi alla porta di input. \
+	Reti di interconnessione più sofisticate usano elementi di commutazione a più stadi per permettere che pacchetti provenienti da porte di input diverse, ma con la stessa porta di output, possano attraversare la struttura di commutazione contemporaneamente. La capacità di commutazione di un router può scalare utilizzando un numero $N$ di strutture di commutazione in parallelo. La portadi ingresso suddivide il pacchetto in $K$ pezzi, detti _chunk_, più piccola, e li invia attraverso $K$ di queste $N$ strutture alla porta di uscita selezioanta, che li riassembla nel pacchetto originale.
+=== Elaborazione alle porte di uscita
+L'elaborazione alle porte di uscita prende i pacchetti dalla memoria delle porte di suscita e li trasmette sul collegamento di uscita. Tale operazione comprende selezionare e togliere dalla coda i pacchetti per la trasmissione e operare le necessarie funzioni a livello di collegamento e fisico.
+#figure(
+image("images/out_router.png", width: 70%),
+caption: [Elaborazione alle porte di uscita]
+)
+=== Problema dell'accodamento
+
+
+
