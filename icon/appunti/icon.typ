@@ -2949,3 +2949,430 @@ $
 Sostituendo $X = a$ ad $r(X)$ si ha $q(X) <-> not (X = a)$ quindi: $p(X) <-> X = a$. \
 La risposta giusta sarebbe $X = a$ ma il differimento del goal non aiuterebbe a trovarla. La procedura dovrebbe essere capace di analizzare i casi nei quali il goal è fallito.
 ]
+= Knowledge Graph e Ontologie
+== Knowledge Graph
+=== Triple
+Dato un linguaggio di rappresentazione logico e un mondo su quale ragionare, i progettisti devono scegliere individui e relazioni, ossia come decomporre il dominio d'interesse per formalizzarne un suo modello. Il livello di dettaglio dipende dal compito da svolgere. Ad esempio, la proprietà di essere di colore blu, `blu`, ascrivibile a diversi oggetti del mondo reale, può essere rappresentata in base allo _spettro di frequenze_ della luce assorbite o riflesse. \
+Le relazioni andranno definite seguendo alcune linee guida ingegneristiche.
+#esempio[
+_blu_ può essere una categoria di classificazione appropriata per gli individui rappresentata come _relazione unaria_:
+- _l'oggetto a è blu_ si traduce con _blu(a)_;
+- una query possibile sarebbe: "Cosa si conosce di colore blu?" traducibile in: $"ask" b l u(X)$
+- i valori di $X$ restituiti rappresentano gli oggetti di colore blu.
+Con questa rappresentazione, però, è difficile chiedere "Di che colore è l'oggetto _a_?" Nel linguaggio delle clausole definite, non si può chiedere $"ask" X(a)$. I nomi dei predicati non possono essere variabili. Ciò diventa possibile in logiche di ordine superiore per qualsiasi proprietà di $a$.
+]
+Si può pensare a una forma di *reificazione*, ossia alla riduzione a oggetto di un concetto astratto, ad esempio la relazione fra un individuo e il suo colore, quindi il colore stesso pùo essere modellato come individuo:
+- usando la costante _blu_ per denotare il colore blu che diventa un individuo referenziabile come gli altri;
+- definendo un predicato _colore(Ind, Val)_, dove _Val_ è il colore dell'individuo _Ind_, si ha una relazione binaria tra individui fisici e i loro colori.
+- si potrà allora chiedere: "Cose è di colore blu?" con la query $"ask" c o l o r e(X, b l u)$
+#esempio(title: "Estensioni")[
+_colore_ come predicato binario non consente domande come "Quale proprietà di questo oggetto ha valore blu?", con risposta _colore_. \
+Un'ulteriore trasformazione può quindi prevedere la modellazione della proprietà _colore_ come individuo e con la nuova relazione _prop_: ad esempio, per rappresentare l'enunciato "l'individuo _a_ ha per la proprietà _colore_ il valore _blu_" si può scrivere _prop(a, colore, blu)_. \
+Sono anche possibili tutte le query viste prima, riscrivendo le relazioni in termini di _prop_.
+]
+Il predicato ternario _prop_ avrà la forma:
+$
+p r o p(I n d, P r o p, V a l)
+$
+con l'individuo _Ind_ ha per la proprietà _Prop_ il valore _Val_. \
+In alternativa si può considerare la struttura di *tripla* $chevron.l s, p, o chevron.r$ con:
+- _s_ *soggetto*;
+- _p_ *predicato verbale*;
+- _o_ *oggetto*.
+che può anche essere scritta come _enunciato_:
+$
+italic("soggetto verbo oggetto")
+$
+equivalente all'atomo $italic("prop(soggetto, verbo, oggetto)")$ che, in notazione funzionale, si può scrivere anche _verbo(soggetto, oggetto)_. \
+In una tripla, il _verbo_ è una *proprietà* _p_ con un *dominio*, l'insieme di individui che possono essere soggetti in triple con verbo $p$ e un *codominio*, l'insieme di valori che possono essere oggetti in triple con verbo $p$. \
+Un *attributo* è una coppia _proprietà-valore_, ad esempio una certa auto ha _colore blu_.
+#esempio[
+Per trasformare in forma di tripla l'atomo _auto(a)_:
++ _auto_ può essere rappresentato come _concetto_:
+$
+italic("prop(a, type, auto)")
+$
+	- l'individuo _a_ è nella classe _auto_;
+	- _type_ è una proprietà speciale che collega individui a classi, spesso indicata con `is_a`
+	- la costante _auto_ denota una classe di individui: l'insieme di tutte le cose, reali o potenziali, che sono automobili;
++ _auto_ può essere rappresentato come _proprietà booleana_, con valore _true_ per soggetti che sono auto:
+$
+italic("prop(a, auto, true)")
+$
+	- una proprietà booleana ha codominio $brace.l italic("true, false") brace.r$, dove _true_ e _false_ sono costanti.
+]
+Le relazioni con specifiche prorpietà possono essere rappresentate con parole, numeri, ad esempio _num\_prenotazione_, _num\_volo_, _num\_ordine_.
+#esempio[
+L'azione del verbo _prestare_ coinvolge tre attori, detti _agente_, _ricevente_ e _paziente_. Data la frase "Lara ha prestato a Nino il libro 342", una sua rappresentazione possibile è: _prestitito(lara, nino, l342)_. \
+Introducendo una costante per l'azione specifica come _prestito3545_ e una per il libro, si può scrivere in forma di triple:
+- _prop(prestito3545, type, prestito)_
+- _prop(prestito3545, agente, lara)_
+- _prop(prestito3545, paziente, l342)_
+- _prop(prestito3545, ricevente, nino)_
+- _prop(l342, type, libro)_.
+dove agente/ricevente/paziente sono relazioni tematiche ossia *ruoli* semantici. \
+La reificazione consente di aggiunge altre proprietà, come ad esempio la data dell'evento, il prezzo del libro, $dots$
+]
+=== Individui e Identificatori
+Gli individui vanno denotati usando identificatori univoci. Ad esempio, nel contesto universitario si usa la matricola per riferirsi univocamente a uno studente, essendo il solo nominativo meno adeguato a evitare casi di omonimia. \
+Nel conesto del web, si può usare uno _Uniform Resource Identifier (URI)_ o anche un _Internationalized Resource Identifier (IRI)_ come nome univoco per identificare qualsiasi *risorsa*. \
+=== Rappresentazioni Grafiche
+La relazione _prop_ può essere interpretata in termini di _grafo orientato_: l'atomo _prop(Ind, Prop, Val)_ può essere raffigurato con i _nodi Ind_ e _Val_ congiunti da un arco orientato etichettato con _Prop_. Il grafo risultante dalla rappresentazione di tali relazioni sarà un *knowledge graph* o *rete semantica*, con una mappatura diretta su una base di conoscenza tramite _prop_.
+#esempio[
+La seguente figura rappresenta parte del KG che riguarda la calciatrice _Christine Sincalir_ in Wikidata.
+#figure(
+image("images/kg.png", width: 70%),
+caption: [Frammento di grafo su Christine Sinclair da Wikidata]
+)
+]
+Diversi sono i vantaggi della notazione grafica:
+- la facilità di visualizzazione delle relazioni senza essere costretti a imparapre la sintassi di un dato linguaggio logico: ciò è d'ausilio ai progettisti nel'organizzazione della conoscenza essendo disponibili strumenti specifici per costruire mappe concettuali.
+- la possibilità di ignorare le etichette con nomi privi di significato (come _prestitito3545_ dell'esempio precedente): sono ammessi i cosiddetti nodi *blank*, ossia privi di etichetta, che possono servire a dare nomi arbitrari solo in caso di mappatura su un formalismo logico;
+- l'efficienza della memorizzazione in un *triple store*: mentre un relational database ha bisogno della progettazione delle chiavi usate per gli indici, un triple store utilizza esattamente 8 indici per ritrovare le triple nelle diverse posizioni; una query basta a determinare se una particolare tripla sia in memoria, mediante semplice enumerazione, e sono possibili casi di query con soggetto, verbo, oggetto eventualmente non specificati (variabili).
+== Classi e Proprietà
+Tipicamente, di un dominio si conoscono e formalizzano il database di fatti e le regole generali tramite le quali è possibile derivare altri fatti. La modalità con cui farlo costituisce una scelta progettuale. \
+Si distingue la *conoscenza primitiva* specificata esplicitamente e la *conoscenza derivata*, inferita da quella primita e/o altra conoscenza derivata. \
+Le regole permettono una rappresentazione più compatta della conoscenza: dato che non tutto è osservabile, attraverso relazioni derivate si possono trarre conclusioni a partire da osservazioni. La conoscenza su un dato dominio sarà in gran parte _inferita_, oltre che da fatti osservati e da conoscenza più generale disponibile o anche appresa. Grazie alle regole si potranno raggruppare gli individui in classi ed anceh associare proprietà generali alle classi, in modo che i loro individui le ereditino. In tal modo si hanno rappresentazioni più concise: le istanze di una classe condividono attributi comuni, senza necessità di specificarli caso per caso. \
+Una *classe* è un insieme di individui che sono sue istanze, sia *effettivi* sia *potenziali*. Essa viene definita in una delle due forme:
+- _intensionale_, ossia tramite una *funzione caratteristica* che avrà valore _1/true_ per i membri dell'insieme e _0/false_ per gli altri individui,
+- _estensionale_, ossia come elenco delle sue istanze.
+L'_equivalenza_ tra classi non dipende solo dalle solo istanze conosciute. La definizione data consente di descrivere qualsiasi insieme come classe: ad esempio una strana classe che comprenda il numero 18, il `Dipartimento_di_Informatica_di_Bari`, e il `primo_goal_della_SerieA`. In tal caso, però, bisogna chiedersi se tale classe sia effettivamente utile. \
+Occorrerà cercare di definire una classe come *tipo naturale*, ossia dovrebbe ammettere una descrizione dell'insieme più concisa. Ad esempio la classe `mammifero` è un tipo naturale: descrivere attributi comuni ai mammiferi e rende più compatta la KB, evitando ripetizioni per ogni singolo individuo.
+=== Gerarchie di Classi e Proprietà
+$S$ è una *sottoclasse* di $C$ se fra di esse interocorre una relazione di _sottoinsieme_: ogni individuo di tipo $S$ è anche di tipo $C$.
+#esempio(title: "Squadre di calcio")[
+Nella seguente figura viene illustrata la struttura delle classi per le nazionali brasiliana e canadese.
+#figure(
+image("images/sottoclasse.png", width: 70%),
+caption: [Struttura delle classi per le nazionali]
+) <es:sottoclasse>
+La nazionale brasiliana è istanza di `Q6979593`, classe denominata _natioanl association football team_ che, a sua volta, è sottoclasse delle classi denominate _national football team_ e _association football team_ denotate dai rispettivi URI.
+]
+La relazione tra tipi e sottoclassi è definibile come _clausola definita_ nel modo seguente:
+$
+italic("prop(X, type, C)") <- italic("prop(S, subClassOf, C)") and italic("prop(X, type, S)")
+$
+o, passando alla notazione funzionale, usando le proprietà speciali _type_ e _subClassOf_:
+$
+"se" italic("subclassOf(S, C)") "e" italic("type(E, S)") "allora" italic("type(E, C)")
+$
+Per definire l'*ereditarietà di proprietà*, il valore di una proprietà, specificato a livello di classe, sarà ereditato da tutte le sue istanze. Per specificare che tutti gli individui di classe $c$ hanno il valore $v$ per la proprietà $p$, in Datalog si può scrivere:
+$
+italic("prop(Ind, p, v)") <- italic("prop(Ind, type, c)")
+$
+che, insieme alla regola precedente che collega tipi e sottoclassi, serve a far ereditare valori di proprietà. \
+Le *proprietà* rappresentano relazioni binarie $p$ con:
+- un *dominio*, la classe $C$ dei soggetti delle triple con $p$ come verbo, per cui se $p(x, y)$ allora $x in C$, quindi se $p$ ha dominio $C_1$ e dominio $C_2$, allora ogni soggetto apparterrà sia a $C_1$ sia a $C_2$;
+- un *codominio*, detto _range_: la classe $C$ per gli oggetti delle triple con $p$, per cui se $p(x, y)$ allora $y in C$.
+La proprietà $p$ è *funzionale* se c'è al più un oggetto associato a ogni soggetto: se $p(x, y_1)$ e $p(x, y_2)$ allora $y_1 = y_2$; in matematica si dice che $p$ è una funzione parziale. \
+Una gerarchia di ereditarietà è possibile anche fra proprietà. Si dirà che $p_1$ è *sotto-proprietà* di $p_2$ se e solo se ogni coppia in $p_1$ è anche in $p_2$. In notazione funzionale si può scrivere $p_1(x, y)$, o anche, usando le triple, $(x, p_1, y)$ implica $(x, p_2, y)$.
+=== Progettazione delle Classi
+La categorizzazione degli oggetti è alla base delle moderne ontologie ma, storicamente, già Aristotele aveva proposto un metodo per definire una classe $C$ in termini di:
+- *genus*, una super-classe di $C$;
+- *differentia*, gli attributi che distinguono le istanze di $C$ dal resto delle istanze delle super-classe di $C$.
+Per costruire un'ontologia:
+- per ogni classe da definire, occorre determinare una super-classe rilevante e poi selezionare gli attributi che la distinguono dalle altre sottoclassi. Per ogni attributi si definirà una proprietà e un valore;
+- per ogni proprietà, si definiscono dominio e codominio le classi più generali che abbia senso considerare, anceh definendole tramite semplice enumerazione dei valori.
+#esempio[
+Si consideri la classe:
+$
+italic("nazionale") = \"italic("squadra che rappresenta una nazione in uno sport")\"
+$
+con genus \"_squadra_\" e differentia \"_rappresenta una nazione in uno sport_\"
+- una _squadra di calcio_ è una squadra sportiva che gioca a calcio;
+- una _squadra nazionale di calcio_ è una _squadra che rappresenta una nazionale nel calcio_, per cui è sottoclasse di entrambe;
+- una _squadra_ è un _gruppo con scopi comuni_.
+Nella gerarchia vista in precedenza, nell'*@es:sottoclasse*, la differentia che distingue le classi nella parte sinistra è che le istanze delle squadre devono essere femminili:
+- si possono concepire anche una classe \"_squadra di calcio femminile_\" e una classe \"_squadra femminile_\", pur non avendo identificatori specifici in Wikidata;
+- non esiste in Wikidata la classe \"_squadra di calcio maschile_\": le squadre possono tesserare donne, anche se poi nessuna gioca effettivamente nella squadra maschile.
+]
+La gerarchia dele classi costituisce un _grafo aciclico orientato, DAG_, con archi delle sottoclassi alle rispettive super-classi immediate. \
+Si tratta di un _reticolo_: sono inutili definizioni con cicli, dato che si creerebbero equivalenze. Si noti che la metodologia non porta necessariamente a gerarchie ad albero, alcuni oggetti possono appartenere a più classi distinte e ogni classe non ha una sola super-classe specifica.
+#esempio(title: "Figure geometriche")[
+Si considerino le seguenti definizioni:
+- `rettangolo: quadrilatero` con tutti angoli retti al suo interno;
+- `rombo: quadrilatero` con lati di pari lunghezza;
+- `quadrato: quadrilatero` con lati di pari lunghezza e tutti gli angoli retti:
+	- è sia `rettangolo` sia un `rombo`: potrebbe essere definito come `rettangolo` con lati di pari lungehzza oppure come `rombo` con gli angoli interni retti;
+	- un `quadrilatero` è una `figura piana` costituta da quattro lati quindi un `quadrato` è una `figura piana` con quattro lati di pari lungehzza e angoli interni retti.
+]
+Raramente le gerarchie naturali sono definibili come alberi per ragioni evolutive. Storicametne imporre forzatamente una struttura ad albero ha avuto scarso successo.\
+Può essere definita una struttura aciclica, con una radice, detta `thing`:
+- definendo ogni classe in termini di una super-classe e attributi con una _forma normale_ costituita da `thing` congiunta con gli attributi, ottenuta espandendo ogni super-classe con la sua definizione;
+- se gli attributi sono coppie proprietà-valore allora in forma normale, una classe è sotto-classe di un'altra per inclusione, come `quadrato` nell'esempio precedente.
+== Ontologie e Condivisione della Conoscenza
+Diversi fattori rendono complessa la costruzione di grandi sistemi basati su conoscenza. La conoscenza viene spesso progettata integrando più sorgenti. Queste, a loro volta, potrebbero non condividere uno stesso modo per analizzare il mondo, ognuna potrebbero semplificarlo secondo specifiche priorità originate in campi diversi e con terminologie peculiari. Inoltre, i sistemi evolvono nel tempo e risulta difficile anticipare distinzioni che potranno essere utili in futuro. Il mondo appare spesso _indistinto_ e i progettisti devono scegliere _individui e relazioni_ da rappresentare accordandosi su una decomposizione conveniente del dominio. Risulta difficile tenere presenti contemporaneamente sia la propria notazione con il suo significato sia quella altrui. Dato un simbolo utilizzato, se ne deve saper determinare il significato, ovvero, dato un concetto, occor saper determinare con quale simbolo rappresentarlo: il concetto potrebbe essere stato già definito e associato a un certo simbolo oppure, in alternativa occorre determinare quali siano concetti correlati con cui definirlo. \
+Per condividere e comunicare conoscenza è importante sviluppare un _vocabolario_ con un suo _significato_ comunemente accettato. Una *concettualizzazione* è l'associazione tra un vocabolario di simboli usati nella macchina e individui / relazioni del  mondo che si itnende rappresentare. Essa costituisce una particolare _astrazione_ del mondo e la sua _notazione_. In piccolo si tratta di una forma di documentazione curata del progettista, spesso informale ma difficilmente scalabile. \
+Nel caso di grandi sistemi occorre una concettualizzazione condivisa.
+#esempio(title: "Mappe")[
+Un'ontologia riguardante le _mappe stradali_ potrebbe specificare che `Immobile di appartamenti` rappresenti stabili con appartamenti, non necessariamente una definizione formale, ma almeno in modoche gli altri ne comprendano la natura. Altri potrebbero usare nomi/simboli diversi, `Condominio, Appartamenti` o `Complesso di appartamenti`, ma essere comunque in grado di ritrovare il simbolo appropriato nell'ontologia. \
+Si devono creare associazioni fra il concetto, il suo simbolo e il suo significato. Mediante l'uso di assiomi si può vincolare meglio l'uso dei simboli: ad esempio:
+- specificando che un `Immobile di Appartamenti` sia un `Immobile`, eqindi _opere_ costruite da uomini;
+- imponendo qualche restrizione sulle dimensioni delle abitazioni in modo da escludere, ad esempio, `Box` o `Isolati` o intere `Città`;
+- dichiarando che un edificio non possa trovarsi simultaneamente in locazioni geograficamente distanti, dato che se si staccasse una sua parte spostandola in un posto diverso, non sarebbe più un edificio singolo;
+- essendo un `Immobile di appartamenti` anche un `Immobile`, le relative restrizioni si applicano anche ad ognuna delle sue istanze.
+]
+Un'*ontologia*, generalmente definita indipendentemente dalle sue applicazioni, richiede l'accordo di una comunità sul significato dei simboli che vi occorrono. Essa si compone dei seguenti elementi:
+- _vocabolario_ delle categorie di cose da rappresentare: classi e proprietà;
+- _organizzazione_ delle categorie, ad esemio la gerarchia d'ereditarietà definita attraverso proprietà speciali come _subClassOf_ o _subPropertyOf_, o altre modalità;
+- insieme di _assiomi_ che vincolano la definizione di alcuni simboli in modo da riflettere meglio il significato inteso, ad esempio la transitività d'una proprietà, restrizioni su dominio, codominio, o sul numero di valori che la proprietà può assumere per individuo; a volte alcune relazioni sono definite in termini di più relazioni primitive, non hanno una vera e propria definizione.
+Non serve provvedere a definire altri individui ancora sconosciuti in fase progettuale, bastano quelli ritenuti necessari e da condividere per la specifica applicazione come, ad esempio, i giorni della settimana o i colori.
+#esempio[
+In un sistema per il settore immobiliare:
+- i clienti possono descrivere una sistemazione desiderata;
+- il sistema potrà:
+	- cercare su più KB le sistemazioni più consone;
+	- contattare gli utenti quando si libera una sistemazione appropriata;
+- per suggerire di affitare una casa / un appartamento, ma non un intero condominio, può essere utile considerare come immobili residenziali solo case indipendenti e condomini;
+- si può definire il concetto di _unità abitativa_, gruppo di stanze in cui si convive, che costituisce la tipica offerta da parte delle agenzie immobiliari: singola stanza, o persino una parte / posto letto;
+- è sufficiente definire conoscenza stabile e generale: descrizioni/offerte reali sono ignoti in fase di progettazioni: casi limite, non previsti in partenza, o spesso non definiti chiaramente, possono essere delineati in seguito nel corso dell'evoluzione dell'ontologia.
+]
+==== Usi delle Ontologie
+Lo scopo primario delle ontologie è documentare il significato dei simboli, associare simboli a concetti:
+- dato un simbolo, si usa l'ontologia per determinare cosa significhi;
+- dovendo rappresentare un concetto, si sfrutta l'ontologia per trovare il simbolo approrpiato o per evidenziare la necessità di una nuova definizione.
+Scopi secondari sono l'inferenza o individuare le eventuali contraddizioni tramite l'uso degli assiomi. Il problema principale nella progettazione è definire l'organizzazione dei concetti in modo che la macchina possa inferire conoscenza utile dai fatti asseriti.
+=== Web Semantico
+Il *Web Semantico* costituisce una prospettiva che prevede la distribuzione di conoscenza attraverso l'infrastruttura del Web: a differenza dei documenti HTML del Web, destinati alle persone, si mira a conoscenza _interpretabile anche delle macchine_, con una semantica esplicitata attraverso la definizione di ontoogie formali che permettano il ragionamento automatico. \
+Gli ingredienti base sono costituiti dagli identificatori URI utilizzati in rappresentazioni / linguaggi quali RDF, RDF-Schema e OWL.
+==== Interoperabilità
+*XML* (_Extensible Markup Language_) è un linguaggio che fornisce una sintassi progettata per l'elaborazione automatica leggibile anche dalle persone. Si tratta di un linguaggio testuale, con elementi costituiti da _tag_ che possono essere organizzati gerarchicamente. La sintassi, anche complessa, prevede al livello basilare ambiti di tag della forma `<tag.../>` oppure `<tag...>...</tag>`. \
+A livello semantico occorre adottare ontologie di riferimento, riusando quelle esistenti anche per svilupparne di nuove in proprio. Ai fini dell'_interoperabilità semantica_, si dovrebbe tendere a riusare ontologie standard per i domini interessati e/o definire mapping della propria verso ontologie standard. Diversi sforzi sono stati fatti in passato tesi alla costruzioni di grandi ontologie universali come, ad esempio, _Cyc_.
+==== Identificatori
+Un *URI*, _Uniform Resource Identifier_, identifica univocamente una risorsa, ovvero qualsiasi cosa debba essere identificata: individui, classi e proprietà. La sintassi è basata su quelli degli URL: `<url#>` dove `url` è l'indirizzo di una pagina Web, con HTTP si può negoziare il tipo di risposta in base alla richiesta del client; si usano anche IRI, con un set-caratteri esteso. Alcuni esempi sono i seguenti:
+- individuo `<http://example.org/#spiderman>`
+- proprietà `<http://xmlns.com/foaf/0.1/name>`
+Un URI si può esprimere in forma abbreviata, detta *CURIE*, `abbr:name`, dove `abbr` è un prefisso dell'URI completo dichiarato localmente. Ogni URI avrà un significato convenzionale condiviso determinato dal suo uso.
+#esempio(title: "FOAF")[
+L'ontologia *FOAF* (_friend-of-a-friend_) serve a pubblicare informazioni su persone, reti di amici, $dots$
+- gli URI di foaf sono associato al namespace `http://xmlns.com/foaf/0.1/` abbreviato tipicamente con il prefisso `foaf`;
+- `foaf:name` è la proprietà che correla una persona a una rappresentazione del suo nome; essa consetirà di sapere esattamente a quale proprietà ci si riferisca; si noti che l'URI della proprietà è formato premettendo il prefisso del namespace;
+- `foaf:knows` serve per collegare una persona ai suoi amici;
+- ecc.
+]
+*RDF* (_Resorce Description Framework_) definisce un modelli di dati in forma di triple
+$
+"individuo-proprietà-valore"
+$
+La sintassi (serializzazione) è tipicamente sull'XML, in al caso si parla di RDF/XML, ma esistono altri formati pìu leggibili come Jason-LD, N3 o Turtle; in quest'ultimo si scrive:
+$
+italic("URI_1 URI_2 Valore") "oppure" italic("URI_1 URI_2 URI_3")
+$
+Un esempio conreto potrebbe essere il seguente:
+$
+"http://example.org/#spiderman http://xmlns.com/foaf/0.1/name \"Uomo ragno\"@it."
+$
+È amessa la reificazione di enunciati, formule logiche arbitrarie, quindi in generale, non è decidibile. Ciò non costituisce sempre un problema: significa solo non poter limitare il tempo necessario a un dato calcolo, analogamente a quanto accade con i programmi logici quando si ammettono le funzioni. \
+*SPARQL* è il nome del protocollo e del linguaggio per l'interrogazione di KB costituite da grafi di triple RDF. A tale scopo si utilizzano specifici _endpoint_, quali, ad esempio: DBpedia, Min. Istruzione, INPS, $dots$ \
+Le query sono definite da pattern costituiti da triple contenenti URI o variabili, id, preceduti da \"?\".
+#esempio(title: "query SPARQL")[
+Testabile attraverso l'endpoint di DBpedia:
+````
+select ?canzone ?data where {
+dbr:The_Sugarcubes dbo:formerBandMember ?componente .
+?componente rdf:type yago:Female109619168 .
+?canzone dbo:artist ?componente .
+?canzone dbo:releaseDate ?data .
+} limit 3
+````
+risultati:
+````
+http://dbpedia.org/resource/Cosmogony_(song) 2011-07-19
+http://dbpedia.org/resource/Hunter_(Bjork_song) 1998-10-05
+http://dbpedia.org/resource/Declare_Independence 2008-01-01
+````
+]
+*RDF-S* (_RDF Schema_) consente di definire risorse, classi, proprietà, in termini di altre risorse, ad esempio è possibile restringere domini e codomini di proprietà. \
+Esso fornisce anche contenitori: set, sequenze e alternative.
+#esempio(title: "Uso di RDF e RDF-S")[
+````
+@prefix : <http://www.example.org/sample.rdfs#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+:Dog rdfs:subClassOf :Animal.
+:Person rdfs:subClassOf :Animal.
+:hasChild rdfs:range :Animal;
+rdfs:domain :Animal.
+:hasSon rdfs:subPropertyOf :hasChild.
+:Max rdf:type :Dog.
+:Abel a :Person.
+:Adam :hasSon :Abel.
+````
+]
+=== Logiche Descrittive e Rappresentazioni per Ontologie
+I linguaggi ontologici come OWL si basano sulle *logiche descrittive (DL)* che servono a descrivere *concetti* (classi), *ruoli* (proprietà) e *individui*. L'idea fondante è la distinzione nella base di conoscenza di due parti $scr(K) = chevron.l scr(T), scr(A) chevron.r$
+- $scr(T)$ costituisce la parte *terminologica* o *TBox* che descrive la terminologia, ossia assiomi per la definizione del significato dei simboli. Ad esempio, in notazione logico-matematica:
+$
+C subset.eq (C_1 and exists R_1.C_2) or forall R_2.(C_3 and not C_4)
+$
+#pad(left: 1.5em)[Per la descrizione in OWL degli assiomi sono possibili diverse sintassi. Essa viene definita in fase di progettazione del sistema e ne specifica l'ontologia. Tende, quindi, ad essere stabile, a meno che non si debba modificare il significato del vocabolario ma è un caso raro.]
+- $scr(A)$ costituisce la parte *asserzionale* o *ABox* che specifica verità fattuali. Ad esempio in DL:
+$
+C(a), R(a, b), P(b, v)
+$
+#pad(left: 1.5em)[facilmente descrivibili come asserzioni in forma di triple RDF. Esse riguardano conoscenza su situazioni contingent, lo stato del mondo, di solito completamente noto solo al momento dell'utilizzo.]
+==== Ontologie per il Web
+*OWL* (_Web Ontologu Language_), è il linguaggio con cui vengono rappresentate le ontologie pubblicate attraverso il Web. Con OWL è possibile descrivere mondi/domini in termini di:
+- *Individui* - _entità_ del mondo che si descrive, come l'URI di una data casa o una particolare prenotazione.
+- *Classi* - _insiemi di individui_, tutte le entità reali o potenziali che potrebbero appartenervi; ad esempio `House` insieme di tutte le cose, anche future, classificabili come _case_.
+- *Proprietà* - _relazioni_ che descrivono individui associandoli ad altri _individui_, *object property*, oppure a _dati, valori_ di tipi predefiniti, come gli interi o le stringhe, dette in tal caso *datatype property* come, ad esempio: `nextTo`, relazione tra case e `onStreet` tra case e vie, o `streetName` chepuò associare vie a stringhe.
+Le varianti di OWL differiscono nelle restrizioni su classi/proprietà e nell'implementazione:
+- in *OWL-DL* una classe non può essere un individuo o una proprietà e una proprietà non è un individuo.
+- in *OWL-Full*, individui, proprietà e classi non devono essere necessariamente disgiunti.
+Con l'introduzione di OWL2, vi sono profili orientati verso specifiche applicazioni che limitano i costrutti usabili, per garantire l'efficienza dell'inferenza:
+- *OWL2 EL* consente descrizioni con molti dettagli strutturali, utili, ad esempio, con le grandi ontologie biomediche;
+- *OWL2 QL* pensato come front-end per i linguaggi di interrogazione per DB;
+- *OWL2 RL* progettato per l'uso di regole.
+Default in OWL:
+- non si assume la UNA: due nomi/URI non denotano necessariamente individui o classi diversi;
+- si assume una semantica di mondo aperto: non si può assumere che tutti i fatti rilevanti siano stati dichiarati.
+Le principali *classi predefinite* e i *costruttori di classe* di OWL sono elencati ella seguente tabella. La loro semantica è data dall'*estensione* corrispondente. Nella tabella che segue, le varie $C_i$ sono classi, $p$ è una generica proprietà, la _tripla x p y_ corrisponde all'atomo _p(x, y)_.
+#table(
+  columns: (auto, auto),
+  align: left,
+  stroke: none,
+  inset: (x: 4pt, y: 3pt),
+  column-gutter: 2em,
+  table.hline(),
+  [*Classe*], [*Estensione*],
+  table.hline(),
+  [`owl:Thing`], [tutti gli individui],
+  [`owl:Nothing`], [nessun individuo],
+  [`owl:ObjectIntersectionOf`$(C_1, dots, C_k)$],
+  [individui in $C_1 inter dots.c inter C_k$],
+  [`owl:ObjectUnionOf`$(C_1, dots, C_k)$],
+  [individui in $C_1 union dots.c union C_k$],
+  [`owl:ObjectComplementOf`$(C)$],
+  [individui non in $C$],
+  [`owl:ObjectOneOf`$(I_1, dots, I_k)$],
+  [$I_1, dots, I_k$],
+  [`owl:ObjectHasValue`$(p, v)$],
+  [$\{x mid(|) p(x, v)\}$],
+  [`owl:ObjectAllValuesFrom`$(p, C)$],
+  [$\{x mid(|) forall y colon p(x, y) -> y in C\}$],
+  [`owl:ObjectSomeValuesFrom`$(p, C)$],
+  [$\{x mid(|) exists y in C colon p(x, y)\}$],
+  [`owl:ObjectMinCardinality`$(n, p, C)$],
+  [$\{x mid(|) abs(\{y mid(|) p(x, y) and y in C\}) >= n\}$],
+  [`owl:ObjectMaxCardinality`$(n, p, C)$],
+  [$\{x mid(|) abs(\{y mid(|) p(x, y) and y in C\}) <= n\}$],
+  [`owl:ObjectHasSelf`$(p)$],
+  [$\{x mid(|) p(x, x)\}$],
+  table.hline(),
+)
+I *predicati predefiniti* OWL hanno un'interpretazione prefissata. Nelle seguenti tabelle si userà la *notazione funzionale*, inoltre _x_ e _y_ s'intendono universalmente quantificate:
+#table(
+  columns: (auto, auto),
+  align: left,
+  stroke: none,
+  inset: (x: 4pt, y: 3pt),
+  column-gutter: 2em,
+  table.hline(),
+  [*Predicato*], [*Semantica*],
+  table.hline(),
+  [`rdf:type`$(I, C)$, `owl:ClassAssertion`$(C, I)$],
+  [$I in C$],
+  [`rdfs:subClassOf`$(C_1, C_2)$, `owl:SubClassOf`$(C_1, C_2)$],
+  [$C_1 subset.eq C_2$],
+  [`rdfs:domain`$(p, C)$, `owl:ObjectPropertyDomain`$(p, C)$],
+  [se $p(x, y)$ allora $x in C$],
+  [`rdfs:range`$(p, C)$, `owl:ObjectPropertyRange`$(p, C)$],
+  [se $p(x, y)$ allora $y in C$],
+  [`owl:EquivalentClass`$(C_1, C_2, dots, C_k)$],
+  [$C_i equiv C_j$ per ogni $i, j$],
+  [`owl:DisjointClass`$(C_1, C_2, dots, C_k)$],
+  [$C_i inter C_j = emptyset$ per ogni $i != j$],
+  table.hline(),
+  [`rdfs:subPropertyOf`$(p_1, p_2)$],
+  [$p_1(x, y)$ implica $p_2(x, y)$],
+  [`owl:EquivalentObjectProperties`$(p_1, p_2)$],
+  [$p_1(x, y)$ sse $p_2(x, y)$],
+  [`owl:DisjointObjectProperties`$(p_1, p_2)$],
+  [$p_1(x, y)$ implica $not p_2(x, y)$],
+  [`owl:InverseObjectProperties`$(p_1, p_2)$],
+  [$p_1(x, y)$ sse $p_2(y, x)$],
+  [`owl:SameIndividual`$(I_1, dots, I_n)$],
+  [$forall j forall k quad I_j = I_k$],
+  [`owl:DifferentIndividuals`$(I_1, dots, I_n)$],
+  [$forall j forall k quad j != k$ implica $I_j != I_k$],
+  [`owl:InverseFunctionalObjectProperty`$(p)$],
+  [se $p(x_1, y)$ e $p(x_2, y)$ allora $x_1 = x_2$],
+  [`owl:TransitiveObjectProperty`$(p)$],
+  [se $p(x, y)$ e $p(y, z)$ allora $p(x, z)$],
+  [`owl:SymmetricObjectProperty`$(p)$],
+  [se $p(x, y)$ allora $p(y, x)$],
+  [`owl:AsymmetricObjectProperty`$(p)$],
+  [$p(x, y)$ implica $not p(y, x)$],
+  [`owl:ReflexiveObjectProperty`$(p)$],
+  [$p(x, x)$ per ogni $x$],
+  [`owl:IrreflexiveObjectProperty`$(p)$],
+  [$not p(x, x)$ per ogni $x$],
+  table.hline(),
+)
+#esempio(title: "Costruttori di classe")[
+- `ObjectHasValue(country_of_citizenship, Q16)` classe dei cittadini del Canada (`Q16`);
+- `ObjectSomeValuesFrom(country_of_citizenship, Q113489728)` classe delle persone con cittadinanza in un paese membro dell'OCSE, _Organizzazione per la Cooperazione e lo Sviluppo Economico_, dove `Q113489728` identifica la classe dei paesi membri dell'OCSE; in caso di più cittadinanze, almeno una deve riguardare un paese dell'OCSE;
+- `MinCardinality(2, country_of_citizenship, Q113489728)` classe di persone con cittadinanza in 2 o più paesi dell'OCSE.
+]
+==== Enunciati
+I costuttori di classe vanno usti negli _enunciati_, ad esempio per dire che un individuo appartiene a tale classe o che una classe sia equivalente a un'altra. \
+OWL non può essere espresso, in modo equivalente, attraverso clausole definite; per dire che tutti gli elementi di $S$ hanno il valore $v$ per un dato predicato $p$, si dice che $S$ è sottoinsieme di quello di tutte le cose con valore $v$ per $p$ (_assioma di inclusione, $subset.eq$_)
+#esempio[
+Definizione di immobile con appartamenti, edificio residenziale con più unità abitative che sono date in affitto; si noti la differenza con il condominio (unità vendute separatamente) o la casa (una sola unità).
+````
+FunctionalObjectProperty(numberOfunits)
+ObjectPropertyDomain(numberOfunits, ResidentialBuilding)
+ObjectPropertyRange(numberOfunits, ObjectOneOf(two,one,moreThanTwo))
+
+FunctionalObjectProperty(ownership)
+ObjectPropertyDomain(ownership, ResidentialBuilding)
+ObjectPropertyRange(ownership,
+										ObjectOneOf(rental,ownerOccupied,coop)
+)
+EquivalentClasses(ApartmentBuilding,
+	ObjectIntersectionOf(ResidentialBuilding,
+		ObjectHasValue(numberOfunits, moreThanTwo),
+		ObjectHasValue(ownership,rental)
+	)
+)
+````
+definizione utile a rispondere a query sulle loro proprietà.
+]
+Fra gli altri costrutti disponibili, c'è il costruttore di proprietà `owl:ObjectInverseOf(p)` utile a rappresentare la proprietà inversa di _p_, denotata anche con $p^(-1): p^(-1)(x, y)$ se e solo se _p(x, y)_ vale solo per _object-property_: le _datatype-property_ non hanno proprietà inverse, in quanto i valori di _tipi concreti_ nno possono fungere da soggetto di triple. \
+Ci sono anche classi _datatype_ corrispondenti ai codomini di proprietà, come `owl:DataSomeValuesFrom` e `owl:EquivalentDataProperties`, con definizioni analoghe a quelle per proprietà su individui ma con domini concreti come codomini, presi in prestito da DML-Schema. \
+Infine, sono disponibili anche costrutti per definire proprietà, commenti, annotazioni, versioning e import da altre ontologie.
+==== Editor OWL
+Gli editor di ontologie, come Protégé forniscono un modo per definire ontologie a un livello di astrazione appropriato:
+- volendo usare un concetto, ne facilitano la ricerca nella terminologia o può segnalarne l'eventuale assenza;
+- aiutando a determinare immediatamente il significato di un termine;
+- permettono controlli di correttezza sulle ontologie, ad esempio sulla corrispondenza con l'interpretazione intesa per i termini;
+- facilitano la riusabilità spingendo a usare il più possibile un linguaggio standard.
+==== Ontologie di Dominio
+Un'*ontologia di dominio* riguarda un particolare dominio d'interesse: molte delle ontologie esistenti riguardano un dominio ristretto definito per specifiche applicazioni. \
+*Linee Guida* per definire ontologie di dominio sono le seguenti:
+- Se possibile, conviene usare ontologie esistenti: la KB potrà interagire con altre che la adottano;
+- Se esiste un'ontologia che non corrisponda esattamente ai requisiti, la si può importare facendo poi delle aggiunte in modo da non partire da zero: se la propria ontologia include e migliora l'altra, altri la vorranno adottare, aumentando l'interoperabilità della loro applicazione;
+- Occorre assicurarsi che l'ontologia si integri con ontologie affini, tentando di assicurare l'uso della stessa terminologia per le stesse cose;
+- Tentare di conformarsi a ontologie di livello superiore poichè questo rende molto più facile l'integrazione della conoscenza di/con altre fonti;
+- Nel progettare una nuova ontologia, conviene consultarsi con altri utenti potenziali, ciò la rende più utile e più facilmente adottabile;
+- Vanno seguite le convenzioni di denominazione, ad esempio chiamare una classe con il nome, al singolare, delle istanze:
+	- pensare all'uso delle classi/proprietà;
+	- di un individuo `r1` meglio dire che \"è un `Resort`\" rispetto a \"è un `Resorts`\" oppure \"è un `Concetto_di_resort`\"
+- Specificare la corrispondenza tra ontologie: a volte serve un allineamento quando le ontologie sono sviluppate separatamente, evitando, se possibile, la ridondanza che le rende più complicate da usare.
+==== Web of Data
+Il *Web of Data* è una prospettiva del Web Semantico tesa a sfruttare l'infrastruttura del Web per creare un grafo globale di sorgenti distribuite di dati collegati, come aad esempio la seguente figura:
+#figure(
+image("images/web_of_data.png", width: 70%),
+)
+La semantica dei dati viene resa disponibile anche alle macchine sulla base di ontologie RDF/OWL, e quindi attraverso query SPARQL, o veri e propri servizi di ragionamento automatico (tramite _reasoner_). A tale scopo sono disponibili anche server ad hoc detti _triple store_ o altre forme di DB NoSQL, come ad esempio _document DB_ basati sulla serializzazione JSON-LD. \
+I principi-guida dei *Linked Data* sono i seguenti:
++ l'uso di URI come nomi per le cose;
++ in particolare URI HTTP per permetterne la ricerca sull'infrastruttura del Web;
++ le informazioni vengono fornite usando linguaggi standard quali RDF, SPARQL, $dots$
++ l'uso di link verso URI di risorse esterne che abilitano la scoperta di altra conoscenza.
+La qualità degli _Open Data_ può essere valutata in termini di una categorizzazione 1-5 stelle di Berners-Lee. In cima, $5 star$, si trovano i _Linked Open Data, LOD_. I LOD sono navigabili attraverso strumenti come _LodLive_.
+=== Ontologie Top-Level
+Ogni ontologia di dominio implicitamente o esplicitamente assume un'ontologia di più alto livello alla quale conformarsi. \
+Ad esempio l'ontologia degli appartamenti può essere riusata da chi voglia definire una KB che si riferisca a cose che possono comparire in mappe, assumendo che gli edifici siano già definiti altrove. \
+Tipicamente, in un'ontologia *top-level* si troveranno definizioni a un livello di astrazione molto elevato. Essa fornirà una categorizzazione di base alla quale altre ontologie potranno conformarsi esplicitamente per facilitare la loro _integrazione_; inoltre consentirà a diverse applicazioni di riferirsi a più KB, ognuna della quali potrà adottare ontologie diverse. \
+Progettare ontologie top-level è un compito complesso ma il loro uso abilita la connessione fra diverse basi di conoscenza.
