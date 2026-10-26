@@ -1261,3 +1261,94 @@ $
 (1 / 3 + 1 / 2 + 1)/3 = 11/18 approx 0.61
 $
 ]
+== Rilevanza valutata (Non-Binario)
+Finora abbiamo esaminato metriche basate su valutazioni di tipo rigorosamente binario, le quali presentano importanti limiti operativi:
+- *Limiti del giudizio binario*: la precisione e la copertura tradizionali permettono unicamente valutazioni di tipo binario. Nella realtà dei fatti, però, i documenti sono raramente del tutto pertinenti o totalmente estranei a una query.
+- *Perdita di sfumature*: di conseguenza, il sistema binario non offre alcuna distinzione pratica tra documenti altamente rilevanti e documenti blandamente o parzialmente rilevanti.
+Per superare questi limiti, si adotta l'utilizzo di *metriche di rilevanza graduata*, che forniscono:
+- *Giudizi multi-livello*: vengono integrate fonti di giudizio basate su scale di valutazione estese, come ad esempio scale Likert a 5 punti.
+- *Categorie multiple*: ciascun documento non è più confinato a una scelta secca, ma viene giudicato lungo una scala a cateogorie multiple, distinguendo chiaramente tra livelli come _altamente rilevante_, _parzialmente rilevante_ o _non rilevante_.
+Questo approccio consetne di modellare in modo molto più accurato la realtà utile dei risultati restituiti dai sistemi di ricerca rispetto alle reali esigenze informative degli utenti.
+=== Discounted Cumulative Gain (DCG)
+Per superare i limiti delle valutazioni binarie e sfruttare i giudizi di rilevanza graduata che abbiamo appena introdotto, si ricorre al *Discounted Cumulative Gain (DCG)*. Questa metrica combina in modo efficace le valutazioni di rilevanza graduata. \
+L'ideazione del DCG si fonda su due osservazioni fondamentali quando si esaminano i risultati di una query:
+- i documenti *altamente rilevanti* sono molto più utili rispetto a quelli blandamente o marginalmente rilevanti;
+- più è bassa la posizione in graduatoria di un documento rilevanti, minore è la sua utilità per l'utente, poichè è statisticamente meno probabile che venga esaminato.
+#esempio[
+Per comprendere concretamente come applicare il DCG, consideriamo un esempio in cui i risultati delle query vengono valutati su una scala graduata da 0 a 3 (0 non rilevante e 3 fortemente rilevante). \
+Supponiamo di avere due query, $q_1$ e $q_2$, per le quali i punteggi di rilevanza graduata assegnati ai documenti sono i seguenti:
+- per la query $q_1$:
+$
+R_(q_1) = brace.l [d_3, 3], [d_5, 3], [d_9, 3], [d_(25), 2], [d_(39), 2], [d_(44), 2], [d_(56), 1], [d_(71), 1], [d_(89), 1], [d_(123), 1] brace.r
+$
+- Per la query $q_2$:
+$
+R_(q_2) = brace.l [d_3, 3], [d_(56), 2], [d_(129), 1] brace.r
+$
+Ciò significa che, ad esempio, mentre il documento $d_3$ risulta altamente rilevante per la query $q_1$, il documento $d_(56)$ viene classificato come blandamente rilevante. Questo sistema a più livelli permette di superare la rigidità della classificazione binaria e di riflettere con maggiore precisione il reale grado di soddisfazione dell'utente.
+]
+==== Vettore di guadagno
+A partire dai giudizi di rilevanta, analizziamo come valutare i risultati di un nuovo algoritmo di ranking introducendo il concetto di *vettore di guadagno G*. \
+Gli specialisti assegnano un punteggio di rilevanza graduata ai primi 10-20 risultati restituiti per una determinata query: questa lista ordinata di punteggi prende il nome di *Gain Vector G*. \
+#esempio[
+Consideriamo i primi 15 documenti delle graduatoria prodotta per le query $q_1$ e $q_2$, i rispettivi vettori di guadagno vengono espressi in forma di sequenza numerica:
+$
+G_1 = (1, 0, 1, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 0, 3) \
+G_2 = (0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3)
+$
+Questo vettore rappresenta la base numerica essenziale su cui si applcia successivamente il fattore di sconto basato sulla posizione per calcolare il valore effettivo del *Discounted Cumulative Gain (DCG)*.
+] <es:gain_vector>
+==== Cumulative Gain
+Sommando progressivamente i punteggi di rilevanza graduata fino a un qualsiasi punto della gruaduatoria, si ottiene direttamente il guadagno cumulativo, il *cumulated gain CG*. \
+#esempio[
+Proseguendo l'*@es:gain_vector*, sommiamo progressivamente sui vettori di guadagno e otteniamo i vettori di guadagno cumulato per le due query:
+$
+C G_1 = (1, 1, 2, 2, 2, 5, 5, 5, 5, 7, 7, 7, 7, 7, 10) \
+C G_2 = (0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 6)
+$
+] <es:cumulative_gain_vector>
+Tuttavaia, il semplice guadagno cumulato non tiene ancora conto della posizione in cui compaiono i documenti. Per risolvere questo limite, il passo successivo consiterà nell'introdurre il fattore di sconto, arrivando così alla formula completa del DCG. \
+In termini formali, definiamo:
+$
+C G_j[i] = cases(
+G_j[1] & "se" i = 1,
+G_j[i] + C G_j[i - 1] & "altrimenti"
+)
+$
+ove $C G_j[i]$ è il guadagno cumulato all'$i$-esima posizione del ranking per la query $q_j$.
+==== Fattore di sconto
+Viene introdotto un *fattore di sconto, _discount factor D_*, che riduce l'impatto del guadagno man mano che si sposta verso il basso nella graduatoria. \
+Un semplice fattore di sconto comunemente adottato consiste nell'utilizare il *logaritmo della posizione di ranking*. \
+Se consideriamo i logaritmi in base 2, questo fattore di sconto sarà pari a $log_2(2)$ alla posizione 2, $log_2(3)$ alla posizione 3, e così via. \
+Infine, dividendo il guadagno per il corrispondente fattore di sconto lungo la posizione, si ottiene la formula definita del *Discounted Cumulative Gain (DCG)*. \
+In termini formali:
+$
+D C G_j[i] = cases(
+G_j[1] & "se" i = 1,
+(G_j[i])/(log_2(i)) + D C G_j[i - 1] & "altrimenti"
+)
+$
+ove $D C G_j[i]$ è il DCG all'$i$-esima posizione della graduatoria per la query $q_j$.
+#esempio[
+Proseguendo l'*@es:cumulative_gain_vector*, otteniamo i seguneti vettori DCG:
+$
+D C G_1 = (1, 1, 1.6, 1.6, 1.6, 2.8, 2.8, 2.8, 2.8, 2.8, 3.4, 3.4, 3.4, 3.4, 4.2) \
+D C G_2 = (0, 0, 1.3, 1.3, 1.3, 1.3, 1.3, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 2.4)
+$
+]
+Facciamo delle considerazioni chiave sul DCG.
+- *Riduzione dell'impatto sul fondo della classifica*: i guadagni cumulati scontati risentono molto meno dei documenti rilevanti sitauti verso la fine del ranking, poichè è la divisione per il logaritmo della posizione ne riduce drasticamente il peso.
+- *Controllo della penalizzazione*: adottando logaritmi in basi inferiori è possibile accentuare ulteriormente il fattore di sconto, rendendo la metrica ancora più severa nei confronti dei risultati posizionati in basso.
+
+==== Curve DCG
+Per produrre curve di CG e DCG complessive su un set di test, è necessario calcolare la media dei valori ottenuti sull'intero insieme delle query. \
+Dato un insieme di $N_q$ query, la media del guadagno cumulato, $overline(C G)[i]$, e del guadagno cumulato scontato, $overline(D C G)[i]$, per ciascuna posizione $i$ della graduatoria viene calcolata sommando i rispettivi valori di tutte le query e dividendoli per il numero totale $N_q$:
+$
+overline(C G)[i] = sum_(j=i)^(N_q) (C G_j[i])/(N_q) \
+overline(D C G)[i] = sum_(j=1)^(N_q)(D C G_j[i])/(N_q)
+$
+Questi valori medi aggreati permettono di tracciare grafici di performance uniformi, consentendo di confrontare in mdoo solido l'efficacia media di differenti algoritmi di ranking su un'intera collezione di interrogazioni.
+#figure(
+image("images/dcg.png", width: 70%)
+)
+==== Fare da slide 65 a slide 70
