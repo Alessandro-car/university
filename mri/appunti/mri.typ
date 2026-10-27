@@ -1351,4 +1351,52 @@ Questi valori medi aggreati permettono di tracciare grafici di performance unifo
 #figure(
 image("images/dcg.png", width: 70%)
 )
-==== Fare da slide 65 a slide 70
+=== Normalized DCG
+==== CG e DCG Ideali
+A differenza di quanto avviene per la precisione e la copertura, che vengono calcolate in relazione all'insieme dei documenti rilevanti, i punteggi di CG e DCG visti finira non sono rapportati ad alcuna linea di base fissa. Questo limite implica che l'utilizzo diretto dei punteggi grezzi di CG e DCG può risultare fuorviante quando si cerca di confrontare direttamente due algoritmi di recupero differenti. \
+Per ovviare a questo problema, la strategia standard nell'introdurre una linea di base da utilizzare come riferimento per la normalizzazione. \
+Questa specifica linea di base è rappresentata proprio dalle metriche di *CG e DGC ideali*, che riflettono il rendimento massimo ottenibile ordinando perfettamente i documenti in base al loro grado di rilevanza. \
+Proseguendo con la costruzione delle metriche ideali per la normalizzazione, definiamo il *vettore di guadagno ideale, IG*. \
+Per una data query di test $q$, assumendo che le valutazioni di rilevanza espresse degli specialisti abbiano prodotto $n_3$ documenti con punteggio 3, $n_2$ con punteggio 2, $n_1$ con punteggio 1 e $n_0$ con punteggio 0, il vettore _IG_ viene generato ordinando tutti i punteggi di rilevanza in *ordine decrescente*. La struttura generale assume la forma:
+$
+I G = (3, dots, 3, 2, dots, 2, 1, dots, 0, dots, 0)
+$
+#esempio[
+Applicando questa regola alle nostre query di esempio, otteniamo i rispettivi vettori di guadagno ideale che rappresentano il limite massimo teorico di performance ottenibile ordinando perfettamente i documenti rilevanti in cima alla graduatoria:
+$
+I G_1 = (3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0) \
+I G_2 = (3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+$
+]
+Questo vettore ideale costituisce il riferimento fondamentale per calcolare successivamente il _Normalized Discounted Cumulative Gain (NDCG)_, permettendo di normalizzare le prestazioni reali di qualsiasi algoritmo di ranking rispetto al miglior risultato teorico possibile. \
+==== Gain Cumulato Ideale e Gain Cumulato Scontato Ideale
+Analizziamo come calcolare i vettori di *Gain Cumulato Ideale, ICG*, e di *Gain Cumulato Scontato Ideale, IDCG*, in modo del tutto analogo a quanto visto per i vettori standard. \
+Analizziamo il calcolo dei vettori _ICG_. Sommando progressivamente i punteggi del vettore di guadagno ideale _IG_, si ottengono i valroi massimi teorici cumulati per le qiery $q_1$ e $q_2$:
+$
+I C G_1 &= (3, 6, 9, 11, 13, 15, 17, 18, 19, 19, 19, 19, 19, 19) \
+I C G_2 &= (3, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6)
+$
+Analizziamo ora il calcolo dei vettori _IDCG_. Applicando il fattore di sconto basato sul logaritmo della posizione ai vettori ideali, si ottengono i vettori di _Ideal Discount Cumulative Gain, IDCG_.
+$
+I D C G_1 &= (3.0, 6.0, 7.9, 8.9, 9.8, 10.5, 10.9, 11.2, 11.5, 11.8, 11.8, 11.8, 11.8, 11.8, 11.8) \
+I D C G_2 &= (3.0, 5.0, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6)
+$
+Questi vettori _IDCG_ rappresentano il punteggio massimo teorico ottenibile da un sistema ideale per le rispettive query e costituiscono la base di normalizzazione fondamentale per calcoalre il punteggio normalizzato finale _NDCG_. \
+Calcoliamo i punteggi medi di _ICG_ e _IDCG_ su un intero insieme di query di test. Analogamente a quanto visto per le curve standard, i punteggi medi del guadagno cumulato ideale, $overline(I C G)[i]$, e del guadagno cumulato scontato ideale, $overline(I D C G)[i]$, per ciascuna posizione $i$ si ottengono mediando i valori corrispondenti di tutte le $N_q$ query:
+$
+overline(I C G)[i] &= sum_(j=1)^(N_q)(I C G_j[i])/(N_q) \
+overline(I D C G)[i] &= sum_(j=1)^(N_q) (I D C G_j[i])/(N_q)
+$
+==== DCG Normalizzato
+Sfruttando le metriche ideali calcolate in precedenza per normalizzare i punteggi delle nostre query d'esempio $q_1$ e $q_2$, si ottengono i vettori normalizzati di guadagno cumulato _NCG_ e di guadagno cumulato scontato normalizzato _NDCG_.
+$
+N C G &= (0.17, 0.09, 0.27, 0.24, 0.21, 0.33, 0.32, 0.35, 0.33, 0.40, 0.40, 0.40, 0.40, 0.40, 0.64) \
+N D C G &= (0.17, 0.09, 0.21, 0.20, 0.29, 0.25, 0.25, 0.26, 0.26, 0.29, 0.29, 0.29, 0.29, 0.29, 0.38)
+$
+L'area sottotesa alle curve _NCG_ e _NDCG_ rappresenta direttametne la qualità complessiva dell'algoritmo di ranking. Più grande è l'area sottotesa, migliori sono i risultati restituiti dal sistema. Di conseguenza, grazie a questa normalizzazione in scala, i valori ottenuti possono essere impiegati efficacemente per confrontare in modo rigoroso due distinti algoritmi di recupero dell'informazione. \
+Possiamo definire formalmente _NCG_ e _NDCG_ come segue:
+$
+N C G[i] &= C G[i] / I C G[i] \
+N D C G[i] &= D C G[i] / I D C G[i]
+$
+Ogni valore di _NCG_ e _NDCG_ si trova nel range $[0, 1]$.
