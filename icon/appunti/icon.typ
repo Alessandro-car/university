@@ -3376,3 +3376,184 @@ Ogni ontologia di dominio implicitamente o esplicitamente assume un'ontologia di
 Ad esempio l'ontologia degli appartamenti può essere riusata da chi voglia definire una KB che si riferisca a cose che possono comparire in mappe, assumendo che gli edifici siano già definiti altrove. \
 Tipicamente, in un'ontologia *top-level* si troveranno definizioni a un livello di astrazione molto elevato. Essa fornirà una categorizzazione di base alla quale altre ontologie potranno conformarsi esplicitamente per facilitare la loro _integrazione_; inoltre consentirà a diverse applicazioni di riferirsi a più KB, ognuna della quali potrà adottare ontologie diverse. \
 Progettare ontologie top-level è un compito complesso ma il loro uso abilita la connessione fra diverse basi di conoscenza.
+= Apprendimento Supervisionato
+L'*apprendimento* è la capacità di sfruttare l'esperienza per migliorare il comportamento nello svolgimento di specifici compiti:
+- l'_estensione_ della abilità / dei comportamenti possibili: fare di pìù;
+- il miglioramento dell'_accuratezza_ nei compiti svolti: far meglio;
+- il miglioramento dell'_efficienza_: fare prima.
+Informalmente si può anche dire che l'obiettivo dell'apprendimento è comprendere il mondo attraverso i *dati*. Occorre modellare non tanto i dati quando il mondo che li genera per consentire il miglioramento delle decisioni/azioni del sistema intelligente. \La conoscenza del passato non è fine a se stessa ma dev'essere utile per il futuro. \
+Verranno trattate problematiche specifiche legate alla predizione tramite apprendimento supervisionato: dato un insieme di _esempi_ di addestramento costituito da coppie input-output, si dovrà predire l'_output_ per nuovi esempi dato il solo input. Gli esempi si chiamano anche _campioni_ mentre l'output da predire si chiama anche _obiettivo_ o _target_.
+== Problematiche dell'Apprendimento
+In un _problema di apprendimento automatico_ si distinguono:
+- il *task*, ovvero il _comportamento_ o _compito_ nel quale migliorare;
+- i *dati*, ossia le _esperienze_ usate per migliorare le prestazioni nello svolgimento del compito, di solito disponibili come sequenza di _esempi_;
+- la *misura del miglioramento*: occorre stabilire _come_ e _cosa_ misurare come, ad esempio, l'incremento di abilità, l'efficacia, l'efficienza nella soluzione del problema. \
+Ai fini della predizione, si considerano la _conoscenza di fondo_ (_background knowledge_, BK) e i _dati_, ossia l'esperienza pregressa, tipicamente in forma di esempi, ossia come `input-output`, per creare una _rappresentazione interna_, un *modello*, che potrà costituire parte della KN, da usare per future _predizioni_.  \
+Nel seguito sono elencate le diverse problematiche legate alla soluzione dei problemi di apprendimento automatico:
+- *Task*: il compito per cui si devono acquisire dati/esperienza. Nell'*apprendiment supervisionato*, dato un insieme di *esempi di traning* descritti in termini di _feature_ di _input_ e _target_, si deve imparare a predire il valore ignoto delle variabili-obiettivo per nuove osservazioni. Nei problemi di _classificazione_ il target è discreto mentre in quelli di _regressione_ esso è continuo. Quando le variabili-obiettivo hanno una struttura si parla di _predizione strutturata_. Altri problemi sono legati a forme di _apprendimento non-supervionato_, in cui si cercano regolarità o _pattern_, senza avere a disposizione dati con variabili-obiettivo esplicite. Nell'_apprendimento relazionale_ si costruiscono modei per _rappresentazioni più espressive_ dei dati, quindi relazioni, concetti / programmi logici (ILP), grafi. Nell'_apprendimento per rinforzo_ l'obiettivo è pianificare comportamenti ovvero piano su azioni da svolgere. Nei problemi di _ranking_ si impara a ordinare le istanze, ad esempio gli item trattati dai sistemi di raccomandazione. Infine nell'_apprendimento analitico_ l'obiettivo è imparare a ragionare ovvero a prendere decisioni più velocemente.
+- *Feedback*: il tipo di feedback che si riceve dipende dal task di apprendimento. Nei task supervisionati, gli _esempi di training_ forniti da un esperto/addestratore, contegono il valore-obiettivo corretto per ognuno di essi. Nei task non-supervisionati non è specificato un output desiderato, si hanno solo _osservazioni_ con le sole variabili di input avvalorate, quindi ci si basa sulla valutazione di funzioni che misurano le prestazioni già menzionate. Nei task per rinforzo si hanno _ricompense_ e _punizioni_ che danno un valore alle diverse sequenze di azioni svolte in base al modello appreso.
+- *Misura delle prestazioni*, ossia del miglioramento dei modelli su nuovi dati. Tipicamente nella valutazione si dividono i dati in due gruppi, _training_ e _test_: costruito un _modello_, usando gli esempi di training, se ne misura l'_accuratezza predittiva_ su _nuovi_ esempi, quelli di test. Si ottiene una misura _approssimata_ delle prestazioni, dato l'insieme limitato di dati, che va _ripetuta_ al variare delle diverse suddivisioni del campione di dati. Nel caso supervisionato, le ipotesi, indotte da _campioni_ della popolazione, devono tendere a _generalizzare_ il training set, senza farsi fuorviare da sue specificità, altrimenti risulterebbero _scarsamente predittive_ rispetto a nuovi dati. Ad esempio in un _problema di classificazione binario_, in cui si decide l'appartenenza ad una classe, si potrebbe formulare facilmente un'ipotesi $h_P$ che decide sempre la predizione positiva, tranne che per i soli esempi negativi del training set e un'ipotesi $h_N$ che decida sempre per la predizione negativa, tranne che per i soli positivi del training set; tali ipotesi sono _modelli estremi_: per entrambe si avrebbe il 100% di accuretezza sui dati di training ma risulterebbero in totale disaccordo sul resto degli esempi.
+- *Bias*: tendenza a preferire certe ipotesi rispetto ad altre. Senza bias, non si sa come stabilire che un'ipotesi sia migliore di un'altra. Nell'esempio precedente le ipotesi $h_N$ e $h_P$ sono entrambe accurate al 100% sui dati di training: quindi occorre stabilire quale si preferisce tra le due. Serve un _fattore esterno_ che prescinda anche dai dati, in grado di ottimizzare le predizioni sui nuovi esempi. La scelta del bias è un problema empirico da risolvere attraverso al pratica. Tipicamente, ci si basas su misure di _complessità_ delle ipotesi.
+- *Rappresentazione*, ossia la _codifica interna_ dell'esperienza ovvero la forma dell'ipotesi. La più semplice è la forma _grezza_, in cui si memorizzano le esperienze stesse, gli esempi. Una forma _compatta_ è più comune perchè permette la generalizzazione dei dati. La scelta fra le rappresentazioni possibili viene detta *bias di rappresentazione* ed è correlata alla scelta fra i diversi modelli, *bias di preferenza*. Come _linea-guida_, si sa che optando per rappresentazioni più ricche sarà più facile esprimere ipotesi più generali che sono però più difficili da apprendere: servono più dati per scegliere fra le più numerose ipotesi coerenti con i dati stessi. Occorre trovare soluzioni di compromesso e/o ricorrere a metodi di apprendimento della rappresentazione ottimale.
+- *Ricerca*: scelti rappresentazione e bias, l'apprendimento può essere visto come un _problema di ricerca_ da risolvere attraversando lo _spazio delle ipotesi_, dato un *bias di ricerca*, per trovare quella che meglio si adatta agli esempi. Tipicamente gli spazi di ricerca sono molto estesi, spesso infiniti, quindi risulta impossibile una ricerca sistematica e si deve ricorrere a forme di _ricerca locale_. Per la definizione dell'_algoritmo_, quindi, si richede la definizione di uno spazio di riecrca, di una funzione di valutazione e di un metodo di ricerca.
+- *Dati imperfetti* nelle situazioni reali, a seguito di diverse cause fra le quali: il _rumore_ dovuto a variabili (_feature_) osservate che risultano inadeguate a fare predizioni; i _dati mancati_ ossia valori di alcune variabili non disponibili per alcuni esempi; gli _errori_, quando i valori di alcune variabili risultano errati.
+- *Ordine* naturale del dominio delle feature. L'ordine permette di distinguere problemi di *interpolazione*, in cui si devono fare predizione per casi _ricompresi_ nelle regioni dei dati osservati (training), da quelli di *estrapolazione*, in cui le predizioni riguardano casi distanti dagli esempi di training. I modelli per tali problemi risultano in genere meno accurato (è più facile predire il passato che il futuro) in quanto determinare il valore incognito di una variabile in base a valori di input già osservati subito prima o dopo, risulta molto più facile che predire valori futuri. Per questo, ipotesi con valori dei parametri ottimizzati ai fini dell'_interpolazione_ possono rivelarsi pessime su successivi problemi di _estrapolazione_.
+- *Dimensionalità*: essendo gli esempi descritti in termini di variabili (una _dimensione_ per ciascuna) il numero di esempi possibili cresce esponenzialmente aumentando le dimensioni (_curse of dimensionality_). Al crescere della dimensionalita, le singole dimensioni diventano poco importanti: in problemi dell'ambito medico, se gli esempi sono costituiti da immagini e altri attributi la modifica di un singolo pixel non dovrebbe influenzare la diagnosi.
+- _Acquisizione_ *offline/online* degli esempi: nel primo caso tutti gli esempi sono disponibili prima dell'azione/decisione, nel secondo caso essi si rendono disponibili nel tempo, nel corso del processo di learning. La rappresentazione degli esempi potrebbe essere determinata prima di averli visti tutti per cui nuovi esempi si rende necessario un aggiornamento della rappresentazione. Nell'_active learning_, il sistema ragione e decide sugli esempi utili da acquisire per svolgere il suo compito.
+== Fondamenti
+=== Problema Supervisionato
+Una *feature* è una funzione $F$ definita sugli _esempi_, ossia sullo spazio della loro rappresentazione:
+- $F(e)$ denota il _valore_ di $F$ per l'esempio $e$;
+- il _dominio_ della feature è l'insieme dei valori che essa può assumere, ossia il codominio della funzione $F$.
+Il *problema* di apprendimento *superivisionato* si può descrivere come segue:
+- `dati`:
+	- le *feature di input* $X_1, dots, X_m$;
+	- le *feature-obiettivo* (o *target*) $Y_1, dots, Y_k$;
+	- un insieme di *esempi* $e = (x_e, y_e)$ \
+		con $x_e = (X_1(e), dots, X_m(e))$ e $y_e = (Y_1(e), dots, Y_k(e))$
+- `determinare` un *predittore*, ossia una funzione atta a predire i valori delle variabili-obiettivo $Y_j$, noti i valori delle variabili $X_i$, per esempi non osservati, ossia nuovi rispetto a quelli usati per l'addestramento.
+Vi sono diverse varianti dei problemi di apprendimento supervisionato:
+- problema di *regressione*: predire un obiettivo a valori continui, in un sottoinsieme dei numeri reali;
+- problema di *classificazione*: predire un valore-obiettivo ricompreso in un insieme finito prefissato, ad esempio binario / booleano $brace.l "false, true" brace.r$, o a valori multipli;
+- problema *relazionale*: predire relazioni, come ad esempio chi sia la madre di una data persona; in tal caso i nuovi esempi per la valutazione saranno tratti da un'altra popolazione rispetto a quelli usati nell'addestramento;
+- problema *strutturale*: predire una struttura.
+Esempi di applicazione dei modelli superivisionati sono i seguenti: predire _attività_ svolte (come camminare, correre, guidare, ecc.) dalla frequenza cardiaca e dal movimento, così come rilevati da uno smartwatch; stimare la probabilità di inondazione di un sito nella prossima decade in base in base ai dati topografici, climatici, geologici, ecc.; individuare parole scritte a mano su smartphone/tablet in base alla grafia; determinare la traduzione di un testo dal cinese all'hindi.
+#esempio(title: "Problema di classificazione")[
+Decisione sull'eventuale visione di un video sulla piattaforma:
+- variabili di input (booleane):
+	- _Virale_: viralità del video;
+	- _Nuovo_: novità del video;
+	- _Lungo_: lunghezza non breve;
+	- _A\_casa_: visione domestica o altrove.
+- variabile-_obiettivo_ booleana: _Da\_vedere_;
+- esempi di _training_: $e_1, dots, e_(18)$ e di test: $e_(19), e_(20)$
+Tabella di esempi ottenuta dalle decisioni prese dagli utenti:
+#let rows = (
+  ("true", "true", "true", "true", "false"),
+  ("false", "true", "false", "false", "true"),
+  ("false", "false", "true", "false", "false"),
+  ("true", "false", "true", "true", "false"),
+  ("true", "true", "false", "true", "true"),
+  ("true", "false", "true", "false", "false"),
+  ("false", "false", "false", "false", "false"),
+  ("false", "true", "false", "false", "true"),
+  ("true", "false", "true", "true", "false"),
+  ("true", "true", "true", "false", "false"),
+  ("false", "false", "false", "true", "false"),
+  ("true", "true", "true", "false", "false"),
+  ("true", "false", "false", "true", "true"),
+  ("true", "true", "false", "false", "true"),
+  ("true", "true", "false", "true", "true"),
+  ("true", "false", "false", "false", "true"),
+  ("true", "true", "false", "true", "true"),
+  ("false", "false", "false", "false", "true"),
+  ("false", "true", "true", "false", "?"),
+  ("false", "false", "false", "true", "?"),
+)
+
+#align(center)[
+  #table(
+    columns: 6,
+    align: (right + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
+    inset: (x: 9pt, y: 4pt),
+    // top line, line under the header (y = 1), line before e19 (y = 19);
+    // vertical lines after the first column and before the last one
+    stroke: (x, y) => (
+      top: if y in (0, 1, 19) { 0.5pt },
+      left: if x in (1, 5) { 0.5pt },
+    ),
+    table.header(
+      emph[\#Es], emph[Virale], emph[Nuovo], emph[Lungo], emph[A\_casa], emph[Da\_vedere],
+    ),
+    ..rows
+      .enumerate()
+      .map(((i, r)) => ([$e_(#(i + 1))$], ..r.map(v => raw(v))))
+      .flatten(),
+  )
+]
+]
+#esempio(title: "Problema di regressione")[
+Predire il valore di $Y$ a valori reali:
+#let rows = (
+  ("0.7", "1.7"),
+  ("1.1", "2.4"),
+  ("1.3", "2.5"),
+  ("1.9", "1.7"),
+  ("2.6", "2.1"),
+  ("3.1", "2.3"),
+  ("3.9", "7.0"),
+  ("2.9", "?"),
+  ("5.0", "?"),
+)
+
+#align(center)[
+  #table(
+    columns: 3,
+    align: (right + horizon, center + horizon, center + horizon),
+    inset: (x: 9pt, y: 4pt),
+    // line under the header (y = 1), line before e8 (y = 8),
+    // vertical line after the first column
+    stroke: (x, y) => (
+      top: if y in (1, 8) { 0.5pt },
+      left: if x == 1 { 0.5pt },
+    ),
+    table.header([\#Es], [$X$], [$Y$]),
+    ..rows
+      .enumerate()
+      .map(((i, r)) => ([$e_(#(i + 1))$], ..r.map(v => raw(v))))
+      .flatten(),
+  )
+]
+- predire il valore di $Y$ per $e_8$: problema di _interpolazione_, il valore $X(e_8)$ ricade tra quelli degli altri esempi di training;
+- predire il valore di $Y$ per $e_9$: problema di _estrapolazione_, il valore $X(e_9)$ è fuori dall'intervallo di valori degli esempi di training.
+] <es:regressione>
+=== Valutazione delle Predizioni
+Dato il _predittore_ $hat(Y)$ per le feature obiettivo $Y$, $hat(Y)(e)$ denoterà una *stima puntuale* del valore di $Y$ per l'esempio $e in E s$, ossia la predizione del vero valore $Y(e)$, detto _ground truth_; il predittore $hat(Y)$, appreso sulla base degli esempi di training, potrà essere applicato in seguito a qualsiasi altro esempio. \
+Si dice *loss* (o _errore_) di $hat(Y)(e)$ una misura della _distanza_ della stima $hat(Y)(e)$ dal vero valore $Y(e)$. Essa viene definita come funzione $"loss"(p, a)$ su $RR_+$: errore della predizione di $p$ quando il valore effettivo è $a$. Tipicamente se ne considera la media sull'insieme $E s$ di esempi, o *loss media* (_mean loss_)
+$
+(1)/(bar E s bar)sum_(e in E s)"loss"(hat(Y)(e), Y(e))
+$
+o, in alternativa, la semplice sommatoria che ha lo stesso punto di minimo. Si preferisce la loss media perchè può essere interpretata senza conoscere il numero di esempi $bar E s bar$.
+==== Feature-Obiettivo a Valori Reali
+In caso di feature con valori _totalmente ordinati_, le differenze sono significative. Ad esempio, altezze in cm, voti, numero bambini, ecc. \
+Le funzioni di _loss_ più utilizzate in problemi di _regressione_, essendo dati il valore vero e quello predetto $a, p in RR$, rispettivametne, sono elencate di seguito:
+- *errore 0-1* o *loss* $L_0$:
+$
+"loss"(p, a) = cases(
+1 & quad p != a,
+0 & quad p = a
+)
+$
+anche con la funzione $1(p != a)$ che vale 1 se l'argomento è vero e 0 altrimenti. La loss media su un dataset sarà il numero medio di predizioni sbagliate, che non tiene conto di _quante_ siano errate. L'*accuratezza* ne costituisce il complemento a 1, ossia il numero medio di predizioni corrette e viene massimizzata minimizzando la loss. Il test d'uguaglianza non è affidabile nel confronto fra numeri reali quindi non è utile calcolare la loss media, mentre potrebbero esserlo il calcolo di moda o mediana.
+- *errore assoluto* o *loss* $L_1$:
+$
+"loss"(p, a) = bar p - a bar
+$
+È sempre non negativa e per un dataset risulta nulla se tutte le predizioni sono corrette; a differenza della precedente, tiene conto della precisione delle predizioni.
+- *errore quadratico* o *loss* $L_2$:
+$
+"loss"(p, a) = (p - a)^2
+$
+Si tratta di un errore amplificato, ad esempio un errore di 2 vale quanto 4 errori di 1; ai fini della minimizzazione, si considera la _loss media quadratica_ su $E s$ o, equivalentemente, la *radice dell'errore quadratico medio* (_root-mean-square error_, RMSE) che ha gli stessi punti di minimo delle sommatorie sul dataset; spesso si antepone il fattore $1/2$ per semplificare le derivate.
+- *errore nel caso pessimo* o *loss* $L_infinity$ su $E s$:
+$
+"loss"(E s) = max_(e in E s)bar hat(Y)(e) - Y(e) bar
+$
+Essa rappresenta una stima pessimistica basata sull'errore massimo del predittore quindi non corrisponde a sommatorie o medie.
+#esempio[
+Per il problema di regressione dell'esempio *@es:regressione* si possono considerare i modelli lineari nella seguente figura, utili a predire $Y$ minimizzando gli errori $L_1, L_2$ e $L_infinity$:
+#figure(
+image("images/rette_reg_loss.png", width: 70%),
+caption: [rette di regressione e loss]
+)
+- ogni retta passante per due punti minimizza l'errore $L_0$:
+	le triple di esempi sono tutte _non co-lineari_;
+- per il punto con $X = 1.1$ e $Y = 2.4$ effettivo, si hanno predizioni simili dalle rette $L_1$ e $L_2$ (rispettivamente 1.805 e 1.709) mentre $L_infinity$ predice 0.7;
+- _interpolando_ in $[1, 3]$ si fano predizioni distnati al più di 1.5;
+- _estrapolando_, essi _divergono_: ad esempio per $X = 5$,  $L_1$ e $L_infinity$ forniscono predizioni molto differenti.
+Un *outlier* è un esempio che non segue schemi che accomunano altri esempi. La differenza tra le diverse rette è più evidente nel trattamento di outlier come, ad esempio, nel caso di $(3.9, 7)$:
+- la predizione con $L_infinity$ dipende solo da $(1.1, 2.4)$, (3.1, 2.3) e (3.9, 7), con lo stesso errore di caso pessimo mentre gli altri punti sono influenti se questi non sono più lontani dalla retta;
+- la predizione con $L_1$ non cambia in base al valore effettivo di $Y$ per gli esempi, se i punti restano al di sopra e al di sotto, rispettivamente: ad esempio, si ha la stessa predizione considerando il punto (3.0, 107), anzichè (3.9, 7);
+- la predizione con $L_2$ è sensibile a tutti i dati: cambiando la $Y$ di qualche esempio, cmabia la retta e i cambiamenti negli outlier hanno maggiori effetti sulla retta rispetto a quelli relativi a punti ad essa vicini.
+==== Feature-Obiettivo Categoriche
+]
