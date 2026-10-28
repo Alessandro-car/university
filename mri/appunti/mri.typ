@@ -1400,3 +1400,250 @@ N C G[i] &= C G[i] / I C G[i] \
 N D C G[i] &= D C G[i] / I D C G[i]
 $
 Ogni valore di _NCG_ e _NDCG_ si trova nel range $[0, 1]$.
+== Coefficienti di correlazione dei ranking
+Sebbene precisione e copertura consentano di confrontare la rilevanza dei risultati prodotti da due funzioni di ranking differenti, esistono scenari applicativi in cui non è possibile misurare direttamente la rilevanza. \
+In molti casi, l'obiettivo principale consiste nel determinare in che modo una funzione di ranking vari rispetto a una seconda funzione di cui conosciamo il comportamento. In queste circostanze, l'interesse si spostas interamente sul confronto dell'ordinamento relativo generato dai due diversi ranking. \
+Per raggiungere questo scopo si utilizzano apposite funzioni statistiche denominate proprio *coefficienti di correlazione dei ranking*. \
+Le caratteristiche principali di un coefficiente di correlazione $C(R_1, R_2)$, calcolato tra due diversi ordinamenti $R_1$ ed $R_2$ sono i seguenti.
+- *Intervallo di valori*: il coefficiente oscilla sempre tra -1 ed 1.
+- *Accordo perfetto*: se $C(R_1, R_2) = 1$ l'accordo tra i due ranking è perfetto, il che significa che le due graduatorie sono identiche.
+- *Disaccordo perfetto*: Se $C(R_1, R_2) = -1$, il disaccordo è totale, ovvero i due ordinamenti risultano l'uno inverso dell'altro.
+- *Indipendenza*: Se $C(R_1, R_2) = 0$, le due classifiche sono completamente indipendenti l'una dall'altra.
+- *Trend di concordanza*: valori crescenti del coefficiente indicano un livello progressivamente maggiore di accordo e somiglianza tra i due ranking.
+=== Coefficiente di Spearman
+Il coefficiente di Spearman è probabilmente la metrica di correlazione dei ranking più utilizzata in assoluto. Si basa sul calcolo delle differenze tra le posizioni occupate da uno stesso documento all'interno di due diverse classifiche. \
+Definiamo le seguenti variabili:
+- sia $s_(1, j)$ la posizione di un documento $d_j$ nel primo ranking $R_1$
+- sia $s_(2, j)$ la posizione dello stesso documento $d_j$ nel secondo ranking $R_2$.
+Questo valore costituisce la base empirica per misurare quanto i due ordinamenti concordino o divergano in base allo scostamento di posizione dei singoli documenti.
+#esempio[
+Consideriamo il seguente risultato:
+#let rows = (
+  (123, 1, 2, "-1", 1),
+  (84, 2, 3, "-1", 1),
+  (56, 3, 1, "+2", 4),
+  (6, 4, 5, "-1", 1),
+  (8, 5, 4, "+1", 1),
+  (9, 6, 7, "-1", 1),
+  (511, 7, 8, "-1", 1),
+  (129, 8, 10, "-2", 4),
+  (187, 9, 6, "+3", 9),
+  (25, 10, 9, "+1", 1),
+)
+
+#align(center)[
+  #table(
+    columns: 5,
+    align: center + horizon,
+    inset: (x: 12pt, y: 5pt),
+    stroke: 0.5pt,
+    table.header(
+      [documents],
+      [$s_(1,j)$],
+      [$s_(2,j)$],
+      [$s_(i,j) - s_(2,j)$],
+      [$(s_(1,j) - s_(2,j))^2$],
+    ),
+    table.hline(stroke: 1.5pt),
+    ..rows
+      .map(r => (
+        [$d_(#r.at(0))$],
+        [#r.at(1)],
+        [#r.at(2)],
+        [#r.at(3)],
+        [#r.at(4)],
+      ))
+      .flatten(),
+    table.hline(stroke: 1.5pt),
+    table.cell(colspan: 4)[Sum of Square Distances],
+    [24],
+  )
+]
+Per ciascun documento $d_j$ la tabella evidenzaia:
+- la posizione occupata nel primo ordinamento;
+- la posizione occupata nel secondo ordinamento;
+- la differenza di posizione tra i due ranking;
+- il quadrato della differenza di posizione, che penalizza maggiormente gli scostamenti più ampi.
+Sommando i valori al quadrato ottenuti per tutti e dieci i documenti, si calcola la *Sum of Square Distances*, che in questo esempio è pari a 24. \
+Questo valore rappresenta l'input fondamentale per la formula matematica finale del coefficiente di Spearman, permettendo di quantificare in modo preciso il grado di correlazione (o discordanza) tra le due graduatorie.
+]
+Per produrre una valutazione quantitativa di questa correlazione, sommiamo i quadrati delle differenze di posizione per ciascuna coppia di ranking. \
+Se consideriamo $K$ documenti classificati, il valore massimo possibile per la somma dei quadrati delle differenze di ranking è dato dalla formula:
+$
+(K times (K^2 - 1))/(3)
+$
+In caso di *accordo perfetto* tra le due graduatorie, la somma delle differenze sarebbe pari a 0. In caso di *totale disaccordo*, la somma delle differenze sarebbe pari al valore calcolato tramite la formula precedente. \
+Analizziamo la frazione di normalizzazione che mette a rapporto lo scostamento osservato e il limite massimo teorico:
+$
+(sum_(j=1)^K (s_(1, j) - s_(2, j))^2)/((K times (K^2 - 1))/(3))
+$
+Il suo valore è 0 quando i due ranking si trovano in perfetto accordo (numeratore pari a 0). Il suo valore è pari a 1 quando i due ranking sono in totale disaccordo. \
+Per mappare questo rapporto nell'intervallo standard dei coefficienti di correlazione, si applicano due passaggi algebrici:
++ moltiplicando la frazione per 2, l'intervallo dei valori si sposta nel range [0, +2]
++ sottraendo il risultato ottenuto da 1, il valore finale si sposta nell'intervallo definitivo $[-1, +1]$, definendo così la formula completa del coefficiente di Spearman. Analizziamo la formula definitiva e completa del *coefficiente di correlazione per ranghi di Spearman*:
+$
+S(R_1, R_2) = 1 - (6 times sum_(j=1)^K(s_(1, j) - s_(2, j))^2)/(K times (K^2 - 1))
+$
+ove $S(R_1, R_2)$ è il coefficiente di correlazione di Spearman e $K$ la dimnesione dei set posizionati e confrontati.
+=== Coefficiente Tau di Kendall
+Spesso risulta difficile assegnare un'interpretazione operativa e immediata al coefficente di Spearman. Una valida alternativa è rappresentata dall'utilizzo di un coefficiente dotato di un'interpretazione molto più naturale e intuitiva, il *coefficiente Tau di Kendall*.  \
+Per comprendere la metrica, si considerano due documenti distinti, $d_j$ e $d_k$, e le rispettive posizioni all'interno dei due ordinamenti $R_1$ ed $R_2$. Si valutano le differenze di posizione per questa coppia di documenti in ciascun ranking, ovvero $s_(2, l) - s_(1, j)$ nel primo e $s_(2, k) - s_(2, j)$ nel secondo. Se queste differenze presentano lo *stesso segno*, significa che i due documenti mantengono lo stesso ordine relativo in entrambe le classifiche; di conseguenza, la coppia $[d_k, d_j]$ viene definita *concordante*. Se invece le differenze hanno segno diverso, significa che l'ordine relativo dei due documenti risulta invertito tra un ranking e l'altro; in questo caso, la coppia viene definita *discordante*.
+#esempio[
+Consideriamo i primi 5 documenti nei due ranking $R_1$ ed $R_2$:
+#let rows = (
+  (123, 1, 2, "-1"),
+  (84, 2, 3, "-1"),
+  (56, 3, 1, "+2"),
+  (6, 4, 5, "-1"),
+  (8, 5, 4, "+1"),
+)
+
+#align(center)[
+  #table(
+    columns: 4,
+    align: center + horizon,
+    inset: (x: 12pt, y: 5pt),
+    stroke: 0.5pt,
+    table.header(
+      [documents],
+      [$s_(1,j)$],
+      [$s_(2,j)$],
+      [$s_(i,j) - s_(2,j)$],
+    ),
+    table.hline(stroke: 1.5pt),
+    ..rows
+      .map(r => (
+        [$d_(#r.at(0))$],
+        [#r.at(1)],
+        [#r.at(2)],
+        [#r.at(3)],
+      ))
+      .flatten(),
+  )
+]
+Tutte le possibili coppie ordinate di documenti che si pososno formare a partire dal primo ranking sono:
+$
+  & [d_123, d_84], quad [d_123, d_56], quad [d_123, d_6], quad [d_123, d_8], \
+  & [d_84, d_56], quad [d_84, d_6], quad [d_84, d_8], \
+  & [d_56, d_6], quad [d_56, d_8], \
+  & [d_6, d_8]
+$
+per un totale di $1/2 times 5 times 4$ di coppie ordinate. \
+Per $R_2$, le coppie ordinate sono:
+$
+  & [d_56, d_123], quad [d_56, d_84], quad [d_56, d_8], quad [d_56, d_6], \
+  & [d_123, d_84], quad [d_123, d_8], quad [d_123, d_6], \
+  & [d_84, d_8], quad [d_84, d_6], \
+  & [d_8, d_6]
+$
+Marchiamo con $C$ le coppie concordanti e con $D$ quelle discordanti. Per $R_1$ abbiamo:
+$
+  & C, D, C, C, \
+  & D, C, C, \
+  & C, C, \
+  & D
+$
+Per $R_2$:
+$
+  & D, D, C, C, \
+  & C, C, C, \
+  & C, C, \
+  & D
+$
+Ci sono un totale di 20 ($K(K - 1)$) coppie ordinate. Tra queste, 14 sono concordanti e 6 sono discordanti.
+]
+Il coefficiente Tau di Kendall è definito come:
+$
+tau(R_1, R_2) = P(R_1 = R_2) - P(R_1 != R_2)
+$
+Nel nostro esempio:
+$
+tau(R_1, R_2) = 14/20 - 6/20 = 0.4
+$
+Analizziamo la formulazione probabilistica e la formula definitiva per il calcolo dell'indice Definiamo le componenti di coppia:
+- $Delta(R_1, R_2)$ rappresenta il numero di *coppie di documenti discordanti* tra i ranking.
+- $K(K-1) - Delta(R_1, R_2)$ rappresenta il numero di *coppie di documenti concordanti* nei due ranking.
+La probabilità $P(R_1 = R_2)$ esprime la proporzione di coppie concordanti sul totale delle coppie ordinate $K(K-1)$.
+$
+P(R_1 = R_2) = (K(K-1)-Delta(R_1, R_2))/(K(K-1))
+$
+La probabilità complementare $P(R_1 != R_2)$ esprime la proporzione di coppie discordanti:
+$
+P(R_1 != R_2) = (Delta(R_1, R_2))/(K(K-1))
+$
+Combinando queste proporzioni e normalizzando il risultato per mappare i valori nell'intervallo $[-1, +1]$, si ottiene l'espressione conclusiva:
+$
+tau(R_1, R_2) = 1 - (2 times Delta(R_1, R_2))/(K(K-1))
+$
+= Link analysis e PageRank
+== FARE DA SLIDE 1 a SLIDE 11
+== PageRank
+L'*idea centrale* è che una pagina web è considerata più importante se riceve un numero maggiore di link. La domanda chiave iniziale distingue tra link in entrata e link in uscita. \
+Considerando i link in entrata alla stregua di voti di preferenza, si osserva che un sito come `www.stanford.edu` vanta ben 23.400 link in entrata, mentre un sito meno noto come `www.joe-schmoe.com` ne possiede appena 1. Ci si chiede quindi se tutti i link in entrata abbiano lo stesso peso. La risposta logica è che i *link provenienti da pagine importanti contano di più*. Questo principio introduce una definizione circolare e *ricorsiva*, poichè l'importanza di una pagina dipende dall'importanza delle pagine che la linkano, ponendo le basi per algoritmi iterativi celebri come il PageRank.
+=== Semplice formulazione ricorsiva
+Il voto espresso da ciascun link è direttamente proporzionale all'importanza della pagina sorgente da cui parte. Se una pagina $j$ un livello di importanza $r_j$ e possiede $n$ link in uscita, ciascuno di questi link trasmette un valore di voto pari a $r_j / n$. L'importanza complessiva di una pagina $j$ è data esattamente dalla somma dei voti ricevuti attraverso tutti i suoi link in entrata.
+#esempio[
+Consideriamo il seguente schema:
+#figure(
+image("images/page_rank.png", width: 70%)
+)
+Se la pagina $j$ riceve link da pagine come $i$ (che ha 3 link in uscita e importanza $r_i$) e $k$ (che ha 4 link in uscita e importanza $r_k$), la sua importanza si calcola come:
+$
+r_j = r_i / 3 + r_k / 4
+$
+]
+=== Modello di Flusso di PageRank
+I principi chiave di questo modello sono i seguenti:
+- un voto proveniente da una pagina importante vale di più;
+- una pagina è importante se è puntata da altre pagine importanti
+Viene definito un punteggio di importanza _rank_ $r_j$ per ciascuna pagina $j$. La formula generale che esprime questo flusso ricorsivo è:
+$
+r_j = sum_(i arrow j)r_i/d_i
+$
+dove $d_i$ rappresenta il grado di uscita, ovvero il numero totale di link uscenti dalla pagina sorgente $i$.
+#esempio[
+Consideriamo il seguente schema:
+#figure(
+image("images/page_rank2.png", width: 70%)
+)
+Le equazioni di flusso sono:
+$
+r_y &= r_y / 2 + r_a / 2 \
+r_a &= r_y / 2 + r_m \
+r_m &= r_a / 2
+$
+Quindi si ottiene un sistema composto da 3 equazioni e 3 incognite senza termini noti. QUesto comporta l'assenza di un'unica soluzione determinata. Tutte le possibili soluzioni sono equivalenti tra loro a meno di un fattore di scala. Per imporre un'unica soluzione valida, si aggiunge il vincolo di normalizzazione secondo cui la somma dei ranghi deve essere pari a 1:
+$
+r_y + r_a + r_m = 1
+$
+] <es:page_rank>
+Il metodo di eliminazione di Gauss funzione bene per esempi di piccole dimensioni, ma risulta inefficiente e inadeguato per grafi di grandi dimensioni paragonabili all'intero Web. Per questo motivo, si rende necessaria una formulazione matematica rinnovata, basata sul calcolo matriciale e su metodi iterativi (come le catene di Markov e il metodo delle potenze).
+=== Matrice di adiacenza stocastica
+Data una pagina $i$ che possiede $d_i$ link in uscita, la matrice viene definita in questo modo:
+- se esiste un link dalla pagina $i$ alla pagina $j$ ($i arrow j$), l'elemento della matrice $M_(j i)$ è pari a $1/d_i$.
+- altrimenti, se non c'è alcun collegamento diretto, l'elemento $M_(j i) = 0$
+Per costruzione, $M$ è una *matrice stocastica per colonne*, il che significa che la som a degli elementi di ciascuna colonna è rigorosamente pari a 1, riflettendo la conservazione del "flusso" di voti tra le pagine del web.
+#esempio[
+Continuando l'*@es:page_rank* la matrice di adiacenza $M$ è la seguente:
+#align(center)[
+  #table(
+    columns: (auto, 2.5em, 2.5em, 2.5em),
+    rows: 2.5em,
+    align: center + horizon,
+    inset: 6pt,
+    // borders only around the 3x3 inner grid, not around the labels
+    stroke: (x, y) => if x >= 1 and y >= 1 { 0.5pt } else { none },
+    [], [*y*], [*a*], [*m*],
+    [*y*], [$1/2$], [$1/2$], [0],
+    [*a*], [$1/2$], [0], [1],
+    [*m*], [0], [$1/2$], [0],
+  )
+]
+]
+Definiamo il *vettore di rank r*, che è un vettore colonna che contiene un'entrata per ciascuna pagina del web:
+- ciascun elemento $r_i$ rappresenta il punteggio d'importanza della pagina $i$
+- vale il vincolo di noramlizzazione globale per cui la somma di tutte le entrate del vettore è pari a 1.
+Partendo dalle equazioni scalari in cui l'importanza $r_j$ di una pagina è data dalla somma dei contributi ricevuti dalle pagine entranti ($r_j = sum_(i arrow j)r_i/d_i$), il sistema può essere espresso elegantemente tramite il prodotto tra la matrice stocastica di adiacenza $M$ e il vettore di rank *r*.
+$
+bold(r) = M dot.c bold(r)
+$
