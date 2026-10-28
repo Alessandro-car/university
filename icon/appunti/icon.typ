@@ -3555,5 +3555,208 @@ Un *outlier* è un esempio che non segue schemi che accomunano altri esempi. La 
 - la predizione con $L_infinity$ dipende solo da $(1.1, 2.4)$, (3.1, 2.3) e (3.9, 7), con lo stesso errore di caso pessimo mentre gli altri punti sono influenti se questi non sono più lontani dalla retta;
 - la predizione con $L_1$ non cambia in base al valore effettivo di $Y$ per gli esempi, se i punti restano al di sopra e al di sotto, rispettivamente: ad esempio, si ha la stessa predizione considerando il punto (3.0, 107), anzichè (3.9, 7);
 - la predizione con $L_2$ è sensibile a tutti i dati: cambiando la $Y$ di qualche esempio, cmabia la retta e i cambiamenti negli outlier hanno maggiori effetti sulla retta rispetto a quelli relativi a punti ad essa vicini.
-==== Feature-Obiettivo Categoriche
 ]
+==== Feature-Obiettivo Categoriche
+Una feature *categorica* $Y$ ha un dominio finito $D = brace.l v_1, dots, v_k brace.r$. Ad esempio, in base al dataset a disposizione, potrebbe rappresentare l'argomento principae di un articolo, la specie di un animale, ecc. \
+La tipica _stima puntuale_ per tale tipo di feature è la *predizione certa* di uno fra i possibili valori $v_1, dots, v_k$, ovvero una tupla binaria con un solo 1 nella posizione binaria corrispondente (_one-hot encoding_). In alternativa, è possibile una *predizione probabilistica*, tramite una funzione $p$, rappresentabile come dizionario che associ gli elementi di $D$ a numeri reali non negativi in modo tale che $sum_(v in D)p[v] = 1$, dove $p[v]$ è il valore della predizione di $p$ per $v$; la predizione certa può essere definita equivalentemente se $exists j : p[v_j] = 1$ e $p$ è nulla per gli altri valori.
+#esempio[
+Imparare le preferenze sulla lunghezza di una vacanza. Dataset semplice (senza input):
+#let rows = ("1", "6", "6", "2", "1")
+
+#align(center)[
+  #table(
+    columns: 2,
+    align: center + horizon,
+    inset: (x: 9pt, y: 4pt),
+    // top line and line under the header only
+    stroke: (x, y) => (
+      top: if y in (0, 1) { 0.5pt },
+    ),
+    table.header(emph[Es], [$Y$]),
+    ..rows
+      .enumerate()
+      .map(((i, v)) => ([$e_(#(i + 1))$], [#v]))
+      .flatten(),
+  )
+]
+- per una $Y$ a valori reali, la predizione per un nuovo $e$ potrebbe essere un generico numero reale, ad esempio $hat(Y)(e) = 3.5$
+- per $Y$ categorica, con dominio $brace.l 1, 2, 3, 4, 5, 6 brace.r$:
+	- predizione _certa_ per $e$: un valore del dominio, come $hat(Y)(e) = 3$
+	- predizione _probabilistica_ per $e$: rappresentando $hat(Y)(e)$ come dizionario
+	$
+	p: p[1] = 0.25, space p[2] = 0.2, space p[3] = 0.1, space p[4] = 0.1, space p[5] = 0.1, space p[6] = 0.25
+	$
+]
+Al caso categorico possono essere applicate le stesse loss del caso continuo. Per $Y(e) = a$:
+$
+"loss"(p[a], 1)
+$
+essendo $p[a]$ la probabilità associata al caso corretto. \
+Ad esempio l'errore quadrato per la predizione probabilistica sarà definito $(1 - p[a])^2$. \
+Una tipica misura delle prestazioni è l'*accuratezza media*:
+- predizione _certa_: 1 per predizioni corrette, nulla altrimenti;
+- predizione _probabilistica_: 1 quando c'è un'_unica moda_ in corrispodenza al valore effettivo ($v$ con max $p[v]$ associata). Dipendendo solo dalla moda, l'accuratezza risulta una misura approssimativa per questo tipo di predizione.
+La distribuzione $p$ può essere ottimizzata anche usando la *log-loss* o _entropia incrociata_:
+$
+"logloss"(p, a) = -log(p[a])
+$
+misura semore non negativa, nulla se $p[a] = 1$ con le altre a 0. \
+Dato il dataset $E s$, la *log-loss media* del predittore $hat(Y)$ sarà:
+$
+-(1)/(bar E s bar) sum_e log(hat(Y)(e)[Y(e)])
+$
+dove $hat(Y)(e)[Y(e)]$ è il valore della redizione $p = hat(Y(e))$ per l'effettivo $a = Y(e)$.
+#esempio[
+Predizioni probabilistiche per il dataset visto in precedenza:
+$
+brace.l (e_1, 1), (e_2, 6), (e_3, 6), (e_4, 2), (e_5, 1).
+$
+- Se la predizione per gli esempi $e_1, e_2, e_3, e_5$ avesse probabilità $0.25 = p[1] = p[6]$, mentre per $e_4$ questa fosse $0.2=p[2]$, la log-loss media sarà:
+$
+- 1/5 (4 dot.c log_2 0.25 + log_2 0.2) approx 2.064
+$
+- Se le predizioni avessero probabilità $p[1] = p[6] = 0.4$ e $p[2] = 0.2$ e nulle per gli altri valori, la log-loss media sarà:
+$
+- 1/5 (4 dot.c log_2 0.4 + log_2 0.2) approx 1.522
+$
+Si noti che la seconda predizione, che adotta la proporzione osservata nel dataset per ciascun valore, risulta essere migliore della prima.
+]
+Il miglior predittore è un modello per quale si massimizza la probabilità dei dati osservati, ossia la _verosomiglianza_ degli esempi $E s$ dato $hat(Y)$:
+$
+product_(e in E s)hat(y)(e)[Y(e)]
+$
+assumendo che gli esempi siano fra loro indipendenti. Passando al logaritmo, si ottiene la cosidetta *log-likelihood*:
+$
+sum_(e in E s)log(hat(Y)(e)[Y(e)])
+$
+Quindi la _log-loss media_ si ottiene cambiando il segno alla log-likehood e dividendo per il numero di esempi. Essa sarà minima quando la log-likelihood è massima. \
+La log-loss media risulta appropriata per predizioni nel ragionamento sotto incertezza: ad esempio, sotto loss quadratica, i valori $10^(-7)$ e $10^(-6)$ sono molto vicini: una predizione di $10^(-7)$ avrà un errore simile a quello di $10^(-6)$. Invece, in termini di probabilità, rappresenterebbero casi molto diversi. Tale differenza può essere apprezzata adottando la log-loss ma non con le loss basate sulle differenze fra valori predetto ed effettivo. \
+Essendo $log(0)$ indefinito, la log-loss per la predizione di 0 e trattata come se fosse infinita. Dovrebbe perciò essere scoraggiata qualsiasi predizione di probabilità nulla per un valore che invece possa essere osservato per qualche esempio futuro. La log-loss è correlata con l'*_entropia_*: numero di simboli per codificare i dati, con un codice basato su $hat(Y)$ come distribuzione di probabilità.
+==== Feature-Obiettivo Binarie
+Si consideri il caso in cui le feature obiettivo $Y$ abbia il dominio $brace.l 0, 1 brace.r$ ($ = brace.l "false, true" brace.r$); tale valore potrebbe indicare, ad esempio, uno degli argomento di un articolo di giornale, usando una variabile booleana $Y_k$ per ciascun argomento possibile. In tal caso la predizione può essere data da un valore reale $p = hat(Y)(e) in [0, 1]$, il che è equivalente alla predizione categorica di $p$ per il valore 1. \
+Si definisce la *log-loss binaria*, o _entropia incrociata binaria_, come mostrato di seguito, la funzione:
+$
+"logloss"(p, a) = -[a log p + (1-a)log(1-p)]
+$
+dove $p$ è la predizione e $a$ il valore effettivo, ricavabile dalla verosomiglianza. Per convenzione $"logloss(1, 1)" = "logloss(0, 0)" = 0$, anche se $log 0$ non è definito. La log-loss sarà pari a $log p$ se $a = 1$, altrimenti sarà $log(1-p)$, come la log-loss categorica per la quale la predizione per 1 è $p$ e per 0 è $1-p$. Il termine _log-loss_ le ricomprende entrambe.
+=== Stime Puntuali di Riferimento senza Feature di Input
+Si consideri il caso in cui la predizione sia basata solo sui valori delle feature obiettivo $Y$ osservata  per i diversi esempi del dataset, senza usare le variabili di input $X_i$. Si avrà un modello costante (ossia una *base di riferimento* naive) per il quale si predice uno stesso valore $v = hat(Y)(e)$ per tutti gli esempi $e$. Il valore ottimale da predire si sceglie in base alla funzione da ottimizzare (la loss) e potrà essere calcolato e ottimizzato _analicamente_ sulla base degli $n$ esempi di training. \
+Nel caso di $Y$ a valori reali, il modello fornisce la stima puntuale $p = hat(Y)(e) quad forall e$:
+#align(center)[
+  #table(
+    columns: 3,
+    align: (left + horizon, center + horizon, center + horizon),
+    inset: (x: 10pt, y: 6pt),
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [Criterio], [Errore per $p$], [Predizione ottimale],
+    table.hline(stroke: 0.5pt),
+    [loss _0-1_ media],
+    $1/n sum_e bold(1)(Y(e) != p)$,
+    [moda],
+
+    [loss _assoluta_ media],
+    $1/n sum_e lr(|Y(e) - p|)$,
+    [mediana],
+
+    [loss _quadratica_ media],
+    $1/n sum_e (Y(e) - p)^2$,
+    [media],
+
+    [loss _caso pessimo_],
+    $max_e lr(|Y(e) - p|)$,
+    $(min + max)/2$,
+    table.hline(stroke: 0.8pt),
+  )
+]
+Per una feature-obiettivo $X$ binaria, i dati possono essere riassunti da due semplici statistiche $n_1 = sum_e Y(e)$ e $n_0 = n - n_1$. La media o *frequenza empirica*, ossia la proporzione di 1 nel training set è $n_1 / n$. Essa costituisce anche una _stima di massima verosomiglianza_ quindi anche la predizione con la minima log-loss. Gli errori 0-1 ed assoluto sono minimizzato considerano il valore binario pìu frequente.
+#align(center)[
+  #table(
+    columns: 3,
+    align: (left + horizon, center + horizon, center + horizon),
+    inset: (x: 10pt, y: 6pt),
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [Criterio], [Errore per $p$], [Predizione ottimale],
+    table.hline(stroke: 0.5pt),
+    [log-loss media],
+    $- lr([n_1/n log p + n_0/n log(1 - p)])$,
+    $n_1/n$,
+    table.hline(stroke: 0.8pt),
+  )
+]
+Nel caso di una $Y$ _categorica_, con un dominio $brace.l v_1, dots, v_k brace.r$, il dataset può essere sintetizzato dalle frequenze $n_1, dots, n_k$. La log-loss sarà minimizzata dalla predizione della frequenza empirica sul training set. L'errore 0-1 viene minimizzato dalla predizione della moda, che porta anche a massimizzare l'accuratezza.
+#align(center)[
+  #table(
+    columns: 3,
+    align: (left + horizon, center + horizon, center + horizon),
+    inset: (x: 10pt, y: 6pt),
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    [Criterio], [Errore per $p$], [Predizione ottimale],
+    table.hline(stroke: 0.5pt),
+    [log-loss media],
+    $- lr(sum_i n_i/n log p_i)$,
+    $p[v_i] = n_i / n$,
+    table.hline(stroke: 0.8pt),
+  )
+]
+Quindi la predizione preferibile dipende dalla rappresentazion di $Y$ e dalla misura da ottimizzare. Per esempi non ancora osservati la frequenza empirica può risultare problematica se si massimizza la verosomiglianza o minimizza la logg. Ad esempio se $n_i = 0$ allora il valore $b_i$ sarà da considerarsi mai osservato. Un nuovo esempio di test con valore $v_i$ comporterebbe una likelihood nulla e una log-loss infinita, costituendo un caso di _sovradattamento_. \
+Come _riferimento_ di partenza si possono considerare predizioni naive, determinate riima di osservare i dati.
+=== Tipi di Errore
+Gli errori non sono tutti uguali, alcuni tipi possono essere peggiori di altri in base alle loro conseguenze.
+#esempio(title: "Medicina")[
+Non diagnosticare una malattia a un paziente, che sarà indotto a non curarsi, può risultare più grave rispetto a predire una malattia che non ha, per cui sarebbero consigliati ulteriori accertamenti.
+]
+Per un esperimento si può compilare una *matrice di confusione*. Nelc aso più semplice si supponga che $Y$ sia booleana. La valutazione della predizione sarà indipendente dalla decisione. In tal caso la matrice è la seguente:
+#align(center)[
+  #table(
+    columns: 3,
+    align: (right + horizon, center + horizon, center + horizon),
+    inset: (x: 9pt, y: 5pt),
+    // vertical lines after the first two columns,
+    // horizontal lines under the header and under the first data row
+    stroke: (x, y) => (
+      left: if x in (1, 2) { 0.5pt },
+      top: if y in (1, 2) { 0.5pt },
+    ),
+    [],
+    [_ap_ realmente positivi],
+    [_an_ realmente negativi],
+
+    [_pp_ predetti positivi],
+    [_tp_ veri positivi],
+    [_fp_ falsi positivi],
+
+    [_pn_ predetti negativi],
+    [_fn_ falsi negativi],
+    [_tn_ veri negativi],
+  )
+]
+_Errori_:
+- _falsi positivi_ o errore di _I tipo_:
+	predizioni positive sbagliate (`true` invece dell'effettivo valore `false`);
+- _falsi negativi_ o errore di _II tipo_:
+	predizioni negative sbagliate (`false` invece dell'effettivo `true`).
+Le tipiche misure definite per un *modello predittivo* _binario_ sono le seguenti:
+- *precisione*: $(t p) / (t p + f p)$ proporzione di veri positivi (_tp_) rispetto ai casi predetti come positivi (_pp_)
+- *richiamo* (_recall_ o _true-positive rate_, TPR): $(t p) / (f p + t n)$ proporzione di falsi positivi (_fp_) su tutti i negativi (_an_).
+- analogamente _false-positive rate (FPR)_: $(f p) / (f p + t n)$ proporzione di falsi positivi _fp_ su tutti i negativi _an_.
+Nella scelta del modello predittivo occorrerebbe massimizzare precisione e richiamo e minimizzare il FPR, ma nella pratica tali obiettivi risultano _incompatibili_: si può massimizzare la precisione e minimizzare il FPR facendo predizioni positive solo se si è sicuro, ma ciò abbassa il richiamo; per massimizzare il richiamo si possono ammettere previsioni più azzardate ma questo tende ad abbassare la precisione e a incrementare il FPR. \
+Si supponga a titolo d'esempio che i falsi positivi rappresentano cai $c$  volte peggiore dei falsi negativi:
+
+Si tratta di costi additivi, quindi il *costo* di una predizione sarebbe proporzionale a  $c dot.c f p + f n$. Si dovrebbe scegliere il predittore con il costo più basso. \
+Nel confronto di modelli, si dice che un predittore $A$ *domina* $B$ se $A$ ha più TPR e meno FPR di $B$. In tal caso $A$ avrà un costo inferiore di $B$ per tutte le funzioni che dipendono solo da numero di FP e FN, assumendo un costo additivo non negativo. \
+Indipendentemente dai costi, si possono considerare lo *spazio ROC* (_receiver operating characteristic_), ossa il grafico del FPR control il TPR e lo *spazio P-R* ossia il grafico della precisione contro il richiamo. Ogni modello produce un punto in ciascuno spazio.
+#esempio[
+Caso di 100 esempi positivi (_ap_) e 1000 esempi negativi (_an_). Metrici di confusione di diversi modelli:
+
+_Confronto_ tra _a_ e _c_:
+- `a`: TPR, richiamo 0.7, FPR 0.15, precisione $20 / 220 approx 0.318$
+- `c`: TPR, richiamo 0.98, FPR 0.2, precisione $98 / 298 approx 0.329$
+per cui $c$ risulta migliore di $a$ in termini di precisione e richiamo ma peggiore in termini di FPR. \
+Se i falsi positivi fossero considerati più importanti dei falsi negativi, allora `a` sarebbe preferibile rispetto a `c` (si vede nello spazio ROC, ma non in quello P-R). \
+Risulta peggiore un modello più in basso e più a destra di altri, ad esempio `d` è peggiore di `c`: non sarebbe logico preferire `d` a `c`.
+]
+Per alcuni modelli, è possibile individuare un _iperparametro_ che, variato, porta a diversi valori di TPR e FPR. Un modello che restituisce un valore reale potrebbe predire `true` o `false` in base al superamento di una _soglia_. Tale modello può essere rappresentato con una curva nello spazio ROC al variare di tale parametro e si potrà dire che domina un altro modello se la sua curva è al di sopra e più a sinistra. Se la situazione è più complessa si può ricorrere a funzioni di costo che dipendono dai due tipi di errore oppure si può adottare l'*area sotto la curva* ROC (AUROC o AUC) una misura numerica per confrontare modello nello spazio dei parametri. Risulterà migliore il modello con l'AUC maggiore.
+== Modelli-Base
