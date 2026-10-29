@@ -3471,7 +3471,7 @@ Tabella di esempi ottenuta dalle decisioni prese dagli utenti:
       .flatten(),
   )
 ]
-]
+] <es:classificazione>
 #esempio(title: "Problema di regressione")[
 Predire il valore di $Y$ a valori reali:
 #let rows = (
@@ -3785,7 +3785,7 @@ Un *albero di decisione* è albero binario costituito da:
 - nodi _foglia_ etichettati con una stima puntuale per la feature obiettivo: la classe in un _albero di classificazione_ oppure un valore reale in un _albero di regressione_.
 Tale struttura rappresenta una _funzione_ definita _per parti_ ovvero un programma fatto di strutture condizionali annidate. Per la _predizione_, dato un esempio con i valori delle variabili di input: partendo dalla radice, ogni condizione incontrata viene valutata per tale esempio seguendo l'arco corrispondente al risultato di ogni test; raggiunta una foglia, si restituisce la stima puntuale associata.
 #esempio(title: "Alberi di decisione come programmi")[
-Si considerino i due alberi di decisione dell'@es:regressione illustrati nella seguente figura:
+Si considerino i due alberi di decisione dell'esempio *@es:classificazione* illustrati nella seguente figura:
 #figure(
 image("images/alberi_reg.png", width: 70%),
 caption: [Alberi di decisione: standard e probabilistico]
@@ -3851,3 +3851,51 @@ L'algoritmo _ricorsivo_ seguente costruisce, in modalità top-down, un albero pa
     + *return* $"migliore_condizione"$
   ]
 ] <alg:decision-tree-learner>
+Nell'algoritmo si effettua una scelta miope della condizione $c$ ottimale, *greedy optimal split*, basata sulla somma delle loss prima e dopo il partizionamento e una soglia $gamma$; l'aggiunta di un livello di bipartizione aumenta le dimensioni dell'albero di un'unità mentre $gamma$ serve a penalizzare tale incremento: se positiva, essa è utile a evitare che si verifichi $"val" < "miglior_valore"$ per meri errori di arrotondamento. \
+Il _criterio di stop_ viene determinato dall'esaurimento delle condizioni ovvero da esempi che risultano d'una stessa classe, il che porta ad avere una loss nulla. \
+L'_output_ rappresenta una stima puntuale. Come stima puntuale si sceglie, in genere, il valore più probabile, la moda, oppure la mediana o la media; in alternativa si può optare per la restituzione di una distribuzione di probabilità delle classi per gli esempi finiti in quella foglia, che corrisponderà a una regione ristretta dello spazio degli esempi.
+#esempio(title: "Problema preferenze video")[
+Usando l'algoritmo visti nell'esempio *@es:classificazione*:
+- chiamata iniziale: \
+	`DT_Learner(`$brace.l"virale, nuovo, lungo, a_casa" brace.r, "Da_vedere", brace.l e_1, e_2, dots, e_(18) brace.r, 0)$ \
+	si supponga che il criterio di stop non si avveri e si scelga il test `lungo`, ossia `Lungo = true`;
+- chiamata per costruire $t_1$, partizione con `Lungo = true`: \
+	`DT_Learner(`$brace.l"virale, nuovo, a_casa" brace.r, "Da_vedere", brace.l e_1, e_3, e_4, e_6, e_9, e_(10), e_(12) brace.r, 0)$
+	- tutti gli esempi concordano sulla classe negativa quindi $t_1$ si riduce a un nodo-foglia con `Da_vedere = false`;
+- chiamata per costruire $t_0$, partizione con `Lungo=false`:
+	`DT_Learner(`$brace.l"virale, nuovo, a_casa" brace.r, "Da_vedere", brace.l e_2, e_5, e_7, e_8, e_(11), e_(13), e_(14), e_(15), e_(16), e_(17), e_(18) brace.r, 0)$
+	- gli esempi non concordano sulla classe;
+	- se non scatta il criterio di stop, si deve scegliere un nuovo test come, ad esempio, `nuovo`; continuando, la struttura risultante per $t_0$ sarà:
+#algoritmo[
+  #pseudocode-list[
+    + *if* $"Nuovo"(e)$ *then* *return* *true*
+    + *else*
+      + *if* $"Virale"(e)$ *then* *return* *true*
+      + *else* *return* *false*
+  ]
+]
+Il risultato finale è l'albero / programma visto in precedenza.
+]
+Usando log-loss con base 2, la media delle loss `somma_loss(Es)/|Es|` corrisponde all'entropia della distribuzione empirica di _Es_. Se _val_ è il numero di bit per descrivere _Es_ sopo il test di _c_ allora l'entropia della distribuzione creata dal partizionamento sarà $"val" / bar "Es" bar$. Si definisce *information gain, IG,* la differenza fra le due entropie. Questo viene spesso usato anche assieme ad altre misure da ottimizzare, ad esempio si può puntare a massimizzare l'accuratezza selezionando la condizione $c$ in base alla log-loss, ma restituendo la moda come valore per le foglie.
+#esempio[
+Ancora con il dataset con le preferenze sui video: operando una scelta (miope) del test, ai fini di minimizzare la log-loss dell'Eq. (7.5), ovvero massimizzare la likelihood, si ha che
+
+  - prima del test iniziale, la predizione ottimale basata sulla _frequenza empirica_ è $p[0] = |\{e in italic("Es") : mono("Da_vedere")(e) = mono("false")\}|/18 = 9/18 = 0.5$, $p[1] = |\{e in italic("Es") : mono("Da_vedere")(e) = mono("true")\}|/18 = 9/18 = 0.5$, per cui la log-loss risulta: $-(9 dot log_2 0.5 + 9 dot log_2 0.5)/18 = -(18 dot log_2 0.5)/18 = 1$
+
+  - test su `Virale`: $[e_1, e_4, e_5, e_6, e_9, e_10, e_12, e_13, e_14, e_15, e_16, e_17]$ sono gli esempi con `Virale = true`, mentre $[e_2, e_3, e_7, e_8, e_11, e_18]$ sono quelli con `Virale = false`; in ciascuna partizione si ha la stessa frequenza di esempi delle due classi (feature-obiettivo), per cui la predizione ottimale è $0.5$ per entrambe con log-loss $1$; non essendoci alcuna diminuzione si verifica che tale test non aiuti la predizione;
+
+  - test su `Nuovo`: $[e_1, e_2, e_5, e_8, e_10, e_12, e_14, e_15, e_17, e_18]$ sono gli esempi con `Nuovo = true` e $[e_3, e_4, e_6, e_7, e_9, e_11, e_13, e_16]$ sono quelli con `Nuovo = false`; nella prima partizione 3 esempi sono negativi e 7 positivi, per cui la predizione di `true` ha una probabilità stimata di $7/10$; nell'altra partizione 2 esempi positivi e 6 di negativi, per cui la predizione di `true` ha una probabilità di $2/8$; la log-loss _dopo_ il partizionamento sarebbe: $-[3 log_2 (3/10) + 7 log_2 (7/10) + 2 log_2 (2/8) + 6 log_2 (6/8)]/18 approx 15.3/18 approx 0.85$
+
+  - test su `Lungo`: $[e_1, e_3, e_4, e_6, e_9, e_10, e_12]$ sono gli esempi con `Lungo = true` e $[e_2, e_5, e_7, e_8, e_11, e_13, e_14, e_15, e_16, e_17, e_18]$ sono quelli con `Lungo = false`; nella prima partizione ci sono solo esempi negativi per cui la predizione `false` ha probabilità $1$; nell'altra partizione si osserva la proporzione di $9 : 2$ tra le classi; la log-loss risulta: $-(7 dot log_2 1 + 9 dot log_2 (9/11) + 2 dot log_2 (2/11))/18 approx 7.5/18 approx underline(0.417)$
+Quindi, per in nodo radice, il test su `Lungo` risulta il migliore.
+]
+==== Definizione delle Condizioni
+Se le variabili di input sono booleane è facile definire le condizioni per i test. In caso contrario ci sono diverse possbilità:
+- se $X$ è categorica, con dominio $brace.l v_1, dots, v_k brace.r$, si può associare una *variabile indicatrice* binaria $X_i$ a ciascun valore: $X_i(e) = 1$ se $X(e) = v_i$ e $X_i(e) = 0$ altrimenti: per ogni esempio $e$, una sola fra $X_1(e), dots, X_k(e)$ vale 1.
+- Se $X$ è *ordinale* (a valori reali o discreti) allora essa ha un dominio _totalmente ordinato_; in tal caso, per ciascun valore $v$, si può introdurre una *variabile* booleana di *taglio* / _cut_ che varrà 1 se $X > v$ e 0 altrimenti; da una combinazione di tagli si possono definire intervalli; ad esempio il caso in cui la variabile per $X > 9$ sia vera e quella per $X > 17$ sia falsa corrisponde a $9 < X <= 17$; valori di taglio ottimali possono essere trovati ordianndo gli esempi in base al valore di $X$ e selezionando quei valori che partizionino al meglio rispetto alla $Y$.
+- *binning*: dato un insieme di soglie si crea una feature per ogni intervallo / _bin_: date le soglie $alpha_1 < alpha_2 < dots < alpha_k$ si ottengono $k + 1$ feature booleane, una vera per $X$ tale che $X <= alpha_1$, una per $alpha_k < X$ e una per $alpha_i < X <= alpha_(i + 1)$  per ogni $1 <= i < k$; si noti che il bin $alpha_i < X <= alpha_(i + 1)$ richiede 2 partizionamenti tramite tagli; i valori $alpha_i$ possono essere predefiniti, ad esempio si possono adottare i _percentili_ rilevati sui dati di training, oppure scelti in base a quelli della $Y$;
+- per feature $X$ categoriche, si possono definire condizioni $X in S$ con $S subset "dom"(X)$ dato l'_insieme_ di valori $bar S bar >= 1$; se $Y$ è booleana per scegliere gli $S$, avendo ordinato $"dom"(X)$ in base alle proporzioni di $Y$ veri, si trova la selezione migliore, _greedy optimal split_, della lista ordinata;
+- si può pensare anche a un'estanzione che preveda la possibilità di condizioni n-arie (_multiway split_) quindi per variabili con più valori nel dominio si potrà considerare un figlio per ciascun valore: si ottiene un albero _n-ario_, con struttura più complessa di quelli con test della forma `if-then-else`, più difficili da apprendere in quanto per alcuni valori delle condizioni potrebbe non essere disponibile alcun esempio di training; con euristiche greedy, come IG, una condizione su variabile con domini più grandi porta ad avere più figli e a un miglior adattamento ai dati a scapito della compattezza del modello; si osservi ad esempio che una condizione a 4 vie equivale a 3 bipartizioni per cui si potrebbero avere 4 foglie.
+==== Scelte di Progetto Alternative
+Quando `selezione_partizionamento` restituisce $perp$ non si procede a ulteriore partizionamento. Ciò può accadere a seguito dell'esaurimento degli esempi o delle condizioni, oppure quando gli esempi hanno tutto lo stesso valore per ciascuna condizione, o hanno tutti la stessa classe. Si può avere un miglioramento con l'aggiunta di una condizione con una soglia $< gamma$. Altri criteri di stop anticipato che eviti ulteriori partizionamenti possono essere la _minimun child size_, allorchè un nodo-figlio abbia meno esempi rispetto a una data soglia, o la _maximum depth_, che segnala il raggiungimento di una profondità massima. \
+È possibile che una condizione funzioni bene solo con altre ma un metodo greedy potrebbe non funzionare quando questo si verifica. Si tratta di un _caso difficile_: ad esempio si consideri di dover trovare un albero che approssimi una funzione di parità di $k$ variabili booleane, vera se un numero dispari (o pari) di essa sono vere; conosceere i valori di meno di $k$ variabili non dà alcuna informazione sul valore della funzione; si possono approssimare funzioni di parità più semplici ($k=2$) come lo XOR o l'equivalenza, ma in genere gli alberi di decisione possono essere molto complessi. Quando dal partizionamento greedy risultano alberi troppo complicati conviene procedere alla loro _semplificazione_ (ad esempio con tecniche di _pruning_).
