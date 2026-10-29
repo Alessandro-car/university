@@ -3760,3 +3760,94 @@ Risulta peggiore un modello più in basso e più a destra di altri, ad esempio `
 ]
 Per alcuni modelli, è possibile individuare un _iperparametro_ che, variato, porta a diversi valori di TPR e FPR. Un modello che restituisce un valore reale potrebbe predire `true` o `false` in base al superamento di una _soglia_. Tale modello può essere rappresentato con una curva nello spazio ROC al variare di tale parametro e si potrà dire che domina un altro modello se la sua curva è al di sopra e più a sinistra. Se la situazione è più complessa si può ricorrere a funzioni di costo che dipendono dai due tipi di errore oppure si può adottare l'*area sotto la curva* ROC (AUROC o AUC) una misura numerica per confrontare modello nello spazio dei parametri. Risulterà migliore il modello con l'AUC maggiore.
 == Modelli-Base
+I *modelli di predizione* da apprendere sono funzioni, saranno anche chiamati _classificatori_ e _regressori_. L'obiettivo di un algoritmo supervisionato può essere sintetizzato come segue:
+#let spec(term, body) = grid(
+  columns: (5.5em, 1fr),
+  column-gutter: 0.8em,
+  strong(term), body,
+)
+
+#spec("dato")[
+  un insieme di esempi descritti in termini delle variabili di input e obiettivo;
+]
+
+#v(0.6em)
+
+#spec("restituire")[
+  la rappresentazione compatta di una funzione utile a predire il valore
+  della feature-obiettivo di nuovi esempi per i quali siano disponibili solo
+  valori delle variabili di input.
+]
+Le differenze fra i diversi algoritmi dipenderanno dalla scelta fra le diverse possibili rappresentazioni delle funzioni. Analizzeremo _modelli base_, essenzialmente _funzioni costanti a pezzi_ o _lineari_, che torneranno utili a costruirne di più complessi.
+=== Alberi di Decisione
+Un *albero di decisione* è albero binario costituito da:
+- nodi _interni_ etichettati con _condizioni_, ossia test booleani basati sui valori delle feature negli esempi e connessi con due figli, radici di sotto-alberi, attraverso archi tipicamente etichettato con `vero` e `falso`;
+- nodi _foglia_ etichettati con una stima puntuale per la feature obiettivo: la classe in un _albero di classificazione_ oppure un valore reale in un _albero di regressione_.
+Tale struttura rappresenta una _funzione_ definita _per parti_ ovvero un programma fatto di strutture condizionali annidate. Per la _predizione_, dato un esempio con i valori delle variabili di input: partendo dalla radice, ogni condizione incontrata viene valutata per tale esempio seguendo l'arco corrispondente al risultato di ogni test; raggiunta una foglia, si restituisce la stima puntuale associata.
+#esempio(title: "Alberi di decisione come programmi")[
+Si considerino i due alberi di decisione dell'@es:regressione illustrati nella seguente figura:
+#figure(
+image("images/alberi_reg.png", width: 70%),
+caption: [Alberi di decisione: standard e probabilistico]
+)
+- Funzione di classificazione per l'albero a sinistra:
+#algoritmo(title: [Funzione Da_vedere])[
+  #pseudocode-list[
+    + *define* $"Da_vedere"(e)$
+    + *if* $"Lungo"(e)$ *then* *return* *false*
+    + *else*
+      + *if* $"Nuovo"(e)$ *then* *return* *true*
+      + *else*
+        + *if* $"Virale"(e)$ *then* *return* *true*
+        + *else* *return* *false*
+  ]
+]
+- L'albero a destra ammette predizioni probabilistiche nelle foglie ossia distribuzioni di `Da_vedere`:
+#algoritmo(title: [Funzione Da_vedere])[
+  #pseudocode-list[
+    + *define* $accent("Da_vedere", hat)(e)$
+    + *if* $"Lungo"(e)$ *then* *return* $0$
+    + *else*
+      + *return* $0.82$
+  ]
+]
+]
+Le due questioni principali nell'apprendimento di alberi di decisione sono le seguenti: dati gli esempi di training:
+- *Quale* albero generare? Dovrebbe essere possibile rappresentare _qualsiasi funzione_ con feature $X_i$ discrete; il _bias_ è insito nel criterio di preferenza tra i diversi alberi: andrebbero favoriti alberi più piccoli ossia con la minima profondità o con meno nodi.
+- *Come* generarlo? Si può effettuare una ricerca in uno spazio di alberi a partire dal più piccolo che si adatti ai dati, ma tale spazio è enorme per cui una ricerca esaustiva non è proponibile; ci si affida, quindi, a un metodo di ricerca _greedy_, puntendo a minimizzare l'errore.
+Si può considerare un albero di decisione come un programma che sappia determinare la predizione per qualunque esempio $e$ arbitrario: ciascuna foglia conterrà una predizione del valore di $Y$; i nodi interni conterranno test di condizioni seguiti da diramazioni come in  `if c(e) then t1(e) else t0(e)`, dove `c` è la condizione booleana da testare e `t1` e `t0` sono i sotto-alberi, ovvero sotto-programmi. \
+L'algoritmo _ricorsivo_ seguente costruisce, in modalità top-down, un albero partizionando gli esempi ricevuti; la crescita viene fermata anche in base a una soglia $gamma >= 0$, passata come parametro, che definisce il minimo miglioramento richiesto per proseguire nella ramificazione dell'albero:
+#algoritmo(title: [Algoritmo di apprendimento di alberi di decisione])[
+  #pseudocode-list[
+    + *procedure* $"DT_Learner"(C s, Y, E s, gamma)$
+    + *Input*
+      + $C s$: insieme delle possibili condizioni utilizzabili
+      + $Y$: feature-obiettivo
+      + $E s$: insieme di esempi di training
+      + $gamma$: miglioramento minimo per l'espansione
+    + *Output*
+      + funzione per predire il valore di $Y$ per un esempio
+    + $c <- "selezione_partizionamento"(E s, C s, gamma)$
+    + *if* $c = bot$ *then* #text(fill: rgb("558B2F"), style: "italic")[{criterio di stop raggiunto}]
+      + $v <- "valore_foglia"(E s)$
+      + *define* $T(e) = v$
+      + *return* $T$
+    + *else*
+      + $text("partizione")_1 <- {e in E s : c(e)}$
+      + $t_1 <- "DT_Learner"(C s backslash {c}, Y, text("partizione")_1, gamma)$
+      + $text("partizione")_0 <- {e in E s : not c(e)}$
+      + $t_0 <- "DT_Learner"(C s backslash {c}, Y, text("partizione")_0, gamma)$
+      + *define* $T(e) = "if"_0 c(e) "then" t_1(e) "else" t_0(e)$
+      + *return* $T$
+    + #h(0pt)
+    + *procedure* $"selezione_partizionamento"(E s, C s, gamma)$
+    + $"miglior_valore" <- "somma_loss"(E s) - gamma$
+    + $"migliore_condizione" <- bot$
+    + *for each* $c in C s$ *do*
+      + $v a l <- "somma_loss"({e in E s | c(e)}) + "somma_loss"({e in E s | not c(e)})$
+      + *if* $v a l < "miglior_valore"$ *then*
+        + $"miglior_valore" <- v a l$
+        + $"migliore_condizione" <- c$
+    + *return* $"migliore_condizione"$
+  ]
+] <alg:decision-tree-learner>
