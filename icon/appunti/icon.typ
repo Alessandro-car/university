@@ -4192,3 +4192,88 @@ Ad esempio, ripetendo per $k=10$ volte, si addestrano modelli sul $90 percent$ e
 Nel caso estremo di un numero ancor più limitato di esempi, si può adottare una $k$-fold CV con $k$ pari al numero di esempi di training, detta *Leave-One-Out Cross Validation*. Avendo $n$ esempi di training, si apprendono $n$ modelli: per ogni esempio $e$, si usano tutti gli altri per addestrare un modello da valutare infine su $e$. La complessità cresce col numero di esempi di training: il metodo diventa poco pratico con modelli prodotti in fase di training indipendenti fra loro, mentre risulta adeguato se il modello creato in un'esecuzione può essere modificato in modo efficiente nel successivo, sostituendo un solo esempio con un altro.
 == Modelli Compositi
 === Estensioni dei Modelli Lineari
+I modelli d'apprendimento visti fin qui forniscono le basi per altre tecniche di apprendimento. Sebbene qualsiasi funzione discreta possa essere rappresentata attraverso alberi di decisione, alcune funzioni, anche semplici, richiedono albero molto complessi. Anche i modelli lineari possono risultare spesso limitati, a meno che non si introducano meccanismi di costruzione di _nuove feature_. \
+Una possibile estensione considera l'uso di funzioni _non lineari_ degli input originari in modo da creare nuovi input per i modelli lineari. La costruzione di nuove feature aumenta la dimensionalità dello spazio e funzioni che non erano lineari in origine possono diventarlo nel nuovo spazio o almeno rendere i problemi _linearmente separabili_.
+#esempio[
+La funzione `xor` risulta linearmente separabile nello spazio 3D con le feature $x_1, x_2$ e $x_1x_2$:
+- $x_1x_2 = 1$ quando $x_1 = x_2 = 1$
+- $x = x_1, y = x_2$ e $z = x_1x_2$, ad esempio $chevron.l 1, 1 chevron.r$ viene mappato su $chevron.l 1, 1, 1 chevron.r$
+- per la separazione basta considerare un piano nel nuovo spazio.
+]
+==== Metodi basati su Kernel
+Si possono definire modelli lineari su nuovi spazi di feature multidimensionali. Tali metodi si basano sulla trasformazione di nuovi problemi di ottimizzazione la cui soluzione dipende da una funzione *kernel* definita come prodotto nel nuovo spazio vettoriale:
+$
+scr(K)(bold("x"), bold("z")) = chevron.l phi(bold("x"), phi(bold("z")))
+$
+con $phi: bold("X") arrow bold("Es")$ che rappresenta la trasformazione implicita/esplicita verso $bold("Es") = RR^n$, $n > m$, detto _embedding space_. \
+Tale approccio risulta utile in casi di non separabilità lineare nello spazio originario delle $bold("X")$. Il kernel generalizza il concetto di _prodotto vettoriale_, interpretabile come misura di _similarità_ basata sulle nuove feature, ad esempio, prodotto di feature aggiuntive/sostitutive rispetto a quelle iniziali. Sono stati proposti molti tipi di kernel, anche per rappresentazioni delle istanze non vettoriali in origine, come stringhe, liste, alberi, $dots$. \
+Con uno spazio delle feature esteso il problema del sovradattamento diventa più vincolante. \
+Una *SVM* è un classificatore basato su kernel: esso definisce un iperpiano, _superficie di decisione_ ottimale, che divide esempi positivi dai negativi. In particolare si considera il margine, la distanza minima degli esempi dall'iperpiano: la SVM mira a trovare l'iperpiano di massimo margine. Gli esempi sul margine, che determinano tale iperpiano, si dicono vettori di supporto. La soluzione sarà calcolata sulla base di prodotti applicati a tali vettori nello spazio di embedding. Il modello è sparso perchè determinato da pochi vettori di supporto, i più vicini all'iperpiano, per cui, put aumentando la dimensionalità, può evitare il sovradattamento.
+==== Ulteriori estensioni
+- *Reti neurali*: ammettono input alla funzione lineare di appiattimento che sono a loro volta frutto di funzioni lineari compresse con coefficienti da determinare: con diversi layer siffatti si possono rappresentare funzioni più complesse.
+- *Alberi di regressione*: sono alberi con funzioni alle foglie, che possono costituire modelli lineari di regressione, potendo così rappresentare _funzioni lineari per parti_. Estensioni possono considerare foglie contenenti reti neurali o altri modelli non lineari. In fase di apprendimento, la scelta delle condizioni può essere fatta adottando un criterio di minimizzazione della varianza. Per la predizione dell'output per un nuovo esempio, a partire dalla radice, lo si instrada giù per l'albero fino ad individuare una foglia, quindi si userà il modello di regressione in essa contenuto.
+=== Ensamble Learning
+In generale, nell'*ensamble learning* si _combinano_ le predizioni di un dato numero di modelli, ciascuno appreso da un learner di base a volte anche da parte del dataset. Ad esempio nelle foreste di alberi di decisione, le predizioni finali si otterranno attraverso medie ovvero meccanismi di voto. Vi sono diversi approcci di _ensamble learning_ (_bagging, boosting, stacking_, $dots$) accomunati dall'essere costituiti da un certo numero di modelli base addestrati sui dati e poi combinati attraverso meccanismi di voto o medie di tipo diverso.
+==== Bagging: Random Forest
+La *random forest* è un modello composto da più alberi di decisione. L'idea è quella di addestrare un certo numero di alberi su parte differenti del dataset. Per ogni esempio da classificare ognuno darà una predizione; le predizioni saranno aggregate per formare la predizione finale per l'esempio dato. \
+L'efficacia dipende dalla _diversità_ degli alberi generati in modo da ottenere da ciascuno predizioni anche diverse. A tale scopo per ogni albero si potrebbe considerare un sottoinsieme casuale di feature. In alternativa, le feature per i test nei nodo possono essere scelte in un _insieme ristretto_, variabile per ciascun albero. \
+Nel *bagging* (o _bootstrap aggregating_) si considerano diversi sottoinsiemi degli esempi di training: dati $m$ esempi di training ogni modello base ne usa un poccolo numero. Ad esempio si possono considerare sottoinsiemi di $m$ esempi estratti casualmente con rimpiazzo: in ognuno, risulteranno esempi assenti oppure anche duplicato il che porta a circa il $63.2 percent$ degli esempi originari per ciascun modello base. Nella _predizione_ finale si dovrà mediare; ad esemio si può considerare la classe di amggioranza sulle predizioni, ossia un meccanismo di voto basato sulla moda, che predica la classe più probabile / predetta da più modelli base. Per foreste di ableri di regressione sono previste medie di tipo diverso.
+==== Boosting
+Nel *boosting* i modelli sono appresi in _sequenza_ imparando dagli errori dei precedenti: si una, in genere, lo stesso tipo di _learner di base_ quali, ad esempio, alberi did ecisione o funzioni lineari compresse. Essi vanno via via adattati agli esempi sui quali il modello precedente commette errori: è come seg li esempi fossero ordinati in base agli errori. La predizione finale si ottiene aggregando le predizioni dei modelli prodotti nelle diverse iterate tramite somma, media pesata, moda, $dots$. \
+Si osservi come i modelli base possano anche essere _deboli_, non necessariamente ottimali, si chiamano infatti anche *weak learner*: essi devono giusto superare le prestazioni di un predittore casuale. L'ensemble risultante avrà prestazioni migliori garantite rispetto a ciascuno di essi. *AdaBoost* (_ADAptive BOOSTing_) è fra gli algoritmi più noti.
+==== Functional Gradient Boosting
+Il *functional gradient boosting* prevede un iperparametro $K$ che corrisponde al numero di iterate da ripetere e quindi di modelli base di regressione da apprendere. La _predizione finale_ viene operata in funzione degli input nel modo seguente:
+$
+p_0 + d_1(X) + dots.c + d_K(X)
+$
+dove $p_0$ rappresenta la predizione iniziale, ad esempio la media, e $d_i$ è la differenza dalla predizione precedente. \
+L'$i$-esima predizione si può scrivere come:
+$
+p_i(X) = p_0 + d_1(X) + dots.c + d_i(X) = p_(i-1)(X) + d_i(X)
+$
+dove $d_i$ viene costruito dal weak learner minimizzando l'errore di $p_i$ (fissato $p_(i-1)$):
+$
+sum_e "loss"(p_i(e), Y(e)) = sum_e "loss"(hat(d)_i(e), Y(e) - p_(i-1)(e))
+$
+usando una qualsiasi loss, anche una per obiettivi continui, ma non la log-loss; $hat(d)_i(e)$ deve ottimizzare $Y_i(e) - p_(i-1)(e)$.
+#algoritmo(title: [Algoritmo per l'apprendimento di un modello di boosting])[
+  #pseudocode-list[
+    + *procedure* $"Boosting_learner"(X s, Y, E s, L, K)$
+    + *Input*
+      + $X s$: insieme di feature di input
+      + $Y$: feature obiettivo
+      + $E s$: insieme di esempi di training
+      + $L$: learner di base
+      + $K$: numero di componenti dell'ensemble
+    + *Output*
+      + funzione per fare predizioni sugli esempi
+    + $"media" <- sum_(e in E s) (Y(e)) / (|E s|)$
+    + *define* $p_0(e) = "media"$
+    + *for each* $i = 1$ *to* $K$ *do*
+      + $E_i <- {chevron.l X s(e), Y(e) - p_(i-1)(e) chevron.r | e in E s}$
+      + $d_i <- L(E_i)$
+      + *define* $p_i(e) = p_(i-1)(e) + d_i(e)$
+    + *return* $p_K$
+  ]
+] <alg:boosting-learner>
+- $p_i$ è la funzione di predizione sugli esempi;
+- $E_i$ è in nuovo insieme di esempi, generabile anche _on demand_: per ogni $e in E s$, l'ultima predizione, $p_(i-1)(e)$, viene sottratta da $Y(e)$;
+- $d_i$ si calcola applicando il modello base a $E_i$.
+#esempio[
+La seguente figura mostra il plot dell'errore quadratico sul validation set per $K$ crescente. Tali grafici utili alla scelta dell'iperparametro $gamma$ fissato `minimum_child_size`.
+#figure(
+image("images/plot_errore.png", width: 70%),
+caption: [Plot errore]
+)
+- per $gamma=10$ si hanno alberi degeneri, predizione della media;
+- per $gamma=1$ gli alberi successivi al primo non estraggono info utile; errori simili a quello di un albero singolo;
+- per $gamma=0.1, 0.01$, il boosting migliora le predizioni.
+]
+
+==== Cenni sullo stacking
+Lo *stacking*, o _stacked generalization_, è un modello ensemble costituito da modelli base di tipi diversi, come ad esempio alberi, modelli lineari, SVM, ecc. e un _meta-learner_ che apprende come aggregare al meglio le decisioni. Uno schema generale è rappresntato nella seguente figura:
+#figure(
+image("images/stacking.png", width: 70%),
+caption: [Schema dello stacking]
+)
+
