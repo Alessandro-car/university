@@ -1576,7 +1576,6 @@ $
 tau(R_1, R_2) = 1 - (2 times Delta(R_1, R_2))/(K(K-1))
 $
 = Link analysis e PageRank
-== FARE DA SLIDE 1 a SLIDE 11
 == PageRank
 L'*idea centrale* è che una pagina web è considerata più importante se riceve un numero maggiore di link. La domanda chiave iniziale distingue tra link in entrata e link in uscita. \
 Considerando i link in entrata alla stregua di voti di preferenza, si osserva che un sito come `www.stanford.edu` vanta ben 23.400 link in entrata, mentre un sito meno noto come `www.joe-schmoe.com` ne possiede appena 1. Ci si chiede quindi se tutti i link in entrata abbiano lo stesso peso. La risposta logica è che i *link provenienti da pagine importanti contano di più*. Questo principio introduce una definizione circolare e *ricorsiva*, poichè l'importanza di una pagina dipende dall'importanza delle pagine che la linkano, ponendo le basi per algoritmi iterativi celebri come il PageRank.
@@ -1604,7 +1603,7 @@ dove $d_i$ rappresenta il grado di uscita, ovvero il numero totale di link uscen
 #esempio[
 Consideriamo il seguente schema:
 #figure(
-image("images/page_rank2.png", width: 70%)
+image("images/page_rank2.png", width: 20%)
 )
 Le equazioni di flusso sono:
 $
@@ -1647,3 +1646,184 @@ Partendo dalle equazioni scalari in cui l'importanza $r_j$ di una pagina è data
 $
 bold(r) = M dot.c bold(r)
 $
+Analizziamo la *formulazione agli autovettori* (_eigenvector_). Poichè le equazioni di flusso possono essere scritte nella forma $bold(r) = M dot.c bold(r)$, il vettore di rank $bold(r)$ risulta essere un autovettore della matrice stocastica del web $M$. Più in dettaglio, $bold(r)$ è il primo autovettore associato all'autovalore $lambda = 1$. L'autovalore più grande di $M$ è proprio 1, poichè $M$ è una matrice stocastica per colonne. \
+Grazie a questa impostazione è possibile calcolare il vettore $bold(r)$ in modo efficiente per grafi di grandi dimensioni utilizzando un algoritmo iterativo noto come *Power iteration* (_metodo delle potenze_).
+#esempio[
+Consideriamo il seguente schema:
+#figure(
+image("images/page_rank2.png", width: 20%)
+)
+Le equazioni di flusso sono:
+$
+r_y &= r_y / 2 + r_a / 2 \
+r_a &= r_y / 2 + r_m \
+r_m &= r_a / 2
+$
+La matrice di adiacenza stocastica è la seguente:
+#align(center)[
+  #table(
+    columns: (auto, 2.5em, 2.5em, 2.5em),
+    rows: 2.5em,
+    align: center + horizon,
+    inset: 6pt,
+    // borders only around the 3x3 inner grid, not around the labels
+    stroke: (x, y) => if x >= 1 and y >= 1 { 0.5pt } else { none },
+    [], [*y*], [*a*], [*m*],
+    [*y*], [½], [½], [0],
+    [*a*], [½], [0], [1],
+    [*m*], [0], [½], [0],
+  )
+]
+Possiamo esprimere l'intero sistema nella forma compatta agli autovettori $bold(r) = M dot.c bold(r)$, per essere risolto tramite il metodo iterativo delle potenze.
+$
+  (mat(delim: #none, "y"; "a"; "m")) =
+  (mat(delim: #none, 1/2, 1/2, 0; 1/2, 0, 1; 0, 1/2, 0))
+  (mat(delim: #none, "y"; "a"; "m"))
+$
+]
+=== Metodo delle potenze
+Il *metodo delle potenze*, _power iteration_, è un algoritmo iterativo efficiente per determinare il vettore di importanza su grandi grafi. \
+- *Modello di partenza*: grafo web composto da $N$ nodi (pagine) e archi (collegamenti ipertestuali).
+- *Fase di inizializzazione*: si assegna un valore iniziale uniforme a tutte le pagine ponendo il vettore di rank iniziale $bold(r)^((0)) = [1 \/ N, dots, 1 \/ N]^T$
+- *Processo iterativo*: ad ogni passo si aggiorna il vettore applicando la matrice di transizione, ovvero $bold(r)^((t + 1)) = M dot.c bold(r)^((t))$, che corrisponde alla forma scalare in cui il nuovo rank $r_j^((t + 1))$ si calcola sommando i contributi dei nodi collegati:
+$
+r_j^((t+1)) = sum_(i arrow j)(r_i^((t)))/(d_i)
+$
+$quad$ dove $d_i$ è il grado di uscita del nodo sorgente $i$.
+- *Condizione d'arresto*: le iterazioni proseguono finchè la differenza tra due vettori successivi diventa inferiore a una soglia di tolleranza $epsilon$, misurata tipicamente tramite la norma $L_1(abs(bold(r)^((t+1)) - bold(r)^((t)))_1 < epsilon)$ o mediante altre norme vettoriali come quella euclidea.
+#esempio[
+Consideriamo il seguente schema:
+#figure(
+image("images/page_rank2.png", width: 20%)
+)
+Le equazioni di flusso sono:
+$
+r_y &= r_y / 2 + r_a / 2 \
+r_a &= r_y / 2 + r_m \
+r_m &= r_a / 2
+$
+La matrice di adiacenza stocastica è la seguente:
+#align(center)[
+  #table(
+    columns: (auto, 2.5em, 2.5em, 2.5em),
+    rows: 2.5em,
+    align: center + horizon,
+    inset: 6pt,
+    // borders only around the 3x3 inner grid, not around the labels
+    stroke: (x, y) => if x >= 1 and y >= 1 { 0.5pt } else { none },
+    [], [*y*], [*a*], [*m*],
+    [*y*], [½], [½], [0],
+    [*a*], [½], [0], [1],
+    [*m*], [0], [½], [0],
+  )
+]
+Il metodo delle potenze prevede i seguenti passi:
++ Poni $r_j = 1 / N$
++ $r'_j = sum_(i arrow j) r_i / d_i$
++ $r = r'$
++ se non converge torna al passo 2.
+#align(center)[
+  #table(
+    columns: 8,
+    stroke: none,
+    align: center + horizon,
+    inset: (x: 9pt, y: 5pt),
+    table.cell(rowspan: 3)[$mat(r_y; r_a; r_m)$],
+    table.cell(rowspan: 3)[$=$],
+    $1/3$, $1/3$, $5/12$, $9/24$, [], $6/15$,
+    $1/3$, $3/6$, $1/3$, $11/24$, $dots$, $6/15$,
+    $1/3$, $1/6$, $3/12$, $1/6$, [], $3/15$,
+    [], [],
+    [Iterazione 0,], [1,], [2,], [3,], [$dots$], [],
+  )
+]
+]
+=== Random Walk Interpretation
+Immaginiamo un navigatore casuale, detto _random web surfer_, ovvero un utente che naviga sul Web in modo casuale. In un qualsiasi istante di tempo $t$, il navigatore si trova su una certa pagina $i$. All'istante successivo $t+1$, l'utente sceglie di seguire uno dei link in uscita dalla pagina $i$ in modo uniformemente casuale. Di conseguenza, il navigatore arriva su una nuova pagina $j$ che risulta collegata a $i$. Questo processo si ripete idenfinitamente. \
+Diamone una *formalizzazione stocastica* con il vettore $bold(p)(t)$. Sia $bold(p)(t)$ un vettore in cui la $i$-esima coordinata rappresenta la probabilità che il navigatore si trovi sulla pagina $i$ al tempo $t$. Per questa ragione, $bold(p)(t)$ costituisce a tutti gli effetti una *distribuzione di probabilità* sulle pagine del web.
+==== Distribuzione stazionaria
+Per determinare dove si trovi il navigatore casuale al tempo successivo $t + 1$, sapendo che segue un link in modo uniformemente casuale, l'equazione di transizione si esprime moltiplicando la matrice stocastica $M$ per il vettore di probabilità corrente:
+$
+bold(p)(t + 1) = M dot.c bold(p)(t)
+$
+Se la passeggiata casuale raggiunge uno stato di equilibrio in cui la distribuzione di probabilità non cambia più nel corso del tempo, ovvero:
+$
+bold(p)(t + 1) = M dot.c bold(p)(t) = bold(p)(t)
+$
+allora il vettore $bold(p)(t)$ prende il nome di *distribuzione stazionaria* della passeggiata casuale. \
+Poichè il vettore di rank originario $bold(r)$ soddisfa esattametne la medesima relazione algebrica:
+$
+bold(r) = M dot.c bold(r)
+$
+Ne consegue che *r rappresenta la distribuzione stazionaria* della passeggiata casuale sul grafo del web, fornendo così una potente interpretazione intuitiva e probabilistica del punteggio di importanza delle pagine.
+==== Esistenza e unicità
+Proseguendo nell'analisi della passeggiata casuale e dei processi di Markov, introduciamo un risultato teorico fondamentale noto come *Esistenza e unicità*.
+#teorema(title: "Esistenza e unicità")[
+PEr i grafi che soddisfano *determinate condizioni*, la *distribuzione stazionaria è unica*. Questa distribuzione viene inevitabilmente raggiunta nel corso del tempo, indipendentemente da quale sia stata la distribuzione di probabilità iniziale al tempo $t=0$.
+]
+=== PageRank: la formualzione di Google
+Ci poniamo tre interrogativi cruciali sulla convergenza e sulla correttezza matematica del modello iterativo appena descritto:
+- *Questo processo converge*? Ci si chiede se il metodo iterativo basato sul calcolo matriciale e sul metodo delle potenze raggiunga effettivametne un limite stabile senza oscillare all'infinito.
+- *Convergono verso ciò che si desidera?* Anche in caso di convergenza, è necessario verificare che il risultato corrisponda all'unica distribuzione stazionaria corretta e significativa per il grafo.
+- *I risultati sono ragionevoli?* Si analizza se i punteggi di importanza assegnati alle pagine rispecchino fedelmente il principio dei link come voti o se emergano anomalie strutturali che richiedono la formulazione correttiva di Google.
+==== Problema della convergenza
+Analizziamo il *problema dello spider trap*. Uno spider trap si verifica quando un gruppo di pagine possiede link interni che puntano esclusivamente tra loro, senza alcuna via d'uscita verso il resto del grafo. Di conseguenza, un navigatore casuale che entra in questo gruppo finisce per rimanervi intrappolato indefinitamente, assorbendo tutto il flusso o l'importanza del grafo.
+#esempio(title: "Spider trap")[
+Consideriamo il seguente schema:
+#figure(
+image("images/spider_trap.png", width: 20%),
+caption: [Problema dello spider trap]
+)
+#align(center)[
+  #table(
+    columns: 6,
+    stroke: none,
+    align: center + horizon,
+    inset: (x: 10pt, y: 5pt),
+    [$r_a$], table.cell(rowspan: 2)[$=$], [1], [0], [1], [0],
+    [$r_b$], [0], [1], [0], [1],
+    [], [], table.cell(colspan: 4)[Iteration 0, 1, 2, $dots$],
+  )
+]
+In questo caso il PageRank non converge.
+]
+Analizziamo un'ulteriore problema, il problema del *dead end*. Il dead end si verifica quando una pagina possiede dei link in entrata ma nessun link in uscita verso il resto del grafo. Quando il navigatore casuale raggiunge una pagina di questo tipo, la probabilità vi si accumulano senza poter essere ridistribuiti, provocando la dispersione o l'annullamento progressivo del flusso complessivo di importanza.
+#esempio(title: "Dead end")[
+Consideriamo il seguente schema:
+#figure(
+image("images/dead_end.png", width: 20%),
+caption: [Problema del dead end]
+)
+#align(center)[
+  #table(
+    columns: 6,
+    stroke: none,
+    align: center + horizon,
+    inset: (x: 10pt, y: 5pt),
+    [$r_a$], table.cell(rowspan: 2)[$=$], [1], [0], [0], [0],
+    [$r_b$], [0], [1], [0], [0],
+    [], [], table.cell(colspan: 4)[Iteration 0, 1, 2, $dots$],
+  )
+]
+In questo caso il PageRank non converge.
+]
+=== Problemi del PageRank
+Analizziamo i *due problemi principali* che compromettono la convergenza e la corretteza del modello di flusso di base sul Web reale:
++ *Dead ends*: alcune pagine sono prive di link in uscita. La presenza di tali pagine fa sì che il punteggio di importanza si disperda o fuoriesca dal sistema durante le iterazioni.
++ *Spider traps*: si verificano quando tutti i link rimangono confinati all'interno di un gruppo chiuso di pagine. Con il passare del tempo, queste strutture finiscono per intrappolare e assorbire tutta l'importanza del grafo.
+==== Soluzione mediante teletrasporti casuali
+La soluzione di Google per le spider traps è la seguente: ad ogni passo temporale, il navigatore casuale ha a disposizione *due opzioni*:
+- con una probabilità $beta$, sceglie di seguire un link a caso della pagina corrente;
+- con una probabilità complementare $1 - beta$, compie un salto (_teleport_) verso una pagina qualsiasi scelta in modo casuale nell'intero grafo.
+I valori comunemente impiegati per il parametro $beta$, noto come fattore di smorzamento o _damping factor_, si trovano tipicamente nell'intervallo compreso tra 0.8 e 0.9. Un esempio è mostrato nel seguente schema:
+#figure(
+image("images/teleport.png", width: 50%),
+caption: [Teletrasporti casuali]
+)
+Nel grafo a sinistra, se si entra nella pagina $m$ si rimane intrappolati, mentre nel secondo ci sono dei salti casuali verso qualsiasi altra pagina. \
+La stessa soluzione si può applicare al problema del dead end, come mostrato in figura:
+#figure(
+image("images/teleport2.png", width: 50%),
+caption: [Soluzione al problema del dead end]
+)
+=== Fare da slide 42 a slide 49 (pdf del PageRank)
