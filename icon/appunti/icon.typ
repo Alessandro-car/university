@@ -836,7 +836,7 @@ Ragionare con 30 variabili è più facile che con un miliardo di stati ma anche 
 Tuttavia molti problemi reali possono essere definiti solo in termini di migliaia o anche milioni di variabili, come le previsioni del meteo.
 === Vincoli
 Dato un problema, le assegnazioni possono essere _ammissibili_ o _non ammissibili_. Un *vincolo rigido* (_hard constraint_) specifica le assegnazioni lecite per una o più variabili e comprende:
-- un *ambito*, detto _scope_, ossia l'insieme $S$ di variabili coinvolte con una sua arietà $bar S bar$
+- un *ambito*, detto _scope_, ossia l'insieme $S$ di variabili coinvolte con una sua arietà $abs(S)$
 - la *condizione*, una funzione booleana sulle assegnazioni alle variabili del vincolo che dovrà risultare vera solo per assegnazioni lecite.
 Seguono alcuni esempi di vincoli di diverse arietà:
 - $B <= 3$ _unario_;
@@ -2800,7 +2800,7 @@ e la dimostrazione ha successo con risposta $F = c(l, c(i, c(s, n i l))), L = t$
 Abbreviazioni ammesse nella notazione del Prolog:
 - $[ ]$ o _nil_ denotano la lista vuota;
 - $[E bar R]$ è la lista con primo elemento $E$ e resto della lista $R$, scritta anche _cons(E, R)_;
-- semplificazione: $[X bar [Y]]$ si può scrivere $[X, Y]$, se $Y$ è una sequenza di valori: ad esempio $[a]$ per $[a bar []]$, $[b bar [ a bar n i l]]$ e $[a, b bar C]$ per $[a bar [b bar C]]$
+- semplificazione: $[X bar [Y]]$ si può scrivere $[X, Y]$, se $Y$ è una sequenza di valori: ad esempio $[a]$ per $[a bar []]$, $[b bar [ a bar n i l]]$ e $[a, b bar C]$ per $a bar [b bar C]]$
 #esempio[
 Definizione che usa la notazione:
 - _append([ A | X], Y, [A | Z])_ $<-$ _append(X, Y, Z)_
@@ -3511,9 +3511,9 @@ Predire il valore di $Y$ a valori reali:
 Dato il _predittore_ $hat(Y)$ per le feature obiettivo $Y$, $hat(Y)(e)$ denoterà una *stima puntuale* del valore di $Y$ per l'esempio $e in E s$, ossia la predizione del vero valore $Y(e)$, detto _ground truth_; il predittore $hat(Y)$, appreso sulla base degli esempi di training, potrà essere applicato in seguito a qualsiasi altro esempio. \
 Si dice *loss* (o _errore_) di $hat(Y)(e)$ una misura della _distanza_ della stima $hat(Y)(e)$ dal vero valore $Y(e)$. Essa viene definita come funzione $"loss"(p, a)$ su $RR_+$: errore della predizione di $p$ quando il valore effettivo è $a$. Tipicamente se ne considera la media sull'insieme $E s$ di esempi, o *loss media* (_mean loss_)
 $
-(1)/(bar E s bar)sum_(e in E s)"loss"(hat(Y)(e), Y(e))
+(1)/(abs(E s))sum_(e in E s)"loss"(hat(Y)(e), Y(e))
 $
-o, in alternativa, la semplice sommatoria che ha lo stesso punto di minimo. Si preferisce la loss media perchè può essere interpretata senza conoscere il numero di esempi $bar E s bar$.
+o, in alternativa, la semplice sommatoria che ha lo stesso punto di minimo. Si preferisce la loss media perchè può essere interpretata senza conoscere il numero di esempi $abs(E s)$.
 ==== Feature-Obiettivo a Valori Reali
 In caso di feature con valori _totalmente ordinati_, le differenze sono significative. Ad esempio, altezze in cm, voti, numero bambini, ecc. \
 Le funzioni di _loss_ più utilizzate in problemi di _regressione_, essendo dati il valore vero e quello predetto $a, p in RR$, rispettivametne, sono elencate di seguito:
@@ -3527,7 +3527,7 @@ $
 anche con la funzione $1(p != a)$ che vale 1 se l'argomento è vero e 0 altrimenti. La loss media su un dataset sarà il numero medio di predizioni sbagliate, che non tiene conto di _quante_ siano errate. L'*accuratezza* ne costituisce il complemento a 1, ossia il numero medio di predizioni corrette e viene massimizzata minimizzando la loss. Il test d'uguaglianza non è affidabile nel confronto fra numeri reali quindi non è utile calcolare la loss media, mentre potrebbero esserlo il calcolo di moda o mediana.
 - *errore assoluto* o *loss* $L_1$:
 $
-"loss"(p, a) = bar p - a bar
+"loss"(p, a) = abs(p - a)
 $
 È sempre non negativa e per un dataset risulta nulla se tutte le predizioni sono corrette; a differenza della precedente, tiene conto della precisione delle predizioni.
 - *errore quadratico* o *loss* $L_2$:
@@ -3537,7 +3537,7 @@ $
 Si tratta di un errore amplificato, ad esempio un errore di 2 vale quanto 4 errori di 1; ai fini della minimizzazione, si considera la _loss media quadratica_ su $E s$ o, equivalentemente, la *radice dell'errore quadratico medio* (_root-mean-square error_, RMSE) che ha gli stessi punti di minimo delle sommatorie sul dataset; spesso si antepone il fattore $1/2$ per semplificare le derivate.
 - *errore nel caso pessimo* o *loss* $L_infinity$ su $E s$:
 $
-"loss"(E s) = max_(e in E s)bar hat(Y)(e) - Y(e) bar
+"loss"(E s) = max_(e in E s)abs(hat(Y)(e) - Y(e))
 $
 Essa rappresenta una stima pessimistica basata sull'errore massimo del predittore quindi non corrisponde a sommatorie o medie.
 #esempio[
@@ -3603,7 +3603,7 @@ $
 misura semore non negativa, nulla se $p[a] = 1$ con le altre a 0. \
 Dato il dataset $E s$, la *log-loss media* del predittore $hat(Y)$ sarà:
 $
--(1)/(bar E s bar) sum_e log(hat(Y)(e)[Y(e)])
+-(1)/(abs(E s)) sum_e log(hat(Y)(e)[Y(e)])
 $
 dove $hat(Y)(e)[Y(e)]$ è il valore della redizione $p = hat(Y(e))$ per l'effettivo $a = Y(e)$.
 #esempio[
@@ -3876,7 +3876,7 @@ Usando l'algoritmo visti nell'esempio *@es:classificazione*:
 ]
 Il risultato finale è l'albero / programma visto in precedenza.
 ]
-Usando log-loss con base 2, la media delle loss `somma_loss(Es)/|Es|` corrisponde all'entropia della distribuzione empirica di _Es_. Se _val_ è il numero di bit per descrivere _Es_ sopo il test di _c_ allora l'entropia della distribuzione creata dal partizionamento sarà $"val" / bar "Es" bar$. Si definisce *information gain, IG,* la differenza fra le due entropie. Questo viene spesso usato anche assieme ad altre misure da ottimizzare, ad esempio si può puntare a massimizzare l'accuratezza selezionando la condizione $c$ in base alla log-loss, ma restituendo la moda come valore per le foglie.
+Usando log-loss con base 2, la media delle loss `somma_loss(Es)/|Es|` corrisponde all'entropia della distribuzione empirica di _Es_. Se _val_ è il numero di bit per descrivere _Es_ sopo il test di _c_ allora l'entropia della distribuzione creata dal partizionamento sarà $"val" / abs("Es")$. Si definisce *information gain, IG,* la differenza fra le due entropie. Questo viene spesso usato anche assieme ad altre misure da ottimizzare, ad esempio si può puntare a massimizzare l'accuratezza selezionando la condizione $c$ in base alla log-loss, ma restituendo la moda come valore per le foglie.
 #esempio[
 Ancora con il dataset con le preferenze sui video: operando una scelta (miope) del test, ai fini di minimizzare la log-loss dell'Eq. (7.5), ovvero massimizzare la likelihood, si ha che
 
@@ -3894,8 +3894,301 @@ Se le variabili di input sono booleane è facile definire le condizioni per i te
 - se $X$ è categorica, con dominio $brace.l v_1, dots, v_k brace.r$, si può associare una *variabile indicatrice* binaria $X_i$ a ciascun valore: $X_i(e) = 1$ se $X(e) = v_i$ e $X_i(e) = 0$ altrimenti: per ogni esempio $e$, una sola fra $X_1(e), dots, X_k(e)$ vale 1.
 - Se $X$ è *ordinale* (a valori reali o discreti) allora essa ha un dominio _totalmente ordinato_; in tal caso, per ciascun valore $v$, si può introdurre una *variabile* booleana di *taglio* / _cut_ che varrà 1 se $X > v$ e 0 altrimenti; da una combinazione di tagli si possono definire intervalli; ad esempio il caso in cui la variabile per $X > 9$ sia vera e quella per $X > 17$ sia falsa corrisponde a $9 < X <= 17$; valori di taglio ottimali possono essere trovati ordianndo gli esempi in base al valore di $X$ e selezionando quei valori che partizionino al meglio rispetto alla $Y$.
 - *binning*: dato un insieme di soglie si crea una feature per ogni intervallo / _bin_: date le soglie $alpha_1 < alpha_2 < dots < alpha_k$ si ottengono $k + 1$ feature booleane, una vera per $X$ tale che $X <= alpha_1$, una per $alpha_k < X$ e una per $alpha_i < X <= alpha_(i + 1)$  per ogni $1 <= i < k$; si noti che il bin $alpha_i < X <= alpha_(i + 1)$ richiede 2 partizionamenti tramite tagli; i valori $alpha_i$ possono essere predefiniti, ad esempio si possono adottare i _percentili_ rilevati sui dati di training, oppure scelti in base a quelli della $Y$;
-- per feature $X$ categoriche, si possono definire condizioni $X in S$ con $S subset "dom"(X)$ dato l'_insieme_ di valori $bar S bar >= 1$; se $Y$ è booleana per scegliere gli $S$, avendo ordinato $"dom"(X)$ in base alle proporzioni di $Y$ veri, si trova la selezione migliore, _greedy optimal split_, della lista ordinata;
+- per feature $X$ categoriche, si possono definire condizioni $X in S$ con $S subset "dom"(X)$ dato l'_insieme_ di valori $abs(S) >= 1$; se $Y$ è booleana per scegliere gli $S$, avendo ordinato $"dom"(X)$ in base alle proporzioni di $Y$ veri, si trova la selezione migliore, _greedy optimal split_, della lista ordinata;
 - si può pensare anche a un'estanzione che preveda la possibilità di condizioni n-arie (_multiway split_) quindi per variabili con più valori nel dominio si potrà considerare un figlio per ciascun valore: si ottiene un albero _n-ario_, con struttura più complessa di quelli con test della forma `if-then-else`, più difficili da apprendere in quanto per alcuni valori delle condizioni potrebbe non essere disponibile alcun esempio di training; con euristiche greedy, come IG, una condizione su variabile con domini più grandi porta ad avere più figli e a un miglior adattamento ai dati a scapito della compattezza del modello; si osservi ad esempio che una condizione a 4 vie equivale a 3 bipartizioni per cui si potrebbero avere 4 foglie.
 ==== Scelte di Progetto Alternative
 Quando `selezione_partizionamento` restituisce $perp$ non si procede a ulteriore partizionamento. Ciò può accadere a seguito dell'esaurimento degli esempi o delle condizioni, oppure quando gli esempi hanno tutto lo stesso valore per ciascuna condizione, o hanno tutti la stessa classe. Si può avere un miglioramento con l'aggiunta di una condizione con una soglia $< gamma$. Altri criteri di stop anticipato che eviti ulteriori partizionamenti possono essere la _minimun child size_, allorchè un nodo-figlio abbia meno esempi rispetto a una data soglia, o la _maximum depth_, che segnala il raggiungimento di una profondità massima. \
 È possibile che una condizione funzioni bene solo con altre ma un metodo greedy potrebbe non funzionare quando questo si verifica. Si tratta di un _caso difficile_: ad esempio si consideri di dover trovare un albero che approssimi una funzione di parità di $k$ variabili booleane, vera se un numero dispari (o pari) di essa sono vere; conosceere i valori di meno di $k$ variabili non dà alcuna informazione sul valore della funzione; si possono approssimare funzioni di parità più semplici ($k=2$) come lo XOR o l'equivalenza, ma in genere gli alberi di decisione possono essere molto complessi. Quando dal partizionamento greedy risultano alberi troppo complicati conviene procedere alla loro _semplificazione_ (ad esempio con tecniche di _pruning_).
+#esempio[
+Si consideri un dataset con feature di input _x, y, z_ e obiettivo $t$ per la funzione: `if x then t=y else t=z`, ossia $t$ è vera se $x$ è vera e $y$ è vera oppure se $x$ è falsa e $z$ è vera. Un dataset che ricalca la tabella di verità è il seguente:
+
+Si possono costruire i seguenti alberi:
+#figure(
+image("images/alberi_if.png", width: 70%),
+caption: [Alberi per `if-then-else`]
+)
+L'albero a sinistra risulta migliore ma parte da $x$ non informativa: stessa proporzione di esempi con $t$ vera per $x$ vera o falsa. L'algoritmo partizionerebbe su $y$, come nell'albero a destra: se $y$ è vera allora la proporzione di $t$ vere risulta più grande riuspetto ai casi in cui $y$ è falsa; quando $y$ è vera, partizionare su $x$ predice facilmente $t$ quando $x$ è vera: seguendo i percorsi verso $t = 1$ nell'albero destro si osserva che $t$ è vera se $(x and y)(y and not x and z) or (not y and not x and z)$ da cui, semplificando $(x and y) or (not and z)$ da cui si ottiene facilmente l'albero a sinistra.
+]
+=== Regressione e Classificazione Lineari
+Si prnderanno in considerazione algoritmi che apprendono _modelli lineari_ per risolvere problemi di regressione (obiettivo continuo) e classificazione (obiettivo discreto). \
+Con la *regressione lineare* si mira all'adattamento di una funzione _lineare_ a un training set con feature _numeriche_. Si supponga che le feature di input siano $X_1, dots, X_m in RR$ e che la feature obiettivo sia $Y in RR$. \
+Il moello è una *funzione lineare* delle feature di input:
+$
+hat(Y)_(overline(w))(e) = w_0 + w_1 dot.c X_1(e) + dots.c + w_m dot.c X_m(e) = sum_(i=0)^m w_i dot.c X_i(e)
+$
+dove $overline(w) = chevron.l w_0, dots, w_m chevron.r$ vettore di *pesi* che costituiscono i _parametri_ da determinare. Si ottiene una forma più compatta assumendo la feature aggiuntiva costante $X_0 = 1$. \
+Per definire il problema di ottimizzazione, dato l'insieme di esempi _Es_, si considera l'errore quadratico medio, su _Es_ per $Y$:
+$
+"errore"(E s, overline(w)) = 1/(abs(E s))sum_(e in E s)(Y(e) - hat(Y)_(overline(w)(e)))^2 = 1/(abs(E s)) sum_(e in E s)(Y(e) - sum_(i=0)^m w_i dot.c X_i(e))^2
+$
+Questa funzione ha un unico minimo. Considerando le derivate parziali rispetto ai pesi:
+$partial / (partial w_i)"errore"(E s, overline(w)) = 1/(abs(E s))sum_(e in E s)2 sigma(e) dot.c X_i(e)$
+dove $sigma(e) = hat(Y)_overline(w)(e) - Y(e)$ è una funzione lineare sui pesi. Il minimo può essere calcolato analiticamente risolvendo le equazioni lineari ottenute annullando tali derivate, utilizzando il cosidetto *metodo dei minimi quadrati*.
+==== Funzioni Lineari Compresse
+Per la _classificazione binaria_ si ha una feature-obiettivo $Y$ con dominio $brace.l 0, 1 brace.r$. Come modello non basta una funzione lineare: le predizioni non possono superare 1 o essere minori di 0. Si considera allora una *funzione lineare compressa* (_squashed_):
+$
+hat(Y)_overline(w)(e) = phi(w_0 + w_1 + X_1(e) + dots.c + w_m dot.c X_m(e)) = phi(sum_i w_i dot.c X_i(e))
+$
+dove $phi$ è detta anche *funziuone di attivazione* da $RR$ a $R subset RR$, tipicamente si considera $R = [0, 1]$. Un predittore basato su tale funzione si dice *classificatore lineare*. \
+Lo *step* o _gradino di Heaviside_ è una funzione di ativazione semplice definita come segue:
+$
+"step"_0(x) = cases(
+0 & quad x < 0,
+1 & quad x >= 0
+)
+$
+Essa viene impiegata in unità dette *percettroni* alla base delle reti neurali. Tuttavia risulta difficile adattare la discesa di gradiente a funzioni non ovunque differenziabili: con una funzione quasi ovunque differenziabile come *step*, l'ampiezza dello scalino dovrebbe tendere a zero per garantire la convergenza. Il grafico della funzione step è mostrato qui di seguito.
+#figure(
+image("images/step.png", width: 70%),
+caption: [Funzione step]
+)
+Si considerano allora in alternativa funzioni come la sigmoide (un tipo di *funzione logistica*):
+$
+"sigmoide"(x) = (1)/(1 + e^(-x))
+$
+il cui grafico è rappresentato nella seguente figura:
+#figure(
+image("images/sigmoide.png", width: 70%),
+caption: [Funzione sigmoidale]
+)
+Essa comprime le predizioni nell'intervallo $]0, 1[$, appropriato ai fini della classificazione, e risulta differenziabile, con derivata:
+$
+d / (d x)"sigmoide"(x) = "sigmoide"(x) dot.c (1 - "sigmoide"(x))
+$
+Nella *regressione logistica* il modello di classificazione è costituito da una funzione lineare compressa dalla sigmoide
+$
+hat(Y)(e) = "sigmoide"(sum_(i=0)^m w_i dot.c X_i(e))
+$
+Per trovare i pesi $overline(w)$ si minimizza la _log-loss_ (ovvero la _log-likelihood negativa_) media di cui si è trattato in precedenza:
+$
+L L(E s, overline(w)) = - 1 / (abs(E s))[sum_(e in E s)Y(e)log(hat(Y)(e)) + (1 - Y(e))log(1-hat(Y)(e))]
+$
+con derivate parziali:
+$
+partial / (partial w_i) L L(E s, overline(w)) = 1 / (abs(E s))sum_(e in E s) sigma(e) dot.c X_i(e)
+$
+dove $sigma(e) = hat(Y)_overline(w)(e) - Y(e)$. Tale funzione risulta difficile da minimizzare analiticamente, essendo $hat(Y)_overline(w)$ non lineare nei parametri per cui si ricorre ad una soluzione algoritmica.
+==== Discesa di Gradiente Stocastica
+La *discesa di gradiente* è un metodo _iterativo_ per la ricerca locale dei minimi di funzioni d'errore. \
+Dopo aver inizializato $overline(w)$ in maniera casuale, a ogni iterata, ogni $w_i$ verrà decrementato in proporzione alla sua derivata parziale:
+$
+w_i <- w_i - eta dot.c partial / (partial w_i)"errore"(E s, overline(w))
+$
+dove $eta$ è detta _passo_ o *learning rate*. Le derivate misurano l'influenza sull'errore di piccole variazioni dei pesi. \
+Per un modello lineare, l'errore quadratico risulta una funzione _convessa_ con unico minimo locale, quindi anche globale. Con un passo sufficientemente piccolo, l'algortimo converge al minimo locale. Le derivate parziali di $"errore"(E s, overline(w))$ o log-loss media si possono scrivere come segue:
+$
+partial / partial w_i "errore"(E s, overline(w)) = 1 / (abs(E s))sum_(e in E s)sigma(e) dot.c X_i (e)
+$
+con $sigma(e) = hat(Y)_overline(w)(e) - Y(e)$ e costante 2 assorbita da $eta$. \
+Normalmente l'aggiornamento dei pesi avviene dopo aver iterato su tutti gli esempi; in alternativa, si può ricorrere alla *discesa di gradiente stocastica* nella quale si prevede un aggiornamento dopo aver visto un campione di $b$ esempi, detto *batch* o *minibatch*; in tal caso un passaggio completo sul dataset si chiama *epoca*, costituita da $abs(E s) / b$ batch. \
+L'algortimo di apprendimento del modello è descritto di seguito.
+#algoritmo(title: [Algoritmo per l'apprendimento di modelli lineari])[
+  #pseudocode-list[
+    + *procedure* $"Linear_learner"(X s, Y, E s, eta, b)$[cite: 24]
+    + *Input*
+      + $X s$: insieme di feature input, $X s = {X_1, dots, X_m}$, $X_0 = 1$[cite: 24]
+      + $Y$: feature obiettivo[cite: 24]
+      + $E s$: insieme di esempi di training[cite: 24]
+      + $eta$: learning rate[cite: 24]
+      + $b$: dimensione del batch[cite: 24]
+    + *Output*
+      + funzione di predizione su esempi[cite: 24]
+    + *Local*
+      + $w_0, dots, w_m$: reali[cite: 24]
+      + $d_0, dots, d_m$: reali[cite: 24]
+    + inizializzare casualmente $w_0, dots, w_m$[cite: 24]
+    + *define* $"pred"(e) = phi(sum_i w_i dot X_i(e))$[cite: 24]
+    + *repeat*
+      + *for each* $i in [0, m]$ *do* $d_i <- 0$[cite: 24]
+      + selezionare il batch $B subset.eq E s$ di dimensioni $b$[cite: 24]
+      + *for each* esempio $e in B$ *do*
+        + $"errore" <- "pred"(e) - Y(e)$[cite: 24]
+        + *for each* $i in [0, m]$ *do*
+          + $d_i <- d_i + "errore" dot X_i(e)$[cite: 24]
+      + *for each* $i in [0, m]$ *do*
+        + $w_i <- w_i - eta * d_i / b$[cite: 24]
+    + *until* terminazione[cite: 24]
+    + *return* $"pred"$[cite: 24]
+  ]
+] <alg:linear-learner>
+Le possibili condizioni di terminazione per l'algoritmo sono:
++ un numero massimo di passi (utile a evitare di divergere);
++ un errore vicino a 0;
++ ridotte variazioni di $overline(w)$ fra iterate successive.
+Sono possibili alcune varianti: regolando le dimensioni dei batch, con $b$ più piccole l'apprendimento risulta più veloce dato che si richiedono meno esempi per l'aggiornamento; considerando, invece, tutti gli esempi, si termina quando tutte le $d_i$ sono nulle: tipicamente si parte con batch piccolo e si aumenta $b$ fino alla convergenza.  \
+Nella *discesa di gradiente incrementale* l'aggiormanto dei pesi va fatto dopo ogni esempio, quindi, in tal caso, $b=1$. Non si devono memorizzare i $d_i$, i pesi sono aggiornati direttamente. Ciò torna utile per esempi acquisiti in streaming. Nel caso di esempi non selezionati casualmente, si corre il rischio della cosidetta *dimenticanza catastrofica*, ossia dell'adattamento ai dati più nuovi, dimenticando quelli meno recenti.
+==== Separabilità Lineare
+In uno spazio $m$-dimensionale, con $m$ feature, si definisce *iperpiano* l'insieme di punti che soddisfano un vincolo espresso come equazione lineare sulle variabili. Esso determina uno spazio di $(m - 1)$ dimensioni. \
+Un *problema* di classificazione binaria si dice *linearmente separabile* quando esiste un iperpiano che separi gli esempi dalle diverse classi. Un problema siffatto può essere risolto con la regressione logistica (usando un algortimo di discesa di gradiente stocastica): l'errore è riducibile arbitrariamente se e solo se il problema linearmente separabile. L'iperapiano separatore sarà l'insieme di punti per i quali $sum_i w_i dot.c X_i = 0$, dove $overline(w)$ contiene i coefficienti appresi. Dato un nuovo esempio, per la predizione della classe il modello avrà un valore maggiore di 0.5 da un lato e minore dall'altro.
+#esempio(title: "Separabilità lineare")[
+Risultano problemi _linearmente separabili_ quelli leagti alle funzioni `or` e `and`. \
+Sono, invece _non linearmente separabili_ il problema dello `xor`, dato che nessuna retta può separare le due classi di esempi, ossia la funzione non è rappresentabile con un classificatore lineare.
+#figure(
+image("images/lin_sep.png", width: 70%),
+caption: [Problemi linearmente separabili (`or` e `and`) e non (`xor` e condizionale)]
+)
+]
+#esempio[
+Problema su variabili booleane con obiettivo _t_ vero se _x_ vera e _y_ vera, o se _x_ falsa e _z_ vera:
+- risulta non linearmente separabile: `t = if x then y else z`;
+- usando la GD, dopo 1000 epoche con $eta = 0.05$, si ottiene un modello con i pesi seguenti:
+$
+"lin"(e) = -0.1 dot.c x(e) + 4.06 + y(e) + 4.06 dot.c z(e) - 3.98
+$
+da cui $hat(t)(e) = "sigmoide(lin("e))$.
+#let rows = (
+  (0, 0, 0, 0, "−3.98", "0.02"),
+  (0, 0, 1, 1, "0.08", "0.52"),
+  (0, 1, 0, 0, "0.08", "0.52"),
+  (0, 1, 1, 1, "4.14", "0.98"),
+  (1, 0, 0, 0, "−4.10", "0.02"),
+  (1, 0, 1, 0, "−0.04", "0.49"),
+  (1, 1, 0, 1, "−0.04", "0.49"),
+  (1, 1, 1, 1, "4.14", "0.98"),
+)
+
+#align(center)[
+  #table(
+    columns: 6,
+    align: center + horizon,
+    inset: (x: 9pt, y: 4pt),
+    // lines above and under the header, vertical line after the t column
+    stroke: (x, y) => (
+      top: if y in (0, 1) { 0.5pt },
+      left: if x == 4 { 0.5pt },
+    ),
+    table.header($x$, $y$, $z$, $t$, [lin], $hat(t)$),
+    ..rows.flatten().map(v => [#v]),
+  )
+]
+- solo per quattro esempi si hanno predizioni corrette, per gli altri si hanno valori vicini a 0.5;
+- il modello risultante è abbastanza stabile anche ripetendo l'algoritmo con diverse inizializzazioni;
+- l'incremento del numero di iterazioni avvicina le predizioni $hat(t)$ a $0, 1$ 0 $0.5$.
+]
+==== Feature-Obiettivo Categoriche
+Quando $Y$ è categorica con più di due classi, essa può essere rappresentata usando variabili indicatrici binarie da imparare separatamente. Essendoci solo un valore di $Y$ per ogni esempio, il modello dovrebbe essere capace di predire probabilità per ciascuna variabile indicatrice, con somma unitaria. È possbile apprendere modelli per tutte tranne una e ricavare la probabilità del suo valore dalle altre. Ciò introduce una forma di _asimettria_ che può risultare problematica con predizione debole del valore per l'accumularsi di errori sulle altre variabili. \
+In alternativa si può considerare, per ogni valore, l'esponenziale d'una funzione lineare, da normalizzare. Si avranno così più parametri del necessario nel modello (_sovra-parametrizzazione_), ma anche uno stesso trattamento per tutti i valori. \
+Data $Y$ categorica con dominio rappresentato dalle tuple $chevron.l v_1, dots, v_k$, si definisce la *funzione softmax* $chevron.l a_1, dots, a_k chevron.r in RR^k mapsto RR^k$ che calcola un vettore la cui $i$-esima componente sarà:
+$
+"softmax"(chevron.l a_1, dots, a_k chevron.r) = (exp(a_i)) / (sum_(j=1)^k exp(a_j))
+$
+Tale funzione assicura la positività e la somma unitaria potendo così definire una distribuzione di probabilità. Essa è correlata con la sigmoide, essendo:
+$
+"sigmoide"(x) = 1/(exp(-x) + 1) attach(=, t: (*)) (exp(x))/(exp(0) + exp(x)) = "softmax"(chevron.l 0, x chevron.r)_2
+$
+la coppia (0, $x$) corrisponde ai valori $("false, true")$; $"softmax"(chevron.l 0, x chevron.r)_2$ è la seconda componente della coppia risultante della softmax; si ha l'uguaglianza $(*)$ moltiplicando numeratore e denominatore per $exp(x)$ quindi equivale al caso in cui la prima componente sia fissata a 0. Si noti che la softmax, come la sigmoide, non può rappresentare probabilità nulle. \
+La *regressione softmax* è una generalizzazione della regressione logistica (detta anche _regressione logistica multinomiale_): si ha un'equazione lineare per ogni valore di $Y$, dove $d o m(Y) = brace.l v_1, dots, v_k$. Per la predizione per un esempio $e$ e $"softmax"(chevron.l u_1(e), dots, u_k(e)chevron.r)$ calcola una tupla di $k$ valori con $j$-esima componente corrispondente alla predizione per $Y = v_j$ e $u_j(e) = w_(0, j) + X_1(e) dot.c w_(1, j) + dots.c X_m(e) dot.c w_(m, j)$. \
+Il modello viene tipicamente ottimizzato usando la log-loss categorica: sia $w_(i j)$ per $X_i$ e $v_j$, e sia $Y(e) = v_q$:
+$
+partial / (partial w_(i j))"logloss(softmax"(chevron.l u_1(e), dots, u_k(e) chevron.r), v_q) &= partial / (partial w_(i j))-log((exp(u_q(e)))/(sum_k exp(u_j(e)))) \
+&= partial / (partial w_(i j))(log(sum_j exp(u_j(e))) - u_q(e)) \
+&= [(hat(Y)(e))_j - bold("1")(j = q)] dot.c X_i
+$
+con $bold("1")(j = q) = 1$ se $j$ è l'indice del valore osservato $v_q$ e $(hat(Y)(e))_j$ la $j$-esima componente della predizione, valore predetto meno quello effettivo. \
+Nell'implementazione del modello vi sono problematiche connesse con la rappresentazione dei numeri:
+- l'esponenziale di numeri grandi potrebbe non essere rappresentabile portando a un caso di _overflow_, come $exp(800)$
+- l'esponenziale di numeri grandi negativi tende a 0, comportando possibili casi di _underflow_, ad esempio $exp(-800)$.
+Osservato che l'aggiunta di una costante a ogni $a_i$ nella softmax non ne cambia il valore, per la prevenzioni casi di over/under flow, conviene sotrarre il massimo da ciascun valore per cui ci sarà sempre uno 0 e il resto dei valori risulteranno negativi. Su GPU e HW paralleli a bassa precisione le correzioni sono importanti. Per grandi numeri di valori possbili il calcolo del denominatore diventa costoso. Si può ricorrere a una modalità di predizione in termini di un albero binario di valori, definita *softmax gerarchica*, simile alla softmax, ma più efficiente per grandi domini. Ad esempio in NLP può essere necessario predire prossima parola in un testo.
+==== Creazione di Feature di Input
+Nella regressione lineare e in quella logistica, si considerano feature di input numeriche. In caso di altri tipi si devono fare delle trasformazioni:
+- feature _categoriche_: vanno convertire in feature con dominio $brace.l 0, 1 brace.r$, tramite *one-hot encoding*, usando le variabili indicatrici;
+- feature a _valori reali_: si possono usare direttamente in modelli lineari per $Y$, una volta aggiustate le altre feature di input; spesso si adottano anche trasformazioni per crearne di nuove, dotate di proprietà desiderabili;
+- feature _ordinali_, comprese quelle a valori reali: si possono considerare dei _tagli_ per definire feature booleane, ad esepio da $x$, scegliendo un valore $v$ del suo dominio, si considera una nuova feature, vera se $x > v$, oppure $x - v > 0$; nel _binning_ si sceglie un insieme di soglie, $a_1 < a_2 < dots.c < a_k$, ricavando una feature booleana per ogni intervallo fra $a_i$ e $a_(i + 1)$, come per una funzione costante a pezzi; una feature può essere anche derivata da $max(x - v, 0)$, funzione alla base delle _rectified linear unit (ReLU)_.
+La progettazione di feature appropriate ai diversi problemi e relativi modelli è il tema principale della cosidetta *feature engineering*. Spesso risulta difficile progettare buone feature. In seguito si considererà il problema dell'apprendimento delle feature il quale è alla base del cosidetto *representation learning*.
+== Sovradattamento
+Il *sovradattamento*, _overfitting_, è il problema che si manifesta con l'apprendimento di modelli basati su _regolarità apparenti_ presenti nei dati di training, ma non in quelli di test o, in generale, nel mondo da cui essi sono tratti. Il fenomeno è tipico nella ricerca di segnali in dati distribuiti casualmente: si tratta di correlazioni _spurie_ nei dati che non si riflettono sull'intero dominio del problema; si verifica un _eccesso di fiducia_ nelle predizioni del modello rispetto a quanto autorizzino i dati a disposizione.
+#esempio(title: "Ristoranti")[
+Sito con giudizi su ristoranti: da 1 a 5 stelle. Si vogliano riconoscere e mettere in evidenza i ristoranti eccellenti: bisogna capire se serve usare il giudizio medio. Per ristoranti con molti giudizi risulta difficile avere una media eccellente. \
+Non è difficile osservare che un ristorante con un solo giudizio pari a 5 stelle: apparentemente rientrerebbe tra quelli eccellenti ma è improbabile che lo sia davvero; analogo problema si manifesterebbe con ristoranti con uno o pochi giudizi molto bassi.
+]
+Previsioni estreme possono diventare problematiche con la disponibilità di nuovi dati. Questa forma di sovradattamento è legata alla cosiddetta *regressione verso la media*. I valori delle osservazioni sono determinati da _qualità_ e _caso_: più dati abbassano l'impatto della casualità. \
+Il sovradattamento può dipendere anche dalla _complessità del modello_ scelto: un modello più complesso, con più parametri, risulta più facile da adattare ai dati di training rispetto a uno più semplice. Si può considerare il caso estremo in cui si preveda un modello con un parametro per ciascun esempio. Tuttavia esso andrà giudicato sulla base di nuovi esempi di test, non utilizzati per l'addestramento.
+Dalla Statistica, l'*errore* sul test-set può essere descritto come segue:
+$
+"Errore"_2("Test") = "Bias"^2 + "Varianza" + "Errore_irriducibile"
+$
+Qui il *bias* è l'errore dovuto all'imperfezione del modello appreso, risulta basso quando esso ha una complessità vicina quella ideale, detta *ground truth*, del processo reale che governa la generazione dei dati. Può essere scomposto in _bias di rappresentazione_, la differenza tra tipo di modello scelto e ground truth e _bias di ricerca_, influenza dell'algoritmo che non cerca esaustivamente nello spazio di ipotesi. \
+La *varianza* è la parte di errore dovuta all'insufficienza di dati disponibili; un modello più complesso richiede più dati per cui, se il quantitativo di dati è fisso, si deve trovare  un *compromesso* fra bias e varianza. Per un modello complesso, se non è disponibile il quantitativo di dati necessario allora il bias sarà basso e la varianza alta; per un modello semplice, se i dati disponibili sono sufficienti alla stima dei parametri si ha una bassa varianza ma un bias alto. Il *rumore* è l'errore intrinseco dovuto a dati che dipendono da _feature non considerate_ nel modello e alla _naturale aleatorietà_ nel processo di generazione dei dati.
+=== Pseudoconteggi
+Nella predizione il calcolo della media costituisce spesso una scelta ottimale rispeto a molte misure basate su dati di training. Ma la _media empirica_ su _Es_ non è sempre valida per stime riguardanti le nuove istantze. Ma, in mancanza di dati a sufficeinza, si può verificare il caso di un valore fra quelli del dominio mai osservato in _Es_ che avrebbe media nulla e, se si deve stimare la probabilità, anche la frequenza relativa sarebbe nulla. \
+Per porre rimedio a tali problemi si possono considerare _pseudo-esempi_ aggiuntivi come _conoscenza pregressa_ addizionale da usarsi per calcolare i cosidetti *pseudoconteggi* (_prior counts_) di partenza. Esesi saranno non negativi ma non necessariamnente interi. \
+Disponendo dei valori osservati $v_1, dots, v_n$, per predire il successivo $hat(v)$, si assume di usare una predizione media $a_0$, ottenuta da conoscenza pregressa, prima ancora di avere i dati a disposizione, ossia quando $n=0$; per i casi successivi si stimerà la media come segue;
+$
+hat(v) = (c dot.c a_0 + sum_i v_i)/(c + n)
+$
+con $c in RR_+$ numero di dati fittizi assunti, ciascun con valore $a_0$. Quando $c=0$ la predizione corrisponde a quella della media empirica, non utilizzabile senza dati osservati a disposizione. Il valore di $c$ regola l'importanza relativa fra ipotesi iniziale e dati osservati.
+#esercizio[
+Derivare uno stimatore $hat(p)$ dalle frequenze $n_0$ e $n_1$. Una buona stima $hat(p)$ dovrà minimizzare l'errore su casi di test. Adottando errore quadratico o log-loss, la media empirica fornisce una stima ottimale: $hat(p) = n_1/(n_0 + n_1)$. Tuttavia, pur minimizzando errore sul training set, non ci sono garanzie sul test set. Tipicamente, se uno dei valori non occorre mai nel training set, si registrerebbe una log-loss infinita. \
+In tali casi si può ricorrere allo *smoothing addititivo di Laplace*:
+$
+hat(p) = (n_1 + 1)/(n_0 + n_1 + 2) = (n_1 + 1)/(n + 2)
+$
+Fra tutti gli stimatori, esso minimizza log-loss ed errore quadratioc sul test set. L'aggiustamento equivale all'aggiunta di due pseudo-esempi, uno con $Y = 0$ e uno con $Y = 1$
+]
+=== Regolarizzazione
+Secondo il _Rasoio di Occam_ si dovrebbero preferire modelli semplici a quelli complessi. A tale scopo si può considerare l'uso di un *regolarizzatore*, ossia un termine da aggiungere alla misura di adattamento del modello ai dati in modo da _penalizzare_ la complessità dell'ipotesi da apprendere. \
+Si dovrà pertanto scegliere un'ipotesi $h$ che minimizzi
+$
+[sum_e "loss"(hat(Y)(e), Y(e))] + lambda dot.c "regularizer"(hat(Y))
+$
+dove:
+- $"loss"(hat(Y)(e), Y(e))$ misura della qualità dell'adattamento su $e$;
+- $"regularizer"(hat(Y))$ penalizza la complessità del modello;
+- il *parametro di regolarizzazione* $lambda$, media tra adattamento e semplicità; esso può servire anchhe a sommare quantità su scale diverse e può essere determinato in base a conoscenza pregresa o tramite _cross-validation_.
+Si osservi che con molti esempi la somma a sinistra tende a dominare sul regolarizzatore, mentre con pochi esempi il regolarizzatore ha maggiore effetto. \
+Il parametro di regolarizzazione è un esempio di iperparametro del modello. Formalmente un *iperparametro* è un parametro usato per definire cosa/come si ottimizza e viene scelto in base a conoscenza pregressa, esperienza con problemi simili, o anche via *tuning* tramite _cross-validation_. \
+Ad esempio, nel caso degli alberi di decisione, una misura della complessità è il numero di test, il quale dipende a sua volta dal numero delle foglie. Nella minimizzazione della loss si può aggiungere una funzione delle dimensioni dell'albero $T$:
+$
+(sum_(e in E s)"loss"(hat(Y)(e), Y(e))) + gamma abs(T)
+$
+dove $abs(T)$ è la misura sopra indicata: un nuovo nodo-test risulta utile se riduce l'errore di $gamma$. \
+Nelc aso di modelli con parametri a valori reali, un regolarizzatore $L_2$ penalizza la somma dei quadrati dei parametri. Ad esempio, nella cosidetta *ridge regression* esso viene sommato all'_errore quadratico_:
+$
+[sum_(e in E s)(Y(e) - sum_(i=0)^m w_i dot.c X_i(e))^2] + lambda sum_(i=0)^m w_i^2
+$
+Anche nella regressione logistica, si adotta un regolarizzatore $L_2$ puntando a minimizzare la seguente log-loss:
+$
+-[sum_(e in E s)(Y(e)log(hat(Y)(e)) + (1 - Y(e))log(1 - hat(Y)(e)))] + lambda(sum_(i=0)^m w_i^2)
+$
+dove $hat(Y)(e) = "sigmoide"(sum_(i=0)^m w_i dot.c X_i(e))$. \
+Nell'implementazione della _regolarizzazione_ $L_2$, si introduce il passo:
+$
+w_i <- w_i - eta dot.c lambda dot.c (b / (abs(E s))) dot.c w_i
+$
+con $b / (abs(E s))$ perchè $lambda$ è relativo all'intero dataset ma l'aggiormento va operato su ciascun batch di dimensione $b$; è possbile manche regolarizzare dopo ogni iterata su tutti gli esempi. Il fattore $eta lambda b\/abs(E s)$ cambia di rado per cui può essere pre-calcolato. \
+Un _regolarizzatore_ $L_1$ si bassa solla somma dei valori assoluti dei parametri. Ad eseempio, nel modello detto LASSO si aggiunge $lambda(sum_i abs(w_i))$ all'errore quadratico. Usando la log-loss:
+$
+-[sum_(e in E s)(Y(e)log(hat(Y)(e)) + (1 - Y(e))log(1 - hat(Y)(e)))] + lambda(sum_(i=0)^m abs(w_i))
+$
+con
+- derivata parziale del termine $"sign"(w_i) = w_i \/ abs(w_i) in brace.l -1, 1 brace.r$: non definita in 0, ma non serve spostarsi da 0 si è già sul valore minimo;
+- si implementa facendo tendere a 0 ogni parametro di una costante: diventa nullo nel caso si cambi il segno del parametro;
+- nell'*iterative soft-thresholding*, GD per la retgressione logistica, si ha:
+$
+w_i <- "sign"(w_i) dot.c max(0, abs(w_i) - eta dot.c lambda dot.c b \/ abs(E s))
+$
+In caso di feature numerose, il regolarizzatore $L_1$ tende ad annullare molti pesi, facendo ignorare le relative feature, per cui diventa un meccanismo implicito per la *selezione delle feature*.
+=== Validazione incrociata
+Risulta difficile determinare la giusta complessità dei modelli da impiegare prima di aver visto i dati: essa dipende dal numero di parametri e/o da altri iperparametri dell'algoritmo. \
+A tale scopo si può adottare uno _schema generale_ di *ricampionamento* (_resampling_) per l'apprendimento e valutazione, come quello sintetizzato nella seguente figura:
+#figure(
+image("images/ricampionamento.png", width: 70%),
+caption: [Schema di ricampionamento]
+)
+Si noti come il test set venga messo da parte per essere usato solo per la valutazione finale. Dev'essere composto da esempi _mai visti_, non utilizzati nella fase di addestramento, da impiegare come surrogato di nuovi esempi futuri. \
+Nella *validazione incrociata* o _cross validation_ (CV) si trattiene parte dei dati di training per valutare un modello appreso sulla base del resto degli esempi di training. Si dividono i dati non di test in due parti: un insieme di _training_, per l'apprendimento dei modelli e un insieme di *validazione* (_validation set, dev set, holdout_) per valutare diversi modelli (o diverse configurazioni degli iperparametri). Trovato iil modello migliore, si userà il dataset per apprendere un modello. \
+La CV va ripetuta più volte scambiando i ruoli degli esempi per ottenere modelli diversi. Alla fine si sceglierà il modello migliore ossia quello con la migliore configurazione degli iperparametri. \
+L'errore sul training set, tende a decresce al crescere delle dimensioni dell'albero emtnre si l'errore sul validation set si abbassa e poi prende a risalire. \
+La CV aiuta a scegliere la configurazione corrispondente al minimo dell'errore sul validation set. L'ipotesi è che si abbia lo stesso punto di minimo anche per l'errore calcolato sul test set. Si può considerare come iperparametro da regolare anche il numero `#passi` di training prima di restituire un predittore, una forma di *early stopping*. Tipicamente l'addestramento ha bisogno di molti esempi per avere modelli migliori, ma ciò non deve andare a scalpito del set per la validazione. \
+Per confrontare modelli diversi si deve ripetere anche la CV esterna su diversi partizionamenti in training / test set. Ciò per evitare l'influenza di un fattore casuale come la scelta del test set che potrebbe favorire solo alcuni dei modelli considerati. Si confrontano i modelli sulla base delle medie delle misure calcolate su più test set e possibilmente anche della varianza per valutare la stabilità dei modelli.
+==== k-Fold Cross Validation
+Disponendo solo di dataset limitati, si può puntare al riuso degli esempi per il training e la validazione per regolare ii parametri del modello appreso, scambiandone i ruoli. \
+Nella *k-Fold Cross Validation* i passi per valutare una scelta di parametri sono:
+- suddividere casualmente il dataset in $k$ parti di uguali dimensioni, dette *fold*
+- si valutano i modelli con le diverse impostazioni: addestrando il modello $k$ volte, ognuna con una distinta fold usata per la validazione;
+- si determinano e restituiscono le impostaioni ottimali.
+Ad esempio, ripetendo per $k=10$ volte, si addestrano modelli sul $90 percent$ e si valida sul $10 percent$ dei dati considerati. In tal modo la validazione coinvolge ogni esempio esattamente in una folda.
+==== Leave-One-Out Cross Validation
+Nel caso estremo di un numero ancor più limitato di esempi, si può adottare una $k$-fold CV con $k$ pari al numero di esempi di training, detta *Leave-One-Out Cross Validation*. Avendo $n$ esempi di training, si apprendono $n$ modelli: per ogni esempio $e$, si usano tutti gli altri per addestrare un modello da valutare infine su $e$. La complessità cresce col numero di esempi di training: il metodo diventa poco pratico con modelli prodotti in fase di training indipendenti fra loro, mentre risulta adeguato se il modello creato in un'esecuzione può essere modificato in modo efficiente nel successivo, sostituendo un solo esempio con un altro.
+== Modelli Compositi
+=== Estensioni dei Modelli Lineari
