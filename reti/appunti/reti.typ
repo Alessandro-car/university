@@ -1002,3 +1002,144 @@ Confrontando il formato IPv6 (*@fig:ipv6*) con IPv4 (*@fig:ipv4*) notiamo che so
 === VEDERE SE SI FA PASSAGGIO DA IPv4 A IPv6 (libro pag 293)
 === VEDERE SE SI FA INOLTRO GENERALIZATO
 === VEDERE SE SI FA DISPOSITIVI MIDDLEBOX
+= Livello di rete: il piano di controllo
+Le tabelle di inoltro, nel caso di inoltro basato sulla destinazione, e le tabelle dei flussi, nel caso di inoltro generalizzato, sono gli elementi principali che collegano il piano dei dati e il piano di controllo del livello di rete. Tali tabelle specificano il comportamento di inoltro nel piano dei dati locale di un router. Inoltre, nel caso di inoltro generalizzato, le azioni intrapese potrebbero includere non solo l'inoltro di un pacchetto verso una porta di uscita del router, ma anche lo scarto del pacchetto, la duplicazione del pacchetto e la riscrittura dei campi dell'interstazione del pacchetto di livello 2, 3 e 4. \
+Per calcolare, mantenere e installare le tabelle di inoltro e dei flussi esistono due possibili approcci.
+- _Controllo per router_. La seguente figura illustra il caso in cui l'algoritmo di instradamento viene eseguito su ogni singolo router, all'interno del quale vengono effettuate sia le funzioni di inoltro (piano dei dati) che quelle di instradamento (piano di controllo). Ogni router ha una componente di instradamento (piano di controllo). Ogni router ha una componente di instradamento che comunica con le componenti di instradamento degli altri router per calcolare la propria tabella di inoltro. Questo approccio è stato usato in Internet per decenni.
+#figure(
+image("images/controllo_router.png", width: 60%),
+caption: [Controllo per router]
+) <fig:controllo_router>
+- _Controllo logicamente centralizzato_. La seguente figura mostra il caso in cui un controller logicamente centralizzato calcola e distribuisce le tabelle di inoltro che devono essere utilizzate da ogni router. Inoltre, l'astrazione del match-action, come visto precedentemente, permette che il router effettui l'inoltro IP tradizionale e moltre altre funzioni che prima erano implementate in middlebox separati.
+#figure(
+image("images/controller_centralizzato.png", width: 60%),
+caption: [Controllo logicamente centralizzato]
+) <fig:controllo_centralizzato>
+Il controller interagisce con l'agente di controllo (CA, _Control Agent_), in ogni router tramite un protocollo che configura e gestisce la tabella dei flussi del router. Tipicamente, il CA ha funzionalità minime: comunica con il cotroller ed esegue quello che il controller gli ordina. A differenza degli algoritmi di instradamenti della *@fig:controllo_router*, gli agenti di controllo non interagiscono direttamente tra di loro e non partecipano attivamente all'elaborazione  della tabella di inoltro. \
+Per controllo logicamente centralizzato si intende un servizio di controllo dell'instradamento a cui si accede come se fosse un singolo punto centrale di servizio, anche se il servizio probabilmente viene implementato su più server per ragioni di resistenza ai guasti e scalabilità delle prestazioni.
+== Algoritmi di instradamento
+Lo scopo degli *algoritmi di instradamento* è determinare i percorsi o cammini, tra le sorgenti e destinatari, attraverso la rete di router. Tipicamente, il percorso migliore è quello che ha costo minimo. Tuttavia, bisogna tenere in considerazione problematiche di interesse concreto quali le policy (ad esempio, il router _x_ appartenente all'organizzazione _Y_, non può inoltrare pacchetti che abbiamo come sorgente la rete appartenente all'organizzazione _Z_). È sempre necessario avere una sequenza ben definita di router che il pacchetto attraverso viaggiando dall'host sorgente all'host destinatario, sia che il piano di controllo adotti un approccio per router sia che adotti un approccio logicamente centralizzato. Quindi, gli algoritmi di instradamento sono di importanza basilare. \
+Per formulare i problemi di instradamento si utilizza un *grafo*. Un grafo $G = (N, E)$ è un insieme $N$ di nodi e un insieme $E$ (_edge_) di archi, ove ciascun arco collega una coppia di nodi di $N$. Nel contesto dell'instradamento a livello di rete, i nodi del grafo rappresentano i router e gli archi che connettono tali nodi rappresentano i colleganti fisici tra i router, come mostrato nella seguente figura:
+#figure(
+image("images/grafo.png", width: 70%),
+caption: [Modello astratto di grafo di una rete di calcolatori]
+) <fig:grafo>
+Come mostrato nella figura, ad un arco è associato un valore che ne indica il costo. In genere, ciò può riflettere la lunghezza fisica del collegamento corrispondente, la velocità del collegamento o il suo prezzo. Per ogni arco $(x, y)$ tra i nodi _x_ e _y_ denotiamo con $c(x, y)$ il suo costo. Se la coppia $(x, y)$ non appartiene ad $E$, poniamo $c(x, y) = +infinity$. Inoltre, consideriamo sempre e solo gafi non orientati ovvero $c(x, y) = c(y, x)$. Inoltre, un nodo $y$ viene detto *adiacente* o *vicino*, _neighbor_, a un nodo _x_ se $(x, y)$ è un arco in $E$. \
+Dato che agli archi del grafo sono assegnati dei costi, l'obiettivo di un algoritmo di instradamento è l'individuazione dei percorsi meno costosi tra sorgenti e destinazioni. Un *percorso* in un grafo $G = (N, E)$ è una sequenza di nodi $(x_1, x_2, dots, x_P)$ tali che ciascuna delle coppie $(x_1, x_2), (x_2, x_3), dots, (x_(P-1), x_P)$ sia un arco appartenente ad $E$. Il costo di un percorso è la somma di tutti gli archi lungo il percorso. Dati due nodi qualsiasi $x$ e $y$, esistono più percorsi che li congiungono, ciascun con il proprio costo. Uno o più tali percorsi rappresenta un *percorso a costo minimo*. Se tutti gli archi del grafo hanno lo stesso costo, il percorso a costo minimo rappresenta anche il *percorso più breve*, ossia il percorso con il minor numero di collegamenti tra sorgente e destinazione. \
+Possiamo classificare gli algoritmi di instradamento come centralizzati o decentralizzto.
+- Un *algoritmo di instradamento centralizzato* calcola il percorso a costo minimo tra una sorgente e una destinazione avendo conoscenza globale e completa della rete. In altre parole, l'algoritmo riceve in ingresso tutti i collegamenti tra i nodi e i loro costi. Ciò richede che l'algoritmo in qualche modo ottenga tale informazione prima di effettuare il vero e proprio calcolo, che può svolto in una sola locazione quale potrebbe essere un controller logicamente centralizzato, o replicato in ognuno dei router della rete. La caratteristica distintiva, è che un algoritmo globale ha informazioni complete su connettività e costi. In pratica, gli algoritmi con informazioni di stato globali sono spesso detti *algoritmi link-state* dato che l'algoritmo deve essere conscio del costo di ciascun collegamento della rete.
+- In un *algoritmo di instradamento decentralizzato* il percorso a costo minimo viene calcolato in modo distribuito e iterativo. Nessun nodo possiede informazioni complete sul costo di tutti i collegamenti della rete. Inizialmente i nodi conoscono soltanto i costi dei collegamenti a loro incidenti. Poi, attraverso un processo iterativo e lo scambio di informazioni con i nodi adiacenti, un nodo gradualmente calcola il percorso a costo minimo verso una destinazione o un insieme di destinazioni. L'algoritmo di instradamento decentralizzato è chiamato algoritmo distance-vector DV, o con vettore delle distanze, poichè ogni nodo elabora un vettore di stima dei costi verso tutti gli altri nodi della rete. Tali algoritmi decentralizzati, che prevedono scambi interattivi tra router vicini, possono essere implementati nei piani di controllo nei quali i router interagiscono direttamente, mentre hanno poco senso nel caso di controllo centralizzato.
+Un secondo criterio per classificare gli algoritmi di instradamento riguarda il fatto di essere statici o dinamici. Negli *algoritmi di instradamento statici* i percorsi cambiano molto raramente, spesso come risultato di un intervento umano. Gli *algoritmi di instradamento dinamici*, invece, determinano gli instradamenti al variare del volume di traffico o della topologia della rete. Un algoritmo dinamico può essere eseguito periodicamente o come conseguenza diretta di un cambiamento nella topologia o nel costo di un collegamento. Gli algoritmi dinamici rispondono meglio ai cambiamenti della rete, ma sono anche soggetti a problemi quali l'instradamento in loop e l'oscillazione dei percorsi. \
+Un terzo modo per classificare gli algoritmi di instradamento si basa sull'essere più o meno sensibili al carico della rete (_load-sensitive_ o _load-insensitive_). In un *algoritmo sensibile al carico* i costi dei collegamenti variano dinamicamente per riflettere il lviello corrente di congestione. Se si associa un alto costo in una situazione di traffico ad un collegamento, un algoritmo di instradamento eviterà di usarlo. Gli attuali algoritmi di instradamento Internet sono *algoritmi insensibili al carico*, dato che il costo di un collegamento non riflette esplicitamente il suo attuale livello di congestione.
+=== Instradamento link-state (LS)
+In un instradamento link-state la topologia di rete e tutti i costi dei colleganenti sono noti. Ciò si ottiene facendo inviare a ciascun nodo paccehtto sullo stato dei suoi collegamenti a tutti gli altri nodi della rete. Questi pacchetti contengono identità e costi dei collegamenti connessi al nodo che li invia. Questo viene spesso ottenuto tramite un algoritmo di *link-state broadcast*. In atl modo tutti i nodi dispongono di una vista identica e completa della rete e ciascun nodo che esegue l'algoritmo LS ottiene gli stessi risultati. \
+L'algoritmo di calcolo dei percorsi associato all'instradamento link-state è noto come *algoritmo di Dijkstra*. L'algoritmo di Dijkstra calcola il percorso a costo minimo da un nodo (l'origine, che chiameremo $u$) a tutti gli altri nodi della rete, è iterativo e ha le seguenti proprietà: dopo la $k$-esima iterazione, i percorsi a costo minimo sono noti a _k_ nodi di destinazione e, tra i percorsi a costo minimo verso tutti nodi di destinazione, questi $k$ percorsi hanno i $k$ costi più bassi. Si adotta la seguente notazione.
+- $D(v)$: costo minimo del percorso dal nodo origine alla destinazione $v$ per quanto concerne l'iterazione corrente dell'algoritmo.
+- $p(v)$: immediato predecessore di $v$ lungo il percorso a costo minimo dall'orgine a $v$.
+- $N'$: sottoinsieme di noti contenente tutti i nodi $v$ per cui il percorso a costo minimo dall'origine a $v$ è definitivamente noto.
+L'algoritmo di instradamento centralizzato consiste in un passo di inizializzazione seguito da un ciclo che viene eseguito una volta per ogni nodo del frao. Quando termina, l'algoritmo avrà calcolato il camminimo minimo dal nodo origine $u$ a tutti gli altri nodi.
+#algoritmo(title: [Algoritmo di Dijkstra])[
+  #pseudocode-list[
+    + *Inizializzazione*
+    + $N' = brace.l u brace.r$
+		+ per tutti i nodi $v$
+			+ se $v$ è adiacente a $u$
+				+ allora $D(v) = c(u, v)$
+			+ altrimenti $D(v) = infinity$
+		+ *Ciclo*
+			+ determina un $w$ non in $N'$ tale che $D(w)$ sia minimo
+			+ aggiungi $w$ a $N'$
+			+ aggiorna $D(v)$ per ciascun nodo $v$ adiacente a $w$ e non in $N'$:
+				+ $D(v) = min(D(v), D(w) + c(w, v))$
+				+ \/\* il nuovo costo verso $v$ è il vecchio costo verso $v$ oppure il costo del percorso minimo noto verso $w$ più il costo da $w$ a $v$ \*/
+				+ ripeti in ciclo *finchè* non si verifica che $N' = N$
+  ]
+] <alg:dijkstra>
+#esempio(title: "Applicazione algoritmo di Dijkstra")[
+Consideriamo la rete nella *@fig:grafo* e calcoliamo i percorsi a costo minimo da $u$ a tutte le destinazioni. I passi dell'algoritmo sono mostrati nella seguente tabella, le cui righe forniscono i valori delle variaibili dell'algoritmo al termine dell'iterazione.
+- Nel passo di inizializzazione i valori dei percorsi a costo minimo noti da $u$ ai suoi nodi adiacenti, $v, w$ e $x$, sono posti rispettivamente a 2, 5 e 1. In particolare il costo verso $w$ vale 5 dato che questo è il costo del collegamento diretto da $u$ a $w$. I costi verso $y$ e $z$ sono posti a infinito dato che tali nodi non sono adiacenti a $u$.
+- Nella prima iterazione prendiamo in considerazione i nodi non ancora aggiunti all'insieme $N'$ e determiniamo il nodo a costo minimo come alla fine della precedente iterazione. Tale nodo è $x$, di costo 1, e pertanto $x$ viene aggiunto all'insieme $N'$. Viene poi eseguita ricalcolato $D(v)$ per tutti i nodi, ottenendo i risultati mostrati nella seconda riga. Il costo verso $v$ non è cambiato. Il costo del percorso verso $w$ passando per $x$ è diventato 4. Viene quindi selezionato questo percorso a costo inferiore e il predecessore di $w$ lungo il percorso minimo da $u$ diventa $x$. Analogamente, il costo verso $y$ viene calcolato essere 2, e la tabella viene aggiornata di conseguenza.
+- Nella seconda iterazione si trova che i nodi $v$ e $y$ hanno percorsi a costo minimo, ne scegliamo arbitrariamente uno e aggiungiamo $y$ all'insieme $N'$ che ora conterrà $u, x$ e $y$. I costi verso i nodi rimanenti non ancora in $N'$, ossia $v, w$ e $z$ sono aggiormati ottenendo i risultati mostrati nella terza riga.
+- E così via...
+#let rows = (
+  ("0", $u$, $2, u$, $5, u$, $1, u$, $infinity$, $infinity$),
+  ("1", $u x$, $2, u$, $4, x$, [], $2, x$, $infinity$),
+  ("2", $u x y$, $2, u$, $3, y$, [], [], $4, y$),
+  ("3", $u x y v$, [], $3, y$, [], [], $4, y$),
+  ("4", $u x y v w$, [], [], [], [], $4, y$),
+  ("5", $u x y v w z$, [], [], [], [], []),
+)
+
+#align(center)[
+  #table(
+    columns: 7,
+    align: center + horizon,
+    inset: (x: 8pt, y: 6pt),
+    stroke: 0.5pt,
+    table.header(
+      [*Passo*],
+      [*$N'$*],
+      [$D(v), p(v)$],
+      [$D(w), p(w)$],
+      [$D(x), p(x)$],
+      [$D(y), p(y)$],
+      [$D(z), p(z)$],
+    ),
+    ..rows.flatten().map(v => [#v]),
+  )
+]
+Quando l'algoritmo termina, abbiamo per ciascun nodo il suo predecessore lungo il percorso a costo minimo dal nodo orgine. Per ciascun predecessore abbiamo il rispettivo predecessore, e in questo modo riusciamo a costruire l'intero percorso dall'orgine a tutte le destinazioni.
+]
+Calcoliamo la complessità computazionale di questo algoritmo. Nella prima iterazione, dobbiamo cercare se tutti gli $n$ nodi per determinare quello $w$ in in $N'$ avente il costo minimo. Nella seconda iterazione dobbiamo controllare $n-1$ nodi per determinare il costo minimo; nella terza $n-2$ e così via. Complessivametne il numero totale di nodi da cercare in tutte le iterazioni è $(n(n+1))/(2)$ e, di conseguenza, diciamo che la complessità dell'algoritmo di Dijkstra nel caso peggiore è di ordine quadratico: $O(n^2)$. Un'implementazione più sofisticata, utilizzando una struttura dati nota come heap, riesce a determinare il minimo in un tempo logaritmico anzichè lineare.
+=== Instradamento distance-vector (DV)
+Mentre l'instradamento LS usa informazioni globali, quello *distance-vector* è iterativo, asincrono e distribuito. È _distribuito_ nel senso che ciascun nodo riceve parte dell'informazione da uno o più dei suoi vicini direttamente connessi, a cui, dopo aver effettuato il calcolo, restituisce i risultati. È _iterativo_ nel senso che questo processo si ripete fino a quando non avviene ulteriore scambio informativo tra vicini. L'algoritmo è anche auto-terminante: non vi è alcun segnale che il calcolo debba fermarsi, semplicemente si blocca. È _asincrono_ nel senso che non richiede che tutti i nodi operino al passo con gli altri. \
+Consideriamo un'importante relazione tra costi e percorsi a costo minimo. Sia $d_x (y)$ il costo del percorso a costo minimo dal nodo _x_ al nodo _y_. Allora i costi minimi sono correlati dalla nota *formula di Bellman-Ford*:
+$
+d_x (y) = min_v brace.l c(x, v) + d_v (y) brace.r
+$
+dove $min_v$ riguarda tutti i vicini di $x$. Se, dopo aver viaggiato da $x$ a $v$, consideriamo il percorso a costo minino da $v$ a $y$, il costo del percorso sarà $c(x, v) + d_v (y)$. Il costo minimo è il minimo di $c(x, v) + d_v (y)$ calcolato su tutti i nodi adiacenti $v$.  \
+La formula di Bellman-Fors fornisce le righe della tabella di inoltro del nodo $x$. Sia $v^*$ un qualsiasi nodo vicino che minimizza l'equazione di Bellman-Ford. Allora, se il nodo _x_ vuole inviare un pacchetto al nodo _y_ lungo il percorso a costo minimo, dovrebbe prima inoltrarlo al nodo $v^*$. Pertanto, la tabella di inoltro al nodo $x$ specificherebbe il nodo $v^*$ come router successivo per la destinazione finale _y_. Un altro contributo pratico della formula è suggerire la forma della comunicazione tra vicini che avrà luogo nell'algoritmo usato dal DV, detto *algoritmo di Bellman-Ford*. \
+L'idea è la seguente. Ciascun nodo $x$ inizia con $D_x (y)$, una stima del percorso a costo minimo da sè stesso al nodo $y$, per tutti i nodi in $N$. Sia $bold(D)_x = [D_x (y): y in N]$ il vettore delle distanze dal nodo _x_, che è il vettore delle stime dei costi da _x_ a tutti gli altri nodi. Con l'algoritmo Bellman-Ford, ciascun nodo $x$ mantiene i seguenti dati di instradamento.
+- Per ciascun vicino $v$, il costo $c(x, v)$ da $x$ al vicino $v$.
+- Il vettore delle distanze dal nodo $x$, contenente la stima presso $x$ del costo verso tutte le destinazioni $y$.
+- I vettori delle distanze di ciascuno dei suoi vicini, ossia $bold(D)_v = [D_v (y) : y in N]$, per ciascuno vicino $y$ di $x$.
+In questo algoritmo distribuito e asincrono, ogni tanto un nodo invia una copia del proprio vettore delle distanze a ciascuno dei suoi vicini. Quando un nodo $x$ riceve un nuovo vettore da qualunque dei suoi vicini $v$, lo salva e quindi usa la formula di Bellman-Ford per aggioranre il proprio vettore come segue:
+$
+D_x (y) = min_v brace.l c(x, v) + D_v (y) brace.r " per ciascun nodo" y  "in" N
+$
+Se il vettore delle distanze del nodo $x$ è cambiato per via di tale passo di aggiornamento lo invia a ciascuno dei suoi vicini, i quali a loro volta aggiorneranno il proprio vettore.
+#algoritmo(title: [Algoritmo Bellman-Ford])[
+  A ciascun nodo $x$:
+  #pseudocode-list[
+    + *Inizializzazione*:
+      + *per* tutte le destinazioni $y$ in $N$:
+        + $D_x (y) = c(x, y)$ #text(fill: luma(150))[/* se $y$ non è adiacente, allora $c(x, y) = infinity$ */]
+      + *per* ciascun vicino $w$
+        + $D_w (y) = ?$ per tutte le destinazioni $y$ in $N$
+      + *per* ciascun vicino $w$
+        + invia il vettore delle distanze $D_x = [D_x (y) : y "in" N]$ a $w$
+    + *ciclo*
+      + attendi (finché vedi cambiare il costo di un collegamento verso qualche vicino $w$ o finché ricevi un vettore delle distanze da qualche vicino $w$)
+      + *per* ogni $y$ in $N$:
+        + $D_x (y) = min_v {c(x, v) + D_v (y)}$
+      + *se* $D_x (y)$ è cambiato per qualche destinazione $y$
+        + invia il vettore delle distanze $D_x = [D_x (y) : y "in" N]$ a tutti i vicini
+    + *ripeti* il ciclo indefinitamente
+  ]
+] <alg:bellman-ford>
+Un nodo, per aggioranre la propria tabella di inoltro per una da destinazione $y$, ciò che il nodo ha bisogno di sapere non è la distanza sul percorso minimo verso $y$, ma il ndoo vicino $v^*(y)$ che rappresenta il router successivo lungo il percorso più breve verso _y_. Il router $v^*(y)$ è il vicino $v$ che ottiene il valore minimo nella riga 11 dell'*@alg:bellman-ford*. Se esistono più vicini $v$ che ottengono il minimo, allora se ne sceglie uno qualunque tra questi. \
+La seguente figura mostra il funzionamento dell'instradamento DV in una semplice rete a tre nodi.
+#figure(
+image("images/dv.png", width: 70%),
+caption: [Instradamento distance vector (DV)]
+)
+La colonna di sinistra della figura mostra tre *tabelle di instradamento* iniziali per ciascuno dei tre nodi. All'interno di una specifica tabella di instradamento le righe rappresentano i vettori delle distanze: più precisamente, la tabella di instradamento di ciascun nodo include il proprio vettore delle distanze e quello dei suoi vicini. \
+Dopo l'inizializzazione, ciascun nodo invia il proprio vettore ai suoi vicini. Dopo aver ricevuto gli aggiormanenti, i nodi ricalcolano il vettore delle distanze. Ad esempio, per il nodo $x$:
+$
+D_x (x) &= 0 \
+D_x (y) &= min brace.l c(x, y) + D_y (y), c(x, z) + D_z (y) brace.r = min brace.l 2 + 0, 7 + 1 brace.r = 2 \
+D_x (z) &= min brace.l c(x, y) + D_y (z), c(x, z) + D_z (z) brace.r = min brace.l 2 + 1, 7 + 0 brace.r = 3
+$
+La seconda colonna mostra, per ciascun nodo, il nuovo vettore delle distanze del nodo e i vettori delle distanze appean ricevuti dai suoi vicini. \
+Il processo di ricezione dei vettori aggiornati, di ricalcolo delle righe nella tabella di instradamento e di informazione ai vicini sui costi cambiati nel percorso a costo minimo verso la destinazione continua finchè non viene più inviato alcun messaggio di aggiormanto.
+==== Instradamento distance-vetor: modifica dei costi e guasti dei collegamenti
