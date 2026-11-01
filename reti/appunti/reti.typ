@@ -1184,3 +1184,127 @@ I vantaggi di OSPF sono i seguenti.
 - *Supporto integrato per l'instradamento unicast e multicast.* Per consentire l'isntradamento multicast viene utilizzata un'estensione di OSPF, MOSPF (multicast OSPF), che utilizza il database dei collegamenti OSPF e aggiunge un nuovo tipo di annuncio sullo stato dei collegamenti al meccanismo di broadcast.
 - *Supporto alla gerarchie in un dominio di instradamento*. OSPF fornisce la possibilità di strutturare i sistemi autonomi in modo gerarchico. Un sistema autonomo OSPF può essere configurato in aree che eseguono diversi algoritmi di instradamento OSPF: ciascun router in un'area invai lo stato dei suoi collegamenti agli altri router nell'area. In ogni area, uno o più *router di confine d'area* si fa carico dell'instradamento dei pacchetti indirizzati all'esterno. Un'area di sistema autonomo OSPF è configurata per essere l'*area di dorsale*, il cui ruolo principale è quello di instradare il traffico tra le altre aree nel sistema autonomo. La dorsale contiene sempre tutti i rotuer di confine del sistema autonomo, ma non necessariamente soltanto quelli. L'instradamento nell'area di un sistema autonomo richiede che i pacchetti siano instradati prima verso il proprio router di confine e da questi, attraverso la dorsale, al rotuer di confine dell'area di destinazione, che provvede a farli pervenire alla destinazione finale.
 == Instradamento fra ISP: BGP
+Per determinare i percorsi per le coppie sorgente-destinazione che interessano più sistemi autonomi è necessario un *protocollo di instradamento inter-AS* (_inter-autonomus system routing protocol_) che coordini più AS. Il *boarder gateway protocol*, detto *BGP*, rappresenta l'attuale standard dei protocolli di instradamento tra sistemi autonomi in Internet. È un protocollo di tipo distance-vector decentralizzato e asincrono.
+=== Il ruolo di BGP
+Si consideri un AS e un suo router qualsiasi. Le occorrenze della tabella di inoltro corrispondneti a destinazioni interne all'AS vengono determinate dal protocollo di instradamento intra-AS, il protocollo BGP ne determina quelle esterne. \
+In BGP, i pacchetti non vengono instradati verso uno specifico indirizzo, ma piuttosto verso *prefissi* CIDR che rappresentano una sottorete o una collezione di sottoreti. Le occorrenze della tabella di inoltro hanno forma $(x, I)$ dove $x$ è un prefisso di rete e $I$ è un numero di interfaccia del router. \
+BGP mette a disposizione di ciascun router per:
++ _Ottenere informazioni sulla raggiungibilità dei prefissi di sottorete da parte dei sistemi confinanti_. In particolare, BGP consente a ciascuna sottorete di comunicare la propria esistenza al resto di Internet. Se non fosse per BGP, ogni sottorete sarebbe isolata, sola, sconosciuta e irraggiungibile dal resto di Internet.
++ _Determinare i percorsi ottimi verso le sottoreti_. Un router può venire a conoscenza di più cammini verso uno specifico prefisso; per determinare il migliore, esegue localmente BGP, sulla base delle informazioni di raggiungibilità e delle politiche del sistema.
+=== Distribuzione delle informazioni dei percorsi in BGP
+Si consideri la rete della seguente figura con tre AS: AS1, AS2 e AS3, quest'ultimo con una sottorete di prefisso $x$. Ogni router, in ogni AS, funge sia da *router gateway*, vale a dire un router di bordo direttamente connesso a uno o più router di altri AS, sia da *router interno*, connesso cioè solo a host e router interni dell'AS.
+#figure(
+image("images/reti.png", width: 70%),
+caption: [Rete con tre AS]
+)
+Analizziamo coem BGP distribuirebbe le informazioni di raggiungibilità del prefisso $x$ a tutti i router. AS3 invai un messaggio BGP ad AS2, con l'annuncio dell'esistenza in AS3 di $x$; denotiamo tale messaggio con _AS3 x_. Quindi AS2 invia un messaggio BGP a AS1 con l'annuncio che $x$ esiste ed è raggiungibile passando prima da AS2 per poi arrivare ad AS3: _AS2 AS3 x_. In questo modo ogni AS verrà a conoscenza non solo dell'esistenza di $x$, ma anche dei percorsi per raggiungerlo. In realtà, sono i router e non gli AS a inviare gli annunci. In BGP, coppie di router si scambiano informazioni di instradamento su connessioni TCP semi-permanenti utilizzando la porta 179. Le connessioni TCP semi-permanenti sono mostrare nella seguente figura.
+#figure(
+image("images/tcp_semi_perm.png", width: 70%),
+caption: [Connessioni eBGP e iBGP]
+) <fig:bgp>
+Ogni connessione TCP, con tutti i messaggi BGP che vi vengono inviati, è detta *sessione BGP*. Nel caso in cui questa coinvolga due sistemi autonomi viene detta *sessione BGP esterna* (*sessione eBGP*), mentre quella tra router dello stesso sistema autonomi è chiamata *sessione BGP interna (sessione iBGP)*. Generalmente, in BGP c'è una connessione TCP di questo tipo per ciascun collegamento che connette direttamente due router in diversi sistemi autonomi. \
+Esaminiamo come BGP distribuirebbe le informazioni di raggiungibilità dal prefisso $x$ ad AS1 e AS2. In router gateway 3a invia un messaggio eBGP _AS3 x_ al router gateway 2c che a sua volta lo invia su una sessione iBGP a tutti i router di AS2 compreso il gateway 2a. Quest'ultimo invia un messaggio eBGP _AS2 AS3 x_ al router gateway 1c, che infine usa iBGP per inviare il messaggio _AS2 AS3 x_ a tutti i router di AS1. Completato tale processo, ogni router di AS1 e AS2 è a conoscenza dell'esistenza di tale $x$ e del percorso per raggiungerlo.
+=== Selezione delle rotte migliori
+Prima di analizazre come un router sceglie il percorso migliore tra tutti quelli che riceve, introduciamo della terminologia BGP. Quando un router annuncia un prefisso per una sessione BGP, include anche un certo numero di *attributi BGP*. Un prefisso assieme ai suoi attributi è detto *rotta* (_route_). Due dei più importanti sono AS-PATH e NEXT-HOP. *AS-PATH* elenca i sistemi autonomi attraverso i quali è passato l'annuncio del prefisso. I router usano tale attributi per rilevare ed evitare gli annunci reiterati. Nello specifico, se un router vede che il proprio AS è contenuto nella lista dei percorsi, rifiuta l'annuncio. \
+Nel fornire il collegamento tra i protocolli di instradamento intra-AS e inter-AS, l'attributo *NNEXT-HOP* ha un ruolo importante. In NEXT-HOP è riportata l'interfaccia del router che inizia l'AS-PATH. Ad esempio, ritornando alla figura *@fig:bgp* l'attributo NEXT-HOP per la rotta _AS2 AS3 x_ da AS1 a $x$ passando per AS2 è l'indirizzo IP dell'interfaccia a sinistra del router 2a.
+Ogni rotta è quindi scritta come una lista di tre elementi:"\
++ NEXT-HOP;
++ AS-PATH;
++ prefisso $x$.
+NEXT-HOP è l'indirizzo IP di un router che non appartiene ad AS1, ma ad una sottorete collegata direttamente ad AS1.
+==== Instradamento hot potato
+Uno dei più semplici algoritmi di routing BGP è l'*instradamento hot potato*. Consideriamo il seguente schema:
+#figure(
+image("images/hot_potato.png", width: 70%),
+caption: [Rete con tre AS]
+) <fig:hot_potato>
+Consideriamo il router 1b della figura. Questo router impara due possibili percorsi BGP verso il prefisso $x$. Nell'instradamento a patata bollente, il percorso scelto è quello con il minor costo per il router NEXT-HOP che lo inizia. In questo esempio, il router 1b consulterà le informazioni di routing intra-AS per trovare il percorso intra-AS a costo minimo verso il router NEXT-HOP 2a e il percorso a costo minimi verso il router NEXT-HOP 3d, e tra questi seleziona quello a costo minimo. Quando il router trova il percorso a costo minimo consulta la sua tabella di inoltro per trovare l'interfaccia $I$ che si trova sul percorso a costo minimo per il router destinazione. Quindi aggiunge $(x, I)$ alla sua tabella di inoltro. \
+La procedura per inserire un prefisso fuori-AS nella tabella di inoltro di un router usando l'instradamento hot-potato è riassunto nel seguente schema:
+#[
+  #set text(size: 9pt, hyphenate: false)
+  #set par(justify: false)
+
+  #let step(body) = grid.cell(
+    stroke: 0.5pt,
+    inset: 10pt,
+    align: center + horizon,
+    body,
+  )
+
+  #grid(
+    columns: (1fr, auto, 1fr, auto, 1fr, auto, 1fr),
+    column-gutter: 6pt,
+    align: horizon,
+    step[Dal protocollo inter-AS si apprende che la sottorete _x_ è raggiungibile attraverso più gateway.],
+    $arrow.r$,
+    step[Si usa l'informazione di instradamento proveniente dal protocollo intra-AS per determinare i costi dei percorsi a costo minimo verso i gateway.],
+    $arrow.r$,
+    step[Instradamento a "patata bollente": si sceglie il gateway che ha il costo minimo inferiore.],
+    $arrow.r$,
+    step[Dalla tabella di inoltro si determina l'interfaccia _I_ che conduce al gateway a costo minimo. Si scrive $(x, I)$ nella tabella di inoltro.],
+  )
+]
+Quando si aggiunge un prefisso fuori-AS a una tabella di inoltro vengono utilizzati entrami i protocolli inter-AS e intra-AS. \
+L'idea alla base è che il router 1b butti fuori i pacchetti dal suo AS quanto prima senza preoccuparsi del costo delle restanti tratte del percorso al di fuori del suo AS; da qui il nome _hot potato_. È quindi un algoritmo egoista che cerca di ridurre i costi per il proprio AS, non badando a quello degli altri. Si noti che due router dello stesso AS potrebbero selezionare diversi percorsi per lo stesso prefisso.
+==== Algoritmo di selezione delle rotte
+BGP utilizza un algoritmo più complesso di quello hot potato. L'input del processo di selezione è l'insieme di tutte le rotte apprese e accettate dal router. Se ne esistono due o più verso lo stesso prefisso, BGP invoca in sequenza le seguenti regole di eliminazione fino ad inviduare un'unica possibilità.
++ Alle rotte viene assegnato come attributo un valore di *preferenza locale*, che potrebbe esser stato impostato direttamente dal router o appreso da un altro router nello stesso AS. Si selezionanto le rotte con i più alti valori di preferenza locale.
++ Tra le rotte con stesso valore di preferenza locale, si seleziona quella con AS-PATH più breve. Se questa fosse l'unica regola di selezione, allora BGP utilizzerebbe un algoritmo Bellman-Ford per la determinazione del percorso, con metrica sulla distanza data dal numero di hop tra AS anzichè tra router.
++ Tra le rotte con stesso valore di preferenza locale e la stessa lunghezza AS-PATH si seleziona quella il cui router di NEXT-HOP è più vicino. In questo caso, s'intende quello che presenta il percorso con costo minore, determinato dall'algortimo inter-AS (instradamento a patata bollente).
++ Se rimane ancora più di nuna rotta, il router si basa sugli identificatori BGP.
+Si consideri il router 1b della figura *@fig:hot_potato* e si ricordi che esistono due rotte BGP verso il prefisso $x$: una che passa da AS2 e una che lo evita. Con questo algoritmo la regola 2 verrebbe applicata prima della 3 e quindi verrebbe scelta la seconda rotta avente AS-PATH più breve. Tale politica BGP non è egoista e riduce anche il ritardo end-to-end.
+=== Anycast IP
+Il protocollo BGP, oltre a essere il protocollo inter-AS di Internet, viene spesso utilizzato anche per implementare il servizio IP anycast, comunemente utilizzato in DNS. Per capire l'utilità di anycast si consideri che in molte applicazioni si è interessati a replicare lo stesso contenuto su server differenti sparsi in diverse aree geografiche e che un utente acceda al contenuto del server che gli è più vicino. È auspicabile che un utente che voglia accedere ad un contenuto utilizzi il server a lui più vicino. L'algoritmo di selezione delle rotte BGP fornisce un meccanismo semplice e naturale per tale operazione. \
+Analizziamo un caso concreto di come una CDN possa utilizzare l'anycast IP. Come mostrato nella seguente figura, durante la configurazione dell'anycast IP, la CDN assegna stesso indirizzo IP a ognuno dei suoi server e utilizza lo standard BGP per annunciare tale indirizzo IP da ognuno dei suoi server.
+#figure(
+image("images/anycast.png", width: 70%),
+caption: [Utilizzo di anycast IP per instradare i client al cluster CDN più vicino]
+)
+Quando un router BGP riceve l'annuncio di più percorsi da questo indirizzo IP, lo tratta come se fossero forniti da diversi percorsi verso la stessa area fisica, anche se sono percorsi diversi verso luoghi diversi. Ogni router, quando configura la sua tabella di inoltro, utilizza localemente l'algoritmo di selezione dei cammini BGP per scegliere il percorso migliore per quell'indirizzo IP. \
+Dopo la fase iniziale di annuncio degli indirizzi BGP, la CDN può dedicarsi a distribuire contenuti. Quando un client richiede un video, la CDN gli restituisce l'indirizzo IP usato da tutti i suoi server disparsi geograficamente, indipendentemente dal luogo in cui si trova il client. Quando il client invia una richiesta a quell'indirizzo IP, i router Internet inoltrano il pacchetto richiesto al server più vicino come definito dall'algoritmo BGP. \
+Nella pratica le CDN non utilizzano anycast IP perchè cambiamenti nell'instradamento BGP potrebbero portare ad avere sulla stessa connessione TCP pacchetti differenti che arrivano a differenti istanze del server web. L'anycast IP viene utilizzato dal sistema DNS per dirigere le richieste DNS al server root più vicino.
+=== Politiche di instradamento
+Quando un router sceglie una rotta, le politiche di instradamento dell'AS possono intervenire facendo saltare qualsiasi altra considerazione riguardante per esempio la brevità del percorso o la procedura hot potato. \
+Si consideri la seguente figura:
+#figure(
+image("images/politche_routing.png", width: 70%),
+)
+La figura mostra sei sistemi autonomi interconessi. Ipotizziamo che _W, X_ e _Y_ siano *reti stub* e che _A, B_ e _C_ siano reti provider di dorsale. Ipotizziamo anche che _A, B_ e _C_ siano peer l'uno dell'altro e forniscano informazioni BGP complete alle reti dei loro clienti. Tutto il traffico che entra in una *rete di accesso di un ISP* è destinato a tale rete e tutto il traffico in uscita ha origine in tale rete. _W_ e _Y_ rappresentano chiaramente reti di accesso. _X_ è un *ISP di accesso multi-homed*, dato che è connessa al resto della rete attraverso due provider. In ogni caso, come _W_ e _Y_, anche _X_ deve essere sorgente o destinazione di tutto il traffico in uscita o ingresso attraverso _X_. Dobbiamo analizzare come si implementa questo comportamento e come si impedisce a $X$ di smaltire traffico tra _B_ e _C_. \
+Per fare ciò si controllano gli annunci delle rotte BGP. In particolare, $X$ opererà come una rete stub se annuncia ai suoi vicini _B_ e _C_ di non avere altri percorsi verso altre destinazioni tranne sè stessa. Quindi, anche se $X$ fosse a conoscenza di un percorso del tipo _XCY_, non l'annuncerà a _B_. \
+Concentriamoci ora sulla rete di un provider, per un sistema autonomo _B_, e supponiamo che questo abbia appreso (da _A_) che _A_ presenta un percorso _AW_ verso _W_. Allora _B_ può installare il percorso _BAW_ nella sua struttura dati per l'instradamento. Chiaramente _B_ vuole annunciare tale percorso al suo cliente _X_, per permettergli di raggiungere _W_ tramite _B_. Se _B_ lo annunciasse anche a _C_, _C_ potrebbe instradare il traffico verso _W_ via _CBAW_. Se _A, B_ e _C_ sono provider di dorsale, allora _B_ potrebbe pensare di non dover sopportare il costo del traffico in transito da _A_ e _C_ e che sia compito di _A_ e _C_ assicurarsi che _C_ possa instradare da e verso i clienti di _A_ tramite una connessione diretta tra _A_ e _C_. Una regola seguita dagli ISP commerciali è quella per cui tutto il traffico che fluisce attraverso la rete di dorsale di un ISP deve avere origine e/o destinazione in una sua rete cliente. Accordi individuali di *peering* vengono negoziati tra coppiue di ISP.
+== Il piano di controllo SDN
+== ICMP (Internet Control Message Protocol)
+Il protocollo ICMP, _Internet Control Message Protocol_, viene usato da host e router per scambiarsi informazioni a livello di rete: il suo uso più tipico è la notifica degli errori. Durante l'esecuzione di una sessione HTTP si può incontrare il messaggio \"Rete di destinazione irraggiungibile\". Questo messaggio ha origine da ICMP. \
+ICMP è spesso considerato parte di IP, ma dal punto di vista dell'architettura si trova esattamente sopra IP, dato che i suoi messaggi vengono trasportati nei datagrammi IP: ossia, i messaggi ICMP vengono trasportati come payload di IP. Allo stesso modo, se un host riceve un datagramma IP, che specifica ICMP come protocollo di livello superiore, allora effettua il demultiplexing dei contenuti dal datagramma a ICMP. \
+I messaggi ICMP hanno un campo tipo e un campo codice e contengono l'intestazione e i primi 8 byte del datagramma IP che ha provocato la generazione del messaggio, in modo che il mittente possa determinare il datagramma che ha causato l'errore. I messaggi ICMP non vengono usati solo per segnalare condizioni d'errore. \
+Il noto programma _ping_ invia un ICMP di tipo 8 e codice 0 verso l'host specificato. L'host destinazione, vedendo la richiesta di _echo_, risponde con un messaggio di tipo 0 e codice 0. \
+Un altro interessante messaggio ICMP è quello di riduzione del tasso di trasmissione. Lo scopo originario di questo messaggio, raramente usato, era un controllo di congestione che consentiva a un router congestionato di inviare un messaggio ICMP a un host, per forzarlo a ridurre il proprio tasso di trasmissione. \
+Una nuova versione di ICMP è stata definita per IPv6, in cui sono stati introdotti nuovi tipi e codici e ridefiniti quelli vecchi: come ad esempio codici di errore \"pacchetto troppo grande\" e \"opzioni non riconosciute\".\
+Segue una tabella che raffigura dei tipi di messaggio ICMP:
+#let rows = (
+  (0, 0, "risposta echo (a ping)"),
+  (3, 0, "rete destinazione irraggiungibile"),
+  (3, 1, "host destinazione irraggiungibile"),
+  (3, 2, "protocollo destinazione irraggiungibile"),
+  (3, 3, "porta destinazione irraggiungibile"),
+  (3, 6, "rete destinazione sconosciuta"),
+  (3, 7, "host destinazione sconosciuto"),
+  (4, 0, "riduzione (controllo di congestione)"),
+  (8, 0, "richiesta echo"),
+  (9, 0, "annuncio di un router"),
+  (10, 0, "scoperta di un router"),
+  (11, 0, "TTL scaduto"),
+  (12, 0, "intestazione IP errata"),
+)
+
+#align(center)[
+  #table(
+    columns: (auto, auto, auto),
+    align: (center + horizon, center + horizon, left + horizon),
+    inset: (x: 10pt, y: 5pt),
+    stroke: 0.5pt,
+    table.header([*Tipo ICMP*], [*Codice*], [*Descrizione*]),
+    ..rows.map(r => ([#r.at(0)], [#r.at(1)], [#r.at(2)])).flatten(),
+  )
+]
+== Gestione della rete e SNMP, NETCONF/YANG
