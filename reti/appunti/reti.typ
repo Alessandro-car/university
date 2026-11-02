@@ -375,7 +375,7 @@ Il livello di trasposrto è collocato sopra quello di rete nella pila di protoco
 Internet mette a disposizione del livello di applicazione due protocolli. Uno è *UDP*, _User Datagram Protocol_, che fornisce alle applicazioni un servizio non affidabile e non orientate alla connessione, l'altro è *TCP*, _Transmission Control Protocol_, che offre un servizio affidabile e orientato alla connessione. \
 Prima di entrare nel dettaglio dei due protocolli è meglio analizzare brevemente il livello di rete. Il protocollo di rete in Internet ha un nome: IP (Internet Protocol). Tale protocollo fornisce comunicazione logica tra host. Il suo modello di servizio prende il nome di *best-effort delivery service* o, *best-effort*. Questo significa che IP fa del suo meglio per consegnare i segmenti tra host comunicanti ma non offre garanzie. NOn assicura né la consegna dei segmenti né il rispetto dell'ordine originario e non garantisce neppure l'integrità dei dati all'interno dei segmenti. Per queste ragioni si dice che IP offra un *servizio non affidabile*. \
 Il compito dei protocolli TCP e UDP è l'estensione del servizio di consegna di IP "tra sistemi periferici" a quello di consegna "tra processi in esecuzione sui sistemi periferici". Il passaggio, da consegna host-to-host a consegna process-to-process, viene detto *multiplexing* e *demultiplexing a livello di trasporto*. Inoltre, TCP e UDP, forniscono un controllo di integrità includendo campi per il riconoscimento di errori nelle intestazioni dei propri segmenti. UDP, come IP, costituisce un servizio inaffidabile: non garantisce che i dati inviati da un processo arrivino intatti (e neanche che arrivino) al processo destinatario. \
-TCP offre diversi servizi aggiuntivi. Innanzitutto, fornisce un *trasferimento dati affidabile* e, quindi, garantisce che i dati vengano trasferiti da un processo a un altro in modo corretto e ordinato. Pertanto TCP converte il servizio inaffidabile tra sistemi periferici, tipico di IP, in un servizio affidabile di trasporto dati tra processi. TCP fornisce anche il *controllo di congestione*, un servizio offerto alle applicazioni e a Internet nel suo complesso. In pratica, evita che le connessioni TCP intasino i collegamenti e i rotuer tra gli host comunicanti con un'eccessiva quantità di traffico. Questo è reso possibile regolando la velocità alla quale il lato mittente della connessione TCP immette traffico in rete. Il traffico UDP, al contrario, non viene regolato. Le applicazioni che usano UDP possono spedire a qualsiasi velocià desiderata e per tutto il tempo voluto.
+TCP offre diversi servizi aggiuntivi. Innanzitutto, fornisce un *trasferimento dati affidabile* e, quindi, garantisce che i dati vengano trasferiti da un processo a un altro in modo corretto e ordinato. Pertanto TCP converte il servizio inaffidabile tra sistemi periferici, tipico di IP, in un servizio affidabile di trasporto dati tra processi. TCP fornisce anche il *controllo di congestione*, un servizio offerto alle applicazioni e a Internet nel suo complesso. In pratica, evita che le connessioni TCP intasino i collegamenti e i router tra gli host comunicanti con un'eccessiva quantità di traffico. Questo è reso possibile regolando la velocità alla quale il lato mittente della connessione TCP immette traffico in rete. Il traffico UDP, al contrario, non viene regolato. Le applicazioni che usano UDP possono spedire a qualsiasi velocià desiderata e per tutto il tempo voluto.
 == Multiplexing e demultiplexing
 Analizziamo il servizio di multiplexing e demultiplexing in Internet, anche se è un servizio presente in tutte le reti di calcolatori. \
 Nell'host destinatario il livello di trasposrto riceve segmenti dal livello di rete immediatamente sottostante. Il livello di trasposrto ha il compito di consegnare i dati di questi segmenti al processo applicativo appropriato in esecuzione nell'host. Esaminiamo come viene realizzato. \
@@ -758,7 +758,7 @@ I diversi scopi delle funzioni di inoltro e di instradamento possono essere desc
 ==== Piano di controllo: l'approccio SDN
 L'approccio di implementare la funzionalità di instradamento in cui ogni router ha una componente di instradamento che comunica con la corrispettiva negli altri router, è stato tradizionalmente adottato dalle aziende produttrici di router. \
 La seguente figura mostra un approccio alternativo in cui un controller remoto, separato fisicamente dai router, calcola e distribuisce le tabelle di inoltro a tutti i router. In questo caso la funzionalità di instradamento del piano di controllo è separata fisicamente dal router; il dispositivo di instradamento effettua solo l'inoltro, mentre il controller remoto calcola e distribuisce le tabelle di inoltro. Il controller remoto potrebbe essere implementato in un data center remoto con elevata affidabilità e ridondanza e potrebbe essere gestito da un ISP o da una terza parte. \
-I router e il controller remoto potrebbero comunicare scambiandosi messaggi contenenti le tabelle di inoltro e altre informazioni di instradamento. Il piano di controllo mostrato nella seguente figura è il nucleo del *Software-Defined Networking (SDN)*, nel quale la rete è gestita da un software perchè il controller che calcola le tabelle di introlo e interagisce coi router è implementato in software.
+I router e il controller remoto potrebbero comunicare scambiandosi messaggi contenenti le tabelle di inoltro e altre informazioni di instradamento. Il piano di controllo mostrato nella seguente figura è il nucleo del *Software-Defined Networking (SDN)*, nel quale la rete è gestita da un software perchè il controller che calcola le tabelle di inoltro e interagisce coi router è implementato in software.
 #figure(
 image("images/sdn.png", width: 80%),
 caption: [Un controller remoto determina e distribuisce i valori delle tabelle di inoltro]
@@ -791,7 +791,7 @@ La seguente figura fornisce una visione dettagliata delle funzionalità delle po
 image("images/ing_router.png", width: 70%),
 caption: [Elaborazione alle porte di ingresso]
 )
-La funzione di terminazione della linea e l'elaborazione a livello di colegamento implementano rispettivamente il livello fisico e di collegamento associati a un singolo collegamento di ingresso al router. L'elaborazione effettuata alla porta di ingresso è centrale per la funzionalità del router: qui, utilizando le informazioni della tabella di introlo, viene determinata la porta di uscita a cui dirigere un pacchetto attraverso la struttura di commutazione. La tabella di inoltro viene elaborata e aggiornata dal processore di instradamento o ricevuta da un controller SDN remoto. La tabella di introlo viene copiata sulla line card dal processore di instradamento tramite un bus separato. Essendoci copie locali della tabella di inoltro, la decisione relativa può essere presa dalle porte di ingresso, senza invocare il processore di instradamento centralizzato. \
+La funzione di terminazione della linea e l'elaborazione a livello di colegamento implementano rispettivamente il livello fisico e di collegamento associati a un singolo collegamento di ingresso al router. L'elaborazione effettuata alla porta di ingresso è centrale per la funzionalità del router: qui, utilizando le informazioni della tabella di inoltro, viene determinata la porta di uscita a cui dirigere un pacchetto attraverso la struttura di commutazione. La tabella di inoltro viene elaborata e aggiornata dal processore di instradamento o ricevuta da un controller SDN remoto. La tabella di inoltro viene copiata sulla line card dal processore di instradamento tramite un bus separato. Essendoci copie locali della tabella di inoltro, la decisione relativa può essere presa dalle porte di ingresso, senza invocare il processore di instradamento centralizzato. \
 Consideriamo il caso in cui l'inoltro sia basato sull'indirizzo di destinazione. Supponiamo che tutti gli indirizzi di destinazione siano a 32 bit. Un'implementazione elementare della tabella di inoltro presenterebbe una riga per ogni possibile indirizzo di destinazione ma, dato che esistono più di 4 miliardi di possibili indirizzi, questa opzione non viene presa in considerazione. \
 Supponiamo che il router abbia quattro collegamenti, numerati da 0 a 3, e che i pacchetti debbano essere inoltrati verso le interfacce di collegamento come segue:
 #align(center)[
@@ -880,9 +880,8 @@ image("images/accodamento_out.png", width: 70%),
 caption: [Accodamento alle porte di uscita]
 )
 All'istante $t$, a ciascuna delle porte di ingrersso giunge un pacchetto destinato alla porta in uscita superiore. Ipotizzando velocità di linea identiche e un commutatore che opera al triplo della velocità di linea, nell'unità di tempo dopo, cioè dopo il tempo richiesto per ricevere o inviare un pacchetto, i tre pacchetti originali sono stati trasferiti sulla porta in uscita e sono accodati in attesa di trasmissione. Nell'unità di tempo successiva verrà tramesso uno di questi tre pacchetti. Nel nostro esempio, due nuovi pacchetti sono giunti al commutatore, uno di questi è destinato alla porta di uscita superiore. Quando vi sono più pacchetti accodati sulle porte di uscita, uno *schedulatore di pacchetti* deve stabilire in quale ordine trasmetterli.
-=== CONTROLLARE SE SERVE IL PARAGRAFO DELLA MEMORIA DI BUFFER (pag 269 libro)
 === Schedulazione dei pacchetti
-Per determinare l'ordine con cui i pacchetti vengono trasmessi sulla porta di uscita esistono diverse procedure. Esiste la procedura FCFC, _first-come-first-served_, anche nota come FIFO, _first-in-first-out_. Alternativamente, esistono le code con priorità oppure le code round-robin.
+Per determinare l'ordine con cui i pacchetti vengono trasmessi sulla porta di uscita esistono diverse procedure. Esiste la procedura FCFS, _first-come-first-served_, anche nota come FIFO, _first-in-first-out_. Alternativamente, esistono le code con priorità oppure le code round-robin.
 ==== FIFO
 I pacchetti che arrivano alla coda di uscita del collegamento aspettano di essere trasmessi se quest'ultimo è occupato nella trasmissione di un altro pacchetto. Se non c'è spazio a sufficienza per contenere il pacchetto che arriva, la politica di scarto dei pacchetti determina se il pacchetto va eliminato o se bisogna rimuovere dei pacchetti dalla coda per fare spazio al pacchetto in arrivo. \
 I pacchetti, con questa procedura, vengono trasmessi nello stesso ordine con cui sono arrivati in coda. La seguente figura mostra un esempio di coda FIFO.
@@ -924,12 +923,17 @@ caption: [Formato dei datagrammi IPv4]
 ) <fig:ipv4>
 I principali campi dei datagrammi IPv4 sono i seguenti:
 - *Numero di versione*. Questi 4 bit, che specificano la versione del protocollo IP del datagramma, consentono al router la corretta interpretazione del datagramma.
-- *Lunghezza dell'intesazione*. Dato che un datagramma IPv4 può contenere un numero variabile di opzioni, questi 4 bit indicano dove iniziano effettivamente i dati del datagramma. La maggior parte dei datagrammi IP non contiene opzioni, pertanto il tipico datagramma IP ha un'intestazione di 20 byte.
+- *Lunghezza dell'intestazione*. Dato che un datagramma IPv4 può contenere un numero variabile di opzioni, questi 4 bit indicano dove iniziano effettivamente i dati del datagramma. La maggior parte dei datagrammi IP non contiene opzioni, pertanto il tipico datagramma IP ha un'intestazione di 20 byte.
 - *Tipo di servizio*. I bit relativi al tipo di servizio (TOS, _type of service_) sono stati inclusi nell'intestazione IPv4 per distinguere diversi tipi di datagrammi. Spesso è utile distinguere datagrammi in tempo reale da altro traffico.
 - *Lunghezza del datagramma*. Rappresenta la lunghezza totale del datagramma IP, intestazione più dati, misurata in byte. Considerando che questo campo è lungo 16 bit, la massima dimensione dei datagrammi IP è 65.535 byte.
-- *Identificatore, flag, offset di frammentazione*. Questi tre campi servono per la cossidetta frammentazione: un datagramma IP grande viene frammentato in datagrammi IP più piccoli che vengono inoltrati in modo indipendente alla destinazione dove vengono riassemblati prima che i dati di payload vengano passati al livello di trasporto dell'host di destinazione. La versione IPv6 non consente la frammentazione.
-- *Tempo di tive*. Il _time-to-live, TTL_, è stato incluso per assicurare che i datagrammi non restino in circolazione per sempre nella rete. Questo campo viene decrementato di un'unità ogni volta che il datagramma è elaborato da un router; quando raggiunge 0, il datagramma viene scartato.
-- *Protocollo*. Questo campo è ustao quando il datagramma raggiunge la destinazione finale. Il valore del campo indica lo specifico protocollo a livello di trasporto al quale vanno passati i dati del datagramma. Ad esempio, il valore 6 indica che i dati sono destinati a TCP, il valore 17 designa UDP.
+- *Identificatore, flag, offset di frammentazione*. Questi tre campi servono per la cossidetta frammentazione: un datagramma IP grande viene frammentato in datagrammi IP più piccoli che vengono inoltrati in modo indipendente alla destinazione dove vengono riassemblati prima che i dati di payload vengano passati al livello di trasporto dell'host di destinazione. La versione IPv6 non consente la frammentazione sui *router intermedi*, ma la consente agli host sorgente e destinazione. \
+	Il campo flag è composto da 3 bit:
+		- bit 0: *RS* (_Reserved_, sempre 0);
+		- bit 1: *DF* (_Don't fragment_, vieta la frammentazione);
+		- bit 2: *MF* (_More Fragments_, vale 1 per tutti i frammenti tranne l'ultimo).
+	Inoltre, abbiamo detto che l'*MTU* (Maximum Transmission Unit) è la massima quantità di dati che un frame di livello collegamento può trasportare. La tecnica usata per trovare la più piccola MTU lungo il percorso tra sorgente e destinazione è la *Path MTU Discovery (PMTUD)*. Si inviano datagrammi col flag `DF = 1`; se un router incontra un link con MTU inferiore alla dimensione del pacchetto, lo scarta e invia un messaggio ICMP tipo 3 codice 4 (_Fragmentation Needed / packet too big_) indicando la MTU del link successivo. Il mittente riduce la dimensione e ripete finchè il pacchetto non arriva a destinazione.
+- *Tempo di vita*. Il _time-to-live, TTL_, è stato incluso per assicurare che i datagrammi non restino in circolazione per sempre nella rete. Questo campo viene decrementato di un'unità ogni volta che il datagramma è elaborato da un router; quando raggiunge 0, il datagramma viene scartato.
+- *Protocollo*. Questo campo è usato quando il datagramma raggiunge la destinazione finale. Il valore del campo indica lo specifico protocollo a livello di trasporto al quale vanno passati i dati del datagramma. Ad esempio, il valore 6 indica che i dati sono destinati a TCP, il valore 17 designa UDP.
 - *Checksum dell'intestazione*. Consente ai router di rilevare gli errori sui bit nei datagrammi ricevuti. È calcolato trattando ogni coppia di byte dell'intestazione come numeri che sono poi sommati in complemento a 1. Un router calcola tale valore per ciascun datagramma IP ricevuto e rileva una condizione di errore se il checksum trasportato nell'intestazione del datagramma non corrisponde a quello calcolato. I router normalmente scartano i datagrammi in cui si verifica un errore. Il checksum deve essere ricalcolato e aggiornato a ogni router, come anche il campo TTL e i campi opzione, che possono cambiare.
 - *Indirizzi IP sorgente e destinazione*. Quando un host crea un datagramma, inserisce il proprio indirizzo IP nel campo indirizzo IP sorgente e quello della destinazione enl campo indirizzo IP destinazione. Spesso l'host sorgente determina l'indirizzo di destinazione attraverso uan ricerca DNS.
 - *Opzioni*. Questi campi consentono di estendere l'intestazione IP. Le opzioni dell'intestazione sono state concepite per un utilizzo sporadico. Tuttavia, le opzioni costituiscono un problema: dato che possono avere lunghezza variabile, non è possibile determinare a priori dove comincerà il campo *Dati*. Inoltre, dato che i datagrammi possono richiedere o non richiedere l'elaborazione delle opzioni, il tempo necessario per questa operazione su un router può variare in modo significativo. Le opzioni sono state eliminate dall'intestazione IPv6.
@@ -943,13 +947,154 @@ Consideriamo la seguente figura.
 image("images/sottorete.png", width: 70%),
 caption: [Indirizzi delle interfacce e sottoreti]
 )
-Questa figura mostra un router con tre interfacce che connette sette hgost. I tre a sinistra hanno un indirizzo IP della forma 223.1.1.xxx. \
+Questa figura mostra un router con tre interfacce che connette sette host. I tre a sinistra hanno un indirizzo IP della forma 223.1.1.xxx. \
 Per IP, questa rete che interconnette tre interfacce di host e l'interfaccia di un router forma una *sottorete*. IP assegna a questa sottorete l'indirizzo 223.1.1.0/24, dove la notazione /24, detta anche *maschera di sottorete*, _subnet mask_, indica che i 24 bit può a sinistra dell'indirizzo definiscono l'indirizzo della sottorete. Ogni altro host connesso alla sottorete 223.1.1.0/24 deve avere un indirizzo della forma 223.1.1.xxx. \
 La strategia di assegnazione degli indirizzi Internet è detta *Classless Interdomain Routing*. *CIDR*, detto in inglese _cider_, generalizza la nozione di indirizzamento di sottorete. L'indirizzo IP viene diviso in due parti e mantiene la forma puntata _a.b.c.d/x_, dove $x$ indica il numero di bit nella prima parte dell'indirizzo. \
 Gli $x$ bit più a sinistra costituiscono la porzione di rete dell'indirizzo IP e sono spesso detti *prefisso* dell'indirizzo. A un'organizzazione viene generalmente assegnato un blocco di indirizzi contigui con un prefisso comune per tutti gli indirizzi IP dei dispositivi che si trovano al suo interno. I rimanenti $32 - x$ bit di un indirizzo possono essere usati per distinguere i dispositivi interni dell'organizzazione, che hanno tutti lo stesso prefisso di rete. Saranno quindi i router della rete interna che utilizzeranno i restanti bit dell'indirizzo per indirizzarli al dispositivo destinatario. \
-Prima dell'adozione di CIDR, le parti di rete di un indirizzo IP dovevano essere lunghe 8, 16 o 24 bit. Tale schema di indirizzamento era noto come *classful addressing*, dato che le sottoreti con indirizzi di sottorete da 8, 16 e 24 bit erano note rispettivamente come reti di classe A, B e C. Il requisiot che la parte di sottorete di un indirizzo IP fosse lungo esattamente 1, 2 o 3 byte si rivelò presto problematico nel supportare il numero di organizzazioni in rapida crescita con sottoreti di piccole e medie dimensioni. Una sottorete di classe C (/24) poteva ospitare solo fino a $2^8 - 2 = 254$ host, due dei 256 indirizzi sono riservati per usi speciali. Altre sottoreti di classe B (/16), che possono avere 65.634 host, risultavano sovradimensionate. Ciò portò a un rapido esaurimento degli indirizzi della classe B e a uno scarso utilizzo dello spazio di indirizzamento assegnato. \
-Consideriamo l'IP broadcast 255.255.255.255. Quando un host emette un datagramma con destinazione 255.255.255.255, il messaggiuo viene consegnato a tutti gli host sulla stessa sottorete. \
+Prima dell'adozione di CIDR, le parti di rete di un indirizzo IP dovevano essere lunghe 8, 16 o 24 bit. Tale schema di indirizzamento era noto come *classful addressing*, dato che le sottoreti con indirizzi di sottorete da 8, 16 e 24 bit erano note rispettivamente come reti di classe A, B e C. Il requisito che la parte di sottorete di un indirizzo IP fosse lungo esattamente 1, 2 o 3 byte si rivelò presto problematico nel supportare il numero di organizzazioni in rapida crescita con sottoreti di piccole e medie dimensioni. Una sottorete di classe C (/24) poteva ospitare solo fino a $2^8 - 2 = 254$ host, due dei 256 indirizzi sono riservati per usi speciali. Altre sottoreti di classe B (/16), che possono avere 65.534 host, risultavano sovradimensionate. Ciò portò a un rapido esaurimento degli indirizzi della classe B e a uno scarso utilizzo dello spazio di indirizzamento assegnato. \
+Consideriamo l'IP broadcast 255.255.255.255. Quando un host emette un datagramma con destinazione 255.255.255.255, il messaggio viene consegnato a tutti gli host sulla stessa sottorete. \
 Per ottenere un blocco di indirizzi IP da usare in una sottorete, un amministratore di rete deve contattare il proprio ISP, che potrebbe fornire degli indirizzi attingendo da un blocco più grande che gli è già stato allocato. Anche lo stesso ISP deve richiedere un blocco di indirizzi. Esiste un'autorità globale che ha la responsabilità di gestire lo spazio di indirizzamento IP e di allocare i blocchi di indirizzi: l'_Internet Corporation for Assigned Names and Numbers_ (ICANN).
+==== Struttura dell'indirizzo, classi (Classful), indirizzi speciali e privati
+Ogni indirizzo IPv4 a 32 bit è logicamente suddiviso in due parti:
+- *Prefisso* (*netid*): identifica univocamente la rete ed è assegnato da un'autorità di registrazione globale (IANA o un _Regional Internet Registry_, RIR).
+- *Suffisso* (*hostid*): identifica l'host (o meglio, l'interfaccia) all'interno della rete ed è gestito localmente dall'amministratore di rete.
+
+Nello schema storico *classful* (oggi legacy), il confine tra _netid_ e _hostid_ era rigido e determinato dai primi bit dell'indirizzo IP, definendo cinque classi:
+
+#align(center)[
+  #table(
+    columns: (auto, auto, auto, auto, auto, auto, auto),
+    align: (center + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon, left + horizon),
+    inset: (x: 6pt, y: 5pt),
+    stroke: 0.5pt,
+    table.header(
+      [*Classe*], [*Bit iniziali*], [*Range $1^degree$ ottetto*], [*Bit Netid / Hostid*], [*Maschera di default*], [*Max Reti*], [*Max Host validi per rete*]
+    ),
+    [A], [`0`], [`0 - 127`], [7 / 24], [`255.0.0.0` (`/8`)], [$2^7$], [$2^(24) - 2$],
+    [B], [`10`], [`128 - 191`], [14 / 16], [`255.255.0.0` (`/16`)], [$2^(14)$], [$2^(16) - 2$],
+    [C], [`110`], [`192 - 223`], [21 / 8], [`255.255.255.0` (`/24`)], [$2^(21)$], [$2^8 - 2$],
+    [D], [`1110`], [`224 - 239`], [—], [—], [—], [Indirizzi *multicast*],
+    [E], [`1111`], [`240 - 255`], [—], [—], [—], [Riservati per usi futuri],
+  )
+]
+
+All'interno dello spazio di indirizzamento IPv4 esistono inoltre degli *indirizzi speciali* e dei blocchi riservati alle *reti private* (non annunciabili né instradabili direttamente sull'Internet pubblica):
+
+#align(center)[
+  #table(
+    columns: (auto, auto, auto, auto),
+    align: (center + horizon, center + horizon, left + horizon, left + horizon),
+    inset: (x: 8pt, y: 5pt),
+    stroke: 0.5pt,
+    table.header([*Prefisso (Netid)*], [*Suffisso (Hostid)*], [*Tipo di indirizzo*], [*Scopo / Utilizzo*]),
+    [Tutti `0`], [Tutti `0`], [_Questo computer_ (`0.0.0.0`)], [Usato dagli host durante la fase di bootstrap (es. DHCP)],
+    [`network`], [Tutti `0`], [Indirizzo di rete], [Identifica la rete o sottorete stessa (_netid_)],
+    [`network`], [Tutti `1`], [_Directed broadcast_], [Broadcast diretto verso tutti gli host di una specifica rete],
+    [Tutti `1`], [Tutti `1`], [_Limited broadcast_ (`255.255.255.255`)], [Broadcast limitato alla sottorete locale del mittente],
+    [`127`], [Qualsiasi], [_Loopback_ (es. `127.0.0.1`)], [Comunicazione interna all'host stesso per testing di rete],
+  )
+]
+
+I tre blocchi di *indirizzi IPv4 privati* (RFC 1918), utilizzati all'interno delle LAN domestiche o aziendali dietro router NAT, sono:
+- *Classe A privata*: `10.0.0.0 - 10.255.255.255` (`10.0.0.0/8`)
+- *Classe B privata*: `172.16.0.0 - 172.31.255.255` (`172.16.0.0/12`, ovvero 16 reti `/16` contigue)
+- *Classe C privata*: `192.168.0.0 - 192.168.255.255` (`192.168.0.0/16`, ovvero 256 reti `/24` contigue)
+
+==== Subnetting e calcolo delle sottoreti
+Il *subnetting* (RFC 950) permette a un'organizzazione di suddividere un singolo blocco di indirizzi IP assegnatole in più *sottoreti* fisiche distinte, prendendo in prestito i primi $k$ bit dalla porzione _hostid_ per estendere il _netid_. \
+La *maschera di sottorete* (_subnet mask_) è una sequenza di 32 bit composta da tutti `1` in corrispondenza dei bit di rete e di sottorete, e da tutti `0` in corrispondenza dei bit riservati agli host.
+
+Dato un blocco iniziale con prefisso `/x` che viene partizionato estendendo la maschera di $k$ bit fino a un nuovo prefisso `/(x + k)`:
+- *Numero di sottoreti ottenibili*: $2^k$.
+- *Bit rimanenti per gli host*: $m = 32 - (x + k)$.
+- *Indirizzi totali per sottorete*: $2^m$.
+- *Indirizzi validi (assegnabili agli host)*: $2^m - 2$, poiché il primo indirizzo del blocco (bit host tutti a `0`) identifica il *netid* della sottorete e l'ultimo indirizzo (bit host tutti a `1`) è riservato al *broadcast* della sottorete. *(Nota: fanno eccezione i collegamenti punto-punto tra due router configurati con maschera `/31` secondo la RFC 3021, che mettono a disposizione esattamente $2^1 = 2$ indirizzi utilizzabili senza indirizzo di broadcast).*
+- *Calcolo del Netid di appartenenza*: dato un indirizzo IP e la sua subnet mask, il _netid_ si ottiene applicando l'operazione logica bitwise *AND* bit a bit tra l'indirizzo IP e la maschera: $"Netid" = "IP" and "Mask"$.
+
+*Nota topologica*: per contare quante sottoreti sono presenti in una rete fisica, occorre isolare i gruppi di interfacce (di host e router) che comunicano direttamente senza attraversare un router; *anche ogni collegamento diretto punto-punto tra due router costituisce una sottorete a sé stante*.
+
+#esempio(title: "Calcolo di appartenenza e partizionamento in sottoreti")[
+  *1. Verifica di appartenenza tramite AND bitwise* \
+  Determiniamo il _netid_ dell'indirizzo `192.168.23.87/26` e verifichiamo se appartiene alla stessa sottorete di `192.168.23.67/26`. \
+  La maschera `/26` ha 26 bit a `1` e $32 - 26 = 6$ bit a `0` per gli host: corrisponde a `255.255.255.192` (poiché nel quarto ottetto $128 + 64 = 192$). I primi tre ottetti rimangono invariati (`192.168.23`); effettuiamo l'AND sul quarto ottetto:
+  - `87` in binario: `01010111`
+  - `192` in binario: `11000000`
+  - `87 AND 192`: `01000000` $= 64$.
+  *Metodo rapido*: con 6 bit di host, le sottoreti procedono a blocchi di dimensione $2^6 = 64$ nel quarto ottetto (`0, 64, 128, 192`). Il più grande multiplo di 64 inferiore o uguale a 87 (e a 67) è `64`. Pertanto:
+  - *Netid*: `192.168.23.64/26`
+  - *Range host validi*: `192.168.23.65 - 192.168.23.126` ($2^6 - 2 = 62$ host)
+  - *Broadcast*: `192.168.23.127`
+  Entrambi gli indirizzi `.87` e `.67` cadono nel range `65 - 126`, quindi *appartengono alla stessa sottorete*.
+
+  *2. Partizionamento di una rete su ottetti diversi* \
+  Data la rete `134.65.0.0/16` (maschera di default `255.255.0.0`), vogliamo partizionarla in almeno 6 sottoreti:
+  - Per ottenere almeno 6 sottoreti servono $k = 3$ bit prestati dal terzo ottetto, poiché $2^3 = 8 >= 6$ sottoreti.
+  - Il nuovo prefisso diventa `/19` ($16 + 3$), corrispondente alla subnet mask `255.255.224.0` ($128 + 64 + 32 = 224$).
+  - Restano $32 - 19 = 13$ bit per gli host, ovvero $2^(13) - 2 = 8190$ host validi per sottorete.
+  - Nel terzo ottetto i blocchi avanzano di $2^(8-3) = 32$: i _netid_ delle prime 6 sottoreti saranno `134.65.0.0/19`, `134.65.32.0/19`, `134.65.64.0/19`, `134.65.96.0/19`, `134.65.128.0/19` e `134.65.160.0/19` (con `134.65.192.0/19` e `134.65.224.0/19` disponibili).
+]
+
+==== VLSM (Variable Length Subnet Mask)
+Nel subnetting "classico" (a maschera fissa), tutte le sottoreti ricavate hanno la stessa identica dimensione: questo comporta un enorme spreco di indirizzi se nella stessa organizzazione coesistono LAN grandi (es. 100 host) e piccoli collegamenti punto-punto tra router (2 host). \
+La tecnica *VLSM* (*Variable Length Subnet Mask*) estende il subnetting permettendo di applicare maschere di lunghezza diversa all'interno dello stesso blocco di partenza, cucendo ogni sottorete esattamente sul numero di host richiesti.
+
+*Regola di allocazione e allineamento (boundary validi)*:
+Una sottorete IPv4 di dimensione $2^m$ *non può iniziare da un indirizzo IP arbitrario*, ma deve sempre iniziare da un indirizzo (*boundary*) che sia un *multiplo esatto della dimensione del suo blocco* ($2^m$). \
+Per evitare "buchi" di indirizzi non allineati, il metodo standard VLSM prevede di:
++ *Ordinare le richieste* di sottorete dalla più grande (maggior numero di host) alla più piccola.
++ Per ciascuna richiesta di $H$ host, trovare il più piccolo esponente $m$ tale che $2^m - 2 >= H$, fissando il prefisso a `/(32 - m)`.
++ *Assegnare i blocchi in sequenza* nello spazio di indirizzi disponibile. *(Se invece si deve frazionare uno spazio residuo che parte da un indirizzo non multiplo di potenze grandi, occorre rispettare prima i boundary validi, allocando eventualmente dal blocco più piccolo a quello più grande per riallinearsi ai multipli di 4, 8, 16, ecc.).*
+
+#esempio(title: "Progettazione VLSM su blocco 10.10.0.0/24")[
+Partizioniamo la rete `10.10.0.0/24` per soddisfare le seguenti richieste (già ordinate in senso decrescente): *LAN A* (100 host), *LAN B* (50 host), *LAN C* (20 host), *LAN D* (10 host) e un *Link punto-punto* (2 host):
+#[
+  #set text(size: 9pt, hyphenate: false)
+  #show raw: set text(size: 8pt)
+
+  #align(center)[
+    #table(
+      columns: 7,
+      align: (left + horizon, center + horizon, center + horizon, center + horizon, left + horizon, left + horizon, left + horizon),
+      inset: (x: 5pt, y: 5pt),
+      stroke: 0.5pt,
+      table.header(
+        [*Rete*],
+        [*Richiesti*],
+        [*Disponibili*],
+        [*Spreco*],
+        [*Subnet* \ *(Netid/Slash)*],
+        [*Range Host* \ *Validi*],
+        [*Broadcast*],
+      ),
+      [LAN A], [100], [126 ($2^7 - 2$)], [26], [`10.10.0.0/25`], [`10.10.0.1` – \ `10.10.0.126`], [`10.10.0.127`],
+      [LAN B], [50], [62 ($2^6 - 2$)], [12], [`10.10.0.128/26`], [`10.10.0.129` – \ `10.10.0.190`], [`10.10.0.191`],
+      [LAN C], [20], [30 ($2^5 - 2$)], [10], [`10.10.0.192/27`], [`10.10.0.193` – \ `10.10.0.222`], [`10.10.0.223`],
+      [LAN D], [10], [14 ($2^4 - 2$)], [4], [`10.10.0.224/28`], [`10.10.0.225` – \ `10.10.0.238`], [`10.10.0.239`],
+      [Link], [2], [2 ($2^1$, \ RFC 3021)], [0], [`10.10.0.240/31`], [`10.10.0.240` – \ `10.10.0.241`], [Nessuno],
+    )
+  ]
+]
+Rimangono liberi 14 indirizzi (`10.10.0.242 - 10.10.0.255`). Poiché `242` è multiplo di 2 ma non di 4 né di 8 ($242 mod 4 = 2$), in `10.10.0.242` non può iniziare una `/30` o una `/29`, ma solo una `/31` (`242-243`), seguita da una `/30` in `10.10.0.244/30` (`244-247`, dato che 244 è multiplo di 4) e infine una `/29` in `10.10.0.248/29` (`248-255`, dato che 248 è multiplo di 8).
+]
+
+==== Supernetting (Route Aggregation)
+Il *supernetting* (o _route aggregation_) è l'operazione duale rispetto al subnetting: consiste nell'accorpare più reti IP contigue in un unico blocco più grande (*super-rete*) rappresentato da un singolo prefisso più corto. Reso possibile dall'introduzione di CIDR, è ampiamente utilizzato nel routing inter-dominio (BGP) per aggregare i blocchi di indirizzi di un Sistema Autonomo e ridurre drasticamente il numero di righe nelle tabelle di routing globali.
+
+Più reti aventi la stessa dimensione (stesso prefisso) possono essere aggregate in un'unica super-rete *solo se* rispettano tre requisiti:
++ *Contiguità*: i blocchi di indirizzi si susseguono senza "buchi" (nessun indirizzo mancante nel mezzo).
++ *Potenza di 2*: il numero $n$ di reti da aggregare deve essere una potenza di 2 ($n = 2, 4, 8, 16, dots$); ad esempio, 3 reti `/24` ($768$ indirizzi) non possono essere rappresentate da alcun singolo prefisso CIDR.
++ *Allineamento*: il primo indirizzo della prima rete deve essere divisibile per la dimensione totale della super-rete risultante.
+
+Il *prefisso della super-rete* è costituito dai bit iniziali che rimangono identici in tutte le reti da aggregare.
+
+#esempio(title: "Aggregazione di 4 reti /24 in una super-rete")[
+  Consideriamo le 4 reti contigue ($n = 4 = 2^2$): `193.0.0.0/24`, `193.0.1.0/24`, `193.0.2.0/24` e `193.0.3.0/24`. Osserviamo la rappresentazione binaria dei primi tre ottetti:
+  - `193.0.0.0/24` $arrow.r$ `11000001 00000000 00000000 00000000`
+  - `193.0.1.0/24` $arrow.r$ `11000001 00000000 00000001 00000000`
+  - `193.0.2.0/24` $arrow.r$ `11000001 00000000 00000010 00000000`
+  - `193.0.3.0/24` $arrow.r$ `11000001 00000000 00000011 00000000`
+  I bit iniziali in comune a tutti e quattro gli indirizzi sono i primi $16 + 6 = 22$ bit. La super-rete risultante è quindi *`193.0.0.0/22`*, che copre l'intero intervallo da `193.0.0.0` a `193.0.3.255` ($4 times 256 = 1024$ indirizzi).
+]
 ==== Ottenere indirizzo di un host tramite DHCP
 Un'organizzazione che ha ottenuto un blocco di indirizzi li può assegnare individualmente alle interfacce di host e router nelal propria struttura. Per gli indirizzi delle interfacce dei router, l'amministratore del sistema configura manualmente gli indirizzi IP nel router. Gli indirizzi degli host possono essere configurati manualmente, ma più spesso questo compito è svolto utilizzando il *Dynamic Host Configuration Protocol (DHCP)*. DHCP consente a un host di ottenere un indirizzo IP in modo automatico, così come di apprendere informazioni aggiuntive, quali la sua maschera di sottorete, l'indirizzo del router per uscire dalla sottorete e l'indirizzo del suo DNS server locale. È possibile configurare DHCP di modo che un dato host riceva un indirizzo IP persistente, in modo che ogni volta che l'host entra in rete gli venga assegnato sempre lo stesso indirizzo IP, oppure in modo da assegnare a ciascun host che si connette un *indirizzo IP temporaneo*. \
 DHCP viene spesso detto protocollo *plug-and-play* o *zero-conf* per la sua capacità di automatizzare la connessione degli host alla rete. \
@@ -963,8 +1108,11 @@ Per i nuovi host, il protoccolo DHCP si articola in quattro punti. I quattro pas
 image("images/dhcp.png", width: 70%),
 caption: [Interazione client-server DHCP]
 )
-=== NAT (Netword Address Translation)
-La profilerazione di sottoreti "small office, home office" (o SOHO, piccoli uffici in ambiente domestico), sembrerebbe implicare che ogni volta che si voglia installarne una, l'ISP debba allocare un intervallo di indirizzi per coprire tutte le macchine della sottorete. Di conseguenza, alc rescere della LAN dovrebbe esserle assegnato un blocco maggiore di indirizzi. Bisogna capire cosa accade se l'ISP ha già allocato la parte contigua all'intervallo di indirizzi dell'attuale rete SOHO e bisogna anche capire cosa dovrebbe sapere il normale utente per gestire gli indirizzi IP. \
+Dal punto di vista del trasporto, DHCP opera secondo il modello client-server su protocollo UDP: il *client DHCP* invia e riceve sulla porta *UDP 68*, mentre il *server DHCP* è in ascolto sulla porta *UDP 67*. All'interno dei messaggi DHCP (come mostrato in figura), il campo `yiaddr` (_your IP address_) indica l'indirizzo IP proposto/assegnato al client (posto a `0.0.0.0` nel _DHCP discover_), mentre il `transaction ID` permette di associare richieste e risposte della medesima transazione. Oltre all'allocazione dinamica con _lease_ temporaneo, DHCP supporta anche l'assegnazione statica associando permanentemente uno specifico indirizzo IP all'indirizzo fisico *MAC* della scheda di rete dell'host.
+
+
+=== NAT (Network Address Translation)
+La proliferazione di sottoreti "small office, home office" (o SOHO, piccoli uffici in ambiente domestico), sembrerebbe implicare che ogni volta che si voglia installarne una, l'ISP debba allocare un intervallo di indirizzi per coprire tutte le macchine della sottorete. Di conseguenza, al crescere della LAN dovrebbe esserle assegnato un blocco maggiore di indirizzi. Bisogna capire cosa accade se l'ISP ha già allocato la parte contigua all'intervallo di indirizzi dell'attuale rete SOHO e bisogna anche capire cosa dovrebbe sapere il normale utente per gestire gli indirizzi IP. \
 Esiste un approccio più semplice, il *NAT*, _Network Address Translation_. \
 La seguente figura mostra l'attività di un router abilitato al NAT.
 #figure(
@@ -974,7 +1122,11 @@ caption: [NAT]
 Le quattro interfacce della rete domestica in figura hanno lo stesso indirizzo di sottorete, 10.0.0.0/24. Lo spazio di indirizzamento 10.0.0.0/8 è una delle tre parti dello spazio di indirizzi IP riservato alle *reti privati*: ossia, una rete i cui indirizzi hanno significato solo per i dispositivi interni. Ovviamente i pacchetti inviati sull'Internet globale non possono utilizzare questi indirizzi come sorgente o destinazione. Per capire come viene gestito l'indirizzamento dei pacchetti relativi all'Internet globale, in cui gli indirizzi sono univoci, bisogna analizzare il servizio offerto dal NAT. \
 I router abilitati al NAT non appaiono come router al mondo esterno, ma si comportano come un unico dispositivo con un unico indirizzo IP. In sostanza, il router abilitato al NAT nasconde i dettagli della rete domestica al mondo esterno. \
 Se tutti i datagrammi in arrivo al router NAT della rete geografica hanno lo stesso indirizzo IP di destnazione, il router per capire a quale host interno deve inoltrare un determinato datagramma utilizza una *tabella di traduzione NAT* nel router NAT e nell'includere nelle righe di tale tabella i numeri di porta oltre che gli indirizzi IP. \
-Facendo riferimento alla *@fig:nat*, supponiamo che un utente che si trovi nella rete domestica dietro l'host 10.0.0.1 richieda una pagina web da un server con indirizzo IP 128.119.40.186. L'host 10.0.0.1 assegna il numero di porta di origine 3345 e invia il datagramma nella rete locale. Il router NAT riceve il datagramma, genera per esso un nuovo numero di porta di origine 5001, sostituisce l'indirizzo IP sorgente conm il proprio indirizzo IP e sostituisce il numero di porta di origine con il nuovo numero 5001. Quando genera il nuovo numero di porta di origine, il router NAT può selezionare qualsiasi numeri di porta che attualmente non si trova nella tabella di traduzione NAT. Il web server risponde con un datagramma con l'indirizzo IP del router NAT come destinazione e il cui numero di porta di destinazione è 5001. Quando questo datagramma arriva al router NAT, quest'ultimo consulta la tabella di traduzione NAT usando l'indirizzo IP di destinazione e il numero di porta di destinazione per ottenere l'appropriato indirizzo IP e il corretto numero di porta di destinazione del browser nella rete domestica.
+Facendo riferimento alla *@fig:nat*, supponiamo che un utente che si trovi nella rete domestica dietro l'host 10.0.0.1 richieda una pagina web da un server con indirizzo IP 128.119.40.186. L'host 10.0.0.1 assegna il numero di porta di origine 3345 e invia il datagramma nella rete locale. Il router NAT riceve il datagramma, genera per esso un nuovo numero di porta di origine 5001, sostituisce l'indirizzo IP sorgente conm il proprio indirizzo IP e sostituisce il numero di porta di origine con il nuovo numero 5001. Quando genera il nuovo numero di porta di origine, il router NAT può selezionare qualsiasi numeri di porta che attualmente non si trova nella tabella di traduzione NAT. Il web server risponde con un datagramma con l'indirizzo IP del router NAT come destinazione e il cui numero di porta di destinazione è 5001. Quando questo datagramma arriva al router NAT, quest'ultimo consulta la tabella di traduzione NAT usando l'indirizzo IP di destinazione e il numero di porta di destinazione per ottenere l'appropriato indirizzo IP e il corretto numero di porta di destinazione del browser nella rete domestica. \
+In base alla direzione in cui avviene la traduzione degli indirizzi, si distingue tra due modalità operative del NAT:
+- *SNAT* (*Source NAT*): è la traduzione dell'indirizzo IP e della porta *sorgente* descritta sopra, effettuata automaticamente dal router per le connessioni originate dagli host della rete privata in uscita verso Internet.
+- *DNAT* (*Destination NAT*, comunemente noto come *Port Forwarding*): è la traduzione dell'indirizzo IP e della porta di *destinazione* per i pacchetti provenienti dall'esterno. Poiché gli host su Internet vedono solo l'IP pubblico del router NAT, se si desidera ospitare un server (es. un server Web sulla porta 80 o FTP sulla porta 21) su una macchina interna alla LAN privata (es. `192.168.0.100`), l'amministratore deve configurare manualmente una regola statica di _port forwarding_ sul router: ogni pacchetto in ingresso dall'esterno diretto a una specifica porta pubblica del router viene riscritto nell'header di destinazione e inoltrato all'IP privato e alla porta privata del server interno.
+
 === IPv6
 Col passare degli anni uno spazio di indirizzamento a 32 bit stava cominciando a esaurirsi. Per soddisfare l'esigenza di un grande spazio di indirizzamento venne sviluppato un nuovo protocollo: IPv6 e i progettisti colsero l'opportunità per apportare migliorie e modifiche rispetto alla precedente versione.
 ==== Formato dei datagrammi IPv6
@@ -999,9 +1151,139 @@ Confrontando il formato IPv6 (*@fig:ipv6*) con IPv4 (*@fig:ipv4*) notiamo che so
 - *Frammentazione/riassemblaggio*. IPv6 non consente frammentazione né riassemblaggio sui router intermedi; queste operazioni possono essere effettuate soltanto da sorgente o destinazione. Se un router riceve un datagramma IPv6 che risulta troppo grande per essere inoltrato, non fa altro che eliminarlo e inviare al mittente un messaggio d'errore ICMP "Pacchetto troppo grande". Il mittente può quindi inviare nuovamente i dati, con una dimensione di dataagramma IP inferiore.
 - *Checksum dell'intestazione*. Dal momento che i protocolli Internet a livello di trasporto e di collegamento calcolano un loro checksum, i progettisti di IP hanno ritenuto questa funzionalità ridondante nel livello di rete da decidere di rimuoverla. La preoccupazione è stata l'elaborazione rapida dei pacchetti IP, pertanto, il checksum era un'operazione onerosa da calcolare ogni volta che il pacchetto attraversava router differenti.
 - *Opzioni*. Il campo opzioni non fa più parte dell'intestazione IP standard, anche se non è del tutto scomparso. Infatti, è una delle possibili intestazioni successive a cui punta l'intestazione IPv6.
-=== VEDERE SE SI FA PASSAGGIO DA IPv4 A IPv6 (libro pag 293)
-=== VEDERE SE SI FA INOLTRO GENERALIZATO
-=== VEDERE SE SI FA DISPOSITIVI MIDDLEBOX
+==== Rappresentazione e struttura degli indirizzi IPv6
+Gli indirizzi IPv6 hanno una lunghezza di *128 bit* (16 byte) e vengono scritti in *notazione esadecimale* suddivisi in *8 blocchi da 16 bit* (4 cifre esadecimali ciascuno) separati dal carattere due punti (`:`), ad esempio:
+#align(center)[`2001:0000:1234:0000:0000:00d0:abcd:0532`]
+Per compattare la scrittura si applicano due regole di semplificazione:
++ *Omissione degli zeri iniziali*: gli zeri non significativi a sinistra all'interno di ciascun blocco da 16 bit possono essere omessi (es. `00d0` $arrow.r$ `d0`, `0532` $arrow.r$ `532`, `0000` $arrow.r$ `0`). L'indirizzo precedente diventa: `2001:0:1234:0:0:d0:abcd:532`.
++ *Compressione dei blocchi di zeri consecutivi (`::`)*: una sequenza contigua di due o più blocchi composti interamente da zeri può essere sostituita da un doppio due punti (`::`). Questa abbreviazione può essere usata *una sola volta* all'interno di un indirizzo (altrimenti la ricostruzione a 128 bit sarebbe ambigua); se ci sono più sequenze di blocchi nulli, si comprime quella più lunga o, a parità di lunghezza, quella più a sinistra.
+  - Esempio 1: `2001:0:1234:0:0:d0:abcd:532` $arrow.r$ `2001:0:1234::d0:abcd:532`.
+  - Esempio 2 (parità di lunghezza): `2001:0db8:0000:0000:0001:0000:0000:0001` $arrow.r$ `2001:db8::1:0:0:1`.
+  - Indirizzo di *loopback* IPv6: `0:0:0:0:0:0:0:1` $arrow.r$ `::1`.
+
+In IPv6 non esiste la notazione decimale puntata per le maschere di sottorete, ma si usa esclusivamente la lunghezza del prefisso (es. `/64`). Tipicamente un indirizzo IPv6 unicast globale è diviso in:
+- *Subnet Prefix (primi 64 bit)*: costituiscono il _netid_, a loro volta solitamente ripartiti in 48 bit per il routing globale Internet e 16 bit per definire le sottoreti interne all'organizzazione.
+- *Host Identifier / Interface ID (ultimi 64 bit)*: identificano univocamente l'interfaccia dell'host nella sottorete (_hostid_).
+==== Autoconfigurazione degli indirizzi: SLAAC
+A differenza di IPv4, IPv6 integra nativamente un meccanismo di autoconfigurazione _stateless_ denominato *SLAAC* (*Stateless Address Autoconfiguration*), basato su messaggi *ICMPv6*, che permette a un host di configurarsi autonomamente sulla rete senza bisogno di un server DHCP. Il processo si articola in 5 passi:
++ *Generazione dell'indirizzo Link-Local*: appena connesso, l'host genera autonomamente un indirizzo provvisorio valido solo sul collegamento locale con prefisso `fe80::xxxx` (derivando l'identificatore a 64 bit dal proprio indirizzo MAC oppure generandolo in modo casuale).
++ *Router Solicitation (RS — ICMPv6 tipo 133)*: l'host invia in multicast un messaggio di _Router Solicitation_ per scoprire la presenza di router IPv6 sul collegamento locale.
++ *Router Advertisement (RA — ICMPv6 tipo 134)*: il router locale risponde con un messaggio di _Router Advertisement_ contenente il prefisso globale della sottorete (es. `2001:db8:cafe::/64`), l'indirizzo del default gateway (es. `fe80::1`) e il server DNS.
++ *Generazione dell'indirizzo globale*: l'host combina il prefisso `/64` annunciato dal router con il proprio ID di interfaccia a 64 bit, formando il proprio indirizzo IPv6 globale.
++ *Duplicate Address Detection (DAD — ICMPv6 tipo 135)*: prima di utilizzare stabilmente l'indirizzo (sia link-local che globale), l'host ne verifica l'unicità inviando sulla rete locale un messaggio ICMPv6 di _Neighbor Solicitation_ avente come target l'indirizzo appena generato; se nessun altro nodo risponde reclamando quell'indirizzo, la configurazione è completata con successo.
+=== Passaggio DA IPv4 A IPv6
+I nuovi sistemi IPv6 sono retrocompatibili, ossia sono in grado d'inviare, instradare e ricevere datagrammi IPv4, i sistemi IPv4 non sono in grado di gestire datagrammi IPv6. Per ovviare a questo problema esistono diverse opzioni.
+==== Tunneling
+L'approccio più adottato è noto come *tunneling*. Supponiamo che due nodi IPv6 vogliano utilizzare datagrammi IPv6, ma siano connessi da un insieme di router intermedi IPv4, che chiameremo *tunnel*, come mostrato nella seguente figura:
+#figure(
+image("images/tunneling.png", width: 70%),
+caption: [Tunneling]
+)
+Il nodo _B_, al lato di invio del tunnel, prende l'intero datagramma IPv6 pervenutogli da $A$ e lo pone nel campo dati di un datagramma IPv4. Quest'ultimo viene indirizzato al nodo _E_, al lato di ricezione del tunnel e inviato al primo nodo del tunnel _C_. I router IPv4 intermedi instradano il datagramma IPv4, come farebbero per qualsiasi altro datagramma, ignari che questo contenga un datagramma IPv6 completo. Il nodo IPv6, sul lato di ricezione del tunnel  riceverà il datagramma IPv4, determinerà che questo ne contiene uno IPv6 osservando che il valore del campo numero di protocollo nel pacchetto IPv4 è 41 corrispondente a payload IPv6, lo estrarrà e lo instraderà esattamente come se l'avesse ricevuto da un nodo IPv6 adiacente.\
+I vantaggi e gli svantaggi del tunneling sono:
+- *Vantaggi*: non richiede alcun aggiornamento dei router IPv4 intermedi.
+- *Svantaggi*: introduce overhead per il doppio header (IPv4 + IPv6), riduce la MTU effettiva (rischio di frammentazione) e aggiunge latenza di incapsulamento/decapsulamento.
+==== Dual Stack
+In questo approccio i nodi eseguono simultaneamente IPv4 e IPv6 quindi hanno entrambe le tipologie di indirizzi e sono capaci di inviare e ricevere sia datagrammi IPv6 che IPv6. Il doppio indirizzamento viene gestito dal DNS (type `AAAA`). I vantaggi di questo approccio sono i seguenti:
+- compatibilità totale con entrambi i protocolli;
+- transizione graduale e trasparente;
+- *nessuna traduzione o modifica dei pacchetti*.
+Gli svantaggi invece sono:
+- non risolve l'esaurimento degli indirizzi IPv4;
+- c'è un doppio consumo di risorse;
+- c'è una maggiore complessità gestionale nei router.
+==== Translation
+Mediante questo approccio vengono tradotti gli header IPv6 in header Ipv4 ai bordi di rete IPv4-only. Questo approccio consente di avere reti IPv6-only ma c'è una perdita di informazioni per campi non traducibili.
+== Inoltro generalizzato e SDN
+L'inoltro basato sull destinazione è caratterizzato da due passi:
++ ricerca dell'indirizzo IP di destinazione (_match_);
++ invio del pacchetto attraverso la struttura di comunicazione a una specifica porta di uscita (_action_).
+Consideriamo un paradigma molto più generale, il paradigma _match-action_, dove il match può essere effettuato su più campi dell'intestazione associati a differenti protocolli corrispondenti a diversi livelli della pila di protocolli. La action può includere l'inoltro del pacchetto a una o più porte di uscita, il bilanciamento di carico dei pacchetti attraverso più interfacce di uscita che portano a un servizio (_load-balacing_), la riscrittura dei valori dell'intestazione, il blocco/scarto di un pacchetto, l'invio di un pacchetto a un server speciale per ulteriori elaborazioni e azioni, e altro ancora. \
+Nell'inoltro generalizzato, una tabella match-action generalizza il concetto delle tabella di inoltro bassata sulla destinazione. Poichè le decisioni di inoltro possono essere effettuate utilizzando indirizzi di sorgente e destinazione del livello di rete e/o del livellodi collegamento, i dispositivi di inoltro sono denominato _packet switch_ piuttosto che router o switch. \
+La seguente figura mostra una tabella match-action in un packet switch, calcolata, installata e aggiornata da un controlelr remoto. È anche possibile che i componenti di controllo di un packet switch interagiscono tra di loro, nella pratica sono implementati da un controller remoto che calcola, installa e aggiorna le tabelle.
+#figure(
+image("images/packed_switch.png", width: 70%),
+caption: [Inoltro generalizzato]
+)
+Ogni entry corrisponde a una riga in una tabella di inoltro match-action, nota come *tabella dei flussi*, contiene quanto segue.
+- _Un insieme di valori dei campi dell'intestazione_ con i quali il pacchetto entrante viene confrontato. Il controllo viene implementato a livello hardware è effettuato molto più rapidamente dalle memorie TCAM, che permettono più di un milione di occorrenze di indirizzi di destinazione. Un pacchetto che non abbia riscontrato alcun riscontro in alcuna occorrenza della tabella dei flussi può essere scartato o inviato a un controller remoto per ulteriori elaborazioni.
+- _Un insieme di contatori_ che vengono aggiornati quando i pacchetti vengono associati a un'occorrenza nella tabella dei flussi. Tali contatori possono contenere il numero di pacchetti associati a tale occorrenza e l'informazione temporale sull'ultimo aggiornamento dell'occorrenza.
+- _Un insieme di azioni_ che devono essere intrapese quando un pacchetto è associato a un'occorrenza della tabella dei flussi. Tali azioni potrebbero essere l'inoltro di un pacchetto a una data porta di uscita, lo scarto del pacchetto, l'effettuazione delle copie del pacchetto e il loro invio a più porte di uscita e/o la riscrittura di alcuni campi dell'intestazione.
+=== Match
+Il seguente schema mostra gli undici campi dell'intestazione del pacchetto e l'ID della porta di ingresso che possono essere confrontati in una regola match-action.
+#[
+#set text(size: 8pt)
+
+#let field(body) = grid.cell(
+  stroke: 0.5pt,
+  inset: 6pt,
+  align: center + horizon,
+  body,
+)
+
+#let level(n, label) = (
+  grid.cell(
+    colspan: n,
+    stroke: (left: 0.5pt, right: 0.5pt, bottom: 0.5pt),
+    inset: 0pt,
+    box(height: 0.6em),
+  ),
+  grid.cell(colspan: n, align: center, label),
+)
+
+#align(center)[
+  #grid(
+    columns: 12 * (1fr,),
+    column-gutter: 3pt,
+    row-gutter: 6pt,
+    // field row
+    field[Ingress \ Port],
+    field[Src \ MAC],
+    field[Dst \ MAC],
+    field[Eth \ Type],
+    field[VLAN \ ID],
+    field[VLAN \ Pri],
+    field[IP Src],
+    field[IP Dst],
+    field[IP \ Proto],
+    field[IP \ TOS],
+    field[TCP/UDP \ Src Port],
+    field[TCP/UDP \ Dst Port],
+    // brackets
+    [],
+    grid.cell(
+      colspan: 5,
+      stroke: (left: 0.5pt, right: 0.5pt, bottom: 0.5pt),
+      box(height: 0.6em),
+    ),
+    grid.cell(
+      colspan: 4,
+      stroke: (left: 0.5pt, right: 0.5pt, bottom: 0.5pt),
+      box(height: 0.6em),
+    ),
+    grid.cell(
+      colspan: 2,
+      stroke: (left: 0.5pt, right: 0.5pt, bottom: 0.5pt),
+      box(height: 0.6em),
+    ),
+    // labels
+    [],
+    grid.cell(colspan: 5, align: center)[Livello di collegamento],
+    grid.cell(colspan: 4, align: center)[Livello di rete],
+    grid.cell(colspan: 2, align: center)[Livello di trasporto],
+  )
+]
+]
+L'astrazione del match permette che un match venga effettuato sui campi delle intestazioni di tre livello di protocollo. Gli indirizzi MAC di sorgente e destinazione sono indirizzi di livello 2 associati alle interfacce di invio e ricezione dei frame. \
+Un dispositivo OpenFlow può funzione sia come un router, dispositivo di livello 3 che inoltra datagrammi, sia come uno switch, dispositivo di livello 2 che inoltra frame. L'insieme dei 12 valori che possono essere confrontati è cresciuto fino a 41 valori nelle specifiche più recenti. \
+La porta di ingresso si riferisce alla porta in entrata al packet switch sul quale il pacchetto viene ricevuto. \
+In funzione della specifica tecnlogia SDN, non tutti i campi dell'intestazione IP possono essere confrontati; per esempio, OpenFlow non permette il confronto sulla base del campo TTL o lunghezza del datagramma. Per capire perchè alcuni campi possono essere confrontati e altri no, è perchè bisogna raggiungere un compromesso tra funzionalità e complessità.
+=== Action
+Ogni occorrenza della tabella dei flussi ha una lista di azioni che determinano l'elaborazione da effettuare su un pacchetto che le corrisponde. In caso di molteplici azioni, vengono effettuate nell'ordine specificato dalla lista. \
+Le azioni più importanti possono essere le seguenti.
+- *Inoltro* (_forwarding_). Un pacchetto in entrata può essere inoltrato a una particolare porta di uscita, inviato in broadcast a tutte le porte eccetto quella da cui è entrato o in multicast a un insieme selezionato di porte. Il pacchetto può essere incapsulato e inviato al controller remoto del dispositivo. Il controller può effettuare alcune azioni sul pacchetto, come installare nuove occorrenze nella tabella dei flussi o restituire il pacchetto al dispositivo per effettuare l'inoltro in base alla regole aggiornate della tabella dei flussi.
+- *Scarto* (_dropping_). Un'occorrenza della tabella dei flussi senza azioni indica che il pacchetto dovrebbe essere scartato.
+- *Modifica dei campi* (_modify-field_). I valori nei dieci campo dell'intestazione del pacchetto possono essere riscritti prima che il pacchetto venga inoltrato alla porta di uscita selezionata.
 = Livello di rete: il piano di controllo
 Le tabelle di inoltro, nel caso di inoltro basato sulla destinazione, e le tabelle dei flussi, nel caso di inoltro generalizzato, sono gli elementi principali che collegano il piano dei dati e il piano di controllo del livello di rete. Tali tabelle specificano il comportamento di inoltro nel piano dei dati locale di un router. Inoltre, nel caso di inoltro generalizzato, le azioni intrapese potrebbero includere non solo l'inoltro di un pacchetto verso una porta di uscita del router, ma anche lo scarto del pacchetto, la duplicazione del pacchetto e la riscrittura dei campi dell'interstazione del pacchetto di livello 2, 3 e 4. \
 Per calcolare, mantenere e installare le tabelle di inoltro e dei flussi esistono due possibili approcci.
@@ -1024,7 +1306,7 @@ Per formulare i problemi di instradamento si utilizza un *grafo*. Un grafo $G = 
 image("images/grafo.png", width: 70%),
 caption: [Modello astratto di grafo di una rete di calcolatori]
 ) <fig:grafo>
-Come mostrato nella figura, ad un arco è associato un valore che ne indica il costo. In genere, ciò può riflettere la lunghezza fisica del collegamento corrispondente, la velocità del collegamento o il suo prezzo. Per ogni arco $(x, y)$ tra i nodi _x_ e _y_ denotiamo con $c(x, y)$ il suo costo. Se la coppia $(x, y)$ non appartiene ad $E$, poniamo $c(x, y) = +infinity$. Inoltre, consideriamo sempre e solo gafi non orientati ovvero $c(x, y) = c(y, x)$. Inoltre, un nodo $y$ viene detto *adiacente* o *vicino*, _neighbor_, a un nodo _x_ se $(x, y)$ è un arco in $E$. \
+Come mostrato nella figura, ad un arco è associato un valore che ne indica il costo. In genere, ciò può riflettere la lunghezza fisica del collegamento corrispondente, la velocità del collegamento o il suo prezzo. Per ogni arco $(x, y)$ tra i nodi _x_ e _y_ denotiamo con $c(x, y)$ il suo costo. Se la coppia $(x, y)$ non appartiene ad $E$, poniamo $c(x, y) = +infinity$. Inoltre, consideriamo sempre e solo grafi non orientati ovvero $c(x, y) = c(y, x)$. Inoltre, un nodo $y$ viene detto *adiacente* o *vicino*, _neighbor_, a un nodo _x_ se $(x, y)$ è un arco in $E$. \
 Dato che agli archi del grafo sono assegnati dei costi, l'obiettivo di un algoritmo di instradamento è l'individuazione dei percorsi meno costosi tra sorgenti e destinazioni. Un *percorso* in un grafo $G = (N, E)$ è una sequenza di nodi $(x_1, x_2, dots, x_P)$ tali che ciascuna delle coppie $(x_1, x_2), (x_2, x_3), dots, (x_(P-1), x_P)$ sia un arco appartenente ad $E$. Il costo di un percorso è la somma di tutti gli archi lungo il percorso. Dati due nodi qualsiasi $x$ e $y$, esistono più percorsi che li congiungono, ciascun con il proprio costo. Uno o più tali percorsi rappresenta un *percorso a costo minimo*. Se tutti gli archi del grafo hanno lo stesso costo, il percorso a costo minimo rappresenta anche il *percorso più breve*, ossia il percorso con il minor numero di collegamenti tra sorgente e destinazione. \
 Possiamo classificare gli algoritmi di instradamento come centralizzati o decentralizzto.
 - Un *algoritmo di instradamento centralizzato* calcola il percorso a costo minimo tra una sorgente e una destinazione avendo conoscenza globale e completa della rete. In altre parole, l'algoritmo riceve in ingresso tutti i collegamenti tra i nodi e i loro costi. Ciò richede che l'algoritmo in qualche modo ottenga tale informazione prima di effettuare il vero e proprio calcolo, che può svolto in una sola locazione quale potrebbe essere un controller logicamente centralizzato, o replicato in ognuno dei router della rete. La caratteristica distintiva, è che un algoritmo globale ha informazioni complete su connettività e costi. In pratica, gli algoritmi con informazioni di stato globali sono spesso detti *algoritmi link-state* dato che l'algoritmo deve essere conscio del costo di ciascun collegamento della rete.
@@ -1032,12 +1314,18 @@ Possiamo classificare gli algoritmi di instradamento come centralizzati o decent
 Un secondo criterio per classificare gli algoritmi di instradamento riguarda il fatto di essere statici o dinamici. Negli *algoritmi di instradamento statici* i percorsi cambiano molto raramente, spesso come risultato di un intervento umano. Gli *algoritmi di instradamento dinamici*, invece, determinano gli instradamenti al variare del volume di traffico o della topologia della rete. Un algoritmo dinamico può essere eseguito periodicamente o come conseguenza diretta di un cambiamento nella topologia o nel costo di un collegamento. Gli algoritmi dinamici rispondono meglio ai cambiamenti della rete, ma sono anche soggetti a problemi quali l'instradamento in loop e l'oscillazione dei percorsi. \
 Un terzo modo per classificare gli algoritmi di instradamento si basa sull'essere più o meno sensibili al carico della rete (_load-sensitive_ o _load-insensitive_). In un *algoritmo sensibile al carico* i costi dei collegamenti variano dinamicamente per riflettere il lviello corrente di congestione. Se si associa un alto costo in una situazione di traffico ad un collegamento, un algoritmo di instradamento eviterà di usarlo. Gli attuali algoritmi di instradamento Internet sono *algoritmi insensibili al carico*, dato che il costo di un collegamento non riflette esplicitamente il suo attuale livello di congestione.
 === Instradamento link-state (LS)
-In un instradamento link-state la topologia di rete e tutti i costi dei colleganenti sono noti. Ciò si ottiene facendo inviare a ciascun nodo paccehtto sullo stato dei suoi collegamenti a tutti gli altri nodi della rete. Questi pacchetti contengono identità e costi dei collegamenti connessi al nodo che li invia. Questo viene spesso ottenuto tramite un algoritmo di *link-state broadcast*. In atl modo tutti i nodi dispongono di una vista identica e completa della rete e ciascun nodo che esegue l'algoritmo LS ottiene gli stessi risultati. \
+In un instradamento link-state la topologia di rete e tutti i costi dei colleganenti sono noti. Ciò si ottiene facendo inviare a ciascun nodo paccehtto sullo stato dei suoi collegamenti a tutti gli altri nodi della rete. Questi pacchetti contengono identità e costi dei collegamenti connessi al nodo che li invia. Questo viene spesso ottenuto tramite un algoritmo di *link-state broadcast*. In tal modo tutti i nodi dispongono di una vista identica e completa della rete e ciascun nodo che esegue l'algoritmo LS ottiene gli stessi risultati. \
+La distribuzione affidabile dello stato dei collegamenti a tutti i nodi avviene mediante una tecnica chiamata *reliable flooding*. Ogni nodo genera periodicamente (e ogni volta che rileva una variazione nello stato di un suo collegamento diretto) un *Link State Packet (LSP)* contenente:
+- l'identificativo (ID) del nodo che ha creato l'LSP;
+- l'elenco dei nodi adiacenti con il relativo costo del collegamento diretto;
+- un *numero di sequenza* (*SEQNO*, a 32 o 64 bit), inizializzato a `0` al reboot del router e incrementato ad ogni nuova emissione di LSP;
+- un campo *tempo di vita* (*TTL*), decrementato periodicamente dai router che conservano il pacchetto (quando il TTL raggiunge `0`, l'LSP viene scartato per eliminare informazioni obsolete).
+Quando un router riceve un LSP da un vicino, controlla il `SEQNO`: se l'LSP è più recente di quello già memorizzato per quel nodo origine (ovvero ha un `SEQNO` maggiore), il router lo salva nel proprio database e lo propaga su tutte le altre linee di uscita eccetto quella da cui è arrivato; altrimenti lo scarta. \
 L'algoritmo di calcolo dei percorsi associato all'instradamento link-state è noto come *algoritmo di Dijkstra*. L'algoritmo di Dijkstra calcola il percorso a costo minimo da un nodo (l'origine, che chiameremo $u$) a tutti gli altri nodi della rete, è iterativo e ha le seguenti proprietà: dopo la $k$-esima iterazione, i percorsi a costo minimo sono noti a _k_ nodi di destinazione e, tra i percorsi a costo minimo verso tutti nodi di destinazione, questi $k$ percorsi hanno i $k$ costi più bassi. Si adotta la seguente notazione.
 - $D(v)$: costo minimo del percorso dal nodo origine alla destinazione $v$ per quanto concerne l'iterazione corrente dell'algoritmo.
 - $p(v)$: immediato predecessore di $v$ lungo il percorso a costo minimo dall'orgine a $v$.
 - $N'$: sottoinsieme di noti contenente tutti i nodi $v$ per cui il percorso a costo minimo dall'origine a $v$ è definitivamente noto.
-L'algoritmo di instradamento centralizzato consiste in un passo di inizializzazione seguito da un ciclo che viene eseguito una volta per ogni nodo del frao. Quando termina, l'algoritmo avrà calcolato il camminimo minimo dal nodo origine $u$ a tutti gli altri nodi.
+L'algoritmo di instradamento centralizzato consiste in un passo di inizializzazione seguito da un ciclo che viene eseguito una volta per ogni nodo del grafo. Quando termina, l'algoritmo avrà calcolato il camminimo minimo dal nodo origine $u$ a tutti gli altri nodi.
 #algoritmo(title: [Algoritmo di Dijkstra])[
   #pseudocode-list[
     + *Inizializzazione*
@@ -1090,7 +1378,8 @@ Consideriamo la rete nella *@fig:grafo* e calcoliamo i percorsi a costo minimo d
 ]
 Quando l'algoritmo termina, abbiamo per ciascun nodo il suo predecessore lungo il percorso a costo minimo dal nodo orgine. Per ciascun predecessore abbiamo il rispettivo predecessore, e in questo modo riusciamo a costruire l'intero percorso dall'orgine a tutte le destinazioni.
 ]
-Calcoliamo la complessità computazionale di questo algoritmo. Nella prima iterazione, dobbiamo cercare se tutti gli $n$ nodi per determinare quello $w$ in in $N'$ avente il costo minimo. Nella seconda iterazione dobbiamo controllare $n-1$ nodi per determinare il costo minimo; nella terza $n-2$ e così via. Complessivametne il numero totale di nodi da cercare in tutte le iterazioni è $(n(n+1))/(2)$ e, di conseguenza, diciamo che la complessità dell'algoritmo di Dijkstra nel caso peggiore è di ordine quadratico: $O(n^2)$. Un'implementazione più sofisticata, utilizzando una struttura dati nota come heap, riesce a determinare il minimo in un tempo logaritmico anzichè lineare.
+Calcoliamo la complessità computazionale di questo algoritmo. Nella prima iterazione, dobbiamo cercare se tutti gli $n$ nodi per determinare quello $w$ in in $N'$ avente il costo minimo. Nella seconda iterazione dobbiamo controllare $n-1$ nodi per determinare il costo minimo; nella terza $n-2$ e così via. Complessivametne il numero totale di nodi da cercare in tutte le iterazioni è $(n(n+1))/(2)$ e, di conseguenza, diciamo che la complessità dell'algoritmo di Dijkstra nel caso peggiore è di ordine quadratico: $O(n^2)$. Un'implementazione più sofisticata, utilizzando una struttura dati nota come heap, riesce a determinare il minimo in un tempo logaritmico anzichè lineare. \
+
 === Instradamento distance-vector (DV)
 Mentre l'instradamento LS usa informazioni globali, quello *distance-vector* è iterativo, asincrono e distribuito. È _distribuito_ nel senso che ciascun nodo riceve parte dell'informazione da uno o più dei suoi vicini direttamente connessi, a cui, dopo aver effettuato il calcolo, restituisce i risultati. È _iterativo_ nel senso che questo processo si ripete fino a quando non avviene ulteriore scambio informativo tra vicini. L'algoritmo è anche auto-terminante: non vi è alcun segnale che il calcolo debba fermarsi, semplicemente si blocca. È _asincrono_ nel senso che non richiede che tutti i nodi operino al passo con gli altri. \
 Consideriamo un'importante relazione tra costi e percorsi a costo minimo. Sia $d_x (y)$ il costo del percorso a costo minimo dal nodo _x_ al nodo _y_. Allora i costi minimi sono correlati dalla nota *formula di Bellman-Ford*:
@@ -1098,7 +1387,7 @@ $
 d_x (y) = min_v brace.l c(x, v) + d_v (y) brace.r
 $
 dove $min_v$ riguarda tutti i vicini di $x$. Se, dopo aver viaggiato da $x$ a $v$, consideriamo il percorso a costo minino da $v$ a $y$, il costo del percorso sarà $c(x, v) + d_v (y)$. Il costo minimo è il minimo di $c(x, v) + d_v (y)$ calcolato su tutti i nodi adiacenti $v$.  \
-La formula di Bellman-Fors fornisce le righe della tabella di inoltro del nodo $x$. Sia $v^*$ un qualsiasi nodo vicino che minimizza l'equazione di Bellman-Ford. Allora, se il nodo _x_ vuole inviare un pacchetto al nodo _y_ lungo il percorso a costo minimo, dovrebbe prima inoltrarlo al nodo $v^*$. Pertanto, la tabella di inoltro al nodo $x$ specificherebbe il nodo $v^*$ come router successivo per la destinazione finale _y_. Un altro contributo pratico della formula è suggerire la forma della comunicazione tra vicini che avrà luogo nell'algoritmo usato dal DV, detto *algoritmo di Bellman-Ford*. \
+La formula di Bellman-Ford fornisce le righe della tabella di inoltro del nodo $x$. Sia $v^*$ un qualsiasi nodo vicino che minimizza l'equazione di Bellman-Ford. Allora, se il nodo _x_ vuole inviare un pacchetto al nodo _y_ lungo il percorso a costo minimo, dovrebbe prima inoltrarlo al nodo $v^*$. Pertanto, la tabella di inoltro al nodo $x$ specificherebbe il nodo $v^*$ come router successivo per la destinazione finale _y_. Un altro contributo pratico della formula è suggerire la forma della comunicazione tra vicini che avrà luogo nell'algoritmo usato dal DV, detto *algoritmo di Bellman-Ford*. \
 L'idea è la seguente. Ciascun nodo $x$ inizia con $D_x (y)$, una stima del percorso a costo minimo da sè stesso al nodo $y$, per tutti i nodi in $N$. Sia $bold(D)_x = [D_x (y): y in N]$ il vettore delle distanze dal nodo _x_, che è il vettore delle stime dei costi da _x_ a tutti gli altri nodi. Con l'algoritmo Bellman-Ford, ciascun nodo $x$ mantiene i seguenti dati di instradamento.
 - Per ciascun vicino $v$, il costo $c(x, v)$ da $x$ al vicino $v$.
 - Il vettore delle distanze dal nodo $x$, contenente la stima presso $x$ del costo verso tutte le destinazioni $y$.
@@ -1141,7 +1430,13 @@ D_x (y) &= min brace.l c(x, y) + D_y (y), c(x, z) + D_z (y) brace.r = min brace.
 D_x (z) &= min brace.l c(x, y) + D_y (z), c(x, z) + D_z (z) brace.r = min brace.l 2 + 1, 7 + 0 brace.r = 3
 $
 La seconda colonna mostra, per ciascun nodo, il nuovo vettore delle distanze del nodo e i vettori delle distanze appean ricevuti dai suoi vicini. \
-Il processo di ricezione dei vettori aggiornati, di ricalcolo delle righe nella tabella di instradamento e di informazione ai vicini sui costi cambiati nel percorso a costo minimo verso la destinazione continua finchè non viene più inviato alcun messaggio di aggiormanto.
+Il processo di ricezione dei vettori aggiornati, di ricalcolo delle righe nella tabella di instradamento e di informazione ai vicini sui costi cambiati nel percorso a costo minimo verso la destinazione continua finchè non viene più inviato alcun messaggio di aggiormanto. \
+La tecnica per cui un nodo non annuncia mai una rotta al nodo adiacente da cui l'ha appresa prende il nome di *Split Horizon*; la variante in cui la annuncia ponendo esplicitamente il costo a $+infinity$ è detta *Split Horizon with Poisoned Reverse* o inversione avvelenata.
+==== Il protocollo RIP (Routing Information Protocol)
+Il principale protocollo storico di routing intra-AS basato sull'algoritmo *Distance-Vector* è *RIP* (*Routing Information Protocol*):
+- *Trasporto e metrica*: i messaggi di aggiornamento RIP viaggiano incapsulati in segmenti *UDP* (sulla porta *520* per IPv4, o porta *521* per RIPng in IPv6). La metrica di costo utilizzata è il semplice conteggio dei salti (*hop count*), assumendo costo `1` per ogni collegamento attraversato.
+- *Timer e Triggered Updates*: ogni router invia il proprio vettore delle distanze ai router adiacenti periodicamente ogni *30 secondi*, oppure immediatamente non appena rileva una modifica nella propria tabella (*triggered update*). Se una rotta non viene riconfermata dagli annunci di un vicino entro *180 secondi*, viene dichiarata irraggiungibile.
+- *Gestione del conteggio all'infinito*: oltre a impiegare lo _split horizon_, RIP fissa convenzionalmente il valore di *infinito a 16 hop*. In questo modo, qualora si verifichi un ciclo di instradamento non coperto dallo split horizon, il conteggio all'infinito si arresta comunque non appena il costo raggiunge 16, dichiarando la destinazione irraggiungibile (ciò limita l'uso di RIP a reti il cui diametro non superi i 15 hop).
 ==== Instradamento distance-vetor: modifica dei costi e guasti dei collegamenti
 Quando un nodo che esegue l'instradamento DV rivela un cambiamento nel costo dei collegamenti con un vicino aggiorna il proprio vettore delle distanze e, se si verifica un cambiamento del percorso a costo minimo, trasmette ai suoi vicini il proprio vettore delle distanze. Consideriamo la seguente figura:
 #figure(
@@ -1153,7 +1448,7 @@ Il grafo a sinistra mostra uno scenario in cui il costo del collegamento da $y$ 
 - All'istante $t_1$ $z$ riceve l'aggiormento da $t$ e aggiorna la propria tabella, calcola un nuovo costo minimo verso $x$ e invia il nuovo vettore delle distanze ai vicini.
 - All'istante $t_2$ $y$ riceve l'aggiornmento di $z$ e aggiorna la propria tabella delle distanze. I costi minimi di $y$ non cambiano e $y$ non manda alcun messaggio a $z$. L'algoritmo entra in uno stato di quiete.
 Consideriamo ora cosa può avvenire quando il costo di un collegamento aumenta. Supponaimo che il costo del collegamento tra $x$ e $y$ passi da 4 a 60, come mostrato nella figura sopra nel grafo a destra.
-+ Prima che il costo del collegamento cambi $D_y (x) = 4, D_y (z)  1, D_z (y) = 1$ e $D_z (x) = 5$. All'istante $t_0$, $y$ rivela che il costo del collegamento è passato da 4 a 60 e calcola il suo nuovo percorso a costo minimo verso $x$ con la formula $D_y (c) = min brace.l c(y, x) + D_x (x), c(y, z) + D_z (x) brace.r = min brace.l 60 + 0, 1 + 5 brace.r = 6$. \
++ Prima che il costo del collegamento cambi $D_y (x) = 4, D_y (z) = 1, D_z (y) = 1$ e $D_z (x) = 5$. All'istante $t_0$, $y$ rivela che il costo del collegamento è passato da 4 a 60 e calcola il suo nuovo percorso a costo minimo verso $x$ con la formula $D_y (x) = min brace.l c(y, x) + D_x (x), c(y, z) + D_z (x) brace.r = min brace.l 60 + 0, 1 + 5 brace.r = 6$. \
 Ovviamente con la visione globale della rete, possiamo rilevare che questo nuovo costo attraverso $z$ è _errato_. Ma l'univa informazione che il nodo $y$ possiede è che il costo diretto verso $x$ è 60 e che $z$ ha detto a $y$ di essere in grado di raggiungere $x$ con un costo di 5. Pertanto al fine di arrivare a $x$, $y$ farebbe passare il percorso per $z$, aspettandosi che questo sia in grado di giungere a $x$ con un costo pari a 5. All'istante $t_1$, abbiamo un *instradamento ciclico*: per giungere ad $x$, $y$ fa passare il percorso per $z$ e $z$ lo fa passare per $y$. Quindi un pacchetto destinato a $x$ rimbalza sempre tra $y$ e $z$.
 + Dato che il nodo $y$ ha calcolato un nuovo costo minimo verso $x$, informa $z$ del suo nuovo vettore delle distanze all'istante $t_1$
 + In un istante successivo a $t_1$, $z$ riceve il nuovo vettore delle distanze di $y$, che indica che il costo minimo di $y$ verso $x$ è 6, sa che può giungere a _y_ a costo 1 e quindi calcola il nuovo costo minimo verso $x$ pari a $D_z (x) = min brace.l 50 + 0, 1 + 6 brace.r = 7$. Dato che il costo minimo di $z$ verso $x$ è aumentato, $z$ informa $y$ del suo nuovo vettore delle distanze a tempo $t_2$
@@ -1161,7 +1456,7 @@ Ovviamente con la visione globale della rete, possiamo rilevare che questo nuovo
 Il ciclo prosegue per 44 iterazioni, fino a quando $z$ considera il costo del proprio percorso attraverso $y$ maggiore di 50. A questo punto, $z$ determina che il percorso a costo minimo verso $x$ passa attraverso la connessione diretta a $x$, e $y$ instraderà verso $x$ passando per $z$. A causa di questi scenari, il processo appena descritto viene detto *problema di conteggio all'infinito*.
 ==== Instradamento distance-vector: aggiunga dell'inversione avvelenata
 Lo scenario con i cicli può essere evitato utilizzando una tecnica nota come *inversione avvelenata*. L'idea è semplice: se $z$ instrada tramite $y$ per giungere alla destinazione $x$, alloa $z$ avverità $y$ che la sua distanza verso $x$ è infinita, ossia $z$ comunicherà a $y$ che $D_z (x) = +infinity$. Quindi $y$ non tenterà mai di instradare _x_ passando per $z$, per tutto il tempo in cui $z$ continua a instradare verso $x$ passando per $y$. \
-Vediamo come l'inversione avvelenata risolva il problema dei cicli. Quando il costo del collegamento $(x, y)$ cambia da 4 a 60 all'istante $t_0$, $y$ aggiorna la propria tabella, continua a instradare direttamente verso $x$, e informa $z$ del suo nuovo costo verso $x$, ovvero $D_y (x) = 60$. Una volta ricevuto l'aggiornamento all'istante $t_1$, $z$ cambia immediatamente il proprio percorso verso $x$ facendolo passare attraverso il collegamento diretto $(x, y)$ al costo 50. Dato che questo è il nuovo percorso a costo minimo e dato che non passa più attraverso $y$, $z$ informa $y$ che $D_z (x) = 50$. Dopo aver ricevuto l'aggiormanto da $z$, $y$ adegua la propria tabella ponendo $D_y (x) = 51$. Dato che $z$ si trova sul percorso a costo minimo di $y$ verso $x$, $y$ avvelena il percorso inverso da $z$ a $x$ informando $z$ che $D_y (x) = +infinity$. \
+Vediamo come l'inversione avvelenata risolva il problema dei cicli. Quando il costo del collegamento $(x, y)$ cambia da 4 a 60 all'istante $t_0$, $y$ aggiorna la propria tabella, continua a instradare direttamente verso $x$, e informa $z$ del suo nuovo costo verso $x$, ovvero $D_y (x) = 60$. Una volta ricevuto l'aggiornamento all'istante $t_1$, $z$ cambia immediatamente il proprio percorso verso $x$ facendolo passare attraverso il collegamento diretto $(z, x)$ al costo 50. Dato che questo è il nuovo percorso a costo minimo e dato che non passa più attraverso $y$, $z$ informa $y$ che $D_z (x) = 50$. Dopo aver ricevuto l'aggiormanto da $z$, $y$ adegua la propria tabella ponendo $D_y (x) = 51$. Dato che $z$ si trova sul percorso a costo minimo di $y$ verso $x$, $y$ avvelena il percorso inverso da $z$ a $x$ informando $z$ che $D_y (x) = +infinity$. \
 L'inversione avvelenata non risolve il problema del conteggio all'infinito perchè i cicli che non riguardano due nodi adiacenti non verranno rilevati dalla tecnica dell'inversione avvelenata.
 ==== Confronto tra gli instradamenti LS e DV
 Confrontiamo gli instradamenti LS e DV con un veloce confronto di alcuni dei rispettivi attributi.
@@ -1173,18 +1468,25 @@ Nessuno dei due meccanismi di instradamento è nettamente superiore all'altro ed
 Precedentemente abbiamo visto la rete semplicemente come una collezione di router interoconessi. Ciascun router era indistinguibile dagli altri nel senso che tutti eseguivano lo stesso algoritmo per calcolare l'instradamento attraverso la rete. Ma questa visione è semplicistica per due motivi.
 - *Scalabilità*. Al crescere del numero di router, il tempo richiesto per calcolare, memorizzare e comunicare le informazioni di instradamento diventa proibitivo. Attualmente, Internet è costituita da centinaia di milioni di host. Archiviare le informazioni su ciascuno di essi richiederebbe enorme quantità di memoria, e il traffico generato dalla comunicazione broadcast non lascerebbe banda per i pacchetti di dati. Un algoritmo DV con così tanti host non convergerebbe mai.
 - *Autonomia amministrativa*. Internet è una rete di ISP che generalmente desiderano gestire autonomamente i propri router o nascondere all'esterno aspetti dell'organizzazione interna della rete. L'ideale sarebbe che ciascuno fosse in grado di amministrare la propria rete nel modo desiderato, pur mantenendo la possibilità di connetterla alle reti esterne.
-Questi problemi possono essere risolti organizzando i router in *sistemi autonomi* (AS, _Autonomous System_), generalmente composti da gruppi di router posto sotto lo stesso controllo amministrativo. I router di un AS eseguono lo stesso algoritmo di instradamento e gli unici hanno informazioni sugli altri. L'algoritmo di instradamento in esecuzione in un AS è detto *protocollo di instradamento interno al sistema autonomo*.
+Questi problemi possono essere risolti organizzando i router in *sistemi autonomi* (AS, _Autonomous System_), generalmente composti da gruppi di router posto sotto lo stesso controllo amministrativo. I router di un AS eseguono lo stesso algoritmo di instradamento e gli unici hanno informazioni sugli altri. L'algoritmo di instradamento in esecuzione in un AS è detto *protocollo di instradamento interno al sistema autonomo*. \
+Ogni Sistema Autonomo (AS) può controllare anche intervalli di indirizzi IP non contigui ed è identificato a livello globale da un numero univoco detto *ASN* (*Autonomous System Number*), assegnato da uno dei cinque *RIR* (*Regional Internet Registry*) mondiali:
+- *RIPE NCC*: Europa, Medio Oriente e Asia Centrale;
+- *ARIN*: Nord America;
+- *APNIC*: Asia e regione del Pacifico;
+- *LACNIC*: America Latina e Caraibi;
+- *AfriNIC*: Africa.
+Gli ASN possono essere a *16 bit* (numeri da `0` a `65535`, dove `0` e `65535` sono riservati e il blocco `64512 - 65534` è destinato ad uso privato, non annunciabile su Internet) oppure nel formato esteso a *32 bit* (fino a circa 4 miliardi, con il range `4200000000 - 4294967294` riservato agli ASN privati).
 ==== OSPF (Open Shortest Path First)
 OSPF è generalmente impiegato negli ISP di livello superiore. Il termine _open_ nell'acronimo indica che le specifiche del protocollo sono pubblicamente disponibili. \
-OSPF è un protocollo link-state che utilizza il *flooding* per inviare in broadcast le informazioni riguardo lo stato dei collegamenti e lá lgoritmo di Dijkstra per la determinazione del percorso a costo minimo. In OSPF, un rotuer costruisce una mappa topologica, cioè un grafo, dell'intero sistema autonomo e manda in esecuzione l'algoritmo di Dijkstra per determinare un albero dei cammini minimi verso tutte le sottoreti. I costi dei collegamenti vengono fissati dall'amministratore di rete. L'amministratore può scegliere di impostare i costi di tutti i collegamenti a 1, oppure in modo inversamente proporzionale alla capacità del collegamento. OSPF non impone una politica sulla scleta dei pesi dei collegamenti, ma fornisce meccanismi per determinare l'instradamento con percorso a costo minimo per un dato insieme di pesi dei collegamenti. \
-In OSPF, ogni qualvolta che si verifica un cambiamento nello stato di un collegamento, il router manda informazioni di instradamento via broadcast a tutti gli altri router nel sistema autonomo. Inoltre, invia periodicamente lo stato dei collegamenti, anche se questo non è cambiato. Gli annunci OSPF sono contenuti in messaggi OSPF che vengono trasportati direttamente da IP come un protocollo di livello superiore con identificativo 89. Quindi, il protocollo OSPF deve implementare funzionalità quali il trasferimento affidabile dei messaggi e il broadcast dello stato dei collegamenti. Inoltre, controlla che i collegamenti siano operativi e consente ai router OSPF di accedere ai databsae sullo stato dei collegamenti della rete, contenuti nei router confinanti. \
+OSPF è un protocollo link-state che utilizza il *flooding* per inviare in broadcast le informazioni riguardo lo stato dei collegamenti e l'algoritmo di Dijkstra per la determinazione del percorso a costo minimo. In OSPF, un router costruisce una mappa topologica, cioè un grafo, dell'intero sistema autonomo e manda in esecuzione l'algoritmo di Dijkstra per determinare un albero dei cammini minimi verso tutte le sottoreti. I costi dei collegamenti vengono fissati dall'amministratore di rete. L'amministratore può scegliere di impostare i costi di tutti i collegamenti a 1, oppure in modo inversamente proporzionale alla capacità del collegamento. OSPF non impone una politica sulla scleta dei pesi dei collegamenti, ma fornisce meccanismi per determinare l'instradamento con percorso a costo minimo per un dato insieme di pesi dei collegamenti. \
+In OSPF, ogni qualvolta che si verifica un cambiamento nello stato di un collegamento, il router manda informazioni di instradamento via broadcast a tutti gli altri router nel sistema autonomo. Inoltre, invia periodicamente lo stato dei collegamenti, anche se questo non è cambiato. Gli annunci OSPF sono contenuti in messaggi OSPF che vengono trasportati direttamente da IP come un protocollo di livello superiore con identificativo 89. Quindi, il protocollo OSPF deve implementare funzionalità quali il trasferimento affidabile dei messaggi e il broadcast dello stato dei collegamenti. Inoltre, controlla che i collegamenti siano operativi e consente ai router OSPF di accedere ai database sullo stato dei collegamenti della rete, contenuti nei router confinanti. \
 I vantaggi di OSPF sono i seguenti.
-- *Sicurezza*. Gli scambi tra router OSPF possono essere autenticati: soltanto router fidati possono prendeere parte al protocollo OSPF in un sistema autonomo. I pacchetti OSPF tra router non sono autenticati e potrebbero essere contraffatti. Si possono configurare due tipi di autenticazione: semplice e tramite MD5. Nel caso di autenticazione semplice, si configura su tutti i router la stessa passwrod che deve essere inclusa, in chiaro nei pacchetti OSPF a essi inviati. L'autenticazione MD5 si basa su chiavi segrete condivise, configurate in ogni router. Per ogni pacchetto OSPF che mandano, i router calcolano l'hash MD5 del contenuto a cui è stata aggiunta la chiave segreta e includono il risultato nel pacchetto MD5. Il rotuer ricevente calcola la funzione hashMD5 del pacchetto e, usando la chiave segreta preconfigurata, la confronta con il valore che il pacchetto trasport, per verificarne l'autenticità. Con autenticazione MD5 vengono usati anche numeri di sequenza come protezione contro i _replay attacks_.
+- *Sicurezza*. Gli scambi tra router OSPF possono essere autenticati: soltanto router fidati possono prendeere parte al protocollo OSPF in un sistema autonomo. Senza autenticazione, i pacchetti OSPF tra router potrebbero essere contraffatti. Si possono configurare due tipi di autenticazione: semplice e tramite MD5. Nel caso di autenticazione semplice, si configura su tutti i router la stessa password che deve essere inclusa, in chiaro nei pacchetti OSPF a essi inviati. L'autenticazione MD5 si basa su chiavi segrete condivise, configurate in ogni router. Per ogni pacchetto OSPF che mandano, i router calcolano l'hash MD5 del contenuto a cui è stata aggiunta la chiave segreta e includono il risultato nel pacchetto MD5. Il router ricevente calcola la funzione hashMD5 del pacchetto e, usando la chiave segreta preconfigurata, la confronta con il valore che il pacchetto trasport, per verificarne l'autenticità. Con autenticazione MD5 vengono usati anche numeri di sequenza come protezione contro i _replay attacks_.
 - *Percorsi con lo stesso costo*. Quando più percorsi verso una destinazione hanno stesso costo, OSPF consente di usarli senza doverne svegliere uno per trasportare tutto il traffico.
 - *Supporto integrato per l'instradamento unicast e multicast.* Per consentire l'isntradamento multicast viene utilizzata un'estensione di OSPF, MOSPF (multicast OSPF), che utilizza il database dei collegamenti OSPF e aggiunge un nuovo tipo di annuncio sullo stato dei collegamenti al meccanismo di broadcast.
-- *Supporto alla gerarchie in un dominio di instradamento*. OSPF fornisce la possibilità di strutturare i sistemi autonomi in modo gerarchico. Un sistema autonomo OSPF può essere configurato in aree che eseguono diversi algoritmi di instradamento OSPF: ciascun router in un'area invai lo stato dei suoi collegamenti agli altri router nell'area. In ogni area, uno o più *router di confine d'area* si fa carico dell'instradamento dei pacchetti indirizzati all'esterno. Un'area di sistema autonomo OSPF è configurata per essere l'*area di dorsale*, il cui ruolo principale è quello di instradare il traffico tra le altre aree nel sistema autonomo. La dorsale contiene sempre tutti i rotuer di confine del sistema autonomo, ma non necessariamente soltanto quelli. L'instradamento nell'area di un sistema autonomo richiede che i pacchetti siano instradati prima verso il proprio router di confine e da questi, attraverso la dorsale, al rotuer di confine dell'area di destinazione, che provvede a farli pervenire alla destinazione finale.
+- *Supporto alla gerarchie in un dominio di instradamento*. OSPF fornisce la possibilità di strutturare i sistemi autonomi in modo gerarchico. Un sistema autonomo OSPF può essere configurato in aree che eseguono diversi algoritmi di instradamento OSPF: ciascun router in un'area invai lo stato dei suoi collegamenti agli altri router nell'area. In ogni area, uno o più *router di confine d'area* si fa carico dell'instradamento dei pacchetti indirizzati all'esterno. Un'area di sistema autonomo OSPF è configurata per essere l'*area di dorsale*, il cui ruolo principale è quello di instradare il traffico tra le altre aree nel sistema autonomo. La dorsale contiene sempre tutti i router di confine del sistema autonomo, ma non necessariamente soltanto quelli. L'instradamento nell'area di un sistema autonomo richiede che i pacchetti siano instradati prima verso il proprio router di confine e da questi, attraverso la dorsale, al rotuer di confine dell'area di destinazione, che provvede a farli pervenire alla destinazione finale.
 == Instradamento fra ISP: BGP
-Per determinare i percorsi per le coppie sorgente-destinazione che interessano più sistemi autonomi è necessario un *protocollo di instradamento inter-AS* (_inter-autonomus system routing protocol_) che coordini più AS. Il *boarder gateway protocol*, detto *BGP*, rappresenta l'attuale standard dei protocolli di instradamento tra sistemi autonomi in Internet. È un protocollo di tipo distance-vector decentralizzato e asincrono.
+Per determinare i percorsi per le coppie sorgente-destinazione che interessano più sistemi autonomi è necessario un *protocollo di instradamento inter-AS* (_inter-autonomus system routing protocol_) che coordini più AS. Il *border gateway protocol*, detto *BGP*, rappresenta l'attuale standard dei protocolli di instradamento tra sistemi autonomi in Internet. È un protocollo di tipo distance-vector decentralizzato e asincrono.
 === Il ruolo di BGP
 Si consideri un AS e un suo router qualsiasi. Le occorrenze della tabella di inoltro corrispondneti a destinazioni interne all'AS vengono determinate dal protocollo di instradamento intra-AS, il protocollo BGP ne determina quelle esterne. \
 In BGP, i pacchetti non vengono instradati verso uno specifico indirizzo, ma piuttosto verso *prefissi* CIDR che rappresentano una sottorete o una collezione di sottoreti. Le occorrenze della tabella di inoltro hanno forma $(x, I)$ dove $x$ è un prefisso di rete e $I$ è un numero di interfaccia del router. \
@@ -1203,11 +1505,41 @@ image("images/tcp_semi_perm.png", width: 70%),
 caption: [Connessioni eBGP e iBGP]
 ) <fig:bgp>
 Ogni connessione TCP, con tutti i messaggi BGP che vi vengono inviati, è detta *sessione BGP*. Nel caso in cui questa coinvolga due sistemi autonomi viene detta *sessione BGP esterna* (*sessione eBGP*), mentre quella tra router dello stesso sistema autonomi è chiamata *sessione BGP interna (sessione iBGP)*. Generalmente, in BGP c'è una connessione TCP di questo tipo per ciascun collegamento che connette direttamente due router in diversi sistemi autonomi. \
+È importante notare una differenza cruciale tra sessioni *eBGP* e *iBGP* (stabilite tra router detti *BGP peer* sulla porta *TCP 179*):
+- Le sessioni *eBGP* connettono router di frontiera di AS diversi, tipicamente collegati da un link fisico diretto (1 hop fisico = 1 hop BGP); le rotte apprese via eBGP vengono poi propagate a tutti i router interni dell'AS tramite iBGP.
+- Le sessioni *iBGP* sono connessioni logiche TCP end-to-end tra router dello stesso AS e possono attraversare più hop fisici interni. Per prevenire cicli di instradamento all'interno dell'AS (poiché l'attributo `AS-PATH` cambia solo quando si attraversano i confini tra AS diversi), vige la regola di *split horizon iBGP*: *le rotte apprese da un peer tramite una sessione iBGP non vengono mai riannunciate ad altri peer iBGP* (motivo per cui i router BGP di uno stesso AS devono essere connessi in una maglia logica completa, _full mesh_, o usare dei _route reflector_).
 Esaminiamo come BGP distribuirebbe le informazioni di raggiungibilità dal prefisso $x$ ad AS1 e AS2. In router gateway 3a invia un messaggio eBGP _AS3 x_ al router gateway 2c che a sua volta lo invia su una sessione iBGP a tutti i router di AS2 compreso il gateway 2a. Quest'ultimo invia un messaggio eBGP _AS2 AS3 x_ al router gateway 1c, che infine usa iBGP per inviare il messaggio _AS2 AS3 x_ a tutti i router di AS1. Completato tale processo, ogni router di AS1 e AS2 è a conoscenza dell'esistenza di tale $x$ e del percorso per raggiungerlo.
+=== Formato dei pacchetti BGP
+Tutti i messaggi BGP scambiati su una sessione TCP condividono un'intestazione (*Header*) fissa di 19 byte seguita dal payload del messaggio:
+- *Marker (16 byte)*: campo di 128 bit posti tutti a `1`, utilizzato per delimitare l'inizio del messaggio BGP e per scopi di sincronizzazione/autenticazione.
+- *Length (2 byte)*: lunghezza totale del messaggio in byte (incluso l'header).
+- *Type (1 byte)*: identifica uno dei *5 tipi di messaggio BGP* (RFC 4271, RFC 2918):
+  + *OPEN*: apre una sessione BGP con un peer adiacente negoziando i parametri.
+  + *UPDATE*: messaggio cardine di BGP, usato per annunciare nuove rotte o ritirare rotte non più valide.
+  + *KEEPALIVE*: inviato periodicamente per confermare che il peer e la sessione sono attivi in assenza di altri messaggi.
+  + *NOTIFICATION*: inviato quando viene rilevata una condizione di errore (determina la chiusura della connessione BGP).
+  + *ROUTE-REFRESH*: richiede al peer vicino di inviare nuovamente tutte le sue rotte (utile, ad esempio, dopo che l'amministratore ha modificato le policy di filtraggio in ingresso).
+
+==== Struttura del messaggio BGP UPDATE
+Il messaggio di tipo *UPDATE* consente sia di revocare più prefissi non più raggiungibili, sia di annunciare un nuovo percorso (con i medesimi attributi) per uno o più prefissi. È composto da cinque campi:
++ *Unfeasible Routes Length (2 byte)*: lunghezza in byte del campo successivo; se vale `0`, nessuna rotta viene ritirata in questo messaggio.
++ *Withdrawn Routes (lunghezza variabile)*: elenco dei prefissi IP delle rotte che vengono revocate (ritirate) poiché non più raggiungibili.
++ *Total Path Attribute Length (2 byte)*: lunghezza in byte del blocco _Path Attributes_.
++ *Path Attributes (lunghezza variabile)*: lista degli attributi associati alle rotte annunciate in questo messaggio. Oltre a `LOCAL-PREF`, i tre attributi obbligatori principali sono:
+  - *`ORIGIN`*: indica come l'AS di origine ha generato la rotta in BGP (es. `IGP` se appresa dal protocollo di routing interno all'AS, `EGP`, oppure `INCOMPLETE` se derivata da altre fonti come rotte statiche);
+  - *`AS-PATH`*: sequenza ordinata degli ASN attraversati dall'annuncio (usato sia come metrica di distanza sia per il rilevamento dei loop);
+  - *`NEXT-HOP`*: indirizzo IP dell'interfaccia del router di frontiera dell'AS vicino verso cui inoltrare i pacchetti.
++ *Network Layer Reachability Information (NLRI, lunghezza variabile)*: elenco dei prefissi CIDR annunciati (codificati come coppie `(lunghezza_prefisso, prefisso)`, es. `(24, 193.204.187)`) che condividono gli attributi specificati nel campo _Path Attributes_.
+
+#esempio(title: "Caso di studio: il blackout globale di Facebook del 4 ottobre 2021")[
+  L'importanza critica di BGP per il funzionamento di Internet è emersa chiaramente il 4 ottobre 2021, quando tutti i servizi del gruppo Meta (Facebook, Instagram, WhatsApp) sono risultati completamente irraggiungibili a livello mondiale per circa 6-7 ore. \
+  Durante un'operazione di manutenzione ordinaria sui router della dorsale (_backbone_) che connettono i data center di Facebook, un comando errato ha disconnesso l'intera dorsale interna. I server DNS autoritativi di Facebook (ospitati in strutture periferiche dell'AS di Facebook, *`AS32934`*) avevano un meccanismo di sicurezza progettato per revocare automaticamente gli annunci BGP verso l'esterno qualora avessero perso il collegamento con la propria dorsale interna, così da non attirare traffico su nodi isolati. \
+  Trovandosi improvvisamente tutti scollegati dal backbone, tutti i router di frontiera di `AS32934` hanno inviato messaggi BGP `UPDATE` contenenti *Withdrawn Routes* per tutti i prefissi IP di Facebook. Di conseguenza, sebbene i server fossero fisicamente accesi e funzionanti, i prefissi dei server DNS di Facebook sono scomparsi dalle tabelle di routing BGP di tutti gli ISP mondiali: nessun utente su Internet poteva più risolvere il nome `facebook.com` né instradare pacchetti verso `AS32934` fino al ripristino manuale degli annunci BGP (*Announce*) avvenuto in serata.
+]
 === Selezione delle rotte migliori
 Prima di analizazre come un router sceglie il percorso migliore tra tutti quelli che riceve, introduciamo della terminologia BGP. Quando un router annuncia un prefisso per una sessione BGP, include anche un certo numero di *attributi BGP*. Un prefisso assieme ai suoi attributi è detto *rotta* (_route_). Due dei più importanti sono AS-PATH e NEXT-HOP. *AS-PATH* elenca i sistemi autonomi attraverso i quali è passato l'annuncio del prefisso. I router usano tale attributi per rilevare ed evitare gli annunci reiterati. Nello specifico, se un router vede che il proprio AS è contenuto nella lista dei percorsi, rifiuta l'annuncio. \
-Nel fornire il collegamento tra i protocolli di instradamento intra-AS e inter-AS, l'attributo *NNEXT-HOP* ha un ruolo importante. In NEXT-HOP è riportata l'interfaccia del router che inizia l'AS-PATH. Ad esempio, ritornando alla figura *@fig:bgp* l'attributo NEXT-HOP per la rotta _AS2 AS3 x_ da AS1 a $x$ passando per AS2 è l'indirizzo IP dell'interfaccia a sinistra del router 2a.
-Ogni rotta è quindi scritta come una lista di tre elementi:"\
+Nel fornire il collegamento tra i protocolli di instradamento intra-AS e inter-AS, l'attributo *NEXT-HOP* ha un ruolo importante. In NEXT-HOP è riportata l'interfaccia del router che inizia l'AS-PATH. Ad esempio, ritornando alla figura *@fig:bgp* l'attributo NEXT-HOP per la rotta _AS2 AS3 x_ da AS1 a $x$ passando per AS2 è l'indirizzo IP dell'interfaccia a sinistra del router 2a.
+Ogni rotta è quindi scritta come una lista di tre elementi:
 + NEXT-HOP;
 + AS-PATH;
 + prefisso $x$.
@@ -1250,7 +1582,7 @@ L'idea alla base è che il router 1b butti fuori i pacchetti dal suo AS quanto p
 BGP utilizza un algoritmo più complesso di quello hot potato. L'input del processo di selezione è l'insieme di tutte le rotte apprese e accettate dal router. Se ne esistono due o più verso lo stesso prefisso, BGP invoca in sequenza le seguenti regole di eliminazione fino ad inviduare un'unica possibilità.
 + Alle rotte viene assegnato come attributo un valore di *preferenza locale*, che potrebbe esser stato impostato direttamente dal router o appreso da un altro router nello stesso AS. Si selezionanto le rotte con i più alti valori di preferenza locale.
 + Tra le rotte con stesso valore di preferenza locale, si seleziona quella con AS-PATH più breve. Se questa fosse l'unica regola di selezione, allora BGP utilizzerebbe un algoritmo Bellman-Ford per la determinazione del percorso, con metrica sulla distanza data dal numero di hop tra AS anzichè tra router.
-+ Tra le rotte con stesso valore di preferenza locale e la stessa lunghezza AS-PATH si seleziona quella il cui router di NEXT-HOP è più vicino. In questo caso, s'intende quello che presenta il percorso con costo minore, determinato dall'algortimo inter-AS (instradamento a patata bollente).
++ Tra le rotte con stesso valore di preferenza locale e la stessa lunghezza AS-PATH si seleziona quella il cui router di NEXT-HOP è più vicino. In questo caso, s'intende quello che presenta il percorso con costo minore, determinato dall'algortimo intra-AS (instradamento a patata bollente).
 + Se rimane ancora più di nuna rotta, il router si basa sugli identificatori BGP.
 Si consideri il router 1b della figura *@fig:hot_potato* e si ricordi che esistono due rotte BGP verso il prefisso $x$: una che passa da AS2 e una che lo evita. Con questo algoritmo la regola 2 verrebbe applicata prima della 3 e quindi verrebbe scelta la seconda rotta avente AS-PATH più breve. Tale politica BGP non è egoista e riduce anche il ritardo end-to-end.
 === Anycast IP
@@ -1272,7 +1604,6 @@ image("images/politche_routing.png", width: 70%),
 La figura mostra sei sistemi autonomi interconessi. Ipotizziamo che _W, X_ e _Y_ siano *reti stub* e che _A, B_ e _C_ siano reti provider di dorsale. Ipotizziamo anche che _A, B_ e _C_ siano peer l'uno dell'altro e forniscano informazioni BGP complete alle reti dei loro clienti. Tutto il traffico che entra in una *rete di accesso di un ISP* è destinato a tale rete e tutto il traffico in uscita ha origine in tale rete. _W_ e _Y_ rappresentano chiaramente reti di accesso. _X_ è un *ISP di accesso multi-homed*, dato che è connessa al resto della rete attraverso due provider. In ogni caso, come _W_ e _Y_, anche _X_ deve essere sorgente o destinazione di tutto il traffico in uscita o ingresso attraverso _X_. Dobbiamo analizzare come si implementa questo comportamento e come si impedisce a $X$ di smaltire traffico tra _B_ e _C_. \
 Per fare ciò si controllano gli annunci delle rotte BGP. In particolare, $X$ opererà come una rete stub se annuncia ai suoi vicini _B_ e _C_ di non avere altri percorsi verso altre destinazioni tranne sè stessa. Quindi, anche se $X$ fosse a conoscenza di un percorso del tipo _XCY_, non l'annuncerà a _B_. \
 Concentriamoci ora sulla rete di un provider, per un sistema autonomo _B_, e supponiamo che questo abbia appreso (da _A_) che _A_ presenta un percorso _AW_ verso _W_. Allora _B_ può installare il percorso _BAW_ nella sua struttura dati per l'instradamento. Chiaramente _B_ vuole annunciare tale percorso al suo cliente _X_, per permettergli di raggiungere _W_ tramite _B_. Se _B_ lo annunciasse anche a _C_, _C_ potrebbe instradare il traffico verso _W_ via _CBAW_. Se _A, B_ e _C_ sono provider di dorsale, allora _B_ potrebbe pensare di non dover sopportare il costo del traffico in transito da _A_ e _C_ e che sia compito di _A_ e _C_ assicurarsi che _C_ possa instradare da e verso i clienti di _A_ tramite una connessione diretta tra _A_ e _C_. Una regola seguita dagli ISP commerciali è quella per cui tutto il traffico che fluisce attraverso la rete di dorsale di un ISP deve avere origine e/o destinazione in una sua rete cliente. Accordi individuali di *peering* vengono negoziati tra coppiue di ISP.
-== Il piano di controllo SDN
 == ICMP (Internet Control Message Protocol)
 Il protocollo ICMP, _Internet Control Message Protocol_, viene usato da host e router per scambiarsi informazioni a livello di rete: il suo uso più tipico è la notifica degli errori. Durante l'esecuzione di una sessione HTTP si può incontrare il messaggio \"Rete di destinazione irraggiungibile\". Questo messaggio ha origine da ICMP. \
 ICMP è spesso considerato parte di IP, ma dal punto di vista dell'architettura si trova esattamente sopra IP, dato che i suoi messaggi vengono trasportati nei datagrammi IP: ossia, i messaggi ICMP vengono trasportati come payload di IP. Allo stesso modo, se un host riceve un datagramma IP, che specifica ICMP come protocollo di livello superiore, allora effettua il demultiplexing dei contenuti dal datagramma a ICMP. \
@@ -1287,6 +1618,7 @@ Segue una tabella che raffigura dei tipi di messaggio ICMP:
   (3, 1, "host destinazione irraggiungibile"),
   (3, 2, "protocollo destinazione irraggiungibile"),
   (3, 3, "porta destinazione irraggiungibile"),
+	(3, 4, "frammentazione necessaria ma DF=1 (PMTUD)"),
   (3, 6, "rete destinazione sconosciuta"),
   (3, 7, "host destinazione sconosciuto"),
   (4, 0, "riduzione (controllo di congestione)"),
@@ -1307,4 +1639,15 @@ Segue una tabella che raffigura dei tipi di messaggio ICMP:
     ..rows.map(r => ([#r.at(0)], [#r.at(1)], [#r.at(2)])).flatten(),
   )
 ]
-== Gestione della rete e SNMP, NETCONF/YANG
+Nell'intestazione del datagramma IPv4 che incapsula un messaggio ICMP, il campo _Protocollo_ assume valore *`1`* (mentre per ICMPv6, definito nella RFC 4443, il campo _Next Header_ vale `58`).
+
+==== Traceroute e ICMP
+Oltre a `ping`, un celebre strumento diagnostico basato su ICMP è *`traceroute`*, utilizzato per scoprire l'elenco di tutti i router attraversati lungo il percorso da una sorgente a una destinazione e misurare il relativo tempo di andata e ritorno (*RTT*) ad ogni salto:
+#figure(
+  image("images/traceroute.png", width: 70%),
+  caption: [Funzionamento di Traceroute tramite sonde UDP e risposte ICMP]
+)
++ La sorgente invia verso la destinazione una serie di segmenti UDP (solitamente *3 sonde* per ogni salto) indirizzati a un numero di porta UDP elevato e improbabile (da `33434` in su), su cui normalmente nessuna applicazione è in ascolto.
++ La prima serie di 3 sonde viene inviata impostando nell'header IP `TTL = 1`, la seconda serie con `TTL = 2`, la terza con `TTL = 3`, e così via.
++ Quando le sonde della serie $n$-esima (con `TTL = n`) raggiungono l'$n$-esimo router lungo il percorso, quest'ultimo decrementa il TTL portandolo a `0`: il router scarta quindi i datagrammi e restituisce alla sorgente un messaggio di errore *ICMP "TTL scaduto"* (*tipo 11, codice 0*). Esaminando l'header IP di questo messaggio ICMP, la sorgente apprende l'indirizzo IP dell'$n$-esimo router e calcola l'RTT delle tre sonde. _(Opzioni come `traceroute -A` o `mtr -z` permettono inoltre di consultare i database RIR per stampare accanto a ciascun IP anche l'ASN del Sistema Autonomo attraversato)._
++ *Condizione di arresto*: quando finalmente una serie di sonde ha un TTL sufficiente per raggiungere l'host di destinazione finale, il datagramma non scade più in transito, ma tenta di consegnare il segmento UDP alla porta alta inesistente. L'host di destinazione risponde allora con un messaggio *ICMP "Porta di destinazione irraggiungibile"* (*tipo 3, codice 3*): ricevendo il tipo 3 codice 3 anziché il tipo 11 codice 0, la sorgente capisce di aver raggiunto l'host finale e termina l'invio di ulteriori sonde.
