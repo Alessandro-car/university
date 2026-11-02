@@ -1576,10 +1576,9 @@ $
 tau(R_1, R_2) = 1 - (2 times Delta(R_1, R_2))/(K(K-1))
 $
 = Link analysis e PageRank
-== PageRank
 L'*idea centrale* è che una pagina web è considerata più importante se riceve un numero maggiore di link. La domanda chiave iniziale distingue tra link in entrata e link in uscita. \
 Considerando i link in entrata alla stregua di voti di preferenza, si osserva che un sito come `www.stanford.edu` vanta ben 23.400 link in entrata, mentre un sito meno noto come `www.joe-schmoe.com` ne possiede appena 1. Ci si chiede quindi se tutti i link in entrata abbiano lo stesso peso. La risposta logica è che i *link provenienti da pagine importanti contano di più*. Questo principio introduce una definizione circolare e *ricorsiva*, poichè l'importanza di una pagina dipende dall'importanza delle pagine che la linkano, ponendo le basi per algoritmi iterativi celebri come il PageRank.
-=== Semplice formulazione ricorsiva
+== Semplice formulazione ricorsiva
 Il voto espresso da ciascun link è direttamente proporzionale all'importanza della pagina sorgente da cui parte. Se una pagina $j$ un livello di importanza $r_j$ e possiede $n$ link in uscita, ciascuno di questi link trasmette un valore di voto pari a $r_j / n$. L'importanza complessiva di una pagina $j$ è data esattamente dalla somma dei voti ricevuti attraverso tutti i suoi link in entrata.
 #esempio[
 Consideriamo il seguente schema:
@@ -1591,8 +1590,8 @@ $
 r_j = r_i / 3 + r_k / 4
 $
 ]
-=== Modello di Flusso di PageRank
-I principi chiave di questo modello sono i seguenti:
+== Modello di Flusso di PageRank
+Iprincipi chiave di questo modello sono i seguenti:
 - un voto proveniente da una pagina importante vale di più;
 - una pagina è importante se è puntata da altre pagine importanti
 Viene definito un punteggio di importanza _rank_ $r_j$ per ciascuna pagina $j$. La formula generale che esprime questo flusso ricorsivo è:
@@ -1738,10 +1737,10 @@ Il metodo delle potenze prevede i seguenti passi:
   )
 ]
 ]
-=== Random Walk Interpretation
+== Random Walk Interpretation
 Immaginiamo un navigatore casuale, detto _random web surfer_, ovvero un utente che naviga sul Web in modo casuale. In un qualsiasi istante di tempo $t$, il navigatore si trova su una certa pagina $i$. All'istante successivo $t+1$, l'utente sceglie di seguire uno dei link in uscita dalla pagina $i$ in modo uniformemente casuale. Di conseguenza, il navigatore arriva su una nuova pagina $j$ che risulta collegata a $i$. Questo processo si ripete idenfinitamente. \
 Diamone una *formalizzazione stocastica* con il vettore $bold(p)(t)$. Sia $bold(p)(t)$ un vettore in cui la $i$-esima coordinata rappresenta la probabilità che il navigatore si trovi sulla pagina $i$ al tempo $t$. Per questa ragione, $bold(p)(t)$ costituisce a tutti gli effetti una *distribuzione di probabilità* sulle pagine del web.
-==== Distribuzione stazionaria
+=== Distribuzione stazionaria
 Per determinare dove si trovi il navigatore casuale al tempo successivo $t + 1$, sapendo che segue un link in modo uniformemente casuale, l'equazione di transizione si esprime moltiplicando la matrice stocastica $M$ per il vettore di probabilità corrente:
 $
 bold(p)(t + 1) = M dot.c bold(p)(t)
@@ -1761,12 +1760,12 @@ Proseguendo nell'analisi della passeggiata casuale e dei processi di Markov, int
 #teorema(title: "Esistenza e unicità")[
 PEr i grafi che soddisfano *determinate condizioni*, la *distribuzione stazionaria è unica*. Questa distribuzione viene inevitabilmente raggiunta nel corso del tempo, indipendentemente da quale sia stata la distribuzione di probabilità iniziale al tempo $t=0$.
 ]
-=== PageRank: la formualzione di Google
+== PageRank: la formualzione di Google
 Ci poniamo tre interrogativi cruciali sulla convergenza e sulla correttezza matematica del modello iterativo appena descritto:
 - *Questo processo converge*? Ci si chiede se il metodo iterativo basato sul calcolo matriciale e sul metodo delle potenze raggiunga effettivametne un limite stabile senza oscillare all'infinito.
 - *Convergono verso ciò che si desidera?* Anche in caso di convergenza, è necessario verificare che il risultato corrisponda all'unica distribuzione stazionaria corretta e significativa per il grafo.
 - *I risultati sono ragionevoli?* Si analizza se i punteggi di importanza assegnati alle pagine rispecchino fedelmente il principio dei link come voti o se emergano anomalie strutturali che richiedono la formulazione correttiva di Google.
-==== Problema della convergenza
+=== Problema della convergenza
 Analizziamo il *problema dello spider trap*. Uno spider trap si verifica quando un gruppo di pagine possiede link interni che puntano esclusivamente tra loro, senza alcuna via d'uscita verso il resto del grafo. Di conseguenza, un navigatore casuale che entra in questo gruppo finisce per rimanervi intrappolato indefinitamente, assorbendo tutto il flusso o l'importanza del grafo.
 #esempio(title: "Spider trap")[
 Consideriamo il seguente schema:
@@ -1826,4 +1825,64 @@ La stessa soluzione si può applicare al problema del dead end, come mostrato in
 image("images/teleport2.png", width: 50%),
 caption: [Soluzione al problema del dead end]
 )
-=== Fare da slide 42 a slide 49 (pdf del PageRank)
+=== Catenen di Markov
+L'equazione di transizione del rank tra il tempo $t$ e il tempo $t + 1$ è espressa come:
+$
+r^((t + 1)) = M r^((t))
+$
+Definiamo formalmente le *catene di Markov* nel contesto:
+- *Insieme degli stati* $X$: rappresenta l'insieme di tutte le pagine web considerate nel grafo.
+- *Matrice di transizione $bold(P)$*: identificata dagli elementi $P_(i j) = P(X_t = i bar X_(t - 1) = j)$ che descrivono la probabilità di transizione dallo stato _j_ allo stato _i_.
+- *Vettore stazionario $bold(pi)$*: specifica la probabilità stazionaria di trovarsi in ciascuno stato $x in X$
+L'*obiettivo* è quello di trovare la distribuzione stazionaria $pi$ tale per cui il sistema soddisfi l'equazione agli autovalori $bold(pi) = bold(P)bold(pi)$. L'introduzione dei teletrasporti modifica la matrice di transizione rendendola irriducibile e aperiodica, garantendo l'esistenza e l'unicità della soluzione. \
+Evidenziamo un risultato chiave della *teoria delle catene di Markov*.
+#teorema(title: "Teorema fondamentale delle catene di Markov")[
+Per *qualsiasi vettore di partenza*, il metodo delle potenze applicato a una matrice di transizione di Markov $P$ convergerà sempre verso un *unico vettore stazionario positivo*, a condizione che la matrice $P$ possieda tre proprietà fondamentali:
++ *Stocastica*.
++ *Irriducibile*.
++ *Aperiodica*.
+] <th:markov>
+L'introduzione dei teletrasporti casuali garantisce proprio che la matrice del web soddisfi questi requisiti, eliminando trappole per ragni e vincoli ciechi e assicurando una convergenza matematica robusta e indipendente dallo stato iniziale. \
+==== Calcolare la matrice stocastica
+Vediamo come rendere una matrice $M$ *stocastica*. Una matrice è definita stocastica per colonne quando ciascuna sua colonna somma esattamente 1. Per correggere i nodi privi di link in uscita, si aggiungono dei collegamenti fittizi noti come *green links*, che collegano i nodi senza uscite a tutte le altre pagine del grafo. \
+La nuova matrice di transizione $A$ viene definita matematicamente come:
+$
+A = M + a^T (1/n e)
+$
+dove:
+- $a$ è un vettore binario in cui l'elemento $a_i = 1$ se il nodo $i$ ha un grado d'uscita pari a 0, e 0 altrimenti.
+- $e$ è un vettore colonna composto interamente da 1.
+- $n$ è il numero totale dei nodi del grafo. \
+==== Calcolare la matrice aperiodica
+Vediamo come rendere una matrice $M$ *aperiodica*. Una catena di Markov si dice *periodica* se esiste un intero $k > 1$ tale per cui l'intervallo di tempo tra due visite successive e un determinato stato $s$ è sempre multiplo di $k$. Questa condizione provoca oscillazioni nel metodo iterativo, impedendo la convergenza a un unico vettore stazionario. \
+Per eliminare la periodicità (garantendo che la catena possa riotrnare in un numero variabile di passi) si aggiungo i *green links* sotto forma di auto-anelli o connessioni supplementari, come mostrato nella seguente figura:
+#figure(
+image("images/periodica.png", width: 70%),
+caption: [Soluzione alla periodicità]
+)
+==== Calcolare la matrice irriducibile
+Vediamo come rendere una matrice $M$ *irriducibile*. Una matrice di transizione è irriducibile quando, partendo da qualsiasi stato, esiste una probabilità maggiore di zero di raggiungere qualsiasi altro stato all'interno del sistema. \
+Per eliminare le barriere strutturali e garantire che il grafo sia fortemente connesso, si introducono i *green link*, i quali assicurano che ciascun nodo possa comunicare con tutti gli altri. In questo modo si soddisfano tutte e tre le proprietà fondamentali del *@th:markov* richieste per garantire l'esistenza di un'unica distribuzione stazionaria e la convergenza universale del PageRank.
+#figure(
+image("images/irriducibile.png", width: 70%),
+)
+=== Random Jumps
+La soluzione complet di Google basata sui *random jumps* unisce tutti i concetti visti finora. L'introduzione dei random jumps rende simultaneamente la matrice del web *stocastica, aperiodica* e *irriducibile*.
+- Le *due opzioni* del navigatore casuale ad ogni passo:
+	+ Con probabilità $beta$, segue un link in modo casuale.
+	+ Con probabilità complementare $1 - beta$, compie un salto verso una pagine scelta a caso nell'intero grafo.
+L'equazione *definitiva* di PageRank è la seguente:
+$
+r_j = sum_(i arrow j)beta (r_i)/(d_i) + (1 - beta) 1/n
+$
+dove $d_i$ è il grado di uscita del nodo $i$ e $n$ il numero totale di pagine. \
+La formulazione sopra descritta presuppone l'assenza di vicoli ciechi. Per gestirli nella pratica, è possibile pre-elaborare la matrice $M$ oppure trattare esplicitamente i vicoli ciechi facendo in modo che seguano i link di teletrasporto con probabilità 1. \
+L'eqauazione di PageRank viene tradotta in forma matriciale compatta combinando la matrice di transizione originaria $M$ e il termine di teletrasporto uniforme:
+$
+A = beta M + (1 - beta)1/n e dot.c e^T
+$
+dove $e$ rappresenta il vettore colonna composto interamente da 1. \
+Poichè la matrice $A$ così definita risulta *stocastica, aperiodica* e *irriducibile*, il processo iterativo converge stabilimente indipendentemente dal vettore iniziale:
+$
+bold(r)^((t+1)) = A dot.c bold(r)^((t))
+$
