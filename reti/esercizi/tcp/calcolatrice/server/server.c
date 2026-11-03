@@ -30,7 +30,7 @@ int recv_all(int socket, char *buf, int len) {
 }
 
 
-void deserialize_msg(const uint8_t buffer[MSG_SIZE], type_msg* msg) {
+void deserialize_msg(const uint8_t buffer[sizeof(type_msg)], type_msg* msg) {
 	size_t offset = 0;
 
 	uint32_t operand1;
@@ -47,7 +47,7 @@ void deserialize_msg(const uint8_t buffer[MSG_SIZE], type_msg* msg) {
 	offset += sizeof(char);
 }
 
-void serialize_msg(const type_op_result* result_msg, uint8_t buf[OP_RESULT_SIZE]) {
+void serialize_msg(const type_op_result* result_msg, uint8_t buf[sizeof(type_op_result)]) {
 	size_t offset = 0;
 	buf[offset] = (uint8_t) result_msg->status;
 	offset += sizeof(uint8_t);
@@ -90,7 +90,7 @@ void handle_client(const type_msg* msg, type_op_result* result_msg) {
 				result_msg->status = STATUS_DIV_ZERO;
 			} else {
 				result_msg->status = STATUS_OK;
-				result_msg->result = op1 / op2;
+				result_msg->result = (float) op1 / op2;
 			}
 			break;
 		default:
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]) {
 			errorhandler("accept() failed.\n");
 			closesocket(my_socket);
 			clearwinsock();
-			return -1;
+			continue;
 		}
 
 		printf("Handling client %s\n", inet_ntoa(cad.sin_addr));
@@ -167,21 +167,21 @@ int main(int argc, char *argv[]) {
 		}
 
 		type_msg msg;
-		uint8_t buf[MSG_SIZE];
-		if (recv_all(client_socket, (char*) buf, MSG_SIZE) <= 0) {
+		uint8_t* buf = (uint8_t*) calloc(sizeof(type_msg), sizeof(uint8_t));
+		if (recv_all(client_socket, (char*) buf, sizeof(type_msg)) <= 0) {
 			errorhandler("recv() failed or connection closed prematurely.\n");
 			closesocket(my_socket);
 			clearwinsock();
 			return -1;
 		}
 		deserialize_msg(buf, &msg);
-		uint8_t res_buf[OP_RESULT_SIZE];
-		memset(res_buf, '\0', OP_RESULT_SIZE);
+		free(buf);
+		buf = (uint8_t*) calloc(sizeof(type_op_result), sizeof(uint8_t));
 		type_op_result result_msg;
 		memset(&result_msg, 0, sizeof(result_msg));
 		handle_client(&msg, &result_msg);
-		serialize_msg(&result_msg, res_buf);
-		if (send(client_socket, (char*) res_buf, OP_RESULT_SIZE, 0) != OP_RESULT_SIZE) {
+		serialize_msg(&result_msg, buf);
+		if (send(client_socket, (char*) buf, sizeof(type_op_result), 0) != sizeof(type_op_result)) {
 			errorhandler("send() sent a different number of bytes than expected\n");
 			closesocket(my_socket);
 			clearwinsock();

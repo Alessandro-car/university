@@ -36,7 +36,7 @@ int recv_all(int socket, char* buf, int len) {
 	return total;
 }
 
-size_t serialize_msg(const type_msg* msg, uint8_t buffer[MSG_SIZE]) {
+void serialize_msg(const type_msg* msg, uint8_t buffer[sizeof(type_msg)]) {
 	size_t offset = 0;
 
 	uint32_t op1 = htonl((uint32_t) msg->operand1);
@@ -50,10 +50,9 @@ size_t serialize_msg(const type_msg* msg, uint8_t buffer[MSG_SIZE]) {
 	buffer[offset] = msg->operator_type;
 	offset += sizeof(char);
 
-	return offset;
 }
 
-void deserialize_msg(const uint8_t buf[OP_RESULT_SIZE], type_op_result* msg) {
+void deserialize_msg(const uint8_t buf[sizeof(type_op_result)], type_op_result* msg) {
 	size_t offset = 0;
 
 	uint8_t raw_status = buf[offset];
@@ -120,9 +119,9 @@ int main(void) {
 	printf("Enter the symbol of the operation: ");
 	scanf(" %c", &msg.operator_type);
 
-	uint8_t buf[MSG_SIZE];
+	uint8_t* buf = (uint8_t*) calloc(sizeof(type_msg), sizeof(uint8_t));
 	serialize_msg(&msg, buf);
-	if (send(c_socket, (char*) buf, MSG_SIZE, 0) != MSG_SIZE) {
+	if (send(c_socket, (char*) buf, sizeof(type_msg), 0) != sizeof(type_msg)) {
 		errorhandler("send() sent a different number of bytes than expected\n");
 		closesocket(c_socket);
 		clearwinsock();
@@ -130,15 +129,14 @@ int main(void) {
 	}
 
 	type_op_result result;
-	uint8_t res_buf[OP_RESULT_SIZE];
-	memset(res_buf, '\0', OP_RESULT_SIZE);
-	if (recv_all(c_socket, (char*) res_buf, OP_RESULT_SIZE) <= 0) {
+	buf = (uint8_t*) calloc(sizeof(type_op_result), sizeof(uint8_t));
+	if (recv_all(c_socket, (char*) buf, sizeof(type_op_result)) <= 0) {
 		errorhandler("recv() failed or connection was closed prematurely\n");
 		closesocket(c_socket);
 		clearwinsock();
 		return -1;
 	}
-	deserialize_msg(res_buf, &result);
+	deserialize_msg(buf, &result);
 	switch(result.status) {
 		case INVALID_OPERATOR:
 			printf("Unknown operator: %c\n", msg.operator_type);
@@ -147,7 +145,7 @@ int main(void) {
 			printf("Can't divide by zero!\n");
 			break;
 		case STATUS_OK:
-			printf("%d %c %d = %f", msg.operand1, msg.operator_type, msg.operand2, result.result);
+			printf("%d %c %d = %0.2f\n", msg.operand1, msg.operator_type, msg.operand2, result.result);
 	}
 	closesocket(c_socket);
 	clearwinsock();
