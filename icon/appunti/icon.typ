@@ -4276,4 +4276,155 @@ Lo *stacking*, o _stacked generalization_, è un modello ensemble costituito da 
 image("images/stacking.png", width: 70%),
 caption: [Schema dello stacking]
 )
-
+= Reti Neurali e Apprendimento Profondo
+Adottare una rappresentazione degli esempi in termini di input grezzo spesso non risulta fruttuoso: servono feature più utili. A talescopo si può ricorrere a una _progettazione_ delel feature utili, generate a partire dall'input, mediante la *feature engineering*. I metodi per tali scppi apprendono feature utili per il probleam da risolvere anche se spesso queste si rilevano poco interpretabili. Un altro vantaggio dall'apprendiento di feature è che possono anche essere reimpiegate nella soluzione di problemi affini. \
+Imparare le feature è l'obiettovo del cosidetto *feature representation learning* svolto utilizzando *reti neurali artificiali* (ANN) le quali sono ispirate alla struttura dei neuroni del cervello umano. Le *unità artificiali* risultano diverse dai corrispettivi biologici in quanto molto più semplici e meno numerose di quelle nel cervello umano. \
+Un esempio di neurone artificiale è rappresentato nella seguente figura.
+#figure(
+image("images/neurone_artificiale.png", width: 70%),
+caption: [Neurone artificiale]
+)
+Tali modelli sono impiegati per risolvere problemi che comportano un ragionamento di basso livello, con molti dati disponibili, come ad esempio l'interpretazione delle immagini, il riconoscimento del parlato e la traduzione automatica, risultando molto flessibili e capaci di inventare nuove feature.  \
+Alcuni motivi d'interesse per le reti neurali artificiali sono i seguenti:
+- nell _neuroscienze_, comprendere i sistemi naturali, ad esempio per la simulazione di sistemi propri di animali semplici;
+- la comprensione dei _meccanismo_ funzionali e astratti _dell'intelligenza_: ipotizzando di poter replicare i meccanismi del cervello per realizzarne le funzionalità, testandoli confrontando forme d'intelligenza con e senza tali meccanismi; l'ipotesi alternativa parte da osservazione come quella degli aerei che, pur sfruttando gli stessi principi del volo degli uccelli, non si basano sugli stessi meccanismi;
+- progettare nuovi _modelli comutazionali_: mentre i modelli convenzionali sono costituiti da pochi porcessori e molta memoria, nel cervello si attvano moltissimi processi asincroni distribuiti, senza un master; difatti le ANN vengono spesso implementate su architetture massivamente parallele; si consideri anche il nuovo paradigma di programmazione detto _differentiable programming_;
+- putnare a modelli di diversa complessità, ossai diversi _learning bias_, rispetto ad altri: le ANN possono rappresentare qualsiasi funzione su feature discrete, come gli alberi di decisione, ma anche molte altre funzioni non sempre realizzabili attraverso alberi.
+== Reti Neurali Artificiali Feed Forward
+Essenzialmente, una _rete neurale *feed-forward*_ implementa una funzione di predizione come segue: dato l'input (vettoriale) _x_:
+$
+f(x) = f_n(f_(n-1)(dots.c f_2(f_1(x))))
+$
+Si consideri la struttura della rete nella seguente figura:
+#figure(
+image("images/feed_forward.png", width: 70%),
+caption: [Rete neurale feed-forward]
+)
+- ogni *layer* / _strato_ è costituito da una funzione $f_i$ che mappa un vettore di input su un vettore di output;
+- ciacsuna componente del vettore di output di un layer costituisce un'_unità_;
+- la _profondità_ delle rete è _n_, con l'ultimo strato, $f_n$, detto di _output_ della rete mentre gli altri layer sono detti _nascosti / hidden_, trenne quello di _input_, con $x$.
+In genere le ANN hanno più feature di input ma anche più feature/target, tipicamente a valori reali; feature discrete possono essere trasformate in variabili-indicatrici o feature ordinali. \
+Ogni layer di unità opera in funzione dei precedenti: il layer di input ha un'unità per feature di input e viene avvalorato da ciascun esempio; un layer nascosto prevede la composizione di una funzione _lineare_ $f_i$ con una funzione $phi$ di attivazione non-lineare, da cui si calcola l'output dello strato _out[j]_ in funzione dei valori in input _in[k]_ verso lo strato
+$
+o u t[j] = phi(sum_k i n[k] dot.c w[k, j])
+$
+si noti l'input aggiuntivo costante $i[0] = 1$ per il _bias_; occorrerà apprendere ciascun peso $w[k, j]$, uno per ogni coppia input-output del layer. \
+Si noti che layer lineari _consecutivi_ sarebbero inutili perchè trasformabilli in un unico layer lineare. \
+Le funzioni di attivazione $phi$, tipicamente, sono differenziabili. Ad esempio, si può usare un _rettificatore_ o *Rectified Linear Unit* (ReLU) definito
+$
+phi(x) = max(0, x)
+$
+assumendo che la derivata sia nulla in $x = 0$. \
+La scelta di $phi$ per il layer di output può variare in base al tipo di $y$ e alla loss da ottimizzare:
+- per _y_ reale e loss quadratica medai si può usare la _funzione identità_ $phi(x) = x$;
+- per _y_ booleana e log loss binaria, tipicamente si usa la funzione _sigmoide_ $phi(x) = 1\/(1+ e^(-x))$, giustificabile anche in termini probabilistici;
+- per $y$ categorica e log loss categorica si usa invece una _softmax_, considerando un _output layer_ con un'unità per ciascun valore di _y_.
+Queste scelte comportano derivate semplici dall'errore, proporzionali a $hat(Y)(e) - Y(e)$.
+#esempio[
+Si consideri la rete neurale per la funzione `if-then-else` nella seguente figura:
+#figure(
+image("images/if_then_else.png", width: 70%),
+caption: [Rete neurale per l'apprendimento della funzione `if-then-else`]
+)
+- _x, y, z_ costituiscono l'input;
+- la funzione è equivalente a $(x and y) or (not x and z)$, rappresentabile in termini di ReLU o sigmoidi;
+- daot un primo layer con due output: $h_1 = r e l u(x + y - 1)$ e $h_2 = r e l u(-x +z)$ si avrà che $h_1 = 1$ se $(x and y)$ vera e $h_2 = 1$ se $(not x and z)$ vera, altrimenti sono entrambe nulle;
+- per l'output, $"sigmoid"(-5 + 10 dot.c h_1 + 10 dot.c h_2)$ approssima $h_1 or h_2$ con un errore vicino al $0.7 percent$
+]
+L'_ampiezza_ di un layer è pari alle dimensioni del vettore di output. L'ampiezza della rete è paria ll'ampiezza massima fra i suoi layer. La sua _profondità_ è pari al numero di layer. Le dimensioni dell'input dipendono dal problema. \
+Si può dimostrare che una rete con un solo layer nascosto, purchè sufficientemente ampio, può approssimare qualsiasi funzione continua su un intervallo di numeri reali o discreta con input / output discreti. I layer a lvielli bassi costruiscono feature utili a quelle dei livelli più alti, che li rende più semplici.
+=== Apprendimento dei parametri
+L'algoritmo *back-propagation, BP,* implementa la DG Stocastica per determinare i pesi del modelli; per ogni esempio $e$ del batch, si aggiorna ogni peso $w$ in ragione di $-(partial)/(partial w)"errore"(e)$ usando le proprietà delle derivate, ossia le regole di decomposizione lineare e di concatenazione. \
+La predizione per $e$, con feature di input $x_e$, sarà
+$
+f(e) = f_n (f_(n-1)(dots.c f_2(f_1(x_e))))
+$
+con le $f_i$ parametrizzate dai pesi sulle connessioni in input. Supponendo che $v_i = f_i (f_(i-1)(dots.c f_2(f_1(x_e))))$, ossia $v_i = f_i (v_(i-1))$. posto $v_0 = x_e$, i valori $v_i$ per $1 <= i <= n$ possono essere calcolati in una passata attraverso le funzioni annidate. \
+Definire le derivate per gli aggiornamenti è più difficile perchè è più difficile calcolare la variazione dell'errore determinata da pesi di strati inferiori rispetto a quello di output. \
+Sia $w$ uno dei pesi nella definizione di una certa $f_j$. La derivata dell'errore risspetto al peso è data da:
+$
+(partial)/ (partial w)"errore"(f(e)) &= "errore"'(v_n) dot.c (partial)/(partial w) f_n (v_(n-1)) \
+&= "errore"'(v_n) dot.c (partial) / (partial w) f_n (f_(n-1)(v_(n-2))) \
+&= "errore"'(v_n) dot.c  f'_n (v_(n-1)) dot.c (partial)/(partial w)(f_(n-1) (v_(n - 2))) \
+&= "errore"'(v_n) dot.c f'_n (v_(n-1)) dot.c f'_(n-1) (v_(n - 2)) dot.c (partial)/(partial w) (f_(n-2) (v_(n - 3))) \
+&= "errore"'(v_n) dot.c f'_n(v_(n-1)) dot.c f'_(n-1) (v_(n-2)) dots.c (partial) / (partial w) (f_j (v_(j-1)))
+$
+con $f'_i$ derivata di $f_i$ rispetto ai suoi input. L'espansione prosegue fino a $f_j$. L'ultima derivata parziale non è istanza della regola di concatenazione non essendo $v_(j-1)$ funzione di $w$, quindi si usa la regola della decomposizione lineare e $w$ viene moltiplicato per la componente di $v_(j-1)$ appropriata. \
+BP determina l'aggiornamento per ogni peso in due passate per ogni esempio:
+- _Predizione_: per ogni layer, dati i valori degli input, si calcola il valore degli output, $v_i$;
+- _Retro-propagazione_: andando a ritroso attraverso i layer, si determina l'aggiornamento di ciascun peso; si calcolano $"errore"'(v_n) dot.c product_(i=0)^k f'_(n-1) (v_(n-i-1))$ per essere passati ai layer inferiori; tale input costituisce il _termine d'errore_ per un layer, combinato con i valori calcolati al passo di predizione per aggironare tutti i pesi del layer e calcolare il termine d'errore per il layer inferiore. \
+BP combina la GD stocastica con la _programmazione dinamica_ memorizzando i risultati intermedi. \
+===== Modularizzazione
+Un layer viene costruito come modulo indipendente che implementa le due passate, predizione e retro-propagazione, con l'aggiornamento dei pesi dopo ogni batch di esempi. \
+La classe `Dense`, definita di seguito, implementa una funzione lineare _densa_ in cui ogni unità di output è connessa a tutte quelle di input. Dato l'array _w_ dei pesi, $w[i, j]$ è il peso per la connessione dell'unità di input $i$ all'output $j$ e $w[n_i, j]$ costituisce il bias per l'output $j$. I metodi `output`e `Backprop` vengono chiamati su ogni esempio.
+- `output(in)` restituisce i valori di output per i valori di input del vettore _in_;
+- `Backprop(errore)` restituisce il vettore degli errori in input e aggiorna i gradienti;
+- `update()` aggiorna i pesi per un batch di esempi
+Ogni classe memorizza _in_ e _out_ se utili a `Backprop`.
+#algoritmo(title: [Classe Dense])[
+  #pseudocode-list[
+    + *class* $"Dense"(n_i, n_o)$ \{#text(size: 8pt)[$n_i$: n. di input, $n_o$: n. di output]\}
+    + *for each* $0 <= i <= n_i$ $e$ $0 <= j < n_o$ *do*
+      + $d[i, j] <- 0$
+      + $w[i, j] <- "valore casuale"$
+    + *method* $"output"(i n)$ \{#text(size: 8pt)[$i n$ array di lunghezza $n_i$]\}
+      + *for each* $j$ *do* $o u t[j] <- w[n_i, j] + sum_i i n[i] dot w[i, j]$
+      + *return* $o u t$
+    + *method* $"Backprop"("errore")$ \{#text(size: 8pt)[$"errore"$ array di lunghezza $n_o$]\}
+      + *for each* $i, j$ *do* $d[i, j] <- d[i, j] + i n[i] dot "errore"[j]$
+      + *for each* $i$ *do* $"i_errore"[i] <- sum_j w[i, j] dot "errore"[j]$
+      + *return* $"i_errore"$
+    + *method* $"update"()$ \{#text(size: 8pt)[aggiorna tutti i pesi: implementa la SGD]\}
+      + *for each* $i, j$ *do*
+        + $w[i, j] <- w[i, j] - eta / b dot d[i, j]$ \{#text(size: 8pt)[$eta$ learning rate]\}
+        + $d[i, j] <- 0$
+  ]
+] <alg:dense>
+L'algoritmo mostra la procedura per l'apprendimento di una rete neurale, in cui:
+- _funzioni_ è una sequenza di funzioni parametriche che definisce la rete, tipicamente, per ciascun layer, una lineare e una di attivazione, implementata da una classe che implementi le due passate e memorizzi l'informazione necessaria;
+- la prima funzione del layer più basso ha input corrispondenti alle feature di input; per le successive, il numero di input è pari al numero di output della funzione precedente, mentre il numero di output della funzione finale è pari al numero di feature target, o al numero di valori per una feature di output categorica non binaria;
+- si assume che il tipo di output della funzione di attivazione sia utile alla funzione di errore, in modo che la derivata sia proporzionale a valore predetto meno valore effettivo, questo vale per l'identià, la sigmoide e la soft-max; $phi_0$ è la funzione di attivazione finale usata in `Neural_network_learner`, ma non viene implementata come classe; altre combinazioin con funzinoi d'errore / loss potrebbero avere forme diverse che vengono automatizzate nelle librerie (_derivazione simbolica_).
+#algoritmo(title: [Algoritmo di apprendimento della rete neurale])[
+  #pseudocode-list[
+    + *procedure* $"Neural_network_learner"(X s, Y s, E s, "funzioni", eta, b)$
+    + *Input*
+      + $X s$: feature di input, $X s = (X_1, dots, X_n)$
+      + $Y s$: feature target
+      + $E s$: insieme di esempi di training
+      + "funzioni": sequenza di funzioni che definiscono la rete
+      + $b$: n. di esempi in ogni batch
+      + $eta$: learning rate (passo della GD)
+    + *repeat*
+      + $"batch" <- "campione casuale di "$ $b$ "esempi"
+      + *for each* esempio $e in "batch"$ *do*
+        + *for each* unità di input $i$ *do* $"valori"[i] <- X_i(e)$
+        + *for each* $f u n$ in "funzioni" in ordine ascendente *do*
+          + $"valori" <- f u n."output"("valori")$
+          + *for each* unità di output $j$ *do* $"errore"[j] <- phi_o("valori"[j]) - Y s[j]$
+        + *for each* $f u n$ in "funzioni" in ordine discendente *do*
+          + $"errore" <- f u n."Backprop"("errore")$
+      + *for each* $f u n$ in "funzioni" che contiene pesi *do*
+        + $f u n."update"()$
+    + *until* terminazione
+  ]
+] <alg:neural-network-learner>
+#algoritmo(title: [Classi per unità ReLU e sigmoid])[
+  #pseudocode-list[
+    + *class* $"ReLU"()$
+    + *method* $"output"(i n)$
+      + *for each* $i: 0 <= i < n_i$ *do* $o u t[i] <- "max"(0, i n[i])$
+      + *return* $o u t$
+    + *method* $"Backprop"("errore")$
+      + *for each* $i: 0 <= i < n_i$ *do*
+        + $"i_errore"[i] <- "errore"[i]$ *if* $(i n[i] > 0)$ *else* $0$
+      + *return* $"i_errore"$
+    + #h(0pt)
+    + *class* $"sigmoid"()$
+    + *method* $"output"(i n)$
+      + *for each* $i: 0 <= i < n_i$ *do* $o u t[i] := 1 / (1 + "exp"(-i n[i]))$
+      + *return* $o u t$
+    + *method* $"Backprop"("errore")$
+      + *for each* $i: 0 <= i < n_i$ *do* $"i_errore"[i] := o u t[i] dot (1 - o u t[i]) dot "errore"[i]$
+      + *return* $"i_errore"$
+  ]
+] <alg:relu-sigmoid>
