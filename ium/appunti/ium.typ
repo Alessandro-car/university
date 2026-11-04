@@ -795,10 +795,10 @@ caption: [Una possibile struttura del documento dei requisiti]
 
 La norma ISO 9241-210, «Human-centred design process for interactive systems», descrive il processo di progettazione centrato sull'utente. Dopo una fase iniziale di pianificazione del processo, il progetto si sviluppa attraverso quattro attività:
 
-- comprendere e specificare il contesto d'uso;
-- specificare i requisiti dell'utente e di business;
-- produrre le soluzioni di progettazione (design);
-- valutare il progetto rispetto ai requisiti.
++ comprendere e specificare il contesto d'uso;
++ specificare i requisiti dell'utente e di business;
++ produrre le soluzioni di progettazione (design);
++ valutare il progetto rispetto ai requisiti.
 
 Il processo è iterativo: se la valutazione mostra che la soluzione non soddisfa i requisiti, si torna a una delle attività precedenti (il contesto d'uso, i requisiti o la produzione delle soluzioni) e il ciclo si ripete. Il processo si conclude quando la soluzione progettuale soddisfa tutti i requisiti. I prototipi sono lo strumento principale con cui le soluzioni di progetto vengono prodotte e valutate. \
 Per produrre soluzioni di progetto efficaci occorre:
@@ -806,7 +806,7 @@ Per produrre soluzioni di progetto efficaci occorre:
 - capire gli utenti e i loro compiti, sulla base del contesto d'uso e dei problemi riscontrati con i sistemi correnti;
 - usare le conoscenze esistenti, cioè standard e linee guida (per esempio la serie ISO 9241);
 - produrre mock-up e prototipi, su carta o con tecniche di prototipazione rapida;
-- valutare, valutare, valutare.
+- valutare.
 
 Si lavora dunque con un ciclo rapido: capire, progettare, valutare. Ogni prototipo viene costruito proprio per essere valutato.
 
@@ -995,7 +995,7 @@ Un'altra tecnica utile per costruire prototipi iniziali fa uso di strumenti per 
 - cliccando su queste aree, l'utente naviga nell'ipertesto, simulando l'interazione con il prodotto.
 
 #figure(
-	image("images/prot_powerpoint.png", width: 80%),
+	image("images/prot_powerpoint.png", width: 60%),
 	caption: [Prototipo PowerPoint del cellulare da polso]
 )
 
