@@ -789,5 +789,236 @@ caption: [Una possibile struttura del documento dei requisiti]
 - _Glossario_. Definisce gli eventuali termini tecnici o gergali, specifici dell'organizzazione o del prodotto, utilizzati nel documento.
 - _Altri allegati_. Come necessario.
 - _Riferimento_. Contiene ogni riferimento a pubblicazioni o a materiale di supporto utile per una migliore comprensione del documento.
+= I prototipi
 
+== Processo human-centred design ISO 9241-210
 
+La norma ISO 9241-210, «Human-centred design process for interactive systems», descrive il processo di progettazione centrato sull'utente. Dopo una fase iniziale di pianificazione del processo, il progetto si sviluppa attraverso quattro attività:
+
+- comprendere e specificare il contesto d'uso;
+- specificare i requisiti dell'utente e di business;
+- produrre le soluzioni di progettazione (design);
+- valutare il progetto rispetto ai requisiti.
+
+Il processo è iterativo: se la valutazione mostra che la soluzione non soddisfa i requisiti, si torna a una delle attività precedenti (il contesto d'uso, i requisiti o la produzione delle soluzioni) e il ciclo si ripete. Il processo si conclude quando la soluzione progettuale soddisfa tutti i requisiti. I prototipi sono lo strumento principale con cui le soluzioni di progetto vengono prodotte e valutate. \
+Per produrre soluzioni di progetto efficaci occorre:
+
+- capire gli utenti e i loro compiti, sulla base del contesto d'uso e dei problemi riscontrati con i sistemi correnti;
+- usare le conoscenze esistenti, cioè standard e linee guida (per esempio la serie ISO 9241);
+- produrre mock-up e prototipi, su carta o con tecniche di prototipazione rapida;
+- valutare, valutare, valutare.
+
+Si lavora dunque con un ciclo rapido: capire, progettare, valutare. Ogni prototipo viene costruito proprio per essere valutato.
+
+== Che cos'è un prototipo
+
+Un prototipo è una rappresentazione di un prodotto o di un sistema, o di una sua parte, che, anche se in qualche modo limitata, può essere utilizzata a scopo di valutazione. \
+Lo scopo principale dei prototipi è quello di coinvolgere gli utenti in tutte le fasi del progetto. I benefici di questo approccio sono molteplici. Secondo l'ISO 9241-210:
+
+- rende le decisioni di progetto più esplicite, permettendo, tra l'altro, ai progettisti di comunicare meglio fin dall'inizio del processo;
+- consente ai progettisti di esplorare numerosi design concept prima della scelta finale;
+- permette di incorporare nel progetto i feedback degli utenti;
+- rende possibile valutare numerose varianti del progetto e progetti alternativi;
+- migliora la qualità e completezza delle specifiche del progetto.
+
+Un esempio di come un prototipo si evolve nel tempo è lo sviluppo dell'iPhone. Si parte da un primo sketch di Jony Ive, un semplice disegno che esplora la forma e le proporzioni del dispositivo. Si passa poi a un primo modello renderizzato in alluminio, che permette di valutare l'aspetto fisico e le dimensioni dell'oggetto. Infine si realizza un prototipo (il «Proto 399») con icone «finte», cioè simulate, sullo schermo, che permette di valutare l'aspetto della schermata. Ogni passaggio aumenta la fedeltà rispetto al prodotto finale e risponde a uno scopo diverso: esplorare, comunicare, valutare.
+
+=== Palm Pilot e Knowledge Navigator
+
+Due esempi storici mostrano che un prototipo non deve per forza essere un sistema funzionante. Per valutare il Palm Pilot, Jeff Hawkins usava un semplice blocco di legno, delle dimensioni del dispositivo, che portava con sé e simulava di usare con una penna, per capire quale posto avrebbe avuto nella vita quotidiana dell'utente. Il Knowledge Navigator, presentato da Apple nel 1987, è invece un video concept: mostra un tablet con un assistente digitale e ne illustra l'uso senza che esista alcun sistema reale.
+
+== Tipi di prototipi
+
+Un prototipo è un modello approssimato o parziale del sistema che vogliamo sviluppare, realizzato allo scopo di valutarne determinate caratteristiche. Poiché i gruppi di progetto per i sistemi interattivi sono spesso multidisciplinari, coinvolgono persone con professionalità e priorità diverse, il termine stesso di prototipo viene usato in modo non univoco. La tabella di seguito mostra una possibile classificazione dei prototipi, sulla base del loro scopo, delle loro modalità d'uso, fedeltà, completezza funzionale e durata della loro vita.
+
+#table(
+  columns: (7.5em, 8em, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  // horizontal line above every row, vertical lines between columns
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [*Scopo*], [Ruolo], [Serve a valutare il ruolo del prodotto nella vita del suo utente],
+  [], [Interfaccia], [Serve a valutare le modalità d'interazione fra utente e prodotto],
+  [], [Implementazione], [Serve a valutare aspetti tecnici relativi alla realizzazione tecnica del prodotto],
+
+  [*Modo d'uso*], [Statico], [È una rappresentazione statica del prodotto (es. storyboard, diagrammi di vario tipo)],
+  [], [Dinamico], [È una rappresentazione dinamica (ma non interattiva) del prodotto, es.: video],
+  [], [Interattivo], [Permette agli utenti di effettuare prove d'uso del prodotto, anche se semplificate e approssimate],
+
+  [*Fedeltà*], [Alta fedeltà], [Assomiglia in tutti gli aspetti al prodotto finale],
+  [], [Bassa fedeltà], [Assomiglia alla lontana al prodotto finale],
+
+  [*Completezza funzionale*], [Orizzontale], [Fornisce tutte le funzioni del prodotto finale, anche se in versione semplificata o limitata],
+  [], [Verticale], [Fornisce solo alcune funzioni, realizzate in dettaglio],
+
+  [*Durata*], [Usa e getta], [Non viene conservato dopo l'uso],
+  [], [Evolutivo], [Viene fatto evolvere fino al prodotto finale],
+
+  table.hline(),
+)
+
+Dal punto di vista del loro scopo, possiamo classificare i prototipi in tre grandi categorie:
+
+- prototipi che servono a valutare il ruolo del prodotto nella vita del suo utente (_role prototype_);
+- prototipi che servono a valutare l'interfaccia del prodotto, intesa come l'insieme delle modalità di interazione fra utenti e prodotto (_look & feel prototype_);
+- prototipi che servono a valutare aspetti tecnici relativi all'implementazione del prodotto.
+
+Questa distinzione raramente può essere netta, poiché spesso un prototipo presenta contemporaneamente più aspetti. Ruolo, interfaccia e implementazione possono quindi essere considerati come le tre dimensioni dello "spazio" nel quale possiamo collocare ogni prototipo. Per esempio, il Knowledge Navigator di cui si è parlato più sopra può considerarsi essenzialmente un prototipo di ruolo, con qualche aspetto, sia pure non approfondito, d'interfaccia, ma senza alcun aspetto implementativo. Pertanto, in figura, dovrebbe essere collocato nell'area indicata del cerchio. Questa rappresentazione è dovuta a Houde e Hill (1997). Per leggerla vale una regola semplice: più un prototipo è vicino a un vertice del triangolo, più si concentra su quell'aspetto; al centro si trovano i prototipi che li integrano tutti. Il blocco di legno del Palm Pilot si colloca vicino al vertice del ruolo; un prototipo Figma cliccabile (look & feel e flusso) vicino al vertice dell'interfaccia; uno spike tecnico, come la misura della latenza di un'API, vicino al vertice dell'implementazione; un prototipo integrato, come un'app pilota con codice reale, al centro.
+
+#figure(
+	image("images/spazio_prototipi.png", width: 70%),
+	caption: [Palm Pilot]
+)
+
+Un'altra possibile classificazione dei prototipi è relativa alla loro modalità d'uso: un prototipo può essere allora statico, dinamico o interattivo. Consisterà semplicemente in una rappresentazione statica del prodotto: una serie d'immagini, per esempio; il funzionamento dinamico del prodotto potrà essere mostrato mediante un video, come nell'esempio del Knowledge Navigator. I prototipi più utili per convalidare l'usabilità di un sistema saranno di solito quelli interattivi, che consentono agli utilizzatori di interagire col sistema in corso di progettazione, per sperimentarne l'uso e individuarne, così, pregi e difetti. Un prototipo interattivo aiuta a chiarire i requisiti di progetto, che spesso sono espressi in forma vaga. Permette di osservare le reazioni dell'utente durante l'uso del sistema e di sperimentare soluzioni alternative, a costi contenuti. \
+Nella pratica corrente, a volte ci si accontenta di realizzare prototipi dinamici, consistenti in una semplice sequenza di immagini che il progettista mostra all'utente in sequenza simulando scenari d'uso tipici. Questo approccio però non permette di valutare la usabilità di un sistema, e non dovrebbe mai sostituire l'interazione vera. \
+I prototipi possono essere ulteriormente classificati in base alla loro fedeltà al prodotto finale, alla loro durata e alla loro completezza:
+
+- *fedeltà al prodotto finale*: i prototipi che assomigliano in tutti gli aspetti al sistema finale si dicono ad alta fedeltà. Quelli che gli assomigliano poco, a bassa fedeltà. I prototipi a bassa fedeltà sono normalmente oggetti semplici, economici e molto facili da realizzare;
+- *completezza funzionale*: un prototipo orizzontale fornisce molte funzionalità, ma realizzate in modo schematico. Un prototipo verticale, al contrario, realizza compiutamente un insieme limitato di funzionalità. Con un prototipo orizzontale, se interattivo, si può provare l'intera interfaccia, anche se in modo approssimativo. Infatti, l'utente non potrà utilizzare nessuna funzionalità per intero: di ciascuna esisterà, per così dire, solo l'involucro esterno o una bozza rudimentale;
+- *durata*: anche la durata di vita del prototipo è importante. Se il prototipo, dopo la sperimentazione, non viene conservato, esso si dice usa e getta. Se invece viene conservato e viene fatto evolvere o comunque integrato nel prodotto finale, si dice prototipo evolutivo. I prototipi a bassa fedeltà solitamente sono usa e getta. I prototipi ad alta fedeltà invece spesso vengono fatti evolvere nel prodotto finale;
+- *incrementale*: viene realizzato una serie di prototipi separati, ciascuno dedicato a una parte del sistema, che alla fine vengono integrati nel prodotto finale.
+
+== Schizzi, storyboard e diagrammi
+
+La definizione dello standard ISO 9241-210 considera prototipi anche le rappresentazioni del sistema sulla carta. Sarebbe meglio considerare come prototipi solo quelle rappresentazioni che permettono di provare l'interattività del sistema e non soltanto di descriverla.
+
+=== Schizzi
+
+Nei gruppi di progetto che coinvolgono più persone, spesso questi schizzi sono realizzati su lavagne di grandi dimensioni, in sessioni di brainstorming, durante le quali i partecipanti suggeriscono, discutono e modificano, in modo totalmente libero, soluzioni diverse. La proposta finale, condivisa, servirà come base per la realizzazione di un prototipo vero e proprio nel processo iterativo di progettazione.
+
+=== Storyboard
+
+La tecnica dello storyboarding consiste nel realizzare una serie di disegni che illustrano, inquadratura per inquadratura, ciò che verrà girato sul set di ripresa. Accanto ai disegni possono essere indicati i movimenti della macchina da presa, o brani del dialogo, o altre annotazioni.
+
+#figure(
+image("images/storyboard.png", width: 80%),
+caption: [Esempio di uno storyboard]
+)
+
+La tecnica dello storyboarding può essere adottata anche nell'interaction design, per rappresentare una storia d'uso: la sequenza degli stati del sistema durante una particolare interazione con l'utente. Lo storyboard risulta utile solo in alcuni casi, soprattutto in fase di definizione dei requisiti.
+
+=== Diagrammi per macchine a stati
+
+Per rappresentare adeguatamente sulla carta l'interazione con l'utente, ci servono strumenti più espressivi che ci permettano di rappresentare tutte le possibili sequenze d'interazione. Per questo sono state sviluppate svariate notazioni, che fanno uso di diagrammi bidimensionali, ovvero i diagrammi per macchine a stati, detti anche _statechart_. Si tratta di diagrammi proposti da David Harel come strumento di modellazione di sistemi complessi e in seguito adottati nel linguaggio UML come uno degli strumenti di base. A differenza di altri diagrammi a stati, essi permettono di descrivere un sistema in modo gerarchico, cioè per livelli di astrazione successivi. \
+I diagrammi per macchine a stati sono strumenti semplici ma flessibili e potenti, che servono a descrivere il comportamento di sistemi di ogni tipo. Uno statechart è costituito da nodi e da archi:
+
+- ogni nodo rappresenta uno stato del sistema: nel nostro caso uno stato del dialogo con l'utente;
+- ogni arco (orientato) rappresenta una transizione da uno stato all'altro.
+
+La transizione è innescata da un evento che normalmente corrisponde a un'azione dell'utente e può causare l'esecuzione di un'azione del sistema. La transizione può essere subordinata al verificarsi di una condizione. Ogni nodo è rappresentato con un rettangolo dai bordi arrotondati, contenente il nome dello stato che rappresenta. Ogni arco è etichettato con il nome dell'evento, della condizione e dell'azione associata.
+
+#figure(
+	image("images/statechart.png", width: 80%),
+	caption: [Gli elementi di base degli statechart]
+)
+
+Di solito gli eventi sono azioni dell'utente: per esempio la pressione di un pulsante.
+
+#figure(
+	image("images/es_statechart.png", width: 80%),
+	caption: [Statechart che definisce l'interazione con un distributore di bevande]
+)
+
+Un grosso vantaggio degli statechart è che permettono di rappresentare il sistema per livelli di astrazione successivi. Questo consente di rappresentare il dialogo nei dettagli, usando dei diagrammi di dimensioni contenute: basterà definire un diagramma separato per ogni caso d'uso individuato nei requisiti. Nel corso del progetto i prototipi si costruiscono in tre momenti successivi. I prototipi iniziali (su carta, wireframe, mago di Oz) servono a esplorare rapidamente le idee. I prototipi intermedi permettono di provare aspetti specifici del prodotto con le tecnologie finali. I prototipi finali corrispondono a un sistema sostanzialmente completo. Procedendo nel tempo, la fedeltà, la completezza e il costo dei prototipi crescono.
+
+== Prototipi iniziali
+
+Nelle prime fasi del progetto è utile esplorare più soluzioni, prima di scegliere quale sarà sviluppata nel dettaglio. I prototipi iniziali servono proprio a questo, e sono quindi molto importanti. Essi saranno quasi sempre di tipo usa e getta ed è opportuno che siano realizzabili molto velocemente e a costi contenuti.
+
+#set par(justify: true)
+
+#emph[
+  Gli utenti possono essere coinvolti molto presto nel progetto, mediante l'uso di modelli statici realizzati sulla carta. È possibile presentare agli utenti le bozze delle schermate o una rappresentazione del prodotto, chiedendo loro di provarli in un contesto realistico. In tal modo si possono valutare rapidamente ed economicamente aspetti del progetto (per esempio, quanto sia facile navigare attraverso una gerarchia di menu). Per i prodotti hardware, analoghi benefici possono essere ottenuti con l'uso di modelli tridimensionali statici, costruiti con materiali semplici. Nelle fasi iniziali, anche i prototipi più rudimentali possono risultare preziosi, per esplorare soluzioni alternative. Anche se può essere utile presentare le soluzioni di progetto nel modo più realistico possibile, è consigliabile evitare di investire troppo tempo o denaro nella loro realizzazione, anche perché ciò potrebbe produrre una resistenza alle modifiche da parte dei progettisti. In un approccio human-centred, un prototipo non è semplicemente una demo per mostrare un'anteprima del prodotto agli utenti. Esso serve a raccogliere le loro reazioni, per poi utilizzarle nell'orientare le attività di progettazione successive. Quando non fosse consigliabile mostrare i prototipi agli utenti all'inizio del processo di progettazione (per esempio, per ragioni di riservatezza), le valutazioni potranno essere condotte da esperti. Queste possono essere utili e poco costose, e complementare i test con l'utente. In ogni caso, in un processo di progettazione human-centred, almeno i test finali dovrebbero essere condotti con utenti reali.#super[115]
+]
+=== Prototipi di carta
+
+I prototipi più semplici che permettono di provare l'interazione con l'utente sono i prototipi di carta. L'interfaccia del sistema viene disegnata a bassa fedeltà su fogli di carta che vengono usati per effettuare una simulazione manuale del sistema. Durante la simulazione, il progettista presenta all'utente la prima schermata, e l'utente interagisce con essa simulando l'interazione. Il progettista risponderà in funzione delle azioni dell'utente, presentando il cartoncino con la schermata successiva e così via.
+
+*Perché si usa.* Sarebbe utile sapere che cosa vogliono gli utenti prima di iniziare la programmazione. I prototipi su carta permettono proprio questo, anche se può non essere intuitivo testare un'interfaccia utente senza l'uso di un computer: consentono di massimizzare il feedback minimizzando lo sforzo. Bastano alcuni test di usabilità con prototipi su carta per avere abbastanza informazioni da capire se ciò che si implementerà è la cosa giusta.
+
+#figure(
+	image("images/prot_carta.png", width: 80%),
+	caption: [Prototipi di carta]
+)
+
+I prototipi di carta non vengono usati molto, perché i progettisti non li prendono seriamente. Spesso però conviene realizzarli come primo passo, subito dopo aver adeguatamente schematizzato i vari percorsi dell'interazione con l'uso dei diagrammi di interazione: i prototipi di carta sono veloci e riutilizzabili, e permettono di correggere facilmente i problemi (interfaccia poco _user friendly_). \
+Un prototipo su carta non deve essere molto curato. In pratica:
+
+- si possono fare anche interfacce miste (carta sopra un'interfaccia reale), anche se in genere non sono necessarie;
+- linee dritte o testo stampato: è sufficiente che l'utente legga una scritta; se non è chiara non bisogna spiegarla, ma sostituirla;
+- immagini e icone: meglio le parole, per esempio «logo azienda» al posto dell'immagine;
+- colori: meglio fare schizzi con un pennarello nero, i colori possono essere aggiunti dopo;
+- dimensioni: sono importanti solo per interfacce molto dense; se l'utente è confuso sulle dimensioni, meglio dare spiegazioni.
+
+Molto spesso dopo il primo test di usabilità si scoprono problemi inattesi e si fanno molte modifiche. Conviene quindi non spendere molto tempo in prototipi che sembrano belli prima di provarli: è sufficiente che siano abbastanza leggibili.
+
+*Carta e prototipi digitali.* I prototipi cartacei hanno alcuni vantaggi rispetto a quelli creati con applicazioni come HTML, Figma, Penpot o Framer:
+
+- _non si scrive codice_: creare velocemente dei mock-up è possibile, ma fare in modo che l'interfaccia risponda correttamente alle azioni dell'utente costa tempo;
+- _si evitano feedback inutili_: interfacce chiare e pulite incoraggiano un tipo sbagliato di feedback, come «non mi piace il verde del bordo di quel pulsante» o «queste caselle di testo non sono allineate!», quando invece si vuole essere sicuri di fornire il giusto contenuto;
+- _si incoraggia la creatività_: la mente è più creativa vedendo cose «non finite» e gli utenti, in particolare quelli non esperti, si intimidiscono di fronte alle applicazioni.
+
+*Pro e contro.* Il paper prototyping permette di valutare:
+
+- _concetti e terminologia_: sono comprensibili all'utente finale?
+- _flusso di navigazione_: la sequenza di passi è quella che gli utenti si aspettano? Devono spostarsi tra le schermate? L'interfaccia chiede informazioni che l'utente non ha o non vuole dare?
+- _contenuto_: l'interfaccia permette agli utenti di prendere decisioni? Ha più informazioni del necessario o presenta informazioni inutili?
+- _layout di pagina_: anche se poco definito, può dare informazioni utili;
+- _funzionalità_: si può scoprire che è necessario inserire funzionalità non previste o che ne sono state previste di inutili.
+
+Ha però dei limiti:
+
+- _fattibilità tecnica_: si possono creare prototipi che non possono essere implementati; per evitarlo deve esserci almeno una persona in grado di capire i vincoli tecnici di una soluzione;
+- _tempi di risposta_: poiché è una persona a simulare il comportamento del sistema, non è possibile valutarli;
+- _scrolling_: il suo uso, in particolare per le pagine web, è da evitare, così anche per i prototipi su carta;
+- _colori e caratteri_: con la carta è molto difficile far vedere l'interfaccia come si vedrebbe su uno schermo. È una buona idea coinvolgere un designer nel prototipo cartaceo, perché potrebbe fare osservazioni che influenzano il progetto.
+
+=== La tecnica del mago di Oz
+
+Questa tecnica consiste nel realizzare un prototipo interattivo, in cui le risposte siano fornite, se possibile all'insaputa dell'utente, da parte di un essere umano che operi dietro le quinte. Per esempio, nel prototipo di un sistema di query, l'utente potrebbe formulare un'interrogazione e un esperto nascosto (il mago di Oz) potrebbe riscrivere l'interrogazione in una forma normalizzata e presentarla all'utente per la sua approvazione e quindi fornire la risposta richiesta, simulando l'accesso a una base di dati ancora inesistente. \
+Affinché il prototipo risulti realistico, le risposte del mago devono essere consistenti per quanto riguarda i contenuti e i tempi di reazione. In particolare: situazioni simili devono provocare le stesse risposte, e queste devono essere conformi alle aspettative dell'utente. Per esempio, se il mago fosse troppo lento a rispondere, l'utente potrebbe pensare di aver fornito una richiesta scorretta o che il sistema è sovraccarico.
+
+=== Prototipi wire-frame
+
+I prototipi wire-frame prendono il nome dai modelli _wire frame_ della grafica computerizzata. Sono prototipi interattivi a bassa fedeltà, di solito usa e getta, nei quali la grafica è estremamente semplificata, e mostra solo i contorni degli oggetti. Permettono di sperimentare le modalità principali di interazione, prima che i dettagli della grafica siano definiti.
+
+=== Pagine ipertestuali
+
+Un'altra tecnica utile per costruire prototipi iniziali fa uso di strumenti per la costruzione di ipertesti. In questo caso, il prototipo è costituito da una serie di immagini che rappresentano l'aspetto del prodotto in corso di progettazione. Le varie snapshot sono legate fra loro da link ipertestuali, cliccando i quali l'utente passa da una snapshot all'altra, simulando così l'interazione con il prodotto. Possono essere realizzati facilmente, a costi molto limitati. Quelli più usati sono i programmi per la costruzione di presentazioni (PowerPoint); in questo caso:
+
+- ogni snapshot del prodotto viene rappresentata su una slide;
+- su ogni snapshot vengono realizzate aree cliccabili di forma opportuna con link ad altre slide;
+- cliccando su queste aree, l'utente naviga nell'ipertesto, simulando l'interazione con il prodotto.
+
+#figure(
+	image("images/prot_powerpoint.png", width: 80%),
+	caption: [Prototipo PowerPoint del cellulare da polso]
+)
+
+Si tratta della slide iniziale dell'ipertesto, sulla quale sono state definite diverse aree cliccabili, corrispondenti ai vari bottoni virtuali dell'orologio. Cliccando sull'area inferiore, comparirà una serie di icone associate ai casi d'uso principali, disegnati su una seconda slide.
+
+*Vantaggi:* i prototipi sono facili da realizzare e da modificare e l'interazione risulta più realistica e fluida.
+
+*Svantaggi:* permettono solo interazioni semplici, di tipo point & click. Interazioni più complesse non hanno più un costo ragionevole e devono venir simulate in modo approssimato. Ci sono dei limiti pratici alla complessità degli ipertesti realizzabili, superati i quali il prototipo diventa poco gestibile da chi lo sviluppa. La soglia di ingestibilità è intorno alle 150 slide. Per questo conviene spezzare i prototipi più complessi in ipertesti separati, ciascuno dedicato a uno specifico aspetto del sistema. Altri strumenti per costruire ipertesti sono i generatori di pagine HTML come Dreamweaver. In ogni caso, è bene evitare di usare strumenti di prototipazione che creino difficoltà tecniche, o che il progettista non padroneggi completamente. \
+\
+Per costruire più rapidamente i prototipi digitali, senza disegnare ogni elemento da zero, si usano i _design stencil_ e le librerie preconfezionate: raccolte di componenti d'interfaccia già pronti (pulsanti, menu, barre, icone, ecc.) da inserire nel prototipo. Usare i componenti ufficiali di una piattaforma rende il prototipo più realistico. Alcune risorse utili, tutte disponibili in Figma:
+
+- gli UI kit ufficiali di Apple (Apple Design Resources) per iOS e iPadOS 27 e per macOS 27;
+- il Material 3 Design Kit di Google, con componenti e stili del Material Design 3;
+- le librerie e i template gratuiti modificabili della Figma Community.
+
+== Prototipi intermedi
+
+I prototipi iniziali, come abbiamo visto, sono spesso usa e getta: si costruiscono con le tecnologie più semplici, allo scopo di avere dei rapidi feedback sulle idee iniziali della progettazione. Quando il design concept è definito, potrà iniziare la realizzazione effettiva del sistema, attraverso un numero adeguato di iterazioni. Da questo momento in poi, almeno per quanto riguarda i prodotti software, si cercherà di sviluppare i prototipi utilizzando le tecnologie finali. \
+Le strategie che guidano il processo dovranno essere definite di volta in volta, a seconda del particolare tipo di sistema. Per esempio, nei siti web si prevedono due prototipi intermedi: il prototipo di comunicazione (forma finale della grafica) e il prototipo funzionale (funzioni interattive).
+I prototipi intermedi permettono di provare specifici aspetti del prodotto, ma non ancora le sue funzioni complessive, che potranno essere esercitate soltanto alla fine del processo. Sviluppando i prototipi con le tecnologie finali, se tutto procede per il meglio il sistema evolve per ampliamenti successivi e per modesti rifacimenti a partire da una base di codice iniziale.
+
+== Prototipi finali
+
+Nelle prove d'uso dei prototipi finali non dovrebbero quindi esserci troppe sorprese. Le prove finali però sono molto importanti, perché è solo quando il sistema è sostanzialmente finito che si potranno condurre prove complete per i compiti per i quali è stato costruito.
+\
+Nel caso per esempio di un sito web, il prototipo finale è il sito completo, con i suoi contenuti definitivi, le funzionalità collaudate e con una base di dati reali o comunque significativi. Su questo sito si potranno fare prove sofisticate, in scenari d'uso completi e di notevole complessità.
