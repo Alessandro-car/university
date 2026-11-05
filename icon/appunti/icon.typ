@@ -4428,3 +4428,78 @@ L'algoritmo mostra la procedura per l'apprendimento di una rete neurale, in cui:
       + *return* $"i_errore"$
   ]
 ] <alg:relu-sigmoid>
+#esempio[
+La rete vista in precedenza per l'`if-then-else` con i dati visti nell'esempio precedente.
+- si invoca `Neural_network_learner` assegnando a _funzioni_ la lista `[Dense(3, 2), ReLU(), Dense(2, 1)]`
+- un run con 1000 epoche, learning rate = 0.01 e batch di 8 esempi produce i seguenti pesi:
+	- $h_1 = r e l u(2.47 dot.c x + 0.0000236 dot.c y - 2.74 dot.c z + 2.74)$
+	- $h_2 = r e l u(3.62 dot.c + 4.01 dot.c y + 0.228 dot.c - 3.84)$
+	- $o u t p u t = s i g m o i d(-4.42 dot.c h_1 + 6.64 dot.c h_2 + 4.95)$
+- la funzione risultante approssima con un errore nel caso pessimo dell'$1 percent$; predizione con la massima log loss 0.99 per l'esempio $not x and not y and z$, per il quale doveva essere 1;
+- al variare dei run si ottengono diversi pesi;
+- in tale caso semplice si ottiene un output intermedio interpretabile:
+	- $h_1$ positiva a meno che $x = 0, z = 1$
+	- $h_2$ grande solo quando $x= 1, y=1$.
+]
+L'apprendimento _sub-simbolico_ è in apparente contrasto con l'ipotesi di sistema di simboli fisico intrinseco: la rete codifica un significato che si può solo intravedere attraverso i valori delle unità nascoste alle quali, però, non è associato un significato preciso. Solo in dati casi si può interpretare cosa rappresentino ed esprimerlo in forma concisa. Questo è uno degli scopi della cosidetta *_eXplainable AI_, XAI*.
+== Estensione
+=== Migliorare l'Ottimizzazione
+Le seguenti tecniche sono state studiate per rendere più efficace l'ottimizzazione dei parametri, specie nei casi in cui siano molti. In particolare va settato opportunamento il passo di apprendimento per permettere alla GD stocastica di risolveer problemi di minimizzazione in cui lo spazio si configura con cosidetti *canyon* con una funzione d'errre a U in una data dimensione mentre nelle altre presenta una pendenza, oppure con *punti di sella* dove un minimo in una dimensione si incontra con un massimo in un'altra. \
+Per ovviare a tali problemi si deve adattare il passo nel corso del processo di ottimizzazione. I modi principali sono due e prevedono passi diversi per diverse dimensioni:
+- se il segno del gradiente non cambia, si può estendere il passo, se, invece, continua a cambiare allora lo si deve ridurre;
+- ogni aggiornamento dovrebbe seguire la direzione del gradiente e la grandezza dovrebbe dipendere dal fatto che il gradiente sia maggiore o minore del suo valore storico.
+I due modi possono essere combinati. \
+Il *momentum* per ciascun parametro costituisce la velocità dell'aggiornamento del parametro, mentre l'aggiormento della GD stocastica si comporta come l'accelerazione. Il momentum determina la dimensione del passo: va incrementato se l'accelerazione ha lo stesso segno, e decrementato altrimenti. Può servire a risolvere problemi come quelli del canyon o del rumore comportato dal fatto che un batch non contenga molti esempi. \
+Il metodo di ottimizzazione *RMS-Prop* (_root mean squared proagation_) si basa sull'idea che la grandezza del cambiamento per ogni peso dipende dal confronto fra il quadrato del gradiente e il suo valore storico. Per ogni peso si aggiorna una media mobile del quadrato del gradiente. Ciò serve a determinare di quanto il peso debba cambiare. Server anche una correzione utile a non incappare nelle problematiche relative alla divisione per numeri molto piccoli. \
+Adam (_adaptive moments_) è un ottimizzatore che usa sia il momentum sia il gradiente quadratico e correzioni necessarie per l'inizializzazione comune a 0 dei parametri, stima non buona per calcolare medie. \
+*Inizializzazione*: ai fini della convergenza conviene normalizzare i parametri in input e usare circospezione nell'inizializzare i pesi. Le feature di input potrebbero avere diverse unità di misura e utilità per cui andrebbero standardizzate. Per feature di input categoriche tipicamente rappresentate attraverso _variabili indicatrici_ binarie per i diversi valori del dominio (_one-hot encoding_). I pesi delle unità latenti non possono essere inizializzate tutti con lo stesso valore per evitare che tutte le funzioni dello stesso layer convergano verso una stessa funzione (_lockstep_). Pertanto sarà meglio partire da valori casuali. Per le unità di output, il bias andrebbe inzializzato con il miglior valore da predire quando gli input sono tutti a zero. Ad esempio la media sul datset per problemi di regressione o la sigmoide inversa della probabilità empirica nei problemi categorici binari. Gli altri pesi possono partire dal valore nullo. Ciò consente di apprendere dagli input e non da medie pregresse.
+=== Migiorare la Generalizzazione
+Occorre anche assicurare in partenza che il modello possa adattarsi al training set, evitando il sovradattamento. \
+Per assicurarsi che si stia apprendendo qualcosa l'errore sul training set dovrebbe almeno essere inferiore a quello dei modelli-base più semplici. Altrimenti bisogna cambiare la configurazione del modello. \
+Se risulta migliore dei modelli base ma non abbastanza occorre cambiare modello. Se già non va benissimo sul training set non potrà migliorare sul test set o su nuovi esempi. Una performance non ottimale è un indice di sotto-adattamento: il modello scelto è troppo semplice. Il problema, in ultima analisi, potrebbe dipendere da feature non abbastanza informative per cui le stime di base potrebbero rappresentare il meglio di quello che si può fare. \
+Se l'algoritmo funziona sul training set ma non su un validation set allora non riesce a generalizzare e va in sovradattamento, pertanto il modelo andrebbe semplificato. Se i dati sono pochi i modelli da usare dovrebbero essere semplici. \
+Sarebbe utile operare il tuning degli iperparametri via _cross validation_, Tale processo può essere automatizzato prendendo il nome di *autoML*. Gli iperparametri da considerare comprendono:
+- l'algoritmo,
+- il numero di layer, l'ampiezza di ciascun layer,
+- il numero di epoche (per consentire l'early stopping),
+- il learning rate,
+- le dimensioni del batch di esempi,
+- i parametri di regolarizzazione.
+Nel caso delle reti profonde si può prendere in considerazione il meccanismo di *dropout* che porta a ignorare casualmente alcune unità in fase di training, ossia settare temporaneamente l'output a 0. Tale meccanismo viene controllato dal parametro `rate`, ossia la proporzione di valori annullati. \
+Altri metodi:
+- raccogliere più dati può essere il modello più economico;
+- _data augmentation_: nuovi esempi, trasformando quelli disponibili anche con l'aggiunta di rumore o cambiando i contesti;
+- usando la  _feature engineering_;
+- riusare esempi disponibili per problemi correlati, condividendo rappresentazioni delle feature a basso livello. Ad esempio nel _multi-task learning_ si condividono i layer inferiori appresi per un problema nella soluzione di altri.
+=== Reti convolutive
+Una *rete convolutiva* (_convulation neural network, CNN_) è specializzata nel riconoscere immagini o nella visione sfruttando il principio di _località_ e la _condivisione_ dei parametri. Un esempio è mostrato nell'immagine seguente:
+#figure(
+image("images/cnn.png", width: 70%),
+caption: [Layer convolutivi]
+)
+Una CNN utilizza un *kernel*, o _convulation mask_, come operatore lineare parametrico, da applicarsi a regioni locali. Tipicamente si usano kernel monodimensionali (per sequenze di parole) o bidimensionali (per immagini e video). I parametri del kernel vanno appresi dai dati. Feature locali determinano i loro valori in funzione di punti vicini. Lo stesso kernel viene applicato in parti diverse dell'istanza in input. Si possono applicare più kernel in maniera concorrente. In tal caso si avranno più output, ad esempio più array, detti _canali_. Questa suddivisione può essere prevista già in input. \
+In un *pooling layer*, si applica una funzione prefissata degli output delle unità in un kernel lineare. Un tipico pooling layer è il _max-pooling_, che è come la circonvuluzione, ma applica il massimo invece di una funzione lineare. Una tipica architettura di CNN usa un layer convolutivo, seguito da una funzione non lineare, come la ReLU, seguita da un pooling layer, il cui output va in input a layer convolutivo e così via.
+=== Modelli per Sequenze
+A volte i dati si presentano come sequenze di lunghezza diversa, non prefissata. Si pensi alle frasi nel linguaggio naturale. \
+Una *rete ricorrente* (_recurrent neural network_, RNN) vanno oltre il meccanismo di _feed-forward_, ammettendo connessioni con un'unità in layer non superiore per formare cicli. \
+Ciò permette l'utilizzo di uno dei layer come _memoria di stato_, e consente, fornendo in input una _sequenza temporale_ di valori, di modellarne un comportamento dinamico dipendente dalla informazioni ricevute in istanti di tempo precedenti. \
+Tale tipo di reti è molto utilizzato per predizioni su _serie temporali_ in cui vada previsto il prossimo output. \
+Le reti *Long Short-Term Memory, LSTM,* costituiscono un tipo speciale di RNN progettate in modo che sia mantenuta la memoria a meno di sostituzioni con nuova informazione. Ciò consente una migliori cattura delle dipendenze di lungo termine rispetto alle RNN tradizionali. Intuitivamente, invece di apprendere la funzione da $h^((t-1))$ a $h^((t))$, si apprende il cambiamento $delta h^((t))$. \
+Un modo per aumentare l'efficacia dei modelli sequenziali è quello di mettere in grado il modello di soffermarsi su particolari parti delle sequenze. Il meccanismo di *attention* prevede l'uso di una distribuzione di probabilità sulle diverse parti dell'input per assegnare loro un diverso perso all'interno di una stessa finestra, consentendo così di sfruttare informazioni di contesto. \
+Questo calcolo di pesi può avvenire in maniera simultanea attraverso modelli *transformer*, basati su più meccanismi di attenzione (_multi-heads_), vanno a inframmezzarsi con layer densi e le funzioni di attivazione. Essi trasformano sequenza in sequenze operando una *codifica posizionale*, risultando più facili da apprendere rispetto a RNN e LSTM.
+=== Altri Modelli Neurali Generativi
+Un *autoencoder* è una rete con uno strato/modello _encoder_ con input e output uguali ricostruiti da uno strato/modello *decoder* ed è atta a costruire una _rappresentazione_ interna vettoraile che può essere riusata come modello generativo. \
+Uno schema di autoencoder è mostrato nella seguente figura:
+#figure(
+image("images/autoencoder.png", width: 70%),
+caption: [Schema di autoencoder]
+)
+Con tali modelli si mira a trasformare i datiin ingresso in forma vettoriale con un meccanismo di codifica dell'input in una rappresentazione intermedia in uno strato latente che garantisca la loro ricostruzione nello strato di output. Un tipico utilizzo può essere quello di generare immagini artificiali a partire da testo. In generale, tale meccanismo è molto utilizzato in NLP, ad esempio nei modelli *Word2vec* e derivati, come quelli relativi al _Knowledge Gragh embedding_ rappresentati da triple. \
+Una _adversarial network_ come la *generative adversarial network, GAN*, impara a generare esempi con una distribuzione simile a quella degli esempi di training. Essa viene allenata sia a predire parte dell'output, sia a non essere in grado di predire altro output. È formata da un _generatore_ di esempi con l'obiettivo di ingannare il _discriminatore_ che invece deve determinare se siani veri o falsi. \
+Un possibile utilizzo delle GAN può essere quello di escludere dal modello alcune feature sensibiili (_debiasing GAN_), ad esempio per evitare predizioni che riguardino persone, ad esempio per sezioni di lavoro, vengano influenzate dal genere o dal colore della carnagione. \
+Un *modello di diffusione* rappresenta un metodo efficace di IA generativa (_image generation_): esso costruice una sequenza di esmepi più rumorose, a partire dai dati disponibili, aggiungendo ripetutamente rumore fino ad avere solo rumore, imparando poi a invertire questo processo. DALL-E è una tipica applicazione di questo modello combinato con alcuni dei precedenti. \
+Un esempio di GAN è mostrato nella seguente figura:
+#figure(
+image("images/gan.png", width: 70%),
+caption: [GAN]
+)
