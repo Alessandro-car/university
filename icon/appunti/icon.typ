@@ -4503,3 +4503,638 @@ Un esempio di GAN è mostrato nella seguente figura:
 image("images/gan.png", width: 70%),
 caption: [GAN]
 )
+= Ragionamento su Modelli di Conoscenza Incerta
+== Probabilità
+Nel mendo reale spesso si devono prendere decisioni in base a informazioni _incomplete_. In tal casi è difficile capire l'esatto stato del mondo. Per prendere decisioni un KBS deve cercare di sfruttare tutta la conoscenza disponibile. Essendo tale conoscenza limitata, il sistema dovrà essere in grado di ragionare sotto *incertezza*, facendo ipotesi e valutandone l'attendibilità. \
+Se non si può assumere una conoscenza completa del mondo, per prendere decisioni spesso si formulano diverse ipotesi. \
+L'*incertezza* può essere caratterizzata come *ontologica* o *epistemologica*. Nel primo caso essa riguarda il mondo in sé (si tratta di una forma di _imprecisione_ nella rappresentazione), ad esempio _persona molto alta_ rappresenta una conoscenza vaga sul valore esatto dell'altezza. Nel secondo caso l'incertezza concerne le credenze sullo stato del mondo: essendo spesso le situazioni non completamente conosciute, si devono fare valutazioni soggettive. \
+Sorge il problema di come aggiornare tale credito con la disponibilità di nuove informazioni. Si devono considerare in due momenti successivi: valutazioni *a priori*, ossia prima di osservare qualsiasi osservazione, e *a posteriori*, ossia dopo l'acquisizione di nuove informazioni, il che porta all'aggiormaneto delle credenze sullo stato del mondo. \
+Il ragionamento in presenza di incertezza è un problema studiato in _Teoria della probabilità_ e in _Teoria delle decisioni_. Si basa sulla valutazione dell'azzardo, ovvero dell'incertezza sulle conseguenze di decisioni da prendere. \
+La misura delle credibilità rientra nella prospettiva che si chiama *bayesiana* o *soggettiva*: lo studio di come la conoscenza impatti sulle credenze del soggetto. Soggetti diversi potranno assumere diverse probabilità. Tale prospettiva è diversa da quella *oggettiva* detta anche *frequentistica*. \
+La _credibilità_ di una proposizione $alpha$ viene misurata con un valore in $[0, 1]$: si ha probabilità nulla se si crede che $alpha$ sia del tutto falsa e che nessuna nuova evidenza possa cambiarla; si avrà probabilità pari a 1 se si ritiene $alpha$ assolutamente vera; altrimenti la probabilità sarà un valore in $]0,1[$ che misura l'incertezza sulla credibilità della sua verità; ciò non significa che $alpha$ sia solo parzialmente vera, bensì che il suo valore di verità non sia determinabile con certezza. \
+== Semantica della Probabilità
+Definiamo alcune nozioni base:
+- *variabile*: _aleatoria / casuale_, denotata con inziale maiuscola e dotata di _dominio_ di valori; per il momento si considerano variabili booleane; variabili discrete con dominio finito o almeno enumerabile;
+- *mondo*: funzione che associa ad ogni variabile un valore, viceversa una variabile può essere vista come una funzione dai mondi al suo dominio;
+- *proposizione primitiva*: assegnazione di un valore a una variabile o diseguaglianza tra variabili e valori/variabili, come ad esempio: $A = "true", X < 7, dots$;
+- *proposizione*: si costruisce applicando i connettivi logici a proposizioni più semplici, a partire dalle primitive.
+Dato l'insieme di _mondi possibili_ $Omega$, _finito_, una *misura di probabilità* $mu: Omega -> RR_+$ verifica le seguenti proprietà:
+- $mu(omega_1 union omega_2) = mu(omega_1) + mu(omega_2)$ se $omega_1$ e $omega_2$ disgiunti;
+- $mu(Omega) = 1$, valore convenzionale.
+La *probabilità* di una proposizione $alpha$ sarà definita come
+$
+P(alpha) = mu(brace.l omega in Omega: alpha "vera in" omega brace.r)
+$
+una misura coerente con la probabilità dei mondi. \
+Data una variabile discreta $X$, la *distribuzione di probabilità* di $X$ è la funzione $P(X): "dom"(X) -> RR$, definita ponendo $P(x)$ come probabilità della proposizione $X = x$, con $x in "dom"(X)$. \
+Questa definizione può essere estesa al caso di un insieme di variabili $brace.l X_1, dots, X_n brace.r$: la distribuzione $P(X_1, dots, X_n)$ va dai valori assegnati alle variabili alla probabilità; ad esempio, per $P(X, Y)$, distribuzione su $X$ e $Y$: dati $x in "dom"(X)$ e $y in "dom"(Y)$
+$
+P(X = x, Y = y) = P(X = x and Y = y)
+$
+La *distribuzione di probabilità congiunta* per l'insieme di variabili $brace.l X_1, dots, X_n brace.r$ è la distribuzione su tutti i mondi possibili. \
+Nel caso di variabili continue si devono considerare infiniti mondi, per la precisione un insieme non enumerabile di insiemi di mondi: in caso di variabili con dominio infinito o numero infinito di variabili. Esso non può essere descritto con un linguaggio finito. \
+In realtà non serve una misura definita su tutti gli insiemi di mondi ma solo quelli rappresentabili con formule logiche. Questo costituisce la base per la definizione di una cosiddetta $sigma$-algebra. \
+Per una variabile $X$ continua si definisce una funzione di *densità di probabilità* $p: RR -> RR_+$, con integrale unitario. La misura della probabilità su intervalli sarà:
+$
+P(a <= X <= b) = integral_(a)^(b)p(X)d X
+$
+Anche se $forall v: P(X = v) = 0$ è possibile avere $P(v_0 <= X <= v_1) > 0$, essendo $v_0 <= v_1$. Una distribuzione di densità si dice:
+- _parametrica_: se la formula ha un numero finito di parametri prefissati;
+- _non parametrica_: se non si fissa il numero dei parametri, potenzialmente anche infiniti.
+Un altro approccio per trattare variabili continue è la _discretizzazione_ in un numero finito di mondi.
+=== Probabilità Condizionata
+Con la disponibilità di fatti nuovi si può operare un aggiornamento della credibilità di proposizioni. \
+La *probabilità condizionata* $P(h bar e)$ di $h$ _data_ $e$ è una misura del credito di $h$ (_ipotesi_), assumendo la verità di $e$ (_evidenza_). $P(h bar e)$ si chiama anche probabilità *a posteriori* di $h$: $e$ rappresenta la congiunzione di osservazioni dirette del mondo, tutte le osservazioni riguardanti una data situazione, non solo una selezione, per la correttezza della probabilità condizionata. $P(h)$ si dice anche probabilità *a priori* di $h$ e corrisponde a $P(h bar "true")$, ossia precede qualunque osservazione.
+==== Semantica della probabilità condizionata
+L'evidenza $e$ elimina i mondi incompatibili. Come nella conseguenza logica, essa seleziona i mondi possibili, quella in cui $e$ vera. \
+Si definisce una nuova misura $mu_e$ su insiemi di mondi, data l'evidenza $e$:
+$
+mu_e(S) = cases(
+0 & quad e "falsa in" omega\, forall omega in S,
+c dot.c mu(omega) & quad e "vera in" omega\, forall omega in S
+)
+$
+dove $c$ è una costante di normalizzazione. \
+Ogni mondo in cui $e$ sia falsa ha probabilità condizionata nulla. Per gli altri mondi, si considerano probabilità normalizzate: perchè risulti una misura di probabilità, dato $e$:
+$
+1 &= mu_e (Omega) attach(=, t: "per casi") mu_e (\{omega mid(|) e "vera in" omega\}) + mu_e (\{omega mid(|) e "falsa in" omega\}) \
+&= c dot mu(\{omega mid(|) e "vera in" omega\}) + 0 = c dot P(e)
+$
+per cui $c = 1 / P(e)$, quindi la misura può essere definita solo se $P(e) > 0$; difatti $P(e) = 0$ indica che $e$ è impossibile. \
+La *probabilità condizionata* della proposizione _h_ data _e_ può essere definita sommando le probabilità condizionate dei mondi in cui _h_ è vera:
+$
+  P(h mid(|) e) &= mu_e (\{omega mid(|) h "vera in" omega\}) \
+    &= mu_e (\{omega mid(|) h and e "vera in" omega\}) + mu_e (\{omega mid(|) h and not e "vera in" omega\}) \
+    &= 1/P(e) dot mu(\{omega mid(|) h and e "vera in" omega\}) + 0 = P(h and e)/P(e)
+$
+Per estensione si definisce la *distribuzione di probabilità condizionata* $P(X bar Y)$ in funzione di $X$ e $Y$ variaibli: dati $x in "dom"(X)$ e $y in "dom"(Y)$, si considera la probabilità condizionata delle proposizioni $P(X = x bar Y = y)$.  \
+Si considererà la _decomposizione_ di una congiunta per semplificare i calcoli.
+#proposizione(title: "Regola di concatenazione.")[
+Date le proposizioni $alpha_1, dots, alpha_n$:
+$
+P(alpha_1 and alpha_2 and dots.c and alpha_n) &= P(alpha_1) dot.c \
+& P(alpha_2 bar alpha_1) dot.c \
+& P(alpha_3 bar alpha_1 and alpha_2) dot.c \
+& dots.v \
+& P(a_n bar a_1 and dots.c and a_(n-1)) \
+&= product_(i=1)^(n)P(alpha_i bar alpha_1 and dots.c and alpha_(i-1))
+$
+La parte destra si annulla se è nullo uno dei prodotti, anche in caso alcuni fossero indefiniti; il caso base è $P(alpha_1 bar "true") = P(alpha_1)$.
+]
+==== Teorema di Bayes
+Vediamo come aggiornare le probabilità in base a nuova evidenza.
+#esempio(title: "Regola di Bayes")[
+Se $P(e) != 0$, si può scrivere:
+$
+P(h bar e) = (P(e bar h) dot.c P(h))/(P(e))
+$
+dove $P(h bar e)$ è la probabilità *a posteriori*, $P(e bar h)$ si chiama *verosomiglianza* o _likelihood_ e $P(h)$ è la probabilità *a priori* di $h$.
+]
+Estendendo a distribuzioni condizionate da $k$, evidenza pregressa o conoscenza di fondo implicita, se $P(e bar k) != 0$ si ha:
+$
+P(h bar e and k) = (P(e bar h and k) dot.c P(h bar k))/(P(e bar k))
+$
+ossia partendo da $P(h bar k)$, data una nuova evidenza $e$, si ha la nuova misura $P(h bar e and k)$. \
+In genere, una tra $P(e bar h)$ o $P(h bar e)$ può essere stimata più facilmente dell'altra, che potrà essere ricavata dal teorema.
+==== Probabilità Condizionata e Implicazione
+Ci si può chiedere se valga sempre l'uguaglianza:
+$ P(f arrow.l e) attach(=, t: ?) P(f mid(|) e) $
+Ciò non è necessariamente vero. Si osseri che, per l'equivalenza $e -> f equiv not e or f$, si ha che $P(f <- e) = P(f or not e)$ misura delle interpretazioni per le qualui $f$ è vera oppure $e$ è falsa. Un caso in cui l'uguaglianza non vale è il seguente:
+- $P("oviparo" bar "mammifero")$ risulta bassa, i mammiferi che depongono uova sono rari;
+- $P("oviparo" <- "mammifero") = P("oviparo" or not "mammifero")$ è alta essendo la proporzione dominata da animali non mammiferi; per lo stesso motivo, anche $P(not "oviparo" <- "mammifero")$ risulta alta.
+=== Valori Attesi
+Per le predizioni, si possono definire _medie ponderate_ su tutti i mondi possibili dei valori di funzioni numeriche. \
+Data $f$, funzione sui mondi, il *valore atteso* di $f$ rispetto a $P$ è definito come segue:
+$ cal(E)_P (f) = sum_(w in Omega) f(w) dot P(w) $
+Se $f$ è definita sulle proposizioni, ossia data $alpha$:
+$
+f(alpha) = cases(
+1 & quad alpha "vera",
+0 & quad alpha "falsa"
+)
+$
+allora:
+$
+cal_(P)(f) = P(alpha)
+$
+Nel caso di distribuzioni condizionate, si definisce il _valore atteso_ *condizionato* di $f$ data l'evidenza $e$:
+$
+cal(f bar e) = sum_(omega in Omega)f(omega) dot.c P(omega bar e)
+$
+Data una variabile booleana, il valore atteso coincide con la probabilità della variabile.
+== Indipendenza
+Per definire distrubuzioni su molte variabili serve molta conoscenza. Gli assiomi della probabilità risultano deboli per certi scopi: pongono pochi vincoli sulle probabilità condizionate da sfruttare, ad esempio con $n$ variabili binarie, ci saranno $2^n - 1$ probabilità da conoscere per avere una completa distribuzione dalla quale derivare quelle condizionate. \
+Per limitare il quantitativo di informazioni richiesto, si può assumere che una variabile dipenda direttametne solo da alcune altre. Altre assunzioni dovrebbero far sì che si richiedano meno dati per specificare un modello: con strutture più semplici il ragionamento sarà svolto in modo più efficiente. \
+In generale $P(h bar e) in ]0, 1[$ non determina vincoli sui valori di $P(h bar f and e)$, se non in casi limite: $P(h bar f and e) = 1$ quando $f$ implica $h$ oppure $P(h bar f and e) = 0$, quando $f$ implica $not h$. \
+Spesso è però disponibile un tipo comune di _conoscenza quantitativa_ riassumibile con:
+$
+P(h bar e) = P(h bar f and e)
+$
+cioè $f$ risulta irrilevante per la probabilità di $h$ data $e$. \
+Estendendo l'idea a un dato insieme di variabili $Z s$: $X$ si dice _condizionatamente_ *indipendente* da $Y$ dato $Z s$ se e solo se:
+$
+P(X bar Y, Z s) = P(X bar Z s)
+$
+cioè $forall x in "dom"(X), forall y in "dom"(Y), forall z in "dom"(Z s)$, se $P(Y = y and Z s = z)>0$ allora
+$
+P(X = x bar Y = y and Z s = z) = P(X = x bar Z s = z)
+$
+ossia noto il valore di ogni variabile in $Z s$, conoscere il valore di $Y$ non influenza la credibilità dell'assegnazione di un valore a $X$. L'indipendenza condizionata è spesso facile da accertare e torna utile nell'inferenza. È, invece, più raro disporre di una tabella della probabilità dei mondi da cui verificare l'indipendenza per via numerica.
+#proposizione[
+Se le probabilità condizionate sono ben definite, i seguenti enunciati sono equivalenti:
++ $X$ è condizionatamente indipendente da $Y$ data $Z$;
++ $Y$ è condizionatamente indipendente da $X$ data $Z$;
++ $forall x, y, y', z: P(X=x bar Y=y and Z=z) = P(X = x bar Y = y' and Z = z)$\
+	ossia, noto il valore di $Z$, cambiare $Y$ non influenza la credibilità del valore di $X$;
++ $P(X, Y bar Z) = P(X bar Z)P(Y bar Z)$
+]
+$X$ e $Y$ sono _incondizionatamente_ *indipendenti* se
+$
+P(X, Y) = P(X)P(Y)
+$
+ossia condizionatamente indipendenti ma senza osservazioni date: ciò non implica che siano pure condizionamente indipendenti, data qualche altra evidenza $Z$. Raramente tale proprietà può essere determinata per via numerica da dati disponibili.
+== Belief Network
+Poter fare assunzioni di indipendenza condizionata consente una rappresentazione concisa dei domini. Data una variabile $X$, solo alcune variabili influenzano direttamente il suo valore. L'insieme di variabili che la influenzano localmente si chiama _Markov blanket_ e tale località può essere sfruttata, difatti, date queste variabili, $X$ sarà condizionatamente indipendente dalle altre. Le assunzioni di _indipendenza_ condizionata inducono un ordinamento delle variabili che può essere rappresentato attraverso un grafo orientato. \
+Una _rete bayesiana_ è un modello in forma di grafo che evidenzia la dipendenza condizionata fra le variabili. Definito un _ordinamento totale_ sull'insieme delle sue variabili $brace.l X_1, dots, X_n brace.r$, la _distribuzione_ di probabilità congiunta può essere decomposta in termini di probabilità condizionate, tramite la _regola di concatenazione_:
+$
+P(X_1 = v_1 and X_2 = v_2 and dots.c and X_n = v_n) = product_(i=1)^(n)P(X_i = v_i bar X_1 = v_1 and dots.c and X_(i-1)=v_(i-1))
+$
+ossia:
+$
+P(X_1, X_2, dots, X_n) = product_(i=1)^(n)P(X_i bar X_1, dots, X_(i-1))
+$
+I *genitori* di ciascuna variabile $X_i$ saranno costituiti dal sottoinsieme minimale di _predecessori_ di $X_i$ nell'ordinamento totale, $"gen"(X_i) subset.eq brace.l X_1, dots, X_(i-1) brace.r$, tale che gli altri predecessori di $X_i$ siano condizionatamente indipendenti da $X_i$ dato $"gen"(X_i)$. \
+Così $X_i$ dipende dai genitori, ma è indipendente dagli altri predecessori:
+$
+P(X_i bar X_1, dots, X_(i-1)) = P(X_i bar "gen"(X_i))
+$
+Se più insiemi minimali soddisfano tale condizione, allora si può operare una scelta casuale. Alcuni dei predecessori possono dipendere deterministicamente da altri. Riscrivendo la regola di concatenazione, la *fattorizzazione* della _congiunta_ sarà:
+$
+P(X_1, dots, X_2, dots, X_n) = product_(i=1)^n P(X_i bar "gen"(X_i))
+$
+Formalmente, una *belief network* o *rete bayesiana (BN)* è rappresentata da un _grafo aciclico orientato (DAG)_ con una variabile, $X$ per ciascun nodo, archi verso $X$ da ciascuno dei nodi relativi ai suoi genitori $"gen"(X)$ e quindi una _distribuzione di probabilità condizionata (CPD)_ $P(X bar "gen"(X))$. Il grafo è aciclico per costruzione con una fattorizzazione che dipende dall'ordinamento: a diversi ordinamenti corrisponderanno diverse BN. Una BN codifica relazioni di indipendenza condizionata fra variabili: dati i genitori, ogni variabile è indipendente da tutte le variabili che non sono sue discendenti.
+#esempio(title: "Voti")[
+#let intel = $italic("Intelligenza")$
+#let impe = $italic("Impegno")$
+#let risp = $italic("Risposte")$
+#let voto = $italic("Voto")$
+
+Dato l'ordinamento _Intelligenza_, _Impegno_, _Risposte_, _Voto_ delle variabili in un esempio precedente, le dipendenze potrebbero essere quelle rappresentate nella seguente figura:
+#figure(
+image("images/bn.png", width: 70%),
+caption: [BN sui voti]
+)
+- _Intelligenza_ non ha predecessori, quindi nemmeno genitori: \
+	$"gen"(intel) = emptyset$;
+
+- _Impegno_ è indipendente da _Intelligenza_ e $"gen"(impe) = emptyset$;
+
+- _Risposte_ dipende da _Intelligenza_ e _Impegno_: \
+	$"gen"(risp) = \{intel, impe\}$;
+
+- _Voto_ è indipendente da _Intelligenza_ e _Impegno_ data _Risposte_: \
+	$"gen"(voto) = \{risp\}$.
+
+La fattorizzazione della distribuzione congiunta è:
+$
+	P(intel, impe, risp, voto) = \
+	P(intel) dot P(impe) dot P(risp mid(|) intel, impe) dot P(voto mid(|) risp).
+$
+Per le risposte si possono considerare domini semplificati, come ad esempio _Risposte_ = \{`approfondite`, `chiare`, `superficiali`, `vacue`\}, oppure anche il testo stesso delle risposte.
+]
+=== Osservazioni e Query
+Data una BN che specifica una distribuzione congiunta, il problema di _inferenza probabilistica_ più comune è il calcolo della _distribuzione a posteriori_ di *variabili di query* data l'evidenza, ossia la congiunzione di assegnazioni di valori osservate riguardanti altre variabili.
+#esempio[
+#let intel = $italic("Intelligenza")$
+#let impe = $italic("Impegno")$
+#let voto = $italic("Voto")$
+
+Prima delle osservazioni, $P(intel)$ fornita dalla BN, dopo si può usare l'_inferenza_ per determinare $P(voto)$:
+
+- _query_ $P(intel mid(|) voto = 10)$: distribuzione a posteriori, ossia saputo che il voto conseguito è $10$ (un valore di $voto$);
+
+- _query_ $P(intel mid(|) voto = 10 and impe = mono("false"))$: distribuzione a posteriori, noto pure che $impe = mono("false")$;
+
+- _Intelligenza_ e _Impegno_ sono indipendenti quando non siano date altre informazioni ma, se si conosce il voto, esse diventano _dipendenti_; ciò spiega perché ci si vanti se si hanno buoni voti senza studiare molto: aumenta la probabilità di risultare intelligenti.
+]
+Le dipendenze modellate con le CPD non impongono la direzione da utilizare nelle inferenze per rispondere a query. Per ricavare le probabilità a posteriori necessarie a rispondere alle query, anche in verso opposto alle dipendenza della BN, si possono usare i teromi della Teoria della probabilità, in particolare quello di Bayes.
+=== Costruzione di Belief Network
+Per modellare un dominio attraverso una BN occorre:
+- individuare le _variabili rilevanti_: cosa può essere osservato del dominio, ogni feature osservata costituirà una _variabile osservata_ utile a potere poi condizionare le query sulla base dei valori assegnati; le feature che costituiranno le _variabili di query_ ossia le informazioni di cui interessi determinare la probabilità a posteriori; potrebbero essere individuate anche altre variabili _nascoste_ o *latenti*, né osservate né di query, utili a considerare dipendenze dirette e a semplificare il modello, perchè vi saranno meno probabilità condizionate da specificare.
+- decidere i _domini di valori_, ossia il livello di dettaglio del ragionamento che poterà a rispondere alle query. Per ogni variabile, si specifica di ogni valore in ottemperanza al *principio di chiarezza* che richiede l'onniscenza del sistema riguardo il valore di ogni variabile, ossia sappia cosa deve acceder eperchè una variabile assuma un dato valore; va quindi documentatno il significato delle variabili e dei loro valori.
+- specificare le _relazioni_ di dipendenza diretta tra le variabili, ossia gli archi da considerare per definire la funzione $"gen"$.
+- definire le CPD per ognuna variaible in dipendenza dai genitori, soliutamente in forma di tabelle _(CPT)_.
+#esempio(title: "Diagnostica di allarme anti-incendio")[
+#let Man = $italic("Manomissione")$
+#let Inc = $italic("Incendio")$
+#let Alr = $italic("Allarme")$
+#let Fum = $italic("Fumo")$
+#let Eva = $italic("Evacuazione")$
+#let Rap = $italic("Rapporto")$
+
+#let man = $mono("manomissione")$
+#let inc = $mono("incendio")$
+#let alr = $mono("allarme")$
+#let fum = $mono("fumo")$
+#let eva = $mono("evacuazione")$
+#let rap = $mono("rapporto")$
+
+
+Si tiene anche conto di manomissioni, rumore dei sensori di rilevamento (fumo, uscita persone) che portino a informazioni contraddittorie sulla situazione nella figura seguente.
+#figure(
+image("images/bn_antincendio.png", width: 70%),
+caption: [BN: allarme antiincendio]
+) <fig:bn_incendio>
+In particolare, l'arrivo di un rapporto segnala che è in corso un'evacuazione ma è una variabile _rumorosa_ perché a volte non è in corso un'evacuazione segnalata (_falso positivo_) o altre volte potrebbe non segnalare un'evacuazione davvero in corso (_falso negativo_); l'evacuazione dipende dal fatto che sia scattato l'_allarme_; una _manomissione_ o un _incendio_ possono influenzare l'attivazione dell'allarme: la segnalazione di _fumo_ dipende solo dalla rilevazione dell'incendio.
+
+Modello risultante:
+
+- _variabili_ booleane (elenco ordinato):
+  - _Manomissione_ vera sse c'è stata la _manomissione_ dell'impianto;
+  - _Incendio_ vera sse c'è un _incendio_;
+  - _Allarme_ vera sse si sente l'_allarme_;
+  - _Fumo_ vera sse c'è _fumo_;
+  - _Evacuazione_ vera sse la gente _lascia_ in massa l'edificio;
+  - _Rapporto_ vera sse si invia un _avviso_ di abbandono dell'edificio in corso;
+
+- relazioni di _indipendenza condizionata_:
+  - _Incendio_ indipendente da _Manomissione_ (senza condizioni);
+  - _Allarme_ dipende solo da _Incendio_ e _Manomissione_, senza altre dipendenze dalle precedenti;
+  - _Fumo_ dipende solo da _Incendio_ ed è indipendente da _Manomissione_ e _Allarme_ data _Incendio_;
+  - _Evacuazione_ dipende solo da _Allarme_ e non direttamente da _Incendio_, _Manomissione_ o _Fumo_, ossia, data _Allarme_, è indipendente dalle altre variabili;
+  - _Rapporto_ dipende direttamente solo da _Evacuazione_;
+
+- _fattorizzazione_ risultante:
+  $
+  & P(Man, Inc, Alr, Fum, Eva, Rap) = \
+  & quad P(Man) dot P(Inc) \
+  & quad dot P(Alr mid(|) Man, Inc) dot P(Fum mid(|) Inc) \
+  & quad dot P(Eva mid(|) Alr) dot P(Rap mid(|) Eva)
+$  Si noti che l'allarme non è sensibile al fumo ma al calore sprigionato dal fuoco: da qui l'indipendenza di _Allarme_ da _Fumo_ dato _Incendio_ e la dipendenza di _Fumo_ da _Incendio_;
+
+- _domini_: variabili booleane per cui si userà il nome in minuscolo per denotare l'assegnazione di `true`, preceduto dalla negazione $not$ nel caso opposto, ad esempio: _Manomissione_ = `true` si abbrevia con `manomissione`, e _Manomissione_ = `false` con $not$`manomissione`
+
+- specifica delle CPD usate negli esempi che seguiranno:
+  - $P(man) = 0.02$;
+  - $P(inc) = 0.01$;
+  - $P(alr mid(|) inc and man) = 0.5$;
+  - $P(alr mid(|) inc and not man) = 0.99$;
+  - $P(alr mid(|) not inc and man) = 0.85$;
+  - $P(alr mid(|) not inc and not man) = 0.0001$;
+  - $P(fum mid(|) inc) = 0.9$;
+  - $P(fum mid(|) not inc) = 0.01$;
+  - $P(eva mid(|) alr) = 0.88$;
+  - $P(eva mid(|) not alr) = 0.001$;
+  - $P(rap mid(|) eva) = 0.75$;
+  - $P(rap mid(|) not eva) = 0.01$.
+  - le probabilità a posteriori delle assegnazioni negative si possono ottenere per complemento, ad esempio: \
+    $P(not fum mid(|) inc) = 1 - P(fum mid(|) inc) = 0.1$ e \
+    $P(not fum mid(|) not inc) = 1 - P(fum mid(|) not inc) = 0.99$;
+
+- probabilità a priori prima di ogni osservazione (evidenza):
+  - $P(man) = 0.02$;
+  - $P(inc) = 0.01$;
+  - $P(fum) = P(fum and inc) + P(fum and not inc)$ \
+    $= P(fum mid(|) inc) dot P(inc) + P(fum mid(|) not inc) dot P(not inc)$ \
+    $= 0.9 dot 0.01 + 0.01 dot 0.99 = 0.009 + 0.0099 = 0.0189$;
+  - $P(rap) = 0.028$.
+
+- avendo osservato l'arrivo di un _rapporto_ (ossia data l'evidenza `rapporto`) si ha che:
+  - $P(man mid(|) rap) = 0.399$;
+  - $P(inc mid(|) rap) = 0.2305$;
+  - $P(fum mid(|) rap) = 0.215$ \
+    si noti che le probabilità di `manomissione` e `incendio` sono aumentate a causa di `rapporto` quindi anche quella di `fumo` che dipende da `incendio`.
+
+- avendo osservato (solo) `fumo`:
+  - $P(man mid(|) fum) = 0.02$, \
+    ossia la probabilità di manomissione non è influenzata dall'osservazione di fumo;
+  - $P(inc mid(|) fum) = 0.476$ e $P(rap mid(|) fum) = 0.320$, \
+    si noti come entrambe aumentino dopo aver osservato del fumo;
+
+- avendo osservato `rapporto` e `fumo`:
+  - $P(man mid(|) rap and fum) = 0.0284$, \
+    il caso di incendio diventa ancora più probabile;
+  - $P(inc mid(|) rap and fum) = 0.964$ \
+    quindi se è pervenuto un rapporto, la presenza di fumo rende la manomissione meno probabile, essendo `rapporto` _spiegabile_ da `incendio` che adesso è molto più probabile;
+
+- ancora, avendo osservato `rapporto` ma non `fumo` si ha che
+  - $P(man mid(|) rap and not fum) = 0.501$;
+  - $P(inc mid(|) rap and not fum) = 0.0294$, \
+    quindi osservato `rapporto`, `incendio` diventa molto meno verosimile e la probabilità di `manomissione` aumenta per poter spiegare quanto osservato.
+]
+=== Probabilià Condizionate e Fattori
+Un *fattore* è una funzione definita su un insieme di variabili. Il suo *ambito* / _scope_ è costituito da tali variabili e data un'assegnazione a ciascuna di esse, il fattore calcolerà un valore numerico. \
+Nel caso della _probabilità condizionata_ si prenderà in considerazione il fattore $P(Y bar X_1, dots, X_k)$, funzione da $Y, X_1, dots, X_k$ in $RR_+$ con il vincolo:
+$
+forall x_1 dots forall x_k sum_(y in "dom"(Y))P(Y =y bar X_1 = x_1, dots, X_k = x_k) = 1
+$
+Normalmente una distribuzione condizionata si rappresenta con una CPT. Questo è possibile con insiemi finiti di variabili e domini di valori. \
+Una possibile rappresentazione per una tabella multidimensionale per la CPD $P(Y = y bar X_1 = v_1, dots, X_k = v_k)$ nella notazione Python per array e dizionari potrebbe essere la seguente: `p[v_1]. . .[v_k][y]`.
+#esempio[
+#let azione = $italic("Azione")$
+#let pioggia = $italic("Pioggia")$
+#let tazza = $italic("Tazza_piena")$
+#let bagnato = $italic("Bagnato")$
+
+Robot con azioni possibili indicate dalla variabile _Azione_, $"dom"(azione) = \{mono("uscita"), mono("porta_caffe")\}$. Si considera lo stato di _bagnato_ (indicato dalla variabile _Bagnato_) causato dalla pioggia (indicato da _Pioggia_ = `true`) nel contesto di un'uscita da un luogo al coperto (_Azione_ = `uscita`) o per colpa del trasporto _Azione_ = `porta_caffe` d'una tazza piena (_Tazza\_piena_) di caffè: _Bagnato_ sarà indipendente da _Pioggia_ quando _Azione_ = `porta_caffe`, ma dipendente da _Pioggia_ se _Azione_ = `uscita`; _Bagnato_ sarà indipendente da _Tazza\_piena_ dato che _Azione_ = `uscita`, ma dipendente da _Tazza\_piena_ dato _Azione_ = `porta_caffe`. Una CPT corrispondente può essere:
+  #align(center)[
+    #table(
+      columns: 4,
+      align: center + horizon,
+      inset: (x: 10pt, y: 3pt),
+      stroke: none,
+      table.header(
+        emph[Azione], emph[Pioggia], emph[Tazza\_piena],
+        $P(mono("bagnato") mid(|) "azione, pioggia, tazza")$,
+      ),
+      `uscita`, `false`, `false`, [0.1],
+      `uscita`, `false`, `true`, [0.1],
+      `uscita`, `true`, `false`, [0.8],
+      `uscita`, `true`, `true`, [0.8],
+      `porta_caffe`, `false`, `false`, [0.3],
+      `porta_caffe`, `false`, `true`, [0.6],
+      `porta_caffe`, `true`, `false`, [0.3],
+      `porta_caffe`, `true`, `true`, [0.6],
+    )
+	]
+]
+==== Alberi di Decisione
+In caso di CPT molto grandi ci saranno troppe probabilità da determinare. A tale scopo conviene sfruttar la struttura della rete. Considerando l'*indipendenza specifica per il contesto* , si sfrutta l'indipendenza condizioanta al fine di definire un albero di decisione.
+#esempio[
+La CPD dell'esempio precedente può essere riassunta attraverso l'albero nella seguente figura:
+#figure(
+image("images/albero_dec.png", width: 70%),
+)
+]
+==== Sistema Deterministico con Input Rumorosi
+Si può descriver eun fattore anche attraverso un sistema deterministico rappresentato da una formula logica ovvero anche da programma avente come _input_ variabili genitrici e input stocastici, dette *variabili-rumore* o *esogene*, fra loro indipendenti, mentre le *variabili endogene*, quelle interne alla BN, potranno essere specificate deterministicamente in funzione di quelle esogene e delle genitrici.
+#esempio[
+Nel caso precedente relativo al robot, si può ridefinire il modello attraverso la formula:
+$
+"bagnato" <-> &(("uscita" and "pioggia" and n_0) or \
+& ("uscita" and not "pioggia" and n_1) or \
+& (not "uscita" and "tazza_piena" and n_2) or \
+& (not "uscita" and not "tazza_piena" and n_3))
+$
+dove le $n_i$ sono variabili-rumore indipendenti, con $P(n_0) = 0.8$, $P(n_1) = 0.1, P(n_2)=0.6, P(n_3)=0.3$, ad esempio se `uscita = true` e `pioggia=false`, allora `bagnato=true` quando $n_1$`=true`, il che accade con probabilità 0.1. \
+Il corrispondente modello in forma di programma sarà:
+```
+if uscita:
+    if pioggia:
+        bagnato := flip(0.8)
+    else:
+        bagnato := flip(0.1)
+else:
+    if tazza_piena:
+        bagnato := flip(0.6)
+    else:
+        bagnato := flip(0.3)
+
+flip(x) = (random() < x)
+```
+dove: `random()` restituisce un numero casuale nell'intervallo $[0, 1)$ e `flip(x)` crea una nuova variabile aleatoria indipendente, vera con probabilità $x$, ossia una $n_i$ nella formula logica.
+]
+Come sistema deterministico si usa:
+- il completamento di Clark di un programma logico nella *programmazione logica probabilistica*;
+- un programma nella *programmazione probabilistica*;
+- una formula logica nel *conteggio pesato del modello*.
+==== Noisy-Or
+Si possono modellare i fattori come casi in cui qualcosa si avvera a causa di qualcos'altro: ad esempio si può avvertire la presenza di un sintomo a causa di una malattia. \
+Il *noisy-or* è un modello di probabilità condizionata in cui una variabile figlia è vera se si attiva almeno una delle variabili genitrici. Sia $Y$ la figlia definita come _disgiunzione_ delle attivazioni delle genitrici $X_1, dots, X_k$ (booleane). I _parametri_ $omega_0, dots, omega_k$ costituiscono un sistema deterministico con input rumorosi, in cui:
+$
+Y equiv n_0 or (n_1 and x_1) or dots or (n_k and x_k)
+$
+con $n_i$ variabili di rumore indipendenti, dove $P(n_i) = omega_i$ e ogni $x_i$ per indicare che $X_i = "true"$. \
+La BN per $P(Y bar X_1, X_2, dots, X_k)$ può essere definita introducendo le variabili booleane $A_0, A_1, dots, A_k$ con:
+- $P(A_i = "true" bar X_i = "true") = omega_i$ e $P(A_i = "true" bar X_i = "false") = 0$;
+- $P(A_0 = "true") = omega_0$: si osservi che $P(Y bar A_0, A_1, dots, A_k) = 1$ se almeno una delle $A_i$ è vera quindi $omega_0$ è la probabilità di $Y$ quando tutte le $X_i$ sono false.
+La probabilità di $Y$ aumenta in base alla numerosità di $X_i$ vere.
+==== Modelli Log-lineari e Regressione Logistica
+Un modello log-lineare specifica probabilità, non normalizzate, tramite un prodotto di termini che andrà normalizzato per inferire probabilità. I termini sono tutti positivi quindi si può descrivere il prodotto come esponenziale di una somma, più facile da trattare. Date $h$ ed $e$ booleane:
+$
+P(h bar e) &= (P(h and e))/(P(e)) = (P(h and e))/(P(h and e) + P(not h and e)) = 1 / (1 + (P(not h and e))/(P(h and e))) \
+&= 1/(1 + exp(-log((P(h and e))/(P(not h and e))))) = "sigmoide"(log("odds"(h bar e)))
+$
+ricordando che
+$
+"sigmoide"(x) = 1/(1 + exp(-x))
+$
+e i rapporti fra probabilità detti *odds condizionti* sono definiti nel seguente modo:
+$
+"odds"(h bar e) = (P(h and e))/(P(not h and e)) = (P(h bar e))/(P(not h bar e)) = (P(h bar e))/(1 - P(h bar e)) = (P(e bar h))/((P(e bar not h))) dot.c (P(h))/(P(not h))
+$
+Qui $(P(e bar h))/(P(e bar not h))$ si chiama anche *likelihood ratio* e $(P(h))/(P(not h)) = (P(h))/(1 - P(h))$ sono detti *prior odds*. \
+Se $(P(e bar h))/(P(e bar not h))$ si può scrivere come prodotto allora il suo logaritmo sarà una somma. \
+Si può considerare anche un modello della probabilità condizionata $P(Y bar X_1, dots, X_k)$ basato sulla _regressione logistica_ definito come segue:
+$
+P(Y = "true" bar X_1, dots, X_k) = "sigmoide"(sum_i omega_i dots.c X_i)
+$
+Asusmendo un input fittizio aggiuntivo $X_0 = 1$ con termine noto $omega_0$, esso corrisponde a una decomposizione della probabilità condizionata, con una _likelihood ratio_ pari a un prodotto di termini, uno per ogni $X_i$. Si noti che $P(Y bar X_1 = 0, dots, X_k = 0) = "sigmoide"(omega_0)$ quindi $omega_0$ corrisponde alla probabilità del caso in cui tutti i suoi genitori sono nulli mentre ogni $omega_i$ specifica un valore da aggiungere al cambiare di $X_i: P(Y bar X_1 = 0, dots, X_i = 1, dots, X_k = 0) = "sigmoide"(omega_0 + omega_i)$. Assumendo l'esclusiva influenza sul figlio di ciascun genitore, gli odds sono decomponibili in prodotti di termini dipendenti da una sola variabile.
+== Inferenza Probabilistica
+Lo scopo dell'inferenza è quello di rispondere a query su un dato modello probabilistico essenzaialemente trattato attraverso il calcolo di distribuzioni. Un tipico task è quello di calcolare la *distribuzione a posteriori* di una o più variabili di query data l'evidenza disponibile. Il problema risulta complesso. Si può dimostrare che sia _NP-hard_ e $hash$NP per il calcolo delle probabilita a posteriori o a priori di una variabile. Ciò nel caso pessimo, ma in genere si può sfruttare la struttura per rendere il compito più agevole. \
+Gli approcci principali all'inferenza probabilistica con le BN si caratterizzano in termini di inferenza esatta ed approssimata.
+=== Inferenza Esatta
+Tale forma di inferenza richiede che le probabilità vengano calcolate precisamente. Fondamentalmente gli approcci relativi a tale forma si dividono in due modalità principali:
++ _Enumerazione_ dei mondi consistenti con l'evidenza;
++ Sfruttamento della struttura della rete: ad esempio l'algortimo di _eliminazione di variabili per BN_, simile all'algoritmo per CSP, basato sulla programmaziuone dinamica, che sfrutta le relazioni di indipendenza condizionata.
+=== Inferenza Approssimata
+Esistono diversi metodi per stimare le probabilità che variano in base al tipo di approssimazione desiderata:
+- metodi che forniscono *limiti garantiti* $[l, u]$ di variazione entro i quali ricada la probabilità esatta $p$, ad esempio un algoritmo _anytime_ garantisce che $l$ e $u$ tendano ad avvicinarsi reciprocamente col passare del tempo;
+- metodi che forniscono *limiti probabilistici* sull'errore garantendo un errore contenuto in un'alta percentuale di casi, ovvero stime di probabilità che convergono nel tempo verso quella esatta e una certa velocità di convergenza, come ad esempio gli algoritmi di _simulazione stocastica_;
+- metodi di *inferenza variazionale* capaci di fornire generalmente buone approssimazioni: seclta di una classe di rappresentazioni più semplici, ad esempio BN non connesse, si trova in tale classe il modello più vicino al problema originario ossia una distribuzione a posteriori, facile da calcolare, più vicina a quella cercata in modo da trasformare il problema in uno di minimizzazione dell'errore, seguito da quello di inferenza vera e propria.
+== Modelli Probabilistici Sequenziali
+Si considerino BN speciali con una struttura che si ripete. Essi rendono possibile il ragionamento su sequenza non solo temporali ma anche nello spazio, come ad esempio, le parole in una frase. È possibile estendere le strutture anche a un numero non limitato di variabili casuali.
+=== Catene di Markov
+Una *catena di Markov (MC)* è una BN con nodi/variabili disposti in una sequenza, quindi ogni variabile dipenderà direttametne solo dalla precedente, come mostrato nella seguente figura:
+#figure(
+image("images/mc.png", width: 70%),
+caption: [MC come BN]
+)
+Tramite queste strutture è possibile rappresentare sequenze di _stati_. Ad esempio si possono considerare sequenze di stati in un sistema dinamico o parole di un testo. Ogni _posizione_ nella sequenza sarà indicato come *stage*. \
+Le sequenze sono spesso intese come successioni nel tempo. Essendo reti bayesiane in cui ogni nodo, tranne il primo, dipende solo dal genitore, si dice che viene fatta una *assunzione di Markov* (mancanza di memoria) che può essere descritta dalla seguente proprietà della distribuzione
+$
+P(S_(i+1) bar S_0, dots, S_i) = P(S_(i+1) bar S_i)
+$
+dove $S_t$ rappresenta lo *stato* al tempo $t$: intuitivamente, $S_t$ porta con sè tutte le informazioni storiche che possono influenza gli stati futuri. \
+Una catena di Markov è un *modello stazionario* se tutte le variabili condividono un unico domibnio e stesse probabilità di transizione per ogni stage:
+$
+forall i >=0: P(S_(i+1) bar S_i) = P(S_1 bar S_0)
+$
+il che la rende definibile attraverso da due sole distribuzioni:
+- $P(S_0)$ che specifica le condizioni iniziali;
+- $P(S_(i+1) bar S_i)$ che specifica le dinamiche, le stesse per ogni $i >= 0$.
+Quindi con pochi parametri si specifica una struttura potenzialmente non limitata. Sarà poi possbile porre domande su punti arbitrari nel futuro o nel passato. \
+Per determinare le distribuzioni:
+- per $P(S_i)$: si può usare l'eliminazione di variabili sommando su tutte le precedenti;
+- per $P(S_i bar S_k)$: se $i > k$, basta considerare solo le variabili tra $S_i$ e $S_k$, altrimenti solo quelle di indice inferiore a $k$.
+La *distribuzione* di una catena di Markov si dice *stazionaria* se ciò che vale una volta varrà anche per la successiva: $P$ stazionaria se per ogni stato $s$ si ha che $P(S_(i+1) = s) = P(S_i = s)$, per cui:
+$
+P(S_i = s) = sum_(s_i)P(S_(i+1)== s bar S_i) dot.c P(S_i)
+$
+==== Proprietà delle Catene di Markov
+- Una catena si dice *ergodica* se e solo se per ogni $(s_1, s_2)$ probabilità non nulla di raggiungere $s_2$ da $s_1$;
+- una catena si dice *periodica* se e solo se $exists p$, _periodo_, tale che la differenza tra passaggi per uno stesso stato divisibile per $p$, altrimenti *aperiodica* ($p=1$).
+Una MC ergodica e aperiodica ha una sola distribuzione stazionaria detta di *equilibrio* raggiungibile a partire da qualunque stato: per ogni distribuzione su $S_0$, la distribuzione su $S_i$ si avvicinerà sempre di più a quella di equilibrio al crescere di $i$.
+=== Modelli di Markov Nascosti
+Un *modello di Markov nascosto* o _Hidden Markov Model (HMM)_ è costituito da una catena di Markov estesa con l'aggiunta dei noid per le osservazioni per ciascuno stage, come mostrato nella figura seguente.
+#figure(
+image("images/hmm.png", width: 70%),
+caption: [HMM]
+)
+Oltre alle transizioni di stato, per ogni istante di tempo $t$ c'è l'osservazione $O_t$ che dipende da $S_t$ con dominio costituito dall'insieme delle possibili osservazioni; tali osservazioni sono _parziali_ e _rumorose_, cioè in uno stesso stato, ma in momenti diversi, si possono avere osservazioni differenti in maniera casuale. \
+Sono necessarie anche le seguenti assunzioni di base:
+- lo stato al tempo $t+1$ dipende direttamente solo dallo stato del tempo $t$ per $t >= 0$, come nelle catene di Markov;
+- l'osservazione a tempo $t$ dipende direttamente solo dallo stato al tempo $t$.
+Un HMM stazionario è quindi definito attraverso le seguenti distribuzioni:
+- $P(S_0)$ specifica le condizioni iniziali;
+- $P(S_(t+1) bar S_t)$ specifica della dinamica;
+- $P(O_t bar S_t)$ specifica del modello del sensore.
+Sono possibili diverse inferenze su tali modelli, come ad esempio ricostruire la sequenza di stati data una sequenza di osservazioni (ovvero la sua probabilità).
+== Simulazione Stocastica
+Spesso i problemi di inferenza sono troppo complessi per un'efficiente inferenza esatta: ci sono molte variabili e molte dipendenze in gioco. In tali casi, conviene ricorrere all'_inferenza approssimata_ con metodi basati sulla generazione di campioni casuali della distribuzione specificata dalla rete. \
+Nella *simulazione stocastica* si costruisce un insieme di campioni mappati su e da probabilità. Per l'inferenza si va dalle probabilità ai campioni e viceversa. \
+I problemi tipicamente correlati con la simulazione stocastica sono i seguenti:
++ come _generare_ i campioni;
++ come _inferire_ probabilità dai campioni;
++ come _incorporare_ nel meccanismo le osservazionia a disposizione.
+I metodi *Monte Carlo* forniscono le basi per soluzioni che usano il campionamento per calcolare la distribuzione a posteriori di una variabile in una BN.
+=== Campionamento di una Variabile
+Per la _generazione di campioni_ dalla distribuzione di una sola variabile $X$ occorre ordinare i valori del dominio per definire la _distribuzione cumulativa_ $f$ in funzione di $x$ come segue:
+$
+f(x) = P(X <= x)
+$
+Quindi, per ottenere un _campione casuale v_ per $X$, si genera $y$ da una distribuzione uniforme su $[0, 1]$ e si ricava il valore $v in "dom"(X)$ che abbia $y$ come immagine nella cumulativa, ossia tale che $f(v) = y$, ovvero $v = f^(-1)(y)$. \
+Avendo a disposizione un insieme di campioni, per la _stima delle probabilità_ da tale insieme basta ricorrere alla _media campionaria_: data una proposizione $alpha$ sulle variabili, sia $s$ la proporzione di campioni per i quali $alpha$ è vera rispetto al totale $n$. Per la *legge dei grandi numeri*, $s$ si avvicina asintoticamente alla probabilità esatta $p = P(alpha)$ al crescere di $n$. \
+Per una _stima dell'errore_ $epsilon$ si può utilizzare la _*disuguaglianza di Hoeffding*_:
+$
+P(abs(p-s) > epsilon) <= 2e^(-2n epsilon^2)
+$
+da cui si può ricavare il numero di campioni $n$ che garantisce una stima _probabilmente approssimativamente corretta_ della probabilità.
+=== Forward Sampling su BN
+Campionando tutte le variabili di una BN ogni campione sarà generato in proporzione alla sua probabilità. Ciò consente di stimare le probabilità a priori di qualsiasi variabile. \
+Dato un ordinamento $X_1, dots, X_n$ delle variabili, tale che ognuna sia preceduta dai propri genitori, per estrarre un campione/tupla dalla distribuzione congiunta:
+- si parte campionando $x_1$ usando la cumulativa;
+- per ogni $i$ da 2 a $n$: \
+	si campiona un valore per $X_i$ da $P(X_i bar "gen"(X_i))$, distribuzione condizionata di $X_i$, dati i valori già campionati per i genitori.
+La stima della distribuzione di una variabile di query si ottiene considerando la proporzione di campioni assegnati a ogni valore di tale variabile.
+#esempio[
+#let intel = $italic("Intelligenza")$
+#let Man = $italic("Manomissione")$
+#let Inc = $italic("Incendio")$
+#let Alr = $italic("Allarme")$
+#let Fum = $italic("Fumo")$
+#let Rap = $italic("Rapporto")$
+
+Per la BN vista in *@fig:bn_incendio*, ordinamento come in tabella. Si deve ripetere la costruzione di un campione, con un valore per variabile, nell'ordine:
+
++ campionando _Manomissione_ con la cumulativa si ottiene, \
+  ad esempio, _Manomissione_ = `false`;
++ analogamente, campionando _Incendio_ si ha, \
+  ad esempio, _Incendio_ = `true`;
++ campionando _Allarme_ da $P(Alr mid(|) Man = mono("false"), Inc = mono("true"))$ \
+  si potrebbe avere, ad esempio, _Allarme_ = `true`;
++ poi si campiona _Fumo_ usando $P(Fum mid(|) Inc = mono("true"))$;
++ ecc...
+
+Ciò va ripetuto fino a ottenere il numero desiderato di campioni/tuple $\{s_1, dots, s_n\}$.
+
+#let t = `true`
+#let f = `false`
+#let vd = $dots.v$
+
+#align(center)[
+  #table(
+    columns: 7,
+    align: center + horizon,
+    inset: (x: 8pt, y: 3pt),
+    stroke: (x, y) => (top: if y == 1 { 0.5pt }),
+    table.header(
+      emph[campione], emph[Manomissione], emph[Incendio], emph[Allarme],
+      emph[Fumo], emph[Evacuazione], emph[Rapporto],
+    ),
+    $s_1$, f, t, t, t, f, f,
+    $s_2$, f, f, f, f, f, f,
+    $s_3$, f, t, t, t, t, t,
+    $s_4$, f, f, f, f, f, t,
+    $s_5$, f, f, f, f, f, f,
+    $s_6$, f, f, f, f, f, f,
+    $s_7$, t, f, f, t, t, t,
+    $s_8$, t, f, f, f, f, t,
+    vd, vd, vd, vd, vd, vd, vd,
+    $s_1000$, t, f, t, t, f, f,
+  )
+]
+
+Ad esempio, per la stima di $P(Rap = mono("true"))$ andrà considerata la proporzione dei campioni per i quali _Rapporto_ è vera sui 1000 campioni.
+]
+=== Markov Chain Monte Carlo
+Si considera ora un metodo che prescinde dall'ordine di campionamento. La distribuzione stazionaria di una catena di Markov è la distribuzione delle sue variabili che non cambia in base alla funzione di transizione della catena: se la catena mescola sufficientemente, c'è un'unica distribuzione stazionaria. Tale distribuzione può essere approssimata facendo girare il meccanismo di campionamento sufficientemente lungo. \
+Nei metodi detti *Markov Chain Monte Carlo (MCMC)* per generare campioni da una distribuzione si costruisce una catena di Markov di campioni avente, a lungo andare, la distribuzione desiderata come sua distribuzione stazionaria, quindi si campiona da tale catena perchè i suoi campioni saranno distribuiti secondo la distribuzione-obiettivo. Può occorrere una fase iniziale di _riscaldamento_: andrebbero scartati i primi campioni, probabilmente lontati dalla distribuzione stazionaria. \
+In particolare, nel *Gibbs sampling* si crea una catena di campioni da una rete bayesiana, fissando i valori per le variabili osservate e campionando le altre. Si genera un nuovo campione a a partire dal precedente, modificando i valori per le variabili non fissate. Si può anche considerare una sola variabile alla volta: la singola variabile sarà campionata in base alla distribuzione condizionata ai valori correnti delle altre variabili. SI noti che una variabile $X$ in una rete dipende solo dai valori delle variabili nel suo *Markov blanket* $m b(X)$ contenente i suoi genitori, i suoi figli e gli altri genitori dei suoi figli, come si vede nella seguente figura.
+#figure(
+image("images/markov_blanket.png", width: 50%),
+caption: [Markov blanket]
+)
+L'algoritmo può essere formalizzato come segue.
+#algoritmo(title: [Gibbs Sampling])[
+  #pseudocode-list[
+    + *procedure* $"Gibbs_sampling"(B, e, Q, n, "burn_in")$
+    + *Input*
+      + $B$: belief network
+      + $e$: evidenza; assegnazione di valori ad alcune variabili
+      + $Q$: variabile di query
+      + $n$: numero di campioni da generare
+      + $"burn_in"$: numero di campioni iniziali da scartare
+    + *Output*
+      + distribuzione a posteriori su $Q$
+    + *Local*
+      + $"campione"[]$, array in cui $"campione"[v a r] in "dom"(v a r)$
+      + $"real" "freq"[k]$, array inizializzato a $0$ per ogni $k in "dom"(Q)$
+    + Inizializzare $"campione"[X] <- e[X]$ se $X$ osservata
+    + #text(fill: rgb("558B2F"), style: "italic")[{ altrimenti con un valore casuale da $"dom"(X)$ }]
+    + *repeat* $"burn_in"$ volte
+      + *for each* variabile $X$ non osservata *do*
+        + $"campione"[X] <- "campione casuale da" P(X | "mb"(X))$
+    + *repeat* $n$ volte
+      + *for each* variabile $X$ non osservata *do*
+        + $"campione"[X] <- "campione da" P(X | "mb"(X))$
+      + $v <- "campione"[Q]$
+      + $"freq"[v] <- "freq"[v] + 1$
+    + *return* $"counts" / sum_v "freq"[v]$ #text(fill: rgb("558B2F"), style: "italic")[{ normalizzazione dell'array }]
+  ]
+] <alg:gibbs-sampling>
+#esempio[
+
+Data la BN vista precedentemente sui voti, per campionare $P(#text(style: "italic")[Manomissione] | #text(style: "italic")[Fumo] and not #text(style: "italic")[Rapporto])$, si costruiscono i campioni:
+#align(center)[
+  #table(
+    columns: 7,
+    align: center + horizon,
+    stroke: (x, y) => if y == 0 { (bottom: 1pt + black) } else { none },
+    table.header(
+      [*campione*], [*Manomissione*], [*Incendio*], [*Allarme*], [*Fumo*], [*Evacuazione*], [*Rapporto*]
+    ),
+    [$s_1$], [true], [true], [false], [true], [false], [false],
+    [$s_2$], [true], [true], [false], [true], [false], [false],
+    [$s_3$], [true], [true], [false], [true], [false], [false],
+    [$s_4$], [true], [true], [true], [true], [false], [false],
+    [$s_5$], [true], [true], [true], [true], [true], [false],
+    [$s_6$], [false], [true], [true], [true], [true], [false],
+    [$\vdots$], [$\vdots$], [$\vdots$], [$\vdots$], [$\vdots$], [$\vdots$], [$\vdots$],
+    [$s_{1000}$], [false], [true], [true], [true], [true], [false],
+  )
+]
+
+#v(1em)
+
+- #text(style: "italic")[Fumo] e #text(style: "italic")[Rapporto] sono fissate a `true` e `false`, rispettivamente;
+
+- si genera $s_1$ casualmente e si seleziona #text(style: "italic")[Manomissione];
+
+- #text(style: "italic")[Incendio] e #text(style: "italic")[Allarme] formano il Markov blanket per #text(style: "italic")[Manomissione] quindi si estrae un campione casuale da $P(#text(style: "italic")[Manomissione] | #text(style: "italic")[incendio] and not #text(style: "italic")[allarme])$; supponendo sia `true` si ottiene così $s_1$;
+
+- dato $s_2$, si estrae un valore casuale da $P(#text(style: "italic")[Incendio] | #text(style: "italic")[manomissione] and not #text(style: "italic")[allarme] and #text(style: "italic")[fumo])$; si supponga sia `true` per ottenere quindi $s_3$; poi si campiona un valore da $P(#text(style: "italic")[Allarme] | #text(style: "italic")[manomissione] and #text(style: "italic")[incendio] and not #text(style: "italic")[evacuazione])$, ad esempio `true`;
+
+- alla fine la stima della probabilità di #text(style: "italic")[Manomissione] sarà la proporzione dei casi `true` nei campioni, generati dopo il periodo di burn-in.
+]
+La distribuzione dei campioni si avvicina alla distribuzione congiunta reale se non si sono probabilità nulle. La velocità dipende da quella del rimescolamento delle probabilità che a sua volta dipende da quanto esse risultino estreme. In genere il metodo funziona bene per probabilità non estreme.
