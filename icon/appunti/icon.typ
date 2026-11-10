@@ -1,5 +1,6 @@
 // Import everything from the template file
 #import "../../typst_templates/classic_template.typ": *
+#import "@preview/fletcher:0.5.8": diagram, node, edge
 
 #set heading(numbering: "1.1")
 
@@ -5361,4 +5362,287 @@ L'algoritmo converge quando nno si hanno cambiamenti nelle assegnazioni.
 Esso converge verso un minimi locale stabile: l'errore tende a ridursi mentre c'è solo un numero finito di possibili riassegnazioni. Spesso bastano poche iterate. \
 Le statistiche sufficienti a calcolare la media di ogni cluster sono $c c[c]$, il numero di esempi nel cluster $c$, e $f s[j, c]$, la frequenza del valore $X_j(e)$ per gli esempi nel cluster $c$; per calcolare $"pred"(j, c)$, stima più recente di $"pred"(j, c)$ in $"cluster"(e)$, si usano i valori correnti di _fs_ e _cc_ per determinare i successivi, _fs'_ e _cc'_. \
 Nell'inizializzazione l'assegnazione casuale degli esempi ai cluster si possono selezionare a caso $k$ esempi come prototipi dei cluster oppure si possono calcolare le statistiche sufficienti iniziali su pochi esempi, evitando così un passaggio sull'intero dataset. \
-Si raggiunge la stabilità del partizionam,ento quando le assegnazioni di _cluster_ e quindi _fs_ e _cc_, non cambiano: ciò richiede che _argmin_ si comporti in modo coerente per ogni esempio nei casi in cui più di un cluster minimizzi l'errore.
+Si raggiunge la stabilità del partizionam,ento quando le assegnazioni di _cluster_ e quindi _fs_ e _cc_, non cambiano: ciò richiede che _argmin_ si comporti in modo coerente per ogni esempio nei casi in cui più di un cluster minimizzi l'errore. \
+Ottenute diverse assegnazioni stabili da più esecuzioni si può scegliere il partizionamento migliore confrontandoli in termini dell'errore. \
+È importante notare la sensibilità dell'errore alle diverse scale delle feature. Pertanto conviene lavorare su valori preventivamente _riscalati_ per poter essere poi confrontati. \
+È importante anche la scala dell'iper-parametro $k$ che dovrebbe rappresentare un compormesso fra complessità e adattamento ai dati. È possibile usare il BIC score, la ricerca del _gomito_ nella curva dell'errore al variare dei diversi valori di $k$: curva decrescente al crescere di $k$. Il valore naturale per $k$ sarebbe quello con maggiore riduzione dell'errore rispetto a $k - 1$. Si noti che il clustering ottimale per $k$ può spesso risultare molto diverso da quello ottimale per $k + 1$.
+=== Soft Clustering
+I classificatori bayesiano possono costituire una base per l'_apprendimento non supervisionato_ se si considera la classe come variabile _latente_, ossia non osservata. \
+L'algoritmo *Expectation Maximization (EM)* consente di apprendere modelli probabilistici con variabili latenti, quindi può essere utilizzato per problemi di _soft clustering_ se combinato con un classificatore probabilistico come NB. Il suo schema è analogo a quello di K-Means, con gli stessi argomenti in input, l'insieme di esempi _Es_ e il numero di cluster _k_, ma gli esempi saranno assegnati ai cluster in senso probabilistico. \
+Dato _Es_, EM costruisce un modello NB con un nodo genitore con la variabile latente $C$ che indicherà la classe, quindi con dominio $brace.l 1, dots, k brace.r$, e come nodi figli uno per ogni feature $X_i$ osservatata nei dati in _Es_. Si devono apprendere le distribuzioni $P(C), P(X_i bar C)$ che si adattino meglio a _Es_. \
+Rispetto a K-Means si può considerare l'estensione della tabella dati con due colonne: una colonna $C$ per la classe, ogni esempio originario replicato per $k$ righe della tabella, una per classe; una colonna _Cont_ per il contatore normalizzato, con le $k$ assegnazioni dell'esempio alle classi di $C$, che insieme rappresentano la distribuzione $P(C bar e)$. \
+Iterativamente, EM ricalcola i conteggi dal modello e poi il modello dai conteggi.
+#esempio[
+Problema con $k = 3$ classi:
+#grid(
+	columns: (auto, auto, auto),
+	column-gutter: 2em,
+	align: horizon,
+	table(
+		columns: 6,
+		align: center + horizon,
+		inset: (x: 7pt, y: 3pt),
+		stroke: (x, y) => (top: if y == 1 { 0.5pt }),
+		table.header($X_1$, $X_2$, $X_3$, $X_4$, $C$, $italic("Cont")$),
+		"vd", "vd", "vd", "vd", "vd", "vd",
+		"t", "f", "t", "t", [1], [.4],
+		"t", "f", "t", "t", [2], [.1],
+		"t", "f", "t", "t", [3], [.5],
+		"vd", "vd", "vd", "vd", "vd", "vd",
+	),
+	align(center)[$arrow.l$ E \ M $arrow.r$],
+	align(left)[
+		$P(C)$ \
+		$P(X_1 mid(|) C)$ \
+		$P(X_2 mid(|) C)$ \
+		$P(X_3 mid(|) C)$ \
+		$P(X_4 mid(|) C)$
+	],
+)
+]
+I passi dell'algoritmo sono i seguenti.
+- *Expectation*: aggiorna _Cont_ in base alle distribuzioni correnti del modello
+	- per ogni esempio originario $chevron.l X_1 = v_1, dots, X_n = v_n chevron.r$, e per ogni classe $c = 1, dots, k$, il contatore associato a $chevron.l X_1 = v_1, dots, X_n = v_n, C = c chevron.r$ viene aggiornato con $P(C = c bar X_1 = v_1, dots, X_n = v_n)$;
+	- il valore atteso va calcolato tramite inferenza probabilistica;
+- *Maximization*: inferisce le probabilità del modello dagli esempi estesi
+	- in tabella: esempi completi con valori per tutte le variabili, come nell'apprendimento supervisionato di probabilità;
+	- per la stima delle probabilità del modello si considera la massimizzazione ML (o MAP).
+EM parte con distribuzioni o conteggi casuali e punta a convergere a un massimo locale della likelihood dei dati fornendo come output un modello probabilistico, utile anche a classificare nuovi esempi:
+$
+P(C = c bar X_1 = v_1, dots, X_n = v_n) = (P(C = c) dot.c product_(i=1)^n P(X_i = v_i bar C = c))/(sum_(c') P(C = c') dot.c product_(i=1)^n P(X_i = v_i bar C = c'))
+$
+Per il calcolo delle probabilità tramite statistiche sufficienti
+- a ogni iterata, si calcolano dai dati:
+	- _cc_: _contatori-classe_, vettore $k$-dimensionale, con $c c[c]$ somma dei contatori degli esempi per la classe  $c$ nella tabella dei dati estesa;
+	- _fc_: _contatori-feature_, matrice tridimensionale in cui per $i$ tra 1 ed $n$, per ogni $v in "dom"(X_i)$ e ogni classe $c: f c[i, v, c]$ è la somma dei contatori per ogni esempio $t$ per $c$;
+	- le statistiche sono usate per derivare quelle dell'iterata successiva; si noti che _cc_ può essere anche calcolato da _fc_, ma è più comodo tenere un contatore separato;
+- la stima delle probabilità può essere fatta in base a _cc_ e _fc_: $P(C = c) = c c[c] \/ abs(E s)$, con $abs(E s)$ numero di esempi nel dataset originario, o somma dei conteggi in quello esteso. Inoltre $P(X_i = v bar C = c) = f c[i, v, c] \/ c c[c]$.
+#algoritmo(title: [EM])[
+  #pseudocode-list[
+    + *procedure* $"EM"(X s, E s, k)$
+    + *Input*
+      + $X s$ insieme di feature, $X s = \{X_1, dots, X_n\}$
+      + $E s$ insieme di esempi di training
+      + $k$ numero di classi
+    + *Output*
+      + statistiche sufficienti per il modello probabilistico su $X s$
+    + *Local*
+      + $"real" c c[c], c c'[c]$ #text(fill: rgb("558B2F"), style: "italic")[{ conteggi di classe/cluster vecchi e nuovi }]
+      + $"real" f c[i, v, c], f c'[i, v, c]$ #text(fill: rgb("558B2F"), style: "italic")[{ conteggi di feature vecchi e nuovi }]
+      + $"real" d c$ #text(fill: rgb("558B2F"), style: "italic")[{ distribuzione per esempio e classe/cluster corrente }]
+      + $"Boolean" "stabile"$
+    + *repeat*
+      + azzerare $c c'[c]$ e $f c'[i, v, c]$
+      + *for each* $(v_1, dots, v_n) in E s$ *do*
+        + *for each* $c in [1, k]$ *do*
+          + $d c <- P(C = c | X_1 = v_1, dots, X_n = v_n)$ #text(fill: rgb("558B2F"), style: "italic")[{ dai conteggi }]
+          + $c c'[c] <- c c'[c] + d c$
+          + *for each* $i in [1, n]$ *do*
+            + $f c'[i, v_i, c] <- f c'[i, v_i, c] + d c$
+      + $"stabile" <- (c c approx c c') and (f c approx f c')$
+      + $c c <- c c'$
+      + $f c <- f c'$
+    + *until* $"stabile"$
+    + *return* $c c, f c$
+  ]
+] <alg:em>
+Si osservi che per valutare _dc_, ossia $P(C = c bar X_1 = v_1, dots, X_n = v_n)$, ci si basa su _cc_ ed _fc_. \
+Per l'inizializzazione si può partire con una distribuzione casuale poi si calcolano i conteggi dai dati. In alternativa si possono considerare conteggi casuali prima di vedere i dati. \
+Si raggiunge la convergenza quando _cc_ e _fc_ cambiano poco in una data iterata. La soglia può essere regolata trovando un compromesso tra accuratezza e velocità. In alternativa si può considerare un numero fissato di iterazioni. \
+Si noti la similarità con K-Means: il passo E assegna gli esempi alle classi mentre il passo M determina quanto viene predetto dalle classi. \
+Un problema tipico è che EM ha pressoché sempre massimi locali e globali multiplis: con qualsiasi permutazione delle etichette delle classi stesse probabilità. Per trovare il massimo globale si possono effettuare più restart e infine scegliere il modello con log-likelihood massima.
+== Apprendimento di Reti Bayesiane
+Una rete bayesiano definisce una distribuzione su un insieme di variabili. Dato che è difficile per un esperto fornire modelli accurati da codificare come rete bayesiana, si può cercare di imparare la rete da dati disponibili. \
+La complessità di tale problema dipende dalla disponibilità di conoscenza a priori sulla struttura e sulle variabili coinvolte e dalla completezza del dataset disponibile. \
+L'_obiettivo_ dell'apprendimento della rete bayesiana varia dal caso più semplice in cui la struttura è nota e tutte le variabili note e osservabili, disponendo di un dataset completo, fino al caso più difficile in cui la struttura non è data, le variabili non siano tutte note e il dataset sia incompleto, ovvero ci siano dati mancanti. \
+L'_obiettivo_ si riduce a imparare, per ogni $X_i$, la distribuzione condizionata $P(X_i bar "gen"(X_i))$. Questo si può vedere come un problema di apprendimento _supervisionato_ con feature-target $X_i$ e feature di input $"gen"(X_i)$. \
+Essendo, solitamente, i genitori in numero limitato ogni probabilità potrà essere appresa separatamente sfruttando gli esempi di training e altra conoscenza a priori comunicata dagli esperti, come ad esempio pseudo-conteggi che migliorano la stima delle probabilità.
+#esempio[
+
+#let vd = $dots.v$
+Tipica istanza del caso semplice (variabili booleane):
+
+  #grid(
+    columns: (auto, auto, auto),
+    column-gutter: 2em,
+    row-gutter: 0.6em,
+    align: (center + horizon, center + horizon, left + horizon),
+    [*Dati*], [*Modello*], [_→ Probabilità_],
+    table(
+      columns: 5,
+      align: center + horizon,
+      inset: (x: 7pt, y: 3pt),
+      stroke: (x, y) => (top: if y == 1 { 0.5pt }),
+      table.header[A][B][C][D][E],
+      [t], [f], [t], [t], [f],
+      [f], [t], [t], [t], [t],
+      [t], [t], [f], [t], [f],
+      vd, vd, vd, vd, vd,
+    ),
+    diagram(
+      node-stroke: 0.5pt,
+      node-shape: circle,
+      spacing: (1.6em, 1.8em),
+      node((0, 0), $A$),
+      node((1, 0), $B$),
+      node((0.5, 1), $E$),
+      node((0, 2), $C$),
+      node((1, 2), $D$),
+      edge((0, 0), (0.5, 1), "->"),
+      edge((1, 0), (0.5, 1), "->"),
+      edge((0.5, 1), (0, 2), "->"),
+      edge((0.5, 1), (1, 2), "->"),
+    ),
+    [
+      $P(A)$ \
+      $P(B)$ \
+      $P(E mid(|) A, B)$ \
+      $P(C mid(|) E)$ \
+      $P(D mid(|) E)$
+    ],
+  )
+
+  Ad esempio, nel determinare $P(E mid(|) A, B)$:
+
+  $
+    P(E = t mid(|) A = t and B = f) = (n_t + c_t) / (n_f + n_t + c_f + c_t)
+  $
+
+  dove:
+
+  - $n_t$ è il numero di casi in cui $E = t and A = t and B = f$ con $c_t >= 0$ pseudo-conteggio corrispondente, noto prima di osservare i dati;
+  - $n_f$ è numero di casi in cui $E = f and A = t and B = f$ con $c_f >= 0$ pseudo-conteggio corrispondente.
+]
+=== Variabili Latenti
+Un caso un po' più difficile è quello in cui il modello contenga anche variabili latenti ossia variabili i cui valori non siano osservabili per nessun esempio. Nella tabella dei dati non ci saranno colonne per tali variabili. Senza queste variabili nel modello aumentano i paraemtri per cui si hanno maggiori rischi di sovradattamento. Ad esempio escludendo la variabile $E$ dal modello precedente occorrerebbe determinare le distribuzioni $P(A), P(B), P(C bar A, B), P(D bar A, B, C)$, passando quindi da 10 a 14 parametri. \
+#esempio[
+
+#let vd = $dots.v$
+BN con $E$ variabile _nascosta_:
+#align(center)[
+	#grid(
+		columns: (auto, auto, auto, auto),
+		column-gutter: 1.5em,
+		row-gutter: 0.6em,
+		align: (center + horizon, center + horizon, center + horizon, left + horizon),
+		[*Modello*], [*Dati*], [], [_Probabilità_],
+		diagram(
+			node-stroke: 0.5pt,
+			node-shape: circle,
+			spacing: (1.6em, 1.8em),
+			node((0, 0), $A$),
+			node((1, 0), $B$),
+			node((0.5, 1), $E$),
+			node((0, 2), $C$),
+			node((1, 2), $D$),
+			edge((0, 0), (0.5, 1), "->"),
+			edge((1, 0), (0.5, 1), "->"),
+			edge((0.5, 1), (0, 2), "->"),
+			edge((0.5, 1), (1, 2), "->"),
+		),
+		table(
+			columns: 4,
+			align: center + horizon,
+			inset: (x: 7pt, y: 3pt),
+			stroke: (x, y) => (top: if y == 1 { 0.5pt }),
+			table.header[_A_][_B_][_C_][_D_],
+			[t], [f], [t], [t],
+			[f], [t], [t], [t],
+			[t], [t], [f], [t],
+			vd, vd, vd, vd,
+		),
+		align(left)[\ \ \ $arrow.r$],
+		[
+			$P(A)$ \
+			$P(B)$ \
+			$P(E mid(|) A, B)$ \
+			$P(C mid(|) E)$ \
+			$P(D mid(|) E)$
+		],
+	)
+]
+L'_obiettivo_ sarà quello di apprendere i parametri del modello, ossia 10 valori di probabilità nelle diverse distribuzioni.
+]
+Per imparare le probabilità di BN con variabili latenti si può usare EM:
+- nel passo E, tramite inferenza probabilistica, per ogni esempio, si deriva la distribuzione delle variabili latenti, date quelle osservate;
+- nel passo M, si deriva le probabilità del modello dei dati estesi, come visto in precedenza.
+#esempio[
+#let vd = $dots.v$
+Continuando il caso precedente:
+#align(center)[
+	#grid(
+		columns: (auto, auto, auto),
+		column-gutter: 2em,
+		align: horizon,
+		table(
+			columns: 6,
+			align: center + horizon,
+inset: (x: 7pt, y: 3pt),
+			stroke: (x, y) => (top: if y == 1 { 0.5pt }),
+			table.header[_A_][_B_][_C_][_D_][_E_][_Cont_],
+			vd, vd, vd, vd, vd, vd,
+			[t], [f], [t], [t], [t], [.71],
+			[t], [f], [t], [t], [f], [.29],
+			[f], [f], [t], [t], [f], [4.2],
+			vd, vd, vd, vd, vd, vd,
+			[f], [t], [t], [t], [f], [2.3],
+		),
+		align(center)[$arrow.l$ E \ M $arrow.r$],
+		align(left)[
+			$P(A)$ \
+			$P(B)$ \
+			$P(E mid(|) A, B)$ \
+			$P(C mid(|) E)$ \
+			$P(D mid(|) E)$
+		],
+	)
+]
+
+- E calcola $P(E mid(|) A, B, C, D)$ per ogni esempio;
+- M impara le probabilità dai dati completi.
+]
+=== Dati Mancanti
+Oltre al caso delle variabili latenti, i dati potrebbero risultare incompleti per altre cause. Ci potrebbero essere valori mancanti per alcune variabili in qualche tupla. \
+Serve cautela nel trattamento di tali esempi: la mancanxas potrebbe non essere casuale ma risultare correlata con il fenomeno d'interesse. \
+Nel caso più semplice vi sono valori mancanti per variabili categoriche senza genitori da interrogare. Per poter interrogare altre variabili, la distribuzione potrebbe essere modellata aggiungendo il valore _missing_ al dominio delle variabili con valori mancanti oppure considerando una variabile indicatrice binaria per ogni valore del dominio della variabile: con 0 a indicare un valore mancante nelle variabili indicatrici.
+#esempio(title: "Fornitura volontaria dei dati personali")[
+Se non si hanno sorelle o fratelli, si tende a non dichiararlo. Inoltre si tende a non menzionare problemi o patologie di cui non si soffre, ad esempio l'ansia. È più facile che si indichino altre problematiche di cui si soffre. \
+Si pensi a un modello di regressione logistica riguardante la _paura di isolamento_ (variabile-target $F$) in dipendenza del fatto di avere sorelle o fratelli (variabile $S$ booleana) e dell'essere ansiosi ansietà (variabile $A$ booleana):
+
+$
+	P(F) = "sigmoide"(w_0 + w_1 dot S_t + w_2 dot S_f + w_3 dot A_t + w_4 dot A_f)
+$
+
+dove $S_t, S_f, A_t, A_f$ sono tutte variabili indicatrici (binarie) con $S_t = 1$ se $S$ è vera, $S_f = 1$ se $S$ è falsa, ed entrambe nulle se il valore è mancante (analogamente per $A_t$ e $A_f$). Il bias $w_0$ rappresenterebbe il valore per il caso di valore mancante per entrambe le variabili $S$ e $A$.
+]
+I casi di dati mancanti non vanno ignorati. Si può ricorrere ai modelli casuali.
+=== Apprendimento della Struttura
+Si supponga di conoscere le variabili della rete da costruire e che nessuna sia latente ma non si conosca la _struttura_, disponendo però di un dataset completo. \
+In tal caso gli approcci principali all'*apprendimento della struttura* sono i seguenti:
+- si definisce la struttura in termini di _indipendenza condizionata_: dato un _ordinamento totale_ delle variabili, occorre determinare i sottoinsiemi $"gen"(dot)$ di predecessori in base a relazioni di _indipendenza condizionata_ quindi occorre prima determinare il _miglior_ ordinamento totale e in seguito verificare l'effettiva indipendenza, il che risulta difficile a causa della limitatezza dei dati disponibili.
+- si conduce una ricerca basata su una misura di _valutazione_ (_score_) delle diverse reti con l'obiettivo di trovare una struttura che minimizzi l'errore, ad esempio usando una misura basata sul criterio MAP, quindi facendo un compromesso tra adattamento ai dati e complessità.
+Assumendo la disponibilità di un dataset di esempi $italic("Es")$ completo, si punta a trovare un modello $m$ che massimizzi:
+$
+  P(m mid(|) italic("Es")) prop P(italic("Es") mid(|) m) dot P(m)
+$
+con $P(E s bar m)$ calcolabile como prodotto delle probabilità per ogni esempio, ulteriormente fattorizzabili in ragione delle distribuzioni di ogni $X_i$ dati i genitori $"par"(X_i, m)$ in $m$:
+$
+P(E s bar m) dot.c P(m) &= (product_(e in E s) P(e bar m)) dot.c P(m) \
+&= (product_(e in E s)product_(X_i) P^(e)_(m) (X_i bar "par"(X_i, m))) dot.c P(m)
+$
+dove $P^(e)_(m)(dot.c)$ distribuzione relativa a $e$ secondo $m$. \
+Passando ai logaritmi si può scrivere:
+$
+  log P(italic("Es") mid(|) m) + log P(m)
+    & = (sum_(e in italic("Es")) sum_(X_i) log P_m^e (X_i mid(|) italic("par")(X_i, m))) + log P(m) \
+    & attach(=, t: (*)) (sum_(e in italic("Es")) sum_(X_i) log P_m^e (X_i mid(|) italic("par")(X_i, m))) + sum_(X_i) log P(m(X_i)) \
+    & = sum_(X_i) (sum_(e in italic("Es")) log P_m^e (X_i mid(|) italic("par")(X_i, m))) + sum_(X_i) log P(m(X_i)) \
+    & = sum_(X_i) (sum_(e in italic("Es")) log P_m^e (X_i mid(|) italic("par")(X_i, m)) + log P(m(X_i)))
+$
+dove in (\*) si assume che si possa fattorizzare $P(m) = product_i P(m(X_i))$ con $m(X_i)$ modello locale per $X_i$. \
+L'obiettivo finale diventa:
+
+in cui ogni variabile può essere ottimizzata separatamente purchè si mantenga la rete aciclica: va trovato un buon ordinamento ttoale sulle variabili tramite ricerca locale o branch-and-bound. Risultano diversi problemi supervisionati indipendenti da risolvere determinando per ogni variabile le distribuzioni $P_(m)^(e) (X_i bar "par"(X_i, m))$ e una possibile approssimazione di $log(P(m(X_i)))$, ad esempio usando il BIC.
+=== Caso Generale
+Se la struttura non è data, alcune variabili sono latenti e vi sono anche dati mancanti ci sono diversi problemi da risolvere: oltre a quello dei dati macanti c'è la complessità computazionale data dalla ricerca in uno spazio circoscritto ma troppo esteso per pensare di testare tutte le combinazioni possibili di ordinamenti e variabili latenti, anche laddove si considerino solo variabili latenti che semplifichino il modello. Lo spazio sarà finito ma è troppo vasto. \
+Possibili soluzioni a tali problemi sono la selezione del miglior modello, ad esempio adottando il criterio MAP oppure effettuare predizioni mediando su tutti i modelli. Questa seconda soluzione fornisce in genere prestazioni migliori ma risultà più difficile da spiegare/giustificare.
