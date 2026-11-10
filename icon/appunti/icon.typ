@@ -5138,3 +5138,227 @@ Data la BN vista precedentemente sui voti, per campionare $P(#text(style: "itali
 - alla fine la stima della probabilità di #text(style: "italic")[Manomissione] sarà la proporzione dei casi `true` nei campioni, generati dopo il periodo di burn-in.
 ]
 La distribuzione dei campioni si avvicina alla distribuzione congiunta reale se non si sono probabilità nulle. La velocità dipende da quella del rimescolamento delle probabilità che a sua volta dipende da quanto esse risultino estreme. In genere il metodo funziona bene per probabilità non estreme.
+= Apprendimento e Incertezza
+== Apprendimento Probabilistico
+Le forme di apprendimento viste possono essere estese con l'uso esplicito del ragionamento probabilistico: i dasti forniscono l'evidenza fattuale sulla quale si può effettuare il condizionamento. Ciò è alla base dell'apprendimento supervisionato e non. \
+Dato il _dataset Es_, per determinare un modello ottimale, $m$, per i dati a disposizione, $E s$, si può utilizzare il _teorema di Bayes_:
+$
+P(m bar E s) = (P(E s bar m) dot.c P(m))/(P(E s))
+$
+ove:
+- $P(E s bar m)$ rappresenta la *verosomiglianza* o _likelihood_ del fatto che _Es_ sia stato generato da $m$: è alta se $m$ fornisce una buona approssimazione della distribuzione dei dati reale;
+- $P(m)$ è la *probabilità a priori* che codifica il _bias di apprendimento_, indicando i modelli più verosimili a priori e può essere usata per la _regolarizzazione_ inducendo a scegliere modelli più semplici attribuendo loro una maggiore probabilità;
+- $P(E s)$, detta *funzione di partizione*, viene usata ai fini della _normalizzazione_.
+==== Selezione dei Modelli
+Nella _selezione_ di un singolo modello, il modello *MAP* (_maximum a posteriori_) è quello che massimizza la probabilità a posteriori, determinabile in base al numeratore
+$
+P(E s bar m) dot.c P(m)
+$
+essendo trascurabile il denominatore in quanto non dipende da $m$. Essa si basa, quindi, sulla verosomiglianza, che misura l'adattamento ai dati, e sulla distribuzione a priori dei modelli, la quale è utile come bias di apprendimento per codificare la preferenza verso modelli più semplici (_rasoio di Occam_). \
+In alternativa, si può puntare a determinare il modello di *massima verosomiglianza (ML)* massimizzando solo
+$
+P(E s bar m)
+$
+Quando lo _spazio dei modelli_ è molto ricco, sorge il problema di avere spesso più di un modello $m$ per cui $P(E s bar m) = 1$; ad esempio tale caso è possibile quando si adottano modelli come gli alberi di decisione: essi possono rappresentare qualunque funzione discreta, quindi anchesovradattarsi ai dati; pertanto anche un modello molto poco probabile a priori non andrebbe escluso: potrebbe essere quello corretto e, se i dati sono sufficienti, risultare anche il migliore. \
+Per la regola di Bayes, se $P(m)$ è uniforme (caso di massima incertezza sui modelli), il modello ML coincide con il modello MAP. Altrimenti conviene preferire _m_ più semplici, adottando distribuzioni a priori che li rendano più probabili, in quanto meno soggetti a _sovradattamento_.
+== Apprendimento Bayesiano
+L'*apprendimento Bayesiano* offre un'_alternativa_ alla scelta di un singolo modello più probabile: si sfruttano le distribuzioni a posteriori di più modelli (ipotesi). \
+Dati gli esempi di training, _Es_, per predire $Y$ per un nuovo esempio $overline(x)$, si deve determinare la probabilità a posteriori:
+$
+P(Y bar overline(x) and E s)
+$
+Lo scopo di un modello è quello di generare esempi. Dato un insieme esaustivo $M$ di modelli disgiunti, si può scrivere (ragionando per casi e sfruttando la definizione della probabilità condizionata):
+$
+P(Y mid(|) overline(x) and E s)
+	&attach(=, t: "casi") sum_(m in M) P(Y and m mid(|) overline(x) and E s) \
+	&attach(=, t: "p.cond") sum_(m in M) P(Y mid(|) m and overline(x) and E s) dot P(m mid(|) overline(x) and E s) \
+	&= sum_(m in M) P(Y mid(|) m and overline(x)) dot P(m mid(|) E s)
+$
+L'ultimo passaggio dipende da due assunzioni sul modello $m$:
++ $m$ racchiude tutte le in formazioni su _Es_ necessarie a una predizione, $P(Y bar m and overline(x) and E s) = P(Y bar m and overline(x))$;
++ $m$ non cambia per un solo nuovo esempio, ossia $P(m bar overline(x) and E s) = P(m bar E s)$.Invece di scegliere il modello migliore, nel *model averaging* si mediano le predizioni di tutti i modelli, ponderando con $P(m bar E s)$:
+$
+P(Y bar overline(x) and E s) = sum_(m in M)P(Y bar m and overline(x)) dot.c underline(P(m bar E s))
+$
+dove $P(m bar E s)$, calcolabile con la regola di Bayes, dipende dalla capacità di generare i dati osservati e dalla probabilità a priori di $m$, mentre $P(E s)$ serve solo alla normalizzazione e risulta difficile da calcolare se $M$ contiene molti modelli, inutile se si deve solo massimizzare il numeratore. \
+Un'assunzione comune è che gli esempi $E s = brace.l e_1, dots, e_k brace.r$ siano *indipendenti e identicamente distribuiti (i.i.d)* dato $m$ ossia che, per ogni coppia di esempi $chevron.l e_i, e_j chevron.r, i != j$, essi siano indipendenti dato $m$. In tal caso si può scrivere:
+$
+P(E s bar m) = product_(i=1)^k P(e_i bar m)
+$
+Nel ragionamento con questa rete si possono applicare metodi di inferenza esatta o approssimata, condizionando su ogni $e_i$ osservato. Tipicamente si fanno interrogazioni su un $e_i$ non osservato, ossia predizioni su esempi non visti oppure anche su $m$.
+=== Appredere Probabilità
+Un possibile _obiettivo_ può essere quello di imparare le probabilità, ossia i parametri di un modello probabilistico in una delle diverse formulazioni possibili.
+#esempio[
+Si considerino dei lanci di una moneta con esito `Testa` o `Croce`. Dato un certo numero di lanci indipendenti si avranno le osservazioni _Es_, nelle quali $n_0$  saranno `Croce` e $n_1$ `Testa`. Detta $phi$ la probabilità di Testa, la likelihood sarà $P(E s bar phi) = phi^(n_1) dot.c (1- phi)^(n_0)$ da cui si può ottener la log-likelihood:
+$
+log(P(E s bar phi)) = n_1 dot.c log(phi) + n_0 dot.c log(1-phi)
+$
+che risulta massima per $phi = (n_1)/(n_0 + n_1)$, valore per cui si ha una minima log-loss.
+]
+Nell'approccio bayesiano si trattano i parametri, $phi$, non come costanti ma come variabili aleatorie a valori reali.
+==== Variabili-obiettivo Binarie
+Si consideri il caso più semplice: variabile _Y_ booleana e nessun input a disposizione. Per tale _Y_, si può considerare $phi$ come variabile su $[0,1]$ tale che $P(Y = "true" bar phi) = phi$e $P(Y = "false" bar phi) = 1 - phi$. Quindi $phi$ determina l'insieme $M$ dei diversi modelli. Gli esemi in _Es_ saranno del tipo $Y = "true"$ o $Y = "false"$. \
+Per $P(phi)$ non c'è alcuna informazione pregressa su $Y$, oltre agli esempi in _Es_. In tal caso i valori sono equiprobabili ossia $phi$ ha una distribuzione uniforme su [0,1]. $P(phi bar E s)$ può essere considerata come l'aggiornamento di $phi$ dopo aver osservato gli esempi in $E s$:
+$
+  P(phi mid(|) E s)
+    attach(=, t: italic("Bayes")) (P(E s mid(|) phi) dot P(phi)) / P(E s)
+    attach(prop, t: italic("i.i.d.")) phi^(n_1) dot (1 - phi)^(n_0) dot P(phi)
+$
+dove $n_0$ è il numero di esempi con $Y = "false"$ e $n_1$ quelli con $Y = "true"$. \
+Sia $phi$ il parametro per la distribuzione di una variabile $Y$ binaria. Si definisce la _distribuzione Beta_ nel modo seguente:
+$
+Beta_(alpha_0, alpha_1) = 1/Z phi^(alpha_1 - 1) dot.c (1-phi)^(alpha_0 - 1)
+$
+ove:
+- i parametri $alpha_0$ e $alpha_1$ sono conteggi iniziali, convenzionalmente si considerano $a_i = n_i + 1 quad i in brace.l 0, 1 brace.r$ e $Z$ è una costante di normalizzazione;
+- la sua _moda_ (valore più probabile) risulta $phi = (a_1 - 1)/(a_0 + a_1 - 2)$
+- il suo _valore atteso_ è $phi = (a_1)/(a_0 + a_1)$, il che giustifica lo _smoothing di Laplace_. \
+Segue una figura che illustra la densità Beta al variare dei parametri.
+#figure(
+image("images/beta.png", width: 70%)
+)
+La distribuzione di $P(phi)$ non è necessariamente uniforme. Tipicamente si ha che: $P(phi) = phi^(c_1 - 1) dot.c (1-phi)^(c_0 - 1)$, come nel caso in cui si considerino $c_1$ _pseudo-esempi_ con $Y = "true"$, e $c_0$ con $Y = "false"$. \
+Quindi, la distribuzione a posteriori è
+$
+P(phi bar E s) prop phi^(c_1 + n_1 - 1) dot.c (1-phi)^(c_0 + n_0 - 1)
+$
+ossia mantiene la stessa forma di quella a priori. La stima MAP per $phi$ è:
+$
+hat(phi)_(M A P) = (c_1 + n_1 - 1)/(c_0 + n_0 + c_1 + n_1 - 2)
+$
+e il valore atteso è:
+$
+E[phi] = (c_1 + n_1)/(c_0 + n_0 + c_1 + n_1)
+$
+In caso si disponesse solo delle statistiche $n_0$ e $n_1$, queste possono corrispondere a sequenze diverse di esempi e si rocrre alla distrubuzione binomiale.
+==== Variabili-obiettivo Categoriche
+Nel caso di $Y$ categorica, parametro con $k$ valori, si considera la _distribuzione Dirichlet_, un'estensione della Beta a più dimensioni:
+
+$
+  "Dirichlet"_(alpha_1, dots, alpha_k) (p_1, dots, p_k) = 1/Z product_(j=1)^k p_j^(alpha_j - 1)
+$
+
+dove gli $alpha_j >= 0$ sono i conteggi iniziali dei diversi valori $j = 1, dots, k$, e si considera in genere $alpha_j = n_i + 1$ come un conteggio, $p_j$ è la probabilità del $j$-esimo valore ($Y = y_j$) e $Z$ è la costante di normalizzazione. Il _valore atteso_ per il risultato $i$-esimo (mediando su tutti i $p_j$) sarà $alpha_i \/ sum_j alpha_j$, con gli $alpha_j$ tutti non-negativi e non tutti nulli. \
+Per predire un valore per $Y$, partendo da _pseudo-conteggi_ $c_j > 0$ per ogni $y_j$ (invece che da una distribuzione a priori uniforme) ottenuti prima di osservare dati (ossia $forall j : n_j = 0$) considerata una Dirichlet anche quella a posteriori sarà Dirichlet e avendo osservato poi $n_j$ esempi con $Y = y_j$, la probabilità di $Y$ può essere stimata usando il _valore atteso_:
+
+$
+  P(Y = y_j) = (c_j + n_j) / (sum_h c_h + n_h)
+$
+
+Si noti che con pseudo-conteggi tutti unitari si ottiene il cosiddetto _smoothing di Laplace_.
+==== Opinioni degli esperti
+Gli pseudo-conteggi si possono ottenere _integrando_ l'opinione di esperti con i dati a disposizione. Questa integrazione comporta le seguenti problematiche:
+
+- la difficoltà nel dare _valori esatti_ di probabilità non modificabili nel seguito;
+- la rappresentazione dell'incertezza associata a una _stima_ della probabilità;
+- la _combinazione_ di stime fatte da più esperti;
+- l'_integrazione_ tra _opinione_ degli esperti e _dati_ effettivi.
+
+Una possibile _soluzione_ è quella in cui le probabilità (numeri reali) provengano da conteggi (interi): invece di una stima di $P(A)$, l'esperto si limiterà a fornire $chevron.l n_A, m chevron.r$, ossia il numero $n_A$ occorrenze di un dato risultato $A$ sulle $m$ prove effettuate, una stima (non sempre credibile) delle _dimensioni_ dei dati su cui fonda il parere.
+=== Classificatori Probabilistici
+Un *classificatore Bayesiano* è un modello probabilistico di classificazione per il quale la distribuzione _a posteriori_ viene calcolata mediante la regola di Bayes. \
+L'idea di fondo è che la _classe_ influenzi / predica i valori delle feature di input per le istanze che vi appartengono: gli esempi sono raggruppati in classi perché hanno valori comuni delle feature, per cui apprendendo le _dipendenze_ delle feature dalla classe, si userà il modello risultante per predire la classificazione di nuove istanze. \
+Nel classificatore *Naive Bayes* (NB) si fa l'assunzione di _indipendenza condizionata_ reciproca tra le feature $X_i$ nota la classe $Y$. Questo caso può essere descritto da una semplice rete bayesiana con un nodo genitore relativo alla classe e nodi figli per ciascuna delle feature di input $X_i$ (si veda la figura nel seguente esempio). Tale rete richiede la specifica delle distribuzioni $P(Y)$ per $Y$ e $P(X_i mid(|) Y)$ per ogni $X_i$. Per predire la classe per un nuovo esempio si dovrà calcolare $P(Y mid(|) italic("Xs"))$, condizionando sui suoi valori osservati delle diverse $X_i$. \
+Nel caso di più variabili-obiettivo $Y_j$ si possono apprendere di modelli separati.
+$
+  P(Y mid(|) X_1 = v_1, dots, X_k = v_k)
+    & attach(=, t: "Bayes")
+    (P(X_1 = v_1, dots, X_k = v_k mid(|) Y) dot P(Y)) / P(X_1 = v_1, dots, X_k = v_k) \
+    & attach(=, t: "indip.")
+    (P(X_1 = v_1 mid(|) Y) dot dots dot P(X_k = v_k mid(|) Y) dot P(Y)) / P(X_1 = v_1, dots, X_k = v_k) \
+    & =
+    (P(Y) dot product_(i=1)^k P(X_i = v_i mid(|) Y)) / (sum_Y P(Y and (X_1 = v_1, dots, X_k = v_k))) \
+    & attach(=, t: "p.cong.+indip.")
+    (P(Y) dot product_(i=1)^k P(X_i = v_i mid(|) Y)) / (sum_Y P(Y) dot product_(i=1)^k P(X_i = v_i mid(|) Y))
+$
+Si noti come il denominatore funga da costante di normalizzazione. \
+Il modello NB è capace di trattare anche esempi con *dati mancanti* ossia con valori non osservati per alcune $X_i$: si condiziona sulle feature osservate, facendo un'assunzione detta MAR, _Missing at Random_. Il NB risulta ottimale con $X_i$ univa feature osservata: al crescere del numero di $X_i$ osservate, l'accuratezza delle predizioni dipende dalla reciproca indipendenza delle $X_i$ data $Y$. \
+Nel caso in cui $Y$ sia booleana e siano $X_i$ tutte osservate si ha un modello simile a quello di _regressione logistica (RegLog)_. Essi fanno le stesse predizioni quando per $X_i$ il peso è $omega_i = log[P(X_i bar h) \/ P(X_i bar not h)]$. La differenza sta nel fatto che RegLog usa la DG per minimizzare la log-loss, quindi ha il punto debole di non essere non applicabile in caso di valori mancanti, mentre NB apprende i parametri della stima MAP, valida anche in caso di valori mancanti, ma con il punto debole dell'assunzione di indipendenza condizionata tra $X_i$ data $Y$, spesso non giustificata. \
+Per apprendere un classificatore, ossia la distribuzione a posteriori $P(Y bar overline(x))$, serve determinare dai dati le distribuzioni $P(Y)$ e $P(X_i bar Y)$ per ogni $i$. La stima di $P(X_i bar Y)$ costituisce un sotto-problema di apprendimento, uno per ogni valore di $Y$. \
+Una soluzione semplice è quello data dalla stima ML nella quale si deve calcolare $P(X_i = x bar Y = y)$ come proporizione empirica osservata nei dati di training, il rapporto tra numero dei casi in cui $X_i = x_i and Y = y$ e quello dei casi in cui $Y = y$. \
+Casi di _probabilità nulle_ possono avere effetti indesiderati. Alcune feature diventano _molto predittive_: con un solo valore nullo si potrebbe escludere un'intera categoria, ma un insieme finito di dati potrebbe essere insufficiente a fornire l'evidenza necessaria per supportare una tale conclusione. Alcune combinazioni di osservazioni possono risultare impossibili: nel classificatore si avrebbe una divisione per zero. Il problema nasce dall'uso delle frequenze empiriche come stime di probabilità. Vi si può ovviare incorporando pseudo-conteggi da scegliere accuratamente. \
+In conclusione un classificatore NB risulta spesso efficace. Funziona bene quando l'assunzione di indipendenza è appropriata nel caso in esame. \
+Il modello NB può essere ampliato ammettendo estensioni in cui alcune $X_i$ possano essere anche in nodi-genitori, mentre le altre rimangono figlie di $Y$: la probabilità della classificazione ati i genitori può essere rappresentata attraverso alberi di decisioni, funzioni lineari compresse oppure reti neurali. \
+In altre estensioni sono ammesse figlie di $Y$ non necessariamente indipendenti:
+- *Tree Augmented Naive-Bayes (TAN)* _network_: oltre alla classe possono avere un solo altro genitore (purchè il grafo resti aciclico), un modello semplice ed efficiente delle dipendenze tra $X_i$;
+- *Latent Tree*: prevede uan struttura più complessa della $Y$, decomponibile in un numero di _variabili latenti_ connesse ad albero, tale che ogni variabile osservata figlia di una variabile latente; si avrà così un modello della dipendenza tra variabili osservate.
+=== Apprendimento MAP di Alberi di Decisione
+Nell'apprendimento degli alberi di decisione serve un bias che tipicamente andrà a favorire alberi più piccoli e può essere imposto attraverso la scelta della distribuzione a priori. \
+Più alberi potranno adattarsi perfettamente ai dati, a meno di _rumore_. Ad esempio, se fra gli esempi di addestramento alcuni presentassero gli stessi valori delle $X_i$ ma valori diversi per la $Y$ oppure valori mancanti per qualche $X_i$, per ogni _assegnazione non osservata_, si possono adattare perfettamente all'insieme di training alberi che potranno fornire predizioni discordanti su esempi non visti. In tali casi, nessuno degli alberi che si adattano perfettamente al training set potrà risultare ottimale. Questa pùo essere conseguenza del _No Free Lunch Theorem_ per il quale modelli apparentemente efficaci possono sempre rivelarsi peggiori su problemi ovvero dataset diversi. Conviene quindi tenere in considerazione anche alberi che si adattino meno perfettamente ai dati, sfruttando anche la _distribuzione a priori_ dei modelli.
+=== Lunghezza delle Descrizioni
+In base al criterio MAP, si deve massimizzare $P(E s bar m) dot.c P(m)$. Passando ai logaritmi e negando, la funzione da ottimizzare risulta:
+$
+(-log_2(P(E s bar m))) + (-log_2(P(m)))
+$
+Questo obiettivo trova corrispondenza con la _Teoria dell'informazione_, in particolare con il criterio della *minima lunghezza di descrizione* (_minimum description length, MDL_): vanno preferiti i modelli che minimizzano la somma precedente dove, $-log_2(P(E s bar m))$ rappresenta il numero di bit per descrivere i dati _Es_, in base a $m$, e $-log_2(P(m))$ è il numero di bit per descrivere $m$. Il _bit_ è un'unità di misura che accomuna probabilità e complessità del modello. \
+Si può interpretare il modello ottimale per il criterio MDL come il più efficiente per la codifica e trasmissione dei dati: prima va comunicato il modello $m$ e poi anche i dati, in termini di $m$. Essendo la funzione $log$ monotona, il modello MAP coincide con quiello MDL. \
+La definizione esatta di una codifica ottimale risulta in genere difficile: spesso si ricorre a una misura approssimata della complessità del modello. \
+Si possono considerare:
+- $abs(t)$, il numero di _parametri probabilistici_: per un albero $abs(t) =$ numero delle foglie; per una funzione lineare o una rete neurale $abs(t)=$ numero di parametri numerici;
+- $abs(E s)$, numero dei esempi: ci sono al più $abs(E s) + 1$ diverse probabilità da distinguere nel modello quindi servono $log_2(abs(E s) + 1) approx log_2(abs(E s))$ bit.
+Come approssimaszione della misura da minimizzare si può usare un indice detto *BIC* (_Bayesian information criterion_):
+$
+-log_2(P(E s bar m)) + abs(m) dot.c log_2(abs(E s))
+$
+== Apprendimento non Supervisionato
+Nell'*apprendimento non supervisionato* il training set non contiene valori per la feature-obiettivo. Si cercano o costruiscono pattern nei dati. \
+Ci sono diversi compiti di tipo non superivisionato. Un _obiettivo_ può essere quello di costruire una classificazione naturale dei dati. Ciò sign ifica che la feature-obiettivo può essere considerata come variabile _latente_ (i suoi valori non sono osservati). \
+Il metodo generale per ricostruire i valori della classificazione naturale è il *clustering*. Si partizionano gli esempi in *cluster*, le classi naturali, in modo tale che ogni cluster predica i valori delle feature per gli esempi in esso contenuti. Per ogni partizionamento dei dati si può calcolare il relativo _errore di predizione_, quindi si deve trovare il clustering migliore minimizzando tale errore. \
+Si distinguono l'*hard clustering* in cui ogni esempio viene assegnato a un cluster preciso e il *soft clustering* che calcola una distribuzione di appartenenza degli esempi ai cluster: la predizione dei valori delle feature di un esempio si può ottenere come _media ponderata_ delle predizioni per cluster, pesata attraverso la distribuzione trovata.
+=== Hard Clustering
+*K-Means* è un classico algoritmo per l'hard clustering. Esso richiede in input le istanze di training e il numero $k$ di cluster da cercare. Nel seguito si assumerà che il dominio di ogni feature sia _numerico_, ossia con differenze tra valori significative. L'algortimo produce come output i $k$ cluster, ovvero una funzione per l'assegnazione delle istanze ai cluster. A ogni cluster è associato un indice intero $c in brace.l 1, dots, k brace.r$. Ogni cluster sarà rappresentato da un vettore medio, o _prototipo_ del cluster, che conterrà la predizione del valore di ogni feature. \
+Dato l'insieme di training _Es_ con istanze descritte dalle feature $X_1, dots, X_n$, si indicherà con $X_j(e)$ il valore osservato di $X_j$ per l'istanza $e in E s$: si assume che tali valori siano osservati direttamente. \
+Essenzialmente K-Means costruisce una funzione $"cluster": E s -> brace.l 1, dots, k brace.r$ tale che $"cluster"(e) = c$ indica che $e$ appartiene al cluster di indice $c$. Per fare questo si basa su una funzione $"pred"(j, c)$ che restituisce il valore di $X_j$ per il cluster di indice $c$: $"pred"(j, c)$ sarà il valore di $X_j$ predetto per ogni sua istanza. Si noti che uno stesso valore viene predetto per ogni $e$ del suo cluster quindi, il valore di $X_j$ per il prototipo del suo clusetr sarà $"pred"(j, "cluster"(e))$. \
+L'obiettivo dell'algoritmo è quindi quello di trovare cluster e pred ottimali, ossia che minimizzano la somma delle *loss*:
+$
+sum_(e in E s)sum_(j=1)^n ["pred"(j, "cluster"(e)) - X_j(e)]^2
+$
+La predizione per un cluster verrà calcolata come media delle predizioni delle sue istanze. \
+Una soluzione ottimale ottenuta da una ricerca tra tute le possibili assegnazioni delle istanze ai $k$ cluster che minimizzano l'errore è NP-hard, proponibile solo in caso di pochi esempi. Con molte istanze, invece, ci saranno moltissime $k$-partizioni possibili e una ricerca esaustiva non risulta praticabile. \
+L'algoritmo K-Means è capace, iterativamente, di abbassare via via la loss quadratica per trovare un punto di minimo. Esso può essere schematizzato come segue:
+- Inializzare casualmente le assegnazioni delle istanze ai cluster;
+- Ripeter fino a un'assegnazione stabile:
+	1. Per ogni feature $X_j$ e ogni cluster $c$, definire $"pred"(j, c)$ con il valore medio di $X_j(e)$ per ogni $e$ nel cluster $c$:
+	$
+	"pred"(j, c) <- (1)/(abs(brace.l e : "cluster"(e) = c brace.r))(sum_(e: "cluster(e)"=c)X_j(e))
+	$
+	2. Ridefinire _cluster_ riassegnando ogni istanza $e$ al cluster di indice $c$ che minimizzi la loss:
+	$
+	sum_(j=1)^n ["pred"(j, c) - X_j(e)]^2
+	$
+L'algoritmo converge quando nno si hanno cambiamenti nelle assegnazioni.
+#algoritmo(title: [k-Means])[
+  #pseudocode-list[
+    + *procedure* $"k-means"(X s, E s, k)$
+    + *Input*
+      + $X s$ insieme di feature, $X s = \{X_1, dots, X_n\}$
+      + $E s$ insieme di istanze di training
+      + $k$ numero di cluster
+    + *Output*
+      + $"cluster"$: funzione dalle istanze ai cluster
+      + $"pred"$: funzione dalle coppie feature-cluster ai valori delle feature per i cluster
+    + *Local*
+      + $"integer" c c[c], c c'[c]$ #text(fill: rgb("558B2F"), style: "italic")[{ contatori per il cluster $c$ }]
+      + $"real" f s[j, c], f s'[j, c]$ #text(fill: rgb("558B2F"), style: "italic")[{ somme valori di $X_j$ per il cluster $c$ }]
+      + $"Boolean" "stabile"$
+    + Inizializzare $f s$ e $c c$ in base ai dati o casualmente
+    + *define* $"pred"[j, c] = f s[j, c] / c c[c]$ #text(fill: rgb("558B2F"), style: "italic")[{ stima di $"pred"(j, c)$ }]
+    + *define* $"cluster"[e] = "arg" min_(c in \{1, dots, k\}) sum_(j=1)^n ("pred"[j, c] - X_j(e))^2$
+    + *repeat*
+      + azzerare $f s'$ e $c c'$
+      + *for each* $e in E s$ *do*
+        + $c <- "cluster"[e]$
+        + $c c'[c] <- c c'[c] + 1$
+        + *for each* $X_j in X s$ *do*
+          + $f s'[j, c] <- f s'[j, c] + X_j(e)$
+      + $"stabile" <- (f s' = f s) and (c c' = c c)$
+      + $f s <- f s'$
+      + $c c <- c c'$
+    + *until* $"stabile"$
+    + *return* $"cluster", "pred"$
+  ]
+] <alg:kmeans>
+Esso converge verso un minimi locale stabile: l'errore tende a ridursi mentre c'è solo un numero finito di possibili riassegnazioni. Spesso bastano poche iterate. \
+Le statistiche sufficienti a calcolare la media di ogni cluster sono $c c[c]$, il numero di esempi nel cluster $c$, e $f s[j, c]$, la frequenza del valore $X_j(e)$ per gli esempi nel cluster $c$; per calcolare $"pred"(j, c)$, stima più recente di $"pred"(j, c)$ in $"cluster"(e)$, si usano i valori correnti di _fs_ e _cc_ per determinare i successivi, _fs'_ e _cc'_. \
+Nell'inizializzazione l'assegnazione casuale degli esempi ai cluster si possono selezionare a caso $k$ esempi come prototipi dei cluster oppure si possono calcolare le statistiche sufficienti iniziali su pochi esempi, evitando così un passaggio sull'intero dataset. \
+Si raggiunge la stabilità del partizionam,ento quando le assegnazioni di _cluster_ e quindi _fs_ e _cc_, non cambiano: ciò richiede che _argmin_ si comporti in modo coerente per ogni esempio nei casi in cui più di un cluster minimizzi l'errore.
