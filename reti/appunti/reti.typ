@@ -1683,3 +1683,121 @@ Analizziamo tecniche per rilevare gli errori nei dati trasmessi:
 - *tecniche di checksum*, solitamente utilizzato nel livello di trasporto;
 - *controllo a ridondanza ciclica* (_cyclic redundancy check_), in genere impiegato dalle schede di rete a livello di collegamento.
 === Controllo di parità
+La forma più semplice di rilevamento degli errori è quella che utilizza un unico *bit di parità*. Supponiamo che le informazioni da inviare, $D$, siano costituite da _d_ bit. In uno schema di parità pari, il mittente include un bit addizionale e sceglie il suo valore in modo da rendere pari il numero totale di bit 1 nei $d + 1$ bit trasmessi. Nello schema di parità dispari, il valore del bit di parità è scelto in modo che ci sia un numero dispari di bit 1. \
+La seguente figura mostra uno schema di parità pari.
+#let bracket(body) = grid.cell(
+  stroke: (top: 0.5pt, left: 0.5pt, right: 0.5pt),
+  inset: 0pt,
+  box(height: 0.5em),
+)
+
+#align(center)[
+  #grid(
+    columns: (auto, auto),
+    column-gutter: 0pt,
+    row-gutter: 3pt,
+    align: center + bottom,
+    // labels
+    [$d$ bit di dati], [Bit \ di parità],
+    // brackets
+    bracket[], bracket[],
+    // bits
+    grid.cell(stroke: 0.5pt, inset: 8pt)[`0111000110101011`],
+    grid.cell(stroke: 0.5pt, inset: 8pt)[`1`],
+  )
+
+  #v(0.8em)
+  Parità pari a un bit.
+]
+Con un solo bit di parità ciò che il ricevente deve fare è contare il numero di bit a 1 tra quelli ricevuti. Se trova un numero dispari di bit 1, sa che si è verificato almeno un errore in un bit. \
+Dobbiamo capire cosa accade se si verifica un numero pari di errori nei bit. In questo caso ci troveremmo in presenza di un errore non rilevato. Se la probabilità di errori nei bit è bassa e si può assumere che gli errori siano indipendenti, l'eventualità di errori multipli in un pacchetto è estremamente ridotta e un solo bit di parità potrebbe risultare sufficiente. Tuttavia, è stato rilevato che gli errori tendono generalmente a verificarsi a gruppi di bit consecutivi (_burst_) piuttosto che in modo indipendente. La probabilità che non vengano rilevati errori a burst in un frame protetto da un solo bit di parità può avvicinarsi al 50%. Quindi, occorre adottare una strategia più efficiente per la rilevazione degli errori. \
+Consideriamo una semplice generalizzazione del bit di parità. La seguente figura illustra una generalizzazione bidimensi9onale dello schema di parità con un bit.
+#figure(
+image("images/par_bi.png", width: 70%),
+caption: [Parità pari bidimensionale]
+)
+In questo caso, i _d_ bit del dato _D_ sono suddivisi in _i_ righe e _j_ colonne per ognuna delle quali è stato calcolato un valore di parità. I risultanti $i + j + 1$ bit di parità contengono bit per la rilevazione dell'errore nei frame a livello di collegamento. \
+Supponiamo ora che si verifichi un solo errore nei _d_ bit originali. Con questo schema di *parità bidimensionale* i bit di parità della colonna e della riga contenenti il bit errato individueranno l'errore. Il ricevente può quindi non solo rilevare che si è verificato un errore, ma può utilizzare gli indici di colonna e di riga per identificare il bit alterato e correggerlo. \
+Questo schema può rilevare (ma non correggere) qualsiasi combinazione di due errori in un pacchetto. \
+La capacità del ricevente sia di rilevare sia di correggere gli errori è conosciuta come *forward error correction* (FEC, _correzione degli errori in avanti_). Le tecniche FEC sono molto utili perchè possono diminuire il numero di ritrasmissioni, ma è più importante il fatto che permettono al ricevente l'immediata correzione degli errori.
+=== Checksum
+Nelle tecniche che utilizzano il checksum i _d_ bit di dati sono trattati come una sequenza di numeri interi da _k_ bit. Un semplice metodo per eseguire il checksum è quello di sommare questi interi da _k_ bit e usare i bit del risultato come bit per la rilevazione degli errori. Il *checksum di Internet*  si basa su questo approccio: i dsati sono trattati come interi di 16 bit e sommati. Il complemento a 1 di questo somma costituisce il checksum di Internet che viene trasposto nell'intestazione dei segmenti. Il ricevente controla il checksum calcolando il complemento a 1 della somma dei dati ricevuti e verifica che tutti i bit del risultato siano 0. Se non è così, viene segnalato un errore. Nei protocolli TCP e UDP il checksum è calcolato per tutti i campi. In IP il checksum è calcolato solo sull'intestazione. \
+I metodi checksum richiedono informazioni addizionali nel pacchetto relativamente piccole, ma forniscono una prevenzione dagli errori piuttosto limitata in confronto alle tecniche di controllo a ridondanza ciclica (CRC) utilizzate nel livello di collegamento. Quindi bisogna capire perchè a livello di trasporto venga utilizzato il checksum e a livello di collegamento il CRC. Il livello di trasporto è esegutio dal software del sistema operativo dell'host. Dato che la rilevazione degli errori a livello di trasporto è implementata come software, risulta fondamentale poter disporre di schemi di rilevazione di errori semplici e veloci. D'altro lato, la rilevazione di errori a livello di collegamento è implementata, mediante hardware dedicato, nelle schede di rete che  possono effettuare più radidamente le complesse operazioni di CRC.
+=== Controllo a ridondanza ciclica (CRC)
+Una tecnica di rilevazione dell'errore largamente utilizzata nella più recenti reti di calcolatori è basata sui *codici di controllo a ridondanza ciclica* (CRC, _cyclic redundancy check_). I codici CRC sono anche detti *codici polinomiali*, in quanto è possibile vedere la stringa di bit da tramsettere come un polinomio i cui coefficienti sono i bit della stringa, con le operazioni sulla stringa di bit interpretate come aritmetica polinomiale. \
+Considerimao _d_ bit costituenti i dati _D_ da trasmettere e supponiamo che sorgente e destinazione si siano accordate su una stringa di $r + 1$ bit, conosciuta come *generatore*, che indicheremo con _G_. \
+È necessario che il bit più significativo di _G_ sia 1. L'idea alla base del codice CRC è illustrata nella seguente figura.
+#let bracket(body) = grid.cell(
+  stroke: (top: 0.5pt, left: 0.5pt, right: 0.5pt),
+  inset: 0pt,
+  box(height: 0.5em),
+)
+
+#align(center)[
+  #grid(
+    columns: (auto, auto, auto),
+    column-gutter: (2pt, 1.5em),
+    row-gutter: 5pt,
+    align: (center + bottom, center + bottom, left + horizon),
+    // etichette
+    [$d$ bit], [$r$ bit], [],
+
+    // parentesi
+    bracket[], bracket[], [],
+
+    // blocchi grigi
+    grid.cell(fill: luma(230), inset: 10pt)[$D$: bit di dati da spedire],
+    grid.cell(fill: luma(230), inset: 10pt)[$R$: bit CRC],
+    [Sequenza di bit],
+
+    // formula
+    grid.cell(colspan: 2, align: center)[$D dot 2^r " XOR " R$],
+    [Formula matematica]
+  )
+]
+Dato un bloco di dati, _D_, il mittente sceglierà _r_ bit addizionali, _R_, e li unirà a _D_ in modo da ottenere una stringa di $d + r$ bit che, interpretata come numero binario, sia esattamente divisibile per $G$. Il processo di controllo del CRC è semplice: se la divisione $(d+r)/G$ ha un resto diverso da 0, il ricevente sa che si è verificato un errore; altrimenti i dati sono accettati come corretti. \
+Tutti i calcoli di CRC sono eseguiti in artimetica modulo 2 senza riporti nelle addizioni e prestiti nelle sottrazioni. Questo significa che addizione e sottrazione sono operazioni identiche e che entrambe equivalgono a un'operazione di XOR sui bit degli operandi. Per esempio:
+$ 1011 " XOR " 0101 &= 1110 \
+  1001 " XOR " 1101 &= 0100 $
+o analogamente
+$ 1011  - 0101 &= 1110 \
+  1001 - 1101 &= 0100 $
+Moltiplicaziuoni e divisioni sono eseguite come in base 2, ma sottrazioni e addizioni non hanno riporti. Come nall normale aritmetica binaria, la moltiplicazione di una striga per $2^k$ corrisponde allo slittamento a sinistra della stringa di $k$ posizioni. Quindi, dati _R_ e _D_, la quantià $D times 2^r "XOR" R$ fornisce come risultato la stringa di $d+r$ bit. \
+Vediamo come il trasmittente calcola $R$ e vogliamo trovare $R$ in modo che esista un valore di $n$ tale che
+$
+D times 2^r "XOR" R = n G
+$
+Vale a dire, vogliamo scegliere $R$ in modo che $G$ sia divisibile per $D times 2^r "XOR" R$ senza resto. Se eseguiamo l'operazione di XOR di R con entrambi i membri dell'espressione otteniamo
+$
+D times 2^r = n G  "XOR" R
+$
+Quest'espressione ci mostra che se dividiamo $D times 2^r$ per $G$, il valore del resto è precisamente $R$. In altre parole possiamo calcolare $R$ come
+$
+R = "resto di" ((D times 2^r)/G)
+$
+La seguente figura illustra questo calcolo per $D = 101110, d=6, G=1001, r=3$.
+#figure(
+	image("images/crc.png", width: 70%),
+	caption: [Esempio di calcolo di CRC]
+)
+I nove bit trasmessi in questo caso sono 101110011. \
+Sono stati definiti dei generatori standard di 8, 12, 16 e 32 bit. \
+CRC può rilevare errori a burst inferiori a $r + 1$ bit: ovvero tutti gli errori consecutivi di non oltre $r$ bit saranno rilevati. Inoltre, la probabilità di avere un burst più lungo di $r + 1$ bit è $1 - 0.5^r$. Inoltre, il CRC può rilevare qualsiasi numero dispari di errori nei bit.
+== Collegamenti e protocolli di accesso multiplo
+Abbiamo detto che esistono due tipi di collegamento di rete: punto a punto e broadcast. Il *collegamento punto a punto* è costituito da un trasmittente a un'estremità del collegamento e da un unico ricevente all'altra. Molti protocolli del livello di collegamento sono stati progettati per questi collegamenti, tra cui PPP (_point-to-point protocol_) e HDLC (_high-level data link control_). Il *collegamento broadcast* può avere più nodi trasmittenti e riceventi connessi allo stesso canale broadcast condiviso. Il termine broadcast indica che, quando un nood trasmette un frame, il canale lo diffonde e tutti gli altri nodi ne ricevono una copia. Ethernet e Wireless LAN sono esempi di tecnlogie con collegamenti broadcast. \
+Analizziamo il *problema dell'accesso multiplo*, ovvero come coordinare l'accesso di più nodi trasmittenti e riceventi in un canale broadcast condiviso. \
+I nodi su un canale broadcast possono sia trasmettere che ricevere. Le reti usano i cosiddetti *protocolli di accesso multiplo* che fissano le modalità con cui i nodi regolano le loro trasmissioni sul canale condiviso. Anche se, ciascun nodo accede al canale broadcast attraverso la propria scheda di rete, useremo il termine nodo per indicare il dispositivo che trasmette e riceve. \
+Dato che tutti i nodi sono in grado di trasmettere frame, può accadere che due o più lo facciano nello stesso istante. In tal caso tutti i nodi ricevono contemporaneamente più frame. Tra questi si genera una *collisione* a causa della quale nessuno dei nodi riceventi riuscirà a interpretare i frame che, in un certo senso, risultano ingarbugliati fra loro. Di conseguenza con la collisione si verifica una perdita di frame, mentre il canale rimane inutilizzato. \
+Per far sì che il canale broadcast venga utilizzato in modo efficiente occorre coordinare le trassmissioni dei nodi attivi. \
+Possiamo classifcare i protocolli di accesso multiplo in una di queste categorie: *protocolli a suddivisione del canale* (_channel partitioning protocol_), *protocolli ad accesso casuale* (_random access protocol_) e *protocolli a rotazione* (_taking-turn protocol_). \
+Un protocollo di accesso multiplo per un canale broadcast con velocità di $R$ bit al secondo dovrebbe avere le seguenti caratteristiche:
++ Quando un solo nodo deve inviare dati, questo dispone di un throughput pari a $R$ bps.
++ Quando $M$ nodi devono inviare dati, questi dispongono di un throughput pari a $R/M$ bps.
++ Il protocollo è decentralizzato; in altre parole non ci sono nodi principali che, qualora non funzionassero correttamente, potrebbero bloccare l'intero sistema.
++ Il protocollo è semplice, in modo che risulti economico da implementare.
+=== Protocolli a suddivisione del canale
+Il multiplexing a divisione di tempo, TDM (_time-division multiplexing_) e quello a divisione di frequenza, FDM (_frequency division multiplexing_), sono due tecniche che possono essere utilizzate per suddividere la larghezza di banda di un canale broadcast fra i nodi che lo condividono. Supponiamo che il canale supporti $N$ nodi e che la sua velocità di trasmissione sia di $R$ bps. TDM suddivide il tempo in *intervalli di tempo* (_time frame_) e poi divide ciascun intervallo di tempo in $N$ *slot temporali* (_time slot_). Ogni slot è quindi assegnato a uno degli $N$ nodi. Ogni volta che un nodo ha un frame da inviare, trasmette i bit del frame durante lo slot di tempo assegnatogli. Generalmente, le dimensioni dello slot sono stabilite in modo da consentire la trasmissione di un singolo frame. \
+TDM viene utilizzato in quanto riesce a evitare le collisioni ed è perfettamente imparziale: ciascun nodo ottiene, durante ciascun intervallo di tempo, un trasso trasmissivo di $R / N$ bps. In ogni caso, TDM presenta due specifici inconvenienti. Quando non vi sono altri nodi che devono inviare un pacchetto, quello che vuole trasmettere è vincolato ad attendere il suo turno nella sequenza di trasmissione e a non superare il limite medio di $R/N$ bps. \
+Mentre TDM suddivide il canale condiviso in intervalli di tempo, FDM lo divide in frequenze differenti e assegna ciascuna frequenza a un nodo. Quindi, a partire da una canale da $R$ bps, FDM crea $N$ canali di $R/N$ bps. FDM condivide alcuni vantaggi e svantaggi del precedente protocollo. Anche FDM evita le collisioni e divide equamente la larghezza di banda tra gli $N$ nodi. Tuttavia, anche con FDM la larghezza di banda è limitata a $R/N$, pure quando vi è un solo nodo che ha un pacchetto da spedire. \
+Un terzo protocollo è l'*accesso multiplo a divisione di codice* (CDMA, _code division multiple access_). Mentre TDM e FDM assegnano rispettivamente ai nodi slot di tempo e di frequenze, CDMA assegna loro un *codice*. Ciascun nodo, utilizza il proprio codice univoco per codificare i dati inviati. Se i codici sono scelti accuratamente, le reti CDMA consentiranno a nodi differenti di trasmettere simultaneamnte e ai rispettivi destinatari di ricevere correttamente i bit dei dati codificati nonostante le interferenze derivanti dalle trasmissioni degli altri nodi.
+=== Protocolli ad accesso casuale
