@@ -1998,3 +1998,84 @@ La figura mostra che i dispositivi IP R5 e R6 sono connessi attraverso un'infras
 Gli algoritmi di instradamento sono stati estesi per effettuare il flooding di queste informazioni ai router abilitati MPLS. \
 I vantaggi di MPLS riguardano la capacità di gestione del traffico, oltre che del miglioramento della velocità di commutazione. Abbiamo detto che R4 ha due percorsi verso A. Se l'invio viene eseguito a livello IP sulla base degli indirizzi IP, il protocollo di instradamento IP vorrebbe specificare solo il percorso più breve verso A. Pertanto, MPLS consente l'invio di pacchetti lungo percorso che non potrebbero essere utilizzati con i protocolli di instradamento IP standard. Questa è una semplice forma di *ingegneria del traffico*, in cui l'operatore di rete può ignorare il normale instradamento IP e fare in mdoo che parte del traffico indirizzato verso una data destinazione sia smistato su percorsi differenti. \
 MPLS risulta utile anche per altri scopi. Ad esempio per implementare una rapida ricostruzione dei percorsi di invio MPLS, cioè per reindirizzare il traffico su un percorso alternativo pre-calcolato in risposta al malfunzionamento di un collegamento. Infine, MPLS può essere utilizzato per implementare le *reti private virutali* (VPN, _virtual private network_). Nell'implementare le VPN per un cliente, un ISP utilizza la propria rete MPLS per connettere tra loro le reti dei client. Viene usato per isolare le risorse e l'indirizzamento delle reti VPN dei client da quelle degli altri utenti che utilizzano la rete del provider.
+= Sicurezza di rete
+== Introduzione alla sicurezza di rete
+Le proprietà di una *comunicazione sicura* sono le seguenti.
+- _Confidenzialità_. Solo il trasmittente e il ricevitore devono essere in grado di capire i contenuti dei messaggi trasmessi. Dato che gli \"origliatori\" potrebbero intercettare il messaggio, questo richiede che il messaggio venga in qualche modo *criptato* in modo tale da renderlo illeggile all'intruso.
+- _Integrità del messaggio_. Il trasmittente e il ricevitore vogliono essere sicuro che il contenuto della loro comunicazione non sia stato alterato.
+- _Autenticazione end-to-end_. Sia il trasmettente sia il ricevitore devono essere in grado di confermare l'identità dell'altra parte coinvolta nella comunicazione, per confermare che l'altra parte è ciò che afferma di essere.
+- _Sicurezza operativa_. Quasi tutte le organizzazioni hanno reti che sono connesse ad Internet pubblico. Queste reti, quindi, potrebbero essere compromesse. Gli aggressori possono tentare di depositare worm negli host della rete, ottenere segreti aziendali, mappare le configurazioni della rete interna e lanciare attacchi DoS.
+Durante una comunicazione, un intruso potrebbe compiere i seguenti attacchi.
+- _intercettazione_: rilevamento e registrazione dei messaggi di controllo e dati sul canale;
+- _modifica, inserimento_ o _eliminazione_ di messaggi o dei contenuti di un messaggio.
+== Principi di crittografia
+Le tecniche di crittografia consentono al trasmittente di trasformare i dati in modo tale da renderli illeggibili all'intruso. Il ricevente, d'altra parte, deve essere in grado di recuperare i dati originali dai dati trasformati. \
+Un messaggio del tipo \"_Ciao Bob_\" è noto come *testo in chiaro*. Il trasmittente cripta il testo in chiaro usando un *algoritmo di crittografia*, così che il messaggio crittografato, noto come *testo cifrato* o *ciphertext*, è illeggibile all'intruso. Nella crittografia moderna, la tecnica crittografica utilizza per crittografare i messaggi è nota e standardizzata, e per questo ci deve essere qualche informazione segreta che vieta all'intruso di decifrare i messaggi. L'informazione segreta è costituita dalle chiavi. Consideriamo la seguente figura:
+#figure(
+image("images/crypto.png", width: 70%),
+caption: [Componenti crittografici]
+) <fig:crypto>
+Nella figura, Alice fornisce una *chiave*, $K_A$, una stringa composta da numeri o caratteri, come input dell'algoritmo crittografico. L'algoritmo prende la chiave e il testo in chiaro, _m_, come in input e produce un testo cifrato come output. La notazione $K_A(m)$ si riferisce al testo cifrato dal testo in chiaro _m_. In modo simile, Bob fornisce una chiave, $K_B$, all'*algoritmo di decrittazione* che prende il testo cifrato e la chiave di Bob come input e produce il testo in chiaro originale come output. Quindi, se Bob riceve un messaggio $K_A(m)$, lo decripa calcolando $K_B(K_A(m)) = m$. Nei *sistemi crittografici a chiave simettrica*, le chiavi di Alice e Bob sono identiche e segrete. Nei *sistemi crittografici a chiave pubblica*, viene usata una coppia di chiavi, una pubblica e una privata. La chiave pubblica è nota a chiunque, mentre la chiave privata è nota solo a Bob o Alice.
+=== Crittografia a chiave simettrica
+Un vecchio sistema crittografico a chiave simettrica è il *cifrario di Cesare*. Il cifrario di Cesare sostituisce ogni lettera nel testo in chiaro con $k$ lettere dopo nellá lfabeto. Ad esempio, se $k=3$, allora la lettera _a_ diventa la lettera _d_ nel testo cifrato; la _b_ diventa la _e_ e così via. Quindi, il valore di $k$ è la chiave. Questo algoritmo è molto debole, in quanto la chiave potrà assumere al massimo 25 valori differenti. \
+Un miglioramento del cifrario di Cesare è il *cifrario monoalfabetico*, che sostiuisce sempre una lettera dell'alfabeto con un'altra lettera dell'alfabeto. Ma, al posto di sostituirle secondo un prefissato valore, ogni lettera può essere sostituita con ogni altra lettera, affinchè quella lettera abbia un'unica lettera sostituta, e vice versa. Questo algoritmo è migliore del cifrario di Cesare in quanto ci sono $26!$ possibili coppie di lettere. Un approccio brute force per provare tutte le possibili $10^(26)$ coppie richiederebbe troppo lavoro. Per questo, si esegue un'analisi statistica del testo in chiaro, ad esempio, sapendo che le lettere _e_ e _t_ sono le più usate nel testo in inglese, e sapendo che in parola da 2/3 lettere appaiono spesso insieme è relativamente semplice decifrare questo codice. \
+I possibili attacchi che possono verificarsi sono i seguenti.
+- _Ciphertext-only attack_. In alcuni casi, l'aggressore può avere accesso al testo cifrato intercettato, senza alcuna informazione relativa ai contenuti del testo in chiaro. Abbiamo visto come l'analisi statistica può aiutare in un attacco di questo tipo.
+- _Known-plaintext attack_. Se l'aggressore sa che nel testo cifrato compaiono determinate parole del testo in chiaro, come _bob_ e _alice_, allora l'aggressore può determinare le coppie per le lettere _a, l, i, c, e, b_ e _o_. Quindi quando l'aggressore conosce alcuine coppie (testo in chiaro, testo cifrato), allora questo è un tipo di *known-plaintext attack*.
+- _Chosen-plaintext attack_. In un attacco di questo tipo, l'aggressore è in grado di scegliere il messagio del testo in chiaro e ottenere il corrispettivo testo cifrato. Ad esempio, se l'aggressore riesce a far trasmettere dal trasmittente un dato messaggio, allora l'aggressore può rompere completamente lo schema di cifratura.
+Una versione migliorata del cifrario monoalfabetico è il *cifrario polialfabetico*. L'idea di questo algoritmo è quello di usare molteplici cifrari monoalfabetici, con unio specifico cifrario monoalfabetico per cifrare una lettera in una specifica posizione del testo in chiaro. Però, la stessa lettera presente in differenti posizioni nel testo in chiaro, potrebbero essere cifrate diversamente.
+==== Cifrari a blocchi
+Analizziamo i moderni algoritmi a chiave simettrica. I cifrari a blocchi vengono usati in molti protocolli Internet sicuri, includendo PGP (per email sicure), TLS (per avere connessioni TCP sicure) e IPsec (per il trasporto sicuro a livello di rete). \
+In un cifrario a blocchi, il messaggio da cifrare è processato in blocchi di _k_ bit. Ad esempio, se $k = 64$, allora il messaggio viene diviso in blocchi da 64 bit, e ogni blocco viene cifrato indipendentemente. Per cifrare un blocco, il cifrario usa un mapping uno-ad-uno per mappare i blocchi di *k* bit del testo in chiaro in blocchi di $k$ bit del testo cifrato. \
+#esempio[
+Supponiamo $k=3$, in modo tale che il cifrario possa mappare 3 bit del testo in chiaro in 3 bit del testo cifrato. Una possibile mappatura è la seguente:
+#let rows = (
+  ("000", "110", "100", "011"),
+  ("001", "111", "101", "010"),
+  ("010", "101", "110", "000"),
+  ("011", "100", "111", "001"),
+)
+
+#align(center)[
+  #table(
+    columns: 4,
+    align: center + horizon,
+    inset: (x: 2em, y: 5pt),
+    // horizontal line above every row, no vertical lines
+    stroke: (x, y) => (top: 0.5pt),
+    table.header([input], [output], [input], [output]),
+    ..rows.flatten().map(v => [#v]),
+    table.hline(),
+  )
+]
+Ad esempio il messaggio 010110001111 viene cifrato in 101000111001. \
+Notiamo che questa mappatura è solo una fra le tante possibili. Ci sono $2^3$ input possibili che possono essere permutati in $8! = 40.320$ modi differenti. Notiamo, quindi, che con blocchi da 64 bit le possibili permutazioni sono tante e non è possibile decifrarlo mediante un attacco brute force.
+]
+I cifrari a blocchi usano funzioni per simulare randomicamente tabelle di permutazione. Un esempio di funzione per $k=64$ è mostrata nella seguente figura.
+#figure(
+image("images/block,.png", width: 70%),
+caption: [Un esempio di cifrario a blocchi]
+)
+La funzione divide i blocchi da 64 in 8 blocchi da 8 bit, che sono di grandezza gestibile. Dopodichè gli 8 blocchi vengono poi riassemblati in un unico blocco da 64 bit. La posizione dei 64 bit vengono poi permutato per produrre un output da 64 bit. Quest'output viene poi dato in input e inizia un altro ciclo. Dopo $n$ cicli, la funzione fornisce un blocco da 64 bit di testo cifrato. \
+Ci sono diversi cifrari a blocchi, come DES (_Data Encryption Standard_), 3DES e AES (_Advanced Encryption Standard_). Ognuno di questi utilizza una funzione, e non tabelle predeterminate. Ognuno di questi algoritmi, inoltre, utilizza una stringa di bit per la chiave. Ad esempio, DES usa blocchi da 64 bit con una chiave di 56 bit. AES usa blocchi da 128 bit e può operare con chiavi che sono lunghe 128, 192 e 256 bit. \
+Per eseguire un attacco brute force su questi algoritmi, bisognerebbe ciclare tra tutte le chiavi, applicare l'algoritmo di decrittazione con ogni chiave. Con una chiave lunga $n$, ci sono $2^n$ chiavi possibili. Applicando un attacco simile ad una chiave di 128 bit dell'algoritmo AES ci vorrebbero 149 trilioni di anni.
+==== Catena di blocchi di cifratura
+In applicazioni di rete, c'è il bisogno di cifrare lunghi messaggi o lunghi stream di dati. Se usassimo un cifrario a blocchi si potrebbe incorrere in un problema. Per analizzarlo, osserviamo che due o più blocchi di testo in chiaro possono essere identici. Per blocchi identici, un cifrario a blochi, produrrebbe lo stesso testo cifrato. Un aggressore potrebbe indovinare il testo in chiaro quando vede dei blocchi di testo cifrato identici e potrebbe anche essere in grado di decifrare l'intero messaggio. \
+Per affrontare questo problema, mischiamo la casualità nel testo cifrato in modo che blocchi identici del testo in chiaro producano blocchi di testo cifrato differenti. Sia $m(i)$ l'$i$-esimo blocco di testo in chiaro, $c(i)$ l'$i$-esimo blocco di testo cifrato, e $a xor b$ denota lo XOR tra le stringhe _a_ e _b_. \
+Inoltre, denotiamo l'algoritmo di cifratura a blocchi con chiave $S$ come $K_S$. L'idea è la seguente. Il trasmittente crea un numero randomico di $k$ bit $r(i)$ per l'$i$-esimo blocco e calcola $c(i) = K_S(m(i) xor r(i))$. Il ricevente riceve $c(i)$ ed $r(i)$, e può recupare ogni blocco del testo in chiaro calcolando $m(i) = K_S(c(i) xor r(i))$. È bene notare che, nonostante $r(i)$ venga trasmesso in chiaro, l'aggressore non può ottenere il testo in chiaro, in quanto non conosce la chiave $K_S$. \
+Introducendo la casualità abbiamo risolto un problema, ma ne è stato creato un altro. Supponiamo che il trasmittente deve inviare il doppio dei bit che ha inviato nella comunicazione preceden te. Per ogni bit del testo cifrato, il trasmittente deve inviare anche uin bit randomico, raddoppiano l'ampiezza di banda richiesta. Per risolvere questo problema i cifrari a blocchi utilizzano uta tenica chiamata *catena di blocchi di cifratura (CBC)*. L'idea è quella di inviare un valore randoming insieme al primo messagio, e dopodichè il trasmittente e il ricevente usano i blocchi calcolati al posto dei numeri randomici. L'algoritmo CBC performa i seguenti passi:
++ Prima di cifrare il messaggio, il trasmittente genera una stringa di $k$ bit randomica, chiamata *Inizilization Vector (IV)*, che viene denotato con $c(0)$. L'inizialization vector viene inviato al ricevente in chiaro.
++ Per il primo blocco, il trasmittente calcola $m(1) xor c(0)$. Dopo utilizza l'algoritmo di cifratura a blocchi sul blocco calcolato  per ottenere il corrispettivo blocco di cifratura, ovvero: $c(1) = K_S(m(1) xor c(0))$. Il trasmittente invia questo blocco al ricevente.
++ Per l'$i$-esimo blocco, il trasmittente genera l'$i$-esimo blocco di cifratura come $c(i) = K_S(m(i) xor c(i - 1))$.
+Il ricevente può calcolare il testo in chiaro come segue $m(i) = s(i) xor c(i - 1)$, ove $s(i) = m(i) xor c(i - 1)$. Se due blocchi di testo in chiaro sono identici, i corrispettivi blocchi di cifratura sono quasi sempre diversi. Inoltre, anche se IV viene trasmesso in chiaro, l'aggressore non sarà in grado di decriptare il messaggio, in quanto non è a conoscenza della chiave segreta $S$.
+=== Crittografia a chiave pubblica
+Un problema degli algortimi di crittografia a chiave simmetrica è che le due parti della comunicazione devono in qualche modo accordarsi sulla chiave segreta condivisa. Per questo è stato inventato un algoritmo che permette alle due parti della comunicazione di comunicare cifrando i messaggi senza avere una chiave segreta condivisa nota in partenza. Questo algoritmo è noto come *Diffie-Hellman Key Exchange*. \
+L'uso della crittografia a chiave pubblica è abbastanza semplice. Supponiamo che Alice vuole comunicare con Bob. Come mostrato nella seguente figura, Bob ha due chiave, una *pubblica* accessibile da chiunque e una *privata* nota solo a Bob. Le due chiavi verranno indicate con $K_B^+$ e $K_B^-$ per denotare la chiave pubblica e privata, rispettivamente.
+#figure(
+	image("images/public_key.png", width: 70%),
+	caption: [Crittografia a chiave pubblica]
+)
+Per comunicare con Bob, Alice recupera la chiave pubblica di Bob, cifra il messaggio utilizzando la chiave pubblica di Bob e un algoritmo di cifratura noto. Quindi Alice calcola $K_B^+ (m)$. Bob riceve il messaggio cifrato di Alice e utilizza la sua chiave primata e un algoritmo di decrittazione noto per decriptare il messaggio di Alice. Bob, quindi, calcola $K_B^- (K_B^+ (m)))$. \
+Considerando che la chiave pubblica di Bob è pubblica, chiunque può inviare un messaggio cifrato a Bob, inclusa Alice o qualcuno che pretende di essere Alice. In questo schema di cifratura il ricevente non è a conoscenza di chi gli ha inviato il messaggio.
+==== RSA
+
