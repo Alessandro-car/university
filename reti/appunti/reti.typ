@@ -2078,4 +2078,160 @@ L'uso della crittografia a chiave pubblica è abbastanza semplice. Supponiamo ch
 Per comunicare con Bob, Alice recupera la chiave pubblica di Bob, cifra il messaggio utilizzando la chiave pubblica di Bob e un algoritmo di cifratura noto. Quindi Alice calcola $K_B^+ (m)$. Bob riceve il messaggio cifrato di Alice e utilizza la sua chiave primata e un algoritmo di decrittazione noto per decriptare il messaggio di Alice. Bob, quindi, calcola $K_B^- (K_B^+ (m)))$. \
 Considerando che la chiave pubblica di Bob è pubblica, chiunque può inviare un messaggio cifrato a Bob, inclusa Alice o qualcuno che pretende di essere Alice. In questo schema di cifratura il ricevente non è a conoscenza di chi gli ha inviato il messaggio.
 ==== RSA
+L'*algoritmo RSA* è diventato quasi un sinonimo della crittografia a chiave pubblica. RSA fa un uso estensivo di aritmetica modulare, quindi, analizziamola brevemente. Ricordiamo che $x mod n$ denota il resto di $x$ quando diviso per $n$. Nell'aritmetica modulare, si eseguono le usuali operazioni di addizioni, multiplicazioni ed esponenziali. Però, il risultato di ogni operazione viene sostituito dal reto intero che è rimasto quando il risultato viene diviso per $n$. Addizionare e moltiplicare con l'aritmetica modulare è facilitato con i seguenti fatti utili:
+$
+[(a mod n) + (b mod n)] mod n &= (a + b) mod n \
+[(a mod n) - (b mod n)] mod n &= (a - b) mod n \
+[(a mod n) dot.c (b mod n)] &= (a dot.c b) mod n
+$
+Dal terzo fatto segue che $(a mod n)^d mod n = a^d mod n$, che è un'identità che si rivelerà molto utile. \
+Ci sono due componenti connesse ad RSA:
++ La scelta della chiave pubblica e privata;
++ L'algoritmo di crittografia e decrittografia.
+Per generare la chiavi RSA pubbliche e private, Bob deve seguire i seguenti passi.
++ Scegliere due numeri primi, $p$ e $q$, molto grandi. Più grandi sono i valori, più difficile sarà per l'agressore decifrare il messaggio, ma ci vorrà più tempo per eseguire le operazioni di codifica e decodifica. È raccomandato usare una dimensione di $p$ e $q$ pari a 1024 bit.
++ Calcolare $n = p q$ e $z = (p - 1)(q - 1)$
++ SCegliere un numero, $e$, più piccolo di $n$, che non ha alcun fattore comune (a parte 1) con $z$. La lettera $e$ viene usata in quanto questo valore verrà usato nel processo di codifica.
++ Trovare un numero, $d$, tale che $e d - 1$ è esattamente divisibile per $z$. La lettera $d$ è usata perchè questo valore viene usata nel processo di decodifica. Possiamo scegliere $d$ tale che $ e d mod z = 1 $
++ La chiave pubblic che Bob rende disponibile è la coppia dei numeri $(n, e)$; e la chiave privata è formata dalla coppia $(n, d)$
+La codifica, che viene calcolata da Alice, viene eseguita seguendo i seguenti passi.
+- Supponiamo che Alice vuole inviare a Bob un pattern di bit rappresentato dal numero intero $m$ (ove $m < n$). Per codificarlo, Alice calcola l'esponenziale $m^e$, e dopo calcola il resato intero di $m^e$ diviso per $n$. Quindi Alice calcola il seguente valore $ c = m^e mod n $
+- Per decodificare il messaggio codificato ricevuto, Bob calco9la $ m = c^d mod n $ utilizzando la sua chiave privata $(n, d)$.
+==== Chiavi di sessione
+I calcoli esponenziali richiesti da RSA sono dei calcoli che consumano tempo. Pertanto, RSA viene usato in combinazione con la crittografia a chiave simettrica. Ad esempio, se Alice vuole inviare a Bob una grande quantità di dati crittografati, potrebbe farlo nel seguente modo. Innanzitutto, Alice sceglie una chiave che verrà usata per codificare i dati. Questa chiave viene detta *chiave di sessione*, e viene denotata con $K_S$. Alice deve informare Bob della chiave di sessione, in quanto è la chiave simmetrica condivisa che verrà usata dall'algoritmo di crittografia a chiave simmetrica. Alice codifica il messaggio utilizzando la chiave pubblica di Bob, quindi, calcola $c = (K_S)^e mod n$. Bob riceve la chiave di sessione crittografata, e la decodifica per ottenere la chiave di sessione, $K_S$. Bob adesso è a conoscenza della chiave di sessione che Alice userà per crittografare i dati che deve inviare.
+== VEDERE SE SI FA Successo dell'algoritmo RSA
+La sicurezza dell'algoritmo RSA si basa sul fatto che non esistono algoritmi noti per fattorizzare velocemente un numero, in questo caso $n$, nei due numeri primi $p$ e $q$. Se qualcuno è a conoscenza dei valori $p$ e $q$, allora dato il valore pubblico $e$, il valore segreto $d$ è facilmente calcolabile. D'altro canto, non è noto se esistono o meno algoritmi veloci per fattorizzare un numero, per questo la sicurezza dell'algoritmo RSA non è garantita.
+== Integrità dei messaggi e firme digitali
+Definiremo il problema dell'integrità dei messaggi utilizzando, nuovamente, Alice e Bob. Supponiamo che Bob riceve un messaggio e crede che sia stato invato da Alice. Per autenticare questo messaggio, Bob deve verificare:
++ Il messaggio è stato originato da Alice.
++ Il messaggio non è stato manomesso mentre arrivava a Bob.
+=== Funzioni hash crittografiche
+Una funzione hash prende un input, $m$, e calcola una sringa di dimensione fissa, $H(m)$, nota come *hash*. Una *funzione hash crittografica* deve avere la seguente proprietà:
+- è computazionalmente infattibile trovare due messaggi diversi $x$ e $y$ tali che $H(x) = H(y)$
+Informalmente, questa proprietà stabilisce che è computazionalmente infattibile per l'aggressore sostituire un messaggio con un altro messaggio che è protetto dalla funzione di hash. Quindi, se $(m, H(m))$ sono il messaggio e l'hash del messaggio creato dal trasmittente, allora l'aggrossere non può falsificare i contenuti di un altro messaggio, $y$, che ha lo stesso valore hash del messaggio originale. \
+Un esempio di applicazione hash è mostrato nella seguente figura.
+#figure(
+image("images/hash.png", width: 70%),
+caption: [Funzione hash]
+)
+Un semplice checksum, come il checksum di Internet, potrebbe creare unas semplice funzione hash crittografica. Piuttosto che calcolare il complemento a uno, calcoliamo il checksum trattando ogni carattere come un byte e aggiungiamo i byte insieme usando blocchi di 4 byte alla volta. Un esempio è mostrato nella seguente figura:
+#align(center)[
+  #grid(
+    columns: (auto, auto, auto),
+    column-gutter: 3em,
+    row-gutter: 0.5em,
+    align: (left + horizon, center + horizon, left + horizon),
+    [], [ASCII \ Representation], [],
+    // message and hex values, one row of three lines each
+    [
+      #set text(font: "DejaVu Sans Mono", size: 9pt)
+      Message \
+      I O U 1 \
+      0 0 . 9 \
+      9 B O B
+    ],
+    [
+      #set text(font: "DejaVu Sans Mono", size: 9pt)
+      49#h(1em)4F#h(1em)55#h(1em)31 \
+      30#h(1em)30#h(1em)2E#h(1em)39 \
+      39#h(1em)42#h(1em)4F#h(1em)42
+    ],
+    [],
+    // checksum row, with a line above the hex values
+    [],
+    [
+      #set text(font: "DejaVu Sans Mono", size: 9pt)
+      #line(length: 100%, stroke: 0.5pt)
+      B2#h(1em)C1#h(1em)D2#h(1em)AC
+    ],
+    [Checksum],
+  )
+]
+Cambiando leggermente il messaggio otteniamo il seguente risultato:
+#align(center)[
+  #grid(
+    columns: (auto, auto, auto),
+    column-gutter: 3em,
+    row-gutter: 0.5em,
+    align: (left + horizon, center + horizon, left + horizon),
+    [], [ASCII \ Representation], [],
+    // message and hex values, one row of three lines each
+    [
+      #set text(font: "DejaVu Sans Mono", size: 9pt)
+      Message \
+      I O U 9 \
+      0 0 . 1 \
+      9 B O B
+    ],
+    [
+      #set text(font: "DejaVu Sans Mono", size: 9pt)
+      49#h(1em)4F#h(1em)55#h(1em)39 \
+      30#h(1em)30#h(1em)2E#h(1em)31 \
+      39#h(1em)42#h(1em)4F#h(1em)42
+    ],
+    [],
+    // checksum row, with a line above the hex values
+    [],
+    [
+      #set text(font: "DejaVu Sans Mono", size: 9pt)
+      #line(length: 100%, stroke: 0.5pt)
+      B2#h(1em)C1#h(1em)D2#h(1em)AC
+    ],
+    [Checksum],
+  )
+]
+Notiamo, quindi che due messaggi differenti hanno stesso checksum. Quindi, questo semplice algoritmo viola la proprietà richiesta da una funzione di hash crittografica. \
+L'algoritmo di hash più usato è l'algoritmo MD5. Questo algoritmo calcola un'hash da 128 bit in un processo formato da 4 passi che consiste in:
++ uno step di padding: aggiungere un \"uno\" seguito da un numero sufficiente di zeri affinchè la lunghezza del messaggio soddisfi determinate condizioni;
++ uno step di append: l'aggiunta in coda una rappresentazione di 64 bit del messaggio prima di effettuare il padding;
++ l'inizializzazione di un accumulatore;
++ una fase ciclica finale in cui blocchi da 16 parole del messaggio vengono mescolato in quattro passaggi, detti _round_.
+Il secondo algoritmo di hash maggiormente usato è il *Secure Hash Algorithm (SHA-1)*. Questo algoritmo sui basa su principi simili a quelli usati nell'algoritmo MD4, predecessore di MD5. SHA-1 è richiesto ogni qualvolta una funzione di hash crittografica è richiesta per applicazioni federali, in quanto SHA-1 è uno standard federale US. SHA-1 produce un messaggio digest di 160 bit. Più grande è l'output, maggiore sarà la sicurezza di questo algoritmo.
+=== Codice di autenticazione dei messaggi
+Dopo aver spiegato le funzioni hash, vediamo come possiamo ottenere l'integrità dei messaggi:
++ Alice crea un messaggio $m$ e calcola il rispettivo hash $H(m)$.
++ Alice aggiunge in coda $H(m)$ al messaggio $m$, creando un messaggio esteso $(m, H(m))$, e invia questo messaggio a Bob.
++ Bob riceve un messaggio esteso $(m, h)$ e calcola $H(m)$. Se $H(m) = h$, allora Bob può concludere che la comunicazione è andata a buon fine.
+Questo approccio è imperfetto. Un aggressore può creare un messaggio falso $m'$ dove dice che è Alice, calcola $H(m')$, e invia a Bob $(m', H(m'))$. Quando Bob riceve il messaggio, tutto corrisponde al passo 3, quindi Bob non sospetta che qualcosa sia andato storto. \
+Per raggiungere l'integrità del messaggio, in aggiunta all'utilizzo di funzioni hash crittografiche, Alice e Bob hanno bisogno di un segreto condiviso $s$. Questo segreto condiviso è chiamato *chiave di autenticazione*. Utilizzando questo segreto, l'integrità del messaggio può essere ottenuta nei seguenti passaggi.
++ Alice crea un messaggio $m$, concatena $s$ con $m$ creando $m + s$, e calcola $H(m + s)$. $H(m + s)$ è chiamato *codice di autenticazione dei messaggi* (*MAC*, _message authentication code_).
++ Alice concatena il MAC al messaggio $m$, creando un messaggio esteso $(m, H(m + s))$, e invia questo messaggio a Bob.
++ Bob riceve il messaggio esteso $(m, h)$ e conoscendo $s$, calcola il MAC. Se $H(m + s) = h$, allora Bob può concludere che la comunicazione è andata a buon fine.
+Una caratteristica del codice MAC è che non richiede un algoritmo crittografico. Utilizzando questo codice, le entità possono autenticare i messaggi che si inviano tra loro senza integrare complessi algoritmi crittografici. \
+Sono stati proposti diversi standard per i codici MAC. Il più famoso è *HMAC*, che può essere usato sia con MD5 o con SHA-1. HMAC gestisce effettivamente i dati e la chiave di autenticazione attraverso la funzione hash due volte. \
+Rimane ancora un problema importante, ovvero come distribuire la chiave di autenticazione segreta alle entità coinvolte nella comunicazione. Un amministratore di rete potrebbe risolvere questo problema visitando fisicamente ogni router, oppure, se ogni router ha la propria chiave pubblica, l'amministratore di rete può distribuire la chiave di autenticazione ad ogni router crittografandola con la chiave pubblic del router e inviando la chiave crittografata sulla rete.
+=== Firme digitali
+La firma su un documento attesta che colui che ha firmato ha preso atto ed è d'accordo con il contenuto del documento. In un mondo digitale, si desidera spesso indicare il proprietario o il creatore di un documento, oppure esprimere il proprio consenso al contenuto di un documento. Una *firma digitale* è una tecnica crittografica per raggiungere questi obiettivi in un mondo digitale. La firma digitale dovrebbe essere eseguita in modo da risultare verificabile e non falsificabile. Ciò significa che deve essere possibile dimostrare che un documento firmato da tale individuo sia stato effettivamente firmato da tale individuo e che solo quell'individuo possa aver firmato il documento. \
+Vediamo ora come si può progettare una firma digitale. Quando Bob firma un messaggio, deve apporre sul messaggio qualcosa che sia univoco per lui. Bob potrebbe pensare di allegare un MAC per la firma, in cui il MAC viene creato accodando la sua chiave al messaggio e calcolandone poi l'hash. Tuttavia, affinchè Alice possa verificare la firma, deve possedere anch'essa una copia della chiave, e quindi la chiave non sarebbe più univoca. \
+La crittografia a chiave pubblica è un'ottima candidata per fornire firme digitali. Supponiamo che Bob voglia firmare digitalmente un documento, $m$. Possiamo pensare al documento come ad un file o un messaggio che Bob sta per inviare e firmare. \
+Per firmare questo documento, Bob utilizza semplicemente la sua chiave privata, $K_B^-$, per calcolare $K_B^- (m)$. Supponiamo, ora, che Alice possieda $m$ e $K_B^- (m)$. Alice prende la chiave pubblica di Bob, $K_B^+ (m)$, e la applica alla firma digitale, $K_B^- (m)$, associata al documento, $m$. Ovvero, calcola $K_B^+ (K_B^- (m))$ e ottiene $m$, che corrisponde esattamente al documento originale. Alice sostiene quindi che solo Bob possa aver firmato il documento per i seguenti motivi:
+- chiunque abbia firmato il messaggio deve aver utilizzato la chiave privata per calcolare la firma, in modo tale che $K_B^+ (K_B^- (m)) = m$.
+- L'unica persone che poteva conoscere la chiave privata è Bob. Si noti che ciò presuppone, tuttavia, che Bob non abbia ceduto $K_B^-$ a nessuno, né che qualcuno abbia rubato $K_B^-$ a Bob.
+Se il messaggio viene modificato in un messaggio $m'$, la firma che Bob crea per $m$ non sarà valida per $m'$, in qaunto $K_B^+ (K_B^- (m)) != m'$. Inoltre, notiamo che le firme digitali forniscono anche l'integrità del messaggio, in quanto consentono al ricente di verificare che il messaggio non è stato alterato. \
+Una preoccupazione nel firmare i dati tramite crittografia sono i costi computazionali. Un approccio più efficiente è quello di introdurre le funzioni hash nelle firme digitali. Utilizzando una funzione hash, Bob firma l'hash del messaggio e non il messaggio in sè, quindi Bob calcola $K_B^- (H(m))$. Dato che $H(m)$ è più piccolo del messaggio originale, il costo computazionale è ridotto. Il processo di firma di un documento è mostrato nella seguente figura:
+#figure(
+image("images/firma_digitale.png", width: 70%),
+caption: [Inviare un messaggio firmato digitalmente]
+)
+Il processo di verifica invece è il seguente:
+#figure(
+image("images/verifica_firma.png", width: 70%),
+caption: [Verificare un messaggio firmato]
+)
+==== Certificazione della chiave pubblica
+Un'importante applicazione delle firme digitali è la *certificazione della chiave pubblica*, che certifica che una data chiave appartiene ad una specifica entità. La certificazione della chiave pubblica viene usata in molti protocolli di rete sicuri, come IPsec e TLS. \
+Associare una chiave pubblica ad una particolare entità è un compito che viene svolto da un'*autorità di certificazione* (*CA*, _Certification Authority_), il cui compito è quello di validare l'identità e assegnare i certificati. Una CA ha i seguenti ruoli.
++ Verifica che un'entità è chi dice di essere. Non ci sono procedure obbligatorie su come la certificazione debba essere fatta. Quando si ha a che fare con una CA bisogna fidarsi del fatto che questa abbia eseguito una verifica dell'identità sufficientemente rigorosa. D'altro canto, si potrebbe essere più disposti a fidarsi di una CA che fa parte di un programma federale o statale. Ci si può anche fidare dell'identità associata a una chiave pubblica solo nella misura in cui si può fidare di una CA e delle sue tecniche di verifica dell'identità.
++ Una volta che la CA verifica l'identità dell'entità, crea un *certificato* che associa la chive pubblica dell'entità all'identità. Il certificato contiene la chiave publica and un'informazione univoca identificante riguardo il proprietario della chiave pubblica. Questo certificato è firmato digitalmente dalla CA.
+La ITU (_International Telecommunication Union_) e la IETF hanno sviluppato degli standard per le CA.
+== Autenticazione end-to-end
+L'*autenticazione degli endpoint* è il processo mediante il quale un'entità dimostra la propria identità a un'altra entità su una rete di calcolatori, ad esempio un utente che dimostra la propria identità a un server di posta elettronica. \
+Nell'autenticazione via rete, le entità coinvolte nella comunicazione non possono confidare su informazioni biometriche. L'autenticazione via rete deve essere ottenuta eclusivamente sulla base dei messaggi e dei dati scambiati come parte di un *protocollo di autenticazione*. Tipicamente, un protocollo di autenticazione viene eseguto prima che le entità coinvolte nella comunicazione eseguano qualche altro protocollo. Il protocollo di autenticazione stabilisce innanzitutto le identità delle parti in modo reciprocamente soddisfacente; sopo dopo l'autenticazione le parti passano all'attività vera e propria. \
+Ci sono diverse versioni del protocollo di autenticazione, denominato con *ap* (_authentication protocol_). \
+Supponiamo che Alice si deve identificare a Bob. \
+Il più semplice protocollo di autenticazione che si può immaginare è quello dove Alice semplicemnte invia a Bob un messaggio nel quale dice che è Alice. La falla in questo protocollo è ovviamente che Bob non può sapere effettivamente se la persona che sta inviando il messaggio è veramente Alice.
+=== VEDERE SE SI FANNO LE DIFFERENTI VERSIONI DEL PROTOCOLLO AP
+== Sicurezza dell'e-mail
+È possibile fornire servizi di sicurezza nei primi 4 livelli (a partire dall'alto) della stack di protocolli di Internet. Quando un servizio di sicurezza viene fornito per uno specifico protocollo a livello di applicazione, l'applicazione che usa tale protocollo godrà di uno o più servizi, come confidenzialità, autenticazione o integrità. Quando la sicurezza viene fornita per protocollo a livello di trasporto, le applicazioni che usano tale protocollo godranno dei servizi di sciurezza di quel protocollo di trasporto. Quando i servizi vengono forniti ai protocolli a livello di rete, tutti i segmenti a livello di trasporto godranno dei servizi di sicurezza del livello di rete. Quando la sicurezza viene fornita a livello di collegamento, i dati nei frame che viaggiano sul collegamento riceveranno i servizi di sicurezza offerti dal collegamento.
+=== E-Mail sicure
 
