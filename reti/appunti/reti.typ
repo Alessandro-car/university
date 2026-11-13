@@ -2534,7 +2534,8 @@ Un amministratore di rete configura il firewall in base alla policy dell'organiz
   ),
 )
 
-#table(
+#figure(
+table(
   columns: (1fr, 1fr),
   align: left + horizon,
   inset: (x: 8pt, y: 5pt),
@@ -2544,6 +2545,7 @@ Un amministratore di rete configura il firewall in base alla policy dell'organiz
   ..rows.flatten(),
   table.hline(),
 )
+)<table:trad_firewall>
 Una policy di filtraggio può basarsi su una combinazione di indirizzi e numeri di porta. Ad esempio un router di filtraggio potrebbe inoltrare tutti i datagrammi Telnet eccetto quelli diretti a e proveniente da un elenco di specifici indirizzi IP. Basare la politica sugli indirizzi esterni non fornisce alcuna protezione contro i datagrammi il cui indirizzo sorgente sia stato falsificato (_spoofed_). \
 Il filtraggio può anche basarsi sul fatto che il bit TCP ACK sia stato impostato o meno. Questo è utile se un'organizzazione desidera consentire ai propri client interni di connettersi a server esterni, ma vuole impedire a client esterni di connettersi a server interni. \
 Le regole del firewall sono implementate nei router tramite *liste di controllo degli accessi* (*ACL*, _access control lists_), in cui ciascuna interfaccia del router dispone delal propria lista. Un esempio di questa lista è mostrata nella seguente tabella.
@@ -2570,6 +2572,92 @@ Le regole del firewall sono implementate nei router tramite *liste di controllo 
 )
 Questa lista di controllo degli accessi blocca tutto il traffico Web avviato dall'interno dell'organizzazione e il traffico DNS. La prima regola consente a qualsiasi pacchetto TCP con porta di destinazione 80 di uscire dalla rete interna; la seconda consente a qualsiasi pacchetto TCP conm porta sorgente 80 e bit ACK di entranre nella rete interna. Lo stesso vale per i pacchetti DNJS della terza e quarta regola.
 ==== Filtri di pacchetti con stato
+I *filtri con stato* (_stateful filters_) tengono invece effettivamente traccia delle connessioni TCP e utilizzano queste informazi9oni per prendere decisioni di filtraggio. \
+La @table:trad_firewall consente a qualsiasi pacchetto proveniente dall'esterno con ACK = 1 e porta sorgente 80 di attraversare il filtro. Tali pacchetti potrebbero essere utilizzati dagli attaccanti nel tentativo di mandare in crash i sistemi interni con pacchetti malformati, condurre attacchi di negazione del servizio (_denaial-of-service_) o mappare la rete interna. La soluzione ingenua consisterebbe nel bloccare anche i pacchetti TCP ACK, ma un tale approccio impedirebbe agli utenti interni dell'organizzazione di navigare sul Web. \
+I filtri con stato risolvono questo problema tenendo traccia di tutte le connessioni TCP in corso in una *tabella delle connessioni*. Ciò è possibile perchè il firewall è in grado di osservare l'inizio di una nuova connessione rilevando un _three-way handshake (SYN, SYNACK, ACK)_ e può osservarne la fine quando rileva un pacchetto FIN relativo alla connessione. Il firewall può inoltre presumere che la connessione sia terminata quando non rileva alcuna attività su di essa per, ad esempio, 60 secondi. Un esempio di tabella delle connessioni per un firewall è mostrato nella seguente tabella.
+#let rows = (
+  ("222.22.1.7", "37.96.87.123", "12699", "80"),
+  ("222.22.93.2", "199.1.205.23", "37654", "80"),
+  ("222.22.65.143", "203.77.240.43", "48712", "80"),
+)
+
+#figure(
+table(
+  columns: 4,
+  align: left + horizon,
+  inset: (x: 8pt, y: 6pt),
+  // horizontal line above every row, no vertical lines
+  stroke: (x, y) => (top: 0.5pt),
+  table.header([source address], [dest address], [source port], [dest port]),
+  ..rows.flatten().map(v => [#v]),
+  table.hline(),
+),
+caption: [Tabella delle connessioni per filtri con stato]
+) <table:firewall_stateful>
+Questa tabella delle connessioni indica che sono attualmente attive tre connessioni TCP, tutte avviate all'interno dell'organizzazione, inoltre, il filtro con stato include una nuova colonna, _check connection_, nella propria lista di controllo degli accessi, come mostrato nella seguente tabella. Si noti che questa tabella è identica alla @table:trad_firewall, tranne per il fatto che ora indica che la connessione deve essere verificata per due delle regole.\
+#let rows = (
+  ([allow], [222.22/16], [outside of \ 222.22/16], [TCP], [\> 1023], [80], [any], []),
+  ([allow], [outside of \ 222.22/16], [222.22/16], [TCP], [80], [\> 1023], [ACK], [X]),
+  ([allow], [222.22/16], [outside of \ 222.22/16], [UDP], [\> 1023], [53], [---], []),
+  ([allow], [outside of \ 222.22/16], [222.22/16], [UDP], [53], [\> 1023], [---], [X]),
+  ([deny], [all], [all], [all], [all], [all], [all], []),
+)
+
+#figure(
+table(
+  columns: 8,
+  align: left + horizon,
+  inset: (x: 7pt, y: 6pt),
+  // horizontal line above every row, no vertical lines
+  stroke: (x, y) => (top: 0.5pt),
+  table.header(
+    [action], [source \ address], [dest \ address], [protocol],
+    [source port], [dest port], [flag bit], [check \ conxion],
+  ),
+  ..rows.flatten(),
+  table.hline(),
+)
+)
+Esaminiamo alcuni esempi per vedere come la tabella delle connessioni e la lista di controllo deglia ccessi estesa lavorino in sinergia. Supponiamo che un attaccante tenti di inviare un pacchetto malformato nella rete dell'organizzazione trasmettendo un datagramma con porta sorgente TCP 80 e con il flag ACK impostato. Supponiamo che questo pacchetto abbia numero di porta sorgete 12543 e indirizzo IP sorgente 120.23.23.155. Quando questo pacchetto raggiunge il firewall, questo controlla la lista di controllo degli accessi della tabella @table:firewall_stateful, la quale indica che occorre verificare anche la tabella delle connessioni prima di consentire al pacchetto di entrare nella rete dell'organizzazione. Il firewall controlla la tabella delle connessioni, rileva che questo pacchetto non fa parte di una connessione TCP in corso e respinge il pacchetto. Adesso, supponiamo che un utente interno desideri navigare su un sito Web esterno. Poichè questo ultimo invia per primo un segmento TCP SYN, la connessione TCP dell'utente viene registrata nella tabella delle connessioni. Quando il server Web invia pacchetti di risposta, il firewall controlla la tabella e rileva che è in corso una connessione corrispondente. Il firewall lascerà quindi passare questi pacchetti, senza interferire con l'attività di navigazione Web dell'utente interno.
 ==== Gateway applicativi
+Il filtraggio a livello di pacchetto consente a un'organizzazione di eseguire un filtraggio a grana grossa basato sul contenuto delle intestazioni IP e TCP/UDP, inclusi indirizzi IP, numeri di porta e bit di riscontro. Però, se un'organizzazione vuole fornire un servizio Telnet a un insieme ristretto di utenti e vuole che tali utenti si autentichino prima di essere autorizzati a creare sessioni Telnet verso il mondo esterno allora i filtri tradizionali e con stato non possono fornire tale servizio. \
+Per ottenere una sicurezza a un livello più fine, i firewall devono combinare filtri di pacchetti con i *gateway applicativi*. I gateway applicativi prendono decisioni sulle politiche di sicurezza basandosi sui dati applicativi. Un gateway applicativo è un server specifico per una data applicazione attraverso il quale devono passare tutti i dati applicativi. Sullo stesso host possono essere eseguiti più gateway applicativi, ma ciascun gateway è un server separato con i propri processi. \
+Progettiamo un firewall che consenta solo a un insieme ristretto di utenti interni di utilizazre Telnet verso l'esterno e impedisca a tutti i client esterni di connettersi tramite Telnet all'interno. Tale politica può essere realizzata implementando una combinazione di un filtro di pacchetti e di un gateway applicativo Telnet, come mostrato nella seguente figura.
+#figure(
+image("images/gateway_applicativo.png", width: 70%)
+)
+Il filtro del router è configurato per bloccare tutte le connessioni Telnet ad eccezione di quelle che hanno origine dall'indirizzo IP del gateway applicativo. Consideriamo un utente interno che desideri connettersi tramite Telnet al mondo esterno. L'utente deve instaurare una sessione Telnet con il gateway applicativo. Un'applicazione in esecuzione sul gateway, che rimane in ascolto per le sessioni Telnet in entrata, richiede all'utente un ID utente e una password. Quando l'utente fornisce queste informazioni, il gateway applicativo controlla se l'utente dispone ell'autorizzazione per effettuare connessioni Telnet verso l'esterno. Se l'utente dispone dell'autorizzazione, allora il gateway
++ chiede all'utente il nome dell'host esterno a cui desidera connettersi;
++ instaura una sessioen Telnet tra il gateway e l'host esterno;
++ inoltra all'host esterno tutti i dati provenienti dall'utente, e inoltra all'utente tutti i dati provenienti dall'host esterno.
+Quindi il gateway applicativo non solo esegue l'autorizzazione dell'utente, ma agisce sia da server Telnet che da client Telnet. \
+Le reti interne dispongono spesso di più gateway applicativo, uno per Telnet, uno per HTTP, uno FTP e posta elettronica. Di fatto, il server di posta elettronica di un'organizzazione e la cache Web sono gateway applicativi. \
+Tuttavia, i gateway applicativi presentano degli svantaggi. In primo luogo, è necessario un gateway applicativo diverso per ciascuna applicazione. In secondo luogo, occorre pagare una penalizzazione in termini di prestazioni, poichè tutti i dati vengono inoltrati tramite il gateway. Questo diventa critico quando più utenti o applicazioni utilizzano la stessa macchina gateway. Infine, il software client deve sapere come contattare il gateway quando l'utente effettua una richiesta e deve sapere come indicare al gateway applicativo a quale server esterno connettersi.
 === Sistemi di rilevamento intrusioni
+Un filtro di pacchetti ispeziona i campi delle intestazioni IP, TCP, UDP e ICMP al momento di decidere quali pacchetti lasciar passare attraverso il firewall. Tuttavia, per rilevare molti tipi di attacchi, è necessario eseguire una *deep packet inspection*, ossia guardare oltre i campi delle intestazioni ed esaminare i dati applicativi effettivi trasportati dai pacchetti. Abbiamo visto che i gateway spesso effettuano questo compito. Però, un gateway applicativo fa ciò solo per una specifica applicazione. \
+Un *sistema di rilevamento delle intrusioni* (*IDS*, _intrusion detection system_) è un dispositivo che genera avvisi quando osserva traffico potenzialmente malevolo, esaminando le intestazioni dei pacchetti che lo attraversano ed effettuando la deep packet inspection. \
+Un dispositivo che filtra ed elimina il traffico sospetto è chiamato *sistema di prevenzione delle intrusioni* (*IPS*, _intrusion prevention system_). \
+Un IDS può essere utilizzato per rilevare un'ampia gamma di attacchi, tra cui la mappatura della rete, scansioni delle porte, scansioni dello stack TCP, attacchi Dos di saturazione della larghezza di banda (_bandwidth-flooding_), worm e virus, attacchi alle vulnerabilità dei sistemi operativi e attacchi alle vulnerabilità delle applicazioni. \
+Un'organizzazione può implementare uno o più sensoir IDS nella propria rete aziendale. La seguente figura mostra un'organizzazione che dispone di tre sensori IDS.
+#figure(
+image("images/ids.png", width: 70%)
+) <fig:ids>
+Quando vengono implementati più sensori, essi lavorano tipicamente di concerto, inviando informazioni sulle attività di traffico sospette a un processore IDS centrale, che raccoglie e integra le informazioni e invia allarmi agli amministratori di rete quando lo ritiene opportuno. Nella @fig:ids l'organizzazione ha suddiviso la propria rete in due regioni: una regione ad alta sicurezza, protetta da un filtro di pacchetti e da un gateway applicativo e monitorata da sensori IDS; e una regione a sicurezza inferiore, detta *zona demilitarizzata* (*DMZ*, _demilitarized zone_), che è protetta solo dal filtro di pacchetti, ma anch'essa monitorata da sensori IDS. La DMZ include i server dell'organizzazione che devono comunicare con il mondo esterno. \
+I sistemi IDS sono classificati come *sistemi basati su firme* o *sistemi basati su anomalie*. Un IDS basato su firme mantiene un ampio database di firme di attacchi. Ciascuna firma è un insieme di regole relative a un'attività di intrusione. Una firma può essere un elenco di caratteristiche riguardanti un singolo pacchetto, oppure può riguardare una serie di pacchetti. Le firme vengono create da ingegneri esperti di sicurezza delle reti che studiano gli attacchi noti. L'amministratore può modificarle o aggiungerne di proprie. \
+Un IDS basato su firme intercetta ogni pacchetto che gli passa accanto, confrontando ciascun pacchetto intercettato con le firme presenti nel suo database. Se un pacchetto corrisponde ad una firma, l'IDS genera un avviso. L'avviso può essere inviato al sistema di gestione della rete oppure può essere registrato per un'ispezione futura. \
+I sistemi IDS basati su firme presentano una serie di limitazioni. Richiedono una conoscenza pregressa dell'attacco per poter generare una firma accurata. Un IDS è cieco di fronte a nuovi attacchi non ancora registrati. Un altro svantaggio è che, anche quando viene generata una corrispondenza con una firma, potrebhbe non trattarsi di un attacco, generando un falso allarme. Infine, poichè ogni pacchetto viene confrontato, l'IDS può risultare sovraccaricato dall'elaborazione e non riuscire a rilevare molti pacchetti malevoli. \
+Un IDS basato su anomalie crea un profilo del traffico osservando il traffico durante il normale funzionamento. Cerca flussi di pacchetti che siano statisticamente insoliti, ad esempio muna percentuale spropositata di pacchetti ICMP. Il grande vantaggio di questi sistemi IDS è che non dipendono dalla conoscenza pregressa degli attacchi esistenti, possono rilevare attacchi nuovi e non documentati. D'altra parte, distinguere tra traffico normale e traffico statisticamente insolito è un problema complesso.
 ==== Snort
+Snort è un IDS open source di pubblico dominio con centinaia di migliaia di installazioni esistenti. È in grado di gestire agevolmente 100 Mbps di traffico; per installazioni con velocità di traffico nell'ordine dei gigabit al secondo, potrebbero essere necessari più sensori Snort.
+Un esempiuo di firma è la seguente:
+#align(center)[
+  #block(breakable: false)[
+    #set align(left)
+    ```
+    alert icmp $EXTERNAL_NET any -> $HOME_NET any
+    (msg:"ICMP PING NMAP"; dsize: 0; itype: 8;)
+    ```
+  ]
+]
+Questa firma corrisponde a qualsiasi pacchetto ICMP che entri nella rete dell'organizzazione dall'esterno, sia di tipo 8 e abbia un payload vuoto. `nmap` genera pacchetti ping con queste caratteristiche, quindi questa firma rileva i _ping sweep_ effettuati con `nmap`. Quando un pacchetto corrisponde a questa firma, Snort genera un alter che include il messaggio \"ICMP PING NMAP\". \
+Una caratteristica importante di Snort è la comunità di utenti esperti che mantiene aggiornato il suo database di firme. Inoltre, utilizzando la sintassi delle firme di Snort, gli amministratori di rete possono adattare le firme alle esigenze della propria organizzazione modificando le firme esistenti oppure creandone di completamente nuove.
