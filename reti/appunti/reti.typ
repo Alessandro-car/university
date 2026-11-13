@@ -2246,7 +2246,330 @@ Un *nonce* è un numero che un protocollo utilizzerà una sola volta nell'arco d
 + Alice cifra il nonce utilizzando la chiave segreta simmetrica condivisa tra Alice e Bob, $K_(A - B)$, e invia il nonce cifrato, $K_(A - B)(R)$, a Bob. Il nonce viene generato per garantire che Alice sia attiva.
 + Bob decifra il messaggio ricevuto. Se il nonce decifrato è uguale al nonce che aveva inviato ad Alice, allora Alice è autenticata.
 L'uso di un nonce e della crittografia a chiave simmetrica costituisce la base di ap4.0.
-== Sicurezza ell'e-mail
+== Sicurezza delle e-mail
 È possibile fornire servizi di sicurezza nei primi 4 livelli (a partire dall'alto) della stack di protocolli di Internet. Quando un servizio di sicurezza viene fornito per uno specifico protocollo a livello di applicazione, l'applicazione che usa tale protocollo godrà di uno o più servizi, come confidenzialità, autenticazione o integrità. Quando la sicurezza viene fornita per protocollo a livello di trasporto, le applicazioni che usano tale protocollo godranno dei servizi di sciurezza di quel protocollo di trasporto. Quando i servizi vengono forniti ai protocolli a livello di rete, tutti i segmenti a livello di trasporto godranno dei servizi di sicurezza del livello di rete. Quando la sicurezza viene fornita a livello di collegamento, i dati nei frame che viaggiano sul collegamento riceveranno i servizi di sicurezza offerti dal collegamento.
 === E-Mail sicure
+Un sistema di mail sicuro deve avere diverse funzionalità:
+- _confindenzialità_: gli utenti di un sistema e-mail non vogliono che i loro messaggi e data vengano letti da persone esterne al sistema;
+- _autenticazione del trasmittente_: quando il ricevente riceve un messaggio, vuole essere sicuro che il trasmittente sia veramente chi dice di essere;
+- _integrità del messaggio_: le parti coinvolte nella comunicazione non vogliono che i loro messaggi vengano alterati durante la comunicazione;
+- _autenticazione del ricevente_: il trasmittente della e-mail vuole essere sicuro che sta mandando il messaggio alla giusta persona e non a qualcuno che pretende di essere tale persona.
+Il modo più immediato per garantire _confidenzialità_ è quello, per il trasmittente, di codificare il messaggio tramite un algoritmo a chiave simettrica e, per il ricevente, decodificarlo non appena ricevuto. Tuttavia, anche se questo approccio è diretto, c'è l'inconveniente di distribuire la chiave simmetrica alle parti coinvolte nella comunicazione. Pertanto, si ricorre ad un algortimo di crittografia a chiave pubblica. Un problema di questo approccio, però, è che un algoritmo di crittografia a chiave pubblica può risultare inefficiente, soprattutto per lunghi messaggi. \
+Per risolvere il problema di inefficienza, usiamo un chiave di sessione. In particolare, supponiamo che Alice debba mandare un messaggio a Bob.
++ Alice sceglie casualmente una chiave simmetrica di sessione, $K_S$
++ codifica il messaggio, $m$, con la chiave simmetrica;
++ codifica la chiave simmetrica con la chiave pubblica di Bob, $K_B^+$;
++ concatena il messaggio codificato e la chiave simmetrica codificata per formare un pacchetto;
++ invia il pacchetto all'indirizzo e-mail di Bob.
+Quando Bob riceve il messaggio, esegue i seguenti passi.
++ Usa la sua chiave privata, $K_B^-$, per ottenere la chiave simmetrica, $K_S$;
++ usa la chiave simmetrica $K_S$ per decodificare il messaggio $m$.
+Adesso progettiamo un sistema e-mail che fornisce autenticazione del trasmittente e integrità del messaggio, supponendo, al momento, che Alice e Bob non siano più preoccupati per la confidenzialità. Per fare ciò usiamo le firme digitali e i digest dei messaggi. Nello specifico
++ Alice applica una funzione hash, $H$, al suo messaggio, $m$, per ottenere il digest del messaggio;
++ Firma il risultato della funzione hash con la sua chiave privata, $K_A^-$, per creare una firma digitale;
++ concatena il messaggio originale con la firma per creare un pacchetto;
++ invia il pacchetto all'indirizzo e-mail di Bob.
+Quando Bob riceve il pacchetto esegue i seguenti passi.
++ Utilizza la chiave pubblica di Alice, $K_A^+$, al digest del messaggio firmato;
++ confronta il risultato di questa operazione con la sua funzione hash, $H$, del messaggio. Se i due risultati sono uguali, allora Bob può essere sicuro che il messaggio proviene da Alice e non è stato alterato.
+Ora progettiamo un sistema che fornisce confidenzialità, oltre che autenticazione del trasmittente e integrità del messaggio. I passi compiuti da Alice sono raffigurati nella seguente figura.
+#figure(
+image("images/trasmittente_email.png", width: 70%),
+caption: [Alice usa la crittografia a chiave simmetrica, la crittografia a chiave pubblica, la funzione hash e la firma digitale per fornire segretezza, autenticazione del trasmittente e integrità del messaggio.]
+) <fig:secure_email>
+Quando Bob riceve questo messaggio, utilizza la sua chiave privata, $K_B^-$, per ottenere la chiave simmetrica, $K_S$, e utilizza tale chiave per decodificare l'hash del messaggio firmato digitalmente da Alice e per ottenere il messaggio, ottenendo $K_A^- (H(m))$ ed $m$. Dopodichè utilizza la chiave pubblica di Alice, $K_A^+$, per ottenere $H(m)$ e utilizza la sua funzione hash, $H$, per il messaggio $m$ e confronta se i due risultati sono uguali. In tal caso, Bob può essere sicuro che il messaggio ricevuto non è stato alterato ed è stato inviato da Alice. \
+Con questo sistema email, c'è ancora un problema importante che deve essere risolto. Per progettare tale sistema Alice deve ottenere la chiave pubblica di Bob e Bob deve ottenere la chiave pubblica di Alice. L'aggressore potrebbe mascherarsi da Bob e dare ad Alice la sua stessa chiave pubblica dicendo che è la chiave pubblica di Bob, ricevendo il messaggio destinato a Bob. Per questo, bisogna affidarsi ad una CA per certicare le chiavi pubbliche.
+=== PGP
+*Pretty Good Privacy (PGP)* è un buon esempio di uno schema di crittografia dell'email. Il design di PGP è, essenzialmente, lo stesso mostrato nella *@fig:secure_email*. PGP utilizza MD5 o SHA, in base alla versione del software, per calcolare il digest del messaggio; CAST, triple-DES o IDEA per la crittografia a chiave simmetrica; RSA per la crittografia a chiave pubblica. \
+Quando PGP viene installato, il software crea una coppia di chiave pubblica per l'utente. La chiave pubblica può essere postata sulla pagina Web dell'utente o piazzata in un server di chiavi pubbliche. La chiave privata è protetta dall'uso di una password. PGP da all'utente l'opzione di firmare digitalmente il messaggio, codificare il messaggio, o fare entrambi. Un messaggio PGP è mostrato di seguito.
+#align(center)[
+  #block(breakable: false)[
+    #set align(left)
+    ```
+    -----BEGIN PGP SIGNED MESSAGE-----
+    Hash: SHA1
+    Bob:
+    Can I see you tonight?
+    Passionately yours, Alice
+    -----BEGIN PGP SIGNATURE-----
+    Version: PGP for Personal Privacy 5.0
+    Charset: noconv
+    yhHJRHhGJGhgg/12EpJ+lo8gE4vB3mqJhFEvZP9t6n7G6m5Gw2
+    -----END PGP SIGNATURE-----
+    ```
+  ]
+]
+Un messaggio PGP segreto, invece, è mostrato qui di seguito. Entrambi i messaggi appaiono dopo l'haeder MIME.
+#align(center)[
+  #block(breakable: false)[
+    #set align(left)
+    ```
+    -----BEGIN PGP MESSAGE-----
+    Version: PGP for Personal Privacy 5.0
+    u2R4d+/jKmn8Bc5+hgDsqAewsDfrGdszX681iKm5F6Gc4sDfcXyt
+    RfdS10juHgbcfDssWe7/K=lKhnMikLo0+1/BvcX4t==Ujk9PbcD4
+    Thdf2awQfgHbnmKlok8iy6gTh1p
+    -----END PGP MESSAGE-----
+    ```
+  ]
+]
+PGP fornisce anche un meccanismo per certificare la chiave pubblica, ma questo meccanismo è diverso dal convenzionale CA. Alice stessa può certificare qualsiasi coppia chiave/username quando ritiene che tale coppia appartenga effettivamente allo stesso soggetto. Inoltre, PGP consente ad Alice di dichiarare che si fida di un altro utente affinché garantisca l'autenticità di ulteriori chiavi. Alcuni utenti PGP firmano reciprocamente le proprie chiavi organizzando dei _key-signing party_. Gli utenti si riuniscono fisicamente, si scambiano le chiavi pubbliche e certificano le chiavi gli uni degli altri firmandole con le proprie chiavi private.
+== Connessioni TCP sicure: TLS
+La versione potenziata di TCP, che fornisce servizi di sicurezza come confidenzialità, integrità dei dati e autenticazione end-point, è nota come *Transport Layer Security (TLS)*, che è stata standardizzata dall'IETF. Una versione precedente di questo protocollo è SSL versione 3. \
+TLS è supportato da tutti i browser Web e da tutti i server web ed è usato da Gmail e da tutti i siti commerciali, come Amazon, eBay, ecc. \
+TLS viene usato spesso per fornire sicurezza alle transazioni che avvengono tramite HTTP, anche se, può essere usato da qualsiasi applicazione che usa TCP, in quanto TLS è una versione sicura di TCP. TLS fornisce una semplice API con utilizzo delle socket, che è simule all'API fornita da TCP. Quando un'applicazione vuole utilizzare TLS, l'applicazione include le classi e libreria di SSL. Anche se tecnicamente TLS è un protocollo a livello di applicazione, dal punto di vista dello sviluppatore è un protocollo a livello di trasporto che fornisce i servizi offerti da TCP con l'aggiunta di servizi di sicurezza. Questa situazione è mostrata nella seguente figura.
+#figure(
+image("images/tls.png", width: 70%),
+)
+=== Descrizione di una versione semplificata TLS
+Descriviamo una versione semplificata di TLS per capire in maniera generale come funziona TLS per poi descriverlo nella sua interezza. La versione semplificata di TLS ha tre fasi: _handshake, derivazione delle chiavi_ e _trasferimento dei dati_. \
+Descriveremo queste tre fasi per una sessione di comunicazione tra un client, Bob, e un server, Alice, con Alice che ha la coppia di chiavi privata e pubblica e un certificato che associa la sua identità alla sua chiave pubblica.
+==== Handshake
+In questa fase, Bob deve
++ stabilire una connessione TCP con Alice;
++ verificare che Alice è veramente Alice;
++ inviare ad Alice la chiave segreta, che verrà usata da entrambi per generare le chiavi simmetrice necessarie per la sessione TLS.
+Questi passi sono mostrati nella seguente figura.
+#figure(
+image("images/handshake_tls.png", width: 70%),
+caption: [Handshake della versione semplificata di TLS]
+)
+==== Derivazione delle chiavi
+Il segreto, MS, condiviso da Bob e Alice, potrebbe esser usato come la chiave simmetrica di sessione per tutte le successive codifiche e controlli di integrità dei dati. Tuttavia, è considerato più sicuro usare, sia per Alice che per BOb, chiavi crittografiche differenti, e usare differenti chiavi per codificare i dati e per i controlli di integrità. Alice e Bob, utilizzano MS per generare quattro chiavi:
+- $E_B$: chiave di cifratura di sessione per i dati inviati da Bob ad Alice;
+- $M_B$: chiave HMAC di sessione per i dati inviati da Bob ad Alice, dove HMAC è un codice di autenticazione dei messaggi basato su hash (MAC) standardizzato;
+- $E_A$: chiave di cifratura di sessione per i dati inviati da Alice e Bob;
+- $M_A$: chiave HMAC di sessione per i dati inviati da Alice a Bob.
+Le chiavi di cifratura, $E_B$ e $E_A$, verranno usate per codificare i dati, le chiavi HMAC verranno usate per verificare l'integrità dei dati.
+==== Trasferimento dei dati
+Adesso che Alice e Bob condividono le quattro chiavi di sessione, possono inziare ad inviare dati sicuri l'uno per l'altro attraverso connessioni sicure TCP. TLS divide i dati in stream di record, aggiunge un HMAC ad ogni record per il controllo di integrità e codifica il record concatenato con l'HMAC. Per creare l'HMAC, Bob invia i dati con la chiave $M_B$ ad una funzione hash. Per codificare il pacchetto formato dal record concatenato con l'HMAC, Bob utilizza la sua chiave di cifrature di sessione $E_B$. Questo pacchetto codificato viene invato a TCP per il trasporto via Internet. \
+Questo approccio, però, non è ancora totalmente sicuro. Se l'aggressore è un man-in-the-middle è la capacità di inserire, elimare e rimpiazzare segmenti nello stream dei segmenti TCP inviati tra Alice e Bob, l'aggressore potrebbe catturare due segmenti, invertirne l'ordine, modificare i numeri di sequenza TCP, ed inviare i due segmenti invertiti ad Alice. Quando arrivano ad Alice, i seguenti passi vengono compiuti:
++ TCP pensa che tutto sia andato a buon fine e passa i record al layer sottostante TLS.
++ TLS decodifica i due record.
++ TLS utilizza l'HMAC in ogni record per verificare l'integrità dei dati dei record.
++ TLS invierebbe gli stream di byte decodificati al layer di applicazione; ma lo stream di dati ricevuto non sarebbe nell'ordine corretto.
+La soluzione a questo problema è dato dall'utilizzo dei numeri di sequenza. Bob memorizza un contatore dei numeri di sequenza, che è inizializzato a zero e viene incrementato per ogni record TLS inviato. Quando Bob calcola l'HMAC, include il numero di sequenza nel calcolo dell'HMAC. In questo modo, Alice può verificare l'integrità dei dati di un record includendo il numero di sequenza appropriato nel calcolo dell'HMAC.
+==== Record TLS
+Il formato dei record TLS è mostrato di seguito.
+#align(center)[
+  #grid(
+    columns: (auto, auto, auto, 12em, auto),
+    column-gutter: 3pt,
+    row-gutter: 4pt,
+    align: center + horizon,
+    // field row
+    ..([Type], [Version], [Length], [Data], [HMAC]).map(c => grid.cell(
+      stroke: 0.5pt,
+      inset: (x: 10pt, y: 9pt),
+      c,
+    )),
+    // bracket under Data and HMAC
+    grid.cell(colspan: 3, []),
+    grid.cell(
+      colspan: 2,
+      stroke: (left: 0.5pt, right: 0.5pt, bottom: 0.5pt),
+      box(height: 0.6em),
+    ),
+    // label
+    grid.cell(colspan: 3, []),
+    grid.cell(colspan: 2)[Encrypted with $E_B$],
+  )
+]
+I primi tre campi non vengono cifrati. Il campo `Type` indica se il record è un messaggio di handshake o se è un messaggio che contiene dati. Viene anche usato per chiudere le connessioni TLS. Il campo `Length` viene usato per estrarre i record TLS dalo stream di byte in arrivo.
+=== Descrizione del protocollo TLS
+Adesso descriviamo il protocollo TLS nella sua interezza.
+==== Handshake TLS
+Il protocollo TLS permette ad Alice e Bob di concordare sull'algoritmo di cifratura all'inizio della sessione TLS, durante la fase di handshake. Inoltre, durante la fase di handshake, Alice e Bob si inviano a vicenda dei nonce, che vengono usati per la creazione delle quattro chiavi di sessione $(E_B, M_B, E_A, M_A)$. I passi della fase di handshake TLS sono i seguenti.
++ Il client invia una lista di algoritmi di cifratura che supporta, insieme al nonce.
++ Il server sceglie un algoritmo a chiave simmetrica e un algoritmo a chiave pubblica, l'algoritmo HMAC insieme alle chiavi HMAC. Al client invia le scelte che ha fatto, il certificato e il nonce.
++ Il client verifica il certificato, estrae la chiave pubblica del server, genera la Pre-Master Secret (PMS), codifica la PMS con la chiave pubblica del server, e la invia.
++ Il server calcola la Master Secret (MS) usando la PMS e il nonce. La MS viene divisa per generare le due chiavi di cifratura e le due chiavi HMAC.
++ Il client invia l'HMAC per tutti i messaggi handshake.
++ Il server invia l'HMAC per tutti i messaggi handshake.
+Gli ultimi due passi proteggono questa fase dalla falsicazione. Questo perchè, nello step 1, gli algoritmi mostrati dal client possono essere forti o deboli, e la lista di algoritmi viene mandata in chiaro. L'aggressore, come man-in-the-middle, potrebbe eliminare gli algoritmi più forti dalla lista. Per prevenire questo attacco, nello step 5, il client invia l'HMAC della concatenazione di tutti i messaggi handshake che ha inviato e ricevuto. Il server può confrontare l'HMAC ricevuto con l'HMAC calcolato e se trova qualche inconsistenza allora il server termina la connessione. \
+I nonce vengon utilizzati per impedire i cosideetti *connection replay attack* (attacco di riproduzione dell'intera connessione). Supponiamo che l'aggressore intercetti tutti i messaggi scambiati tra Bob e Alice. L'aggressore fa passare del tempo, si finge Bob ed invia ad Alice esattametne la stessa sequenza di messaggi che Bob aveva invato ad Alice. Se Alice non utilizzasse i nonce, risponderebbe con la stessa sequenza di messaggi inviata a Bob e non sospetterebbe nulla. Includendo un nonce, Alice invierà nonce diversi per ogni sessione TCP, facendo sì che le chiavi di cifratura siano diverse nei due giorni. Pertanto, quando Alice riceverà i messaggi riprodottiu dall'aggressore, i record non supereranno i controlli di integrità. I nonce vengono usati per difendersiu dal connection replay attack mentre i numeri di sequenza vengono usati per difendersi dalla riproduzione di singoli pacchetti durante una sessione in corso.
+==== Chiusura della connessione
+Per chiudere una connessione, un approccio sarebbe lasciare che Bob termini la sessione chiudendo la connessione TCP, facendo inviare un segmento TCP FIN ad Alice. Però questo approccio potrebbe essere soggetto ad *attacchi di troncamento*, dove l'aggressore si inserisce nel mezzo di una sessione TLS in corso e la termina prematuramente con un TCP FIN. La soluzione a questo problema sarebbe indicare nel campo `Type` se il record serve a terminare la sessione TLS.
+== Sicurezza a livello di rete: IPsec e VPN
+Il protocollo di sicurezza IP, noto come *IPsec*, fornisce sicurezza a livello di rete. IPsec rendere sicuri i datagrammi IP tra due entità a livello di rete, includendo host e router. Molte istituzioni usano IPsec per creare le *reti private viruatli* (*VPN*, _virtual private network_). Un protocollo di sicurezza a livello di rete fornisce confidenzialità, autenticazione della sorgente così che il ricevente possa verificare la fonte dei datagrammi, integrità dei dati, e prevenzione da replay-attack.
+=== IPsec e VPNs
+Un'istituzione che si estende su molteplici regioni geografiche spesso ha bisogna di una propria rete IP, in modo tale che host e server possono inviarsi data a vincena in modo sicuro e confidenziale. Una rete digiunta, dedicata ad una particolare istutuzione, è nota come *rete privata*. Una rete privata può essere molto costosa, in quanto l'istituzione deve comprare, installare e mantenere la sua infrastruttura fisica di rete. \
+In alternativa, è possibile crare delle VPN sulla rete pubblica di Internet già esistente. Con una VPN, il traffico interno all'istituzione è inviato sulla rete Internet. Per fornire confidenzialità il traffico interno all'istituzione viene cifrato prima di entrare nella rete pubblica di Internet. Quando due host comunicano all'interno della stessa rete locale, senza usare su Internet, utilizzano normali datagrammi *IPv4 standard* in chiaro, privi di protezione IPsec. Quando la comunicazione deve attraversare la rete pubblica, il traffico viene protetto prima di essere immesso su Internet: il router gateway, o l'host mittente, trasforma il datagramma IPv4 ordinario in un *datagramma IPsec*. Il datagramma IPsec conserva un normale *haeder IPv4 esterno*: in questo modo i router intermedi della rete Internet pubblica possono instradarlo normalmente senza dover supportare o comprendere IPsec. All'interno del _payload_ del datagramma IPsec vengono inseriti un *header IPsec* e i *dati cifrati*. Una volta raggiunta la destinazione, il sistmea operativo, o il gateway ricevente, elabora l'haeder IPsec, verifica l'integrità dei dati, *decifra il payload* e consegna il contenuto in chiaro ai protocolli di livello superiore.
+=== Protocolli AH ed ESP
+Nella suite di protocolli IPsec, ci sono due principali protocolli: l'*authentication header (AH)* e l'*Encapsulation Security Payload (ESP)*. Il protocollo AH fornisce autenticazione della sorgente e integrità dei dati ma non fornisce confidenzialità. Il protocollo ESP fornisce autenticazione della fonte, integrità dei dati e confidenzialità. Dato che la confidenzialità è critica per le VPN e per altre applicazioni IPsec, il protocollo ESP è più usato rispetto al protocollo AH.
+=== Associazioni di sicurezza
+Prima di inviare datagrammi IPsec dall'entità sorgente all'entità destinazione, la sorgente e la destinazione devono creare una connessione logica a livello di rete, che prende il nome di *associazione di sicurezza* (*SA*, _security association_). Una SA è una semplice connessione logica, è unidirezionale dalla sorgente alla destinazione. Se entrambe le entità vogliono inviarsi dattagrammi a vicenda, devono essere stabilire due SA, una per ogni direzione. \
+Consideriamo il seguente schema.
+#figure(
+image("images/sa.png", width: 70%),
+caption: [SA da R1 ad R2]
+) <fig:sa>
+Il router R1 manterrà un'informazione di stato riguardante la SA stabilita, che include:
+- Un identificatore da 32 bit per l'SA, chiamato *Security Parameter Index (SPI)*.
+- L'interfaccia origine dell'SA e l'interfaccia di destinazione.
+- Il tipo di crittografia usata.
+- La chiave di cifratura.
+- Il tipo di controllo di integrità.
+- La chiave di autenticazione.
+Un'entità IPsec memorizza tutte le informazioni di stato per tutte le SA stabilite in un *Security Association Database (SAD)*.
+=== Datagramma IPsec
+IPsec ha due differenti forme di pacchetti, una per la *modalità tunnel* e una per la *modalità di trasporto*. La modalità tunnel, più appropriata per le VPN, è più utilizzata rispetto alla modalità di trasporto. \
+Il formato di un datagramma IPsec è mostrato di seguito.
+#let field(x, body) = grid.cell(
+  x: x,
+  y: 4,
+  stroke: 0.5pt,
+  inset: (x: 4pt, y: 8pt),
+  align: center + horizon,
+  body,
+)
 
+// bracket line over a range of columns: top line with short legs
+#let bracket(x, y, n) = grid.cell(
+  x: x,
+  y: y,
+  colspan: n,
+  stroke: (top: 0.5pt, left: 0.5pt, right: 0.5pt),
+  box(height: 0.7em),
+)
+
+#let sub(..cells) = grid(
+  columns: cells.pos().len() * (1fr,),
+  column-gutter: 2pt,
+  ..cells.pos().map(c => block(
+    width: 100%,
+    stroke: 0.5pt,
+    inset: (x: 3pt, y: 7pt),
+    align(center + horizon, c),
+  )),
+)
+
+#grid(
+  columns: (5em, 5em, 5em, 11em, 5em, 5em),
+  column-gutter: 2pt,
+  row-gutter: 3pt,
+  align: center + bottom,
+
+  // row 0-1: "Enchilada" authenticated (ESP header .. ESP trailer)
+  grid.cell(x: 1, y: 0, colspan: 4)[“Enchilada” authenticated],
+  bracket(1, 1, 4),
+
+  // row 2-3: Encrypted (Original IP header .. ESP trailer)
+  grid.cell(x: 2, y: 2, colspan: 3)[Encrypted],
+  bracket(2, 3, 3),
+
+  // row 4: main fields
+  field(0)[New IP \ header],
+  field(1)[ESP \ header],
+  field(2)[Original \ IP header],
+  field(3)[Original IP \ datagram payload],
+  field(4)[ESP \ trailer],
+  field(5)[ESP \ MAC],
+
+  // row 5: expanded fields under ESP header and ESP trailer
+  grid.cell(x: 0, y: 5, colspan: 2, align: right, inset: (top: 0.8em))[
+    #box(width: 9em, sub[SPI][Seq \#])
+  ],
+  grid.cell(x: 4, y: 5, colspan: 2, align: left, inset: (top: 0.8em))[
+    #box(width: 10em, sub[Padding][Pad \ length][Next \ header])
+  ],
+)
+Per convertire un datagramma IPv4 in un datagramma IPsec i passi che un router deve seguire sono i seguenti.
+- Concatenare al datagramma IPv4 un campo `ESP trailer`.
+- Cifrare i risultati usando l'algoritmo e la chiave specificata dall'SA.
+- Aggiungere all'inizia della quantità cifrata un campo chiamato `ESP header`: il package finale viene chimato _enchilada_.
+- Crare un codice di autenticazione MAC su tutto il package, utilizzando l'algoritmo e la chiave specificata dall'SA.
+- Concantenare il MAC alla fine del package, formando il _payload_.
+- Creare un nuovo header IP con i classici header IPv4 che vengono aggiunti prima del payload.
+Quando un router invia un datagramma IPsec sulla rete Internet, ogni router che analizzerà tale datagramma è consapevole del fatto che il datagramma sta trasportando dati cifrati IPsec. \
+Il `ESP trailer` consiste di tre campi: padding, lunghezza del padding e header successivo. Il padding viene utilizzato affinchè, una volta aggiunto al datagramma originale, il messaggio risultante sia composto da un numero intero di blocchi. Il campo _pad length_ indica all'entità ricevente quanto padding è stato inserito. Il campo _next header_ identifica il tipo dei dato contenuti nel campo _payload-data_. I dati del payload e il trailer ESP vengono concatenati e poi cifrati. \
+A quest'unità viene anteposto l'`ESP header`, che viene inviato in chiaro ed è composto da due campi: lo *SPI* (_Security Parametrs Index_) e il campo *sequence number*. Lo SPI indica all'entità ricevente la SA a cui appartiene il datagramma e il _sequence number_ viene utilizzato per difendersi dagli attacchi di riproduzione. \
+Insieme ad una SAD, l'entità IPsec mantiene anche un'altra struttura dati chiamata *Security Policy Database (SPD)* che indica quali tipi di datagrammi debbano essere elaborati tramite IPsec; e, per quelli che devono essere elaborati tramite IPsec, quale SA debba essere utilizzata.
+=== IKE: gestione delle chiavi in IPsec
+Quando una VPN presenta un numero ridotto di endpoint, l'amministratore di rete può inserire manualmente le informazioni della SA nelle SAD degli endpoint. Per una VPN di grandi dimensioni richiedono un meccanismo automatizzato per la creazione delle SA. IPsec realizza ciò mediante il protocollo *Internet Key Exchange (IKE)*. \
+Il protocollo IKE fa sì che le entità si scambino i certificati, negozino gli algoritmi di autenticazione e cifratura e scambino in modo sicuro il materiale crittografico per creare le chiavi di sessione nelle SA IPsec. IKE svolge questi compiti in due fasi. Consideriamo la situazione tra i router nella *@fig:sa*.
+- Durante il primo scambio di messaggi, le due parti utilizzano Diffie-Hellman per creare una *IKE SA biderezionale* tra i router. Durante questo primo scambio di coppie di messaggi, vengono stabilite le chiavi per la cifrature e l'autenticazione della IKE SA. Viene anche stabilito un master secret che verrà utilizzato per calcolare le chiavi della SA IPsec.
+- Durante il secondo scambio di messaggi, entrambe le parti rilevano reciprocamente la propria identità firmando i propri messaggi. Le identità non vengono rilevate a un eventuale intercettatore passivo, poichè i messaggi vengono inviati sul canale sicuro della IKE SA. In questa fase le due parti negoziano gli algoritmi IPsec di cifrature e autenticazione da impiegare per le SA IPsec.
+Nelle fase 2, le due parti creano una SA in ciascuna direzione. Al termine di questa fase, le chiavi di sessione per la cifratura e l'autenticazione sono stabilite su entrambi i lati per le due SA.
+== Firewall e sistemi di rilevamento intrusioni
+In una rete di calcolatori, quando il traffico in entrata e in uscita da una rete viene sottoposto a controlli di sicurezza, registrato, scartato o inoltrato, ciò viene eseguito da dispositivi operativi noti come *firewall, sistemi di rilevamento delle intrusioni (IDS)* e *sistemi di prevenzione delle intrusioni (IPS)*.
+=== Firewall
+Un *firewall* è una combinazione di hardware e software che isola la rete interna di un'organizzazione dal resto di Internet, consentendo ad alcuni pacchetti di passare e bloccandone altri. Un firewall permette ad un amministratore di rete di controllare l'accesso tra il mondo esterno e le risorse all'interno della rete amministrata gestendo il flusso dit raffico da e verso tali risorse. Un firewall ha tre obiettivi:
+- _Tutto il traffico dall'esterno verso l'interno, e viceversa, passa attraverso il firewall_. Sebbene le grandi organizzazioni possano utilizzare più livelli di firewall o firewall distribuiti, collocare un firewall in un unico punto di accesso alla rete, rende più semplice gestire e far rispettare una politica di accesso di sicurezza.
+- _Solo il traffico autorizzato, come definito dalla politica di sicurezza locale, sarà autorizzato a passare_. Con tutto il traffico in entrata e in uscita dalla rete istituzionale che attraversa il firewall, qeust'ultimo può limitare l'accesso solo al traffico autorizzato.
+- _Il firewall stesso è immune alle penetrazioni_. Il firewall è un dispositivo connesso alla rete. Se non progettato o installato correttamente, può essere compromesso, nel qual caso fornisce solo un falso senso di sicurezza.
+I firewall possono essere classificati in tre categorie: *filtri di pacchetti tradizionali*, *filtri con stato* e *gateway applicativi*.
+==== Filtri di pacchetti tradizionali
+Consideriamo la seguente figura.
+#figure(
+image("images/firewall.png", width: 70%),
+caption: [Firewall piazzato tra la rete amministrata e il mondo esterno.]
+)
+Un'organizzazione tipicamente dispone di un router gateway che collega la propria rete interna al proprio ISP. Tutto il traffico in uscita e in entrata dalla rete passa attraverso questo router, ed è proprio presso questo router che avviene il *filtraggio dei pacchetti*. Un filtro di pacchetti esamina ciascun datagramma singolarmente, determinando se può essere inoltrato o scartato in base a regole specifiche stabilite dall'amministratore. Le decisioni di filtraggio si basano tipicamente su:
+- Indirizzo IP sorgente o di destinazione.
+- Tipo di protocollo nel campo del datagramma.
+- Porta sorgente e destinazione TCP o UDP.
+- Bit di flag TCP.
+- Tipo di messaggio ICMP.
+- Regole diverse per i datagrammio in uscita e in entrata dalla rete.
+- Regole diverse per le diverse interfacce del router.
+Un amministratore di rete configura il firewall in base alla policy dell'organizzazione. La seguente tabella elenca una serie di possibili politiche che un'organizzazione può adottare e il modo in cui verrbero gestite tramite un filtro di pacchetti.
+#let rows = (
+  ([No outside Web access.], [Drop all outgoing packets to any IP address, port 80.]),
+  (
+    [No incoming TCP connections, except those for organization's public Web server only.],
+    [Drop all incoming TCP SYN packets to any IP except 130.207.244.203, port 80.],
+  ),
+  (
+    [Prevent Web-radios from eating up the available bandwidth.],
+    [Drop all incoming UDP packets --- except DNS packets.],
+  ),
+  (
+    [Prevent your network from being used for a smurf DoS attack.],
+    [Drop all ICMP ping packets going to a "broadcast" address (eg 130.207.255.255).],
+  ),
+  (
+    [Prevent your network from being traceroute#sym.zws\d.],
+    [Drop all outgoing ICMP TTL expired traffic.],
+  ),
+)
+
+#table(
+  columns: (1fr, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 5pt),
+  // horizontal line above every row, no vertical lines
+  stroke: (x, y) => (top: 0.5pt),
+  table.header([*Policy*], [*Firewall Setting*]),
+  ..rows.flatten(),
+  table.hline(),
+)
+Una policy di filtraggio può basarsi su una combinazione di indirizzi e numeri di porta. Ad esempio un router di filtraggio potrebbe inoltrare tutti i datagrammi Telnet eccetto quelli diretti a e proveniente da un elenco di specifici indirizzi IP. Basare la politica sugli indirizzi esterni non fornisce alcuna protezione contro i datagrammi il cui indirizzo sorgente sia stato falsificato (_spoofed_). \
+Il filtraggio può anche basarsi sul fatto che il bit TCP ACK sia stato impostato o meno. Questo è utile se un'organizzazione desidera consentire ai propri client interni di connettersi a server esterni, ma vuole impedire a client esterni di connettersi a server interni. \
+Le regole del firewall sono implementate nei router tramite *liste di controllo degli accessi* (*ACL*, _access control lists_), in cui ciascuna interfaccia del router dispone delal propria lista. Un esempio di questa lista è mostrata nella seguente tabella.
+#let rows = (
+  ([allow], [222.22/16], [outside of \ 222.22/16], [TCP], [\> 1023], [80], [any]),
+  ([allow], [outside of \ 222.22/16], [222.22/16], [TCP], [80], [\> 1023], [ACK]),
+  ([allow], [222.22/16], [outside of \ 222.22/16], [UDP], [\> 1023], [53], [---]),
+  ([allow], [outside of \ 222.22/16], [222.22/16], [UDP], [53], [\> 1023], [---]),
+  ([deny], [all], [all], [all], [all], [all], [all]),
+)
+
+#table(
+  columns: 7,
+  align: left + horizon,
+  inset: (x: 8pt, y: 6pt),
+  // horizontal line above every row, no vertical lines
+  stroke: (x, y) => (top: 0.5pt),
+  table.header(
+    [action], [source address], [dest address], [protocol],
+    [source port], [dest port], [flag bit],
+  ),
+  ..rows.flatten(),
+  table.hline(),
+)
+Questa lista di controllo degli accessi blocca tutto il traffico Web avviato dall'interno dell'organizzazione e il traffico DNS. La prima regola consente a qualsiasi pacchetto TCP con porta di destinazione 80 di uscire dalla rete interna; la seconda consente a qualsiasi pacchetto TCP conm porta sorgente 80 e bit ACK di entranre nella rete interna. Lo stesso vale per i pacchetti DNJS della terza e quarta regola.
+==== Filtri di pacchetti con stato
+==== Gateway applicativi
+=== Sistemi di rilevamento intrusioni
+==== Snort
