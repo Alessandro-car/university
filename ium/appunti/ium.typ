@@ -1145,7 +1145,13 @@ Gli standard principali che riguardano l'usabilità sono:
 	Questo standard descrive principi e raccomandazioni per la progettazione di sistemi multimediali. In particolare tratta l'interfaccia utente di applicazioni che incorporano, integrano e sincronizzano media differenti, statici (testo, immagini e così via) o dinamici (audio, animazioni e così via).
 Esistono diverse tipologie di standard. Gli _standard di processo_ definiscono le caratteristiche di determinati processi di lavoro (come nel caso dell'ISO 13407). Altri sono _standard di protodotto_ che specificano le caratteristiche devono possedere determinate categorie di prodotti (come vari documenti dell'ISO 9241). Molto documenti, inoltre, hanno lo scopo di _definire la terminologia_ da usarsi in un determinato ambito. Questo è un compito importante che permette ai vari operatori di utilizzare un linguaggio comune in modo non ambiguo.
 == I principi del dialogo secondo la ISO 9241-110
-Descriviamo la parte 110 dell'ISO 9241, intitolata _Dialogue principles_. Si tratta di un documento breve, ma importante. Esso descrive sette _principi del dialogo_, ovvero sette caratteristiche che ogni dialogo fra un utente e un sistema interattivo dovrebbe possedere. Il dialogo è inteso come sequenza di azioni dell'utente (input) e di risposte del sistema (output) per raggiungere un obiettivo. I sette principi del dialogo sono i seguenti.
+Descriviamo la parte 110 dell'ISO 9241, intitolata _Dialogue principles_. Si tratta di un documento breve, ma importante, destinato a:
+- coloro che si occupano di analisi dei requisiti (di mercato, degli utenti e di sistema);
+- progettisti degli strumenti e della "guida di stile" necessari per la progettazione e lo sviluppo delle interfacce utente;
+- progettisti che utilizzano tale normativa come guida durante il processo di sviluppo;
+- valutatori che hanno la possibilità, grazie a tale guida, di garantire che i prodotti soddisfino le raccomandazioni generali di progettazione contenute nel documento normativo stesso;
+- gli acquirenti, come riferimento per la stesura dei contratti di acquisto dei prodotti.
+Il documento descrive sette _principi del dialogo_, ovvero sette caratteristiche che ogni dialogo fra un utente e un sistema interattivo dovrebbe possedere. Il dialogo è inteso come sequenza di azioni dell'utente (input) e di risposte del sistema (output) per raggiungere un obiettivo. I sette principi del dialogo sono i seguenti.
 - _Adeguatezza al compito_ \
 	Un sistema interattivo è adeguato al compito se suipporta l'utente nel completamento del compito, cioè quando le funzionalità del sistema e il dialogo sono basati sulle caratteristiche del compito, piuttosto che sulla tecnlogia scelta.
 - _Auto-descrizione_ \
@@ -1182,10 +1188,10 @@ Alcune linee guida sono le seguenti.
 - Compatibilità con i documenti. \
 	Questa indicazione è particolarmente importante nel progetto di sistemi informativi aziendali. Essa si applica quando un documento cartaceo è la fonte dei dati che devono essere immessi nel sistema, o quando né è la destinazione. In entrambi i casi conviene che il layout delle informazioni sul video e sul documento siano congruenti. Nel primo caso, per rendere più scorrevoli le operazioni di immissione dei dati. Nel secondo caso, per evitare all'utente la complessità di gestire gli stessi dati visualizzati in modo diverso.
 === Auto-descrizione
-Questo principio richiede che il sistema comunichi all'utente, in ogni momento, che cosa può fare e come, e che cosa sta accadendo. Nella maggior parte dei casi, questa comunicazione utilizza il canale visivo, con informazioni testuali o grafiche. Possono però essere utilizzati anche altri canali, per esempio quello auditivo. \
+Questo principio richiede che il sistema comunichi all'utente, in ogni momento, che cosa può fare e come, e che cosa sta accadendo, con lo scopo di ridurre il _golfo dell'esecuzione_ e il _golfo della valutazione_. Nella maggior parte dei casi, questa comunicazione utilizza il canale visivo, con informazioni testuali o grafiche. Possono però essere utilizzati anche altri canali, per esempio quello auditivo. \
 Alcune linee guida da seguire nella progettazione di un dialogo autodescrittivo sono le seguenti.
 - Guida per l'utente. \
-	Ogni passo del dialogo dovrebbe fornire all'utente tutte le informazioni utili per proseguire. Le informazioni sono sostanzialmente di tre tipi: istruzioni operative (cosa può fare l'utente), informazioni sullo stato del sistema (cosa sta facendo il sistema) e informazioni di feedback (l'output conseguente all'input dell'utente). La guida all'utente non dovrebbe essere eccessivamente vincolante: egli dovrebbe essere sempre libero di modificare lo svolgimento del dialogo secondo le sue esigenze, in modo flessibile. La flessibilità è importante e l'ISO 9341 la sancisce dedicandole uno dei sette principi di base.
+	Ogni passo del dialogo dovrebbe fornire all'utente tutte le informazioni utili per proseguire. Le informazioni sono sostanzialmente di tre tipi: istruzioni operative (cosa può fare l'utente), informazioni sullo stato del sistema (cosa sta facendo il sistema) e informazioni di feedback (l'output conseguente all'input dell'utente). La guida all'utente non dovrebbe essere eccessivamente vincolante: egli dovrebbe essere sempre libero di modificare lo svolgimento del dialogo secondo le sue esigenze, in modo flessibile. La flessibilità è importante e l'ISO 9241 la sancisce dedicandole uno dei sette principi di base.
 - Interazione evidente. \
 	Questa linea guida raccomanda che i dialoghi siano progettati in modo che l'interazione con il sistema risulti evidente.
 	#figure(
@@ -1213,8 +1219,7 @@ Questo principio afferma che il dialogo dovrebbe essere conforme a ciò che l'ut
 - Aderenza alle convenzioni. \
 	Il dialogo dovrebbe seguire le convenzioni comunemente adottate nello specifico contesto. Ad esempio, in un sito web di un paese occidentale, il menu di navigazione orizzontale è allineato a sinistra, leggendolo da sinistra a destra. In un sito arabo, i menu sono allineati a destra.
 - Organizzazione abituale. \
-	La struttura del dialogo e l'oganizzazione dei dati dovrebbero permettere all'utente di effettuare le operazini secondo le modalità a lui consuete. Per seguire questa indicazione, il progettista deve tenere presente che le abitudini degli utenti si formano e modificano rapidamente, e spesso in modo inconsapevole.
-- Dialogo consistente. \
+    La struttura del dialogo e l'organizzazione dei dati dovrebbero permettere all'utente di effettuare le operazioni secondo le modalità a lui consuete. Per esempio, nel caso delle pagine web, lo studio empirico di Bernard (2001) mostra dove gli utenti si aspettano abitualmente di trovare i diversi componenti funzionali (link interni al sito a sinistra, link esterni a destra, link alla home page in alto a sinistra, motore di ricerca interno in alto al centro, e funzionalità come login/registrazione, carrello e help in alto a destra). Per seguire questa indicazione, il progettista deve tenere presente che le abitudini degli utenti si formano e modificano rapidamente, e spesso in modo inconsapevole.- Dialogo consistente. \
 	Le aspettative dell'utente si formano anche nell'ambito di uno stesso sistema. Se questi si comporta in un certo modo in una data situazione, l'utente si aspetterà un comportamento analogo in situazioni simili. Pertanto, tutti i dialoghi realizzati da uno stesso sistema dovrebbero avere aspetto e comportamenti consistenti.
 - Feedback conforme alle aspettative. \
 	È utile che il feedback sia ben comprensibile e specifico: l'utente dovrebbe essere in grado di interpretarlo senza fatica. Meglio ancora, dovrebbe essere formulato nel modo che l'utente si aspetta. Importante è la sua tempestività. Tempi di risposta fino a 0.1 secondi sono percepiti come immediati. Tempi di risposta da 0.1 a 1 secondo non sono percepiti come immediati, ma non sono sufficientemente lunghi da compromettere la continuità cognitiva  del compito che l'utente sta svolgendo. Invece, 10 secondi costituiscono il limite massimo per mantenere l'attenzione dell'utente focalizzata sul compito in corso. Per tempi più lunghi, l'utente desidererà probabilmente dedicarsi ad altri compiti.
@@ -1289,6 +1294,8 @@ Le raccomandazioni contenute nell'ISO 9241 sono le seguenti.
 === Adeguatezza all'individualizzazione
 L'usabilità di un sistema è relativa a uno specifico utente, compito e contesto d'uso. È quindi utile che un sistema permetta all'utente di adattarne il comportamento alle proprie specifiche esigenze e capacità. Si dice allora che il sistema è _personalizzabile_ o, nel linguaggio dell'ISO 9241-110, _individualizzabile_.  \
 La personalizzazione può riguardare aspetti diversi, come la lingua, le preferenze in relazione ai compiti da effettuare, le modalità di rappresentazione dei dati, e così via. Alcune linee guida da tenere presenti in relazione a questo principio sono le seguenti.
+- Adattamento al profilo dell'utente. \
+    Il sistema dovrebbe consentire di adattare l'interazione e la presentazione delle informazioni alle caratteristiche e alle preferenze specifiche del profilo del singolo utente.
 - Scelta di rappresentazioni alternative. \
 	Il sistema dovrebbe permettere all'utente di scegliere fra varie forme di rappresentazione, adatte alle diverse necessità individuali. Ad esempio, la seguente figura, mostra come l'utente possa scegliere il sistema di misura, la valuta, e la rappresentazione di ora, data e numeri presenti nel sistema operativo MacOS della Apple.
 	#figure(
@@ -1337,6 +1344,7 @@ Riassumendo le linee guida illustrate dall'ISO 9241-110 sono le seguenti.
 	- Input in posizione attesa.
 	- Stile coerente dei messaggi.
 - Adeguatezza all'apprendimento.
+	- Adattamento al profilo dell'utente.
 	- Bassa soglia di apprendimento.
 	- Aiuto alla familiarizzazione.
 	- Aiuto online.
