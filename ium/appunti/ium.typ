@@ -1022,3 +1022,222 @@ I prototipi intermedi permettono di provare specifici aspetti del prodotto, ma n
 Nelle prove d'uso dei prototipi finali non dovrebbero quindi esserci troppe sorprese. Le prove finali però sono molto importanti, perché è solo quando il sistema è sostanzialmente finito che si potranno condurre prove complete per i compiti per i quali è stato costruito.
 \
 Nel caso per esempio di un sito web, il prototipo finale è il sito completo, con i suoi contenuti definitivi, le funzionalità collaudate e con una base di dati reali o comunque significativi. Su questo sito si potranno fare prove sofisticate, in scenari d'uso completi e di notevole complessità.
+
+= Principi e linee guida
+Per aiutare il progettista di sistemi interattivi usabili, è utile fornirgli delle indicazioni che si siano dimostrate valide in progetti simili al suo. Le indicazioni possono essere più o meno _generali_ (alcune applicabili in ogni situazione, altre in casi specifici) o più o meno _coercitive_ (alcune sono semplici suggerimenti, che possono essere seguiti a discrezione del progettista, altre sono vincolanti, e devono essere seguite obbligatoriamente). \
+Queste indicazioni possono essere classificate in quattro grandi categorie, in funzione del loro livello di generalità e coercitività, come mostrato nella seguente figura.
+
+#let W = 9cm
+#let H = 4.5cm
+#let x0 = 1.4cm        // left edge of the dashed grid
+#let y0 = 0.8cm        // top edge of the dashed grid
+#let ox = 1.0cm        // x of the vertical axis
+#let oy = y0 + H + 0.25cm  // y of the horizontal axis
+#let dashed = (thickness: 0.5pt, dash: "dashed")
+
+#let arrow-head(angle) = rotate(angle, origin: center + horizon, polygon.regular(size: 0.28cm, vertices: 3, fill: black))
+
+#let vlabel(txt, cy) = place(
+  top + left,
+  dx: 0.45cm - 0.7cm,
+  dy: cy - 0.25cm,
+  rotate(-90deg, origin: center + horizon, box(width: 1.4cm, height: 0.5cm, align(center + horizon, txt))),
+)
+
+#figure(
+  box(width: W + 3.8cm, height: H + 2.2cm)[
+    // dashed grid: outer rectangle and the two midlines
+    #place(top + left, dx: x0, dy: y0, rect(width: W, height: H, stroke: dashed))
+    #place(top + left, dx: x0 + W / 2, dy: y0, line(length: H, angle: 90deg, stroke: dashed))
+    #place(top + left, dx: x0, dy: y0 + H / 2, line(length: W, stroke: dashed))
+
+    // axes
+    #place(top + left, dx: ox, dy: oy, line(start: (0cm, 0cm), end: (0cm, -(oy - 0.45cm)), stroke: 1pt))
+    #place(top + left, dx: ox - 0.14cm, dy: 0.28cm, arrow-head(0deg))
+    #place(top + left, dx: ox, dy: oy, line(start: (0cm, 0cm), end: (x0 + W + 0.5cm - ox, 0cm), stroke: 1pt))
+    #place(top + left, dx: x0 + W + 0.38cm, dy: oy - 0.14cm, arrow-head(90deg))
+
+    // axis titles
+    #place(top + left, dx: 0cm, dy: 0cm, [*generalità*])
+    #place(top + left, dx: x0 + W + 0.7cm, dy: oy - 0.2cm, [*coercitività*])
+
+    // axis value labels
+    #vlabel("alta", y0 + H / 4)
+    #vlabel("bassa", y0 + 3 * H / 4)
+    #place(top + left, dx: x0, dy: oy + 0.2cm, box(width: W / 2, align(center)[bassa]))
+    #place(top + left, dx: x0 + W / 2, dy: oy + 0.2cm, box(width: W / 2, align(center)[alta]))
+
+    // quadrant labels
+    #place(top + left, dx: x0, dy: y0, box(width: W / 2, height: H / 2, align(center + horizon)[*principi*]))
+    #place(top + left, dx: x0 + W / 2, dy: y0, box(width: W / 2, height: H / 2, align(center + horizon)[*standard*]))
+    #place(top + left, dx: x0, dy: y0 + H / 2, box(width: W / 2, height: H / 2, align(center + horizon)[*linee \ guida*]))
+    #place(top + left, dx: x0 + W / 2, dy: y0 + H / 2, box(width: W / 2, height: H / 2, align(center + horizon)[*regole \ di progetto*]))
+  ],
+  caption: [Classificazione delle indicazioni per il progettista],
+)
+- _Regole di progetto_ \
+	Sono le regole che *devono* essere applicate nell'ambito di uno specifico progetto. Hanno bassa generalità, ma alta coercitività: sono imposte dal committente, e vincolanti per il progettista. Di solito sono regole piuttosto dettagliate, che specificano le modalità d'interazione con un certo sistema, per esempio per renderlo consistente con altri sistemi della stessa organizzazione. Esempi tipici sono le regole che definiscono l'apparenza grafica dell'interfaccia con l'utente: i fonti usati, i formati ammessi per i campi di input, ecc.
+- _Standard_ \
+	Sono norme di tipo generale, emesse da organismi internazionali, che definiscono le regole da applicare nei progetti di determinate classi di sistemi. Sono vincolanti per tutti i progetti che dichiarano di essere conformi allo standard. Sono emessi da enti di standardizzazione, come ISO, o das altri enti dipendenti, che hanno l'obiettivo di definire delle raccomandazioni da seguire per certe categorie di sistemi. Le raccomandazioni definiscono degli _standard di fatto_. La conformità ad uno standard deve essere valutabile in modo preciso, e quindi gli standard devono essere formulati con estrema cura, per evitare ambiguità. Gli standard sono meno specifici delle regole di progetto perchè devono essere applicabili a intere classi di sistemi.
+- _Linee guida_ \
+	Sono delle raccomandazioni per il design dell'interazione di specifiche classi di sistemi, espresse in modo più o meno generale, a seconda dei casi. Sono spesso corredate di esempi e motivazioni. Non sono vincolanti, sta al progettista decidere sull'opportunità di applicarle caso per caso. Sono importanti le linee guida per l'interfaccia utente di applicazioni relative a una specifica piattaforma, come Apple, Windows, e così via. Il loro scopo è quello di garantire un'elevata uniformità della user experience di tutte le applicazioni sviluppate per la specifica piattaforma. Altre sono indipendenti dalla piattaforma, dette _cross-platform guidelines_.
+- _Principi_ \
+	Sono indicazioni generali per la progettazione di interfacce utente usabili, basate su evidenze scientifiche o sul generale consenso. Derivano dalla conoscenza degli aspetti fisiologici, psicologici e sociali degli utenti e dall'esperienza accumulata nella pratica della progettazione dei sistemi usabili. Sono indipendenti dalla tecnlogia, e sono espressi spesso in forma molto generale. I principi del diagolo con i sistemi interattivi descritti nel documenti ISO 9241-110 sono particolarmente importanti.
+== Gli standard della human-system interaction
+L'ente principale della progettazione degli standard è l'ISO (_International Standard Organization_). I prodotti principali dell'ISO sono dei documenti chiamati _International Standard (IS)_, che vengono redatti da appositi commitati tecnici (_Technical Commitee, TC_) rappresentativi degli interessi delle parti coinvolte. \
+Gli standard principali che riguardano l'usabilità sono:
+- ISO 13407 \
+	Si intitola _Human-cetred design processes for interactive systems_, ed ha lo scopo di aiutare coloro che hanno la responsabilità di gestire i processi di progettazione hardware e software a pianificare in modo adeguato le attività di progettazione human-centred.
+- ISO 9241 \
+	Si tratta dello standard principale relativo alla human-computer interaction. È molto ampio, ed è composto da numerosi documenti separati, in evoluzione da una ventina d'anni.  \
+	Inizialmente, questo standard trattava gli aspetti ergonomici dei terminali video utilizzati per il lavoro di ufficio, e si intitolava _Ergonomic requirements for office work with visual display terminals (VDTs)_. Adesso, tratta problematiche di usabilità dei sistemi interattivi in generale. Pertanto, è stato rinominato come _Ergonomics of Human System Interaction_. Alcuni documenti pubblicati dell'ISO 9241 sono i seguenti:
+	#figure(
+  block(
+    stroke: 0.5pt,
+    inset: 10pt,
+    width: 100%,
+    align(left)[
+      #set text(size: 8pt)
+      #set par(leading: 0.5em)
+      Part 1: General introduction \
+      Part 2: Guidance on task requirements \
+      Part 4: Keyboard requirements \
+      Part 5: Workstation layout and postural requirements \
+      Part 6: Guidance on the work environment \
+      Part 9: Requirements for non-keyboard input devices \
+      Part 11: Guidance on usability \
+      Part 12: Presentation of information \
+      Part 13: User guidance \
+      Part 14: Menu dialogues \
+      Part 15: Command dialogues \
+      Part 16: Direct manipulation dialogues \
+      Part 17: Form filling dialogues \
+      Part 20: Accessibility guidelines for ICT equipment and services \
+      Part 100: Introduction to standards related to software ergonomics \
+      Part 110: Dialogue principles \
+      Part 129: (DIS) Guidance on software individualization \
+      Part 151: Guidance on World Wide Web user interfaces \
+      Part 171: Guidance on software accessibility \
+      Part 210: Human-centred design for interactive systems \
+      Part 300: Introduction to electronic visual display requirements \
+      Part 302: Terminology for electronic visual displays \
+      Part 303: Requirements for electronic visual displays \
+      Part 304: User performance test methods for electronic visual displays \
+      Part 305: Optical laboratory test methods for electronic visual displays \
+      Part 306: Field assessment methods for electronic visual displays \
+      Part 307: Analysis and compliance test methods for electronic visual displays \
+      Part 308: Surface-conduction electron-emitter displays (SED) \
+      Part 309: Organic light-emitting diode (OLED) displays \
+      Part 400: Principles and requirements for physical input devices \
+      Part 410: Design criteria for physical input devices \
+      Part 420: (DIS) Selection procedures for physical input devices \
+      Part 910: (DIS) Framework for tactile and haptic interaction \
+      Part 920: Guidance on tactile and haptic interactions
+    ],
+  ),
+  caption: [Alcuni documenti dell'ISO 9241],
+)
+- ISO 14915 \
+	Si intitola _Software ergonomics for muiltimedia user-interfaces_, ed è composto da tre documenti.
+	+ _Design principles and framework_;
+	+ _Multimedia navigation and control_;
+	+ _Media selection and combination_
+	Questo standard descrive principi e raccomandazioni per la progettazione di sistemi multimediali. In particolare tratta l'interfaccia utente di applicazioni che incorporano, integrano e sincronizzano media differenti, statici (testo, immagini e così via) o dinamici (audio, animazioni e così via).
+Esistono diverse tipologie di standard. Gli _standard di processo_ definiscono le caratteristiche di determinati processi di lavoro (come nel caso dell'ISO 13407). Altri sono _standard di protodotto_ che specificano le caratteristiche devono possedere determinate categorie di prodotti (come vari documenti dell'ISO 9241). Molto documenti, inoltre, hanno lo scopo di _definire la terminologia_ da usarsi in un determinato ambito. Questo è un compito importante che permette ai vari operatori di utilizzare un linguaggio comune in modo non ambiguo.
+== I principi del dialogo secondo la ISO 9241-110
+Descriviamo la parte 110 dell'ISO 9241, intitolata _Dialogue principles_. Si tratta di un documento breve, ma importante. Esso descrive sette _principi del dialogo_, ovvero sette caratteristiche che ogni dialogo fra un utente e un sistema interattivo dovrebbe possedere. Il dialogo è inteso come sequenza di azioni dell'utente (input) e di risposte del sistema (output) per raggiungere un obiettivo. I sette principi del dialogo sono i seguenti.
+- _Adeguatezza al compito_ \
+	Un sistema interattivo è adeguato al compito se suipporta l'utente nel completamento del compito, cioè quando le funzionalità del sistema e il dialogo sono basati sulle caratteristiche del compito, piuttosto che sulla tecnlogia scelta.
+- _Auto-descrizione_ \
+	Un dialogo è auto-descrittivo se agli utenti risulta evidente, in qualsiasi momento, in che dialogo si trovano, a che punto si trovano all'interno del dialogo, quali azioni possono compiere e come possono essere eseguite.
+- _Conformità delle aspettative dell'utente_ \
+	Un dialogo è conforme alle aspettative dell'utente se corrisponde alle necessità dell'utente, prevedibili in base al contesto e a convenzioni comunemente accettate.
+- _Adeguatezza all'apprendimento_ \
+	Un dialogo è adeguato all'apprendimento se supporta e guida l'utente nell'apprendimento del sistema.
+- _Controllabilità_ \
+	Un dialogo è controllabile se l'utente è in grado di iniziare e tenere sotto controllo la direzione e i tempo dell'interazione fino al raggiungimento dell'obiettivo.
+- _Tolleranza verso gli errori_ \
+	Un dialogo tollera gli errori se, nonostante gli errori negli input, i risultati desiderati possono essere ottenuti senza o con minime azioni correttive. La tolleranza per gli errori si ottiene attraverso:
+	+ il controllo degli errori;
+	+ la correzione degli errori;
+	+ la gestione degli errori, per fronteggiare gli errori occorsi.
+- _Adeguatezza all'individualizzazione_ \
+	Un dialogo è adeguato all'individualizzazione se l'utente può modificare l'interazione e la presentazione dell'informazione per adattarle alle proprie necessità e capacità individuali.
+Per ciascuno di questi principi, lo standard ISO 9241-110 fornisce una lista di raccomandazioni che dovrebbero essere tenute in considerazione nella progettazione di un sistema. Le raccomandazioni non sono fra loro indipendenti, e ci sono diverse sovrapposizioni.
+=== Adeguatezza al compito
+Questo principio afferma che le funzionalità e le modalità d'interazione del sistema devono essere modellate sulle caratteristiche del compito che l'utente deve compiere con il supporto del sistema, e non sulla tecnologia o delle caratteristiche del sistema stesso. In pratica, il dialogo dovrà essere progettato a partire dai casi d'uso identificati nell'analisi dei requisiti. Per ogni caso d'uso, dovrà permettere all'utente di svolgere i compiti e le azioni necessarie nella sequenza più naturale per lui, e non per il software. \
+Alcune linee guida sono le seguenti.
+- Dialogo adeguato al compito. \
+	I passi del dialogo dovrebbero essere adeguati al compito: dovrebbero essere inclusi tutti i passi necessari ed evitati quelli non necessari. Il dialogo dovrebbe assegnare al sistema tutte le operazioni che possono essere automatizzate. Le operazioni assegnate all'utente dovrebbero essere eseguite con facilità.
+- Informazione adeguata al compito. \
+	Questa linea guida è un caso particolare della precedente, e richiede che il sistema presenti all'utente tutte le informazioni utili per lo svolgimento del compito. Le soluzioni migliori sono quelle in cui l'informativa all'utente varia in funzione del contesto. In questo modo, si trasmettono all'utente solo le informazioni utili nello svolgimento di un particolare passo del dialogo.
+- Dialogo essenziale. \
+	Il sistema dovrebbe evitare di presentare all'utente informazioni ridondanti. La comunicazione dovrebbe esere breve, diretta ed essenziale. Occorre sempre evitare di duplicare l'informazione. Ogni duplicazione genera dubbi nell'utente e ne distoglie l'attenszione dal compito principale.
+- Dispositivi di input e output adeguati al compito. \
+	La tecnlogia mette a disposizione molti dispositivi di input e di output per realizzare il dialogo con l'utente. Quelli utilizzati dovrebbero essere scelti in funzione del compito specifico, e non viceversa. A volte il compito può richiedere, per una migliore efficienza, l'utilizzo contemporaneo di più dispositivi.
+- Formati di input e output adeguati al compito. \
+	I formati dei dati di input e output dovrebbero essere adeguati al compito. Per esempio, un programma finanziario dovrebbe accettare valori con non più di due decimali. Un altro esempio significativo è costituito dai numeri di telefono.
+- Default tipici. \
+	Una corretta impostazione dei valori di default può semplificare molto il dialogo. Essi dovrebbero essere impostati in modo da riflettere le scelte più comuni. Per esempio, in un distributore di biglietti ferroviari, la stazione di partenza di default potrebbe essere quella in cui ci si rova. Un'adeguata impostazione dei valori di default è particolarmente importante in quelle funzionalità che richiedono all'utente di specificare molti parametri, come per esempio nei programmi di frafica più sofisticati. In questo caso un utente poco esperto potrebbe affidarsi ai valori di default quando non ne conosce il significato.
+- Compatibilità con i documenti. \
+	Questa indicazione è particolarmente importante nel progetto di sistemi informativi aziendali. Essa si applica quando un documento cartaceo è la fonte dei dati che devono essere immessi nel sistema, o quando né è la destinazione. In entrambi i casi conviene che il layout delle informazioni sul video e sul documento siano congruenti. Nel primo caso, per rendere più scorrevoli le operazioni di immissione dei dati. Nel secondo caso, per evitare all'utente la complessità di gestire gli stessi dati visualizzati in modo diverso.
+=== Auto-descrizione
+Questo principio richiede che il sistema comunichi all'utente, in ogni momento, che cosa può fare e come, e che cosa sta accadendo. Nella maggior parte dei casi, questa comunicazione utilizza il canale visivo, con informazioni testuali o grafiche. Possono però essere utilizzati anche altri canali, per esempio quello auditivo. \
+Alcune linee guida da seguire nella progettazione di un dialogo autodescrittivo sono le seguenti.
+- Guida per l'utente. \
+	Ogni passo del dialogo dovrebbe fornire all'utente tutte le informazioni utili per proseguire. Le informazioni sono sostanzialmente di tre tipi: istruzioni operative (cosa può fare l'utente), informazioni sullo stato del sistema (cosa sta facendo il sistema) e informazioni di feedback (l'output conseguente all'input dell'utente). La guida all'utente non dovrebbe essere eccessivamente vincolante: egli dovrebbe essere sempre libero di modificare lo svolgimento del dialogo secondo le sue esigenze, in modo flessibile. La flessibilità è importante e l'ISO 9341 la sancisce dedicandole uno dei sette principi di base.
+- Interazione evidente. \
+	Questa linea guida raccomanda che i dialoghi siano progettati in modo che l'interazione con il sistema risulti evidente.
+	#figure(
+		image("images/interazione.png", width: 70%),
+		caption: [Home page di un vecchio sito della Mulino Bianco]
+	)
+	L'home page in figura ha un'interazione non evidente. La parte centrale della pagina, destinata a contenere il menu principale, è muta, ma passando il mouse su ciascuna delle tree aree appaiono le voci di un menu. Per conoscere lo scopo del sito è necessario esplorare la pagina col mouse.
+- Descrizione dell'input atteso. \
+	Anche questa raccomandazione è un caso particolare della prima. Ogni volta che il sistema richiede un input all'utente, dovrebbe fornirgli informazioni adeguate su ciò che si aspetta, e sul suo formato. Quindi, sono da evitare dialoghi che contengono campi liberi, come il seguente:
+	#align(center)[DATA DI NASCITA: #box(width: 6cm, line(length: 100%, stroke: 0.5pt))]
+	che andrebbero sostituiti con input guidati, per esempio:
+	#align(center)[
+		DATA DI NASCITA: #box(width: 1cm, line(length: 100%, stroke: 0.5pt))/#box(width: 1cm, line(length: 100%, stroke: 0.5pt))/#box(width: 2cm, line(length: 100%, stroke: 0.5pt)) (gg/mm/aaaa)
+	]
+- Stato visibile. \
+	Questa è una delle raccomandazioni più importanti. L'utente dovrebbe essere sempre informato sullo stato del sistema, sia quando questo è in attesa di input, sia quando ha elaborato l'input che gli è stato appena fornito. Se l'utente non conosce lo stato in cui si trova il sistema, non può prevedere come risponderà alle sue azioni. Un sistema muto, genera incertezza e stress, anche quando va tutto bene.
+- Formati descritti. \
+	Il sistema dovbrebbe fornire all'utente ogni informazione sui formati e sulle unità di misura utilizzati.
+- Manualistica minima. \
+	Durante l'interazione, si dovrebbe minimizzare la necessità di consultare manuali d'uso o altre informaszioni presenti fuori dal sistema. Tutta l'informazione necessaria dovrebbe essere consultabile in linea, senza uscire dal sistema, preferibilmente con sistemi di help.
+=== Conformità alle aspettative
+Questo principio afferma che il dialogo dovrebbe essere conforme a ciò che l'utente si aspetta, in relazione allo specifico contesto d'uso del sistema, e alle convenzioni comunemente adottate. Si tratta di un principio generale, che può essere applicato a situazioni diverse. Le implicazioni sono tante e ne analizzeremo alcune.
+- Linguaggio familiare. \
+	Il sisteam dovrebbe utilizzare un linguaggio che l'utente conosce bene. Questa raccomandazione è importante, perchè la maggiuor parte dei dialoghi con i sistemi interattivi avviene attraverso il linguaggio. Un suo uso improprio può compromottere l'usabilità.
+- Aderenza alle convenzioni. \
+	Il dialogo dovrebbe seguire le convenzioni comunemente adottate nello specifico contesto. Ad esempio, in un sito web di un paese occidentale, il menu di navigazione orizzontale è allineato a sinistra, leggendolo da sinistra a destra. In un sito arabo, i menu sono allineati a destra.
+- Organizzazione abituale. \
+	La struttura del dialogo e l'oganizzazione dei dati dovrebbero permettere all'utente di effettuare le operazini secondo le modalità a lui consuete. Per seguire questa indicazione, il progettista deve tenere presente che le abitudini degli utenti si formano e modificano rapidamente, e spesso in modo inconsapevole.
+- Dialogo consistente. \
+	Le aspettative dell'utente si formano anche nell'ambito di uno stesso sistema. Se questi si comporta in un certo modo in una data situazione, l'utente si aspetterà un comportamento analogo in situazioni simili. Pertanto, tutti i dialoghi realizzati da uno stesso sistema dovrebbero avere aspetto e comportamenti consistenti.
+- Feedback conforme alle aspettative. \
+	È utile che il feedback sia ben comprensibile e specifico: l'utente dovrebbe essere in grado di interpretarlo senza fatica. Meglio ancora, dovrebbe essere formulato nel modo che l'utente si aspetta. Importante è la sua tempestività. Tempi di risposta fino a 0.1 secondi sono percepiti come immediati. Tempi di risposta da 0.1 a 1 secondo non sono percepiti come immediati, ma non sono sufficientemente lunghi da compromettere la continuità cognitiva  del compito che l'utente sta svolgendo. Invece, 10 secondi costituiscono il limite massimo per mantenere l'attenzione dell'utente focalizzata sul compito in corso. Per tempi più lunghi, l'utente desidererà probabilmente dedicarsi ad altri compiti.
+- Tempi di risposta conformi alle aspettative. \
+	L'utente si forma delle aspettative sul tempo di esecuzione delle elaborazioni richieste. Se questo dovesse deviare sensibilmente da queste aspettative, dovrebbe esserne preventivamente informato. Se la risposta del sistema tarda troppo, o se il sistema rimane muto, può sorgere il dubbio che si sia bloccato per qualche errore. Le operazioni che richiedono tempi lunghi sono critiche, e il sistema dovrebbe sempre indicare chiaramente cosa sta facendo, e quanto manca al completamento.
+- Messaggi adeguati al contesto. \
+	La lunghezza e il tipo dei messaggi prodotti dal sistema dovrebbero essere adeguati al contesto. Non tutti i messaggi sono adatti a ogni situazione, anche se il loro contenuto è pertinente.
+- Messaggi in posizione appropriata. \
+	I messaggi di feedback e le spiegazioni fornite all'utente dovrebbero apparrire dove si trova il focus dell'; attenzione dell'utente, per non interrompere il flusso dell'interazione. Per esempio, in un sistema controllato per mezzo di un telecomando, i messaggi di feedback dovrebbero apparire dove l'utente dirige il telecomando stesso, poiché è lì che guarda.
+- Input in posizione attesa. \
+	Il sistema dovrebbe richieder l'input all'utente nella posizione in cui questi si aspetta di doverlo fornire. Questa indicazione è simile alla precedente, e si riferisce soprattuto ai dialoghi in cui l'utente deve fornire input ripetuti. Per esempio, durante il controllo ortografico di un testo, il word processor presenta via via all'utente le frasi da correggere, chiedendogli di accettare la correzione proposta o di confermare il testo senza modifiche. Per permettere all'utente di eseguire il compito con la massima efficienza, i bottoni per la conferma o la sostituzione dovrebbero apparire sempre nella stessa posizione.
+- Stile coerente dei messaggi. \
+	Lo stile dei messaggi prodotti dal sistema è importante. L'utente si aspetta essi siano espresei in una forma coerente con il contesto e con le convenzioni correnti. In particolare, essi dovrebbero essere formulati in modo oggettivo e costruttivo, evitando qualunque connotazione negativa o enfatica. Questa raccomandazione è importante nel caso dei messaggi di errore, che non dovrebbero mai rimproverare l'utente, anche se in modo implicito, per ciò che ha fatto.
+=== Adeguatezza all'apprendimento
+Questo principio si riferisce alla _learnability_. Esso auspica che il dialogo sia organizzato in modo tale da aiutare e guidare l'utente nell'apprendimento del sistema. Alcune linee guida sono le seguenti.
+- Bassa soglia di apprendimento. \
+	Ogni sistema dovrebbe essere utilizzabile, sia pure in modo elementare, anche con un livello di apprendimento minimo. L'utente inesperto dovrebbe essere comunque in grado di usare le funzioni di base con un addestramento molto limitato, o meglio ancora, senza alcun addestramento. Di fronte a un nuovo sistema, gli utenti preferiranno provarlo direttamente, esplorandone subito almeno le funzioni più semplici. Il sistema dovrebbe facilitare questa esplorazione, e fornir loro, le informazioni necessarie per un utilizzo più avanzato. Molto importanti, per facilitare l'accesso iniziale al sistema, sono i valori di default dei principali parametri che dovranno essere scelti in accordo alle modalità d'uso più comuni degli utenti inesperti.
+- Aiuto alla familiarizzazione. \
+	Il sistema dovrebbe aiutare l'utente a prendere familiarità con il dialogo, fornendo tutti gli aiuti necessari.
+- Aiuto online. \
+	Nel punto precedente, è il sistema che suggerisce all'utente le azioni per prendere familiarità con le diverse funzioni. Tuttavia, è necessariuo anche dare all'utente la possibilità di chiedere aiuto quando è lui che lo desidera. Questo è lo scopo dei vari sistemi di _help online_, tradizionalmente disponibili nei prodotti software. In molti casi, ci si può limitare alla tecnica, molto più semplice, delle _FAQ (Frequently Asked Question)_, presenti in quasi tutti i servizi online.
+- Feedback intermedi. \
+- Modello concettuale evidente. \
+- Sperimentazione sicura. \
+- Riapprendimento facilitato. \
+=== Controllabilità
