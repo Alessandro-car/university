@@ -1243,5 +1243,133 @@ Questo principio si riferisce alla _learnability_. Esso auspica che il dialogo s
 - Sperimentazione sicura. \
 	Il modo più naturale di imparare a usare un sistema è di sperimentarne l'uso. Un sistema ben progettato dovrebbe permettere all'utente di provarne le funzioni, senza che ciò produca conseguenze negative. Questo si può ottenere mettendo a disposizione dell'utente una funzione di _undo_, che consenta di annullare le conseguenze indesiderate delle sue azioni. Le azioni che non potranno essere annullate dovrebbero essere preventivamente segnalate all'utente in modo chiaro, per esempio con un messaggio di avvertimento e una richiesta di conferma.
 - Riapprendimento facilitato. \
-	In tutti i sistemi eesistono funzioni che sono usate raramente. Per esempio, in un sistema di contabilità aziendale le funzioni relative alla compilazione del bilancio sono eseguite una solta volta l'anno. Può accadere che l'utente dimentichi come utilizzare queste funzionalità, e le debba apprendere di nuovo. Il sistema dovrebbe fornire un aiuto per questo riapprendimento, trattando le funzioni di uso non frequente in modo particolare. Questo è importante nel caso di funzionalità di utilizzo raro ma di elevata criticità.
+	In tutti i sistemi eesistono funzioni che sono usate raramente. Per esempio, in un sistema di contabilità aziendale le funzioni relative alla compilazione del bilancio sono eseguite una solta volta l'anno. Può accadere che l'utente dimentichi come utilizzare queste funzionalità, e le debba apprendere di nuovo. Il sistema dovrebbe fornire un aiuto per questo riapprendimento, trattando le funzioni di uso non frequente in modo particolare. Questo è importante nel caso di funzionalità di utilizzo raro ma di elevata criticità. Ad esempio, in un sistema di sorveglianza domestica, le funzioni che permettono all'utente di intervenire in caso di allarme sono usate molto di rado. Quindi è facile che l'utente si dimentichi come interagire col sistema in caso di allarme, il sistema dovrà ricordargli in modo chiaro, e rapidamente, come intervenire.
 === Controllabilità
+Questo principio afferma che è l'utente che deve guidare il sistema. Ciò significa che egli nno deve essere costretto a seguire una sequenza rigidamente di passi d'interazione: egli dovrebe poter decidere di sospondere il dialogo quando lo desidera, per riprenderlo successivamente, e di fornire le informazioni richieste dal sistema nell'ordine che gli è più congeniale. Dovrebbe poter cambiare idea durante l'interazione, e modificare gli input da lui già forniti. Quindi, l'interazione deve essere controllata dall'utente, e non dal sistema. Per raggiungere questo obiettivo è importante seguire le linee guida seguenti.
+- Tempi dell'interazione controllati dall'utente. \
+	L'utente dovrebbe poter impiegare tutto il tempo che desidera per effettuare i vari passi del dialogo, senza che il sistema gli ponga dei vincoli. I time-out imposti dal sistema, andrebbero introdotti solo in casi di effettiva necessità. Questa raccomandazione può essere in conflitto con esigenze di sicurezza, come avviene in alcune transazioni sul Web. Per esempio, durante l'acccesso ad una banca online, dopo un periodo d'inattività da parte dell'utente l'applicazione chiude automaticamente la sessione per evitare che utenti non autorizzati possano subentrare ed effettuare transazioni illecite. Questa indicazioni si applicano anche ai messaggi inviati dal sistema. È pratica socorretta far sì che i messaggi restino visibili per un tempo limitato, e poi siano automaticamente rimossi.
+- Proseguimento del dialogo controllato dall'utente. \
+	L'utente dovrebbe poter decidere come proseguire nel dialogo, senza che il sistema imponga vincoli rigidi. A volte può essere opportuno permettergli di effettuare uno o più compiti secondari durante l'esecuzione del compito principale.
+- Punto di ripartenza controllato dall'utente. \
+	Se il dialogo è stato interrotto per qualche motivo, l'utente dovrebbe poter scegliere il punto dal quale riprenderlo, se ciò è compatibile con il compito. Per esempio, se l'utente deve interrompere la compilazione di un SMS per rispondere a una chiamata, il sistema dovrebbe archiviarlo automaticamente in bozza, per consentirgli di riprendere da dove era stato interrotto.  Spesso il dialogo viene interrotto perchè l'utente si accorge di dover modificare qualche input da lui fornito in precedenza. Anche in quetso caso, il sistema dovrebbe permettergli di ripartire dal punto desiderato, senza ripartire da capo.
+- Reversibilita delle operazioni. \
+	Se le operazioni sono reversibili e se il contesto d'uso lo permette, dovrebbe essere sempre possibile annullare almeno il passo più recente del dialogo. La disponibilità di una funzionalità di _undo_ (e _redo_) migliora l'usabilità di un sistema, perchè permette di eliminare le conseguenze di azioni errate, ed elimina l'ansia causata dal timore di commettere errori.
+- Modalità di visualizzazione dei dati controllata dall'utente. \
+	È utile che l'utente possa tenere sotto controllo non soltanto la sequenza dei passi del dialogo, ma anche le modalità di visualizzazione dei dati necessari al compito. Questo è importante nel caso in cui essi siano numerosi: l'utente dovrebbe essere in gardo di controllare quali e quanti dati gli vengono mostrati.
+- Dispositivo d'interazione scelto dall'utente. \
+	All'utente dovrebbe essere permesse di scegliere uno dei qualsiasi dispositivi di input o output disponibili, se compatbili con il compito.
+- Personalizzazione dei valori di default. \
+	L'utente dovrebbe essere in grado di definire nuovi valori di default in accordo alle proprie personali esigenze, se compatibili con il compito.
+- Disponibilità dei dati originali.  \
+	Dopo la loro modifica, i dati originali dovrebbero rimanere disponibili all'utente, se necessari per il compito.
+=== Tolleranza verso l'errore
+Nell'interazione con il sistema, anche l'utente più esperto commette inevitabilmente degli errori. È compito dei progettisti concepire sistemi che riducano al minimo la possibilità che questi errori avvengano, e la gravità delle loro conseguenze. Un dialogo si dice _tollerante verso gli errori_ quando fornisce i risultati desiderati anche in presenza di errori dell'utente, senza (o con minime) azioni correttive da parte sua. \
+Questa proprietà si ottiene mediatne accorgimenti dviersi, che permettano di prevenire gli errori quando è possibile, di segnalarli con chiarezza quando avvengono, suggerendo o effettuando automaticamente le azioni correttive appropriate. \
+Le raccomandazioni contenute nell'ISO 9241 sono le seguenti.
+- Assistenza all'utente. \
+	Il sistema dovrebbe aiutare l'utente a evitare di commettere errori negli input da lui forniti, e a scoprire quelli che comunque vengono commessi.
+- Verifica e convalida dei dati. \
+	Prima di procedere all'elaborazione dell'input, il sistema dovrebbe verificarlo e convalidarlo.
+- Prevenzione di azioni non lecite. \
+	Il sistema dovrebbe evitare che un'azione dell'utente possa causare una caduta o uno stato indefinito del sistema.
+- Richieste di conferma. \
+	Prima di eseguire azioni che possano produrre conseguenze gravi e non annullabili, il sistema dovrebbe chiedere conferma all'utente.
+- Spiegazione dell'errore. \
+	Quando l'utente commette un errore, il sistema dovrebbe fornirgli una spiegazione adeguata, indicandone la causa dell'errore e la modalità di correzione.
+- Spiegazioni aggiuntive. \
+	Il sistema dovrebbe fornire all'utente, su sua richiesta, informazioni aggiuntive sulla natura dell'errore e sulla sua correzione.
+- Assistenza per il recupero. \
+	Quando l'utente commette un errore, il sistema dovrebbe fornirgli un supporto attivo per permettergli di ristabilire la situazione corretta.
+- Minimo sforzo di correzione. \
+	I passi necessari per correggere un errore dovrebbero essere semplificati al massimo.
+- Correzione differibile. \
+	L'utente dovrebbe poter rimandare la correzione dell'errore a un momento successivo, a meno che ciò non sia necessario per proseguire nel dialogo.
+- Correzione automatica modificabile. \
+	Quando il sistema è in grado di correggere automaticamente un errore commesso dall'utente, dovrebbe avvisarlo della correzione effettuta e permettergli di modificarla.
+=== Adeguatezza all'individualizzazione
+L'usabilità di un sistema è relativa a uno specifico utente, compito e contesto d'uso. È quindi utile che un sistema permetta all'utente di adattarne il comportamento alle proprie specifiche esigenze e capacità. Si dice allora che il sistema è _personalizzabile_ o, nel linguaggio dell'ISO 9241-110, _individualizzabile_.  \
+La personalizzazione può riguardare aspetti diversi, come la lingua, le preferenze in relazione ai compiti da effettuare, le modalità di rappresentazione dei dati, e così via. Alcune linee guida da tenere presenti in relazione a questo principio sono le seguenti.
+- Scelta di rappresentazioni alternative. \
+	Il sistema dovrebbe permettere all'utente di scegliere fra varie forme di rappresentazione, adatte alle diverse necessità individuali. Ad esempio, la seguente figura, mostra come l'utente possa scegliere il sistema di misura, la valuta, e la rappresentazione di ora, data e numeri presenti nel sistema operativo MacOS della Apple.
+	#figure(
+	image("images/individualizzazione.png", width: 70%)
+	)
+	Particolarmente importanti sono le possibilità di scelta di rappresentazioni alternative che rendano il sistema accessibile a utenti con disabilità (visive, auditive o di altro tipo).
+- Scelta dei formati dei dati input e output. \
+	L'utente dovrebbe poter scegliere le rappresentazioni più appropriate per il formato dei dati elaborati nello specifico contesto applicativo.
+- Vocabolario personalizzabile. \
+	In molti casi, è utile poter arricchire il vocabolario usato dal sistema, per aggiungere eventuali termini utilizzati nel contesto specifico.
+- Scelta del livello delle spiegazioni. \
+	Il livello di dettaglio e/ola forma delle spiegazioni dovrebbe essere modificabile in funzione del livello di conoscenza dell'utente.
+- Personalizzazione dei tempi di risposta. \
+	L'utente dovrebbe poter modificare i parametri relativi ai tempi di risposta dei dispositivi di input e di output, per adattarli alle proprie personali esigenze. Ad esempio, i sistemi operativi permettono di impostare vari parametri, come sensibilità del mouse e l'intervallo temporale accettato dal sistema per il \"doppio clic\", e altri, in funzione delle preferenze dell'utente.
+- Scelta del metodo d'interazione. \
+	Quando appropriato, l'utente dovrebbe poter scegliere fra diverse tecniche di dialogo metodi d'interazione. Per esempio, un word processor permette di salvare un documento selezionando la voce di un menu, o cliccando su un'icona, o digitando una combinazione di tasti.
+- Personalizzazione del dialogo. \
+	Se appropriato, l'utente dovrebbe poter modificare alcune componenti del dialogo, per adattarlo a specifiche necessità nell'effettuazione dei compiti. La personalizzazione può essere più o meno spinta. Per esempio, in un word processor l'utente può scegliere quali _toolbar_ debbano essere visualizzate. In questo modo, se l'utente non ha necessità di utilzizare strumenti di composizione grafica, potrà evitare di affollare il video con comandi che non gli servono.
+- Ripristinabilità dei valori precedenti.
+	I sistemi interattivi più evoluti forniscono di solito ampie possibilità di personalizzazione. Questo può creare delle difficoltà all'utente, che potrebbe dimenticare quali personalizzazioni ha attivato. È quindi importante che il sistema presenti un quadro chiaro del valore dei parametri, e che l'utente possa ripristinare facilmente le impostazioni di default o quelle da lui stesso definite precedentemente. Nel caso di sistemi utilizzati da più utenti, ciascuno di essi dovrebbe poter memorizzare i parametri di personalizzazione in un proprio profilo, per poter attivare velocemente la propria configurazione.
+== Sintesi delle linee guida
+Riassumendo le linee guida illustrate dall'ISO 9241-110 sono le seguenti.
+- Adeguatezza al compito.
+	- Dialogo adeguato al compito.
+	- Informazione adeguata al compito.
+	- Dialogo essenziale.
+	- Dispositivi di I/O adeguati al compito.
+	- Formati di I/O adeguati al compito.
+	- Default tipici.
+	- Compatibilità con i documenti.
+- Auto-descrizione.
+	- Guida per l'utente.
+	- Interazione evidente.
+	- Descrizione dell'input atteso.
+	- Stato visibile.
+	- Formati descritti.
+	- Manualistica minima.
+- Conformità alle aspettative dell'utente.
+	- Linguaggio familiare.
+	- Aderenza alle convenzioni.
+	- Organizzazione abituale.
+	- Dialogo consistente.
+	- Feedback conforme alle aspettative.
+	- Tempi di risposta conformi alle aspettative.
+	- Messaggi adeguati al contesto.
+	- Input in posizione attesa.
+	- Stile coerente dei messaggi.
+- Adeguatezza all'apprendimento.
+	- Bassa soglia di apprendimento.
+	- Aiuto alla familiarizzazione.
+	- Aiuto online.
+	- Feedback intermedi.
+	- Modello concettuale evidente.
+	- Sperimentazione sicura.
+	- Riapprendimento facilitato.
+- Controllabilità.
+	- Tempi dell'interazione controllati dall'utente.
+	- Proseguimento del dialogo controllato dall'utente.
+	- Punto di ripartenza controllato dall'utente.
+	- Reversibiltià delle operazioni.
+	- Modalità di visualizzazione dei dati controllata dall'utente.
+	- Dipsositivo d'interazione scelto dall'utente.
+	- Personalizzazione dei valori di default.
+	- Disponibilità dei dati originali.
+- Tolleranza verso l'errore.
+	- Assistenza all'utente.
+	- Verifica e convalida dei dati.
+	- Prevenzione di azioni non lecite.
+	- Richieste di conferma.
+	- Spiegazione dell'errore.
+	- Spiegazioni aggiuntive.
+	- Assistenza per il recupero.
+	- Minimo sforzo di recupero.
+	- Recupero differibile.
+	- Recupero automatico modificabile.
+- Adeguatezza all'individualizzazione.
+	- Scelta di rappresentazioni alternative.
+	-	Scelta dei formati di I/O.
+	- Vocabolario personalizzabile.
+	- Scelta del livello delle spiegazioni.
+	- Scelta dle metodo d'interazione.
+	- Personalizzazione del dialogo.
+	- Ripristinabilità dei valori precedenti.
+	- Personalizzazione dei tempi di risposta.
