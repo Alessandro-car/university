@@ -1381,3 +1381,32 @@ Riassumendo le linee guida illustrate dall'ISO 9241-110 sono le seguenti.
 	- Personalizzazione del dialogo.
 	- Ripristinabilità dei valori precedenti.
 	- Personalizzazione dei tempi di risposta.
+= Progettare per l'errore
+= Interaction design
+== Design dell'interazione e comunicazione visiva
+La comunicazione visiva ha un ruolo fondamentale nell'interazione uomo-macchina: la maggior parte delle informazioni che un sistema trasmette al suo utente sono veicolate da display video di varia forma e dimensione, dai grandi monitor che tappezzano le pareti delle control room dei grandi impianti di processo, fino ai piccoli display dei telefoni cellurari o degli altri dispositivi mobili in circolazione. \
+A seguito della pubblicazione del libro _Designing Web Usability_ di Jacob Nielson, ci fu un ampio dibattito fra i fautori dell'usabilità dei siti web, da un lato, e dalla libertà espressiva, dall'altro. I primi rimpoveravano ai secondi di perseguire una creatività libera da ogni vincolo, spesso a discapito della facilità d'uso. I secondi obiettavano che l'usabilità perseguita ad ogni costo avrebbe, in ultima analisi, limitato la libertà di comunicazione che la rete permetteva. \
+Citando le parole dello standard ISO 9241-12, \"_la presentazione dell'informazione visiva dovrebbe abilitare l'utente a eseguire i compiti percettivi (per esempio, la ricerca d'informazioni sullo schermo) in modo efficace, efficiente e con soddisfazione._\". Per raggiungere questo obiettivo, prosegue lo standard, è importante che, nel progettare l'informazione visiva, si considerino le seguenti caratteristiche:
+- *Chiarezza*: il contenuto informativo è veicolato velocemente e accuratamente;
+- *Discriminabilità*: l'informazione visualizzata può essere distinta con accuratezza;
+- *Concisione*: agli utenti viene fornita solo l'informazione necessaria per eseguire il compito;
+- *Consistenza*: la medesima informazione è presentata nello stesso modo all'interno del sistema, conformemente alle aspettative dell'utente;
+- *Scopribilità*: l'attenzione dell'utente è diretta verso l'informazione necessaria;
+- *Leggibilità*: l'informazione è facile da leggere;
+- *Comprensibilità*: il significato è chiaramente comprensibile, non ambiguo, interpretabile e riconoscibile.
+== Le leggi della Gestalt
+La _psicologia della Gestalt_, detta anche _psicologia della forma_, è una corrente psicologica che si sviluppò tra gli anni '10 e gli anni '30 del secolo scorso. I suoi esponenti si focalizzarono soprattutto sugli studi della percezione e del problem-solving. \
+L'idea portante della psicologia della Gestalt è che non è corretto dividere l'esperienza umana nelle sue componenti elementari, da analizzare separatamente, perchè _un insieme è più della somma delle sue parti_. In particolare, questo avviene nella percezione visiva: gli elementi che ci si prensentano nel campo visivo interagiscono fra loro in modo complesso, e noi percepiamo qualcosa che è diverso dalla loro somma. Per esempio, quando osserviamo una fila di lampadine che si accendono e si spengono in sequenza con una certa cadenza temporale, noi percepiamo delle luci in movimento, anche se nulla si muove. \
+Gli psicologi della Gestalt hanno cercato di individuare le leggi elementari che governano questi fenomeni. Max Wertheimer descrisse le _leggi dell'organizzazione figurale_, in base alle quali elementi presenti nel campo visivo tendono a organizzarsi in unità, secondo la loro forma e posizione relativa. Esse sono chiamate legge della vicinanza, della somiglianza, della chisura, della continuità di direzione, della buona forma e dell'esperienza passata, e sono descritte di seguito.
+- Legge della vicinanza: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono fra loro più vicini tendono a essere raccolti in unità.
+- Legge della somiglianza: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono tra loro simili tendono a essere raccolti in unità.
+- Legge della chisura: a parità di tutte le altre condizioni, le linee delimitanti una superficie chiusa si percepiscono come unità più facilmente di quelle che non si chiudono.
+- Legge della continuità di direzione (dette anche della curva buona): a parità di tutte le altre condizioni, le linee che vanno nella stessa direzione si costituiscono in unità più facilmente delle altre.
+- Legge della buona forma: a parità di tutte le altre condizioni, il campo percettivo si segmenta in modo che risultino entità per quanto possibile equilibrate, armoniche, costituite secondo un medesimo principio in tutte le loro parti.
+*PER OGNI ENTRY DELL'ELENCO INSERIRE GLI ESEMPI*.
+== Vicinanza
+== Somiglianza
+== Chiusura
+== Allineamento
+== Colore
+== Percorsi visivi
