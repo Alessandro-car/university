@@ -1,4 +1,6 @@
 // Import everything from the template file
+
+#import "@preview/fletcher:0.5.8": diagram, node, edge
 #import "../../typst_templates/classic_template.typ": *
 
 #set heading(numbering: "1.1")
@@ -1886,3 +1888,209 @@ Poichè la matrice $A$ così definita risulta *stocastica, aperiodica* e *irridu
 $
 bold(r)^((t+1)) = A dot.c bold(r)^((t))
 $
+= Text Categorization
+== Il task della classificazione
+Gli elementi del task di classificazione sono i seguenti.
+- Dati in input:
+	- Viene fornita la descrizione di un'istanza $x in X$, dove $X$ rappresenta lo *spazio delle istanze*.
+	- È definito un *insieme finito di categorie* $C = brace.l c_1, c_2, dots, c_n brace.r$
+- Obiettivi da determinare:
+	- Si vuole trovare la categoria associata all'istanza $x$, espressa come $c(x) in C$	- Questo processo è regolato da una *funzione di classificazione* $c(x)$, il cui dominio è lo spazio delle istanze $X$ e il cui codominio è l'insieme delle categorie $C$.
+Un'esempio di training è costituito da una coppia $chevron.l x, c(x) chevron.r$, dove $x$ è un'istanza appartenente allo spazio delle istanze $X$ ed è associata alla rispettiva categoria $c(x)$, determinata da una funzione di classificazione $c$ che tuttavia *non è nota*. \
+L'*insieme di training* $D$ rappresenta l'insieme dei dati di addestramento a disposizione del sistema. A partire dall'insieme $D$, il compito è trovare un'ipotesi (ovvero una funzione di classificazione stimata) $h(x)$ tale per cui sia soddisfatta la condizione:
+$
+forall chevron.l x, c(x) chevron.r in D : h(x) = c(x)
+$
+La *consistenza* indica la proprietà per cui l'ipotesi $h$ riesce a riprodurre esattamente le categorie corrette per tutti gli esempi inclusi nell'insieme di training $D$. #esempio[
+Dato lo spazio delle istanze $chevron.l "size, color, shape" chevron.r$
+- size $in brace.l "small, medium, large" brace.r$
+- color $in brace.l "red, blue, green" brace.r$
+- shape $in brace.l "square, circle, triangle" brace.r$
+e l'insieme delle categorie $C = brace.l "positive, negative" brace.r$.
+Definiamo l'insieme di training $D$ come segue:
+#let rows = (
+  ("1", "small", "red", "circle", "positive"),
+  ("2", "large", "red", "circle", "positive"),
+  ("3", "small", "red", "triangle", "negative"),
+  ("4", "large", "blue", "circle", "negative"),
+)
+
+#align(center)[
+  #table(
+    columns: 5,
+    align: left + horizon,
+    inset: (x: 10pt, y: 8pt),
+    stroke: 0.5pt,
+    table.header([Example], [Size], [Color], [Shape], [Category]),
+    ..rows.flatten().map(v => [#v]),
+  )
+]
+]
+L'obiettivo è quello di generalizzare le osservazioni al fine di classificare correttamente istanze non appartenenti al training set. Memorizzare semplicemente gli esempi garantisce la consistenza ma non generalizza. Il processo di apprendimento mira a definire un *modello generale* di classificazione. \
+Il termine _Text Categorization_ designa l'assegnazione automatica di una o più categorie a testi scritti in un linguaggio naturale. Formalmente, il problema di TC consiste nell'approssimare la funzione target:
+$
+phi': D times C -> brace.l T, F brace.r
+$
+attaverso la funzione
+$
+phi: D times C -> brace.l T, F brace.r
+$
+ove:
+-	$D$ è l'insieme dei documenti;
+- $C$ è l'insieme delle categorie;
+- $phi$ si dice classificatore e deve risultare il più fedele possibile a $phi'$.
+Le tipologie di classificazione possono essere:
+- *Single-label*: prevede l'assegnazione di una sola classe a ciascun documento, tipicamente in forma binaria.
+- *Multi-label*: consente invece di associare una o più classi contemporaneamente a ogni singolo documento.
+L'approccio _single-label_ è praticabile quando sussiste l'indipendenza tra le categorie, un'assunzione che nella realtà risulta solitamente vera. Sfruttando il modello _single-label_ binario, classificare un documento rispetto all'insieme $C$ significa risolvere il problema di categorizzazione binaria esattamente $abs(C)$ volte. \
+Il caso _single-label binario_ costituisce l'impostazione più generale, impiegata con grandissima frequenza e ampiamente dettagliata nella letteratura di settore.
+== Algoritmi di text categorization
+Gli algoritmi di text categorization sono diversi, e sono:
+- *Apprendimento superivisionato*. I dati di addestramento vengono forniti come input e consistono nelle classi associate ai documenti di input.
+- *Apprendimento non superivisionato*. Non viene fornito alcun dato di addestramento.
+- *Apprendimento semi-superivisionato*. Sfrutta un set ridotto di dati di addestramento e questo piccolo insiemi di dati di training viene combinato con una quantità maggiore di dati non etichettati.
+#figure(
+  diagram(
+    node-stroke: 0.3pt,
+    node-corner-radius: 3pt,
+    node-inset: 3pt,
+    spacing: (0.8em, 1.2em),
+
+    // top levels
+    node((2.3, 0), [*Unsupervised Algorithms*], name: <root>),
+    node((1, 1), [*Clustering*], name: <clu>),
+    node((3.6, 1), [*Naive Text Classification*], name: <ntc>),
+
+    // second level
+    node((0, 2), [Partitional \ Clustering], name: <par>),
+    node((2, 2), [Agglomerative (Hierarchical) \ Clustering], name: <agg>),
+    node((3.6, 2), [Text Classification by Direct Match], name: <tcm>),
+
+    // leaves, each group inside a thicker rounded container
+    node((0, 3), [K-means]),
+    node((0, 4), [Bisecting \ K-means]),
+    node(enclose: ((0, 3), (0, 4)), stroke: 1.5pt, inset: 10pt, name: <g1>),
+
+    node((2, 3), [Single \ Link]),
+    node((2, 4), [Complete \ Link]),
+    node((2, 5), [Average \ Link]),
+    node(enclose: ((2, 3), (2, 4), (2, 5)), stroke: 1.5pt, inset: 10pt, name: <g2>),
+
+    node((3.6, 3), [Vector \ Model]),
+    node(enclose: ((3.6, 3),), stroke: 1.5pt, inset: 10pt, name: <g3>),
+
+    // edges (orthogonal, with arrow heads)
+    edge(<root>, (2.3, 0.5), (1, 0.5), <clu>, "-|>"),
+    edge(<root>, (2.3, 0.5), (3.6, 0.5), <ntc>, "-|>"),
+    edge(<clu>, (1, 1.5), (0, 1.5), <par>, "-|>"),
+    edge(<clu>, (1, 1.5), (2, 1.5), <agg>, "-|>"),
+    edge(<ntc>, <tcm>, "-|>"),
+    edge(<par>, <g1>, "-|>"),
+    edge(<agg>, <g2>, "-|>"),
+    edge(<tcm>, <g3>, "-|>"),
+  ),
+  caption: [Algoritmi di text categorization non supervisionati],
+) \
+
+#figure(
+  diagram(
+    node-stroke: 0.3pt,
+    node-corner-radius: 3pt,
+    node-inset: 3pt,
+    spacing: (0.8em, 1.2em),
+
+    // root
+    node((2.5, 0), [*Supervised Text \ Classification Algorithms*], name: <root>),
+
+    // categories
+    node((0, 1), [Decision \ Trees], name: <dt>),
+    node((1, 1), [Nearest \ Neighbors], name: <nn>),
+    node((2, 1), [Relevance \ Feedback], name: <rf>),
+    node((3, 1), [Naive \ Bayes], name: <nb>),
+    node((4, 1), [Support Vector \ Machines], name: <svm>),
+    node((5, 1), [Ensemble], name: <ens>),
+
+    // leaves, each group inside a thicker rounded container
+    node((0, 2), [DT]),
+    node(enclose: ((0, 2),), stroke: 0.8pt, inset: 4pt, name: <g1>),
+
+    node((1, 2), [kNN]),
+    node((1, 3), [Weighted \ kNN]),
+    node(enclose: ((1, 2), (1, 3)), stroke: 0.8pt, inset: 4pt, name: <g2>),
+
+    node((2, 2), [Rocchio]),
+    node((2, 3), [Rocchio in a \ Query Zone]),
+    node(enclose: ((2, 2), (2, 3)), stroke: 0.8pt, inset: 4pt, name: <g3>),
+
+    node((3, 2), [Binary \ Independence \ Naive Bayes]),
+    node((3, 3), [Multinomial Naive \ Bayes]),
+    node(enclose: ((3, 2), (3, 3)), stroke: 0.8pt, inset: 4pt, name: <g4>),
+
+    node((4, 2), [SVM]),
+    node((4, 3), [SVM Multiple \ Classes]),
+    node((4, 4), [SVM Multiple \ Kernels]),
+    node(enclose: ((4, 2), (4, 3), (4, 4)), stroke: 0.8pt, inset: 4pt, name: <g5>),
+
+    node((5, 2), [Stacking-based \ Ensemble]),
+    node((5, 3), [Boosting-based \ Ensemble]),
+    node(enclose: ((5, 2), (5, 3)), stroke: 0.8pt, inset: 4pt, name: <g6>),
+
+    // edges from the root through a horizontal bus
+    edge(<root>, (2.5, 0.5), (0, 0.5), <dt>, "-|>"),
+    edge(<root>, (2.5, 0.5), (1, 0.5), <nn>, "-|>"),
+    edge(<root>, (2.5, 0.5), (2, 0.5), <rf>, "-|>"),
+    edge(<root>, (2.5, 0.5), (3, 0.5), <nb>, "-|>"),
+    edge(<root>, (2.5, 0.5), (4, 0.5), <svm>, "-|>"),
+    edge(<root>, (2.5, 0.5), (5, 0.5), <ens>, "-|>"),
+
+    // category to leaf group
+    edge(<dt>, <g1>, "-|>"),
+    edge(<nn>, <g2>, "-|>"),
+    edge(<rf>, <g3>, "-|>"),
+    edge(<nb>, <g4>, "-|>"),
+    edge(<svm>, <g5>, "-|>"),
+    edge(<ens>, <g6>, "-|>"),
+  ),
+  caption: [Algoritmi di text categorization supervisionati],
+)
+=== Algoritmi supervisionati
+Siano dati l'insieme dei documenti $D=  brace.l d_1, dots, d_(abs(D)) brace.r$ e l'insieme delle categorie $C = brace.l c_1, dots, c_(abs(C)) brace.r$. La funzione target $phi'$ è nota per ogni valore appartenente al prodotto cartesiano $chevron.l d_j, c_i chevron.r in D times C$. Se il valore della funzione è _True_, la coppia $chevron.l d_j, c_i chevron.r$ viene considerata un esempio *positivo* per $phi'$, mentre in caso contrario viene definita come esempio *negativo*. \
+L'insieme dei documenti $D$ viene suddiviso in due sotto-insiemi principali: $T r$ (training set) e $T e$ (Test set), tali per cui l'unione corrisponde all'intero corpus $D$. \
+Il classificatore viene costruito partendo unicamente dagli esempi presenti nel training set $T r$ e la fase di testing e validazione viene effettuata utilizzando gli esempi riservati nel test set $T e$. \
+Gli algoritmi supervisionati dipendono da un training set. Esso è costituito da un insieme di classi con esempi di documenti associati a ciascuna classe. Gli esempi di addestramento sono determinati da specialisti umani. Il training set viene utilizzato per apprendere la funzione di classificazione. \
+Maggiore è il numero di esempi di training, migliore risulta la messa a punto (_fine tuing_) del classificatore. Il problema dell'*overfitting* si manifesta quando il classificatore diventa eccessivamente specifico e legato ai soli esempi di training, perdendo capacità di generalizzazione. \
+Per valtuare l'efficacia del classificatore occorre utilizzare un insieme di oggetti non visti e questo insieme di verifica è definito *test set*.  \
+I principali algoritmi di apprendimento sono:
+- *Bayesian (naive)*. Modello probabilistico basato sul teorema di Bayes e sull'assunzione di indipendenza condizionale tra le feature.
+- *Neural network*. Reti neurali artificiali capaci di apprendere rappresentazioni complesse dei dati testuali.
+- *Relevance feedback (Rocchio)*. Algoritmo classico basato sulla modifica dei vettori di query e documenti tramite feedback di pertinenza.
+- *Rule based (ripper)*. Sistemi basati sull'induzione di regole logiche di classificazione.
+- *Nearest Neighbor (case based)*. Metodo basato sulle istanze che classifica un documento in base alla vicinanza con gli esempi memorizzati.
+- *Support Vector Machines (SVM)*. Modelli a margini massimali ampiamente utilizzati ed efficaci nella classificazione testuale ad alta dimensionalità.
+Si utilizza un approccio induttivo che realizza la *costruzione induttiva di un classificatore* in grado di svolgere le funzioni tipiche di un sistema esperto. Il vantaggio di questo approccio è che garantisce una *buona manutenibilità*, poichè elimina la necessità di ingegnerizzare e aggiornare continuamente a mano le regole di classificazione. Lo svantaggio è che richiede tassativamente una *base di documenti pre-classificati* che consenta la generazione e l'addestramento del classificatore.
+
+== RIASSUMERE SLIDE 19, 22, 23
+=== Il classificatore di Rocchio
+I metodi di _relevance feedback_ possono essere utilizzati nell'ambito del TC> I documenti possono essere rappresentati usando vettori di pesi TF/IDF (normalizzati mediatne la frequenza massima dei termini). Per ogni categoria, si computa un vettore _prototipo_. Si assegnano documenti di testing alla categoria con il vettore prototipo più vicino secondo una misura di similarità. \
+Il relevance feedback di Rocchio:
+- modifica la query dell'utente sulla base del feedback ricevuto;
+- produce una nuova query in grado di approssimare meglio l'interesse dell'utente.
+Questo approccio può essere adattato alla classificazione del testo. Il training set viene interpretato come un'insieme di informazioni di feedback. I termini che appartengono ai documenti di addestramento di una determinata classe $c_p$ foriniscono un feedback positivo. I termini appartenenti a documenti di training esterni alla classe $c_p$ forniscono un feedback negativo. \
+Le informaazioni di feedback vengono riassunte un vettore centroide. Un nuovo documento viene classificato in base alla distanza che lo separa dal vettore centroide. \
+Ogni documento $d_j$ viene rappresentato come un vettore di termini pesati $arrow(d_j)$. Il vettore viene definito come:
+$
+arrow(d_j) = (w_(1, j), w_(2, j), dots, w_(t, j))
+$
+ove:
+- $w_(i, j)$ rappresenta il peso del termine $k_i$ all'interno del documento $d_j$;
+- $t$ indica la dimensione del vocabolario.
+Vediamo come calcolare il vettore centroide $arrow(c_p)$ associato a una specifica classe $c_p$:
+$
+arrow(c_p) = beta / n_p sum_(d_j in c_p)arrow(d_j) - (gamma) / (N_t - n_p)sum_(d_l in.not n_p) arrow(d_l)
+$
+ove:
+- $n_p$ è il numero di documenti nella classe $c_p$;
+- $N_t$ è il numero totale di documenti nel training set;
+- i termini appartenenti ai documenti di addestramento inclusi nella classe $c_p$ generano pesi positivi;
+- i termini appartenenti ai documenti esterni alla classe $c_p$ generano pesi negativi.
+== FARE DA SLIDE 29 a 33
