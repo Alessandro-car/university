@@ -1600,13 +1600,66 @@ Citando le parole dello standard ISO 9241-12, \"_la presentazione dell'informazi
 == Le leggi della Gestalt
 La _psicologia della Gestalt_, detta anche _psicologia della forma_, è una corrente psicologica che si sviluppò tra gli anni '10 e gli anni '30 del secolo scorso. I suoi esponenti si focalizzarono soprattutto sugli studi della percezione e del problem-solving. \
 L'idea portante della psicologia della Gestalt è che non è corretto dividere l'esperienza umana nelle sue componenti elementari, da analizzare separatamente, perchè _un insieme è più della somma delle sue parti_. In particolare, questo avviene nella percezione visiva: gli elementi che ci si prensentano nel campo visivo interagiscono fra loro in modo complesso, e noi percepiamo qualcosa che è diverso dalla loro somma. Per esempio, quando osserviamo una fila di lampadine che si accendono e si spengono in sequenza con una certa cadenza temporale, noi percepiamo delle luci in movimento, anche se nulla si muove. \
+La seguente figura illustra in modo suggestivo questo principio. Si tratta di un dipinto di Salvador Dalì, che rappresenta una stanza contenente un divano, due quadri alla parete, un caminetto che regge un orologio, vista da una grande porta incorniciata da tende. L'effetto complessivo è però diverso; l'osservatore percepisce innanzitutto un viso di donna che assomiglia all'attrice Mae West.
+#figure(
+image("images/salvador_dali.png", width: 70%),
+caption: [\"Viso di Mae West in forma di appartamento\"]
+)
 Gli psicologi della Gestalt hanno cercato di individuare le leggi elementari che governano questi fenomeni. Max Wertheimer descrisse le _leggi dell'organizzazione figurale_, in base alle quali elementi presenti nel campo visivo tendono a organizzarsi in unità, secondo la loro forma e posizione relativa. Esse sono chiamate legge della vicinanza, della somiglianza, della chisura, della continuità di direzione, della buona forma e dell'esperienza passata, e sono descritte di seguito.
-- *Legge della vicinanza*: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono fra loro più vicini tendono a essere raccolti in unità.
-- Legge della somiglianza: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono tra loro simili tendono a essere raccolti in unità.
-- *Legge della chiusura*: a parità di tutte le altre condizioni, le linee delimitanti una superficie chiusa si percepiscono come unità più facilmente di quelle che non si chiudono.
-- *Legge della continuità di direzione* (dette anche della _curva buona_): a parità di tutte le altre condizioni, le linee che vanno nella stessa direzione si costituiscono in unità più facilmente delle altre.
-- *Legge della buona forma*: a parità di tutte le altre condizioni, il campo percettivo si segmenta in modo che risultino entità per quanto possibile equilibrate, armoniche, costituite secondo un medesimo principio in tutte le loro parti.
-*PER OGNI ENTRY DELL'ELENCO INSERIRE GLI ESEMPI*.
+- *Legge della vicinanza*: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono fra loro più vicini tendono a essere raccolti in unità. \
+	Nella seguente figura è composta da quattro raggruppamenti di piccoli cerchi. Nella figura (a) vediamo relativamente pochi raggrupppamenti. Nella figura (b), (c) e (d) le configurazioni appaiono infatti molto stabili e univoche. Nella prima vediamo tre colonne verticali, nella seconda tre righe orizzontali, e nella terza quattro gruppi di forma quadrata. I raggruppamenti, quindi, sono determinati dalla distanza relativa fra gli elementi.
+	#figure(
+		image("images/vicinanza.png", width: 70%),
+		caption: [Legge della vicinanza]
+	)
+- *Legge della somiglianza*: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono tra loro simili tendono a essere raccolti in unità. Consideriamo la seguente figura.
+	#figure(
+		image("images/somiglianza.png", width: 70%),
+		caption: [Legge della somiglianza]
+	)
+	Nella figura (a) e (b) percepiamo due gruppi ben distinti di elementi. Se invece di modificare il colore, modifichiamo la forma, il risultato è lo stesso: gli elementi si raccolgono in gruppi di analoga forma. A parità di tutte le altre condizioni, quindi, tendono a raggrupparsi quegli elementi che hanno qualche tipo di _somiglianza_. Il fenomeno descritto dalla legge della somiglianza può anche essere utilizzato per porre in evidenza alcuni elementi, per _diversità_ o _contrasto_. Nella figura (d), l'elemento grigio spicca chiaramente nel contesto degi altri elementi, tutti neri. La legge della somiglianza fa sì che esso venga isolato da tutti gli altri.
+- *Legge della chiusura*: a parità di tutte le altre condizioni, le linee delimitanti una superficie chiusa si percepiscono come unità più facilmente di quelle che non si chiudono. Consideriamo la seguente figura. Consideriamo la seguente figura.
+	#figure(
+		image("images/chiusura.png", width: 70%),
+		caption: [Legge della chiusura]
+	)
+
+	Nella figura (a), per la legge della vicinanza vediamo qauttro coppie di linee verticali. Tuttavia se aggiungiamo i tratti orizzontali che uniscono le linee verticali come nella figura (b), la segmentazione del campo visivo cambia, e vediamo tre rettangoli chiusi con duee linee verticali ai lati. La chiusura è più forte della vicinanza, come mostrato nella seguente figura.
+	#figure(
+		image("images/chiusura2.png", width: 70%),
+		caption: [Conflitto fra chiusura e vicinanza]
+	)
+
+	Nella figura (a), anche se le parentesi quadre (\][) sono molto vicine, vengono associate diversamente e vengono visti tre rettangoli chiusi. Se vengono eliminate le parentesi quadre ai due lati estremi della figura, come nella figura (b), la segmentazione diventa piuttosto instabile: a volte vediamo tre coppie di parentesi accostate, altre volte vediamo due rettangoli e due parentesi ai lati.
+- *Legge della continuità di direzione* (dette anche della _curva buona_): a parità di tutte le altre condizioni, le linee che vanno nella stessa direzione si costituiscono in unità più facilmente delle altre. In sostanza, il sistema visivo sembra funzionare in modo che un segmento rettilineo tenda a evitare bruschi cambiamenti di direzione e quindi, a un incrocio con altri segmenti, si unifiac di preferenza con quello che continua nella medesima direzione. Consideriamo la seguente figura:
+	#figure(
+		image("images/direzione.png", width: 70%),
+		caption: [Legge della continuità di direzione]
+	)
+
+	Nella figura (a) i quattro segmenti obliqui si unificano in unico segmento che sembra disposto dietro i tre gruppi di linee verticali, unificati per la legge della vicinanza. Anche le linee curve tendono a mantenere il proprio andamento e, dopo un incrocio con altre linee, a proseguire nelle linee che meno si discostano da esso. Ad esempio, nella figura (b), vediamo le due linee 1-2 e 3-4, e non le altre possibili.
+- *Legge della buona forma*: a parità di tutte le altre condizioni, il campo percettivo si segmenta in modo che risultino entità per quanto possibile equilibrate, armoniche, costituite secondo un medesimo principio in tutte le loro parti. \
+	Questo principio, detto anche _principio di pregnanza_ o della _coerenza strutturale_, non è definibile con precisione, per questo ne vediamo un esempio. Consideriamo la seguente figura.
+	#figure(
+		image("images/buona_forma.png", width: 70%),
+		caption: [Legge della buona forma]
+	)
+	Nella figura (a), in virtù della legge della chiusura, vediamo due figure chiuse distinte, ciascuna con una propria forma definita. NElla figura (b), gli elementi si raggruppano in modo completamente diverso. Le due figure si trasformano e diventa impossibile vedere le due configurazioni di partenza. Le linee si collegano fra loro in un modo strutturalmente più coerenti: i segmenti si uniscono ad altri segmenti lineari, mentre le linee curve a formare una figura tondeggiante. La tendenza alla coerenza strutturale e alla continuità di direzione ci permettono di vedere la figura in un solo modo, eliminando tutte le possibili segmentazioni, fra le quali anche quella della figura (c).
+
+- *Legge dell'esperienza passata*: a parità di tutte le altre condizioni, gli elementi del campo visivo che danno origine a una figura familiare o dotata di significato tendono a formare un'unità. Consideriamo la seguente figura.
+	#figure(
+	image("images/esperienza_passata.png", width: 70%),
+	caption: [Legge dell'esperienza passata]
+	)
+	Nella figura (a), riconosciamo la lettera E, anche se molti tratti sono mancanti. La figura (b) contiene un'altra configurazione di tratti appartenente alla lettera E, nella quale il riconoscimento è più problematico, anche se il numero di tratti è lo stesso. \ \
+
+Se invece gli elementi presenti nel campo visivo sono irregolari nella forma e nella distribuzione spaziale, senza simmetrie o continuità, abbiamo difficoltà riconoscerne il senso, come mostrato nella seguente figura.
+#figure(
+image("images/no_gestalt.png", width: 70%),
+caption: [Figure prive di Gestalt]
+)
+Nella prima l'assenza di linee chiuse e la somiglianza delle numerose chiazze nere presenti sullo sfondo bianco ci impediscono di vedere ciò che la figura rappresenta: un cane di razza dalmata visto da dietro, che annusa il terreno. Nella seconda, per gli stessi motivi, risulta difficile riconoscere il viso barbuto che la figura rappresenta. \
+La conoscenza delle leggi della Gestalt è di grande utilità per il progettista di interfacce grafiche. Egli potrà sfruttare questi meccanismi, per far sì che il sistema visivo dell'utente gli mostri le immagini presentate sullo schermo nel modo desiderato.
 == Vicinanza
 Il principio della vicinanza della Gestalt ci dice che elementi vicini verranno percepiti come appartenenti a uno stesso gruppo. Questo ci suggerisce di porre uno vicino all'altro gli elementi grafici che, dal punto di vista funzionale, sono fra loro correlati. E anche, ovviamente, di tenere lontani elementi che non hanno fra loro alcun rapporto. In questo modo il progettista frutta la legge della vicinanza a proprio vantaggio, facendo sì che i meccanismi della visione rafforzino la percezione dello stretto legame che unisce gli oggetti dell'interfaccia fra loro semanticamente o funzionalmente correlati. Consideriamo il seguente form:
 #figure(
