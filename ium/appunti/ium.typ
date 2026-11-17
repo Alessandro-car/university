@@ -1601,15 +1601,92 @@ Citando le parole dello standard ISO 9241-12, \"_la presentazione dell'informazi
 La _psicologia della Gestalt_, detta anche _psicologia della forma_, è una corrente psicologica che si sviluppò tra gli anni '10 e gli anni '30 del secolo scorso. I suoi esponenti si focalizzarono soprattutto sugli studi della percezione e del problem-solving. \
 L'idea portante della psicologia della Gestalt è che non è corretto dividere l'esperienza umana nelle sue componenti elementari, da analizzare separatamente, perchè _un insieme è più della somma delle sue parti_. In particolare, questo avviene nella percezione visiva: gli elementi che ci si prensentano nel campo visivo interagiscono fra loro in modo complesso, e noi percepiamo qualcosa che è diverso dalla loro somma. Per esempio, quando osserviamo una fila di lampadine che si accendono e si spengono in sequenza con una certa cadenza temporale, noi percepiamo delle luci in movimento, anche se nulla si muove. \
 Gli psicologi della Gestalt hanno cercato di individuare le leggi elementari che governano questi fenomeni. Max Wertheimer descrisse le _leggi dell'organizzazione figurale_, in base alle quali elementi presenti nel campo visivo tendono a organizzarsi in unità, secondo la loro forma e posizione relativa. Esse sono chiamate legge della vicinanza, della somiglianza, della chisura, della continuità di direzione, della buona forma e dell'esperienza passata, e sono descritte di seguito.
-- Legge della vicinanza: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono fra loro più vicini tendono a essere raccolti in unità.
+- *Legge della vicinanza*: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono fra loro più vicini tendono a essere raccolti in unità.
 - Legge della somiglianza: a parità di tutte le altre condizioni, gli elementi del campo visivo che sono tra loro simili tendono a essere raccolti in unità.
-- Legge della chisura: a parità di tutte le altre condizioni, le linee delimitanti una superficie chiusa si percepiscono come unità più facilmente di quelle che non si chiudono.
-- Legge della continuità di direzione (dette anche della curva buona): a parità di tutte le altre condizioni, le linee che vanno nella stessa direzione si costituiscono in unità più facilmente delle altre.
-- Legge della buona forma: a parità di tutte le altre condizioni, il campo percettivo si segmenta in modo che risultino entità per quanto possibile equilibrate, armoniche, costituite secondo un medesimo principio in tutte le loro parti.
+- *Legge della chiusura*: a parità di tutte le altre condizioni, le linee delimitanti una superficie chiusa si percepiscono come unità più facilmente di quelle che non si chiudono.
+- *Legge della continuità di direzione* (dette anche della _curva buona_): a parità di tutte le altre condizioni, le linee che vanno nella stessa direzione si costituiscono in unità più facilmente delle altre.
+- *Legge della buona forma*: a parità di tutte le altre condizioni, il campo percettivo si segmenta in modo che risultino entità per quanto possibile equilibrate, armoniche, costituite secondo un medesimo principio in tutte le loro parti.
 *PER OGNI ENTRY DELL'ELENCO INSERIRE GLI ESEMPI*.
 == Vicinanza
+Il principio della vicinanza della Gestalt ci dice che elementi vicini verranno percepiti come appartenenti a uno stesso gruppo. Questo ci suggerisce di porre uno vicino all'altro gli elementi grafici che, dal punto di vista funzionale, sono fra loro correlati. E anche, ovviamente, di tenere lontani elementi che non hanno fra loro alcun rapporto. In questo modo il progettista frutta la legge della vicinanza a proprio vantaggio, facendo sì che i meccanismi della visione rafforzino la percezione dello stretto legame che unisce gli oggetti dell'interfaccia fra loro semanticamente o funzionalmente correlati. Consideriamo il seguente form:
+#figure(
+image("images/form_destrutturato.png", width: 70%),
+caption: [Forma di un'applicazione alberghiera]
+) <fig:form_destrutturato>
+Questo form contiene numerosi campi, per l'immisione dei dati degli ospiti dell'albergo. Esiste una certa correlazione fra campi vicini: le informazioni relative alla camera occupata sono raggruppate in basso, i dati per il pagamento sono al centro, e così via. Ma non c'è alcun ordine visivo, le correlazioni sono quasi impossibili da individuare. La seguente figura mostra gli stessi campi, riorganizzati su due form.
+#figure(
+image("images/app_alberghiera.png", width: 70%),
+caption: [Form ristrutturato di un'applicazione alberghiera]
+) <fig:form_strutturato>
+I campi sono stati chiaramente divisi in quattro gruppi di significato omogenoo: il gruppo con le informazioni riguardanti la prenotazione della camera, quello con i dati anagrafici dell'ospite e, nel secondo form, un gruppo con i dati per il pagamento e uno con i dati per la fatturazione. \
+I meccanismi della visione possono facilitare la comprensione di un'immagine, ma possono anche creare difficoltà. Il pannello rappresentato nella seguente figura, che permette di definire le tabulazioni dei testi, risulta incomprensibile. Il titolo _Allineamento_, che si riferisce ai quattro check-box, è visivamente contiguo al grande campo bianco sulla sinistra, e gli viene quindi associato. Quest'ultimo dovrebbe essere associato al titolo _Tabulazioni da cancellare_ il quale però, è spostato sulla destra, e si trova quindi contiguo al titolo _Tabulazioni predefinite_, con cui fa gruppo.
+#figure(
+image("images/tabulazioni.png", width: 70%),
+)
 == Somiglianza
+Possiamo utilizzare a nostro vantaggio la legge della somiglianza dando forma o colore simili a quegli elementi grafici che sono funzionalmente o semanticamente correlati. \
+Nel menu _a_, ad ogni singola voce è associata una piccola icona colorata. In questo caso, le icone non servono a spiegare il significato della voce: le etichette sono chiare, e non c'è bisogno di spiegazioni aggiuntive; d'altra parte le figure sono piccole e non sempre riconoscibili. La loro funzione è un'altra: associare a ogni voce di menu un pattern visivo ben riconoscibile. In questo modo, per la legge della somiglianza, tutte le voci vengono raccolte in un gruppo, ben differenziato dagli altri gruppi presenti sulla pagina. Nel menu _b_, le icone sono utili nonostante la scarsa comprensibilità delle immagini. Nel menu _c_, le icone hanno dimensioni maggiori, e contengono figure ben riconoscibili. In questo caso, a differenza degli altri due esempi, costituiscono una vera alternativa al testo.
+#figure(
+image("images/menu_yahoo.png", width: 70%),
+caption: [Menu di yahoo]
+)
 == Chiusura
+Una tecnica molto efficace per associare visivamente più elementi consiste nel racchiuderli all'interno di una cornice chiusa. La seguente figura mostra tre versioni di uno stesso menu a tendina.
++ Nella prima (a), le verie voci sono elencate in un ordine logico, ma nessun accorgimento grafico mette in evidenza questi raggruppamenti.
++ Nella seconda (b), è stata inserita una spaziatura per distinguere i tre gruppi, sfruttando la legge della vicinanza.
++ Nella terza (c) è stata inserita una linea di separazione fra un gruppo e l'altro. Ogni gruppo risulta all'interno di un rettangolo, che lo isola dagli altri, sottolineando le relazioni fra le voci di ciascun gruppo.
+#figure(
+image("images/menu_tendina.png", width: 70%),
+caption: [L'effetto dei separatori in un menu a tendina]
+)
+Quando si abbia la necessità di mostrare sul monitor una grande quantità di elementi, come avviene spesso sul Web, l'uso delle corinici è spesso la tecnica più conveniente per orientare l'utente nella lettura corretta della pagina. \
+La seguente figura mostra la home page del sito di due compagnie aeree. In entrambe, il form di prenotazione voli è posta in grande evidenza dal riquadro che la isola, anche cromaticamente dagli altri elementi.
+#figure(
+image("images/form_prenotazione.png", width: 70%)
+)
+Queste due pagine web hanno una grafica semplice e funzionale, senza soluzioni a effetto risultano molto chiare e leggibili: le informazioni sono ben organizzate in gruppi logici facilmente individuabili. \
+La seguente figura, invece, mostra un sito progettato male. Le informazioni sono inserite in numerosi riquadri, che affollano la pagina. La sensazione che trasmette è di confusione. Ciò che spicca, per legge della somiglianza, è il gruppo delle immagini, che rappresentano prevalentemente automobili. Nemmeno i titoli dei riquadri aiutano a comprendere la pagina, perchè spesso sono di corpo inferiore a quello dei testi. I quadratini accanto ai titoli sono troppo piccolo e di un colore che non li mette in risalto (giallo).
+#figure(
+image("images/sito_brutto.png", width: 70%)
+)
 == Allineamento
+L'allineamento degli elementi visivi è una delle tecniche più importanti usate dai grafici per dare all'immagine una struttura immediatamente percepibile. Una pagina i cui elementi siano disallineati ci trasmette un'impressione di complessità che può essere molto ridotta con un maggior ordine visivo. Per ottenerlo, gli elementi dovrebbero essere inseriti in una griglia logica ben definita. Consideriamo il form della @fig:form_destrutturato con la sua riorganizzazione nella @fig:form_strutturato. L'immediata comprensibilità di quest'ultima non è solo il risultato della vicinanza dei campi semanticamente correlati e delle cornici che racchiudono i diversi gruppi di informazioni. Anche l'allineamento delle etichette e dei campi all'interno dei riquadri e, nel form di destra, dei riquadri stessi, contribuisce a trasmettere una sensazione di ordine e di semplicità. Infine, l'allineamento rende gli elementi più simili, e quindi anche la legge della somiglianza è all'opera per facilitare ulteriormente l'identificazione dei diversi gruppi. \
+Nella seguente figura, l'immagine è confusa e non se ne percepisce la logica: gli elementi sembrano disposti in modo casuale. Inoltre, il gruppo di elementi che maggiormente spicca è quello dei campi di input, unificati dalla somiglianza di colore e di forma. Anche in questo caso, l'organizzazione visiva degli elementi impedisce di leggerla in modo corretto.
+#figure(
+image("images/form_disordinato.png", width: 70%)
+)
 == Colore
+Il colore, se usato bene, può essere di grande aiuto alla comprensione di un'interfaccia. Quando è usato male può creare difficoltà. I colori andrebbero impiegati non tanto per rendere gradevoli le schermate, quanto soprattutto per distinguere meglio fra loro contenuti di natura diversa. Possiamo sfruttare la legge della somiglianza, utilizzando gli stessi color per associare visivamente elementi fra loro correlati, o colori diversi e contrastanti per dissociare elementi semanticamente o funzionalmente lontani. \
+La seguente figura mostra la mappa in tempo reale dei mercati finanziari. I riquadri rappresentano le principali aziende quotate in borsa, raggruppati per settori mercelogici. L'area di ogni riquadro è proporzionale alla capitalizzazione dell'azienda, e il colore del riquadro rappresenta la variazione del valore del tipo a partire da una data scelta dell'utente. In rosso sono indicate le variazioni negative, in verde quelle positive. La luminosità del colore è proporzionale all'entità della variazione (rosso vivo indica una perdita consistente, rosso scuro una perdita lieve e così via). Infine, la disposizione spaziale regolare, realizzata ricercando i migliori allineamenti fra i riquadri e collocandoli all'interno di aree anch'esse rettangolari e per quando è possibile allineate, contribuisce a dare un'impressione di semplicità, nonostante la grande quantità di informazioni visualizzate.
+#figure(
+image("images/smartmoney.png", width: 70%)
+)
+I colori possono anche essere usati per indirizzare l'attenzione dell'utente su elementi di particolare importanza. Per questo sono particolarmente indicati i colori saturi e caldi, meglio se su sfondi insaturi e freddi. Nella seguente figura, il menu principale è messo in grande evidenza dal colore rosso vivo, anche nel contesto di pagine molto ricche di banner e di elementi colorati.
+#figure(
+image("images/mediaworld.png", width: 70%)
+)
+Nella figura precedente, la voce corrente è segnalata da una freccia nera, ben visibile anche se molto piccola. I menu di secondo livello sono invece grigio pallido che li separa bene dal menu principale. \
+Il colore può essere usato per potenziare l'effetto della legge della chiusura, colorando i riquadri che identificano le diverse aree funzionalmente differenti di una schermata. A questo scopo si usano sfondi di colori insaturi, per non risultare stancanti, e rendere i testi ben leggibili. \
+L'uso del colore non deve mai eccedere. È consigliabile usare pochi colori contemporaneamente, evitando pagine piene di colori. Infine, troppa informazione equivale a nessuna informazione, e pagine troppo ricche di colori diversi tendono a sembrare complesse. \
+Un altro aspetto che richiede attenzione è l'uso di colori che sono associati a particolari significati. Per esempio, nei paesi occidentali il colore rosso è usato per segnalare pericolo, mentre il verde è associato a emssaggi di via liberi. Un cartello di TSTOP di colore verde risulterebbe ambiguo. \
+La seguetne figura mostra un esempio di scelta criticabile dei colori. Nelle pagine del catalogo dei prodotti in vendita, i codi colore scelti per segnalarne la disponibilità non seguono le normali convenzioni. Le associazioni sono innaturali da richiedere uno sforzo cognitivo abbastanza rilevante.
+#figure(
+image("images/colori_brutti.png", width: 70%)
+)
+Un altro prolema da tenere in considerazione nella scelta dei colori è quello della cecità cromatica (daltonismo). I disturbi più frequenti riguardano l'incapacità di distinguere il rosso dal verde, ma ci sono altri tipi di disturbi meno diffusi. È quindi opportuno che nell'interfaccia non ci siano informazioni importanti identificabili esclusivamente attraverso il colore. In particolare, non dobbiamo mai supporre che l'utente sia in grado di distinguere il rosso dal verde.
 == Percorsi visivi
+È abbastanza diffusa la convinzione che, quando si esamina una schermata, i nostri occhi seguano un percorso regolare, iniziando dalla posizione di home e procedendo da sinistra a destra e dall'alto in basso, come quando si legge un testo scritto. Questa convizione non ha alcun fondamento. In realtà la situazione è molto più complessa, e può essere analizzata usando sistemi di eye tracking. Questi dispositivi mostrano che il movimento dei nostri occhi è molto irregolare: lo sguardo si fissa per un certo tempo su un determinato punto, per acquisire l'informazione visiva (_fissazione_), e quindi sposta l'asse visivo su un altro punto, con un movimento rapidissimo (chiamato _saccade_) durante il quale non viene acquisita alcuna informazione visiva. \
+Gli studi effettuati con queste apparecchiature mostrano che il percorso dello sguardo è molto variabile, e dipende non solo dalle caratteristiche dell'immagine stessa, ma anche dagli obiettivi di chi guarda. \
+La seguente figura mostra lo scanpath di una persona nell'esame di una pagina ewb. Lo sguardo percorre la pagina irregolarmente, fissandosi sui diversi menu, sui titoli, secondo una logica che dipende dagli obiettivi dell'utente.
+#figure(
+image("images/scampath.png",width: 70%),
+caption: [Scanpath di una pagina web]
+)
+Gli esperimenti condotti confermanto che una pagina web non viene esaminata sempre nello stesso modo, lo scanpath è quasi sempre molto irregolare. \
+Sommando gli snapath percorsi da numerosi utenti è possibile costruire le _heat-map_, che mostrano le aree della pagina sulle quali gli sguardi si sono, in media, maggiormente soffermati.
+#figure(
+image("images/heatmap.jpg", width: 70%),
+caption: [Heat-map di tre pagine web]
+)
+Analisi di questo tipo possono fornire informazioni molto utili per migliorare l'usabilità dei siti web. Studiando i cammini percorsi dallo sguardo dei diversi utenti sulle pagine, e correlandoli agli obiettivi che essi hanno nel condurre questo esame, possiamo ricavare utili informazioni per migliorarne il layout. Queste sono analisi complesse, tutt'oggi utilizzate solo in casi molto particolari.
+
