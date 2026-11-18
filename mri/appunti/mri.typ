@@ -2067,9 +2067,82 @@ I principali algoritmi di apprendimento sono:
 - *Rule based (ripper)*. Sistemi basati sull'induzione di regole logiche di classificazione.
 - *Nearest Neighbor (case based)*. Metodo basato sulle istanze che classifica un documento in base alla vicinanza con gli esempi memorizzati.
 - *Support Vector Machines (SVM)*. Modelli a margini massimali ampiamente utilizzati ed efficaci nella classificazione testuale ad alta dimensionalità.
-Si utilizza un approccio induttivo che realizza la *costruzione induttiva di un classificatore* in grado di svolgere le funzioni tipiche di un sistema esperto. Il vantaggio di questo approccio è che garantisce una *buona manutenibilità*, poichè elimina la necessità di ingegnerizzare e aggiornare continuamente a mano le regole di classificazione. Lo svantaggio è che richiede tassativamente una *base di documenti pre-classificati* che consenta la generazione e l'addestramento del classificatore.
+Si utilizza un approccio induttivo che realizza la *costruzione induttiva di un classificatore* in grado di svolgere le funzioni tipiche di un sistema esperto. Il vantaggio di questo approccio è che garantisce una *buona manutenibilità*, poichè elimina la necessità di ingegnerizzare e aggiornare continuamente a mano le regole di classificazione. Lo svantaggio è che richiede tassativamente una *base di documenti pre-classificati* che consenta la generazione e l'addestramento del classificatore. \
+La fase di training di un classificatore può essere schematizzata come segue.
+#figure(
+image("images/training.png", width: 70%)
+)
 
-== RIASSUMERE SLIDE 19, 22, 23
+La fase di classificazione e valutazione può essere schematizzata come segue.
+#figure(
+image("images/classification.png", width: 70%)
+)
+=== Dimensionalità dello spazio
+La dimensione dello spazio dei termini può costituire un problema perchè:
+- gli algoritmi di learning non scalano facilmente su grandi valori della dimensione;
+- se la dimensione è alta spesso si verificano fenomeni di _overfitting_.
+Ci sono due possibili strade da seguire:
+- *riduzione locale*, viene scelto un insieme di termini diverso per ciascuna categoria;
+- *riduzione globale*, il set di termini è valido per qualunque categoria.
+La riduzione può essere per *selezione* oppure per *estrazione*.
+==== Riduzione dello spazio per selezione
+Gli algoritmi di riduzione dello spazio per selezione sono i seguenti.
+- _TSR_ (Term Space Reduction): seleziona un sotto-insieme dell'insieme dei termini che massimizzi la effectiveness al momento della indicizzazione.
+- _Wrapper_: partendo da un insieme di termini applica l'algoritmo di learning a sotto-insiemi di termini ottenuti eliminando un termine per volta, fino ad ottenere la effectiveness massima.
+- _Filtering_: seleziona un sotto-insieme dei termini in accordo ai valori forniti da una funzione che misura l'importanza dei termini nel processo di categorizzazione.
+Gli algoritmi sono riassunti nella seguente tabella.
+#let fit(body) = layout(size => {
+  let m = measure(body)
+  if m.width > size.width {
+    scale(size.width / m.width * 100%, reflow: true, body)
+  } else {
+    body
+  }
+})
+
+#table(
+  columns: (auto, auto, 1fr),
+  align: center + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: 0.5pt,
+  table.header([Function], [Denoted by], [Mathematical form]),
+
+  emph[Document frequency],
+  $ hash (t_k, c_i) $,
+  fit($ P(t_k mid(|) c_i) $),
+
+  emph[DIA association factor],
+  $ z(t_k, c_i) $,
+  fit($ P(c_i mid(|) t_k) $),
+
+  emph[Information gain],
+  $ I G(t_k, c_i) $,
+  fit($ sum_(c in {c_i, overline(c)_i}) sum_(t in {t_k, overline(t)_k}) P(t, c) dot log (P(t, c)) / (P(t) dot P(c)) $),
+
+  emph[Mutual information],
+  $ M I(t_k, c_i) $,
+  fit($ log (P(t_k, c_i)) / (P(t_k) dot P(c_i)) $),
+
+  emph[Chi-square],
+  $ chi^2 (t_k, c_i) $,
+  fit($ (abs(T r) dot [P(t_k, c_i) dot P(overline(t)_k, overline(c)_i) - P(t_k, overline(c)_i) dot P(overline(t)_k, c_i)]^2) / (P(t_k) dot P(overline(t)_k) dot P(c_i) dot P(overline(c)_i)) $),
+
+  emph[NGL coefficient],
+  $ N G L(t_k, c_i) $,
+  fit($ (sqrt(abs(T r)) dot [P(t_k, c_i) dot P(overline(t)_k, overline(c)_i) - P(t_k, overline(c)_i) dot P(overline(t)_k, c_i)]) / sqrt(P(t_k) dot P(overline(t)_k) dot P(c_i) dot P(overline(c)_i)) $),
+
+  emph[Relevancy score],
+  $ R S(t_k, c_i) $,
+  fit($ log (P(t_k mid(|) c_i) + d) / (P(overline(t)_k mid(|) overline(c)_i) + d) $),
+
+  emph[Odds Ratio],
+  $ O R(t_k, c_i) $,
+  fit($ (P(t_k mid(|) c_i) dot (1 - P(t_k mid(|) overline(c)_i))) / ((1 - P(t_k mid(|) c_i)) dot P(t_k mid(|) overline(c)_i)) $),
+
+  emph[GSS coefficient],
+  $ G S S(t_k, c_i) $,
+  fit($ P(t_k, c_i) dot P(overline(t)_k, overline(c)_i) - P(t_k, overline(c)_i) dot P(overline(t)_k, c_i) $),
+)
 === Il classificatore di Rocchio
 I metodi di _relevance feedback_ possono essere utilizzati nell'ambito del TC> I documenti possono essere rappresentati usando vettori di pesi TF/IDF (normalizzati mediatne la frequenza massima dei termini). Per ogni categoria, si computa un vettore _prototipo_. Si assegnano documenti di testing alla categoria con il vettore prototipo più vicino secondo una misura di similarità. \
 Il relevance feedback di Rocchio:
@@ -2093,4 +2166,92 @@ ove:
 - $N_t$ è il numero totale di documenti nel training set;
 - i termini appartenenti ai documenti di addestramento inclusi nella classe $c_p$ generano pesi positivi;
 - i termini appartenenti ai documenti esterni alla classe $c_p$ generano pesi negativi.
-== FARE DA SLIDE 29 a 33
+==== Classificazione dei documenti
+Il classificatore assegna i documenti di test alla categoria caratterizzata dal vettore prototipo, il centroide, più vicino. Tale vicinanza viene calcolata utilizzando un'apposita misura di somiglianza, come ad esempio la *somiglianza del coseno*. \
+Il vettore prototipo per ciascuna categoria può essere calcolato utilizzando esclusivamente i documenti di training associati a quella specifica categorai. Il centroide viene ricavato impiegando unicamente tutti i documenti che appartengono a quella determinata classe, omettendo quindi il termine sottrattivo relativo ai documenti esterni $(d_l in.not c_p)$.
+==== Proprietà dell'algoritmo di Rocchio
+L'algoritmo di Rocchio presenta le seguenti proprietà.
+- Non garantisce un'ipotesi consistente.
+- Forma una semplice generalizzazione degli esempi in ogni classe, un _prototipo_.
+- La classificazione è bsata sulla similarità dei documenti ai vettori prototipo.
+- I vettori prototipo non necessitano di medie/normalizzazioni poichè la similarità del coseno non è influenzata dalla lunghezza.
+=== Alberi di decisione
+Un classificatore basato su alberi di decisione ha:
+- per nodi interni i _termini_ usati per l'indicizzazione;
+- le diramazioni dei nodi sono test sul peso dei termini nel documento di test;
+- per foglie le _categorie_ previste.
+La classificazione avviene testando ricorsivamente i valori dei pesi realtivi ai termini associati ai nodi interni.
+#let dot(pos, name) = node(pos, [], name: name, radius: 1.8pt, fill: black, stroke: none, inset: 0pt)
+
+// leaf: label in small caps
+#let leaf(pos, name, u: false) = node(
+  pos,
+  if u { underline(smallcaps[Wheat]) } else { smallcaps[Wheat] },
+  name: name,
+  stroke: none,
+  inset: 2pt,
+)
+
+// edge with a label on the outer left or right side of the picture
+// (fletcher's label-side is relative to the edge direction, so it is flipped)
+#let br(from, to, txt, side, u: false) = edge(
+  from, to, "-",
+  label: if u { underline(txt) } else { txt },
+  label-side: if side == left { right } else { left },
+  label-sep: 1pt,
+)
+
+#figure(
+  diagram(
+    spacing: (2.6em, 2.4em),
+
+    // internal nodes
+    dot((3.5, 0), <r>),
+    dot((2, 1), <a>),
+    dot((5.5, 1), <b>),
+    dot((1, 2), <c>),
+    dot((4.8, 2), <d>),
+    dot((0.2, 3), <e>),
+    dot((1, 4), <f>),
+    dot((2, 5), <g>),
+    dot((3, 6), <h>),
+
+    // leaves
+    leaf((2.8, 2), <l1>),
+    leaf((6.3, 2), <l2>, u: true),
+    leaf((1.8, 3), <l3>),
+    leaf((4.3, 3), <l4>, u: true),
+    leaf((5.4, 3), <l5>),
+    leaf((-0.6, 4), <l6>),
+    leaf((0, 5), <l7>),
+    leaf((1, 6), <l8>),
+    leaf((2.2, 7), <l9>),
+    leaf((3.8, 7), <l10>),
+
+    // edges
+    br(<r>, <a>, [wheat], left),
+    br(<r>, <b>, [wheat], right),
+    br(<a>, <c>, [farm], left, u: true),
+    br(<a>, <l1>, [farm], right),
+    br(<b>, <d>, [bushels], left),
+    br(<b>, <l2>, [bushels], right, u: true),
+    br(<c>, <e>, [commodity], left, u: true),
+    br(<c>, <l3>, [commodity], right),
+    br(<d>, <l4>, [export], left),
+    br(<d>, <l5>, [export], right),
+    br(<e>, <l6>, [agriculture], left),
+    br(<e>, <f>, [agriculture], right, u: true),
+    br(<f>, <l7>, [tonnes], left),
+    br(<f>, <g>, [tonnes], right, u: true),
+    br(<g>, <l8>, [winter], left),
+    br(<g>, <h>, [winter], right, u: true),
+    br(<h>, <l9>, [soft], left),
+    br(<h>, <l10>, [soft], right),
+  ),
+  caption: [Albero di decisione],
+)
+La classificazione avviene testando ricorsivamente i valori dei pesi relativi ai termini associati ai nodi interni. Un metodo per il learning è invece il seguente:
+- Verificare se tutti gli esempi di training appartengono alla setssa categoria.
+- In caso negativo, selezionare un termine $t_k$ che partizioni il set di training in classi di documenti in cui al termine $t_k$ sia assegnato lo stesso valore, ponendo ciascuna classe in un sotto-albero diverso.
+- Ripetere ricorsivamente sui sotto-alberi finché tutte le foglie non contengono esempi appartenenti alla stessa categoria.
+La scelta di $t_k$ per partizionare l'albero viene effettuata massimizzando l'_information gain_.
