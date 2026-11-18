@@ -1399,13 +1399,14 @@ Questo è un termine troppo generico. In modo più specifico:
 ]
 
 #figure(
-  image("images/errore_umano.jpg", width: 70%),
+  image("images/errore_umano.png", width: 70%),
+caption: [Classificazione degli errori]
 )
 
 Lo schema sopra è considerato corretto quando si verificano tre condizioni:
-- l'utente aveva l'intenzione di agire;
-- l'azione è proceduta come desiderato;
-- l'azione ha ottenuto il suo scopo.
++ l'utente aveva l'intenzione di agire;
++ l'azione è proceduta come desiderato;
++ l'azione ha ottenuto il suo scopo.
 
 Se non si verificano tutte queste tre condizioni, si hanno quattro fondamentali tipi di errori:
 - _azione intenzionale ma errata_ (_mistake_): si verifica quando l'utente ha agito con intenzione, l'azione si è svolta come pianificato, ma non ha ottenuto lo scopo prefissato.
@@ -1416,7 +1417,8 @@ Se non si verificano tutte queste tre condizioni, si hanno quattro fondamentali 
 Le strategie che il progettista attua per limitare la possibilità e le conseguenze dell'errore umano sono riassunte nella figura seguente:
 
 #figure(
-  image("images/strategie_errore.jpg", width: 70%),
+  image("images/strategie_errore.png", width: 70%),
+	caption: [Progettare per l'errore]
 )
 
 == Prevenzione
@@ -1433,12 +1435,17 @@ Prevenire è meglio che curare. Prevenire l'errore significa progettare il siste
 
 === Diversificare le azioni dell'utente
 
-Serve a prevenire i lapsus. Si tratta di fare in modo che le azioni che l'utente deve eseguire per effettuare compiti diversi siano ben diversificate, in modo da minimizzare la probabilità che l'utente ne esegua inavvertitamente una al posto dell'altra.
+Serve a prevenire i lapsus. Si tratta di fare in modo che le azioni che l'utente deve eseguire per effettuare compiti diversi siano ben diversificate, in modo da minimizzare la probabilità che l'utente ne esegua inavvertitamente una al posto dell'altra. \
+A volte questa indicazione è in conflitto con quella, altrettanto corretta, di raggruppare fra loro i comandi semanticamente corretti. La seguente figura mostra un esempio tipico di questa situazione di conflitto. Il programma Outlook della Microsoft, associa a ogni messaggio che si trova nella mailbox di input lo stato di _Read_ o _Unread_. Nel menu _Edit_ ci sono due comandi (_Mark as Read_ e _Mark as Unread_) che permettono di modificare questi stati. Il sistema fornisce anche un comando _Mark All as Read_, che pone tutti i messaggi presenti nella mailbox di input nello stato di _Read_. Il comando è posto sotto gli altri due, e può accadere di selezionarlo innavertitamente al posto del contiguo _Mark as Unread_, con esiti fastidiosi perchè il sistema non consente di annullarne gli effetti. Il problema potrebbe essere evitato, allontanando il comando pericolosa dagli altri due, oppure lasciandolo dove si trova ma chiedendo conferma all'utente prima di eseguirlo.
+#figure(
+image("images/lapsus.png", width: 70%),
+caption: [Un menu pericoloso]
+)
 
 === Evitare comportamenti modali
 
-Chiamiamo _modale_ un sistema che, a fronte di una stessa azione dell'utente, si comporta diversamente a seconda dello stato in cui si trova, e questo stato non è facilmente riconoscibile dall'utente. Se l'utente non conosce lo stato, non può prevedere come il sistema risponderà alle sue azioni.
-- Es: funzione di riconoscimento della password (minuscole considerate diverse dalle maiuscole).
+Chiamiamo _modale_ un sistema che, a fronte di una stessa azione dell'utente, si comporta diversamente a seconda dello stato in cui si trova, e questo stato non è facilmente riconoscibile dall'utente. Se l'utente non conosce lo stato, non può prevedere come il sistema risponderà alle sue azioni. Ad esempio:
+- funzione di riconoscimento della password. Se una funzione contiene minuscole e viene digitata con il _Caps Lock_, viene rifiutata. Se lo stato di _Caps Lock_ non è visibile l'utente potrebbe provare a reinserirla più volte e sbagliare.
 - Quando eseguo _copy_ o _cut_, l'oggetto copiato o tagliato viene inserito nella clipboard, ma non è visibile: cambia stato ma l'utente non lo vede.
 
 #figure(
@@ -1449,7 +1456,8 @@ Chiamiamo _modale_ un sistema che, a fronte di una stessa azione dell'utente, si
 
 Viene definita _obbligante_ una funzione in cui le azioni dell'utente sono vincolate in modo tale che la mancata esecuzione di un passaggio impedisce il successivo. In tal modo egli è obbligato a compiere le azioni nella sequenza corretta. Si tratta di una tecnica molto efficace di prevenzione degli errori.
 
-_Esempio._ In un sistema desktop quale delle seguenti due soluzioni è preferibile?
+#esempio[
+In un sistema desktop quale delle seguenti due soluzioni è preferibile?
 - opzione 1:
   - selezione azione
   - selezione oggetto
@@ -1458,27 +1466,30 @@ _Esempio._ In un sistema desktop quale delle seguenti due soluzioni è preferibi
   - selezione azione
 
 È preferibile l'opzione 2: selezionando l'oggetto desiderato il sistema disabilita tutte le voci di menu che corrispondono ad azioni che non hanno senso su tale oggetto.
-
+]
 === Imporre input vincolati
 
 Questa tecnica, che generalizza quella delle funzioni obbliganti, consiste nel permettere all'utente di fornire solo valori di input corretti, ovvero azioni lecite nel contesto corrente.
 
 #figure(
-  image("images/input_vincolanti.jpg", width: 70%),
+  image("images/input_vincolanti.png", width: 70%),
+	caption: [Esempi di input vincolanti]
 )
 
 === Non sovraccaricare la memoria a breve termine
 
 Dialoghi che sovraccaricano la memoria a breve termine risultano faticosi per l'utente e aumentano la probabilità che egli commetta degli errori. Tipico è il caso dei messaggi pre-registrati dei call-center.
 
-_Esempio._ "Per informazioni sulle nuove offerte, premi 1: per informazioni sulle tariffe e così via; premi 2: se sei interessato a conoscere i nuovi servizi e così via; premi 3: se desideri comunicare furto o smarrimento del tuo telefono o per assistenza specifica; premi 4: se desideri ricevere informazioni sul credito; premi 5: se desideri parlare con un operatore premi 0."
-
+#esempio[
+"Per informazioni sulle nuove offerte, premi 1: per informazioni sulle tariffe e così via; premi 2: se sei interessato a conoscere i nuovi servizi e così via; premi 3: se desideri comunicare furto o smarrimento del tuo telefono o per assistenza specifica; premi 4: se desideri ricevere informazioni sul credito; premi 5: se desideri parlare con un operatore premi 0."
+]
 === Richiedere conferme
 
 Il sistema dovrebbe sempre avvertire l'utente quando questi richiede l'esecuzione di azioni irreversibili o comunque potenzialmente pericolose, e domandare conferma. Le richieste di conferma devono essere formulate in modo semplice e non ambiguo. Il sistema non deve costringere l'utente a conferme troppo complicate come quella che segue:
 
 #figure(
-  image("images/richiedere_conferme.jpg", width: 70%),
+  image("images/richiedere_conferme.png", width: 70%),
+	caption: [Alcuni sistemi di conferma]
 )
 
 === Usare default inoffensivi
@@ -1489,8 +1500,7 @@ _Esempio._ La richiesta di stampa di un documento Microsoft Word 2007 ha come de
 
 == Diagnosi
 
-Anche se il progettista adotta le tecniche di prevenzione più appropriate, resterà sempre la possibilità che l'utente commetta un errore. Pertanto, il sistema deve sempre controllare l'input e, nel caso si riveli scorretto, dovrà fornire all'utente una spiegazione adeguata, che gli permetta di recuperare la situazione in modo rapido, senza incertezze e senza stress.
-
+Anche se il progettista adotta le tecniche di prevenzione più appropriate, resterà sempre la possibilità che l'utente commetta un errore. Pertanto, il sistema deve sempre controllare l'input e, nel caso si riveli scorretto, dovrà fornire all'utente una spiegazione adeguata, che gli permetta di recuperare la situazione in modo rapido, senza incertezze e senza stress. \
 Sono tre le funzioni che un messaggio di errore ben progettato deve svolgere:
 - _allertare_: segnalare qualcosa che non va;
 - _identificare_: indicare che cosa non va, e perché;
@@ -1513,19 +1523,22 @@ Sono tre le funzioni che un messaggio di errore ben progettato deve svolgere:
 - ridurre al massimo il lavoro necessario per correggere l'errore.
 
 #figure(
-  image("images/err_linee_guida.jpg", width: 70%),
+  image("images/linee_guida.png", width: 70%),
+	caption: [Messaggi di errore]
 )
 
 Tutti gli esempi discussi si riferiscono a singoli errori. Sono frequenti tuttavia situazioni più complesse, in cui l'utente compie più di uno sbaglio.
 
 #figure(
   image("images/errori_mul.png", width: 70%),
+	caption: [Messaggi di errore multipli]
 )
 
 In questo caso risulta difficile per l'utente leggere tutti gli errori: egli è costretto a prendere appunti sulle correzioni da effettuare. La soluzione di gran lunga più corretta è quella esemplificata successivamente, in cui la segnalazione di errore è visualizzata immediatamente sopra il campo errato.
 
 #figure(
   image("images/errori_mul2.png", width: 70%),
+	caption: [Tecnica corretta per la segnalazione di errori]
 )
 
 La spiegazione dell'errore e di come fare per correggerlo dovrebbe essere particolarmente dettagliata e chiara quando il sistema si rivolge a utenti poco esperti.
@@ -1548,6 +1561,7 @@ Quando l'utente commette un errore, deve essere possibile correggerlo. Questo pr
 
 #figure(
   image("images/correzione.png", width: 70%),
+	caption: [Ripristino dell'errore]
 )
 
 A partire da questo stato, il processo di correzione può avvenire con due strategie diverse, a seconda della situazione.
