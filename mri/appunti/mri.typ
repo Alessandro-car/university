@@ -2255,3 +2255,188 @@ La classificazione avviene testando ricorsivamente i valori dei pesi relativi ai
 - In caso negativo, selezionare un termine $t_k$ che partizioni il set di training in classi di documenti in cui al termine $t_k$ sia assegnato lo stesso valore, ponendo ciascuna classe in un sotto-albero diverso.
 - Ripetere ricorsivamente sui sotto-alberi finché tutte le foglie non contengono esempi appartenenti alla stessa categoria.
 La scelta di $t_k$ per partizionare l'albero viene effettuata massimizzando l'_information gain_.
+==== Regole di decisione
+Una regola di decisione per categorizzare un testo è espressa in forma normale disgiunta (disgiunzione di clausole congiuntive).
+#align(center)[
+  #table(
+    columns: (auto, auto, auto),
+    align: (left + horizon, center + horizon, left + horizon),
+    inset: (x: 8pt, y: 4pt),
+    // only the outer frame
+    stroke: (x, y) => (
+      top: if y == 0 { 0.8pt },
+      bottom: if y == 4 { 0.8pt },
+      left: if x == 0 { 0.8pt },
+      right: if x == 2 { 0.8pt },
+    ),
+    [*if*], $(("wheat" and "farm"))$, [*or*],
+    [], $("wheat" and "commodity")$, [*or*],
+    [], $("bushels" and "export")$, [*or*],
+    [], $("wheat" and "tonnes")$, [*or*],
+    [], $("wheat" and "winter" and not "soft")$,
+    [*then* #smallcaps[Wheat] *else* $not$ #smallcaps[Wheat]],
+  )
+]
+I classificatori basati su regole di decisione sono simili a quelli basati su alberi di decisione ma sono in genere più compatti. I letterali denotano la presenza (o l'assenza) di termini nel documento sotto esame, mentre la testa della clausola stabilisce di classificare sotto una data categoria. \
+Inizialmente ogni esempio di training viene trasformato in una clausola:
+$
+eta_1, eta_2, dots, eta_n -> gamma_i
+$
+I termini $eta_i$ rappresentano la presenza di termini nel documento in esame mentre $gamma_i$ vale $c_i$ oppure la sua negazione. Un set di clausole è già un classificatore che però causa _overfitting_. Attraverso una procedura di generalizzazione il set viene semplificato il più possibile giungendo ad una rappresentazione compatta che non sacrifichi però la copertura.
+=== Nearest-Neighbor Learning Algorithm
+L'apprendimento consiste solo nel memorizzare gli esempi di training presenti in _Tr_. Data un'istanza di testing $x$:
+- calcola la similarità tra $x$ e tutti gli esempi in _Tr_;
+- assegna a $x$ la categoria dell'esempio più simile in _Tr_.
+Non effettua esplicitamente una generalizzazione o determina prototipi di categoria. \
+Questo algoritmo viene anche chiamato _case-based_, _memory-based_ o _lazy learning_.
+==== K Nearest-Neighbor
+Effettuare la classificazione basandosi esclusivamente sull'esempio più vicino (simile) può generare errori a causa di:
+- Esempi atipici.
+- Rumore (errori di etichettatura presenti negli esempi di training).
+L'*alternativa del K-NN* consiste nel trovare i _k_ esempi più simili e restituire la classe della maggioranza tra di essi. Tipicamente si sceglie un valore dispari di $k$ per evitare situazioni di parità; i valori più comuni sono 3 e 5. \
+Il metodo Nearest Neighbor dipende da una misura di similarità. La similarità del coseno tra vettori TF-IDF è quella più efficace.
+#esempio(title: "3 Nearest Neighbor con distanza euclidea")[
+La seguente figura mostra un esempio geometrico basato sull'uso di 3-NN. I punti nel paino rappresentano gli esempi del training set divisi in classi differenti, indicati dai colori. \
+Viene trattaciata una circonferenza centrata sull'istanza da classificare per delimitare i 3 punti più vicini nello spazio delle feature.
+#figure(
+image("images/3-NN.png", width: 70%),
+caption: [3-NN]
+)
+L'algoritmo misura le distanze euclidee tra l'oggetto non classificato e i punti circostanti. Seleziona i $k = 3$ vicini più prossimi racchiusi all'interno del raggio di ricerca e assegna all'istanza la classe maggioritaria tra di essi.
+]
+#algoritmo(title: [Classificazione k-NN con TF-IDF])[
+  #pseudocode-list[
+    + *Training*
+      + *for each* training example $chevron.l x, c(x) chevron.r in T r$ *do*
+        + Compute the corresponding TF-IDF vector, $bold(d)_x$, for document $x$
+    + *Test instance* $y$:
+      + Compute TF-IDF vector $bold(d)$ for document $y$
+      + *for each* $chevron.l x, c(x) chevron.r in T r$ *do*
+        + Let $s_x = "cosSim"(bold(d), bold(d)_x)$
+      + Sort examples, $x$, in $T r$ by decreasing value of $s_x$
+      + Let $N$ be the first $k$ examples in $T r$ #text(fill: luma(150), style: "italic")[(get most similar neighbors)]
+      + *return* the majority class of examples in $N$
+  ]
+] <alg:knn-tfidf>
+
+#esempio(title: "KNN per documenti testuali")[
+Nel modello dello spazio vettoriale, ciascun documento non è rappresentato da un semplice punto isolato, bensì da un *vettore* che parte dall'origine degli assi cartesiani. \
+A differenza dello spazio euclideo standard, per i testi si sfrutta spesso l'angolo compreso tra i vettori per determinare quanto due documenti siano vicini e semanticamente simili. I vettori più vicini in termini di orientamento angolare rappresentano i documenti più affini all'interno del corpus. \
+L'algoritmo valuta i vettori appartenenti alle diverse classi per individuare i $k = 3$ vicini più prossimi e assegnare la classe maggioritaria al documento di test.
+#figure(
+image("images/knn_testo.png", width: 70%),
+)
+]
+=== I metodi Bayesiani
+I metodi bayesiani sono metodi di apprendimento e classificazione basati sulla teoria delle probabilità. Il teorema di Bayes riveste un ruolo fondamentale nell'apprendimento e nella classificazione probabilistica. Il metodo utilizza la probabilità  _a priori_ di ciascuna categoria quando non si possiede alcuna informazione su un determinato elemento. \
+La categorizzazione produce una distribuzione di probabilità _a posteriori_ sulle possbili categorie a partire dalla descrizione di un elemento.
+==== Assiomi della Teoria della Probabilità
+Tutte le probabilità sono comprese tra 0 e 1.
+$
+0 <= P(A) <= 1
+$
+Una proposizione vera ha probabilità 1, mentre una proposizione falsa ha probabilità 0.
+$
+P("true") &= 1 \
+P("false") &= 0
+$
+La probabilità dell'unione di due eventi $A$ e $B$ è data dalla formula:
+$
+P(A or B) = P(A) + P(B) - P(A and B)
+$
+La probabilità $P(A bar B)$ è la probabilità di $A$ dato $B$. Si assume che $B$ è l'unica informazione che si conosce. La probabilità condizionata si calcola come:
+$
+P(A bar B) = (P(A and B))/(P(B))
+$
+Due eventi, $A$ e $B$, sono _indipendenti_ se e solo se:
+$
+P(A bar B) &= P(A) \
+P(B bar A) &= P(B)
+$
+Quindi, se $A$ e $B$ sono indipendenti:
+$
+P(A bar B) &= P(A and B)/(P(B)) = P(A) \
+P(A and B) &= P(A)P(B)
+$
+Il teorema di Bayes si presenta nella seguente forma:
+$
+P(H bar E) = (P(E bar H)P(H))/(P(E))
+$
+#dimostrazione[
+La derivazione si basa direttamente sulle definizioni di base della probabilità condizionata. Dalla definizione di $P(H bar E)$:
+$
+P(H bar E) = P(H and E)/P(E)
+$
+Dalla definizione di $P(E bar H)$:
+$
+P(E bar H) = P(H and E)/P(H)
+$
+isolando la probabilità congiunta $P(H and E)$ della seconda equazione si ottiene:
+$
+P(H and E) = P(E bar H)P(H)
+$
+sostituendo tale risultato nella prima equazione si giunge a:
+$
+P(H bar E) = (P(E bar H)P(H))/(P(E))
+$
+]
+==== Categorizzazione Bayesiana
+Sia $brace.l c_1, c_2, dots, c_n brace.r$ l'insieme complessivo delle classi disponibili nel sistema. Sia $E$ la descrizione di un elemento (ad esempio, un documento testuale rappresentato tramite il vettore delle sue feature/termini). L'obiettivo è determinare la categoria di $E$ calcolando per ogni classe $c_i$ la probabilità condizionata:
+$
+P(c_i bar E) = (P(c_i)P(E bar c_i))/P(E)
+$
+Poichè le categorie costituiscono un insieme *completo e disgiunto* (formano cioè una partizione degli eventi), la somma delle probabilità a posteriori di tutte le categorie deve essere necessariamente pari a 1:
+$
+sum_(i=1)^n P(c_i bar E) = sum_(i = 1)^n (P(c_i)P(E bar c_i))/(P(E)) = 1
+$
+Sfruttando questa proprietà, è possibile ricavare il fattore di normalizzazione $P(E)$come la somma totale delle probabilità congiunte su tte le categorie (legge della probabilità totale):
+$
+P(E) = sum_(i=1)^n P(c_i)P(E bar c_i)
+$
+Per calcolare la probabilità a posteriori, il modello richiede di conoscere le probabilità _a priori_ $P(c_i)$ e le probabilità condizionate $P(E bar c_i)$. Le probabilità a priori delle categorie sono facilmente stimabili direttamente dai dati di training. Se $n_i$ esempi all'interno del dataset $D$ appartengono alla classe $c_i$, la probabilità si calcola come frequenza relativa:
+$
+P(c_i) = n_i/(abs(D))
+$
+Si assume che la descrizione di un'istanza $E$ sia data dalla congiunzione di $m$ feature binarie:
+$
+E = e_1 and e_2 and dots.c and e_m
+$
+Il numero di istanze possibili cresce in modo *esponenziale rieptto al numero di feature* _m_, rendendo statisticamente impossibile stimare tutte le probabilità condizionate $P(E bar c_i)$ per ogni combinazione tramite la sola osservazione dei dati. \
+Questa difficoltà intrinseca motiva la necessità di introdurre ipotesi semplificatrici (come l'indipendenza condizionale tipica del classificatore *Naive Bayes*).
+==== Classificatore Naive Bayes
+Se si assume che le feature che compongono l'istanza $E$ siano indipendenti tra loro nota la categoria $c_i$ (_conditionally independent_), la probabilità congiunta si semplifica nel prodotto delle probabilità delle singole feature:
+$
+P(E bar c_i) = P(e_1 and e_2 and dots.c e_m bar c_i) = product_(j=1)^m P(e_j bar c_i)
+$
+Grazie a questa forte ipotesi semplificatrice, non è più necessario stimare combinazioni esponenziali di feature, ma diventa sufficiente calcolare un numero lineare di parametri, ovvero $P(e_j bar c_i)$ per ciascuna singola feature $e_j$ e categoria $c_i$.
+#esempio[
+Sia:
+- $C=brace.l "allergy, cold, well" brace.r$
+- $e_1 = "sneeze"; e_2 = "cough"; e_3 = "fever"$
+- $E = brace.l "sneeze, cough," not "fever" brace.r$
+#align(center)[
+#table(
+  columns: (auto, auto, auto, auto),
+  align: (left, right, right, right),
+
+  [*Prob*], [*Well*], [*Cold*], [*Allergy*],
+
+  [$P(c_i)$],         [0.9],  [0.05], [0.05],
+  [$P("sneeze"|c_i)$], [0.1],  [0.9],  [0.9],
+  [$P("cough"|c_i)$],  [0.1],  [0.8],  [0.7],
+  [$P("fever"|c_i)$],  [0.01], [0.7],  [0.4],
+)
+]
+$
+P("well" bar E) &= (0.9)(0.1)(0.1)(0.99)\/P(E) = 0.0089\/P(E) \
+P("cold" bar E) &= (0.05)(0.9)(0.8)(0.3)\/P(E) = 0.01\/P(E) \
+P("allergy" bar E) &= (0.05)(0.9)(0.7)(0.6)\/P(E) = 0.019\/P(E) \
+$
+La categoria più probabile è _allergy_.
+]
+Normalmente, le probabilità si stimano calcolando le frequenze empiriche nel training set. Se il dataset $D$ contiene $n_i$ esempi appartenenti alla categoria $c_i$, e di questi $n_(i j)$ contengono la feature $e_j$, la probabilità condizionata si calcola come:
+$
+P(e_j bar c_i) = (n_(i j))/(n_i)
+$
+Stimare le probabilità in questo modo quando si dispone di dataset limitato è altametne soggetto a errori. Se per puro caso una feature rara $e_k$ non compare mai negli esempi di training di una certa classe, la sua probabilità stimata sarà pari a 0. Di conseguenza, se quella stessa feature $e_k$ si presenta in un documento di test $E$, a causa della produttoria del Naive Bayes l'intero prodotto si azzera, rendendo nulle sia la probabilità congiunta che quella a posteriori. ($forall c_i: P(E bar c_i) = 0$ e $forall c_i : P(c_i bar E) = 0$).
+== FARE DA SLIDE 53 a 66
