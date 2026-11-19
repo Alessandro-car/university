@@ -2439,4 +2439,34 @@ $
 P(e_j bar c_i) = (n_(i j))/(n_i)
 $
 Stimare le probabilità in questo modo quando si dispone di dataset limitato è altametne soggetto a errori. Se per puro caso una feature rara $e_k$ non compare mai negli esempi di training di una certa classe, la sua probabilità stimata sarà pari a 0. Di conseguenza, se quella stessa feature $e_k$ si presenta in un documento di test $E$, a causa della produttoria del Naive Bayes l'intero prodotto si azzera, rendendo nulle sia la probabilità congiunta che quella a posteriori. ($forall c_i: P(E bar c_i) = 0$ e $forall c_i : P(c_i bar E) = 0$).
-== FARE DA SLIDE 53 a 66
+==== Correzione di Laplace
+Per gestire il problema delle probabilità pari a 0, si utilizza il seguente approccio. Il documento viene modellato come la generazione di un insieme di parole (_bag of words_) per una determinata categoria, simulando campionamenti ripetuti con reimissione da un vocabolario $V = brace.l w_1, w_2, dots, w_m brace.r$ in base alle probabilità condizionate $P(w_j bar c_i)$. Per ovviare al problema della parole mancanti nel training set, si applica la *correzione di Laplace*. \
+Si utilizzano stime di probabilità smussate assumendo una distribuzione uniforme su tutte le parole del vocabolario $(p = 1/abs(V))$ e ponendo $m = abs(V)$. \
+Questa tecnica equivale ad aggiungere un _campione virtuale_ in cui ogni parola del vocabolario viene osservata esattamente una volta all'interno di ciascuna categoria, evitando così divisioni per zero o azzeramenti anomali delle probabilità a posteriori.
+==== Addestramento dell'algoritmo Naive Bayes
+L'addestramento dell'algoritmo Naive Bayes è il seguente:
+#algoritmo(title: [Addestramento Naive Bayes])[
+  #pseudocode-list[
+    + Let $V$ be the vocabulary of all words in the documents in $D$
+    + *for each* category $c_i in C$ *do*
+      + Let $D_i$ be the subset of documents in $D$ in category $c_i$
+      + $P(c_i) = |D_i| \/ |D|$
+      + Let $T_i$ be the concatenation of all the documents in $D_i$
+      + Let $n_i$ be the total number of word occurrences in $T_i$
+      + *for each* word $w_j in V$ *do*
+        + Let $n_(i j)$ be the number of occurrences of $w_j$ in $T_i$
+        + Let $P(w_j | c_i) = (n_(i j) + 1) \/ (n_i + |V|)$
+  ]
+] <alg:naive-bayes-training>
+==== Test dell'algoritmo Naive Bayes
+La fase di test dell'algoritmo Naive Bayes è il seguente. \
+Dato un documento di test _x_, si indica con _n_ il numero totale di occorrenze di palore presenti in _x_, e con $a_i$ la parola che compare alla $i$-esima posizione del documento. L'algoritmo assegna a $x$ la classe $c_i in C$ che massimizza il punteggio bayesiano:
+$
+  op("argmax", limits: #true)_(c_i in C) P(c_i) product_(i=1)^n P(a_i mid(|) c_i)
+$
+Moltiplicare tra loro molte probabilità, può portare a valori così piccoli da scendere sotto il minimo numero rappresentabile in virgola mobile, collassando verso 0. Poichè vale l'identità
+$
+log(x y) =  log(x) + log(y)
+$
+conviene effettaure i calcoli sommando i logaritmi delle probabilità anzichè moltiplicare direttamente le probabilità. La classe che ottiene il punteggio finale più alto in log-probabilità resta comunque la più probabile, perchè la funzione logaritmo è strettamente crescente e quindi preserva l'ordinamento nell'operazione di argmax.
+
