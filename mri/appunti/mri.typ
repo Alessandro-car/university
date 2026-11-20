@@ -2469,4 +2469,103 @@ $
 log(x y) =  log(x) + log(y)
 $
 conviene effettaure i calcoli sommando i logaritmi delle probabilità anzichè moltiplicare direttamente le probabilità. La classe che ottiene il punteggio finale più alto in log-probabilità resta comunque la più probabile, perchè la funzione logaritmo è strettamente crescente e quindi preserva l'ordinamento nell'operazione di argmax.
+==== Calibrazione numerica delle probabilità a posteriori
+I risultati della classificazione ottenuti selezionando la classe con probabilità a posteriori massima sono solitamente abbastanza accurati. A causa dell'inadeguatezza dell'ipotesi di indipendenza condizionale (che nella realtà die testi è spesso violata, poichè le parole sono correlate), le stime numeriche effettive delle probabilità a posteriori non sono accurate. Le probabilità in uscita tenono in genere a concentrarsi molto vicino a 0 oppure a 1.
+=== Valutazione di un classificatore
+La valutazione di un classificatore è sperimentale perchè il problema non ha una specifica formale che consenta un altro tipo di valutazione. La valutazione deve essere effettuata su dati di training. \
+Definaimo la _classification accuracy_ come:
+$
+c / n
+$
+ove:
+- $n$ è il numero totale di istanze nel testing;
+- $c$ è il numero di istanze di testing classificate correttamente dal sistema.
+I risultati possono variare in base all'uso di diversi training e testing sets. Solitamente si mediano i risultati ottenuti su diversi training e test sets per ottenere risultati più significativi. \
+Le misure standard di efficacia per i classificatori sono tratte dall'Information Retrieval: _precision_ $(pi)$ e _recall_ ($rho$). $pi$ e $rho$ sono ottenuti mediando su tutte le categorie. $pi$ può essere pensata come la correttezza del classificatore, $rho$
+#let frame(x, y) = (
+  top: if y in (0, 2) or (y == 1 and x >= 2) or (y == 3 and x != 0) { 0.5pt },
+  bottom: if y == 3 { 0.5pt },
+  left: if x == 2 { 1.2pt } else { 0.5pt },
+  // the "expert judgments" header cell starts at column 2 and spans to the right edge
+  right: if x == 3 or (y == 0 and x == 2) { 0.5pt },
+)
+
+// small table: single category
+#align(center)[
+  #block(breakable: false)[
+    #table(
+      columns: 4,
+      align: center + horizon,
+      inset: (x: 9pt, y: 5pt),
+      stroke: (x, y) => frame(x, y),
+      table.cell(rowspan: 2, colspan: 2)[Category \ $c_i$],
+      table.cell(colspan: 2)[expert judgments],
+      [*YES*], [*NO*],
+      [classifier], [*YES*], $T P_i$, $F P_i$,
+      [judgments], [*NO*], $F N_i$, $T N_i$,
+    )
+  ]
+]
+
+#v(1.5em)
+
+// large table: category set
+#align(center)[
+  #block(breakable: false)[
+    #table(
+      columns: 4,
+      align: center + horizon,
+      inset: (x: 12pt, y: 9pt),
+      stroke: (x, y) => frame(x, y),
+      table.cell(rowspan: 2, colspan: 2)[Category set \ $C = {c_1, dots, c_(|C|)}$],
+      table.cell(colspan: 2)[expert judgments],
+      [*YES*], [*NO*],
+      [classifier], [*YES*],
+      $ T P = sum_(i=1)^(|C|) T P_i $,
+      $ F P = sum_(i=1)^(|C|) F P_i $,
+      [judgments], [*NO*],
+      $ F N = sum_(i=1)^(|C|) F N_i $,
+      $ T N = sum_(i=1)^(|C|) T N_i $,
+    )
+  ]
+]
+e calcoliamo $pi$ e $rho$ come:
+$
+hat(pi)_i = (T P_i)/(T P_i + F P_i) quad hat(rho)_i = (T P_i)/(T P_i + F N_i)
+$
+Eistono due strategie fondamentali per aggregare le metriche di valutazione su un insieme di categorie $C$ in un problema di classificazione multiclasse/multilabel: *microaceraging* e *macroaveraging*. \
+==== Microaveraging
+Nel *microaveraging*, i conteggi dei _True Positive, False Positive_ e _False Negative_ vengono sommati globalmente su tutte le classi $abs(C)$ prima di calcolare precisione e recall. La microprecisione $hat(pi)^mu$ viene calcolata come:
+$
+hat(pi)^mu = (T P)/(T P + F P) = (sum_(i=1)^(abs(C)) T P_i)/(sum_(i=1)^(abs(C)) (T P_i + F P_i))
+$
+La micro-recall, $hat(rho)^mu$, viene calcolata come:
+$
+hat(rho)^mu = (T P)/(T P + F N) = (sum_(i=1)^(abs(C)) T P_i)/(sum_(i=1)^(abs(C)) (T P_i + F N_i))
+$
+Ogni singolo documento ha lo stesso peso, quindi il risultato è fortemente influenzato dalle *classi più frequenti*.
+==== Macroaveraging
+Nel *macroaveraging*, si calcolano prima la precisione $hat(pi)_i$ e la recall $hat(rho)_i$ separatamente per ciascuna categoria $c_i in C$, e poi se ne fa la media aritmetica semplice sul numero totale di categorie $abs(C)$. La macro-precisione, $hat(pi)^M$, viene calcolata come:
+$
+hat(pi)^M = (sum_(i=1)^(abs(C)) hat(pi)_i)/(abs(C))
+$
+La macro-recall, $hat(rho)^(M)$, viene calcolata come:
+$
+hat(rho)^M = (sum_(i=1)^(abs(C)) hat(rho)_i)/(abs(C))
+$
+Ogni categoria pesa in modo uguale nella media finale, indipendentemente dalla sua frequenza nel dataset. Di conseguenza, le prestazioni sulle classi *rare* hanno un impatto proporzionalmente molto maggiore rispetto al microaveraging.
+==== K-Fold Cross-Validation
+In linea teorica, test and training sets devono essere indipendenti ad ogni prova e questo richiede una notevole quantità di dati etichettati. \
+Questa tecnica prevede il partizionamento dei dati in $K$ insiemi disgiunti. Si eseguono $K$ prove: ogni prova usa un diverso insieme per il testing, addrestrando il sistema sugli altri $K - 1$ insiemi. Le metriche di valutazione sono mediate sulle $K$ prove. Questa procedura garantisce l'indipendenza. Tipicamente a $K$ viene assegnato il valore 10. \
+Quindi, si partiziona $D$ ottenendo $K$ insiemi $T e_i$. Si applica iterativamente il train-and-test a
+$
+chevron.l T r_i = D - T e_i, T e_i chevron.r
+$
+L'efficacia del sistema è ottenuta mediando quella dei $K$ classificatori. \
+Ottenere dataset etichettati non è facile. È interessante osservare come varia l'accuratezza predittiva di un classificatore in base al numero di istanze usate nella fase di learning. Le _curve di apprendimento_ rappresentano la precisione di classificazione su dati di test indipendenti (asse _Y_) rispetto al numero di esempi di training (asse _X_). Utilizzando la _K_-Fold le curve di learning vengono mediate sulle varie prove indipendenti. Per ogni prova generata dalla _K_-fold cross validation, si addestra il classificatore su frazioni del training set con un numero crescente di istanze, misurando l'accuratezza sui dati di test per ogni punto della curva di learning desiderata. \
+Un esempio è mostrato nella seguente figura.
+#figure(
+image("images/learning_curve.png", width: 70%),
+caption: [Curva di apprendimento]
+)
 
