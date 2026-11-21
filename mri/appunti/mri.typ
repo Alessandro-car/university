@@ -932,7 +932,8 @@ image("images/tradeoff.png", width: 70%),
 caption: [Tradeoff tra precisione e copertura]
 )
 In uno scenario ideale, si vorrebbe raggiungere il punto in cui entrambe le metriche assumono valore massimo pari a 1. \
-Tuttavia, nella realtà operativa i sistemi si muovono lungo una curva di compromesso:  - *Alta precisione e bassa copertura*: concentrandosi sui primi risultati, il sistema restituisce documenti rilevanti ma rischia di tralasciarne molti altri che potrebbero rivelarsi utili.
+Tuttavia, nella realtà operativa i sistemi si muovono lungo una curva di compromesso:
+- *Alta precisione e bassa copertura*: concentrandosi sui primi risultati, il sistema restituisce documenti rilevanti ma rischia di tralasciarne molti altri che potrebbero rivelarsi utili.
 - *Alta copertura e bassa precisione*: cercando di includere la maggior parte dei documenti pertinenti (ad esempio espandendo il recupero), il sistema intercetta i documenti rilevanti ma finisce per includere una grande quantità di materiale irrilevante o "spazzatura" (junk).
 === Limiti nell'utilizzo della precisione e della copertura
 L'utilizzo delle metriche di precisione e copertura comporta diverse difficoltà pratiche che è necessario considerare. Prima di tutto, per ottenere una valutazione significativa, è opportuno calcolare la media su sistemi estesi di query e grandi collezioni di documenti. Il processo richiede inoltre valutazioni umane della rilevanza, sebbene le persone non si rivelino sempre valutatrici affidabili. Un'ulteriore limitazione deriva dal fatto che tali valutazioni devono solitametne essere binarie, il che rende complessa l'eventuale gestione di giudizi più sfumati. \
@@ -951,7 +952,7 @@ $
 Confrontandola con la media aritmetica, entrambi i valori devono essere alti affinchè la media armonica sia alta. \
 La misura F1 è la generalizzazione della misura $F_beta$, ove $beta$ è un parametro che serve a dare più o meno peso a uno dei due parametri (precisione o copertura).
 $
-F_beta = (1 + beta^2)P R / (beta^2 P + R) = (1 + beta^2) / ((beta^2 / R) + (1 / P))
+F_beta = ((1 + beta^2)(P R)) / ((beta^2 P) + R) = (1 + beta^2) / ((beta^2 / R) + (1 / P))
 $
 Analizziamo il comportamento di questa misura in base al valore di $beta$:
 - $beta = 1$: uguale compromesso tra precisione e copertura ($F_beta = F$)
