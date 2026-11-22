@@ -1399,8 +1399,8 @@ $
 L'area sottotesa alle curve _NCG_ e _NDCG_ rappresenta direttametne la qualità complessiva dell'algoritmo di ranking. Più grande è l'area sottotesa, migliori sono i risultati restituiti dal sistema. Di conseguenza, grazie a questa normalizzazione in scala, i valori ottenuti possono essere impiegati efficacemente per confrontare in modo rigoroso due distinti algoritmi di recupero dell'informazione. \
 Possiamo definire formalmente _NCG_ e _NDCG_ come segue:
 $
-N C G[i] &= C G[i] / I C G[i] \
-N D C G[i] &= D C G[i] / I D C G[i]
+N C G[i] &= (C G[i]) / (I C G[i]) \
+N D C G[i] &= (D C G[i]) / (I D C G[i])
 $
 Ogni valore di _NCG_ e _NDCG_ si trova nel range $[0, 1]$.
 == Coefficienti di correlazione dei ranking
@@ -1485,7 +1485,7 @@ Per mappare questo rapporto nell'intervallo standard dei coefficienti di correla
 + moltiplicando la frazione per 2, l'intervallo dei valori si sposta nel range [0, +2]
 + sottraendo il risultato ottenuto da 1, il valore finale si sposta nell'intervallo definitivo $[-1, +1]$, definendo così la formula completa del coefficiente di Spearman. Analizziamo la formula definitiva e completa del *coefficiente di correlazione per ranghi di Spearman*:
 $
-S(R_1, R_2) = 1 - (6 times sum_(j=1)^K(s_(1, j) - s_(2, j))^2)/(K times (K^2 - 1))
+S(R_1, R_2) = 1 - (6 times sum_(j=1)^K (s_(1, j) - s_(2, j))^2)/(K times (K^2 - 1))
 $
 ove $S(R_1, R_2)$ è il coefficiente di correlazione di Spearman e $K$ la dimnesione dei set posizionati e confrontati.
 === Coefficiente Tau di Kendall
