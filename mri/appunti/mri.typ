@@ -18,7 +18,7 @@
 
 = Introduzione
 == Gestire la conoscenza
-Gestire la conoscenza significa raccogliere la conoscenza, organizzarla, distruibuirla e renderla accessibile a chi ne ha bisogno (nel momento e nel posto in cui serve) al fine di:
+Gestire la conoscenza significa raccogliere la conoscenza, organizzarla, distribuirla e renderla accessibile a chi ne ha bisogno (nel momento e nel posto in cui serve) al fine di:
 - risparmiare tempo,
 - migliorare la qualità dei servizi,
 - ridurre i tempi di accesso all'informazione ed alla fruizione dei servizi.
@@ -28,17 +28,17 @@ La conoscenza è un capitale:
 - difficile da concretizzare e conservare.
 Circa il 90% dei dati presenti nei database del mondo è in forma non strutturata. Gli obiettivi sono quelli di costruire sistemi in grado di processare documenti in linguaggio naturale e ritrovare conoscenza da basi di dati in forma testuale.
 == Acquisizione della conoscenza
-Il processo di acquisizione della conoscenza dal testo in linguaggio naturale è chiamato *text mining*. La classificazione delle tecniche di estrazione ed esplorazione dei dati si basa sull'incrocio di due dimensioni fondamemtali: l'obiettivo dell'utente e la natura dei dati analizzati.
+Il processo di acquisizione della conoscenza dal testo in linguaggio naturale è chiamato *text mining*. La classificazione delle tecniche di estrazione ed esplorazione dei dati si basa sull'incrocio di due dimensioni fondamentali: l'obiettivo dell'utente e la natura dei dati analizzati.
 - L'approccio dell'utente:
 	- *Search (Goal-oriented)*: l'utente ha un obiettivo e sa cosa sta cercando. Formula una query per recuperare informazioni o documenti specifici.
-	- *Discover (Opportunistic)*: l'utente ha un approccio esplorativo. Non cerca un dato esatto noto a priori, ma vuole "scoprire" pattern nascoti, tendenza, anomalie o estrarre nuova conoscenza dei dati.
+	- *Discover (Opportunistic)*: l'utente ha un approccio esplorativo. Non cerca un dato esatto noto a priori, ma vuole "scoprire" pattern nascosti, tendenze, anomalie o estrarre nuova conoscenza dai dati.
 - Il formato dei dati:
 	- *Structured Data*: Dati strutturati, tipicamente organizzati in schemi rigidi.
 	- *Unstructured Data*: Dati non strutturati, composti prevalentemente da testo libero in linguaggio naturale, privi di uno schema predefinito.
 Incrociando queste dimensioni si ottengono quattro diverse aree di studio e applicazione:
 - *Data Retrieval (Dati Strutturati + Search)*: consiste nel recuperare record esatti da un database strutturato. Si basa su logica deterministica: un record corrisponde o non corrisponde alla query,
-- *Information Retrieval (Dati non Strutturati + Search)*. È la ricerca di informazioni all'interno di collezioni di documenti testuali. Poichè il testo non è strutturato, il sistema restituisce un ranking di documenti in base al loro grado di "rilevanza" rispetto alla query.
-- *Data Mining (Dati strutturati + Discover)*. È l'applicazione di algoritmi statistici e di macchine di learning su grandi database strutturati per scoprire pattern ricorrenti, regole di associazione o per addestrare modelli predittivi.
+- *Information Retrieval (Dati non Strutturati + Search)*. È la ricerca di informazioni all'interno di collezioni di documenti testuali. Poiché il testo non è strutturato, il sistema restituisce un ranking di documenti in base al loro grado di "rilevanza" rispetto alla query.
+- *Data Mining (Dati strutturati + Discover)*. È l'applicazione di algoritmi statistici e di machine learning su grandi database strutturati per scoprire pattern ricorrenti, regole di associazione o per addestrare modelli predittivi.
 - *Text Mining (Dati non strutturati + Discover)*. È il processo di derivazione di informazioni di alta qualità, pattern e nuova conoscenza partendo da enormi quantità di testo libero.
 Tutto ciò è mostrato nella seguente figura.
 #figure(
@@ -52,7 +52,7 @@ image("images/data_retrieval.png", width: 70%),
 caption: [Data Retrieval]
 )
 === Information Retrieval
-Il processo di information retrieval è la ricerca di un'informazione rilvante in una sorgente di dati non strutturati (tipicamente in formato testo).
+Il processo di information retrieval è la ricerca di un'informazione rilevante in una sorgente di dati non strutturati (tipicamente in formato testo).
 #figure(
 image("images/information_retrieval.png", width: 70%),
 caption: [Information Retrieval]
@@ -66,7 +66,7 @@ caption: [Data Mining]
 )
 
 === Il processo KDD
-Il processo KDD, acronimo per _Knowledge Discovery from Databases_, è un processo non banale di identificazione valida, nuova e potenzialmente, e ultimente di comprensibili pattern nei dati.
+Il processo KDD, acronimo per _Knowledge Discovery from Databases_, è un processo non banale di identificazione valida, nuova e potenzialmente, e utilmente di comprensibili pattern nei dati.
 === Text Mining
 Il processo di text mining è la scoperta di nuova conoscenza attraverso l'analisi del testo.
 #figure(
@@ -75,33 +75,33 @@ caption: [Text Mining]
 )
 Il processo di text mining si può dividere nei seguenti passi:
 + *Text Preprocessing (Pre-elaborazione del testo)*. Coinvolge l'analisi _sintattica_ e _semantica_ per preparare i dati in un formato leggibile dalle fasi successive.
-+ *Features Generation (Generazione delle Feature / Trasformazione del testo)*. Consiste nel trasformare il testo pre-elaborato in una rappresentazione matematica o strutturata. L'approccio principale è il *Bag of words* che ignora l'ordine delle parole e la grammatica, concentrandosi slla presenza e la molteplicità dei termini.
-+ *Features Selection (Selezione delle feature)*. La fase precedente genera uno spazio vettoriale di dimensioni enormi, questa fase selezione solo le caratteristiche più rilevanti e informative. Si basa su tecniche come:
++ *Features Generation (Generazione delle Feature / Trasformazione del testo)*. Consiste nel trasformare il testo pre-elaborato in una rappresentazione matematica o strutturata. L'approccio principale è il *Bag of words* che ignora l'ordine delle parole e la grammatica, concentrandosi sulla presenza e la molteplicità dei termini.
++ *Features Selection (Selezione delle feature)*. La fase precedente genera uno spazio vettoriale di dimensioni enormi, questa fase seleziona solo le caratteristiche più rilevanti e informative. Si basa su tecniche come:
 	- *simple counting*: metodi basati sul conteggio semplice delle frequenze dei termini.
 	- *statistics:* valutazioni statistiche per capire quali feature hanno il maggiore potere discriminante.
-+ *Text/data mining*. È il cuore del processo, dove si applicano gli algoritmi di macchine di machine learning ai dati ormai strutturati e filtrati. Si divide in due paradigmi:
++ *Text/data mining*. È il cuore del processo, dove si applicano gli algoritmi di machine learning ai dati ormai strutturati e filtrati. Si divide in due paradigmi:
 	- *Classification (Supervised learning)*. Apprendimento supervisionato, dove si addestra un modello su testi già etichettati per classificare nuovi documenti.
 	- *Clustering (Unsupervised learning)*. Apprendimento non supervisionato, dove l'algoritmo raggruppa autonomamente i documenti in base alle loro similarità intrinseche, senza avere categorie predefinite.
-+ *Analyzing result (Interpretazione e valutazione)*. L'ultima fase in cui i pattern estratti vengono analizzati e interpretati per estrarre il vero e proprio "valore" o "conoscenza". Questa fase prevede un *meccanismo di feedback*. L'interpretazione dei risultati può portare a rivalutare e modifcare i parametri di qualsiasi delle fasi precedenti per migliorare l'output finale.\
-Il text mining è importante anche nell'impresa, in quanto il processo di estrazione di conoscenza, precedentemente sconosciuta, da fonti testualii è utilizzabile per prendere decisioni aziendali. Inoltre, permette di organizzare e di categorizzare scoprendo tendenza e apprendendo concetti. Inoltre, il text minining nell'impresa è anche necessario in quanto scoprire tendenze, idee, opinioni e gusti degli utenti sta diventando sempre più impegnativo. Ci sono tante fonti da analizzare come e-mail, forum, articol, ecc, e l'obiettivo è quello di analizzare migliaia di testi in pochi secondi raggruppandoli in funzione del loro contenuto.
++ *Analyzing result (Interpretazione e valutazione)*. L'ultima fase in cui i pattern estratti vengono analizzati e interpretati per estrarre il vero e proprio "valore" o "conoscenza". Questa fase prevede un *meccanismo di feedback*. L'interpretazione dei risultati può portare a rivalutare e modificare i parametri di qualsiasi delle fasi precedenti per migliorare l'output finale.\
+Il text mining è importante anche nell'impresa, in quanto il processo di estrazione di conoscenza, precedentemente sconosciuta, da fonti testuali è utilizzabile per prendere decisioni aziendali. Inoltre, permette di organizzare e di categorizzare scoprendo tendenze e apprendendo concetti. Inoltre, il text mining nell'impresa è anche necessario in quanto scoprire tendenze, idee, opinioni e gusti degli utenti sta diventando sempre più impegnativo. Ci sono tante fonti da analizzare come e-mail, forum, articoli, ecc., e l'obiettivo è quello di analizzare migliaia di testi in pochi secondi raggruppandoli in funzione del loro contenuto.
 == Ritrovamento delle informazioni intelligente
 === Ritrovamento delle informazioni
 Il ritrovamento delle informazioni, oppure _information Retrieval, IR_, si occupa della rappresentazione, dell'archiviazione, organizzazione e accesso a elementi informativi, come documenti, pagine Web, cataloghi online, record strutturati e oggetti multimediali. L'ambito di ricerca iniziale nell'area del ritrovamento delle informazioni riguardava l'indicizzazione del testo e la ricerca di documenti utili in una collezione. Cercare pagine nel web è un compito non banale in quanto bisogna prima ritrovare documenti relativi ad una data query e poi ritrovare, in modo efficiente, informazioni da un grande set di documenti. \
-Il compito del ritrovamento delle informazioni è quello di trovare una classifica di un insieme di documenti che sono relativi ad una data query. Data la query dell'utenet l'obiettivo di un sistema di ritrovamento delle informazioni è quello di ritrovare informazioni utili o rilevanti per l'utente. Il sistema IR deve classificare le informazioni in accordo con un grado di rilevanza alla query data dall'utente.
+Il compito del ritrovamento delle informazioni è quello di trovare una classifica di un insieme di documenti che sono relativi ad una data query. Data la query dell'utente l'obiettivo di un sistema di ritrovamento delle informazioni è quello di ritrovare informazioni utili o rilevanti per l'utente. Il sistema IR deve classificare le informazioni in accordo con un grado di rilevanza alla query data dall'utente.
 === Come le persone cercano informazioni
 L'interazione degli utenti con le interfacce di ricerca è influenzata da diversi fattori. Nel campo dell'information retrieval, si fa, inoltre, una distinzione fondamentale tra le modalità con cui si cerca l'informazione. \
 Il modo in cui un utente interagisce con un'interfaccia di ricerca varia in funzione di tre elementi:
 - *il tipo di compito*: l'obiettivo pratico che l'utente deve portare a termine.
 - *l'esperienza nel dominio*: il livello di conoscenza pregressa che chi cerca l'informazione possiede riguardo allo specifico argomento trattato.
-- *tempo e sforzo*: la quantità di tempo e di impegno cognitivo che l'utente ha a disposizione o è disposto a inverstire nel processo.
+- *tempo e sforzo*: la quantità di tempo e di impegno cognitivo che l'utente ha a disposizione o è disposto a investire nel processo.
 Come detto prima, si opera una distinzione principale tra due approcci alla ricerca:
 - *information lookup*, ricerca mirata;
 - *exploratory search*, ricerca esplorativa.
 I compiti basati sull'information lookup presentano le seguenti caratteristiche:
-- sono assimilabili al recupero di dato di fatto o alla ricerca di risposte dirette a domande specifiche;
+- sono assimilabili al recupero di dati di fatto o alla ricerca di risposte dirette a domande specifiche;
 - il bisogno dell'utente può essere soddisfatto ottenendo pezzi discreti di informazioni, come numeri, date, siti Web, ecc.;
 - questa modalità si sposa molto bene con i paradigmi di interazione standard offerti dai classici motori di ricerca Web. \
-L'exploratory search, invece, è divisa in compiti di apprendimento e compiti investigativi. La ricerca di apprendimento richiede più di singole coppie query-risposta e richiede a chi effettua le ricerca di spendere tempo per: analizzare e leggere molteplici elementi di informazione e per sintetizzare i contenuto in una nuova forma comprensibile. \
+L'exploratory search, invece, è divisa in compiti di apprendimento e compiti investigativi. La ricerca di apprendimento richiede più di singole coppie query-risposta e richiede a chi effettua la ricerca di spendere tempo per: analizzare e leggere molteplici elementi di informazione e per sintetizzare i contenuti in una nuova forma comprensibile. \
 Il compito investigativo riguarda un processo a lungo termine che:
 - coinvolge interazioni che prendono luogo in un periodo di tempo prolungato;
 - può restituire risultati che necessitano di essere valutati criticamente prima di essere integrati nel personale bagaglio professionale e di conoscenza;
@@ -121,14 +121,14 @@ La rilevanza è un giudizio soggettivo e può includere:
 - essere sul giusto argomento;
 - avere informazioni recenti;
 - soddisfare gli obiettivi dell'utente e del suo uso previsto delle informazioni.
-La definizione più semplice di rilevanza è che la query appare parola per parola nel documento. Una nozione più generale, invece, è che le parole nella stringa appaiono frequentemente nel documento, in qualsiasi ordine. Per questo si usa il termine di _bag of words_, intesa come una sacca di parole del quale non importa l'ordine. \
+La definizione più semplice di rilevanza è che la query appare parola per parola nel documento. Una nozione più generale, invece, è che le parole nella stringa appaiono frequentemente nel documento, in qualsiasi ordine. Per questo si usa il termine di _bag of words_, intesa come una sacca di parole di cui non importa l'ordine. \
 Il problema di queste parole chiave è che è possibile non ritrovare documenti rilevanti che includono, però, dei sinonimi di tali parole. Oppure, è possibile ritrovare documenti irrilevanti che possono contenere termini polisemici, ovvero stessa parola ma con significato diverso. Ad esempio, la parola "bat" in inglese può significare sia pipistrello che la mazza da baseball.
 === Ritrovamento delle informazioni intelligente
 Un sistema di _intelligent IR_ si distingue dai sistemi di base per le seguenti caratteristiche:
 - prende in considerazione il _significato_ delle parole utilizzate;
 - prende in considerazione l'_ordine_ delle parole all'interno della query;
 - si adatta all'utente basandosi su un feedback che può essere diretto o indiretto;
-- nel processo di _relevance feedback_, il sistema raccoglie il feedback fornito, genera una nuova query e ripete l'operazione di redcupero delle informazioni.
+- nel processo di _relevance feedback_, il sistema raccoglie il feedback fornito, genera una nuova query e ripete l'operazione di recupero delle informazioni.
 Analizziamo l'architettura di un sistema IR:
 #figure(
 image("images/architettura_ir.png", width: 70%),
@@ -140,21 +140,21 @@ Dalla foto precedente descriviamo le seguenti componenti:
 	- lo stemming, ovvero ridurre le parole alle loro radici tramite la rimozione di prefissi e suffissi.
 - *Indexing*, l'indicizzazione. Questa fase consiste nel costruire un _indice invertito_ detto _inverted index_ che mappa le parole verso i puntatori dei documenti in cui esse compaiono.
 - *Searching*, la ricerca. Questa fase ha lo scopo di recuperare, a partire dall'inverted index, i documenti che contengono uno specifico token di ricerca.
-- *Ranking*. Questa fase assegna un punteggio a tutti i documenti recuperati basandosi su una metrice di rilevanza. Questa componente può occuparsi anche del raggruppamento, ovvero trovare elementi in comune per presentare all'utente dei gruppi di documenti.
+- *Ranking*. Questa fase assegna un punteggio a tutti i documenti recuperati basandosi su una metrica di rilevanza. Questa componente può occuparsi anche del raggruppamento, ovvero trovare elementi in comune per presentare all'utente dei gruppi di documenti.
 Le aree di ricerca dei sistemi di intelligent IR riguardano il processing del linguaggio naturale e il machine learning.
 === Natural Language Processing
 Il Natural Language Processing, NLP, nell'ambito dell'Information Retrieval si caratterizza per i seguenti aspetti:
 - è focalizzato sull'analisi sintattica, semantica e pragmatica del testo e del discorso in linguaggio naturale.
 - la capacità di analizzare la sintassi e la semantica potrebbe consentire un recupero delle informazioni basato sul significato, piuttosto che sulle semplici parole chiave.
 L'applicazione del Natural Language Processing al campo dell'Information Retrieval si sta sviluppando lungo diverse direzioni di ricerca principali:
-- *Word Sense Disambiguation*. Sviluppo di emtodi per determinare il significato corretto di una parola ambigua basandosi sul contesto in cui si trova.
-- *Information Extraction*. Utilizzo di metodi volti a indentificare specifiche porzioni di informazione all'interno di un documento.
+- *Word Sense Disambiguation*. Sviluppo di metodi per determinare il significato corretto di una parola ambigua basandosi sul contesto in cui si trova.
+- *Information Extraction*. Utilizzo di metodi volti a identificare specifiche porzioni di informazione all'interno di un documento.
 - *Question answering*. Creazione di metodi per fornire risposte a specifiche domande poste in linguaggio naturale ricavandole da ampi corpi di documenti.
 === Machine learning
 Il campo del Machine Learning si concentra sui seguenti aspetti:
 - È focalizzato sullo sviluppo di sistemi computazionali che sono in grado di migliorare le proprie prestazioni attraverso l'esperienza.
-- *Apprendimento supervisionato (Supervised learning)*. Prevede la classificaione automatica di esempi basandosi sull'apprendimento di concetti derivati da esempi di addestramento precedentemente etichettati.
-- *Apprendimento non supervisionato (Unsupervised learning)*. Consiste nell'utilizzo di metodi automatici per raggruppare esempi non etichettati all'interno di gruppo che risultino significativi.
+- *Apprendimento supervisionato (Supervised learning)*. Prevede la classificazione automatica di esempi basandosi sull'apprendimento di concetti derivati da esempi di addestramento precedentemente etichettati.
+- *Apprendimento non supervisionato (Unsupervised learning)*. Consiste nell'utilizzo di metodi automatici per raggruppare esempi non etichettati all'interno di gruppi che risultino significativi.
 = Boolean and Vector Space Retrieval Models
 == Retrieval Models
 Un modello di ritrovamento, detto *retrieval model*, specifica i dettagli di:
@@ -172,12 +172,11 @@ Un modello di ritrovamento delle informazioni è una quadrupla $[D, Q, F, R(q_i,
 + $F$ è un framework per la modellazione dei documenti e query.
 + $R(q_i, d_j)$ è una funzione di ranking, che confronta la query con il documento e rileva quanto il documento è rilevante rispetto alla query data.
 ]
-Esistono diversi modelli di ritrovamento, come mostrari nella figura di seguito: \
+Esistono diversi modelli di ritrovamento, come mostrati nella figura di seguito: \
 #figure(
 image("images/taxonomy_IR.jpg", width: 70%),
 caption: [Tassonomia dei modelli di ritrovamento]
 )
-*Cercare foto simile a quella nelle slide* \
 == Modello di ritrovamento booleano
 Il modello di ritrovamento booleano è basato sulla teoria degli insiemi. Per approcciarsi a questi modelli ci sono dei passi comuni nella fase di preprocessing:
 - rimuovere caratteri non voluti, come tag HTML, punteggiature, numeri, ecc.
@@ -186,7 +185,7 @@ Il modello di ritrovamento booleano è basato sulla teoria degli insiemi. Per ap
 - rimuovere comuni parole chiuse, come congiunzioni, articoli, ecc.
 - Individuare frasi comuni, possibilmente usando un dizionario specifico di dominio
 - costruire gli indici invertiti, detti _inverted index_, che permettono di accedere alla lista dei documenti che contengono una data parola, detta _keyword_.
-Nel modello di ritrovamento booleano un documento è rappresentato mediante un *insieme* di parole e le query sono espressioni booleane di keyword collegate tramite le operazioni di AND, OR e NOT, includendo l'uso di parentesi graffe per indicare lo scopo. In output si ottiene se il documento è rilevante o meno, non ci sono corrispondenze parziali o una classificazione di rilevanza. Quindi la nozione di rilevanza in questo modello è di tipo booleana.
+Nel modello di ritrovamento booleano un documento è rappresentato mediante un *insieme* di parole e le query sono espressioni booleane di keyword collegate tramite le operazioni di AND, OR e NOT, includendo l'uso di parentesi tonde per indicare lo scopo. In output si ottiene se il documento è rilevante o meno, non ci sono corrispondenze parziali o una classificazione di rilevanza. Quindi la nozione di rilevanza in questo modello è di tipo booleana.
 === Vettori di incidenza
 Consideriamo la seguente tabella:
 #let header(content) = text(fill: rgb("#0000cc"))[#content]
@@ -213,7 +212,7 @@ Consideriamo la seguente tabella:
 )
 Quindi, per ogni termine abbiamo un vettore composto da 0 o 1. Per rispondere ad una query come:
 $
-"Brutus, Ceaser and NOT Calpurnia"
+"Brutus, Caesar and NOT Calpurnia"
 $
 si prendono i vettori per le rispettive parole:
 - _Brutus_: 110100;
@@ -224,7 +223,7 @@ $
 110100 " AND " 110111 " AND " 101111 = 100100
 $
 === Indice invertito
-Per ogni termine $t$, memorizziamo una lista di tutti i documenti che contengono tale ptermine. Ogni documento è identificato da un *docID* è un numero seriale per i documenti. \
+Per ogni termine $t$, memorizziamo una lista di tutti i documenti che contengono tale termine. Ogni documento è identificato da un *docID*, ovvero un numero seriale per i documenti. \
 Supponiamo di implementare gli indici invertiti utilizzando array di dimensione statica e consideriamo la seguente figura:
 #figure(
 image("images/indici_invertiti_statici.png", width: 70%),
@@ -233,7 +232,7 @@ Se, ad esempio, si aggiunge la parola _Caesar_ al documento 14, non possiamo ins
 In memoria centrale, questo problema si risolve tipicamente utilizzando:
 - *Liste concatenate*
 - *Array a lunghezza variabile*.
-Queste soluzioni dinamiche permettono di aggiungere nuovi *docID* man mano che l'indice cresce, accettando dei compromessi tra l'ottimizzazione dello spazio occupato e la facilità di inserimento. Su disco, invece, è normale e ottimale mantenere una sequenza continua di dati per velocizzare i tempo di lettura. \
+Queste soluzioni dinamiche permettono di aggiungere nuovi *docID* man mano che l'indice cresce, accettando dei compromessi tra l'ottimizzazione dello spazio occupato e la facilità di inserimento. Su disco, invece, è normale e ottimale mantenere una sequenza continua di dati per velocizzare i tempi di lettura. \
 Inoltre, a prescindere dalla struttura dinamica scelta in memoria, è fondamentale ricordare che i documenti all'interno di ogni lista di *posting* devono sempre essere mantenuti ordinati per *docID* crescente per garantire l'efficienza delle operazioni di intersezione durante le query. \
 Segue un esempio di costruzione dell'indice invertito:
 #figure(
@@ -241,15 +240,15 @@ image("images/costruzione_indice.png", width: 70%),
 caption: [Costruzione dell'indice invertito]
 )
 === Fasi dell'Indicizzatore
-Analizziamo le passi che compongono l'indicizzatore:
+Analizziamo i passi che compongono l'indicizzatore:
 + Creazione delle coppie (Token, docID)
 	- Il processo estrae il testo e genera una sequenza formata da coppie di valori: un *token modificato* e l'*ID del documento* in cui quel token compare.
-	- I token vengono definiti "modificati" perchè, subiscono una pre-elaborazione prima di essere inseriti nella tabella.
+	- I token vengono definiti "modificati" perché subiscono una pre-elaborazione prima di essere inseriti nella tabella.
 + *Ordinamento*. Una volta generata la sequenza iniziale di coppie (Token, docID), il sistema procede con l'ordinamento di questi dati. Questo passaggio è identificato come la fase centrale e più importante del processo di indicizzazione. \
 	L'algoritmo riorganizza l'intera tabella applicando due criteri di ordinamento in sequenza:
-	+ *Ordinamento primario per termine*: tutte le coppie vengono ordinate alfabeticametne in base alla colonna del token. In questo modo, tutte le occorrenze della stessa parola vengono raggruppate vicine.
+	+ *Ordinamento primario per termine*: tutte le coppie vengono ordinate alfabeticamente in base alla colonna del token. In questo modo, tutte le occorrenze della stessa parola vengono raggruppate vicine.
 	+ *Ordinamento secondario per docID*: a parità di termine, le tuple vengono ordinate in modo crescente in base all'identificativo del documento.
-+ *Dizionario e postings*. Dopo aver ordinato alfabeticametne i termini e i relativi docID, il sistema trasforma la lista lineare nella struttura finale dell'indice invertito attraverso tre operazioni fondamentali:
++ *Dizionario e postings*. Dopo aver ordinato alfabeticamente i termini e i relativi docID, il sistema trasforma la lista lineare nella struttura finale dell'indice invertito attraverso tre operazioni fondamentali:
 	- *Unione dei termini (Merging)*: le entrate multiple dello stesso termine relative a un singolo documento vengono unite. Se una parola compare più volte, non si creano puntatori duplicati allo stesso documento, ma le occorrenze vengono compattate.
 	- *Divisione in due strutture (Split)*: I dati elaborati vengono formalmente suddivisi nelle due componenti principali: il *Dizionario* e le relative liste di *Postings*.
 	- *Aggiunta della Document Frequency*: Per ogni termine nel dizionario viene aggiunta l'informazione sulla _Document Frequency_. Questo valore indica il numero totale di documenti distinti all'interno della collezione in cui quel termine è presente.
@@ -259,7 +258,7 @@ Le fasi dell'elaborazione sono le seguenti.
 + Localizza il termine *Brutus* all'interno del Dizionario e ne recupera la rispettiva lista di _postings_.
 + Localizza il termine *Caesar* nel Dizionario e ne recupera la relativa lista di _postings_.
 + Esegue un Merge delle due liste di postings per individuare i documenti che contengono contemporaneamente entrambe le parole. \
-Affinchè l'intersezione sia computazionalmente efficiente, sussistono due vincoli fondamntali:
+Affinchè l'intersezione sia computazionalmente efficiente, sussistono due vincoli fondamentali:
 - I postings all'interno di ciascuna lista devono essere rigorosamente ordinati per docID;
 - Le liste devono essere processate in *ordine di lunghezza crescente*, iniziando dalle parole più rare per ridurre da subito il numero di documenti da confrontare.
 L'algoritmo di intersezione è il seguente.
@@ -281,35 +280,35 @@ L'algoritmo di intersezione è il seguente.
 === Query booleane: corrispondenza esatta
 Il modello di ritrovamento booleano si basa sulla capacità di sottoporre al sistema delle query formulate come vere e proprie espressioni booleane.
 + *Caratteristiche del modello*.
-	- Le query booleane utilizzano gli opearatori logici fondamentali.
+	- Le query booleane utilizzano gli operatori logici fondamentali.
 	- In questo modello, ogni documento viene visto e trattato matematicamente come un semplice _insieme di parole_.
 	- La sua natura è *precisa*: l'esito della ricerca è puramente binario. Un documento soddisfa esattamente la condizione dettata dalla query oppure non la soddisfa affatto.
 	- Per via di queste caratteristiche, rappresenta forse il modello più semplice su cui sia possibile costruire un sistema di Information Retrieval.
 + *Rilevanza storica e attuale*
 	- È stato lo strumento di retrieval principale in ambito commerciale per circa tre decenni.
-	- Ancora oggi, molti dei sistemi di ricerca di uso comune si basano su logico booleana. Tra questi figurano la ricerca all'interno delle emeail, i cataloghi delle biblioteche e la funzione Spotlight di Mac OS X.
+	- Ancora oggi, molti dei sistemi di ricerca di uso comune si basano su logica booleana. Tra questi figurano la ricerca all'interno delle email, i cataloghi delle biblioteche e la funzione Spotlight di Mac OS X.
 === Problemi del modello booleano
 Nonostante la loro semplicità, i modelli di retrieval booleano presentano diverse criticità e limitazioni:
 - *Estrema rigidità*: l'utilizzo dell'operatore AND richiede che tutti i termini siano presenti, portando spesso a ottenere troppi pochi risultati. Al contrario, l'operatore OR si accontenta di un qualsiasi termine, rischiando di generare una mole eccessiva di risultati.
-- *Difficoltà nell'esprimere richieste complesse*. Risulta complicato esprimere i bisogni informativi complessi degli utenti, poichè queste informazioni devono essere obbligatoriamente tradotte e forzate all'interno di un'espressione booleana.
-- *Mancanza di controllo sul volume dei risultati*. È difficile controllare il numero di documenti che il sistema recupera, poichè tutti i documenti che presentano una corrispondenza verranno inevitabilmente restituiti.
+- *Difficoltà nell'esprimere richieste complesse*. Risulta complicato esprimere i bisogni informativi complessi degli utenti, poiché queste informazioni devono essere obbligatoriamente tradotte e forzate all'interno di un'espressione booleana.
+- *Mancanza di controllo sul volume dei risultati*. È difficile controllare il numero di documenti che il sistema recupera, poiché tutti i documenti che presentano una corrispondenza verranno inevitabilmente restituiti.
 - *Difficoltà nel ranking*. Non è possibile generare una classifica di rilevanza accurata, dato che tutti i documenti recuperati soddisfano logicamente la query allo stesso livello.
 - *Difficoltà nell'applicazione del relevance feedback*. Risulta problematico implementare meccanismi di feedback. Se l'utente identifica un documento restituito come rilevante o irrilevante, non è chiaro come la query originale debba essere modificata di conseguenza.
 == Fasi di preprocessing
-Quando un sistema si appresta a elaborare un documento greszzo, deve prima determinare alcune sue caratteristiche fondamentali, rispondendo a tre domande:
+Quando un sistema si appresta a elaborare un documento grezzo, deve prima determinare alcune sue caratteristiche fondamentali, rispondendo a tre domande:
 - *Formato*: in quale formato si trova il file;
 - *Lingua*: in quale lingua è scritto il testo;
 - *Codifica*: quale codifica dei caratteri viene utilizzata.
-Dal punto di vista formale, ognuna di queste sfide rappresenta un vero e proprio *problema di classificazione*. Nonostante la loro natura, nella pratica questi compiti vengono spesso affrontati in modo _euristico_: invece di addestrare modelli complessi, la classificazione viene predetta applicando delle regole semplici. Un esempio di questa implementazione è il riconoscimento della lingua: se nel testo ci sono molte occorrenze della parole "the", allora il documento è in inglese. \
+Dal punto di vista formale, ognuna di queste sfide rappresenta un vero e proprio *problema di classificazione*. Nonostante la loro natura, nella pratica questi compiti vengono spesso affrontati in modo _euristico_: invece di addestrare modelli complessi, la classificazione viene predetta applicando delle regole semplici. Un esempio di questa implementazione è il riconoscimento della lingua: se nel testo ci sono molte occorrenze della parola \"the\", allora il documento è in inglese. \
 Durante il processo di parsing e indicizzazione, i sistemi devono affrontare diverse complicazioni legate alla varietà di formati e lingue:
 + *la gestione del multilinguismo*
 	- la collezione di documenti da indicizzare può includere testi scritti in molte lingue differenti. Questo implica che un singolo indice potrebbe trovarsi a memorizzare e gestire termini appartenenti a diverse lingue contemporaneamente
-+ *documenti e componenti ibridi*. In alcuni casi, un singolo documento o i vari componenti che lo formano possono contenere al loro interno molteplici lingue o formati. Un tipico esempio è un'email scritta in france che ha come allegato un documento PDF scritto in tedesco.
-+ *Il problema dell'unità documentale*. Alla luce di queste complessità strutturali, sorge una domanda fondamentale: come si definisce esattametne un "documento unitario" da indicizzare? Ci sono diverse interpretazioni a seconda del contesto:
++ *documenti e componenti ibridi*. In alcuni casi, un singolo documento o i vari componenti che lo formano possono contenere al loro interno molteplici lingue o formati. Un tipico esempio è un'email scritta in francesese che ha come allegato un documento PDF scritto in tedesco.
++ *Il problema dell'unità documentale*. Alla luce di queste complessità strutturali, sorge una domanda fondamentale: come si definisce esattamente un "documento unitario" da indicizzare? Ci sono diverse interpretazioni a seconda del contesto:
 	- è un singolo file?
 	- è un'email?
 	- è un'email considerata insieme a tutti i suoi allegati?
-	- oppuer un gruppo di file interconnessi?
+	- oppure un gruppo di file interconnessi?
 === Tokenizzazione
 La tokenizzazione è il processo di suddivisione del testo grezzo in unità fondamentali e significative. Analizziamone un esempio.
 #esempio[
@@ -327,28 +326,28 @@ Diamo una definizione formale di token.
 Un *token* è definito come un'istanza di una specifica sequenza di caratteri all'interno del testo.
 ]
 Ogni token così generato diventa un candidato potenziale per diventare una voce vera e propria all'interno dell'indice. Tuttavia, per diventare una voce definitiva dell'indice, il token deve prima subire un *ulteriore processamento*. \
-La domanda findamentale che guida le fasi successive della progettazione di un indicizzatore è: *quali sono i token validi da emettere?* \
+La domanda fondamentale che guida le fasi successive della progettazione di un indicizzatore è: *quali sono i token validi da emettere?* \
 Nel processo di tokenizzazione sorgono diverse problematiche e ambiguità su come interpretare correttamente i caratteri speciali, i trattini e la punteggiatura. I casi critici principali sono i seguenti:
 - *Gestione degli apostrofi e dei genitivi*. Prendendo come esempio la frase "Finland's capital", come deve essere gestito il termine possessivo? Il token risultante deve essere _Finland?, Finlands?_ oppure _Finland's?_
 - *Parole con trattino*. Espressioni come "Hewlett-Packard" devono essere suddivise in due token distinti? Ci sono casi come "state-of-the-art", in cui bisogna decidere se spezzare o meno una sequenza complessa unita da trattini. Esistono parole ambigue come "co-education", o variazioni ortografiche come _lowercase_, _lower-case_ e _lower case_.
 	In questi casi, può rilevarsi efficace fare in modo che sia l'utente stesso a inserire eventuali trattini per guidare la ricerca.
-- *Nomi composti*. Nomi propri come "San Francisco" devono essere considerati come un unico token oppure come token separati? E soprattutto: con quale criterio logico si deicde se un'espressione plurinominale costituisce un token unico?
+- *Nomi composti*. Nomi propri come "San Francisco" devono essere considerati come un unico token oppure come token separati? E soprattutto: con quale criterio logico si decide se un'espressione plurinominale costituisce un token unico?
 ==== La gestione dei numeri nella tokenizzazione
 La gestione delle sequenze numeriche e dei codici alfanumerici rappresenta un aspetto critico durante la tokenizzazione, a causa della grande varietà di formati esistenti. \
 Ad esempio le date possono essere rappresentate come _3/20/91_, _Mar. 12, 1991_ oppure _20/3/91_.\
 Spesso queste stringhe contengono spazi interni che complicano la separazione dei token. I sistemi di IR meno recenti potrebbero scegliere di non indicizzare affatto i numeri. Tuttavia, indicizzare i numeri è spesso estremamente utile: basti pensare alla ricerca sul web di codici di errore o di _stack trace_. Una possibile soluzione tecnica a questo problema è l'uso degli *n-grammi*. Molto spesso, i metadati associati vengono indicizzati separatamente come *meta-data*.
 ==== Problematiche legate alla lingua
-Le scelte di tokenizzazione variano profondamente in base alle specifità linguistiche e morlogiche della lingua in cui è scritto il documento.
+Le scelte di tokenizzazione variano profondamente in base alle specificità linguistiche e morfologiche della lingua in cui è scritto il documento.
 + *Caso di lingua francese*:
-	- *Gestione delle elisioni*: un'espressione come l'_ensemble_ solleva il dubbio se debba essere considerata come un token unico oppure come due distinti. Le opzioni di suddivisione includono: separare in _L_ e _ensemble_?, considerare _L'_? oppure espandere in _Le_ e _ensamble_.
-	- *Problemi di corrispondenza (matching)*. Spesso si desidera che la ricerca di _l'ensemble_ restituisca una corrispondenza anche con forme simili come un _esemble_. TUttavia, su Google questo comportamento non era garantito fino al 2003, evidenziando le grandi sfide legate all'*internazionalizzazione*.
+	- *Gestione delle elisioni*: un'espressione come l'_ensemble_ solleva il dubbio se debba essere considerata come un token unico oppure come due distinti. Le opzioni di suddivisione includono: separare in _L_ e _ensemble_?, considerare _L'_? oppure espandere in _Le_ e _ensemble_.
+	- *Problemi di corrispondenza (matching)*. Spesso si desidera che la ricerca di _l'ensemble_ restituisca una corrispondenza anche con forme simili come un _ensemble_. Tuttavia, su Google questo comportamento non era garantito fino al 2003, evidenziando le grandi sfide legate all'*internazionalizzazione*.
 + *Caso del Tedesco*:
-	- *Composti nominali non segmentati*. In lingua tedesca i sostantivi composti vengono scritti unizi senza spazi. Un esempio stano è la parola _Lebensversicherungsgeselischaftangestellter_, che significa letteralmente "impiegato di una compagnia di assicurazioni sulal vita".
-	- *L'uso del Compound Splitter*. Per ovviare a questo rpoblema, i sitemi di Information Retrieval in lingua tedesca traggono enormi vantaggi dall'integrazione di un modulo di scompozione noto come *compound splitter*. L'adozione di qeusto modulo può incrementare le prestazioni di ricerca per il tedesco fino al 15%.
+	- *Composti nominali non segmentati*. In lingua tedesca i sostantivi composti vengono scritti uniti senza spazi. Un esempio strano è la parola _Lebensversicherungsgesellschaftsangestellter_, che significa letteralmente "impiegato di una compagnia di assicurazioni sulla vita".
+	- *L'uso del Compound Splitter*. Per ovviare a questo problema, i sistemi di Information Retrieval in lingua tedesca traggono enormi vantaggi dall'integrazione di un modulo di scompozione noto come *compound splitter*. L'adozione di questo modulo può incrementare le prestazioni di ricerca per il tedesco fino al 15%.
 + *Caso di cinese e giapponese*:
-	- Assenza di spazi: il cinese e il giapponese non prevedono sapzi tra le parole;
+	- Assenza di spazi: il cinese e il giapponese non prevedono spazi tra le parole;
 	- Tokenizzazione non unica: a causa di ciò, non è sempre garantita una tokenizzazione univoca;
-	- Nel caso del giapponese ci sono _alfabeti multipli mescolati_: la gestione diventa più complessa a causa dellapresenza contemporanea di più alfabeti intrecciati tra loro. Le date e gli importi si presentano in formati differenti. Inoltre, l'utente finale può scegliere di esprimere la propria query intermante utilizzando l'alfabeto hiragana.
+	- Nel caso del giapponese ci sono _alfabeti multipli mescolati_: la gestione diventa più complessa a causa della presenza contemporanea di più alfabeti intrecciati tra loro. Le date e gli importi si presentano in formati differenti. Inoltre, l'utente finale può scegliere di esprimere la propria query internamente utilizzando l'alfabeto hiragana.
 + *Caso di arabo e ebraico*
 	- _Direzione di scrittura_: l'arabo e l'ebraico si scrivono fondamentalmente da destra a sinistra, sebbene determinati elementi come i numeri siano scritti da sinistra a destra.
 	- _Rappresentazione e Unicode_: grazie all'utilizzo di Unicode, la presentazione visiva di superficie risulta complessa a causa della mescolanza di direzioni, ma la forma memorizzata sottostante rimane lineare e diretta.
@@ -366,15 +365,15 @@ Il processo definisce implicitamente delle classi di equivalenza tra i termini. 
 - La rimozione dei punti per formare un termine standard ad esempio _U.S.A_ e _USA_ appartengono alla classe di equivalenza $[U S A]$.
 - La rimozione dei trattini, ad esempio _anti-discriminatory_ e _antidiscriminatory_ appartengono alla classe di equivalenza $["antidiscriminatory"]$.
 Inoltre, ci sono lingue in cui anche gli accenti possono diventare critici. Ad esempio, il termine francese _résumé_ rispetto a _resume_. Queste forme differenti dovrebbero essere trattate come equivalenti dal sistema. \
-Il fattore più importante da considerare nella progettazione è il modo in cui gli utenti tendono a digitare le proprie query per queste parole. Anche nelle lingue che prevono standardmente l'uso di accenti, gli utenti spesso non li digitano quando effetuano una ricerca. Di conseguenza, è spesso preferibile normalizzare i termini riconducibili a una forma priva di eccenti. \
+Il fattore più importante da considerare nella progettazione è il modo in cui gli utenti tendono a digitare le proprie query per queste parole. Anche nelle lingue che prevono standardmente l'uso di accenti, gli utenti spesso non li digitano quando effettuano una ricerca. Di conseguenza, è spesso preferibile normalizzare i termini riconducibili a una forma priva di accenti. \
 Anche le date e l'alternanza nell'uso giapponese dei caratteri _kana_ rispetto ai caratteri cinesi devono essere normalizzati. Il processo di tokenizzazione e normalizzazione dipende strettamente dalla lingua e risulta pertanto profondamente intrecciato con il rilevamento della lingua stessa. Ad esempio nella frase "Morgen will ich in MIT" bisogna stabilire se si tratta effettivamente della preposizione tedesca _mit_. \
 La regola fondamentale è quella di normalizzare sia il testo che viene inserito nell'indice sia i termini specifici della query, riconducendoli esattamente alla medesima forma standard. \
 Un'altra operazione fondamentale è quella della riduzione delle maiuscole, e ci sono diversi modi per farlo:
 - _Conversione universale_: prevede di ridurre tutte le lettere a minuscole;
 - _Eccezioni contestuali_: si valutano le maiuscole a metà frase, come nel caso di _General Motors_, o la distinzione tra acronimi e parole comuni.
-Risulta spesso ottimale applicare la conversione in minuscolo a tutto, poichè gli utenti tendono a digitare in minuscolo a prescindere dalla capitalizzazione formalmente corretta. \
+Risulta spesso ottimale applicare la conversione in minuscolo a tutto, poiché gli utenti tendono a digitare in minuscolo a prescindere dalla capitalizzazione formalmente corretta. \
 Ci si interroga su quale sia l'effetto concreto delle operazioni di normalizzazione sulle prestazioni del sistema in termini di precisione e richiamo. \
-Un'alternativa alle classi di equivalenza è quella di includere nel dizionario tante varianti di un termine e poi fare un'espansione asimettrica a query time. Ad esempio se l'utente inserisce la query _window_ il sistema cerca per _window, windows_. Questo approccio è potenzialmente più potente ma meno efficiente.
+Un'alternativa alle classi di equivalenza è quella di includere nel dizionario tante varianti di un termine e poi fare un'espansione asimmetrica a query time. Ad esempio se l'utente inserisce la query _window_ il sistema cerca per _window, windows_. Questo approccio è potenzialmente più potente ma meno efficiente.
 ==== Thesauri e Soundex
 Analizziamo la gestione di sinonimi e omonimi. È possibile gestirli tramite classi di equivalenza costruite manualmente, come ad esempio l'equivalenza tra _Car_ e _automobile_, oppure tra _color_ e _colour_. Si possono riscrivere i termini per formare classi di equivalenza: quando un documento contiene la parola _automobile_, ad esempio, viene indicizzato sotto la forma combinata _car-automobile_ (e viceversa). Un'alternativa consiste nell'espandere la query in fase di ricerca, facendo in modo che se la query contiene _automobile_, il sistema cerchi anche sotto _car_. \
 Per gestire gli errori di ortografia, invece, si applica l'approccio _soundex_, un sistema che raggruppa le parole in classi di equivalenza basandosi su euristiche di tipo fonetico.
@@ -398,22 +397,22 @@ $
 "for exampl compress and compress ar both accept as equival to compress"
 $
 ==== Algoritmo di Porter
-L'algoritmo di Porter è l'algoritmo più diffuso per lo stemming della lingua inglese. I risultati suggeriscono che sia almeno tanto valido quanto le altre opzioni di stemming disponibili. Il processo si basa su convezioni e su 5 fasi di riduzione.
+L'algoritmo di Porter è l'algoritmo più diffuso per lo stemming della lingua inglese. I risultati suggeriscono che sia almeno tanto valido quanto le altre opzioni di stemming disponibili. Il processo si basa su convenzioni e su 5 fasi di riduzione.
 - Le fasi vengono applicate in modo sequenziale.
 - Ciascuna fase è costituita da un insieme di comandi.
 - Una convenzione tipica stabilisce che, tra le regole presenti in un comando composto, si debba selezionare quella che si applica al suffisso più lungo.
 Analizziamone un esempio pratico: la parola _Girls_, la lettera "s" viene identificata come suffisso, mentre _Girl_ costituisce la radice.
 == Punteggio, Pesatura dei Termini e Modello dello Spazio Vettoriale
-=== Problemmi del modello di ritrovamento booleano
-Fino ad ora, le nostre query sono state booleane, quindi i documenti potevano essere rilevanti o meno. Il modello di ritrovamento booleano è utile per utenti esperti che hanno una conoscenza completa dei loro bisgoni e della collezione di documenti. È anche utile per le applicazioni che possono facilmente consumare migliaia di risultati. \
-Non risulta efficiente, però, per la maggior parte degli utenti in quanto non capaci di scrivere query booleano (oppure se lo sono, pensano che sia troppo impegnativo). Inoltre, la maggior parte degli utenti non vogliono guardare tra migliaia di risultati. \
-Le query booleane spesso risultano in troppi pochi risultati oppure in troppo risultati. Ci vogliono grandi capacità per costruire una query che produce un numero di documenti rilevanti ragionevoli, in quanto le operazioni di AND ne producono pochi e l'operazione di OR ne producono tanti.
+=== Problemi del ritrovamento booleano
+Fino ad ora, le nostre query sono state booleane, quindi i documenti potevano essere rilevanti o meno. Il modello di ritrovamento booleano è utile per utenti esperti che hanno una conoscenza completa dei loro bisogni e della collezione di documenti. È anche utile per le applicazioni che possono facilmente consumare migliaia di risultati. \
+Non risulta efficiente, però, per la maggior parte degli utenti in quanto non capaci di scrivere query booleane (oppure se lo sono, pensano che sia troppo impegnativo). Inoltre, la maggior parte degli utenti non vogliono guardare tra migliaia di risultati. \
+Le query booleane spesso risultano in troppi pochi risultati oppure in troppi risultati. Ci vogliono grandi capacità per costruire una query che produce un numero di documenti rilevanti ragionevoli, in quanto le operazioni di AND ne producono pochi e l'operazione di OR ne producono tanti.
 === Ranked Retrieval Models
-I modelli di ritrovamento basati su ranking, anzichè restituire un insieme non ordinato di documenti che soddisfano un'espressione booleana, il sitema restituisce un ordinamento sui migliori documenti della collezione rispetto a una specifica query. \
-Inoltre, invece di utilizzare un linguaggio di interrogazione basato su operatori ed espressioni formali, la query dell'utente è costituita semplicemente da una o più parole scritte in linguaggio naturale. In linea di principio si possono distinguere due scelte separate, ovvero il linguaggio di interrogazione (_query language_) e il modello di ritrovamento (_retrieval model_). Tuttavia, nella pratica, i modello di ritrovamento basati sul ranking sono normalmente associati alla query a testo libero. \
+I modelli di ritrovamento basati su ranking, anziché restituire un insieme non ordinato di documenti che soddisfano un'espressione booleana, il sistema restituisce un ordinamento sui migliori documenti della collezione rispetto a una specifica query. \
+Inoltre, invece di utilizzare un linguaggio di interrogazione basato su operatori ed espressioni formali, la query dell'utente è costituita semplicemente da una o più parole scritte in linguaggio naturale. In linea di principio si possono distinguere due scelte separate, ovvero il linguaggio di interrogazione (_query language_) e il modello di ritrovamento (_retrieval model_). Tuttavia, nella pratica, i modelli di ritrovamento basati sul ranking sono normalmente associati alla query a testo libero. \
 Quando un sistema produce una classifica di risultati, un insieme di risultati troppo grande non è più un problema, in quanto ne mostriamo i primi $k (approx 10)$.
 === Classificazione come base del ranked retrieval
-L'obiettivo dei sistemi di ranking e restituire in ordine i documenti che hanno la maggiore probabilità di risultare utili per l'utente che effettua la ricerca. Sorge spontanea la domanda su come sia possibile ordinare per grado di importanza i documenti presenti nella collezione in relazione a una determinata query. \
+L'obiettivo dei sistemi di ranking è restituire in ordine i documenti che hanno la maggiore probabilità di risultare utili per l'utente che effettua la ricerca. Sorge spontanea la domanda su come sia possibile ordinare per grado di importanza i documenti presenti nella collezione in relazione a una determinata query. \
 Si assegna un punteggio, ad esempio compreso nell'intervallo [0, 1], a ciascun documento. Questo punteggio misura quanto bene un documento e una query riescono a "corrispondere". \
 Ci serve un modo per assegnare un punteggio ad un documento. Per iniziare la trattazione, si prende in considerazione una query composta da un unico termine. Se il termine della query non compare all'interno del documento il punteggio deve essere pari a 0. A tal proposito ci si chiede il motivo di questa regola e se sia possibile adottare soluzioni migliori. Più il termine della query è frequente all'interno del documento, maggiore dovrebbe essere il punteggio assegnato.
 ==== Primo approccio: Coefficiente di Jaccard
@@ -438,11 +437,11 @@ Applichiamo la formula
 $
 j a c c a r d(Q, D) = bar Q inter D bar backslash bar Q union D bar
 $
-e ottieniamo:
+e otteniamo:
 - $j a c c a r d(Q, D_1) = 1/6$
 - $j a c c a r d(Q, D_2) = 1/5$
 ]
-Il coefficiente di Jaccard non considera la *frequenza dei termini*. Inoltre, i termini rari all'interno di una collezione sono più informativi rispetto a quelli frequenti, ma il coefficiente di Jaccard ignora completamente questa informazione. Emerge la necessità di disporre di un metodo più sofisticato per effettuare la noramalizzazione basata sulla lunghezza del testo.
+Il coefficiente di Jaccard non considera la *frequenza dei termini*. Inoltre, i termini rari all'interno di una collezione sono più informativi rispetto a quelli frequenti, ma il coefficiente di Jaccard ignora completamente questa informazione. Emerge la necessità di disporre di un metodo più sofisticato per effettuare la normalizzazione basata sulla lunghezza del testo.
 ==== Secondo approccio: matrici di conteggio termini-documenti
 Consideriamo il numero di volte in cui un determinato termine compare all'interno di un documento. Ciascun documento viene rappresentato come un vettore di conteggio appartenente a $NN^V$ corrispondente a una colonna della matrice.
 #let blu = rgb("#0000ff")
@@ -496,7 +495,7 @@ Per certi versi, questo modello rappresenta un passo indietro rispetto all'indic
 La frequenza del termine $t f_(t, d)$ di un termine $t$ in un documento $d$ è definita come il numero di volte in cui $t$ compare all'interno di $d$.
 ]
 Vogliamo utilizzare il valore di $t f$ nel calcolo dei punteggi di corrispondenza tra query e documento, ma ci si interroga su come farlo correttamente. La frequenza grezza in sè non è ciò che vogliamo. Un documento con 10 occorrenze di un termine è certamente più rilevante rispetto a un documento con una sola occorrenza, ma non è 10 volte più rilevante. \
-La rilevanza non cresce in modo direttamente proporozionale rispetto alla frequenza del termine. È bene notare che la frequenza, nell'ambito dell'Information Retrieval, è pari al conteggio puro.
+La rilevanza non cresce in modo direttamente proporzionale rispetto alla frequenza del termine. È bene notare che la frequenza, nell'ambito dell'Information Retrieval, è pari al conteggio puro.
 ==== Pesatura basata sulla frequenza logaritmica
 Il peso basato sulla frequenza logaritmica di un termine $t$ in un documento $d$ è definito dalla funzione a tratti:
 $
@@ -516,7 +515,7 @@ $
 s c o r e(d, q) = sum_(t in q inter d)(1 + log(t f_(t, d)))
 $
 La *condizione di annullamento*, ovvero se il punteggio è pari 0, si avvera se nessuno dei termini della query è presente all'interno del documento. \
-La formula precedentemente introdotta definisce il cosidetto *_sublinear tf-scaling_*, in cui il peso è calcolato come
+La formula precedentemente introdotta definisce il cosiddetto *_sublinear tf-scaling_*, in cui il peso è calcolato come
 $
 w_(t, d) = cases(
 1 + log_10(t f_(t, d)) & "se" t f_(t, d) > 0,
@@ -528,7 +527,6 @@ L'approccio normale, *normal* è il metodo più semplice e diretto e consiste ne
 I termini rari, nell'intera collezione dei documenti, sono più informativi dei termini frequenti, ad esempio delle stop word. \
 Consideriamo un termine in una query che è raro nella collezione, ad esempio _aracnocentrico_. Un documento che contiene tale termine sarà, molto probabilmente, rilevante alla query "aracnocentrico". Quindi, dobbiamo assegnare un peso alto per termini considerati rari. \
 Generalmente i termini frequenti sono *meno informativi* dei termini rari. \
-*VEDERE ESEMPI SLIDE* \
 ==== idf weight
 $d f_t$ è la _frequenza del documento_ del termine $t$: il numero di documenti che contiene tale termine $t$
 - $d f_t$ è una misura inversa dell'informatività di $t$, più piccola è meglio è.
@@ -539,7 +537,7 @@ i d f_t = log(N / (d f_t))
 $
 è una funzione che dipende solo da $t$, non dal documento. Utilizziamo $log(N / (d f_t))$ e non $N / (d f_t)$ per attenuare l'effetto di _idf_. \
 Per ogni termine $t$ nella collezione di documenti esiste il corrispettivo valore di _idf_. \
-L'idf non ha effetto su query che presentano un'unico termine in quanto esiste un valore di idf per ogni termine nella collezione. Il valore di idf influisce sulla classificazione dei documenti per query che hanno almeno 2 termini. \
+L'idf non ha effetto su query che presentano un unico termine in quanto esiste un valore di idf per ogni termine nella collezione. Il valore di idf influisce sulla classificazione dei documenti per query che hanno almeno 2 termini. \
 ==== Differenza fra collection e document frequency
 La collection frequency di un termine $t$ conta il numero di occorrenze di $t$ nella collezione, contando occorrenze multiple. La document frequency, conta in quanti documenti è presente il termine $t$. \
 Per avere una ricerca migliore uniamo questi due concetti nel *tf-idf weighting*.
@@ -560,25 +558,25 @@ $
 Supponiamo di avere uno spazio vettoriale con $V$ dimensioni, ove:
 - i termini sono gli assi dello spazio;
 - i documenti sono i punti o i vettori nello spazio.
-In un web search engine questo spazio vettoriale può arrivare anche ad avere una dimensione di decine di millioni. \
+In un web search engine questo spazio vettoriale può arrivare anche ad avere una dimensione di decine di milioni. \
 Questi sono vettori molto scarsi in quanto la maggior parte delle voci è pari a 0.
 === Query come vettori
 Vogliamo fare la stessa cosa fatta per i documenti, rappresentare le query come uno spazio vettoriale e vogliamo classificare i documenti secondo la loro vicinanza alla query nello spazio vettoriale. La vicinanza rappresenta la similarità dei vettori e l'inverso della distanza. \
 Stiamo volgendo la nostra attenzione per non far ricorso al modello di ritrovamento booleano e per classificare con un punteggio più alto i documenti più rilevanti rispetto ai documenti meno rilevanti.
 ==== Formalizzazione della prossimità nello spazio vettoriale
 Un primo approccio è quello di considerare la distanza tra due punti, intesa come la distanza tra gli estremi dei due vettori. \
-Ci si interroga sulla possibilità di utilizzare la distanza euclidea ma è una cattiva idea perchè restituisce valori elevanti quando viene applicata a vettori con lunghezze differenti. Consideriamo il seguente esempio:
+Ci si interroga sulla possibilità di utilizzare la distanza euclidea ma è una cattiva idea perchè restituisce valori elevati quando viene applicata a vettori con lunghezze differenti. Consideriamo il seguente esempio:
 #figure(
 image("images/distanza_euclidea.png", width: 70%),
 )
-La distanza euclidea tra $q$ e $d_2$ è grande anceh quando la distribuzione dei termini nella query $q$ e la distribuzione dei termini nel documento $d_2$ sono molto simili.\
-La soluzione è quella di utilizzare l'angolo anzichè la distanza. Consideriamo il seguente esperimento: si prenda un documento $d$ e lo si concaten a se stesso. Questo documento viene chiamato $d'$. Semanticamente $d$ e $d'$ possiedono esattamente lo stesso contenuto. La distanza euclidea tra i due documenti può risultare piuttosto grande. Se si utilizza la rappresentazione $t f_(t, d)$ l'angolo tra i due documenti è pari a 0, il che corrisponde alla massima somiglianza. \
+La distanza euclidea tra $q$ e $d_2$ è grande anche quando la distribuzione dei termini nella query $q$ e la distribuzione dei termini nel documento $d_2$ sono molto simili.\
+La soluzione è quella di utilizzare l'angolo anziché la distanza. Consideriamo il seguente esperimento: si prenda un documento $d$ e lo si concaten a se stesso. Questo documento viene chiamato $d'$. Semanticamente $d$ e $d'$ possiedono esattamente lo stesso contenuto. La distanza euclidea tra i due documenti può risultare piuttosto grande. Se si utilizza la rappresentazione $t f_(t, d)$ l'angolo tra i due documenti è pari a 0, il che corrisponde alla massima somiglianza. \
 Quindi l'idea è quella di ordinare i documenti in base all'angolo che formano con la query.
 ==== Dagli angoli ai coseni
 Le due seguenti modalità di ordinamento risultano equivalenti:
 - ordinare i documenti in ordine _decrescente_ rispetto all'angolo compreso tra la query e il documento;
 - ordinare i documenti in ordine crescente rispetto al coseno tra query e documento ($cos("query", "documenti")$)
-La funzione coseno è monoticamente decrescente nell'intervallo $[0^degree, 180^degree]$. \
+La funzione coseno è monotonicamente decrescente nell'intervallo $[0^degree, 180^degree]$. \
 Analizziamo come e perchè dovremmo calcolare i coseni. \
 Un vettore può essere normalizzato dividendo ciascun componente per la sua lunghezza, per questo utilizziamo la norma 2, $L_2$:
 $
@@ -646,11 +644,11 @@ caption: [Varianti del tf-idf weighting]
 ) <fig:varianti_tf_idf>
 Alcuni motori di ricerca consentono di avere sistemi di classificazioni diversi per documenti e query. Si usa una specifica notazione per specificare il sistema di classificazione usato per le query e per i documenti, ed è il seguente _ddd.qqq_ utilizzando gli acronimi della @fig:varianti_tf_idf . Uno schema di pesatura comunemente usato è _lnc.ltc_. Lo schema lnc per i documenti è il term frequency logaritmico (_l_), senza inverse document frequency (_n_) e con normalizzazione del coseno (_c_). Per la query invece si adotta il term frequency logaritmico (_l_), l'inverse document frequency (_t_) e la normalizzazione del coseno.
 === Riepilogo
-Il ranking nello spazio vettoirlae permette di:
+Il ranking nello spazio vettoriale permette di:
 - rappresentare la query come un vettore pesato (tf-idf);
 - ciascun documento viene rappresentato come un vettore pesato tf-idf;
 - viene calcolato il punteggio di somiglianza del coseno tra il vettore della query e il vettore di ciascun documento;
-- i documenti vengono ordinati rispetto alla query in base al punto ottenuto;
+- i documenti vengono ordinati rispetto alla query in base al punteggio ottenuto;
 - vengono restituiti all'utente i primi $K$ documenti.
 == Integrazione di conoscenza lessicale: WordNet
 WordNet è un'ontologia linguistica che rappresenta in maniera esplicita e formale la conoscenza linguistica umana. L'obiettivo di WordNet è quello di consentire la ricerca concettuale nei dizionari e il risultato è quello di aver definito un database lessicale. \
@@ -658,7 +656,7 @@ WordNet è un'ontologia linguistica top-level in quanto rappresenta la conoscenz
 - _senso comune_: costituisce una forma di conoscenza di senso comune.
 - _versatilità d'uso_: può essere impiegata trasversalmente in qualsiasi dominio.
 === Utilizzo di WordNet
-Sistemi per Information Retrieva e Text Categorization utilizzano la conoscenza linguistica di WordNet per aggiungere "semantica" al processo di ritrovamento/categorizzazione. \
+Sistemi per Information Retrieval e Text Categorization utilizzano la conoscenza linguistica di WordNet per aggiungere "semantica" al processo di ritrovamento/categorizzazione. \
 La memoria lessicale umana si suddivide in quattro parti ognuna rispettivamente dedicata a: nomi, verbi, aggettivi e avverbi. Gli ideatori di WordNet, ispirandosi a tale teoria, hanno suddiviso in modo analogo la conoscenza lessicale.
 === Concetto di parola
 La parola è un'associazione fra una word form e una word meaning:
@@ -671,7 +669,7 @@ caption: [Mapping tra word form e word meaning]
 )
 Una word form è *polisemica* se ad essa possono essere associate più word meaning. Due word form sono *sinonimi* se ad esse è associata la stessa word meaning. \
 Lo scopo principale di WordNet è quello di riuscire a trasferire ad un computer tutta la conoscenza linguistica (le word form, le word meaning e il mapping fra queste). La rappresentazione delle word form, in una forma comprensibile ad un calcolatore, non ha suscitato molti problemi. \
-Ogni word meaning è rappresentata dall'insieme delle word form che possono essere usate per esprimerla: _synset_. Un synset associato ad una word form consente all'utente di inferire la semantica della word form in esame purchè conosca la semantica di almeno una word form elencata nel synset.
+Ogni word meaning è rappresentata dall'insieme delle word form che possono essere usate per esprimerla: _synset_. Un synset associato ad una word form consente all'utente di inferire la semantica della word form in esame purché conosca la semantica di almeno una word form elencata nel synset.
 #figure(
 image("images/synset.png", width: 70%),
 caption: [Synset]
@@ -699,7 +697,7 @@ Wordnet organizza i concetti attraverso due tipi fondamentali di relazioni seman
 - *Meronimia/Olonimia*. Relazioni *parte-tutto* che descrivono come gli elementi costituiscono strutture più complesse.
 ==== Iperonimia e Iponimia: la Gerarchia
 #definizione(title: "Iperonimia")[
-L'_iperonimia_ rappresenta una relazione _is_a_ asimettrica transitiva. Un synset _Y_ è iperonimo di $X$ se $X$ è un tipo di $Y$.
+L'_iperonimia_ rappresenta una relazione _is_a_ asimmetrica transitiva. Un synset _Y_ è iperonimo di $X$ se $X$ è un tipo di $Y$.
 ]
 L'_iponimia_ è la relazione inversa: $X$ è iponimo di $Y$ se $X$ rappresenta un tipo più specifico di _Y_. \
 Analizziamone le proprietà.
@@ -707,10 +705,10 @@ Analizziamone le proprietà.
 - *Transitività*: se $A$ è iponimo di $B$ e $B$ è iponimo di $C$, allora $A$ è iponimo di $C$.
 - *Ereditarietà*: gli iponimi ereditano le proprietà dei loro iperonimi (nodi superiori della tassonomia).
 ==== Profondità e Ampiezza della Gerarchia
-La struttura gerarchica di WordNet varia significativamente tra domini semantici, riflettendo diversi livelli di specificità. Si possono avere 16 livelli massimi, ovvero la profondità massima della gerarchia per sostantivi. Ci possono essere 8 livelli medi che è la profondità tipica della maggior parte delle gerarchia e ci possono essere 25.000 synset foglia, ovvero concetti terminal senza iponimi.
+La struttura gerarchica di WordNet varia significativamente tra domini semantici, riflettendo diversi livelli di specificità. Si possono avere 16 livelli massimi, ovvero la profondità massima della gerarchia per sostantivi. Ci possono essere 8 livelli medi che è la profondità tipica della maggior parte delle gerarchia e ci possono essere 25.000 synset foglia, ovvero concetti terminali senza iponimi.
 ==== Meronimia e Olonimia: Relazioni parte-tutto
 Le relazioni parte-tutto catturano la composizione strutturale degli oggetti e sono fondamentali per comprendere la struttura fisica e funzionale delle entità. Le diverse tipologie di *meronimia* sono le seguenti.
-- *Part-Meronym* (Parte-Tutto strutturale). Riguarda i componenti fisici e strutturali di un oggetto. Ad esempio una "ruota" è parte di un "automobile".
+- *Part-Meronym* (Parte-Tutto strutturale). Riguarda i componenti fisici e strutturali di un oggetto. Ad esempio una "ruota" è parte di un'automobile.
 - *Member-Meronym* (Membro - Collezione). Riguarda l'appartenenza di un elemento individuale a un gruppo o collezione. Ad esempio un "albero" è membro di una "foresta".
 - *Substance-Meronym* (Materiale - Sostanza). Riguarda la materia prima o il materiale costitutivo con cui è fatto un oggetto. Ad esempio il "legno" è la sostanza di un "tavolo".
 #esempio(title: "Struttura di un albero")[
@@ -722,7 +720,7 @@ caption: [Esempi di meronimia]
 ==== Differenze Formali tra le relazioni.
 Analizziamo le differenze fra le relazioni di iperonimia/iponimia rispetto a quelle di meronimia/olonimia. Le relazioni di iperonimia/iponimia sono delle relazioni tassonomiche, sono transitive e godono della proprietà di ereditarietà. Le relazioni di meronimia indicano una relazione compositiva, la transitività è limitata, non c'è ereditarietà ed esiste una dipendenza strutturale.
 ==== Applicazioni nel Natural Language Processing
-Le relazioni semantiche sono fondamentali per numerose applicazioni di elaborazione del linguaggio naturale e rappresentazione della conoscenza. Sono impoeranti per i seguenti motivi.
+Le relazioni semantiche sono fondamentali per numerose applicazioni di elaborazione del linguaggio naturale e rappresentazione della conoscenza. Sono importanti per i seguenti motivi.
 - *Disambiguazione del senso*. Le gerarchie aiutano a risolvere l'ambiguità lessicale attraverso vincoli semantici.
 - *Espansione di Query*. Gli iperonimi e iponimi migliorano il recupero dell'informazione.
 - *Inferenza Semantica*. Le relazioni permettono di dedurre proprietà implicite e inferenze logiche.
@@ -736,7 +734,7 @@ Il relevance feedback è il feedback dell'utente sulla rilevanza dei documenti s
 Può essere difficile formulare una buona query quando non si ha una buona conoscenza della collezione, per questo si itera il processo di relevance feedback. \
 Il processo di modifica della query è comunemente riferito come:
 - *relevance feedback*, quando l'utente fornisce informazioni su documenti rilevanti ad una data query, oppure come
-- *query expansion* (_espansioni della query_), quando l'informazione correlata alla query viene usata per espanderla.
+- *query expansion* (_espansione della query_), quando l'informazione correlata alla query viene usata per espanderla.
 Ci riferiamo ad entrambi come metodi per fornire feedback al sistema. Due approcci comuni dei metodi di feedback sono:
 - *feedback esplicito* (_explicit feedback_), dove le informazioni per la riformulazione della query sono fornite direttamente dagli utenti;
 - *feedback implicito* (_implicit feedback_), dove le informazioni per la riformulazione della query vengono derivate implicitamente dal sistema.
@@ -746,14 +744,14 @@ Il centroide viene definito come segue:
 $
 arrow(u)(C) = (1)/(bar C bar)sum_(d in C)arrow(d)
 $
-dove $C$ è l'insieme dei documenti. Il centroide rappressenta il "documento medio". Il centroide per definizione non è normalizzato. \
+dove $C$ è l'insieme dei documenti. Il centroide rappresenta il "documento medio". Il centroide per definizione non è normalizzato. \
 Vediamo come si mettono insieme tutte queste informazioni da un punto di vista operazionale. Utilizziamo un algoritmo, detto *algoritmo di Rocchio*.
 === Algoritmo di Rocchio
 Definiamo la terminologia riguardante il processo di una data query $q$, come segue:
 - $D_r$ è l'insieme dei documenti rilevanti tra i documenti ritrovati;
 - $N_r$ è la cardinalità dell'insieme $D_r$;
 - $D_n$ è l'insieme dei documenti non rilevanti tra i documenti ritrovati;
-- $N_n$ è la cardinalità dell'insiemem $D_n$
+- $N_n$ è la cardinalità dell'insieme $D_n$
 - $C_r$ è l'insieme dei documenti rilevanti tra tutti i documenti nella collezione;
 - $N$ è il numero di documenti nella collezione
 - $alpha, beta, gamma$ sono delle costanti di accordatura.
@@ -761,7 +759,7 @@ L'algoritmo di rocchio usa il modello a spazio vettoriale per scegliere una quer
 $
 arrow(q)_(o p t) = 1/(bar C_r bar)sum_(arrow(d)_j in C_r)arrow(d)_j - 1/(N - bar C_r bar)sum_(arrow(d)_j in.not C_r)arrow(d)_j
 $
-ove $arrow(q)_(o p t)$ è ìl vettore della query ottimale. \
+ove $arrow(q)_(o p t)$ è il vettore della query ottimale. \
 Il problema è che non conosciamo veramente l'insieme dei documenti rilevanti $C_r$. \
 L'insieme $C_r$ non è noto a priori. Per risolvere questo problema, possiamo formulare una query iniziale e cambiare incrementalmente il vettore di query iniziale. \
 Pertanto, l'algoritmo cambia nel seguente modo:
@@ -782,10 +780,10 @@ caption: [Applicazione dell'algoritmo di Rocchio]
 Ci sono alcune cose che bisogna notare. Ci deve essere un buon tradeoff tra $alpha$, $beta$ e $gamma$ in quanto se abbiamo tanti documenti valutati, vogliamo una $beta$ e una $gamma$ più alti. Alcuni pesi nel vettore della query possono essere negativi, anche se vengono ignorati e vengono impostati a 0. \
 Un feedback positivo è più importante di uno negativo, anche se molti sistemi consentono solo l'uso di feedback positivi. \
 Il feedback può migliorare la precisione.
-=== Problemi del relavance feedback
-I problemi del relavance feedback sono i seguenti.
+=== Problemi del relevance feedback
+I problemi del relevance feedback sono i seguenti.
 + *Inefficienza della query lunghe*.
-	Query molto lunghe sono inefficeinti per i motori di information retrieval per diversi motivi citati di seguito.
+	Query molto lunghe sono inefficienti per i motori di information retrieval per diversi motivi citati di seguito.
 	- Comportano tempi di risposta elevanti per l'utente.
 	- Rappresentano un costo computazionale elevato per il sistema di recupero.
 	Per questo si ricorre ad una soluzione parziale: si ricalcola il peso soltanto di alcuni termini prominenti, ad esempio limitandosi ai primi 20 in base alla frequenza dei termini.
@@ -800,7 +798,7 @@ I problemi del relavance feedback sono i seguenti.
 	- Mostra miglioramenti spettacolari, ma si tratta di una forma di "imbroglio"
 	- I documenti già noti come rilevanti ottengono posizioni più elevate nel ranking.
 	- La valutazione deve essere effettuata rispetto a documenti non ancora visti dall'utente
-+ Metodo 2: Uso della collezione residura (tutti i documenti meno quelli valutati come rilevanti)
++ Metodo 2: Uso della collezione residua (tutti i documenti meno quelli valutati come rilevanti)
 	- Le metriche risultano solitamente inferiori rispetto a quelle della query originale.
 	- Rappresenta una valutazione più realistica.
 	- Consente di confrontare in modo valido le prestazioni relative.
@@ -808,80 +806,80 @@ I problemi del relavance feedback sono i seguenti.
 Il metodo più soddisfacente è quello di utilizzare due collezioni, ognuna con la propria valutazione di rilevanza:
 - $q_0$ e il feedback dell'utente vengono usati sulla prima collezione;
 - $q_m$ viene eseguita sulla seconda collezione e viene valutata.
-Una vera valutazione dell'utilità deve confrontare i metodi a parità di tempo impeigato o a parità di sforzo richiesto dall'utente. Un'alternativa comune al feedback di rilevanza consiste nel permettere all'utente di revisionare e inviare nuovamente la query. Gli utenti potrebbero preferire la revisione e il reinvio della query piuttosto che dover giudicare manualmente la rilevanza dei singoli documenti. \
+Una vera valutazione dell'utilità deve confrontare i metodi a parità di tempo impiegato o a parità di sforzo richiesto dall'utente. Un'alternativa comune al feedback di rilevanza consiste nel permettere all'utente di revisionare e inviare nuovamente la query. Gli utenti potrebbero preferire la revisione e il reinvio della query piuttosto che dover giudicare manualmente la rilevanza dei singoli documenti. \
 Non esistono prove evidenti che il feedback di rilevanza rappresenti l'impiego migliore del tempo dell'utente. \
-Alcuni motori di ricerca offrono funzionalità di pagine simili o correlate, che costituisce una forma elementare di feedback di rilevanza. Ad esempio Google è basato sul link. Altri motodi di ricerca non implementano questa opzione perchè risulta complessa da spiegare all'utente medio, come ad esempio Altheweb. \
+Alcuni motori di ricerca offrono funzionalità di pagine simili o correlate, che costituisce una forma elementare di feedback di rilevanza. Ad esempio Google è basato sul link. Altri motori di ricerca non implementano questa opzione perchè risulta complessa da spiegare all'utente medio, come ad esempio AlltheWeb. \
 Il motore di ricerca Excite, invece, integrava un vero e proprio sistema di rilevanza, ma è stato successivamente abbandonato a causa dello scarso utilizzo.
 === Feedback di pseudo-rilevanza
 Il feedback di pseudo-rilevanza automatizza la parte manuale del feedback di rilevanza autentico. L'algoritmo di pseudo-rilevanza è basato sui seguenti passi.
 + Recupera un elenco ordinato di risultati per la query dell'utente.
 + Assume che i primi $k$ documenti siano rilevanti.
-+ Esegue il feedback di rilevanza (ad esempio, adottazndo l'algoritmo di Rocchio).
++ Esegue il feedback di rilevanza (ad esempio, adottando l'algoritmo di Rocchio).
 In media questo algoritmo funziona molto bene ma può fallire drasticamente per alcune query, ad esempio se i primi risultati di una ricerca riguardano tutti un sottoargomento specifico. Diverse iterazioni possono causare la deriva della query e ci si chiede il perchè.
 === Relevance feedback indiretto
-Il feedback di rilevanza indiretto assegna un punteggio più alto a documenti che gli utenti osservano più spesso. I link si cui si fa clic sono considerati presumibilmente rilevanti e questa assunzione si basas sul fatto che i sommari visualizzati siano validi, ecc. \
-Questo tipo di feedback non è necessariamente specifoc per un singolo utente o per una specifica query. Questo aspetto rientra nell'area generale del _clickstream mining_. \
+Il feedback di rilevanza indiretto assegna un punteggio più alto a documenti che gli utenti osservano più spesso. I link su cui si fa clic sono considerati presumibilmente rilevanti e questa assunzione si basa sul fatto che i sommari visualizzati siano validi, ecc. \
+Questo tipo di feedback non è necessariamente specifico per un singolo utente o per una specifica query. Questo aspetto rientra nell'area generale del _clickstream mining_. \
 Oggigiorno questo processo viene gestito come parte integrante del ranking basato sull'apprendimento automatico.
 == Espansione della query
-Nel feedback di rilevanza, gli utenti forniscono input aggiuntivi sui documenti, che veogno usati per riassegnare un peso ai termini della query per quei documenti. Nell'*espansione della query*, l'utente fornisce input aggiuntivi (se è un buon termine o un cattivo termine) su *parole o frasi*.\
+Nel feedback di rilevanza, gli utenti forniscono input aggiuntivi sui documenti, che vengono usati per riassegnare un peso ai termini della query per quei documenti. Nell'*espansione della query*, l'utente fornisce input aggiuntivi (se è un buon termine o un cattivo termine) su *parole o frasi*.\
 Un esempio sono le cosiddete _search images_ presenti su google:
 #figure(
 image("images/search_images.png", width: 70%),
 )
 Le ricerche correlate, come mostrate nella figura soprastante, sono tecniche di *query assist*. Il processo di query assist viene generalmente effettuato tramite l'analisi dei log delle query e questo processo raccomanda query frequenti e recenti che contengono la stringa parziale digitata dall'utente. Questo viene trattato come un problema di ordinamento in cui ciascuna query precedente è vista come un documento, ordinando per rango quelle che corrispondono alla stringa parziale. \
 Per ampliare la query dell'utente si possono adottare diverse tecniche.
-- *Thesaurus manuale*. Ad esempio, in _MedLine_ peril termine *physician* i sinonimi sono: _doc, doctor, MD, medico, ecc._
-	Il thesaurus può riguardare query correlate anzichè limitarsi ai soli sinonimi.
-- *Analisi globale*: di natura statica, basata sull'interezza dei documenti nella collezione. Solitamente viene applicato il processo di thesaurus derivato in modo automatico e vengono applicate statistiche di co-occorrenza. Alternativamente, si possono effettuare perfezionamenti basatu sul query log mining che è l'approccio comune usato sul Web.
+- *Thesaurus manuale*. Ad esempio, in _MedLine_ per il termine *physician* i sinonimi sono: _doc, doctor, MD, medico, ecc._
+	Il thesaurus può riguardare query correlate anziché limitarsi ai soli sinonimi.
+- *Analisi globale*: di natura statica, basata sull'interezza dei documenti nella collezione. Solitamente viene applicato il processo di thesaurus derivato in modo automatico e vengono applicate statistiche di co-occorrenza. Alternativamente, si possono effettuare perfezionamenti basato sul query log mining che è l'approccio comune usato sul Web.
 - *Analisi locale*: di natura dinamica. Vengono analizzati i documenti inclusi nell'insieme dei risultati.
 === Espansione della query basato su thesaurus
 Per ogni termine $t$ in una query, si espande quella query con sinonimi e parole correlate prese dal thesaurus, ad esempio:
 $
 "feline" -> "feline cat"
 $
-Questo approccio incrementa generalmente la copertura ed è ampiemente utilizzato in ambiti scientifici e ingegneristici. Tuttavia, presenta grossi svantaggi: ha un costo di produzione manuale molto elevato, richiede un aggiornamento costante per seguire l'evoluzione scientifica e rischia di abbassare drasticamente la precisione a causa dell'ambiguità dei termini. Ad esempio, espandere in modo improprio _interest rate_ può portare a risultati distorti come _interest rate fascinate value_. Per mitigare questo problema, i termini aggiunti vengono solitamente pesati meno rispetto a quelli originali.
+Questo approccio incrementa generalmente la copertura ed è ampiemente utilizzato in ambiti scientifici e ingegneristici. Tuttavia, presenta grossi svantaggi: ha un costo di produzione manuale molto elevato, richiede un aggiornamento costante per seguire l'evoluzione scientifica e rischia di abbassare drasticamente la precisione a causa dell'ambiguità dei termini. Ad esempio, espandere in modo improprio _interest rate_ può portare a risultati distorti come _interest rate floating value_. Per mitigare questo problema, i termini aggiunti vengono solitamente pesati meno rispetto a quelli originali.
 = Valutazione dei Sistemi di Ritrovamento
 Ci sono tanti modelli, algoritmi e sistemi di ritrovamento, ma dobbiamo capire quali siano i migliori. \
 Dobbiamo capire quale sia il miglior componente per:
 - funzione di ranking;
 - selezione dei termini;
 - pesatura dei termini.
-È importante capire quanto in baso nella lista ordinata dei risultati un utente debba spingersi per trovare alcuni o tutti i documenti rilevanti.
+È importante capire quanto in basso nella lista ordinata dei risultati un utente debba spingersi per trovare alcuni o tutti i documenti rilevanti.
 == Difficoltà nel valutare sistemi di ritrovamento
 L'efficacia di un sistema di ritrovamento è collegata alla rilevanza degli elementi ritrovati. La rilevanza, tipicamente, non è binaria ma è continua. Anche se fosse binaria, sarebbe difficile effettuare un giudizio. La rilevanza, da un punto di vista umano, è:
 - *soggettiva*: dipende dal giudizio di uno specifico utente;
-- *situazionale*: dipende dagli bisogni attuali di un utente;
+- *situazionale*: dipende dai bisogni attuali di un utente;
 - *cognitiva*: dipende dalla percezione e dal comportamento umano;
 - *dinamico*: ci sono cambiamenti nel corso del tempo;
 - *contestuale*: influenzata dallo stato dell'utente, come mood, tempo disponibile, ecc.
-=== Pardigma di Cranfield
+=== Paradigma di Cranfield
 La valutazione dei sistemi di ritrovamento è il risultato di un esperimento condotto al college di Cranfield da un bibliotecario, Cyrill Cleverdon. \
-Le intuizioni tratte da questi esperimenti costituiscono ancoa oggi la base fondamentale per la valutazione dei sistemi di ritrovarmento. Cleverdon prese in considerazione un nuovo sistema di indicizzazione denominato _Uniterm_. Il sistema prevedeva l'anaalisi di 40.000 intestazioni di argomento, che portarono a 7.000 parole distinte. Successivamente, venne eseguito un test che consisteva nell'indicizzare manualmente 200 documenti utilizzando il sistema _Uniterm_, chiedendo poi di eseguire alcune query. \
+Le intuizioni tratte da questi esperimenti costituiscono ancora oggi la base fondamentale per la valutazione dei sistemi di ritrovamento. Cleverdon prese in considerazione un nuovo sistema di indicizzazione denominato _Uniterm_. Il sistema prevedeva l'analisi di 40.000 intestazioni di argomento, che portarono a 7.000 parole distinte. Successivamente, venne eseguito un test che consisteva nell'indicizzare manualmente 200 documenti utilizzando il sistema _Uniterm_, chiedendo poi di eseguire alcune query. \
 Il cuore del *paradigma di Cranfield* risiede nell'utilizzo di una *collezione di riferimento di test*, composta strutturalmente da tre elementi fondamentali:
 + un insieme di documenti;
 + delle query;
 + dei relativi giudizi di rilevanza.
 In questo contesto, il concetto di rilevanza viene intesto in senso stretto come _rilevanza tematica_, verificando se un documento contenga informazioni che vertono sullo stesso argomento della query. \
 Questo impianto metodologico ha trovato concreta realizzazione nella nota collezione *Cranfield 2*, la quale raccoglieva 1400 articoli di ricerca in lingua inglese appartenenti ad un unico dominio accompagnati da 221 argomento o query di test. L'aspetto cruciale di questa metodologia è che l'utilizzo di una collezione di riferimento standardizzata permette di impiegare lo stesso identico set di documenti e query per valutare e confrontare diversi sistemi di ranking. Di conseguenza, l'uniformità di questa configurazione garantisce una valutazione rapida ed efficiente di nuove funzioni di ranking. \
-All'interno del paradigam di Cranfield, la procedura operativa per la valutazione comparativa dei sistemi si sviluppa attraverso una sequenza logica strutturata in diverse fasi.
+All'interno del paradigma di Cranfield, la procedura operativa per la valutazione comparativa dei sistemi si sviluppa attraverso una sequenza logica strutturata in diverse fasi.
 + Vengono selezionati diversi sistemi di ritrovamento da confrontare.
 + Vengono utilizzati i sistemi scelti per produrre liste pesate dei documenti, dette _runs_, per ogni query.
-+ Vengono calcolati l'efficicacia di ogni strategia per ogni query nella collezione di test come la funzione di ritrovamento dei documenti ritrovati.
++ Vengono calcolati l'efficacia di ogni strategia per ogni query nella collezione di test come la funzione di ritrovamento dei documenti ritrovati.
 + I punteggi ottenuti vengono mediati su tutte le query, calcolando l'efficacia globale del sistema o della strategia.
-+ Vengono usati i punteggi del passo prendente per classificare i sistemi di ritrovamento tra loro
++ Vengono usati i punteggi del passo precedente per classificare i sistemi di ritrovamento tra loro
 + (opzionale, per determinare l'approccio migliore) Vengono eseguiti test statistici per determinare se le differenze tra il punteggio di efficacia per i sistemi e il loro punteggio  è rilevante.
-==== Human Labeld Corpus (Test collection)
-La costruzione di una collezione di test da parte di esseri umani richiede una metodologia rigorosa che parte da un corpus inziale di documenti. Su questa base si raccolgono differenti bisogni informativi, i quali vanno tenuti distinti dalle semplice query, specifici per quel determinato corpus. Successivamente, uno o più esperti umani si occupano di etichettare in modo esauistivo i documenti rilevanti associati a ciascun bisogno informativo. Tale approccio si basa tipicamente su giudizi di rilevanza di tipo binario e comporta uno sforzo umano considerevole, in particolare quando si opera su corpus di grandi dimensioni.
+==== Human Labeled Corpus (Test collection)
+La costruzione di una collezione di test da parte di esseri umani richiede una metodologia rigorosa che parte da un corpus iniziale di documenti. Su questa base si raccolgono differenti bisogni informativi, i quali vanno tenuti distinti dalle semplice query, specifici per quel determinato corpus. Successivamente, uno o più esperti umani si occupano di etichettare in modo esaustivo i documenti rilevanti associati a ciascun bisogno informativo. Tale approccio si basa tipicamente su giudizi di rilevanza di tipo binario e comporta uno sforzo umano considerevole, in particolare quando si opera su corpus di grandi dimensioni.
 == Benchmark standard di rilevanza
-Nel panorama dell'Information Retrieval, per superare i limiti dei primi esperimenti e disporre di banchi di prova su larga scala, sono stati definiti dei *becnhmark standard di rilevanza*. Il punto di riferimento fondamentale è costituito dalla *TREC, Text Retrieval Conference*, un grande sistema di test, forte di una collezione di un millione di documenti e di una serie annuale di workshop dedicati.\
-Con l'espansione della rete, la ncessità di valutare sistemi su scala Web ha portato allo sviluppo di corpus imponenti, tra cui la collezione *ClueWeb09*, che raccoglie più di un miliardo di pagine web in dieci lingue distribuite su vari domini. A competere figurano altre importanti colezioni, come:
+Nel panorama dell'Information Retrieval, per superare i limiti dei primi esperimenti e disporre di banchi di prova su larga scala, sono stati definiti dei *benchmark standard di rilevanza*. Il punto di riferimento fondamentale è costituito dalla *TREC, Text Retrieval Conference*, un grande sistema di test, forte di una collezione di un milione di documenti e di una serie annuale di workshop dedicati.\
+Con l'espansione della rete, la necessità di valutare sistemi su scala Web ha portato allo sviluppo di corpus imponenti, tra cui la collezione *ClueWeb09*, che raccoglie più di un miliardo di pagine web in dieci lingue distribuite su vari domini. A competere figurano altre importanti collezioni, come:
 - *ILST*
 - *UCKS*
 - *MEDLARS*
-Oltre a corpus storici, nel panorama dei benchmark standard rientrano raccolte di documenti di riferimento come *Reuters*. All'interno di questi contesti vengono definiti specific compiti di recupero, espressi talvolta sotto forma di query. Per effettuare la valutazione, esperti umani si occupano di etichettare cianscun documento rispetto a ogni query, distiguendolo in rilevante o non rilevante. Tale attività di giudizio viene condotta almeno su sottoinsiemi di documenti, mediante una tecnica nota come _pooling_, restituiti da alcuni sistemi per quella specifica query.
+Oltre a corpus storici, nel panorama dei benchmark standard rientrano raccolte di documenti di riferimento come *Reuters*. All'interno di questi contesti vengono definiti specifici compiti di recupero, espressi talvolta sotto forma di query. Per effettuare la valutazione, esperti umani si occupano di etichettare ciascun documento rispetto a ogni query, distinguendolo in rilevante o non rilevante. Tale attività di giudizio viene condotta almeno su sottoinsiemi di documenti, mediante una tecnica nota come _pooling_, restituiti da alcuni sistemi per quella specifica query.
 == Precisione e richiamo
 Per valutare l'efficacia di un sistema di Information Retrieval, si fa affidamento a due metriche fondamentali: la *precisione* e la *copertura (recall)*. \
-Questi parametri vengono definiti analizzando la relazione tra l'intera collezione di documenti, l'insiemi dei documenti realmente rilevanti per un dato bisogno informativo e l'insieme dei documenti effettivamente recuperati dal sistema. Attraverso una rappresentazione a insiemi o una matrice di contigenza, è possibile suddividere i risultati i documenti recuperati e rilevanti, recuperati ma irrilevanti, non recuperati ma rilevanti, e infine non recuperati e irrilevanti.
+Questi parametri vengono definiti analizzando la relazione tra l'intera collezione di documenti, l'insiemi dei documenti realmente rilevanti per un dato bisogno informativo e l'insieme dei documenti effettivamente recuperati dal sistema. Attraverso una rappresentazione a insiemi o una matrice di contingenza, è possibile suddividere i risultati i documenti recuperati e rilevanti, recuperati ma irrilevanti, non recuperati ma rilevanti, e infine non recuperati e irrilevanti.
 #figure(
 image("images/rapp_insieme.png", width: 70%),
 caption: [Insiemi di documenti rilevanti e non]
@@ -892,7 +890,7 @@ caption: [Matrice di contingenza]
 )
 La *precisione* misura l'esattezza dei risultati restituiti e si calcola nel seguente modo:
 $
-"precision" = ("Number of relevant documents retrived") / ("Total number of documents retrieved")
+"precision" = ("Number of relevant documents retrieved") / ("Total number of documents retrieved")
 $
 In altre parole, indica quale percentuale dei risultati forniti sia effettivamente pertinente per l'utente. \
 La *copertura* misura la completezza del processo di recupero e si determina nel seguente modo:
@@ -900,7 +898,7 @@ $
 "recall" = ("Number of relevant documents retrieved") / ("Total number of relevant documents")
 $
 Tale metrica evidenzia la capacità del sistema di individuare quanta parte dell'informazione utile disponibile sia stata effettivamente portata alla luce. \
-Trasformiamo la matrice di contigenza nel seguente modo:
+Trasformiamo la matrice di contingenza nel seguente modo:
 #figure(
 image("images/mat_doc2.png", width: 70%),
 )
@@ -913,16 +911,16 @@ $
 $
 Approfondendo ulteriormente il concetto di *precisione* e *copertura*, possiamo definirli formalmente anche attraverso la probabilità condizionata e le specifiche capacità del sistema:
 - Precisione:
-	- Rappresenta la frazione di documenti recuperati che risulta effettivametne rilevante.
+	- Rappresenta la frazione di documenti recuperati che risulta effettivamente rilevante.
 	- Corrisponde alla capacità del sistema di collocare i documenti più pertinenti ai vertici della graduatoria.
 	- Dal punto di vista probabilistico, si esprime come la probabilità che un documento sia rilevante dato che è stato recuperato: $P("rilevante" bar "recuperato")$
 - Copertura:
 	- Rappresenta la frazione di documenti rilevanti che viene effettivamente recuperata dal sistema.
-	- Riflette la capacità della ricerca di individuare *tutti* gli elementi pertineti presenti all'interno del corpus.
+	- Riflette la capacità della ricerca di individuare *tutti* gli elementi pertinenti presenti all'interno del corpus.
 	- Dal punto di vista probabilistico, si esprime come la probabilità che un documento sia stato recuperato dato che è rilevante: $P("recuperato" bar "rilevante")$
 Analizzando il comportamento di precisione e copertura, sorge spontaneo chiedersi quale sia il livello di copertura di una query nel caso in cui venissero recuperati tutti i documenti della collezione. Adottando questa strategia estrema è possibile ottenere una copertura elevata, sebbene associata a una precisione molto bassa. \
-La copertura costituisce una funzione non decrescente rispetto al numero di documenti recuperati. Questa proprietà si spiega osservando che, incrementando la quantità di documenti restituiti, se il documento aggiunto è rilevante aumentano i veri positivi e diminuiscono i falsi negativi, mentre se è irrilevante aumentano i fasli positivi e diminuiscono i veri negativi: in entrambi i casi, il rapporto che definisce la copertura non subisce diminuzioni. \
-Per contro, in un sistema efficiente, la precisione tende tipicamente a diminuire all'aumentare del numero di documenti recuperati o dalla copertura stessa. Sebbene questo comportamento non raprpesenti un teorema matematico rigoroso, gode di una fortissima e costnate conferma empirica. \
+La copertura costituisce una funzione non decrescente rispetto al numero di documenti recuperati. Questa proprietà si spiega osservando che, incrementando la quantità di documenti restituiti, se il documento aggiunto è rilevante aumentano i veri positivi e diminuiscono i falsi negativi, mentre se è irrilevante aumentano i falsi positivi e diminuiscono i veri negativi: in entrambi i casi, il rapporto che definisce la copertura non subisce diminuzioni. \
+Per contro, in un sistema efficiente, la precisione tende tipicamente a diminuire all'aumentare del numero di documenti recuperati o dalla copertura stessa. Sebbene questo comportamento non rappresenti un teorema matematico rigoroso, gode di una fortissima e costante conferma empirica. \
 La determinazione della copertura presenta notevoli difficoltà pratiche, principalmente perchè il numero totale di elementi rilevanti all'interno di un'intera collezione non è sempre disponibile. Per superare questo ostacolo e stimare tale valore, si ricorre solitamente a due approcci principali:
 - *Campionamento del database*: si estrae un campione rappresentativo attraverso la base di dati e si effettuano giudizi di rilevanza su questi specifici elementi.
 - *Aggregazioni di algoritmi multipli*: si applicano diversi algoritmi di recupero allo stesso database a fronte della medesima query, assumendo che l'insieme aggregato degli elementi rilevanti restituiti dai vari sistemi costituisca l'intero insieme di riferimento.
@@ -936,7 +934,7 @@ Tuttavia, nella realtà operativa i sistemi si muovono lungo una curva di compro
 - *Alta precisione e bassa copertura*: concentrandosi sui primi risultati, il sistema restituisce documenti rilevanti ma rischia di tralasciarne molti altri che potrebbero rivelarsi utili.
 - *Alta copertura e bassa precisione*: cercando di includere la maggior parte dei documenti pertinenti (ad esempio espandendo il recupero), il sistema intercetta i documenti rilevanti ma finisce per includere una grande quantità di materiale irrilevante o "spazzatura" (junk).
 === Limiti nell'utilizzo della precisione e della copertura
-L'utilizzo delle metriche di precisione e copertura comporta diverse difficoltà pratiche che è necessario considerare. Prima di tutto, per ottenere una valutazione significativa, è opportuno calcolare la media su sistemi estesi di query e grandi collezioni di documenti. Il processo richiede inoltre valutazioni umane della rilevanza, sebbene le persone non si rivelino sempre valutatrici affidabili. Un'ulteriore limitazione deriva dal fatto che tali valutazioni devono solitametne essere binarie, il che rende complessa l'eventuale gestione di giudizi più sfumati. \
+L'utilizzo delle metriche di precisione e copertura comporta diverse difficoltà pratiche che è necessario considerare. Prima di tutto, per ottenere una valutazione significativa, è opportuno calcolare la media su sistemi estesi di query e grandi collezioni di documenti. Il processo richiede inoltre valutazioni umane della rilevanza, sebbene le persone non si rivelino sempre valutatrici affidabili. Un'ulteriore limitazione deriva dal fatto che tali valutazioni devono solitamente essere binarie, il che rende complessa l'eventuale gestione di giudizi più sfumati. \
 Infine, i dati rischiano di risultare fortemente distorti dalla collezione e dalla paternità dei testi, con la conseguenza che i risultati ottenuti in un determinato dominio potrebbero non essere facilmente trasferibili a un altro.
 == Accuratezza
 Data una query, un sistema, detto *classifier* o _classificatore_, classifica ogni documento come _rilevante_ o _non rilevante_. L'*accuratezza* del classificatore è calcolata come segue:
@@ -945,7 +943,7 @@ $
 $
 L'accuratezza è una misura di precisione comunemente usata nel lavoro del classificazione in machine learning, ma nell'ambito dell'Information Retrieval questa misura non è molto utile.
 == Misura F1
-La *misura F1* è una misura di efficacia che tiene conta sia della copertura e sia della precisione. Viene effettuata una media armonica tra copertura e precisione:
+La *misura F1* è una misura di efficacia che tiene conto sia della copertura e sia della precisione. Viene effettuata una media armonica tra copertura e precisione:
 $
 F = (2 P R) / (P + R) = 2 / ((1 / R) + (1/P))
 $
@@ -974,7 +972,7 @@ La curva di precisione-copertura che ne deriva è la seguente.
 image("images/prec_rec_curve.png", width: 70%),
 caption: [Curva di precisione-copertura]
 )
-Analizzare il grado di precisione-copertura relativo a una singola query non risulta particolarmente utile nè significativo. Per ottenere una valutazione affidabile e complessiva delle prestazioni, è infatti necessario calcolare la media della performance estesa a un intero sistema di query. Tuttavia, questo processo di aggregazione fa emergere una questione tecnica rilevante: i calcoli di precisione e copertura restituiscono soltanto determinati punti discreti sul grafico. Di conseguenza, si pone il problema metodologico di stabilire come determinare i valori intermedi, ovvero come interpolare correttametne lo spazio compreso tra i diversi punti calcolati.
+Analizzare il grado di precisione-copertura relativo a una singola query non risulta particolarmente utile né significativo. Per ottenere una valutazione affidabile e complessiva delle prestazioni, è infatti necessario calcolare la media della performance estesa a un intero sistema di query. Tuttavia, questo processo di aggregazione fa emergere una questione tecnica rilevante: i calcoli di precisione e copertura restituiscono soltanto determinati punti discreti sul grafico. Di conseguenza, si pone il problema metodologico di stabilire come determinare i valori intermedi, ovvero come interpolare correttamente lo spazio compreso tra i diversi punti calcolati.
 #esempio[
 Consideriamo la seguente tabella:
 #let rows = (
@@ -1052,7 +1050,7 @@ Consideriamo ora questa tabella:
 )
 L'ultima tabella ha una precisione e una copertura migliore. Tuttavia, la prima tabella risulta preferibile, nonostante i valori di precisione e copertura siano inferiori, in quanto i documenti li posiziona meglio.
 ]
-=== Interpolazione una curva di precisione-copertura
+=== Interpolazione di una curva di precisione-copertura
 Per risolvere il problema dell'interpolazione tra i punti discreti di un grafico di performance e consentire l'aggregazione dei dati tra query differenti, si ricorre all'interpolazione della curva di copertura e precisione. \
 Il metodo standard consiste nell'interpolare un valore di precisione in corrispondenza di specifici livelli standard di copertura definiti nell'insieme $r_j in brace.l 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0 brace.r$ dove $r_0 = 0.0$ e $r_(10) = 1.0$.\
 Formalmente, la regola di interpolazione stabilisce che la precisione interpolata al $j$-esimo livello standard di copertura, indicata come $P(r_j)$, è definita come il valore massimo di precisione noto tra tutti i livelli di copertura superiori o uguali a $r_j$:
@@ -1073,19 +1071,19 @@ Rispetto alla prima curva, questa è peggiore perchè la prima presenta una prec
 ]
 Le curve di precisione-copertura sono una particolare forma di metrica che consentono di valutare la funzione di ranking.
 == Precisione media
-La precisione media calcola la media dei valori di precisione ottenuti in corrispoendenza delle posizioni $p$ in cui viene effettivamente recuperato un documento rilevante. \
-Formalmente, data una query per cui vengono recuperati $m$ documenti rilevanti, la precisione media si esprime come la media delle precisioni calcolate nei ranghi in cui compaioni i documenti pertinenti:
+La precisione media calcola la media dei valori di precisione ottenuti in corrispondenza delle posizioni $p$ in cui viene effettivamente recuperato un documento rilevante. \
+Formalmente, data una query per cui vengono recuperati $m$ documenti rilevanti, la precisione media si esprime come la media delle precisioni calcolate nei ranghi in cui compaiono i documenti pertinenti:
 $
 A P = (1) / (m)sum_(k=1)^m "Precision"(p = k)
 $
 === MAP
-Per estendere la valutazione delle prestazioni a un intero insieme di queru, si introuduce la *Mean Average Precision, MAP*, la quale si ottiene calcolando la media dei valori di precisione media registrati su un insieme complessivo di interrogazioni. \
+Per estendere la valutazione delle prestazioni a un intero insieme di query, si introduce la *Mean Average Precision, MAP*, la quale si ottiene calcolando la media dei valori di precisione media registrati su un insieme complessivo di interrogazioni. \
 Formalmente, considerando un totale di $n$ query all'interno del testo, dove ciascuna $j$-esima query è associata a un numero $m_j$ di documenti rilevanti, la formula della MAP aggrega le prestazioni su tutte le richieste effettuate:
 $
-"MAP" = 1 / n sum_(j=1)^1 1/(m_j)sum_(k=1)^(m_j)"Precision"(p = k)
+"MAP" = 1 / n sum_(j=1)^n 1/(m_j)sum_(k=1)^(m_j)"Precision"(p = k)
 $
-In questo modo, la metrica riesce a sintetizzare in un unico valore complessivo e robusto l'efficacia dell'intero sistema di recupero, tenendo conto sia della qualità del ranking per le singole query sia del compertamento su molteplici bisogni informativi differenti. \
-Nonostante la MAP raprpesenti una metrica solida e ampiamente diffusa, essa presenta intriseci limiti strutturali che ne evidenziano l'insufficienza in determinati contesti di valutazione. Il problema fondamentale risiede nel fatto che la media aritmetica tende a mascherare le variazioni di performance sulle singole query.
+In questo modo, la metrica riesce a sintetizzare in un unico valore complessivo e robusto l'efficacia dell'intero sistema di recupero, tenendo conto sia della qualità del ranking per le singole query sia del comportamento su molteplici bisogni informativi differenti. \
+Nonostante la MAP rappresenti una metrica solida e ampiamente diffusa, essa presenta intrinseci limiti strutturali che ne evidenziano l'insufficienza in determinati contesti di valutazione. Il problema fondamentale risiede nel fatto che la media aritmetica tende a mascherare le variazioni di performance sulle singole query.
 Consideriamo il seguente esempio:
 #align(center)[
 #table(
@@ -1101,13 +1099,13 @@ Consideriamo il seguente esempio:
   [MAP], [0.225], [0.225],
 )
 ]
-Nonostante le differenze puntaili nei risultati delle singole interrogazioni, se si calcola la media aritmetica di entrambi i sistemi si ottiene esattamente lo stesso identico punteggio di MAP pari a 0.225. \
-Questo limite dimostra che la MAP può restituire valutazioni globali identiche per sistemi che si comportano in modo diverso sulle singole query, occultando le difficoltà specifiche incontrate dal sistema su determinati bisogni informativi e giustificando lanecessità di metriche complementari come la *GMAP*.
+Nonostante le differenze puntuali nei risultati delle singole interrogazioni, se si calcola la media aritmetica di entrambi i sistemi si ottiene esattamente lo stesso identico punteggio di MAP pari a 0.225. \
+Questo limite dimostra che la MAP può restituire valutazioni globali identiche per sistemi che si comportano in modo diverso sulle singole query, occultando le difficoltà specifiche incontrate dal sistema su determinati bisogni informativi e giustificando la necessità di metriche complementari come la *GMAP*.
 === GMAP
-Per ovviare ai limiti della media aritemcica utilizzata nella MAP, si introduce la *Geometric Mean Average Precision, GMAP*. Questa metrica si calcola utilizzando la media geometrica dei valori di precisione media associato alle diverse query. \
-Dal punto di vsita matematico e opeartivo, la GMAP presenta caratteristiche peculiari:
-- gli incrementi nei valori pìu bassi esercitano un impatto molto più forte sul valore finale, poichè la formula si basa su un prodotto di valori anzichè su una somma.
-- Risulta ideale per testare i sistemi in presenza di query difficili, ovvero quelle situazioni in cui viene recuperato un numero eseguo di documenti rilevanti.
+Per ovviare ai limiti della media aritmetica utilizzata nella MAP, si introduce la *Geometric Mean Average Precision, GMAP*. Questa metrica si calcola utilizzando la media geometrica dei valori di precisione media associato alle diverse query. \
+Dal punto di vista matematico e operativo, la GMAP presenta caratteristiche peculiari:
+- gli incrementi nei valori più bassi esercitano un impatto molto più forte sul valore finale, poiché la formula si basa su un prodotto di valori anziché su una somma.
+- Risulta ideale per testare i sistemi in presenza di query difficili, ovvero quelle situazioni in cui viene recuperato un numero esiguo di documenti rilevanti.
 $
 "GMAP" = root(n, product_n "AP"_n)
 $
@@ -1167,7 +1165,7 @@ Se la precisione di $I R S_1 > I R S_2$ allora anche la copertura sarà maggiore
 #figure(
 image("images/precisionk3.png", width: 50%),
 )
-Quindi, si conclude che il sistema $I R S_1$, rappresentato dalla linea magenta, mantenga prestazioni complessivamente migliori rispetto a $I R S_2$, rappresentato dalla liena verde, poichè i suoi documenti rilevanti sono concentrati più in alto nella graduatoria.
+Quindi, si conclude che il sistema $I R S_1$, rappresentato dalla linea magenta, mantenga prestazioni complessivamente migliori rispetto a $I R S_2$, rappresentato dalla linea verde, poiché i suoi documenti rilevanti sono concentrati più in alto nella graduatoria.
 ]
 == R-precision
 Per ovviare ai limiti derivanti dalla scelta arbitraria di un parametro fisso $k$ come nella Precision\@k, si introduce la metrica della *R-precision*. Questa misura calcola la precisione esattamente alla $R$-esima posizione della graduatoria, dove $R$ rappresenta il numero totale di documenti rilevanti associati a quella specifica query.
@@ -1220,21 +1218,21 @@ Consideriamo l'immagine proposta:
 image("images/mrr1.png", width: 50%)
 )
 Analizzando quest'immagine, possiamo osservare un ulteriore limite metodologico delle metriche basate su sistemi come la Precision\@k.
-- Nel confronto tra i due sistemi $I R_1$ e $I R_2$, intuitivamente percepiamo che il sistema $I R_2$ risulta migliore, poichè posiziona i documenti rilevanti più in altro rispetto a $I R_1$
-- Tuttavia, se calcoliamo la Precision\@5 considerando un taglio a $k = 5$, entrambi i sistemi ottengono lo setsso identico punteggio: $"Precision@5"(q, I R_2) = 2/5 = 0.4$ e $"Precision@"(q, I R_1) = 2/5=0.4$.
-Questo esempio dimostra chiaramente che metriche come la Precision\@k non fanno alcuna distinzione tra differenti ordinamenti interni dei risultati, fallendo nel cogliore la qualità del ranking quando il numero di elementi rilevanti all'interno della soglia è identica. \
+- Nel confronto tra i due sistemi $I R_1$ e $I R_2$, intuitivamente percepiamo che il sistema $I R_2$ risulta migliore, poiché posiziona i documenti rilevanti più in altro rispetto a $I R_1$
+- Tuttavia, se calcoliamo la Precision\@5 considerando un taglio a $k = 5$, entrambi i sistemi ottengono lo stesso identico punteggio: $"Precision@5"(q, I R_2) = 2/5 = 0.4$ e $"Precision@5"(q, I R_1) = 2/5=0.4$.
+Questo esempio dimostra chiaramente che metriche come la Precision\@k non fanno alcuna distinzione tra differenti ordinamenti interni dei risultati, fallendo nel cogliere la qualità del ranking quando il numero di elementi rilevanti all'interno della soglia è identica. \
 Consideriamo ora la seguente immagine:
 #figure(
 image("images/mrr2.png", width: 50%),
 )
-L'immagine evidenzia come la metrice del Reciprocal Rank, RR, riesca a cogliere le differenze di ordinamento tra i due sistemi, superando i limiti visti in precedenza con la Precision\@k.
+L'immagine evidenzia come la metrica del Reciprocal Rank, RR, riesca a cogliere le differenze di ordinamento tra i due sistemi, superando i limiti visti in precedenza con la Precision\@k.
 - Nel sistema $I R_2$, il primo documento rilevante compare subito alla prima posizione, restituendo un valore di $R R(q, I R_2) = 1/1 = 1$
 - Nel sistema $I R_1$, invece, il primo documento rilevante compare soltanto alla quarta posizione, producendo un valore di $R R(q, I R_1) = 1 / 4 = 0.25$.
-Questo dimostra che il sistema $I R_2$ è effettivametne migliore rispetto a $I R_1$ secondo questa metrica, poichè premia in modo sensibile la capacità di posizionare un risultato utile ai primissimi ranghi della graduatoria.
+Questo dimostra che il sistema $I R_2$ è effettivamente migliore rispetto a $I R_1$ secondo questa metrica, poiché premia in modo sensibile la capacità di posizionare un risultato utile ai primissimi ranghi della graduatoria.
 ]
 La MRR rappresenta una metrica ottimale nei casi in cui l'interesse primario sia focalizzato sul reperimento della *prima risposta corretta*. Tali contesti applicativi includono in particolare:
 - I sistemi di Question-Answering (QA).
-- Le ricerche di tipo navigazionale, ossia le interrogazioni rivolte ai motori di ricerca alla ricerca di siti specific, tra cui le query basate su URL, le home-page query e le named-page query.
+- Le ricerche di tipo navigazionale, ossia le interrogazioni rivolte ai motori di ricerca alla ricerca di siti specifici, tra cui le query basate su URL, le home-page query e le named-page query.
 #esempio[
 Consideriamo la seguente tabella:
 #align(center)[
@@ -1255,10 +1253,10 @@ Consideriamo la seguente tabella:
     [virus], [*viruses*, \ virii, viri], [viruses], [1], [1],
   )
 ]
-Consideriamo un insieme di tre query al'interno della tabella:
+Consideriamo un insieme di tre query all'interno della tabella:
 - Per la query _cat_, la risposta corretta _cats_ compare alla terza posizione nella lista dei risultati, restituendo un valore di RR pari a $1/3$.
-- Per la query _torus_, la risposta corretta _tori_ si trova alla seconda posizione, generano un valore di RR pari a $1/2$.
-- Per la query _virus_, la risposta corretta _viruses_ appare direttamente al primo posto ottentendo un valore di $RR$ pari a 1.
+- Per la query _torus_, la risposta corretta _tori_ si trova alla seconda posizione, generando un valore di RR pari a $1/2$.
+- Per la query _virus_, la risposta corretta _viruses_ appare direttamente al primo posto ottenendo un valore di $RR$ pari a 1.
 Mediando i valori ottenuti per la tre query, il calcolo della MRR risulta pari a
 $
 (1 / 3 + 1 / 2 + 1)/3 = 11/18 approx 0.61
@@ -1270,13 +1268,13 @@ Finora abbiamo esaminato metriche basate su valutazioni di tipo rigorosamente bi
 - *Perdita di sfumature*: di conseguenza, il sistema binario non offre alcuna distinzione pratica tra documenti altamente rilevanti e documenti blandamente o parzialmente rilevanti.
 Per superare questi limiti, si adotta l'utilizzo di *metriche di rilevanza graduata*, che forniscono:
 - *Giudizi multi-livello*: vengono integrate fonti di giudizio basate su scale di valutazione estese, come ad esempio scale Likert a 5 punti.
-- *Categorie multiple*: ciascun documento non è più confinato a una scelta secca, ma viene giudicato lungo una scala a cateogorie multiple, distinguendo chiaramente tra livelli come _altamente rilevante_, _parzialmente rilevante_ o _non rilevante_.
-Questo approccio consetne di modellare in modo molto più accurato la realtà utile dei risultati restituiti dai sistemi di ricerca rispetto alle reali esigenze informative degli utenti.
+- *Categorie multiple*: ciascun documento non è più confinato a una scelta secca, ma viene giudicato lungo una scala a categorie multiple, distinguendo chiaramente tra livelli come _altamente rilevante_, _parzialmente rilevante_ o _non rilevante_.
+Questo approccio consente di modellare in modo molto più accurato la realtà utile dei risultati restituiti dai sistemi di ricerca rispetto alle reali esigenze informative degli utenti.
 === Discounted Cumulative Gain (DCG)
 Per superare i limiti delle valutazioni binarie e sfruttare i giudizi di rilevanza graduata che abbiamo appena introdotto, si ricorre al *Discounted Cumulative Gain (DCG)*. Questa metrica combina in modo efficace le valutazioni di rilevanza graduata. \
 L'ideazione del DCG si fonda su due osservazioni fondamentali quando si esaminano i risultati di una query:
 - i documenti *altamente rilevanti* sono molto più utili rispetto a quelli blandamente o marginalmente rilevanti;
-- più è bassa la posizione in graduatoria di un documento rilevanti, minore è la sua utilità per l'utente, poichè è statisticamente meno probabile che venga esaminato.
+- più è bassa la posizione in graduatoria di un documento rilevante, minore è la sua utilità per l'utente, poiché è statisticamente meno probabile che venga esaminato.
 #esempio[
 Per comprendere concretamente come applicare il DCG, consideriamo un esempio in cui i risultati delle query vengono valutati su una scala graduata da 0 a 3 (0 non rilevante e 3 fortemente rilevante). \
 Supponiamo di avere due query, $q_1$ e $q_2$, per le quali i punteggi di rilevanza graduata assegnati ai documenti sono i seguenti:
@@ -1291,7 +1289,7 @@ $
 Ciò significa che, ad esempio, mentre il documento $d_3$ risulta altamente rilevante per la query $q_1$, il documento $d_(56)$ viene classificato come blandamente rilevante. Questo sistema a più livelli permette di superare la rigidità della classificazione binaria e di riflettere con maggiore precisione il reale grado di soddisfazione dell'utente.
 ]
 ==== Vettore di guadagno
-A partire dai giudizi di rilevanta, analizziamo come valutare i risultati di un nuovo algoritmo di ranking introducendo il concetto di *vettore di guadagno G*. \
+A partire dai giudizi di rilevanza, analizziamo come valutare i risultati di un nuovo algoritmo di ranking introducendo il concetto di *vettore di guadagno G*. \
 Gli specialisti assegnano un punteggio di rilevanza graduata ai primi 10-20 risultati restituiti per una determinata query: questa lista ordinata di punteggi prende il nome di *Gain Vector G*. \
 #esempio[
 Consideriamo i primi 15 documenti delle graduatoria prodotta per le query $q_1$ e $q_2$, i rispettivi vettori di guadagno vengono espressi in forma di sequenza numerica:
@@ -1302,7 +1300,7 @@ $
 Questo vettore rappresenta la base numerica essenziale su cui si applcia successivamente il fattore di sconto basato sulla posizione per calcolare il valore effettivo del *Discounted Cumulative Gain (DCG)*.
 ] <es:gain_vector>
 ==== Cumulative Gain
-Sommando progressivamente i punteggi di rilevanza graduata fino a un qualsiasi punto della gruaduatoria, si ottiene direttamente il guadagno cumulativo, il *cumulated gain CG*. \
+Sommando progressivamente i punteggi di rilevanza graduata fino a un qualsiasi punto della graduatoria, si ottiene direttamente il guadagno cumulativo, il *cumulated gain CG*. \
 #esempio[
 Proseguendo l'*@es:gain_vector*, sommiamo progressivamente sui vettori di guadagno e otteniamo i vettori di guadagno cumulato per le due query:
 $
@@ -1310,7 +1308,7 @@ C G_1 = (1, 1, 2, 2, 2, 5, 5, 5, 5, 7, 7, 7, 7, 7, 10) \
 C G_2 = (0, 0, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 6)
 $
 ] <es:cumulative_gain_vector>
-Tuttavaia, il semplice guadagno cumulato non tiene ancora conto della posizione in cui compaiono i documenti. Per risolvere questo limite, il passo successivo consiterà nell'introdurre il fattore di sconto, arrivando così alla formula completa del DCG. \
+Tuttavia, il semplice guadagno cumulato non tiene ancora conto della posizione in cui compaiono i documenti. Per risolvere questo limite, il passo successivo consisterà nell'introdurre il fattore di sconto, arrivando così alla formula completa del DCG. \
 In termini formali, definiamo:
 $
 C G_j[i] = cases(
@@ -1321,7 +1319,7 @@ $
 ove $C G_j[i]$ è il guadagno cumulato all'$i$-esima posizione del ranking per la query $q_j$.
 ==== Fattore di sconto
 Viene introdotto un *fattore di sconto, _discount factor D_*, che riduce l'impatto del guadagno man mano che si sposta verso il basso nella graduatoria. \
-Un semplice fattore di sconto comunemente adottato consiste nell'utilizare il *logaritmo della posizione di ranking*. \
+Un semplice fattore di sconto comunemente adottato consiste nell'utilizzare il *logaritmo della posizione di ranking*. \
 Se consideriamo i logaritmi in base 2, questo fattore di sconto sarà pari a $log_2(2)$ alla posizione 2, $log_2(3)$ alla posizione 3, e così via. \
 Infine, dividendo il guadagno per il corrispondente fattore di sconto lungo la posizione, si ottiene la formula definita del *Discounted Cumulative Gain (DCG)*. \
 In termini formali:
@@ -1333,14 +1331,14 @@ G_j[1] & "se" i = 1,
 $
 ove $D C G_j[i]$ è il DCG all'$i$-esima posizione della graduatoria per la query $q_j$.
 #esempio[
-Proseguendo l'*@es:cumulative_gain_vector*, otteniamo i seguneti vettori DCG:
+Proseguendo l'*@es:cumulative_gain_vector*, otteniamo i seguenti vettori DCG:
 $
 D C G_1 = (1, 1, 1.6, 1.6, 1.6, 2.8, 2.8, 2.8, 2.8, 2.8, 3.4, 3.4, 3.4, 3.4, 4.2) \
 D C G_2 = (0, 0, 1.3, 1.3, 1.3, 1.3, 1.3, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 2.4)
 $
 ]
 Facciamo delle considerazioni chiave sul DCG.
-- *Riduzione dell'impatto sul fondo della classifica*: i guadagni cumulati scontati risentono molto meno dei documenti rilevanti sitauti verso la fine del ranking, poichè è la divisione per il logaritmo della posizione ne riduce drasticamente il peso.
+- *Riduzione dell'impatto sul fondo della classifica*: i guadagni cumulati scontati risentono molto meno dei documenti rilevanti sitauti verso la fine del ranking, poiché è la divisione per il logaritmo della posizione ne riduce drasticamente il peso.
 - *Controllo della penalizzazione*: adottando logaritmi in basi inferiori è possibile accentuare ulteriormente il fattore di sconto, rendendo la metrica ancora più severa nei confronti dei risultati posizionati in basso.
 
 ==== Curve DCG
@@ -1350,17 +1348,17 @@ $
 overline(C G)[i] = sum_(j=i)^(N_q) (C G_j[i])/(N_q) \
 overline(D C G)[i] = sum_(j=1)^(N_q)(D C G_j[i])/(N_q)
 $
-Questi valori medi aggreati permettono di tracciare grafici di performance uniformi, consentendo di confrontare in mdoo solido l'efficacia media di differenti algoritmi di ranking su un'intera collezione di interrogazioni.
+Questi valori medi aggregati permettono di tracciare grafici di performance uniformi, consentendo di confrontare in modo solido l'efficacia media di differenti algoritmi di ranking su un'intera collezione di interrogazioni.
 #figure(
 image("images/dcg.png", width: 70%)
 )
 === Normalized DCG
 ==== CG e DCG Ideali
-A differenza di quanto avviene per la precisione e la copertura, che vengono calcolate in relazione all'insieme dei documenti rilevanti, i punteggi di CG e DCG visti finira non sono rapportati ad alcuna linea di base fissa. Questo limite implica che l'utilizzo diretto dei punteggi grezzi di CG e DCG può risultare fuorviante quando si cerca di confrontare direttamente due algoritmi di recupero differenti. \
+A differenza di quanto avviene per la precisione e la copertura, che vengono calcolate in relazione all'insieme dei documenti rilevanti, i punteggi di CG e DCG visti finora non sono rapportati ad alcuna linea di base fissa. Questo limite implica che l'utilizzo diretto dei punteggi grezzi di CG e DCG può risultare fuorviante quando si cerca di confrontare direttamente due algoritmi di recupero differenti. \
 Per ovviare a questo problema, la strategia standard nell'introdurre una linea di base da utilizzare come riferimento per la normalizzazione. \
-Questa specifica linea di base è rappresentata proprio dalle metriche di *CG e DGC ideali*, che riflettono il rendimento massimo ottenibile ordinando perfettamente i documenti in base al loro grado di rilevanza. \
+Questa specifica linea di base è rappresentata proprio dalle metriche di *CG e DCG ideali*, che riflettono il rendimento massimo ottenibile ordinando perfettamente i documenti in base al loro grado di rilevanza. \
 Proseguendo con la costruzione delle metriche ideali per la normalizzazione, definiamo il *vettore di guadagno ideale, IG*. \
-Per una data query di test $q$, assumendo che le valutazioni di rilevanza espresse degli specialisti abbiano prodotto $n_3$ documenti con punteggio 3, $n_2$ con punteggio 2, $n_1$ con punteggio 1 e $n_0$ con punteggio 0, il vettore _IG_ viene generato ordinando tutti i punteggi di rilevanza in *ordine decrescente*. La struttura generale assume la forma:
+Per una data query di test $q$, assumendo che le valutazioni di rilevanza espresse dagli specialisti abbiano prodotto $n_3$ documenti con punteggio 3, $n_2$ con punteggio 2, $n_1$ con punteggio 1 e $n_0$ con punteggio 0, il vettore _IG_ viene generato ordinando tutti i punteggi di rilevanza in *ordine decrescente*. La struttura generale assume la forma:
 $
 I G = (3, dots, 3, 2, dots, 2, 1, dots, 0, dots, 0)
 $
@@ -1374,7 +1372,7 @@ $
 Questo vettore ideale costituisce il riferimento fondamentale per calcolare successivamente il _Normalized Discounted Cumulative Gain (NDCG)_, permettendo di normalizzare le prestazioni reali di qualsiasi algoritmo di ranking rispetto al miglior risultato teorico possibile. \
 ==== Gain Cumulato Ideale e Gain Cumulato Scontato Ideale
 Analizziamo come calcolare i vettori di *Gain Cumulato Ideale, ICG*, e di *Gain Cumulato Scontato Ideale, IDCG*, in modo del tutto analogo a quanto visto per i vettori standard. \
-Analizziamo il calcolo dei vettori _ICG_. Sommando progressivamente i punteggi del vettore di guadagno ideale _IG_, si ottengono i valroi massimi teorici cumulati per le qiery $q_1$ e $q_2$:
+Analizziamo il calcolo dei vettori _ICG_. Sommando progressivamente i punteggi del vettore di guadagno ideale _IG_, si ottengono i valori massimi teorici cumulati per le query $q_1$ e $q_2$:
 $
 I C G_1 &= (3, 6, 9, 11, 13, 15, 17, 18, 19, 19, 19, 19, 19, 19) \
 I C G_2 &= (3, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6)
@@ -1384,7 +1382,7 @@ $
 I D C G_1 &= (3.0, 6.0, 7.9, 8.9, 9.8, 10.5, 10.9, 11.2, 11.5, 11.8, 11.8, 11.8, 11.8, 11.8, 11.8) \
 I D C G_2 &= (3.0, 5.0, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6, 5.6)
 $
-Questi vettori _IDCG_ rappresentano il punteggio massimo teorico ottenibile da un sistema ideale per le rispettive query e costituiscono la base di normalizzazione fondamentale per calcoalre il punteggio normalizzato finale _NDCG_. \
+Questi vettori _IDCG_ rappresentano il punteggio massimo teorico ottenibile da un sistema ideale per le rispettive query e costituiscono la base di normalizzazione fondamentale per calcolare il punteggio normalizzato finale _NDCG_. \
 Calcoliamo i punteggi medi di _ICG_ e _IDCG_ su un intero insieme di query di test. Analogamente a quanto visto per le curve standard, i punteggi medi del guadagno cumulato ideale, $overline(I C G)[i]$, e del guadagno cumulato scontato ideale, $overline(I D C G)[i]$, per ciascuna posizione $i$ si ottengono mediando i valori corrispondenti di tutte le $N_q$ query:
 $
 overline(I C G)[i] &= sum_(j=1)^(N_q)(I C G_j[i])/(N_q) \
@@ -1396,7 +1394,7 @@ $
 N C G &= (0.17, 0.09, 0.27, 0.24, 0.21, 0.33, 0.32, 0.35, 0.33, 0.40, 0.40, 0.40, 0.40, 0.40, 0.64) \
 N D C G &= (0.17, 0.09, 0.21, 0.20, 0.29, 0.25, 0.25, 0.26, 0.26, 0.29, 0.29, 0.29, 0.29, 0.29, 0.38)
 $
-L'area sottotesa alle curve _NCG_ e _NDCG_ rappresenta direttametne la qualità complessiva dell'algoritmo di ranking. Più grande è l'area sottotesa, migliori sono i risultati restituiti dal sistema. Di conseguenza, grazie a questa normalizzazione in scala, i valori ottenuti possono essere impiegati efficacemente per confrontare in modo rigoroso due distinti algoritmi di recupero dell'informazione. \
+L'area sottesa alle curve _NCG_ e _NDCG_ rappresenta direttamente la qualità complessiva dell'algoritmo di ranking. Più grande è l'area sottesa, migliori sono i risultati restituiti dal sistema. Di conseguenza, grazie a questa normalizzazione in scala, i valori ottenuti possono essere impiegati efficacemente per confrontare in modo rigoroso due distinti algoritmi di recupero dell'informazione. \
 Possiamo definire formalmente _NCG_ e _NDCG_ come segue:
 $
 N C G[i] &= (C G[i]) / (I C G[i]) \
@@ -1405,7 +1403,7 @@ $
 Ogni valore di _NCG_ e _NDCG_ si trova nel range $[0, 1]$.
 == Coefficienti di correlazione dei ranking
 Sebbene precisione e copertura consentano di confrontare la rilevanza dei risultati prodotti da due funzioni di ranking differenti, esistono scenari applicativi in cui non è possibile misurare direttamente la rilevanza. \
-In molti casi, l'obiettivo principale consiste nel determinare in che modo una funzione di ranking vari rispetto a una seconda funzione di cui conosciamo il comportamento. In queste circostanze, l'interesse si spostas interamente sul confronto dell'ordinamento relativo generato dai due diversi ranking. \
+In molti casi, l'obiettivo principale consiste nel determinare in che modo una funzione di ranking vari rispetto a una seconda funzione di cui conosciamo il comportamento. In queste circostanze, l'interesse si sposta interamente sul confronto dell'ordinamento relativo generato dai due diversi ranking. \
 Per raggiungere questo scopo si utilizzano apposite funzioni statistiche denominate proprio *coefficienti di correlazione dei ranking*. \
 Le caratteristiche principali di un coefficiente di correlazione $C(R_1, R_2)$, calcolato tra due diversi ordinamenti $R_1$ ed $R_2$ sono i seguenti.
 - *Intervallo di valori*: il coefficiente oscilla sempre tra -1 ed 1.
@@ -1462,7 +1460,7 @@ Consideriamo il seguente risultato:
     [24],
   )
 ]
-Per ciascun documento $d_j$ la tabella evidenzaia:
+Per ciascun documento $d_j$ la tabella evidenzia:
 - la posizione occupata nel primo ordinamento;
 - la posizione occupata nel secondo ordinamento;
 - la differenza di posizione tra i due ranking;
@@ -1487,10 +1485,10 @@ Per mappare questo rapporto nell'intervallo standard dei coefficienti di correla
 $
 S(R_1, R_2) = 1 - (6 times sum_(j=1)^K (s_(1, j) - s_(2, j))^2)/(K times (K^2 - 1))
 $
-ove $S(R_1, R_2)$ è il coefficiente di correlazione di Spearman e $K$ la dimnesione dei set posizionati e confrontati.
+ove $S(R_1, R_2)$ è il coefficiente di correlazione di Spearman e $K$ la dimensione dei set posizionati e confrontati.
 === Coefficiente Tau di Kendall
-Spesso risulta difficile assegnare un'interpretazione operativa e immediata al coefficente di Spearman. Una valida alternativa è rappresentata dall'utilizzo di un coefficiente dotato di un'interpretazione molto più naturale e intuitiva, il *coefficiente Tau di Kendall*.  \
-Per comprendere la metrica, si considerano due documenti distinti, $d_j$ e $d_k$, e le rispettive posizioni all'interno dei due ordinamenti $R_1$ ed $R_2$. Si valutano le differenze di posizione per questa coppia di documenti in ciascun ranking, ovvero $s_(2, l) - s_(1, j)$ nel primo e $s_(2, k) - s_(2, j)$ nel secondo. Se queste differenze presentano lo *stesso segno*, significa che i due documenti mantengono lo stesso ordine relativo in entrambe le classifiche; di conseguenza, la coppia $[d_k, d_j]$ viene definita *concordante*. Se invece le differenze hanno segno diverso, significa che l'ordine relativo dei due documenti risulta invertito tra un ranking e l'altro; in questo caso, la coppia viene definita *discordante*.
+Spesso risulta difficile assegnare un'interpretazione operativa e immediata al coefficiente di Spearman. Una valida alternativa è rappresentata dall'utilizzo di un coefficiente dotato di un'interpretazione molto più naturale e intuitiva, il *coefficiente Tau di Kendall*.  \
+Per comprendere la metrica, si considerano due documenti distinti, $d_j$ e $d_k$, e le rispettive posizioni all'interno dei due ordinamenti $R_1$ ed $R_2$. Si valutano le differenze di posizione per questa coppia di documenti in ciascun ranking, ovvero $s_(1, k) - s_(1, j)$ nel primo e $s_(2, k) - s_(2, j)$ nel secondo. Se queste differenze presentano lo *stesso segno*, significa che i due documenti mantengono lo stesso ordine relativo in entrambe le classifiche; di conseguenza, la coppia $[d_k, d_j]$ viene definita *concordante*. Se invece le differenze hanno segno diverso, significa che l'ordine relativo dei due documenti risulta invertito tra un ranking e l'altro; in questo caso, la coppia viene definita *discordante*.
 #esempio[
 Consideriamo i primi 5 documenti nei due ranking $R_1$ ed $R_2$:
 #let rows = (
@@ -1524,7 +1522,7 @@ Consideriamo i primi 5 documenti nei due ranking $R_1$ ed $R_2$:
       .flatten(),
   )
 ]
-Tutte le possibili coppie ordinate di documenti che si pososno formare a partire dal primo ranking sono:
+Tutte le possibili coppie ordinate di documenti che si possono formare a partire dal primo ranking sono:
 $
   & [d_123, d_84], quad [d_123, d_56], quad [d_123, d_6], quad [d_123, d_8], \
   & [d_84, d_56], quad [d_84, d_6], quad [d_84, d_8], \
@@ -1580,9 +1578,9 @@ tau(R_1, R_2) = 1 - (2 times Delta(R_1, R_2))/(K(K-1))
 $
 = Link analysis e PageRank
 L'*idea centrale* è che una pagina web è considerata più importante se riceve un numero maggiore di link. La domanda chiave iniziale distingue tra link in entrata e link in uscita. \
-Considerando i link in entrata alla stregua di voti di preferenza, si osserva che un sito come `www.stanford.edu` vanta ben 23.400 link in entrata, mentre un sito meno noto come `www.joe-schmoe.com` ne possiede appena 1. Ci si chiede quindi se tutti i link in entrata abbiano lo stesso peso. La risposta logica è che i *link provenienti da pagine importanti contano di più*. Questo principio introduce una definizione circolare e *ricorsiva*, poichè l'importanza di una pagina dipende dall'importanza delle pagine che la linkano, ponendo le basi per algoritmi iterativi celebri come il PageRank.
+Considerando i link in entrata alla stregua di voti di preferenza, si osserva che un sito come `www.stanford.edu` vanta ben 23.400 link in entrata, mentre un sito meno noto come `www.joe-schmoe.com` ne possiede appena 1. Ci si chiede quindi se tutti i link in entrata abbiano lo stesso peso. La risposta logica è che i *link provenienti da pagine importanti contano di più*. Questo principio introduce una definizione circolare e *ricorsiva*, poiché l'importanza di una pagina dipende dall'importanza delle pagine che la linkano, ponendo le basi per algoritmi iterativi celebri come il PageRank.
 == Semplice formulazione ricorsiva
-Il voto espresso da ciascun link è direttamente proporzionale all'importanza della pagina sorgente da cui parte. Se una pagina $j$ un livello di importanza $r_j$ e possiede $n$ link in uscita, ciascuno di questi link trasmette un valore di voto pari a $r_j / n$. L'importanza complessiva di una pagina $j$ è data esattamente dalla somma dei voti ricevuti attraverso tutti i suoi link in entrata.
+Il voto espresso da ciascun link è direttamente proporzionale all'importanza della pagina sorgente da cui parte. Se una pagina $j$ ha un livello di importanza $r_j$ e possiede $n$ link in uscita, ciascuno di questi link trasmette un valore di voto pari a $r_j / n$. L'importanza complessiva di una pagina $j$ è data esattamente dalla somma dei voti ricevuti attraverso tutti i suoi link in entrata.
 #esempio[
 Consideriamo il seguente schema:
 #figure(
@@ -1594,7 +1592,7 @@ r_j = r_i / 3 + r_k / 4
 $
 ]
 == Modello di Flusso di PageRank
-Iprincipi chiave di questo modello sono i seguenti:
+I principi chiave di questo modello sono i seguenti:
 - un voto proveniente da una pagina importante vale di più;
 - una pagina è importante se è puntata da altre pagine importanti
 Viene definito un punteggio di importanza _rank_ $r_j$ per ciascuna pagina $j$. La formula generale che esprime questo flusso ricorsivo è:
@@ -1613,17 +1611,17 @@ r_y &= r_y / 2 + r_a / 2 \
 r_a &= r_y / 2 + r_m \
 r_m &= r_a / 2
 $
-Quindi si ottiene un sistema composto da 3 equazioni e 3 incognite senza termini noti. QUesto comporta l'assenza di un'unica soluzione determinata. Tutte le possibili soluzioni sono equivalenti tra loro a meno di un fattore di scala. Per imporre un'unica soluzione valida, si aggiunge il vincolo di normalizzazione secondo cui la somma dei ranghi deve essere pari a 1:
+Quindi si ottiene un sistema composto da 3 equazioni e 3 incognite senza termini noti. Questo comporta l'assenza di un'unica soluzione determinata. Tutte le possibili soluzioni sono equivalenti tra loro a meno di un fattore di scala. Per imporre un'unica soluzione valida, si aggiunge il vincolo di normalizzazione secondo cui la somma dei ranghi deve essere pari a 1:
 $
 r_y + r_a + r_m = 1
 $
 ] <es:page_rank>
-Il metodo di eliminazione di Gauss funzione bene per esempi di piccole dimensioni, ma risulta inefficiente e inadeguato per grafi di grandi dimensioni paragonabili all'intero Web. Per questo motivo, si rende necessaria una formulazione matematica rinnovata, basata sul calcolo matriciale e su metodi iterativi (come le catene di Markov e il metodo delle potenze).
+Il metodo di eliminazione di Gauss funziona bene per esempi di piccole dimensioni, ma risulta inefficiente e inadeguato per grafi di grandi dimensioni paragonabili all'intero Web. Per questo motivo, si rende necessaria una formulazione matematica rinnovata, basata sul calcolo matriciale e su metodi iterativi (come le catene di Markov e il metodo delle potenze).
 === Matrice di adiacenza stocastica
 Data una pagina $i$ che possiede $d_i$ link in uscita, la matrice viene definita in questo modo:
 - se esiste un link dalla pagina $i$ alla pagina $j$ ($i arrow j$), l'elemento della matrice $M_(j i)$ è pari a $1/d_i$.
 - altrimenti, se non c'è alcun collegamento diretto, l'elemento $M_(j i) = 0$
-Per costruzione, $M$ è una *matrice stocastica per colonne*, il che significa che la som a degli elementi di ciascuna colonna è rigorosamente pari a 1, riflettendo la conservazione del "flusso" di voti tra le pagine del web.
+Per costruzione, $M$ è una *matrice stocastica per colonne*, il che significa che la somma degli elementi di ciascuna colonna è rigorosamente pari a 1, riflettendo la conservazione del "flusso" di voti tra le pagine del web.
 #esempio[
 Continuando l'*@es:page_rank* la matrice di adiacenza $M$ è la seguente:
 #align(center)[
@@ -1643,12 +1641,12 @@ Continuando l'*@es:page_rank* la matrice di adiacenza $M$ è la seguente:
 ]
 Definiamo il *vettore di rank r*, che è un vettore colonna che contiene un'entrata per ciascuna pagina del web:
 - ciascun elemento $r_i$ rappresenta il punteggio d'importanza della pagina $i$
-- vale il vincolo di noramlizzazione globale per cui la somma di tutte le entrate del vettore è pari a 1.
+- vale il vincolo di normalizzazione globale per cui la somma di tutte le entrate del vettore è pari a 1.
 Partendo dalle equazioni scalari in cui l'importanza $r_j$ di una pagina è data dalla somma dei contributi ricevuti dalle pagine entranti ($r_j = sum_(i arrow j)r_i/d_i$), il sistema può essere espresso elegantemente tramite il prodotto tra la matrice stocastica di adiacenza $M$ e il vettore di rank *r*.
 $
 bold(r) = M dot.c bold(r)
 $
-Analizziamo la *formulazione agli autovettori* (_eigenvector_). Poichè le equazioni di flusso possono essere scritte nella forma $bold(r) = M dot.c bold(r)$, il vettore di rank $bold(r)$ risulta essere un autovettore della matrice stocastica del web $M$. Più in dettaglio, $bold(r)$ è il primo autovettore associato all'autovalore $lambda = 1$. L'autovalore più grande di $M$ è proprio 1, poichè $M$ è una matrice stocastica per colonne. \
+Analizziamo la *formulazione agli autovettori* (_eigenvector_). Poiché le equazioni di flusso possono essere scritte nella forma $bold(r) = M dot.c bold(r)$, il vettore di rank $bold(r)$ risulta essere un autovettore della matrice stocastica del web $M$. Più in dettaglio, $bold(r)$ è il primo autovettore associato all'autovalore $lambda = 1$. L'autovalore più grande di $M$ è proprio 1, poiché $M$ è una matrice stocastica per colonne. \
 Grazie a questa impostazione è possibile calcolare il vettore $bold(r)$ in modo efficiente per grafi di grandi dimensioni utilizzando un algoritmo iterativo noto come *Power iteration* (_metodo delle potenze_).
 #esempio[
 Consideriamo il seguente schema:
@@ -1741,7 +1739,7 @@ Il metodo delle potenze prevede i seguenti passi:
 ]
 ]
 == Random Walk Interpretation
-Immaginiamo un navigatore casuale, detto _random web surfer_, ovvero un utente che naviga sul Web in modo casuale. In un qualsiasi istante di tempo $t$, il navigatore si trova su una certa pagina $i$. All'istante successivo $t+1$, l'utente sceglie di seguire uno dei link in uscita dalla pagina $i$ in modo uniformemente casuale. Di conseguenza, il navigatore arriva su una nuova pagina $j$ che risulta collegata a $i$. Questo processo si ripete idenfinitamente. \
+Immaginiamo un navigatore casuale, detto _random web surfer_, ovvero un utente che naviga sul Web in modo casuale. In un qualsiasi istante di tempo $t$, il navigatore si trova su una certa pagina $i$. All'istante successivo $t+1$, l'utente sceglie di seguire uno dei link in uscita dalla pagina $i$ in modo uniformemente casuale. Di conseguenza, il navigatore arriva su una nuova pagina $j$ che risulta collegata a $i$. Questo processo si ripete indefinitamente. \
 Diamone una *formalizzazione stocastica* con il vettore $bold(p)(t)$. Sia $bold(p)(t)$ un vettore in cui la $i$-esima coordinata rappresenta la probabilità che il navigatore si trovi sulla pagina $i$ al tempo $t$. Per questa ragione, $bold(p)(t)$ costituisce a tutti gli effetti una *distribuzione di probabilità* sulle pagine del web.
 === Distribuzione stazionaria
 Per determinare dove si trovi il navigatore casuale al tempo successivo $t + 1$, sapendo che segue un link in modo uniformemente casuale, l'equazione di transizione si esprime moltiplicando la matrice stocastica $M$ per il vettore di probabilità corrente:
@@ -1753,7 +1751,7 @@ $
 bold(p)(t + 1) = M dot.c bold(p)(t) = bold(p)(t)
 $
 allora il vettore $bold(p)(t)$ prende il nome di *distribuzione stazionaria* della passeggiata casuale. \
-Poichè il vettore di rank originario $bold(r)$ soddisfa esattametne la medesima relazione algebrica:
+Poiché il vettore di rank originario $bold(r)$ soddisfa esattamente la medesima relazione algebrica:
 $
 bold(r) = M dot.c bold(r)
 $
@@ -1761,11 +1759,11 @@ Ne consegue che *r rappresenta la distribuzione stazionaria* della passeggiata c
 ==== Esistenza e unicità
 Proseguendo nell'analisi della passeggiata casuale e dei processi di Markov, introduciamo un risultato teorico fondamentale noto come *Esistenza e unicità*.
 #teorema(title: "Esistenza e unicità")[
-PEr i grafi che soddisfano *determinate condizioni*, la *distribuzione stazionaria è unica*. Questa distribuzione viene inevitabilmente raggiunta nel corso del tempo, indipendentemente da quale sia stata la distribuzione di probabilità iniziale al tempo $t=0$.
+Per i grafi che soddisfano *determinate condizioni*, la *distribuzione stazionaria è unica*. Questa distribuzione viene inevitabilmente raggiunta nel corso del tempo, indipendentemente da quale sia stata la distribuzione di probabilità iniziale al tempo $t=0$.
 ]
-== PageRank: la formualzione di Google
+== PageRank: la formulazione di Google
 Ci poniamo tre interrogativi cruciali sulla convergenza e sulla correttezza matematica del modello iterativo appena descritto:
-- *Questo processo converge*? Ci si chiede se il metodo iterativo basato sul calcolo matriciale e sul metodo delle potenze raggiunga effettivametne un limite stabile senza oscillare all'infinito.
+- *Questo processo converge*? Ci si chiede se il metodo iterativo basato sul calcolo matriciale e sul metodo delle potenze raggiunga effettivamente un limite stabile senza oscillare all'infinito.
 - *Convergono verso ciò che si desidera?* Anche in caso di convergenza, è necessario verificare che il risultato corrisponda all'unica distribuzione stazionaria corretta e significativa per il grafo.
 - *I risultati sono ragionevoli?* Si analizza se i punteggi di importanza assegnati alle pagine rispecchino fedelmente il principio dei link come voti o se emergano anomalie strutturali che richiedono la formulazione correttiva di Google.
 === Problema della convergenza
@@ -1789,7 +1787,7 @@ caption: [Problema dello spider trap]
 ]
 In questo caso il PageRank non converge.
 ]
-Analizziamo un'ulteriore problema, il problema del *dead end*. Il dead end si verifica quando una pagina possiede dei link in entrata ma nessun link in uscita verso il resto del grafo. Quando il navigatore casuale raggiunge una pagina di questo tipo, la probabilità vi si accumulano senza poter essere ridistribuiti, provocando la dispersione o l'annullamento progressivo del flusso complessivo di importanza.
+Analizziamo un'ulteriore problema, il problema del *dead end*. Il dead end si verifica quando una pagina possiede dei link in entrata ma nessun link in uscita verso il resto del grafo. Quando il navigatore casuale raggiunge una pagina di questo tipo, la probabilità vi si accumula senza poter essere ridistribuiti, provocando la dispersione o l'annullamento progressivo del flusso complessivo di importanza.
 #esempio(title: "Dead end")[
 Consideriamo il seguente schema:
 #figure(
@@ -1828,7 +1826,7 @@ La stessa soluzione si può applicare al problema del dead end, come mostrato in
 image("images/teleport2.png", width: 50%),
 caption: [Soluzione al problema del dead end]
 )
-=== Catenen di Markov
+=== Catene di Markov
 L'equazione di transizione del rank tra il tempo $t$ e il tempo $t + 1$ è espressa come:
 $
 r^((t + 1)) = M r^((t))
@@ -1858,7 +1856,7 @@ dove:
 - $n$ è il numero totale dei nodi del grafo. \
 ==== Calcolare la matrice aperiodica
 Vediamo come rendere una matrice $M$ *aperiodica*. Una catena di Markov si dice *periodica* se esiste un intero $k > 1$ tale per cui l'intervallo di tempo tra due visite successive e un determinato stato $s$ è sempre multiplo di $k$. Questa condizione provoca oscillazioni nel metodo iterativo, impedendo la convergenza a un unico vettore stazionario. \
-Per eliminare la periodicità (garantendo che la catena possa riotrnare in un numero variabile di passi) si aggiungo i *green links* sotto forma di auto-anelli o connessioni supplementari, come mostrato nella seguente figura:
+Per eliminare la periodicità (garantendo che la catena possa ritornare in un numero variabile di passi) si aggiungono i *green links* sotto forma di auto-anelli o connessioni supplementari, come mostrato nella seguente figura:
 #figure(
 image("images/periodica.png", width: 70%),
 caption: [Soluzione alla periodicità]
@@ -1870,22 +1868,22 @@ Per eliminare le barriere strutturali e garantire che il grafo sia fortemente co
 image("images/irriducibile.png", width: 70%),
 )
 === Random Jumps
-La soluzione complet di Google basata sui *random jumps* unisce tutti i concetti visti finora. L'introduzione dei random jumps rende simultaneamente la matrice del web *stocastica, aperiodica* e *irriducibile*.
+La soluzione completa di Google basata sui *random jumps* unisce tutti i concetti visti finora. L'introduzione dei random jumps rende simultaneamente la matrice del web *stocastica, aperiodica* e *irriducibile*.
 - Le *due opzioni* del navigatore casuale ad ogni passo:
 	+ Con probabilità $beta$, segue un link in modo casuale.
-	+ Con probabilità complementare $1 - beta$, compie un salto verso una pagine scelta a caso nell'intero grafo.
+	+ Con probabilità complementare $1 - beta$, compie un salto verso una pagina scelta a caso nell'intero grafo.
 L'equazione *definitiva* di PageRank è la seguente:
 $
 r_j = sum_(i arrow j)beta (r_i)/(d_i) + (1 - beta) 1/n
 $
 dove $d_i$ è il grado di uscita del nodo $i$ e $n$ il numero totale di pagine. \
 La formulazione sopra descritta presuppone l'assenza di vicoli ciechi. Per gestirli nella pratica, è possibile pre-elaborare la matrice $M$ oppure trattare esplicitamente i vicoli ciechi facendo in modo che seguano i link di teletrasporto con probabilità 1. \
-L'eqauazione di PageRank viene tradotta in forma matriciale compatta combinando la matrice di transizione originaria $M$ e il termine di teletrasporto uniforme:
+L'equazione di PageRank viene tradotta in forma matriciale compatta combinando la matrice di transizione originaria $M$ e il termine di teletrasporto uniforme:
 $
 A = beta M + (1 - beta)1/n e dot.c e^T
 $
 dove $e$ rappresenta il vettore colonna composto interamente da 1. \
-Poichè la matrice $A$ così definita risulta *stocastica, aperiodica* e *irriducibile*, il processo iterativo converge stabilimente indipendentemente dal vettore iniziale:
+Poiché la matrice $A$ così definita risulta *stocastica, aperiodica* e *irriducibile*, il processo iterativo converge stabilmente indipendentemente dal vettore iniziale:
 $
 bold(r)^((t+1)) = A dot.c bold(r)^((t))
 $
@@ -1897,7 +1895,7 @@ Gli elementi del task di classificazione sono i seguenti.
 	- È definito un *insieme finito di categorie* $C = brace.l c_1, c_2, dots, c_n brace.r$
 - Obiettivi da determinare:
 	- Si vuole trovare la categoria associata all'istanza $x$, espressa come $c(x) in C$	- Questo processo è regolato da una *funzione di classificazione* $c(x)$, il cui dominio è lo spazio delle istanze $X$ e il cui codominio è l'insieme delle categorie $C$.
-Un'esempio di training è costituito da una coppia $chevron.l x, c(x) chevron.r$, dove $x$ è un'istanza appartenente allo spazio delle istanze $X$ ed è associata alla rispettiva categoria $c(x)$, determinata da una funzione di classificazione $c$ che tuttavia *non è nota*. \
+Un esempio di training è costituito da una coppia $chevron.l x, c(x) chevron.r$, dove $x$ è un'istanza appartenente allo spazio delle istanze $X$ ed è associata alla rispettiva categoria $c(x)$, determinata da una funzione di classificazione $c$ che tuttavia *non è nota*. \
 L'*insieme di training* $D$ rappresenta l'insieme dei dati di addestramento a disposizione del sistema. A partire dall'insieme $D$, il compito è trovare un'ipotesi (ovvero una funzione di classificazione stimata) $h(x)$ tale per cui sia soddisfatta la condizione:
 $
 forall chevron.l x, c(x) chevron.r in D : h(x) = c(x)
@@ -1947,9 +1945,9 @@ L'approccio _single-label_ è praticabile quando sussiste l'indipendenza tra le 
 Il caso _single-label binario_ costituisce l'impostazione più generale, impiegata con grandissima frequenza e ampiamente dettagliata nella letteratura di settore.
 == Algoritmi di text categorization
 Gli algoritmi di text categorization sono diversi, e sono:
-- *Apprendimento superivisionato*. I dati di addestramento vengono forniti come input e consistono nelle classi associate ai documenti di input.
-- *Apprendimento non superivisionato*. Non viene fornito alcun dato di addestramento.
-- *Apprendimento semi-superivisionato*. Sfrutta un set ridotto di dati di addestramento e questo piccolo insiemi di dati di training viene combinato con una quantità maggiore di dati non etichettati.
+- *Apprendimento supervisionato*. I dati di addestramento vengono forniti come input e consistono nelle classi associate ai documenti di input.
+- *Apprendimento non supervisionato*. Non viene fornito alcun dato di addestramento.
+- *Apprendimento semi-supervisionato*. Sfrutta un set ridotto di dati di addestramento e questo piccolo insieme di dati di training viene combinato con una quantità maggiore di dati non etichettati.
 #figure(
   diagram(
     node-stroke: 0.3pt,
@@ -2059,8 +2057,8 @@ Siano dati l'insieme dei documenti $D=  brace.l d_1, dots, d_(abs(D)) brace.r$ e
 L'insieme dei documenti $D$ viene suddiviso in due sotto-insiemi principali: $T r$ (training set) e $T e$ (Test set), tali per cui l'unione corrisponde all'intero corpus $D$. \
 Il classificatore viene costruito partendo unicamente dagli esempi presenti nel training set $T r$ e la fase di testing e validazione viene effettuata utilizzando gli esempi riservati nel test set $T e$. \
 Gli algoritmi supervisionati dipendono da un training set. Esso è costituito da un insieme di classi con esempi di documenti associati a ciascuna classe. Gli esempi di addestramento sono determinati da specialisti umani. Il training set viene utilizzato per apprendere la funzione di classificazione. \
-Maggiore è il numero di esempi di training, migliore risulta la messa a punto (_fine tuing_) del classificatore. Il problema dell'*overfitting* si manifesta quando il classificatore diventa eccessivamente specifico e legato ai soli esempi di training, perdendo capacità di generalizzazione. \
-Per valtuare l'efficacia del classificatore occorre utilizzare un insieme di oggetti non visti e questo insieme di verifica è definito *test set*.  \
+Maggiore è il numero di esempi di training, migliore risulta la messa a punto (_fine tuning_) del classificatore. Il problema dell'*overfitting* si manifesta quando il classificatore diventa eccessivamente specifico e legato ai soli esempi di training, perdendo capacità di generalizzazione. \
+Per valutare l'efficacia del classificatore occorre utilizzare un insieme di oggetti non visti e questo insieme di verifica è definito *test set*.  \
 I principali algoritmi di apprendimento sono:
 - *Bayesian (naive)*. Modello probabilistico basato sul teorema di Bayes e sull'assunzione di indipendenza condizionale tra le feature.
 - *Neural network*. Reti neurali artificiali capaci di apprendere rappresentazioni complesse dei dati testuali.
@@ -2068,7 +2066,7 @@ I principali algoritmi di apprendimento sono:
 - *Rule based (ripper)*. Sistemi basati sull'induzione di regole logiche di classificazione.
 - *Nearest Neighbor (case based)*. Metodo basato sulle istanze che classifica un documento in base alla vicinanza con gli esempi memorizzati.
 - *Support Vector Machines (SVM)*. Modelli a margini massimali ampiamente utilizzati ed efficaci nella classificazione testuale ad alta dimensionalità.
-Si utilizza un approccio induttivo che realizza la *costruzione induttiva di un classificatore* in grado di svolgere le funzioni tipiche di un sistema esperto. Il vantaggio di questo approccio è che garantisce una *buona manutenibilità*, poichè elimina la necessità di ingegnerizzare e aggiornare continuamente a mano le regole di classificazione. Lo svantaggio è che richiede tassativamente una *base di documenti pre-classificati* che consenta la generazione e l'addestramento del classificatore. \
+Si utilizza un approccio induttivo che realizza la *costruzione induttiva di un classificatore* in grado di svolgere le funzioni tipiche di un sistema esperto. Il vantaggio di questo approccio è che garantisce una *buona manutenibilità*, poiché elimina la necessità di ingegnerizzare e aggiornare continuamente a mano le regole di classificazione. Lo svantaggio è che richiede tassativamente una *base di documenti pre-classificati* che consenta la generazione e l'addestramento del classificatore. \
 La fase di training di un classificatore può essere schematizzata come segue.
 #figure(
 image("images/training.png", width: 70%)
@@ -2145,12 +2143,12 @@ Gli algoritmi sono riassunti nella seguente tabella.
   fit($ P(t_k, c_i) dot P(overline(t)_k, overline(c)_i) - P(t_k, overline(c)_i) dot P(overline(t)_k, c_i) $),
 )
 === Il classificatore di Rocchio
-I metodi di _relevance feedback_ possono essere utilizzati nell'ambito del TC> I documenti possono essere rappresentati usando vettori di pesi TF/IDF (normalizzati mediatne la frequenza massima dei termini). Per ogni categoria, si computa un vettore _prototipo_. Si assegnano documenti di testing alla categoria con il vettore prototipo più vicino secondo una misura di similarità. \
+I metodi di _relevance feedback_ possono essere utilizzati nell'ambito del TC. I documenti possono essere rappresentati usando vettori di pesi TF/IDF (normalizzati mediante la frequenza massima dei termini). Per ogni categoria, si computa un vettore _prototipo_. Si assegnano documenti di testing alla categoria con il vettore prototipo più vicino secondo una misura di similarità. \
 Il relevance feedback di Rocchio:
 - modifica la query dell'utente sulla base del feedback ricevuto;
 - produce una nuova query in grado di approssimare meglio l'interesse dell'utente.
-Questo approccio può essere adattato alla classificazione del testo. Il training set viene interpretato come un'insieme di informazioni di feedback. I termini che appartengono ai documenti di addestramento di una determinata classe $c_p$ foriniscono un feedback positivo. I termini appartenenti a documenti di training esterni alla classe $c_p$ forniscono un feedback negativo. \
-Le informaazioni di feedback vengono riassunte un vettore centroide. Un nuovo documento viene classificato in base alla distanza che lo separa dal vettore centroide. \
+Questo approccio può essere adattato alla classificazione del testo. Il training set viene interpretato come un'insieme di informazioni di feedback. I termini che appartengono ai documenti di addestramento di una determinata classe $c_p$ forniscono un feedback positivo. I termini appartenenti a documenti di training esterni alla classe $c_p$ forniscono un feedback negativo. \
+Le informaazioni di feedback vengono riassunte in un vettore centroide. Un nuovo documento viene classificato in base alla distanza che lo separa dal vettore centroide. \
 Ogni documento $d_j$ viene rappresentato come un vettore di termini pesati $arrow(d_j)$. Il vettore viene definito come:
 $
 arrow(d_j) = (w_(1, j), w_(2, j), dots, w_(t, j))
@@ -2160,7 +2158,7 @@ ove:
 - $t$ indica la dimensione del vocabolario.
 Vediamo come calcolare il vettore centroide $arrow(c_p)$ associato a una specifica classe $c_p$:
 $
-arrow(c_p) = beta / n_p sum_(d_j in c_p)arrow(d_j) - (gamma) / (N_t - n_p)sum_(d_l in.not n_p) arrow(d_l)
+arrow(c_p) = beta / n_p sum_(d_j in c_p)arrow(d_j) - (gamma) / (N_t - n_p)sum_(d_l in.not c_p) arrow(d_l)
 $
 ove:
 - $n_p$ è il numero di documenti nella classe $c_p$;
@@ -2169,19 +2167,19 @@ ove:
 - i termini appartenenti ai documenti esterni alla classe $c_p$ generano pesi negativi.
 ==== Classificazione dei documenti
 Il classificatore assegna i documenti di test alla categoria caratterizzata dal vettore prototipo, il centroide, più vicino. Tale vicinanza viene calcolata utilizzando un'apposita misura di somiglianza, come ad esempio la *somiglianza del coseno*. \
-Il vettore prototipo per ciascuna categoria può essere calcolato utilizzando esclusivamente i documenti di training associati a quella specifica categorai. Il centroide viene ricavato impiegando unicamente tutti i documenti che appartengono a quella determinata classe, omettendo quindi il termine sottrattivo relativo ai documenti esterni $(d_l in.not c_p)$.
+Il vettore prototipo per ciascuna categoria può essere calcolato utilizzando esclusivamente i documenti di training associati a quella specifica categoria. Il centroide viene ricavato impiegando unicamente tutti i documenti che appartengono a quella determinata classe, omettendo quindi il termine sottrattivo relativo ai documenti esterni $(d_l in.not c_p)$.
 ==== Proprietà dell'algoritmo di Rocchio
 L'algoritmo di Rocchio presenta le seguenti proprietà.
 - Non garantisce un'ipotesi consistente.
 - Forma una semplice generalizzazione degli esempi in ogni classe, un _prototipo_.
-- La classificazione è bsata sulla similarità dei documenti ai vettori prototipo.
-- I vettori prototipo non necessitano di medie/normalizzazioni poichè la similarità del coseno non è influenzata dalla lunghezza.
+- La classificazione è basata sulla similarità dei documenti ai vettori prototipo.
+- I vettori prototipo non necessitano di medie/normalizzazioni poiché la similarità del coseno non è influenzata dalla lunghezza.
 === Alberi di decisione
 Un classificatore basato su alberi di decisione ha:
 - per nodi interni i _termini_ usati per l'indicizzazione;
 - le diramazioni dei nodi sono test sul peso dei termini nel documento di test;
 - per foglie le _categorie_ previste.
-La classificazione avviene testando ricorsivamente i valori dei pesi realtivi ai termini associati ai nodi interni.
+La classificazione avviene testando ricorsivamente i valori dei pesi relativi ai termini associati ai nodi interni.
 #let dot(pos, name) = node(pos, [], name: name, radius: 1.8pt, fill: black, stroke: none, inset: 0pt)
 
 // leaf: label in small caps
@@ -2252,7 +2250,7 @@ La classificazione avviene testando ricorsivamente i valori dei pesi realtivi ai
   caption: [Albero di decisione],
 )
 La classificazione avviene testando ricorsivamente i valori dei pesi relativi ai termini associati ai nodi interni. Un metodo per il learning è invece il seguente:
-- Verificare se tutti gli esempi di training appartengono alla setssa categoria.
+- Verificare se tutti gli esempi di training appartengono alla stessa categoria.
 - In caso negativo, selezionare un termine $t_k$ che partizioni il set di training in classi di documenti in cui al termine $t_k$ sia assegnato lo stesso valore, ponendo ciascuna classe in un sotto-albero diverso.
 - Ripetere ricorsivamente sui sotto-alberi finché tutte le foglie non contengono esempi appartenenti alla stessa categoria.
 La scelta di $t_k$ per partizionare l'albero viene effettuata massimizzando l'_information gain_.
@@ -2294,11 +2292,11 @@ Questo algoritmo viene anche chiamato _case-based_, _memory-based_ o _lazy learn
 Effettuare la classificazione basandosi esclusivamente sull'esempio più vicino (simile) può generare errori a causa di:
 - Esempi atipici.
 - Rumore (errori di etichettatura presenti negli esempi di training).
-L'*alternativa del K-NN* consiste nel trovare i _k_ esempi più simili e restituire la classe della maggioranza tra di essi. Tipicamente si sceglie un valore dispari di $k$ per evitare situazioni di parità; i valori più comuni sono 3 e 5. \
+L'*alternativa del K-NN* consiste nel trovare i _k_ esempi più simili è restituire la classe della maggioranza tra di essi. Tipicamente si sceglie un valore dispari di $k$ per evitare situazioni di parità; i valori più comuni sono 3 e 5. \
 Il metodo Nearest Neighbor dipende da una misura di similarità. La similarità del coseno tra vettori TF-IDF è quella più efficace.
 #esempio(title: "3 Nearest Neighbor con distanza euclidea")[
-La seguente figura mostra un esempio geometrico basato sull'uso di 3-NN. I punti nel paino rappresentano gli esempi del training set divisi in classi differenti, indicati dai colori. \
-Viene trattaciata una circonferenza centrata sull'istanza da classificare per delimitare i 3 punti più vicini nello spazio delle feature.
+La seguente figura mostra un esempio geometrico basato sull'uso di 3-NN. I punti nel piano rappresentano gli esempi del training set divisi in classi differenti, indicati dai colori. \
+Viene tracciata una circonferenza centrata sull'istanza da classificare per delimitare i 3 punti più vicini nello spazio delle feature.
 #figure(
 image("images/3-NN.png", width: 70%),
 caption: [3-NN]
@@ -2330,7 +2328,7 @@ image("images/knn_testo.png", width: 70%),
 ]
 === I metodi Bayesiani
 I metodi bayesiani sono metodi di apprendimento e classificazione basati sulla teoria delle probabilità. Il teorema di Bayes riveste un ruolo fondamentale nell'apprendimento e nella classificazione probabilistica. Il metodo utilizza la probabilità  _a priori_ di ciascuna categoria quando non si possiede alcuna informazione su un determinato elemento. \
-La categorizzazione produce una distribuzione di probabilità _a posteriori_ sulle possbili categorie a partire dalla descrizione di un elemento.
+La categorizzazione produce una distribuzione di probabilità _a posteriori_ sulle possibili categorie a partire dalla descrizione di un elemento.
 ==== Assiomi della Teoria della Probabilità
 Tutte le probabilità sono comprese tra 0 e 1.
 $
@@ -2386,7 +2384,7 @@ Sia $brace.l c_1, c_2, dots, c_n brace.r$ l'insieme complessivo delle classi dis
 $
 P(c_i bar E) = (P(c_i)P(E bar c_i))/P(E)
 $
-Poichè le categorie costituiscono un insieme *completo e disgiunto* (formano cioè una partizione degli eventi), la somma delle probabilità a posteriori di tutte le categorie deve essere necessariamente pari a 1:
+Poiché le categorie costituiscono un insieme *completo e disgiunto* (formano cioè una partizione degli eventi), la somma delle probabilità a posteriori di tutte le categorie deve essere necessariamente pari a 1:
 $
 sum_(i=1)^n P(c_i bar E) = sum_(i = 1)^n (P(c_i)P(E bar c_i))/(P(E)) = 1
 $
@@ -2402,7 +2400,7 @@ Si assume che la descrizione di un'istanza $E$ sia data dalla congiunzione di $m
 $
 E = e_1 and e_2 and dots.c and e_m
 $
-Il numero di istanze possibili cresce in modo *esponenziale rieptto al numero di feature* _m_, rendendo statisticamente impossibile stimare tutte le probabilità condizionate $P(E bar c_i)$ per ogni combinazione tramite la sola osservazione dei dati. \
+Il numero di istanze possibili cresce in modo *esponenziale rispetto al numero di feature* _m_, rendendo statisticamente impossibile stimare tutte le probabilità condizionate $P(E bar c_i)$ per ogni combinazione tramite la sola osservazione dei dati. \
 Questa difficoltà intrinseca motiva la necessità di introdurre ipotesi semplificatrici (come l'indipendenza condizionale tipica del classificatore *Naive Bayes*).
 ==== Classificatore Naive Bayes
 Se si assume che le feature che compongono l'istanza $E$ siano indipendenti tra loro nota la categoria $c_i$ (_conditionally independent_), la probabilità congiunta si semplifica nel prodotto delle probabilità delle singole feature:
@@ -2439,9 +2437,9 @@ Normalmente, le probabilità si stimano calcolando le frequenze empiriche nel tr
 $
 P(e_j bar c_i) = (n_(i j))/(n_i)
 $
-Stimare le probabilità in questo modo quando si dispone di dataset limitato è altametne soggetto a errori. Se per puro caso una feature rara $e_k$ non compare mai negli esempi di training di una certa classe, la sua probabilità stimata sarà pari a 0. Di conseguenza, se quella stessa feature $e_k$ si presenta in un documento di test $E$, a causa della produttoria del Naive Bayes l'intero prodotto si azzera, rendendo nulle sia la probabilità congiunta che quella a posteriori. ($forall c_i: P(E bar c_i) = 0$ e $forall c_i : P(c_i bar E) = 0$).
+Stimare le probabilità in questo modo quando si dispone di dataset limitato è altamente soggetto a errori. Se per puro caso una feature rara $e_k$ non compare mai negli esempi di training di una certa classe, la sua probabilità stimata sarà pari a 0. Di conseguenza, se quella stessa feature $e_k$ si presenta in un documento di test $E$, a causa della produttoria del Naive Bayes l'intero prodotto si azzera, rendendo nulle sia la probabilità congiunta che quella a posteriori. ($forall c_i: P(E bar c_i) = 0$ e $forall c_i : P(c_i bar E) = 0$).
 ==== Correzione di Laplace
-Per gestire il problema delle probabilità pari a 0, si utilizza il seguente approccio. Il documento viene modellato come la generazione di un insieme di parole (_bag of words_) per una determinata categoria, simulando campionamenti ripetuti con reimissione da un vocabolario $V = brace.l w_1, w_2, dots, w_m brace.r$ in base alle probabilità condizionate $P(w_j bar c_i)$. Per ovviare al problema della parole mancanti nel training set, si applica la *correzione di Laplace*. \
+Per gestire il problema delle probabilità pari a 0, si utilizza il seguente approccio. Il documento viene modellato come la generazione di un insieme di parole (_bag of words_) per una determinata categoria, simulando campionamenti ripetuti con reimmissione da un vocabolario $V = brace.l w_1, w_2, dots, w_m brace.r$ in base alle probabilità condizionate $P(w_j bar c_i)$. Per ovviare al problema delle parole mancanti nel training set, si applica la *correzione di Laplace*. \
 Si utilizzano stime di probabilità smussate assumendo una distribuzione uniforme su tutte le parole del vocabolario $(p = 1/abs(V))$ e ponendo $m = abs(V)$. \
 Questa tecnica equivale ad aggiungere un _campione virtuale_ in cui ogni parola del vocabolario viene osservata esattamente una volta all'interno di ciascuna categoria, evitando così divisioni per zero o azzeramenti anomali delle probabilità a posteriori.
 ==== Addestramento dell'algoritmo Naive Bayes
@@ -2461,20 +2459,20 @@ L'addestramento dell'algoritmo Naive Bayes è il seguente:
 ] <alg:naive-bayes-training>
 ==== Test dell'algoritmo Naive Bayes
 La fase di test dell'algoritmo Naive Bayes è il seguente. \
-Dato un documento di test _x_, si indica con _n_ il numero totale di occorrenze di palore presenti in _x_, e con $a_i$ la parola che compare alla $i$-esima posizione del documento. L'algoritmo assegna a $x$ la classe $c_i in C$ che massimizza il punteggio bayesiano:
+Dato un documento di test _x_, si indica con _n_ il numero totale di occorrenze di parole presenti in _x_, e con $a_i$ la parola che compare alla $i$-esima posizione del documento. L'algoritmo assegna a $x$ la classe $c_i in C$ che massimizza il punteggio bayesiano:
 $
   op("argmax", limits: #true)_(c_i in C) P(c_i) product_(i=1)^n P(a_i mid(|) c_i)
 $
-Moltiplicare tra loro molte probabilità, può portare a valori così piccoli da scendere sotto il minimo numero rappresentabile in virgola mobile, collassando verso 0. Poichè vale l'identità
+Moltiplicare tra loro molte probabilità, può portare a valori così piccoli da scendere sotto il minimo numero rappresentabile in virgola mobile, collassando verso 0. Poiché vale l'identità
 $
 log(x y) =  log(x) + log(y)
 $
-conviene effettaure i calcoli sommando i logaritmi delle probabilità anzichè moltiplicare direttamente le probabilità. La classe che ottiene il punteggio finale più alto in log-probabilità resta comunque la più probabile, perchè la funzione logaritmo è strettamente crescente e quindi preserva l'ordinamento nell'operazione di argmax.
+conviene effettuare i calcoli sommando i logaritmi delle probabilità anziché moltiplicare direttamente le probabilità. La classe che ottiene il punteggio finale più alto in log-probabilità resta comunque la più probabile, perchè la funzione logaritmo è strettamente crescente e quindi preserva l'ordinamento nell'operazione di argmax.
 ==== Calibrazione numerica delle probabilità a posteriori
-I risultati della classificazione ottenuti selezionando la classe con probabilità a posteriori massima sono solitamente abbastanza accurati. A causa dell'inadeguatezza dell'ipotesi di indipendenza condizionale (che nella realtà die testi è spesso violata, poichè le parole sono correlate), le stime numeriche effettive delle probabilità a posteriori non sono accurate. Le probabilità in uscita tenono in genere a concentrarsi molto vicino a 0 oppure a 1.
+I risultati della classificazione ottenuti selezionando la classe con probabilità a posteriori massima sono solitamente abbastanza accurati. A causa dell'inadeguatezza dell'ipotesi di indipendenza condizionale (che nella realtà die testi è spesso violata, poiché le parole sono correlate), le stime numeriche effettive delle probabilità a posteriori non sono accurate. Le probabilità in uscita tendono in genere a concentrarsi molto vicino a 0 oppure a 1.
 === Valutazione di un classificatore
 La valutazione di un classificatore è sperimentale perchè il problema non ha una specifica formale che consenta un altro tipo di valutazione. La valutazione deve essere effettuata su dati di training. \
-Definaimo la _classification accuracy_ come:
+Definiamo la _classification accuracy_ come:
 $
 c / n
 $
@@ -2534,7 +2532,7 @@ e calcoliamo $pi$ e $rho$ come:
 $
 hat(pi)_i = (T P_i)/(T P_i + F P_i) quad hat(rho)_i = (T P_i)/(T P_i + F N_i)
 $
-Eistono due strategie fondamentali per aggregare le metriche di valutazione su un insieme di categorie $C$ in un problema di classificazione multiclasse/multilabel: *microaceraging* e *macroaveraging*. \
+Esistono due strategie fondamentali per aggregare le metriche di valutazione su un insieme di categorie $C$ in un problema di classificazione multiclasse/multilabel: *microaveraging* e *macroaveraging*. \
 ==== Microaveraging
 Nel *microaveraging*, i conteggi dei _True Positive, False Positive_ e _False Negative_ vengono sommati globalmente su tutte le classi $abs(C)$ prima di calcolare precisione e recall. La microprecisione $hat(pi)^mu$ viene calcolata come:
 $
@@ -2557,7 +2555,7 @@ $
 Ogni categoria pesa in modo uguale nella media finale, indipendentemente dalla sua frequenza nel dataset. Di conseguenza, le prestazioni sulle classi *rare* hanno un impatto proporzionalmente molto maggiore rispetto al microaveraging.
 ==== K-Fold Cross-Validation
 In linea teorica, test and training sets devono essere indipendenti ad ogni prova e questo richiede una notevole quantità di dati etichettati. \
-Questa tecnica prevede il partizionamento dei dati in $K$ insiemi disgiunti. Si eseguono $K$ prove: ogni prova usa un diverso insieme per il testing, addrestrando il sistema sugli altri $K - 1$ insiemi. Le metriche di valutazione sono mediate sulle $K$ prove. Questa procedura garantisce l'indipendenza. Tipicamente a $K$ viene assegnato il valore 10. \
+Questa tecnica prevede il partizionamento dei dati in $K$ insiemi disgiunti. Si esiguono $K$ prove: ogni prova usa un diverso insieme per il testing, addestrando il sistema sugli altri $K - 1$ insiemi. Le metriche di valutazione sono mediate sulle $K$ prove. Questa procedura garantisce l'indipendenza. Tipicamente a $K$ viene assegnato il valore 10. \
 Quindi, si partiziona $D$ ottenendo $K$ insiemi $T e_i$. Si applica iterativamente il train-and-test a
 $
 chevron.l T r_i = D - T e_i, T e_i chevron.r
