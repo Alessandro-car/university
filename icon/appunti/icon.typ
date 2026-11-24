@@ -89,10 +89,6 @@ Le *dimensioni della complessità* nella progettazione:
 
   [Interattività], [_ragionamento (computazione) online | offline_]
 )
-=== Modularità
-Il tipo di *modularità* indica il grado di decomposizione di un sistema in _moduli_ interagenti da prendere in considerazione separatamente. Ciò serve a _dominare la complessità_, nei sistemi software ma anche nelle organizzazioni. Tipicamente la modularità viene espressa attraverso una decomposizione gerarchica: ogni modulo è organizzato in sotto-mopduli a loro volta organizzati gerarchicamente fino al livello base; astrazione procedurale e OOP servono a sfruttare modularità e astrazione.\
-Le strutture possibili sono: _piatta_, ossia senza struttura organizzativa; _modulare_, se il sistema viene decomposto in moduli interagenti considerabili separatamente; _gerarchica_ quando nel sistema i moduli possono essere decomposti in sotto-moduli interagenti, a loro volta decomponibili. \
-Le modalità di  _ragionamento_ dipendono dal tipo di struttura: con uno struttura piatta o modularesi ha un singolo livello di astrazione; con una gerarchica si hanno multipli livelli di astrazione.
 === Schema di Rappresentazione
 Lo *schema di rappresentazione* riguarda la _descrizione del mondo_. Le rappresentazioni alternative possibili sono: a _stati_, con _caratteristiche / proposizioni_ oppure con individui e _relazioni_.
 ==== Stati
@@ -137,63 +133,6 @@ In certi casi è possibile conoscere sempre l'effetto delle azioni/decisioni: da
 L'_incertezza sugli effetti_ prevede che la loro _dinamica_ possa essere:
 - _deterministica_ e lo stato risultante viene determinato esattamente dall'azione e dallo stato precedente;
 - _aleatoria_, con una probabilità sui possibili stati risultanti: ha senso solo se il mondo è completamente osservabile.
-==== Preferenza
-Gli agenti sono spesso _utilitaristici_: la scelta di un'azione è dettata dai risultati attesi più desiderabili; ci possono essere le finalità _semplici_ o anche preferenze _complesse_. \
-Le *preferenze* si caratterizzano come:
-- _finalità_, da raggiungere, detto _achievement goal_, o di conservazione, detto _mainenance goal_, in ogni stato visitato;
-- _preferenze complesse_: sono compromessi sul vantaggio derivante dei vari risultati, eventualemten anche in momenti diversi. Si distinguono:
-	- preferenze _ordinali_: conta solo l'ordine;
-	- preferenze _cardinali_: conta anche la grandezza del valore.
-
-==== Apprendimento
-Non sempre il progettista dispone di un buon modello del sistema e del suoi ambiente: si devono usare dati da esperienze passate e altre sorgenti di conoscenza per migliorare il modello e prendere migliori decisioni. \
-La dimensione dell'*apprendimento* determina se la conoscenza sia data oppure se vada appresa.\
-Apprendere significa trovare il modello migliore che si adatti ai dati e si possono presentare diversi casi:
-- caso _semplice_: regolare un insieme fisso di _parametri_;
-- caso più difficile: scegliere preliminarmente la migliore _rappresentazione_, ad esempio feature o relazioni.
-Si possono presentare diverse problematiche:
-- utilizzo di _conoscenza di fondo_;
-- _selezione_ dei dati da raccogliere;
-- _rappresentazione_ dei dati e dei modelli;
-- selezione dei _learning bias_ appropriati;
-- uso della conoscenza appresa per modificare decisioni / azioni dell'agente.
-==== Limitatezza delle Risorse Computazionali
-Le *limitazioni* sulle risorse computazionali disponibili spesso impediscono di prendere le migliori decisioni. Si fanno compromessi quindi sulla qualità della soluzione da cercare spesso necessari: spesso è preferibile una soluzioner ragionevole ma rapida che una migliore calcolata quando è troppo tardi perchè il mondo esterno nel frattempo è cambiato. \
-Tale dimensione determina se il sistema ragione per prender la migliore decisione: senza tener conto dei limiti, _razionalità perfetta_, oppure tenenendo conto dei limiti, _razionalità limitata_.\
-I _limiti_ riguardano il _tempo_, la _memoria_ e la _precisione_, il grado di approssimazione.\
-Un *algoritmo anytime* produce soluzioni che migliorano con il tempo:
-- in qualunque momento produce la _miglior soluzione corrente_;
-- si assicura che la qualità non decresca, si conserva la migliore soluzione trovata da restituire su richiesta;
-- l'attesa può avere un _costo_: a volte meglio decidere/agire subito anzichè di aspettare una soluzione probabilemente migliore.
-==== Orizzonte
-L'*orizzonte* misura quanto lontano sia prevista la pianificazione del lavoro, ossia quanto in avanti ci si spinga a considerare le conseguenze delle azioni. Si possono distinguere sistemi/agenti software:
-- _senza pianificazione_: nelle decisioni non considerano il futuro e il fattore-tempo non è preso in considerazione;
-- a _orizzonte finito_: interessano solo un numero prefissato di passi;
-- a _orizzonte indefinito_: numero di passi finito, ma non predeterminato;
-- a _orizzonte infinito_: sempre attivo.
-==== Numero di agenti
-Difficoltà aggiuntive degli ambienti con altri agenti / sistemi sono:
-- occorre ragionare sugli altri agenti secondo _strategie_: potrebbero cercare di confondere e manipolare o potrebbero cooperare; conviene agire in modo casuale se gli altri adottano strategie deterministiche;
-- anche quando si cooperi e vi sia un file comune, il problema della _coordinazione_ e della _comunicazione_ rende il ragionamento multi-agente più complesso.
-Dal punto di vista del singolo agente, la dimensione del *numero di agenti* prevede:
-- ragionamento da _agente singolo_: gli altri come parte dell'ambiente;
-- ragionevole se non ci sono altri agenti o se gli altri non cambieranno il comportamento in base alle sue azioni;
-- ragionamento _multi-agente_: si prende in considerazione il ragionamento altrui;
-- in caso di agenti intelligenti con _fini / preferenze_ che dipendano da quello dalla _comunicazione_ con gli altri;
-- più difficile se gli agenti possono agire _simultaneamente_ o se l'ambiente è solo _parzialmente osservabile_.
-==== Interazione delle Dimensioni
-Non si possono studiare le dimensioni separatamente perchè sono soggette a _interazioni complesse_:
-- _Rappresentazione e modularità_: avendo una gerarchia di moduli semplici, il ragionamento può essere svolto su insieme finito di stati; altri livelli di astrazione richiedono il ragionamento su relazioni.
-- _Orizzonte e modularità_: ad esempio, un cane robotico può ricevere una ricompensa quando risponde al richiamo; quando decide sui singoli movimenti, il momento del premio potrebbe essere lontano quindi l'orizzonte risulta potenzialmente indefinito.
-- _Incertezza sull'osservazione e complessità del ragionamento_: molto più facile ragionare quando si conosce lo stato del mondo; l'incertezza su individui e relazioni è più complicata da trattare.
-- _Incertezza sugli effetti e modularità_: ad un dato livello della gerarchiua, una decisione può essere _deterministica_ mentre ad un altro potrebbe essere _stocastica_.
-- _Molteplicità e modularità_: agente progettato attraverso più sistemi che interagiscono condvidendo il _fine comune_ di rendere intelligente il comportamente dell'agente al livello superiore.
-- _Apprendimento e rappresentazione_: spesso l'apprendimento lavora sulla rappresentazione di feature: determina modelli che portano a miglioir predizioni dei valori di una specifica feature-obiettivi; ma si può lavorare anche su individui e relazioni, ovveroi l'apprendimento di gerarchie di modelli, in domini parzialmente osservabili e attraverso sistemi multipli.
-- _Modularità e razionalità limitata_ per un ragionamento più efficiente; il formalismo può diventare più complicato ma per costruire sistemi complessi servono: la decomposizione in componenti più piccole e delle approssimazioni per poter decidere in tempo accettabili anche in regime di memoria limitata.
-#figure(
-	image("images/risuluzione_problemi.png", width: 70%),
-	caption: [Risoluzione dei problemi]
-)
 == Progettazione si Sistemi Intelligenti
 === Semplificazione di Ambienti e Sistemi
 La conoscenza del KBS non corrisponde a quella nella mente dell'esperto e/o del progettista.\
@@ -254,12 +193,6 @@ Uno schema di un KBS dettagliato è il seguente:
 	image("images/kbs_dettagliato.png", width: 70%),
 	caption: [Schema dettagliato di un KBS]
 )
-== Domini applicativi
-Tipici domini applicativi sono i seguenti:
-- _robotica_;
-- _diagnostica_: _assistente_ che aiuta a capire i problemi di altri sistemi software e suggerisce rimedi;
-- _tutoring_: _sistema_ di aiuta agli studenti che interagisce fornendo informazioni su un argomento di interesse, assegnando compiti/test e valutando le capacità; deve comprendere la materia, lo studente e come questo impari;
-- _e-commerce_: assistente agli acquisti di beni e servizi per conto dell'utente che sa riconoscere richieste e preferenze; sa trovare compromessi tra obiettivi distinti.
 = Ricerca di soluzioni in spazi di stati
 == Risoluzione di problemi mediante ricerca
 La risoluzione di diversi problemi spesso consiste nella _ricerca_ in uno specifico modello del mondo. Considernado il caso di un sistema che, dato un _obiettivo_ da raggiungere, ragiona su un _modello_ del mondo fatto di _stati_, in _assenza di incertezza_. \
@@ -1150,15 +1083,15 @@ Il _successore_ si ottiene tramite un piccolo passo dall'attuale posizione verso
 - spazio di ricerca (b): _random restart_ rimane bloccato a cercare tra numerosi minimi locale mentre _random walk_ con _greedy descent_ potrebbe evitare tali minimi locali.
 ]
 Con spazi con diverse caratteristiche in regioni differenti si può pensare di ricorrere a un *catalogo di algoritmi* da cui scegliere.
-== Varianti della ricerca Locale
+=== Varianti della ricerca Locale
 Molte altre varianti sono possibili nella _scelta del successore_ e nelle scelte _casuali_. Con domini _limitati_ tutti i valori possono essere scelti per i successori. COn domini più estesi si possono considerare solo alcuni valori, risparmiando tempo, in genere si considerano solo quelli più vicini ai precedenti, ma esistono metodi più sofisticati di selezione.
-=== Tabu Search
+==== Tabu Search
 La *tabu search* è una forma di ricerca locale con memoria che evita la modifica di assegnazioni introdotte di recente. Si memorizzano le variabili modificate negli ultimi $t$ passi (*tenure*) che andranno considerate non selezionabili. In tal modo si evitano i cicli dopo poche assegnazioni. Va ottimizzato il parametro $t$. Nella sua implementazione, se è piccolo si può considerare una lista delle variabili modificate di recente, invece se è grande si memorizza per ogni variabile il passo in cui si è avuto l'ultima sua modifica.
-=== Passo di Massimo Miglioramento
+==== Passo di Massimo Miglioramento
 In questo metodo di ricerca locale, si seleziona una coppia variabile-valore che porta al miglioramento di valutazione massimale. In caso di più coppie si opera una scelta casuale. \
 Nella sua implementazione "ingenua" data l'assegnazione totale corrente, per ogni variabile $X$ e ogni valore $v in d o m(X)$ diverso da quello corrente, si confronta l'assegnazione corrente con quella in cui si assegna $X = v$. Si seleziona quindi una delle coppie di _massimo miglioramento_. Si noti che la modifica potrebbe portare a _differenze negative_ nella valutazione, ossia a peggioramenti. Inoltre, le variabili non coinvolte in vincoli possono essere trascurate. \
 In un'implementazione alternativa si adotta una coda con priorità fatta di coppie variabile-valore pesate. Per ogni $X$ e ogni $v in d o m(X)$ non assegnato in $A$, in coda ci sarà una coppia $chevron.l X, v chevron.r$ con peso $w = h(A') - h(A)$. Si considera allora il miglioramento dell'assegnazione $A'$ ottenuta sostituendo $X = v$ rispetto ad $A$. Questo dipenderà dai valori assegnati a $X$ e dai suoi vicini nella rete dei vincoli, non da quelli assegnati alle altre variabili. A ogni iterata si seleziona una _coppia-successore_ di massimo miglioramento, ossia con _peso minimale_. Ogni nuova assegnazione comporta il ricalcolo dei pesi e il riordimento della coda, ma solo per coppie con variabili presenti in vincoli il cui soddisfacimento è mutato.
-=== Scelta a due fasi
+==== Scelta a due fasi
 L'algoritmo di *scelta a due fasi* prevede la selezione della coppia articolata in:
 + selezione della variabile per la riassegnazione;
 + selezione del valore.
@@ -1166,10 +1099,10 @@ Si gestisce una coda con priorità di variabili con associato un peso pari al nu
 + si seleziona $X$ che partecipa a più conflitti;
 + le si cambia il valore assegnato, scegiendolo fra quelli che minimizzano il numero di conflitti oppure casualmente.
 Vanno infine ricalcolati i pesi per le variabili coinvolte in vincoli il cui soddisfacimento è mutato.
-=== Algoritmo Any-Conflict
+==== Algoritmo Any-Conflict
 L'idea-base dell'algoritmo *Any-Conflict* è quella di scegliere, per la modifica, una *variabile conflittuale* ossia una che partecipa a uno o più conflitti. A ogni iterata: si seleziona casualmente una variabile conflittuale, non necessariamente quella con più conflitti, quindi le si assegna, in alternativa, un valore che minimizzi il numero di conflitti oppure un valore casuale. \
 Sono possibili alcune varianti, ad esempio cambiando il criterio di selezione casuale della variabile: si può scegliere prima un conflitto e poi una variabile coinvolta oppure si opera una semplice scelta casuale di una variabile conflittuale. La differenza fra i due criteri sta nella probabilità di selezione di una variabile: nel primo essa dipende dal numero di conflitti in cui la variabile è coinvolta, nel secondo si ha la stessa probabilità per tutte le variabili.
-=== Simulated Annealing
+==== Simulated Annealing
 Il *simulated annealing* prende in prestito una metafora dal dominio della _metallurgia_ (ovvero della _termodinamica_): ad alte temperature l'algoritmo deve comportarsi con maggiore casualità o plasticità mentre a basse temperature deve consentire minore casualità in conseguenza una maggiore durezza. Come funzione di valutazione si adotta un'euristica basata sul numero di conflitti. \
 L'algoritmo riduce lentamente la temperatura cui è legata una misura di probabilità:
 - ad _alte temperature_ si deve comportare come _random walk_ per poter evitare i minimi locali, alla ricerca di regioni con bassi valori dell'euristica, quindi i passi peggiorativi dovranno risultare più probabili;
@@ -1190,13 +1123,13 @@ $
 Il cosidetto *problema di annealing* specifica cme ridurre la temperatura al progredire della ricerca: spesso si usa il _raffreddamento geometrico_ che, ad esempio parte da $T = 10$ e si moltiplica per $0.99$ ad ogni passo, arrivando a $0.07$ dopo 500 passi. - a temperature alte, come $T = 10$, si tende ad accettare passi che peggiorano di poco, con una leggera preferenza rispetto a passi che migliorano;
 - a temperature ridotte, come $T = 1$, i passi peggiorativi sono accettati molto meno frequentamente;
 - a temperature basse, come $T = 0.1$, i passi peggiorativi sono accetti molto raramente.
-=== Ripartenza casuale
+==== Ripartenza casuale
 L'algoritmo di *ripartenza casuale*, _random restart_, permette di migliorare le prestazioni di un _algoritmo causale debole_, uno che abbia successo in pochi casi specifici. Nel seguito sarà indicata con $p$ la probabilità di successo d'una singola esecuzione. Per stimare le prestazioni di _random restart_, si considera una sequensza di $n$ sue esecuzioni indipendenti. \
 La probabilità di successo in almeno una di tali esecuzioni sarà $1 - (1 - p)^n$ essendo $(1-p)^n$ la probabilità di fallimento in tutti gli $n$ tentativi. \
 _Random restart_ risulta computazionalmente costoso quando sono coinvolte molte variabili. Nella sua variante _partial restart_ si fanno assegnazioni solo ad alcune variabili, per consentire di spostarsi verso un'altra regione. In tal caso le esecuzioni non sono più indipendenti fra loro quindi si richiede un'analisi teorica più complessa.
 == Algoritmi basati su popolazioni
 A differenza degli algoritmi esaminati in precedenza che considerano un'assegnazione alla volta, tali metodi gestiscono *popolazioni* di *individui*, ossia insiemi di assegnazioni. Nella _beam search_ si considerano le migliori $k$ assegnazioni, numero che può variare casualmente nella loro variante stocastica. Anche negli algoritmi evoluzionistici si considerano i migliori $k$ individui nella metafora riproduttiva.
-== Beam Search
+=== Beam Search
 La *beam search* si comporta in maniera simile agli algoritmi di massimo miglioramento iterativo, con la differenza di lavorare simultaneamente su più assegnazioni (fino a $k$) anziché una sola. Essa ha successo quando viene trovata un'assegnazione che soddisfa tutti i vincoli. A ogni passo, si selezionano i migliori $k$ successori. La selezione è casuale in caso di parità di valutazione. Si continua con il nuovo insieme di $k$ assegnazioni. \
 In caso di _memoria limitata_ si sceglie $k$ in base alla memoria disponibile. È possibile usre le diverse varianti di ricerca locale viste in precedenza. Occorrerà ovviamte più tempo nel cercare i migliori $k$ successori. Per una ricerca più rpida, si può ricorrere ad approssimazioni dei migliori $k$ individui.
 === Beam Search Stocastica
@@ -4443,67 +4376,6 @@ La rete vista in precedenza per l'`if-then-else` con i dati visti nell'esempio p
 	- $h_2$ grande solo quando $x= 1, y=1$.
 ]
 L'apprendimento _sub-simbolico_ è in apparente contrasto con l'ipotesi di sistema di simboli fisico intrinseco: la rete codifica un significato che si può solo intravedere attraverso i valori delle unità nascoste alle quali, però, non è associato un significato preciso. Solo in dati casi si può interpretare cosa rappresentino ed esprimerlo in forma concisa. Questo è uno degli scopi della cosidetta *_eXplainable AI_, XAI*.
-== Estensione
-=== Migliorare l'Ottimizzazione
-Le seguenti tecniche sono state studiate per rendere più efficace l'ottimizzazione dei parametri, specie nei casi in cui siano molti. In particolare va settato opportunamento il passo di apprendimento per permettere alla GD stocastica di risolveer problemi di minimizzazione in cui lo spazio si configura con cosidetti *canyon* con una funzione d'errre a U in una data dimensione mentre nelle altre presenta una pendenza, oppure con *punti di sella* dove un minimo in una dimensione si incontra con un massimo in un'altra. \
-Per ovviare a tali problemi si deve adattare il passo nel corso del processo di ottimizzazione. I modi principali sono due e prevedono passi diversi per diverse dimensioni:
-- se il segno del gradiente non cambia, si può estendere il passo, se, invece, continua a cambiare allora lo si deve ridurre;
-- ogni aggiornamento dovrebbe seguire la direzione del gradiente e la grandezza dovrebbe dipendere dal fatto che il gradiente sia maggiore o minore del suo valore storico.
-I due modi possono essere combinati. \
-Il *momentum* per ciascun parametro costituisce la velocità dell'aggiornamento del parametro, mentre l'aggiormento della GD stocastica si comporta come l'accelerazione. Il momentum determina la dimensione del passo: va incrementato se l'accelerazione ha lo stesso segno, e decrementato altrimenti. Può servire a risolvere problemi come quelli del canyon o del rumore comportato dal fatto che un batch non contenga molti esempi. \
-Il metodo di ottimizzazione *RMS-Prop* (_root mean squared proagation_) si basa sull'idea che la grandezza del cambiamento per ogni peso dipende dal confronto fra il quadrato del gradiente e il suo valore storico. Per ogni peso si aggiorna una media mobile del quadrato del gradiente. Ciò serve a determinare di quanto il peso debba cambiare. Server anche una correzione utile a non incappare nelle problematiche relative alla divisione per numeri molto piccoli. \
-Adam (_adaptive moments_) è un ottimizzatore che usa sia il momentum sia il gradiente quadratico e correzioni necessarie per l'inizializzazione comune a 0 dei parametri, stima non buona per calcolare medie. \
-*Inizializzazione*: ai fini della convergenza conviene normalizzare i parametri in input e usare circospezione nell'inizializzare i pesi. Le feature di input potrebbero avere diverse unità di misura e utilità per cui andrebbero standardizzate. Per feature di input categoriche tipicamente rappresentate attraverso _variabili indicatrici_ binarie per i diversi valori del dominio (_one-hot encoding_). I pesi delle unità latenti non possono essere inizializzate tutti con lo stesso valore per evitare che tutte le funzioni dello stesso layer convergano verso una stessa funzione (_lockstep_). Pertanto sarà meglio partire da valori casuali. Per le unità di output, il bias andrebbe inzializzato con il miglior valore da predire quando gli input sono tutti a zero. Ad esempio la media sul datset per problemi di regressione o la sigmoide inversa della probabilità empirica nei problemi categorici binari. Gli altri pesi possono partire dal valore nullo. Ciò consente di apprendere dagli input e non da medie pregresse.
-=== Migiorare la Generalizzazione
-Occorre anche assicurare in partenza che il modello possa adattarsi al training set, evitando il sovradattamento. \
-Per assicurarsi che si stia apprendendo qualcosa l'errore sul training set dovrebbe almeno essere inferiore a quello dei modelli-base più semplici. Altrimenti bisogna cambiare la configurazione del modello. \
-Se risulta migliore dei modelli base ma non abbastanza occorre cambiare modello. Se già non va benissimo sul training set non potrà migliorare sul test set o su nuovi esempi. Una performance non ottimale è un indice di sotto-adattamento: il modello scelto è troppo semplice. Il problema, in ultima analisi, potrebbe dipendere da feature non abbastanza informative per cui le stime di base potrebbero rappresentare il meglio di quello che si può fare. \
-Se l'algoritmo funziona sul training set ma non su un validation set allora non riesce a generalizzare e va in sovradattamento, pertanto il modelo andrebbe semplificato. Se i dati sono pochi i modelli da usare dovrebbero essere semplici. \
-Sarebbe utile operare il tuning degli iperparametri via _cross validation_, Tale processo può essere automatizzato prendendo il nome di *autoML*. Gli iperparametri da considerare comprendono:
-- l'algoritmo,
-- il numero di layer, l'ampiezza di ciascun layer,
-- il numero di epoche (per consentire l'early stopping),
-- il learning rate,
-- le dimensioni del batch di esempi,
-- i parametri di regolarizzazione.
-Nel caso delle reti profonde si può prendere in considerazione il meccanismo di *dropout* che porta a ignorare casualmente alcune unità in fase di training, ossia settare temporaneamente l'output a 0. Tale meccanismo viene controllato dal parametro `rate`, ossia la proporzione di valori annullati. \
-Altri metodi:
-- raccogliere più dati può essere il modello più economico;
-- _data augmentation_: nuovi esempi, trasformando quelli disponibili anche con l'aggiunta di rumore o cambiando i contesti;
-- usando la  _feature engineering_;
-- riusare esempi disponibili per problemi correlati, condividendo rappresentazioni delle feature a basso livello. Ad esempio nel _multi-task learning_ si condividono i layer inferiori appresi per un problema nella soluzione di altri.
-=== Reti convolutive
-Una *rete convolutiva* (_convulation neural network, CNN_) è specializzata nel riconoscere immagini o nella visione sfruttando il principio di _località_ e la _condivisione_ dei parametri. Un esempio è mostrato nell'immagine seguente:
-#figure(
-image("images/cnn.png", width: 70%),
-caption: [Layer convolutivi]
-)
-Una CNN utilizza un *kernel*, o _convulation mask_, come operatore lineare parametrico, da applicarsi a regioni locali. Tipicamente si usano kernel monodimensionali (per sequenze di parole) o bidimensionali (per immagini e video). I parametri del kernel vanno appresi dai dati. Feature locali determinano i loro valori in funzione di punti vicini. Lo stesso kernel viene applicato in parti diverse dell'istanza in input. Si possono applicare più kernel in maniera concorrente. In tal caso si avranno più output, ad esempio più array, detti _canali_. Questa suddivisione può essere prevista già in input. \
-In un *pooling layer*, si applica una funzione prefissata degli output delle unità in un kernel lineare. Un tipico pooling layer è il _max-pooling_, che è come la circonvuluzione, ma applica il massimo invece di una funzione lineare. Una tipica architettura di CNN usa un layer convolutivo, seguito da una funzione non lineare, come la ReLU, seguita da un pooling layer, il cui output va in input a layer convolutivo e così via.
-=== Modelli per Sequenze
-A volte i dati si presentano come sequenze di lunghezza diversa, non prefissata. Si pensi alle frasi nel linguaggio naturale. \
-Una *rete ricorrente* (_recurrent neural network_, RNN) vanno oltre il meccanismo di _feed-forward_, ammettendo connessioni con un'unità in layer non superiore per formare cicli. \
-Ciò permette l'utilizzo di uno dei layer come _memoria di stato_, e consente, fornendo in input una _sequenza temporale_ di valori, di modellarne un comportamento dinamico dipendente dalla informazioni ricevute in istanti di tempo precedenti. \
-Tale tipo di reti è molto utilizzato per predizioni su _serie temporali_ in cui vada previsto il prossimo output. \
-Le reti *Long Short-Term Memory, LSTM,* costituiscono un tipo speciale di RNN progettate in modo che sia mantenuta la memoria a meno di sostituzioni con nuova informazione. Ciò consente una migliori cattura delle dipendenze di lungo termine rispetto alle RNN tradizionali. Intuitivamente, invece di apprendere la funzione da $h^((t-1))$ a $h^((t))$, si apprende il cambiamento $delta h^((t))$. \
-Un modo per aumentare l'efficacia dei modelli sequenziali è quello di mettere in grado il modello di soffermarsi su particolari parti delle sequenze. Il meccanismo di *attention* prevede l'uso di una distribuzione di probabilità sulle diverse parti dell'input per assegnare loro un diverso perso all'interno di una stessa finestra, consentendo così di sfruttare informazioni di contesto. \
-Questo calcolo di pesi può avvenire in maniera simultanea attraverso modelli *transformer*, basati su più meccanismi di attenzione (_multi-heads_), vanno a inframmezzarsi con layer densi e le funzioni di attivazione. Essi trasformano sequenza in sequenze operando una *codifica posizionale*, risultando più facili da apprendere rispetto a RNN e LSTM.
-=== Altri Modelli Neurali Generativi
-Un *autoencoder* è una rete con uno strato/modello _encoder_ con input e output uguali ricostruiti da uno strato/modello *decoder* ed è atta a costruire una _rappresentazione_ interna vettoraile che può essere riusata come modello generativo. \
-Uno schema di autoencoder è mostrato nella seguente figura:
-#figure(
-image("images/autoencoder.png", width: 70%),
-caption: [Schema di autoencoder]
-)
-Con tali modelli si mira a trasformare i datiin ingresso in forma vettoriale con un meccanismo di codifica dell'input in una rappresentazione intermedia in uno strato latente che garantisca la loro ricostruzione nello strato di output. Un tipico utilizzo può essere quello di generare immagini artificiali a partire da testo. In generale, tale meccanismo è molto utilizzato in NLP, ad esempio nei modelli *Word2vec* e derivati, come quelli relativi al _Knowledge Gragh embedding_ rappresentati da triple. \
-Una _adversarial network_ come la *generative adversarial network, GAN*, impara a generare esempi con una distribuzione simile a quella degli esempi di training. Essa viene allenata sia a predire parte dell'output, sia a non essere in grado di predire altro output. È formata da un _generatore_ di esempi con l'obiettivo di ingannare il _discriminatore_ che invece deve determinare se siani veri o falsi. \
-Un possibile utilizzo delle GAN può essere quello di escludere dal modello alcune feature sensibiili (_debiasing GAN_), ad esempio per evitare predizioni che riguardino persone, ad esempio per sezioni di lavoro, vengano influenzate dal genere o dal colore della carnagione. \
-Un *modello di diffusione* rappresenta un metodo efficace di IA generativa (_image generation_): esso costruice una sequenza di esmepi più rumorose, a partire dai dati disponibili, aggiungendo ripetutamente rumore fino ad avere solo rumore, imparando poi a invertire questo processo. DALL-E è una tipica applicazione di questo modello combinato con alcuni dei precedenti. \
-Un esempio di GAN è mostrato nella seguente figura:
-#figure(
-image("images/gan.png", width: 70%),
-caption: [GAN]
-)
 = Ragionamento su Modelli di Conoscenza Incerta
 == Probabilità
 Nel mendo reale spesso si devono prendere decisioni in base a informazioni _incomplete_. In tal casi è difficile capire l'esatto stato del mondo. Per prendere decisioni un KBS deve cercare di sfruttare tutta la conoscenza disponibile. Essendo tale conoscenza limitata, il sistema dovrà essere in grado di ragionare sotto *incertezza*, facendo ipotesi e valutandone l'attendibilità. \
@@ -4972,10 +4844,6 @@ La *distribuzione* di una catena di Markov si dice *stazionaria* se ciò che val
 $
 P(S_i = s) = sum_(s_i)P(S_(i+1)== s bar S_i) dot.c P(S_i)
 $
-==== Proprietà delle Catene di Markov
-- Una catena si dice *ergodica* se e solo se per ogni $(s_1, s_2)$ probabilità non nulla di raggiungere $s_2$ da $s_1$;
-- una catena si dice *periodica* se e solo se $exists p$, _periodo_, tale che la differenza tra passaggi per uno stesso stato divisibile per $p$, altrimenti *aperiodica* ($p=1$).
-Una MC ergodica e aperiodica ha una sola distribuzione stazionaria detta di *equilibrio* raggiungibile a partire da qualunque stato: per ogni distribuzione su $S_0$, la distribuzione su $S_i$ si avvicinerà sempre di più a quella di equilibrio al crescere di $i$.
 === Modelli di Markov Nascosti
 Un *modello di Markov nascosto* o _Hidden Markov Model (HMM)_ è costituito da una catena di Markov estesa con l'aggiunta dei noid per le osservazioni per ciascuno stage, come mostrato nella figura seguente.
 #figure(
