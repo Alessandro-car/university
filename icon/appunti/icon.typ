@@ -858,7 +858,7 @@ Si introduce una nozione di *consistenza* intesa come compatibilità, o coerenza
 - un arco $chevron.l X, c chevron.r$ per ogni variabile $X$ nell'ambito del vincolo $c$.
 Un arco $chevron.l X, c chevron.r$ si dice *consistente* _rispetto ai domini (domain consistent)_ se e solo se $forall x in "dom"[X]: brace.l X = x brace.r$ soddisfa $c$. \
 Dato il vincolo $c$ su $brace.l X, Y_1, dots, Y_k brace.r$, l'arco $chevron.l X, c chevron.r$ è *consistente* se e solo se $forall x in "dom"[X], exists y_1, dots, y_k: y_i in "dom"[Y_i]$ tale che $brace.l X = x, Y_1 = y_1, dots, Y_k = y_k$ soddisfi $c$. \
-Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $"dom"[X]$ non ci sono valori di $Y_1, dots, Y_k$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $"dom"[X]$ si può ripristinare la consistenza di $chevron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
+Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $"dom"[X]$ non ci sono valori di $Y_1, dots, Y_k brace.r$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $"dom"[X]$ si può ripristinare la consistenza di $chevron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
 L'idea di base è quella di rendere la rete consistente restringendo i domini. A tale scopo, si considera l'insieme _inconsistenti_ degli archi potenzialmente non consistenti:
 - si inizializza _inconsistenti_ con tutti gli archi del grafo;
 - si ripete fino a svuotare _inconsistenti_: estratto un arco $chevron.l X, c chevron.r$ da _inconsistenti_ se $chevron.l X, c chevron.r$ non è consistente, si deve restringere $"dom"[X]$. Si devono, poi, aggiungere a _inconsistenti_ gli archi resi non consistenti dal passo precedente: $chevron.l Z, c' chevron.r, c' = c$, con ambito che comprende $X$ e una diversa $Z$.
@@ -918,7 +918,7 @@ L'algoritmo fornisce tutte le soluzioni:
 - c'è modo di usare anche algoritmi di ricerca su grafo, ma qui contano le soluzioni e non i cammini.
 Un possibile miglioramento è il seguente: se un'assegnazione rende il grafo _non connesso_, ogni componente può essere risolta separatamente. Si ricava facilmente una soluzione ricombinando le soluzioni delle componenti. Il conteggio del numero di soluzioni è fattibile in modo efficiente.
 == Eliminazione di Variabili
-L'*eliminazione di variabili*, _variabile elimination (VE)_, è una tecnica che semplifica la rete dei vincoli rimuovendo variabili. L'idea di base è quella di eliminare progressivamente le variabili, una alla volta, ottenendo CSP semplificati da risolvere e infine, a partire dalle loro soluzioni, ricostruire quelle dei CSP più complessi: quando si elimina la variabile $X$ si deve costruire un nuobo vincolo sulle rimanenti che rifletta gli effetti dei vincoli su $X$; esso sostituisce tutti i vincoli su $X$ producendo una rete semplificata; alla fine, ogni soluzione di un CSP ridotto va estesa per ottenere una soluzione del CSP che ricomprenda anche $X$. \
+L'*eliminazione di variabili*, _variabile elimination (VE)_, è una tecnica che semplifica la rete dei vincoli rimuovendo variabili. L'idea di base è quella di eliminare progressivamente le variabili, una alla volta, ottenendo CSP semplificati da risolvere e infine, a partire dalle loro soluzioni, ricostruire quelle dei CSP più complessi: quando si elimina la variabile $X$ si deve costruire un nuovo vincolo sulle rimanenti che rifletta gli effetti dei vincoli su $X$; esso sostituisce tutti i vincoli su $X$ producendo una rete semplificata; alla fine, ogni soluzione di un CSP ridotto va estesa per ottenere una soluzione del CSP che ricomprenda anche $X$. \
 Per eliminare una variabile $X$:
 + considerate le relazioni relative a tutti i vincoli su $X$, sia $r_X (X, overline(Y))$ quella ottenuta dal join di tali relazioni, vincolo che codifica l'_influenza_ di $X$ su $overline(Y)$, insieme delle altre variabili nell'ambito di $r_X$, vicine di $X$ nel grafo dei vincoli;
 + la _proiezione_ di $r_X$ su $overline(Y)$ sostituisce tutte le relazioni in cui occorre $X$;
@@ -1017,7 +1017,7 @@ Per avere una o tutte le soluzioni a partire dalla soluzione del CSP ridotto: si
   ]
 ] <alg:eliminazione-variabili>
 Seguono alcune osservazioni:
-- _caos base_: rimane una sola variabile, quindi una soluzione esiste se ci sono righe nelle relazioni finali e saranno tutte relative a una sola variabile basterà intersecarle;
+- _caso base_: rimane una sola variabile, quindi una soluzione esiste se ci sono righe nelle relazioni finali e saranno tutte relative a una sola variabile basterà intersecarle;
 - caso _ricorsivo_: l'ordine di selezione delle variabili ha un impatto sull'efficienza; al ritorno se bastasse una soluzione, si restituisce solo una tupla di $R join S$. È garantito che sia parte d'una soluzione; se un valore di $R$ non avesse tuple, non ci sarebbero soluzioni con tale valore.
 VE può essere combinato con algoritmi basati su consistenza da usare per semplificare il problema quando si elimina una variabile. Le tabelle intermedie risulteranno più piccole.
 == Ricerca Locale
@@ -1052,7 +1052,7 @@ Ogni iterazione della ``` repeat``` rappresenta un *tentativo* (_try_): con il p
 - si seleziona una assegnazione tra i possibili *successori* di $A$ che differiscono per il valore assegnato a una sola variabile;
 - si ha lo stop se si è trovata una soluzione o si avvera il criterio di ``` ferma_walk()```, ad esempio è stato raggiunto un numero massimo di iterate.
 La fermata non è garantita: l'algoritmo può divergere se il CSP non ha soluzione. In alcuni casi, anche se ne esistessero, potrebbe rimanere intrappolato in una regione; una garanzia di _completezza_ dipende dai criteri di selezione e di stop. \
-*Random Sampling* e la versione della ricerca locale in cui:
+*Random Sampling* è la versione della ricerca locale in cui:
 - ``` ferma_walk()``` risulta sempre vera quindi il ciclo ``` while``` non viene mai eseguito: si continua indefinitamente a provare assegnazioni casuali che possano soddisfare tutti i vincoli;
 - l'algoritmo è completo ossia garantisce di trovare la soluzione se questa esiste, tuttavia il tempo richiesto non può essere limitato e tipicamente risulta molto lento;
 - la sua efficienza dipende dalle dimensioni dei domini e dal numero di soluzioni esistenti.
@@ -1069,8 +1069,8 @@ Una funzione di valutazione tipica per i CSP è il numero di *conflitti*, come i
 Si considera il miglior successore anche quando questo non ha una migliore valutazione rispetto all'assegnazione corrente. È possibile che l'algoritmo trovi ottimi locali che risultano successori reciproci e che continui a passare da uno all'altro senza poter trovare una soluzione. Questo rende l'algoritmo _incompleto_.
 === Algoritmi stocastici
 Per evitare minimi locali che non siano anche globali, negli *algoritmi stocastici* si ricorre a una maggiore casualità. Le mosse casuali previste saranno:
-+ il *random restart*, in cui valori scelti a caso per tutte le variabili: costituisce una mossa casuale globale che consente di ripartire da regione anche completamente diverse dello spazio;
-+ il *random step*, una mossa casuale locale da alternare a passi di ottimizzazione: utilizzata nel _Greedy descent / ascent_ permette pasasi in direzione opposta in modo da sfuggire a minimi / massimi locali.
++ il *random restart*, in cui valori sono scelti a caso per tutte le variabili: costituisce una mossa casuale globale che consente di ripartire da regione anche completamente diverse dello spazio;
++ il *random step*, una mossa casuale locale da alternare a passi di ottimizzazione: utilizzata nel _Greedy descent / ascent_ permette passi in direzione opposta in modo da sfuggire a minimi / massimi locali.
 Integrando _massimo miglioramento iterativo_ e mosse _casuali_ si definiscono algoritmi per la *ricerca locale stocastica*.
 #esempio(title: "Spazi 2D")[
 Si veda la seguente figura:
@@ -1084,7 +1084,7 @@ Il _successore_ si ottiene tramite un piccolo passo dall'attuale posizione verso
 ]
 Con spazi con diverse caratteristiche in regioni differenti si può pensare di ricorrere a un *catalogo di algoritmi* da cui scegliere.
 === Varianti della ricerca Locale
-Molte altre varianti sono possibili nella _scelta del successore_ e nelle scelte _casuali_. Con domini _limitati_ tutti i valori possono essere scelti per i successori. COn domini più estesi si possono considerare solo alcuni valori, risparmiando tempo, in genere si considerano solo quelli più vicini ai precedenti, ma esistono metodi più sofisticati di selezione.
+Molte altre varianti sono possibili nella _scelta del successore_ e nelle scelte _casuali_. Con domini _limitati_ tutti i valori possono essere scelti per i successori. Con domini più estesi si possono considerare solo alcuni valori, risparmiando tempo, in genere si considerano solo quelli più vicini ai precedenti, ma esistono metodi più sofisticati di selezione.
 ==== Tabu Search
 La *tabu search* è una forma di ricerca locale con memoria che evita la modifica di assegnazioni introdotte di recente. Si memorizzano le variabili modificate negli ultimi $t$ passi (*tenure*) che andranno considerate non selezionabili. In tal modo si evitano i cicli dopo poche assegnazioni. Va ottimizzato il parametro $t$. Nella sua implementazione, se è piccolo si può considerare una lista delle variabili modificate di recente, invece se è grande si memorizza per ogni variabile il passo in cui si è avuto l'ultima sua modifica.
 ==== Passo di Massimo Miglioramento
@@ -1120,7 +1120,7 @@ $
 exp[- (h(A') - h(A))/T]
 $
 	Si noti che quando $A'$ è peggiorativa, quindi l'esponente è negativo. Tendendo  $h(A') - h(A)$ a 0, sarà più probabile accettare $A'$. Infatti ad alte temperature l'argomento dell'esponenziale tende a 0 e la probabilità a 1, mentre a basse temperature, l'esponente tende a $-infinity$ e la probabilità a 0. \
-Il cosidetto *problema di annealing* specifica cme ridurre la temperatura al progredire della ricerca: spesso si usa il _raffreddamento geometrico_ che, ad esempio parte da $T = 10$ e si moltiplica per $0.99$ ad ogni passo, arrivando a $0.07$ dopo 500 passi. - a temperature alte, come $T = 10$, si tende ad accettare passi che peggiorano di poco, con una leggera preferenza rispetto a passi che migliorano;
+Il cosidetto *problema di annealing* specifica come ridurre la temperatura al progredire della ricerca: spesso si usa il _raffreddamento geometrico_ che, ad esempio parte da $T = 10$ e si moltiplica per $0.99$ ad ogni passo, arrivando a $0.07$ dopo 500 passi. A temperature alte, come $T = 10$, si tende ad accettare passi che peggiorano di poco, con una leggera preferenza rispetto a passi che migliorano;
 - a temperature ridotte, come $T = 1$, i passi peggiorativi sono accettati molto meno frequentamente;
 - a temperature basse, come $T = 0.1$, i passi peggiorativi sono accetti molto raramente.
 ==== Ripartenza casuale
@@ -1131,7 +1131,7 @@ _Random restart_ risulta computazionalmente costoso quando sono coinvolte molte 
 A differenza degli algoritmi esaminati in precedenza che considerano un'assegnazione alla volta, tali metodi gestiscono *popolazioni* di *individui*, ossia insiemi di assegnazioni. Nella _beam search_ si considerano le migliori $k$ assegnazioni, numero che può variare casualmente nella loro variante stocastica. Anche negli algoritmi evoluzionistici si considerano i migliori $k$ individui nella metafora riproduttiva.
 === Beam Search
 La *beam search* si comporta in maniera simile agli algoritmi di massimo miglioramento iterativo, con la differenza di lavorare simultaneamente su più assegnazioni (fino a $k$) anziché una sola. Essa ha successo quando viene trovata un'assegnazione che soddisfa tutti i vincoli. A ogni passo, si selezionano i migliori $k$ successori. La selezione è casuale in caso di parità di valutazione. Si continua con il nuovo insieme di $k$ assegnazioni. \
-In caso di _memoria limitata_ si sceglie $k$ in base alla memoria disponibile. È possibile usre le diverse varianti di ricerca locale viste in precedenza. Occorrerà ovviamte più tempo nel cercare i migliori $k$ successori. Per una ricerca più rpida, si può ricorrere ad approssimazioni dei migliori $k$ individui.
+In caso di _memoria limitata_ si sceglie $k$ in base alla memoria disponibile. È possibile usre le diverse varianti di ricerca locale viste in precedenza. Occorrerà ovviamte più tempo nel cercare i migliori $k$ successori. Per una ricerca più rapida, si può ricorrere ad approssimazioni dei migliori $k$ individui.
 === Beam Search Stocastica
 In questa variante si selezionano $k$ individui casualmente favorando quelli con valutazione migliore. La probabilità di selezione sarà definita in funzione dell'euristica: per un individuo $A$ la probabilità di selezione (_distribuzione di Gibbs/Boltzmann_) proporzionale a:
 $
@@ -1179,7 +1179,7 @@ Anche questi metodi sono definiti per gestire _popolazioni_ di individui. Restan
   ]
 ] <alg:algoritmo-genetico>
 Sono possibili diverse tecniche di selezione:
-- _Selezione proporzionale alla fitness_: a ogni iterata, si generano $k$ nuovi individui. Si opera una seleezione casuale delle coppie, che favorisca gli individui più adatti con probabilità dipendente dall'incremento della misura di fitness apportato e da una misura della temperatura. Per ogni coppia, si opera un _crossover_ e si fanno _mutare_ casualmente alcuni valori, per alcune variabili scelte a caso. Si passa infine a considerare la successiva generazione.
+- _Selezione proporzionale alla fitness_: a ogni iterata, si generano $k$ nuovi individui. Si opera una selezione casuale delle coppie, che favorisca gli individui più adatti con probabilità dipendente dall'incremento della misura di fitness apportato e da una misura della temperatura. Per ogni coppia, si opera un _crossover_ e si fanno _mutare_ casualmente alcuni valori, per alcune variabili scelte a caso. Si passa infine a considerare la successiva generazione.
 - _Selezione a torneo_: a ogni iterata si selezionano casualmente $t$ individui (misura di _greediness_) e poi si scelgono i più adattabili fra questi.
 Un'operazione di combinazione tipicamente utilizzata è il *crossover* che prevede la selezione di una coppia di individui e la conseguente generazione della loro prole ossia di individui ottenuti copiando parte delle assegnazioni da un genitore e il resto dell'altro. Si tratta di un'operazione aggiuntiva rispetto alla mutazione. Vi sono diverse forme di crossover:
 - *crossover uniforme*: si considerano due individui genitore e si generano due figli; per ogni variabile, si copia nel primo figlio il valore da uno dei genitori scelto in maniera casuale, quello dell'altro genitore sarà copiato nel secondo figlio;
@@ -1223,7 +1223,7 @@ $
 L'utilità dell'algoritmo sarà evidente nell'apprendimento automatico del valore dei parametri di un modello, anche nel caso di modelli complessi con $10^(12)$ parametri da ottimizzare. \
 Vi sono numerose *varianti*, ad esempio per $eta$ si può usare una forma di ricerca binaria per cercare un valore ottiamle, oppure potrebbe variare in funzione delle diverse iterate. \
 Per quanto riguarda la convergenza in caso di funzioni regolari con un minimo, GD converge a un minimo locale se $eta$ è sufficientemente piccolo. Qunado è troppo grande allora è possibile che diverga, se, invece è troppo piccolo esso converge molto lentamente. Se il minimo locale è unico allora sarà anche un minimo globale. In caso di più minimi locali è necessaria un'ulteriore ricerca per trovare il minimo globale. Ad esempio, si può usare _random restart_ o _random walk_. È garantito il minimo globale solo quando sarà stato attraversato l'intero spazio di ricerca.
-= Rappresentazione e Ragionamentoi Proposizionale
+= Rappresentazione e Ragionamento Proposizionale
 == Proposizioni
 Le *proposizioni* sono _enunciati_ che possono essere veri o falsi. Esse sono espresse in un linguaggio formale che si può descrivere in termini di sintassi e semantica, la *logica proposizionale*. \
 Il _ragionamento_, che potrà essere definito in termini di proposizioni, si propone obiettivi quali trovare modelli, trovare conseguenze logiche, formulare ipotesi e fare debugging della conoscenza descritta per correggere eventuali errori.
@@ -1307,7 +1307,7 @@ mentre $K B cancel(models) $_interruttore\_acceso_ ossia esiste un modello di _K
 Per caratterizzare un dominio / mondo, il progettista della _KB_ lo definisce come *interpretazione intesa*: il significato dei simboli viene definito attraverso proposizioni, ossia assiomi che si possono assumere veri rispetto a tale stato del mondo, quindi le conseguenze logiche di _KB_ saranno vere rispetto all'_interpretazione intesa_. Il significato viene così condiviso e potrà essere usato per interpretare le risposte a interrogazioni della _KB_.
 ==== Metodologia di Costruzione di Basi di Conoscenza
 Il progetto della base di conoscenza _KB_ si sviluppa nelle seguenti fasi:
-+ SI sceglie il dominio/mondo da rappresentare, ossia l'interpretazione intesa. Questo può comprendere sia aspetti del mondo reale, un mondo immaginario oppure un dominio astratto come quello numero e/o dell'insiemistica.
++ Si sceglie il dominio/mondo da rappresentare, ossia l'interpretazione intesa. Questo può comprendere sia aspetti del mondo reale, un mondo immaginario oppure un dominio astratto come quello numero e/o dell'insiemistica.
 + Si scelgono gli atomi per rappresentare le proposizioni d'interesse, la cosiddetta *concettualizzazione*, cui associare un significato preciso rispetto all'interpretazione intesa.
 + Si definiscono gli assiomi di _KB_, ossia proposizioni vere nell'interpretazione intesa, l'*assiomatizzazione* del dominio applicativo per il sistema.
 + Si pongono al sistema domande sull'interpretazione intesa; le sue risposte dovranno essere interpretate in base ai significati associati ai simboli.
@@ -1327,7 +1327,7 @@ Un _problema_ di *soddisfacibilità proposizionale (SAT)* è definito da:
 	l_1 or l_2 or dots.c or l_k
 	$
 	in cui ogni *letterale* $l_i$ è un atomo $a$ o la sua negazione $not a$, ossia un'assegnazione a una variabile booleana; si dirà che $a$ _occorre negativamente_ (risp. _positivamente_) nel letterale $not a$ (risp. $a$).
-La clausola $l_1 or l_2 or dots.c or l_k$ è vera in un'interpretazione se e solo se $exists i in brace.l 1, dots, k brace.r : l_i$ vero in tale interpretazione. In tal casol, si dice anche che il vincolo clausale è _soddisfatto_. \
+La clausola $l_1 or l_2 or dots.c or l_k$ è vera in un'interpretazione se e solo se $exists i in brace.l 1, dots, k brace.r : l_i$ vero in tale interpretazione. In tal caso, si dice anche che il vincolo clausale è _soddisfatto_. \
 In Logica Proposizionale, una clausola è una forma logica in una forma ristretta. Esiste un algoritmo di conversione per cui ogni proposizione può essere convertita in forma di clausola. \
 Nei CSP, una clausola è un vincolo su un insieme di variabili booleane che è soddisfatto se almeno uno dei suoi letterali è vero: $l_1 or l_2 or dots.c or l_k$ equivale a $not(not l_1 and not l_2 and dots.c and not l_k)$, ciò esclude che le assegnazioni in cui tutti i letterali risultino falsi.
 === Forma Clausale per CSP
@@ -1345,9 +1345,9 @@ Considerando le variabili $A$ e $B$ con dominio $brace.l 1, 2, 3, 4 brace.r$
 $
 not a_1 or not a_2, not a_1 or not a_3, not a_1 or not a_4, not a_2 or not a_3, not a_2 or not a_4, not a_3 or not a_4, a_1 or a_2 or a_3 or a_4
 $
-]
 - analogamente per $B$;
 - il vincolo $A < B$ implica che $a_4$ sika falsa, $b_1$ falsa e le coppie che lo violano siano parimenti false quindi un totale di 5 clausole: $not a_4, not b_1, not a_2 or not b_2, not a_3 or not b_3, not a_3 or not b_2$. Si noti che non serve $not a_1 or not b_1$ già implicata da $not b_1$.
+]
 L'algoritmo *DPLL Davis-Putnam-Logemann-Loveland* prevede:
 - la riduzione dei domini e dei vincoli;
 - la separazione dei domini;
@@ -1358,7 +1358,7 @@ Il linguaggio delle *clausole definite proposizionali* è un sottolinguaggio del
 $
 a or not b_1 or dots.c or not b_m
 $
-Le _proposizioni atomiche_ o _atomi_ sono gli stessi della logica proposizionale. Valendo l'equiivalenza $A or not B equiv A <- B$, una *clausola definita* proposizionale si può scrivere come segue:
+Le _proposizioni atomiche_ o _atomi_ sono gli stessi della logica proposizionale. Valendo l'equivalenza $A or not B equiv A <- B$, una *clausola definita* proposizionale si può scrivere come segue:
 $
 h <- a_1 and dots.c and a_m
 $
@@ -1366,7 +1366,7 @@ formula che si legge "_h_ se $a_1$ e $dots.c$ e $a_m$". In tale formula, $h$ si 
 Una clausola definita è una *regola* se $m > 0$ (ossia ha un corpo che rappresenta una condizione), altrimenti è un *fatto* o *clausola atomica* quando $m = 0$ nel qual caso si può omettere $<-$. \
 Una *base di conoscenza* può essere specificata come insieme di clausole definite. \
 La clausola $h <- a_1 and dots.c and a_m$ è falsa nell'interpretazione $I$ se $a_1, dots, a_m$ sono tutti veri in $I$ ma $h$ è falsa, altrimenti essa è vera in $I$. \
-La clausola definita è una forma ristretta di clausola nella quale compare esattamente un letterale positivo. Ad esempio, $a <- b and c and d$ è equivalente a $a or not b or not c or not d$. Essa non può rappresentare una qualunque disgiunzione3 di atomi, nemmeno se tutti negati.
+La clausola definita è una forma ristretta di clausola nella quale compare esattamente un letterale positivo. Ad esempio, $a <- b and c and d$ è equivalente a $a or not b or not c or not d$. Essa non può rappresentare una qualunque disgiunzione di atomi, nemmeno se tutti negati.
 #let a(s) = text(style: "italic")[#s]
 #esempio(title: "Scheda impianto elettrico")[
 Si consideri un ambiente intelligente per la simulazione (diagnostica) come quello nella figura sottostante:
@@ -1458,13 +1458,13 @@ Le risposte possibili sono:
 - $"yes"$ se $b$ è conseguenza logica, $K B models b$;
 - $"no"$ altrimenti, $K B cancel(models) b$: ciò significa che $b$ sia falso in un modello della _KB_, non necessariamente nell'interpretazione intesa, ma non è possibile determinarlo con la conoscenza disponibile.
 === Dimostrazioni
-La relazione $models$ definisce le risposte corrette secondo la _teoria dei modelli_. La *teoria ella dimostrazione*, _proof theory_, si occupa invece di come calcolare tqali risposte, ossia della dimostrazione delle conseguenza logiche. Si tratta di un problema di _deduzione_, una forma di _inferenza_. \
+La relazione $models$ definisce le risposte corrette secondo la _teoria dei modelli_. La *teoria ella dimostrazione*, _proof theory_, si occupa invece di come calcolare tali risposte, ossia della dimostrazione delle conseguenza logiche. Si tratta di un problema di _deduzione_, una forma di _inferenza_. \
 Una *prova*, (_proof_), è una dimostrazione, derivabile anche _automaticamente_, del fatto che una proposizione seuga logicamente da un insieme di assiomi. Una proposizione dimostrabile si dice anche *teorema*. \
 Una *procedura di dimostrazione*, _proof procedure_, è un algoritmo, eventualmente non deterministico, utile a costruire prove. Data una procedura di dimostrazione, si denota con
 $
 K B tack g
 $
-la possibilità di produrre attraverso al procedura una prova del fatto che $g$ sia conseguenza di $K B$. \
+la possibilità di produrre attraverso la procedura una prova del fatto che $g$ sia conseguenza di $K B$. \
 Le proprietà più importanti delle procedure riguardano le relazioni tra prove e modelli:
 - una procedura è *corretta* (_sound_) se e solo se ogni proposizione dimostrata dalla procedura è conseguenza logica di _KB_:
 $
@@ -1476,11 +1476,12 @@ $
 $
 Esistono due tipi principali di procedure: le _bottom-up (BU)_ e le _top-down (TD)_.
 === Procedura Bottom-Up
-L'obiettivo di una procedura _bottom-up_ è quello di derivare tutte le conseguenze logiche di una base di conoscenza. A tal fine si costruisce la prova gradualmente, basandosi su quanto è stato già dimostrato. Si procede per *concatenazione in avanti* (_forward chaining_) su clausole definite, derivando fati nuovi a partire da quanto è già stato dimostrato. \
+L'obiettivo di una procedura _bottom-up_ è quello di derivare tutte le conseguenze logiche di una base di conoscenza. A tal fine si costruisce la prova gradualmente, basandosi su quanto è stato già dimostrato. Si procede per *concatenazione in avanti* (_forward chaining_) su clausole definite, derivando fatti nuovi a partire da quanto è già stato dimostrato. \
 A tal fine si impiega una sola _regola di derivazione_ che costituisce una generalizzazione della *regola d'inferenza* detta *modus ponens*
 $
 (p -> q quad p)/(q)
 $
+ovvero, se $p$ implica $q$, e $p$ è vero, allora $q$ è vero. \
 Se $h <- a_1 and dots.c and a_m$ è in _KB_ e ogni $a_i$ è già stato provato, allora si potrà derivare $h$. \
 Ogni fatto ($m=0$) in _KB_ è un assioma quindi viene considerato immediatamente provato. \
 La seguente procedura trova $C$, l'_insieme delle conseguenze_ di _KB_:
