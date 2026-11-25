@@ -413,7 +413,7 @@ Il _fallimento_ della ricerca in profondità limitata può essere:
     + *procedure* $"Ricerca_a_profondita_limitata"(chevron.l n_0, dots, n_k chevron.r, b)$
       + *Input*
         + $chevron.l n_0, dots, n_k chevron.r$: percorso
-        + $b$: integer $brace.lb >= 0brace.r$
+        + $b$: integer $brace.l >= 0 brace.r$
       + *Output*
         + percorso fino a nodo-obiettivo di lunghezza $k + b$
       + *if* $b > 0$ *then*
@@ -2059,11 +2059,11 @@ Si ha una definzione ricorsiva del *fallimento*: $p$ fallisce se fallisce il cor
     + *repeat*
       + *either*
         + selezionare $(h <- b_1 and dots.c and b_m) in K B$ tale che: $h in.not C$ e $forall i: b_i in C$
-        + $C <- C union brace.lhbrace.r$
+        + $C <- C union brace.l h brace.r$
       + *or*
         + selezionare $h$ con $tilde h in.not C$ tale che:
           + $forall(h <- b_1 and dots.c and b_m) in K B: exists i: tilde b_i in C$ oppure $b_i = tilde g$ e $g in C$
-        + $C <- C union brace.ltilde hbrace.r$
+        + $C <- C union brace.l tilde h brace.r$
     + *until* non ci sono altre selezioni possibili
   ]
 ] <alg:naf-bottom-up>
@@ -2414,12 +2414,12 @@ Un'_espressione_ è un termine, un atomo o una clausola. Un'*istanza* $e sigma$ 
 #esempio[
 Diverse applicazioni di sostituzioni ad atomi:
 
-- _confina\_con(peru, X)_ $brace.lX \/ italic("cile")brace.r =$ _confina\_con(peru, cile)_
-- _confina\_con(Y, cile)_ $brace.lY \/ italic("peru")brace.r =$ _confina\_con(peru, cile)_
-- _confina\_con(peru, X)_ $brace.lY \/ italic("peru"), Z \/ Xbrace.r =$ _confina\_con(peru, X)_
-- $p(X, X, Y, Y, Z)brace.lX \/ Z, Y \/ italic("brasile")brace.r = p(Z, Z, italic("brasile"), italic("brasile"), Z)$
+- _confina\_con(peru, X)_ $brace.l X \/ italic("cile") brace.r =$ _confina\_con(peru, cile)_
+- _confina\_con(Y, cile)_ $brace.l Y \/ italic("peru") brace.r =$ _confina\_con(peru, cile)_
+- _confina\_con(peru, X)_ $brace.l Y \/ italic("peru"), Z \/ X brace.r =$ _confina\_con(peru, X)_
+- $p(X, X, Y, Y, Z)brace.l X \/ Z, Y \/ italic("brasile") brace.r = p(Z, Z, italic("brasile"), italic("brasile"), Z)$
 
-Le sostituzioni si applicano anche alle clausole: data $sigma = brace.lX \/ Y, Z \/ italic("peru")brace.r$, \
+Le sostituzioni si applicano anche alle clausole: data $sigma = brace.l X \/ Y, Z \/ italic("peru") brace.r$, \
 $[p(X, Y) <- q(italic("peru"), Z, X, Y, Z)] sigma = p(Y, Y) <- q(italic("peru"), italic("peru"), Y, Y, italic("peru"))$
 ]
 Un *unificatore* delle espressioni $e_1$ e $e_2$ è una sostituzione $sigma$ tale che
@@ -2428,13 +2428,13 @@ e_1 sigma = e_2 sigma
 $
 Quando esiste un tale unificatore si dice che $e_1$ e $e_2$ sono _unificabili_ o che si _unificano_.
 #esempio(title:"Esempi di unificatori")[
-- $brace.lX \/ italic("cile"), Y \/ italic("peru")brace.r$ è un unificatore per _confina\_con(peru, X)_ e _confina\_con(Y, cile)_ \
+- $brace.l X \/ italic("cile"), Y \/ italic("peru") brace.r$ è un unificatore per _confina\_con(peru, X)_ e _confina\_con(Y, cile)_ \
   dalla cui applicazione si ottiene: _confina\_con(peru, cile)_
-- $brace.lX \/ a, Y \/ bbrace.r$ unificatore di $t(a, Y, c)$ e $t(X, b, c)$ \
-  per cui: $t(a, Y, c)brace.lX \/ a, Y \/ bbrace.r = t(X, b, c)brace.lX \/ a, Y \/ bbrace.r = t(a, b, c)$
+- $brace.l X \/ a, Y \/ b brace.r$ unificatore di $t(a, Y, c)$ e $t(X, b, c)$ \
+  per cui: $t(a, Y, c)brace.l X \/ a, Y \/ b brace.r = t(X, b, c) brace.l X \/ a, Y \/ b brace.r = t(a, b, c)$
 
 Diversi unificatori possibili di $p(X, Y)$ e $p(Z, Z)$ sono: \
-$brace.lX \/ b, Y \/ b, Z \/ bbrace.r$, $brace.lX \/ c, Y \/ c, Z \/ cbrace.r$, $brace.lX \/ Z, Y \/ Zbrace.r$, $brace.lY \/ X, Z \/ Xbrace.r$, ecc.
+$brace.l X \/ b, Y \/ b, Z \/ b brace.r$, $brace.l X \/ c, Y \/ c, Z \/ c brace.r$, $brace.l X \/ Z, Y \/ Z brace.r$, $brace.l Y \/ X, Z \/ X brace.r$, ecc.
 
 - i primi due specificano precisamente i valori sostituiti
 - gli altri due sono _più generali_.
@@ -2580,7 +2580,7 @@ Ripetendo passi di risoluzione si ottiene una *derivazione SLD*, ossia una seque
       + Sia $sigma <- "Unify"(a_1, a)$
       + *if* $sigma = bot$ *then* fallire
       + Assegna a $G$ la clausola $("yes"(t_1, dots, t_k) <- b_1 and dots and b_p and a_2 and dots and a_m) sigma$
-    + *return* $brace.lV_1 = t_1, dots, V_k = t_kbrace.r$ dove $G$ è $"yes"(t_1, dots, t_k) <-$
+    + *return* $brace.l V_1 = t_1, dots, V_k = t_k brace.r$ dove $G$ è $"yes"(t_1, dots, t_k) <-$
   ]
 ] <alg:datalog-top-down>
 La procedura top down per KB Datalog è non deterministica: si possono trovare tutte le derivazioni tentando altre scelte che portino al successo. Essa fallisce se tutte le scelte portano al fallimento: non esiste alcuna derivazione. \
@@ -2599,22 +2599,22 @@ si può costruire la _derivazione_ seguente:
 
 - _yes(P)_ $<-$ _luogo\_nascita(P, colombia)._ \
   risolta con _luogo\_nascita_($P_1, L_1$) $<-$ _parte\_di_($d_1, L_1$) $and$ _luogo\_nascita_($P_1, d_1$). \
-  usando $brace.lP_1 \/ P, L_1 \/ italic("colombia")brace.r$;
+  usando $brace.l P_1 \/ P, L_1 \/ italic("colombia") brace.r$;
 
 - _yes(P)_ $<-$ _parte\_di_($d_1$, _colombia_) $and$ _luogo\_nascita_($P, d_1$). \
   risolta con _parte\_di(atlantico, colombia)._ \
-  usando $brace.ld_1 \/ italic("atlantico")brace.r$;
+  usando $brace.l d_1 \/ italic("atlantico") brace.r$;
 
 - _yes(P)_ $<-$ _luogo\_nascita(P, atlantico)._ \
   risolta con _luogo\_nascita_($P_2, L_2$) $<-$ _parte\_di_($d_2, L_2$) $and$ _luogo\_nascita_($P_2, d_2$). \
-  usando $brace.lP_2 \/ P, L_2 \/ italic("atlantico")brace.r$;
+  usando $brace.l P_2 \/ P, L_2 \/ italic("atlantico")brace.r$;
 
 - _yes(P)_ $<-$ _parte\_di_($d_2$, _atlantico_) $and$ _luogo\_nascita_($P, d_2$). \
-  risolta con _parte\_di(barranquilla, atlantico)._ usando $brace.ld_2 \/ italic("barranquilla")brace.r$;
+  risolta con _parte\_di(barranquilla, atlantico)._ usando $brace.l d_2 \/ italic("barranquilla") brace.r$;
 
 - _yes(P)_ $<-$ _luogo\_nascita(P, barranquilla)._ \
   risolta con _luogo\_nascita(shakira, barranquilla)._ \
-  usando $brace.lP \/ italic("shakira")brace.r$;
+  usando $brace.l P \/ italic("shakira") brace.r$;
 
 - _yes(shakira)_ $<- .$
 ]
@@ -3010,7 +3010,7 @@ Per costruire un'ontologia:
 #esempio[
 Si consideri la classe:
 $
-italic("nazionale") = "italic("squadra che rappresenta una nazione in uno sport")"
+italic("nazionale") = italic("squadra che rappresenta una nazione in uno sport")
 $
 con genus "_squadra_" e differentia "_rappresenta una nazione in uno sport_"
 - una _squadra di calcio_ è una squadra sportiva che gioca a calcio;
@@ -3094,7 +3094,7 @@ italic("URI_1 URI_2 Valore") "oppure" italic("URI_1 URI_2 URI_3")
 $
 Un esempio conreto potrebbe essere il seguente:
 $
-"http://example.org/#spiderman http://xmlns.com/foaf/0.1/name "Uomo ragno"@it."
+"http://example.org/#spiderman http://xmlns.com/foaf/0.1/name \"Uomo ragno\"@it."
 $
 È amessa la reificazione di enunciati, formule logiche arbitrarie, quindi in generale, non è decidibile. Ciò non costituisce sempre un problema: significa solo non poter limitare il tempo necessario a un dato calcolo, analogamente a quanto accade con i programmi logici quando si ammettono le funzioni. \
 *SPARQL* è il nome del protocollo e del linguaggio per l'interrogazione di KB costituite da grafi di triple RDF. A tale scopo si utilizzano specifici _endpoint_, quali, ad esempio: DBpedia, Min. Istruzione, INPS, $dots$ \
@@ -3181,17 +3181,17 @@ Le principali *classi predefinite* e i *costruttori di classe* di OWL sono elenc
   [`owl:ObjectOneOf`$(I_1, dots, I_k)$],
   [$I_1, dots, I_k$],
   [`owl:ObjectHasValue`$(p, v)$],
-  [$brace.lx mid(|) p(x, v)brace.r$],
+  [$brace.l x mid(|) p(x, v)brace.r$],
   [`owl:ObjectAllValuesFrom`$(p, C)$],
-  [$brace.lx mid(|) forall y colon p(x, y) -> y in Cbrace.r$],
+  [$brace.l x mid(|) forall y colon p(x, y) -> y in C brace.r$],
   [`owl:ObjectSomeValuesFrom`$(p, C)$],
-  [$brace.lx mid(|) exists y in C colon p(x, y)brace.r$],
+  [$brace.l x mid(|) exists y in C colon p(x, y)brace.r$],
   [`owl:ObjectMinCardinality`$(n, p, C)$],
-  [$brace.lx mid(|) abs(brace.ly mid(|) p(x, y) and y in Cbrace.r) >= nbrace.r$],
+  [$brace.l x mid(|) abs(brace.l y mid(|) p(x, y) and y in C brace.r) >= n brace.r$],
   [`owl:ObjectMaxCardinality`$(n, p, C)$],
-  [$brace.lx mid(|) abs(brace.ly mid(|) p(x, y) and y in Cbrace.r) <= nbrace.r$],
+  [$brace.l x mid(|) abs(brace.l y mid(|) p(x, y) and y in C brace.r) <= n brace.r$],
   [`owl:ObjectHasSelf`$(p)$],
-  [$brace.lx mid(|) p(x, x)brace.r$],
+  [$brace.l x mid(|) p(x, x)brace.r$],
   table.hline(),
 )
 I *predicati predefiniti* OWL hanno un'interpretazione prefissata. Nelle seguenti tabelle si userà la *notazione funzionale*, inoltre _x_ e _y_ s'intendono universalmente quantificate:
@@ -3814,7 +3814,7 @@ Usando log-loss con base 2, la media delle loss `somma_loss(Es)/|Es|` corrispond
 #esempio[
 Ancora con il dataset con le preferenze sui video: operando una scelta (miope) del test, ai fini di minimizzare la log-loss dell'Eq. (7.5), ovvero massimizzare la likelihood, si ha che
 
-  - prima del test iniziale, la predizione ottimale basata sulla _frequenza empirica_ è $p[0] = |brace.le in italic("Es") : mono("Da_vedere")(e) = mono("false")brace.r|/18 = 9/18 = 0.5$, $p[1] = |brace.le in italic("Es") : mono("Da_vedere")(e) = mono("true")brace.r|/18 = 9/18 = 0.5$, per cui la log-loss risulta: $-(9 dot log_2 0.5 + 9 dot log_2 0.5)/18 = -(18 dot log_2 0.5)/18 = 1$
+  - prima del test iniziale, la predizione ottimale basata sulla _frequenza empirica_ è $p[0] = |brace.l e in italic("Es") : mono("Da_vedere")(e) = mono("false")brace.r|/18 = 9/18 = 0.5$, $p[1] = |brace.l e in italic("Es") : mono("Da_vedere")(e) = mono("true")brace.r|/18 = 9/18 = 0.5$, per cui la log-loss risulta: $-(9 dot log_2 0.5 + 9 dot log_2 0.5)/18 = -(18 dot log_2 0.5)/18 = 1$
 
   - test su `Virale`: $[e_1, e_4, e_5, e_6, e_9, e_10, e_12, e_13, e_14, e_15, e_16, e_17]$ sono gli esempi con `Virale = true`, mentre $[e_2, e_3, e_7, e_8, e_11, e_18]$ sono quelli con `Virale = false`; in ciascuna partizione si ha la stessa frequenza di esempi delle due classi (feature-obiettivo), per cui la predizione ottimale è $0.5$ per entrambe con log-loss $1$; non essendoci alcuna diminuzione si verifica che tale test non aiuti la predizione;
 
@@ -4430,15 +4430,15 @@ $
 dove $c$ è una costante di normalizzazione. \
 Ogni mondo in cui $e$ sia falsa ha probabilità condizionata nulla. Per gli altri mondi, si considerano probabilità normalizzate: perchè risulti una misura di probabilità, dato $e$:
 $
-1 &= mu_e (Omega) attach(=, t: "per casi") mu_e (brace.lomega mid(|) e "vera in" omegabrace.r) + mu_e (brace.lomega mid(|) e "falsa in" omegabrace.r) \
-&= c dot mu(brace.lomega mid(|) e "vera in" omegabrace.r) + 0 = c dot P(e)
+1 &= mu_e (Omega) attach(=, t: "per casi") mu_e (brace.l omega mid(|) e "vera in" omega brace.r) + mu_e (brace.l omega mid(|) e "falsa in" omega brace.r) \
+&= c dot mu(brace.l omega mid(|) e "vera in" omega brace.r) + 0 = c dot P(e)
 $
 per cui $c = 1 / P(e)$, quindi la misura può essere definita solo se $P(e) > 0$; difatti $P(e) = 0$ indica che $e$ è impossibile. \
 La *probabilità condizionata* della proposizione _h_ data _e_ può essere definita sommando le probabilità condizionate dei mondi in cui _h_ è vera:
 $
-  P(h mid(|) e) &= mu_e (brace.lomega mid(|) h "vera in" omegabrace.r) \
-    &= mu_e (brace.lomega mid(|) h and e "vera in" omegabrace.r) + mu_e (brace.lomega mid(|) h and not e "vera in" omegabrace.r) \
-    &= 1/P(e) dot mu(brace.lomega mid(|) h and e "vera in" omegabrace.r) + 0 = P(h and e)/P(e)
+  P(h mid(|) e) &= mu_e (brace.l omega mid(|) h "vera in" omega brace.r) \
+    &= mu_e (brace.l omega mid(|) h and e "vera in" omega brace.r) + mu_e (brace.l omega mid(|) h and not e "vera in" omega brace.r) \
+    &= 1/P(e) dot mu(brace.l omega mid(|) h and e "vera in" omega brace.r) + 0 = P(h and e)/P(e)
 $
 Per estensione si definisce la *distribuzione di probabilità condizionata* $P(X bar Y)$ in funzione di $X$ e $Y$ variaibli: dati $x in "dom"(X)$ e $y in "dom"(Y)$, si considera la probabilità condizionata delle proposizioni $P(X = x bar Y = y)$.  \
 Si considererà la _decomposizione_ di una congiunta per semplificare i calcoli.
@@ -4558,20 +4558,20 @@ image("images/bn.png", width: 70%),
 caption: [BN sui voti]
 )
 - _Intelligenza_ non ha predecessori, quindi nemmeno genitori: \
-	$"gen"(intel) = emptyset$;
+	$"gen"("intel") = emptyset$;
 
-- _Impegno_ è indipendente da _Intelligenza_ e $"gen"(impe) = emptyset$;
+- _Impegno_ è indipendente da _Intelligenza_ e $"gen"("impe") = emptyset$;
 
 - _Risposte_ dipende da _Intelligenza_ e _Impegno_: \
-	$"gen"(risp) = brace.lintel, impebrace.r$;
+	$"gen"("risp") = brace.l "intel, impe" brace.r$;
 
 - _Voto_ è indipendente da _Intelligenza_ e _Impegno_ data _Risposte_: \
-	$"gen"(voto) = brace.lrispbrace.r$.
+	$"gen"("voto") = brace.l "risp" brace.r$.
 
 La fattorizzazione della distribuzione congiunta è:
 $
-	P(intel, impe, risp, voto) = \
-	P(intel) dot P(impe) dot P(risp mid(|) intel, impe) dot P(voto mid(|) risp).
+	P("intel, impe, risp, voto") = \
+	P("intel") dot P("impe") dot P("risp" mid(|) "intel, impe") dot P("voto" mid(|) "risp").
 $
 Per le risposte si possono considerare domini semplificati, come ad esempio _Risposte_ = \{`approfondite`, `chiare`, `superficiali`, `vacue`\}, oppure anche il testo stesso delle risposte.
 ]
@@ -4709,7 +4709,7 @@ Una possibile rappresentazione per una tabella multidimensionale per la CPD $P(Y
 #let tazza = $italic("Tazza_piena")$
 #let bagnato = $italic("Bagnato")$
 
-Robot con azioni possibili indicate dalla variabile _Azione_, $"dom"(azione) = brace.lmono("uscita"), mono("porta_caffe")brace.r$. Si considera lo stato di _bagnato_ (indicato dalla variabile _Bagnato_) causato dalla pioggia (indicato da _Pioggia_ = `true`) nel contesto di un'uscita da un luogo al coperto (_Azione_ = `uscita`) o per colpa del trasporto _Azione_ = `porta_caffe` d'una tazza piena (_Tazza\_piena_) di caffè: _Bagnato_ sarà indipendente da _Pioggia_ quando _Azione_ = `porta_caffe`, ma dipendente da _Pioggia_ se _Azione_ = `uscita`; _Bagnato_ sarà indipendente da _Tazza\_piena_ dato che _Azione_ = `uscita`, ma dipendente da _Tazza\_piena_ dato _Azione_ = `porta_caffe`. Una CPT corrispondente può essere:
+Robot con azioni possibili indicate dalla variabile _Azione_, $"dom"(azione) = brace.l mono("uscita"), mono("porta_caffe")brace.r$. Si considera lo stato di _bagnato_ (indicato dalla variabile _Bagnato_) causato dalla pioggia (indicato da _Pioggia_ = `true`) nel contesto di un'uscita da un luogo al coperto (_Azione_ = `uscita`) o per colpa del trasporto _Azione_ = `porta_caffe` d'una tazza piena (_Tazza\_piena_) di caffè: _Bagnato_ sarà indipendente da _Pioggia_ quando _Azione_ = `porta_caffe`, ma dipendente da _Pioggia_ se _Azione_ = `uscita`; _Bagnato_ sarà indipendente da _Tazza\_piena_ dato che _Azione_ = `uscita`, ma dipendente da _Tazza\_piena_ dato _Azione_ = `porta_caffe`. Una CPT corrispondente può essere:
   #align(center)[
     #table(
       columns: 4,
@@ -4905,7 +4905,7 @@ Per la BN vista in *@fig:bn_incendio*, ordinamento come in tabella. Si deve ripe
 + poi si campiona _Fumo_ usando $P(Fum mid(|) Inc = mono("true"))$;
 + ecc...
 
-Ciò va ripetuto fino a ottenere il numero desiderato di campioni/tuple $brace.ls_1, dots, s_nbrace.r$.
+Ciò va ripetuto fino a ottenere il numero desiderato di campioni/tuple $brace.l s_1, dots, s_n brace.r$.
 
 #let t = `true`
 #let f = `false`
@@ -5200,7 +5200,7 @@ L'algoritmo converge quando nno si hanno cambiamenti nelle assegnazioni.
   #pseudocode-list[
     + *procedure* $"k-means"(X s, E s, k)$
     + *Input*
-      + $X s$ insieme di feature, $X s = brace.lX_1, dots, X_nbrace.r$
+      + $X s$ insieme di feature, $X s = brace.l X_1, dots, X_n brace.r$
       + $E s$ insieme di istanze di training
       + $k$ numero di cluster
     + *Output*
@@ -5212,7 +5212,7 @@ L'algoritmo converge quando nno si hanno cambiamenti nelle assegnazioni.
       + $"Boolean" "stabile"$
     + Inizializzare $f s$ e $c c$ in base ai dati o casualmente
     + *define* $"pred"[j, c] = f s[j, c] / c c[c]$ #text(fill: rgb("558B2F"), style: "italic")[{ stima di $"pred"(j, c)$ }]
-    + *define* $"cluster"[e] = "arg" min_(c in brace.l1, dots, kbrace.r) sum_(j=1)^n ("pred"[j, c] - X_j(e))^2$
+    + *define* $"cluster"[e] = "arg" min_(c in brace.l 1, dots, k brace.r) sum_(j=1)^n ("pred"[j, c] - X_j(e))^2$
     + *repeat*
       + azzerare $f s'$ e $c c'$
       + *for each* $e in E s$ *do*
@@ -5289,7 +5289,7 @@ Per il calcolo delle probabilità tramite statistiche sufficienti
   #pseudocode-list[
     + *procedure* $"EM"(X s, E s, k)$
     + *Input*
-      + $X s$ insieme di feature, $X s = brace.lX_1, dots, X_nbrace.r$
+      + $X s$ insieme di feature, $X s = brace.l X_1, dots, X_n brace.r$
       + $E s$ insieme di esempi di training
       + $k$ numero di classi
     + *Output*
