@@ -20,10 +20,10 @@
 L'Ingegneria della Conoscenza è il processo di acquisizione, strutturazione e rappresentazione delle competenze umane in un formato che le macchine possono comprendere e utilizzare. Può essere vista come l'arte e la scienza di costruire sistemi basati sulla conoscenza in grado di ragionare, prendere decisioni e risolvere problemi complessi in modi che rispecchiano il pensiero umano.
 ]
 
-Nel contesto dell'_intelligenza artificiale_ che sta rimodellando ogni settore, l'ingegneria della conoscenza rappresenta il ponte fondamentale tra le competenze umane e l'intelligenza artificiale. Gli ingegneri della conoscenza possono essere considerati come traduttori della conoscenza imp;licita che _vive_ nella mente degli esperti: essi la convertono in formati espliciti e strutturati che le macchine possono elaborare e sulle quali possono agire.
+Nel contesto dell'_intelligenza artificiale_ che sta rimodellando ogni settore, l'ingegneria della conoscenza rappresenta il ponte fondamentale tra le competenze umane e l'intelligenza artificiale. Gli ingegneri della conoscenza possono essere considerati come traduttori della conoscenza implicita che _vive_ nella mente degli esperti: essi la convertono in formati espliciti e strutturati che le macchine possono elaborare e sulle quali possono agire.
 == Sistemi intelligenti basati su Conoscenza
-L'ingegneria della conoscenza è una disciplina ingegneristica atta a progettare e sviluippare _sistemi intelligenti_ basati su conoscenza _esplicita_.\
-L'intelligenta artificiale può essere definita come la disciplina che studia sintesi e analisi degli _agenti computazionali_, ossia dei sistemi che agiscono in modo _intelligente_. Essi possono svolgere azioni in un _ambiente_ e vanno giudicati *solo* per tali azioni. \
+L'ingegneria della conoscenza è una disciplina ingegneristica atta a progettare e sviluppare _sistemi intelligenti_ basati su conoscenza _esplicita_.\
+L'intelligenza artificiale può essere definita come la disciplina che studia sintesi e analisi degli _agenti computazionali_, ossia dei sistemi che agiscono in modo _intelligente_. Essi possono svolgere azioni in un _ambiente_ e vanno giudicati *solo* per tali azioni. \
 Aspetti salienti dell'_azione intelligente_ sono i seguenti:
 - l'appropriatezza rispetto alle circostanze, agli obiettivi, ai limiti;
 - la considerazione delle conseguenza a breve/lungo termine delle azioni;
@@ -31,14 +31,14 @@ Aspetti salienti dell'_azione intelligente_ sono i seguenti:
 - la flessibilità rispetto ai cambiamenti.
 Un *agente computazionale* è un agente le cui decisioni/azioni siano spiegabili in termini di calcolo automatico. Esso è implementato su sistema _fisico_ e presenta le seguenti _limitazioni_:
 - non è onnisciente né onnipotente;
-- le capacità di osservazione sono specializate e vincolate dal dominio applicativo;
+- le capacità di osservazione sono specializzate e vincolate dal dominio applicativo;
 - la sua memoria è finita e a tempo limitato.
 La disciplina dell'AI può essere inquadrata sotto diverse prospettive:
-- la prospettiva _scientifica_ considera l'AI come displina finalizzata a comprendere i principi del comportamento intelligente:
+- la prospettiva _scientifica_ considera l'AI come disciplina finalizzata a comprendere i principi del comportamento intelligente:
 	- analizzando sistemi naturali e artificiali;
 	- formulando _teorie_ sulla costruzione di agenti intelligenti che possano essere supportate da _implementazioni_ per la loro _verifica sperimentale_;
 - la prospettiva _ingegneristica_ inquadra l'AI come lo studio di nuove tecnologie atte risolvere specifici problemi tipicamente risolti da agenti umani:
-	- progetto e sintesi di _sistemi_ intgelligenti _basati su conoscenza_ (KBS) _testabili_: qualità valutabili attraverso metrodi standard dell'ing. informatica;
+	- progetto e sintesi di _sistemi_ intelligenti _basati su conoscenza_ (KBS) _testabili_: qualità valutabili attraverso metodi standard dell'ing. informatica;
 	- applicazioni costruite per la loro _utilità_ in un dato dominio.
 Altri obiettivi dell'AI:
 - *intelligence augmentation*: accrescimento dell'intelligenza e della creatività umane. Alcuni esempi:
@@ -46,7 +46,7 @@ Altri obiettivi dell'AI:
 	- motore di ricerca: aiuta a superare i limiti della memoria umana;
 	- traduzione automatica: aiuta la gente a comunicare.
 - *integrazione* dei compiti di agenti umani e sistemi intelligenti che collaborano alla soluzione di problemi; si parla di modalità *human-in-the-loop*.
-C'è differenza tra la definizione di intelligenza _naturale_ e l'intelligenza _artificiale_. L'intelligenza _naturale_ emerge spontanaemente in natura mentre, quella _artificiale_, viene progettata per specifici scopi. \
+C'è differenza tra la definizione di intelligenza _naturale_ e l'intelligenza _artificiale_. L'intelligenza _naturale_ emerge spontaneamente in natura mentre, quella _artificiale_, viene progettata per specifici scopi. \
 L'ipotesi fondamentale può essere riassunta con la seguente formula:
 $
 "ragionamento" approx "computazione"
@@ -114,7 +114,7 @@ In un sistema per la domotica le caratteristiche potrebbero essere:
 ==== Proposizioni
 Una *proposizione* è una caratteristica _booleana_. Risulta una rappresentazione _compatta_: sono state comprese _regolarità_ importanti sul dominio. Ad esempio con 30 proposizioni codificano $2^(30) approx 10^9$ stati quindi è più facile specfiicare e ragione con 30 proposizioni che con oltre un miliardo di stati.
 ==== Relazioni e individui
-Nella descrizione di mondi complessi una relazione su un singolo individuo è una *proprietà*. Si può definire una _caratteristica_ per ogni possibile relazione tra individui, come ad esempio $R(a, b)$, che potrebbe corrispondere a "Nico studia Informatica", ossia $s t u d i a(N i c o, I n f o r m a t i c a)$.
+Nella descrizione di mondi complessi una relazione su un singolo individuo è una *proprietà*. Si può definire una _caratteristica_ per ogni possibile relazione tra individui, come ad esempio $R(a, b)$, che potrebbe corrispondere a "Nico studia Informatica", ossia $"studia"("Nico", "Informatica")$.
 Le _descrizioni relazionali_ sono più convenienti di caratteristiche e proposizioni:
 - ad esempio, con una sola relazione binaria e 100 indvidui si possono rappresentare $100^2=10000$ proposizioni e $2^(10000)$ stati;
 - si possono considerare intere classi di individui senza enumerarne caratteristiche/proposizioni, o addirittura i numerossisimi stati;
@@ -163,7 +163,7 @@ Come nell'ingegneria del software, dato un problema, il progettista deve definir
 	- forma di approssimazione precisa di soluzione soddisfacente;
 	- si possono distinguere i tassi di errori di _falsi-positivi_ o di _falsi-negativi_.
 === Modelli: Livelli di Astrazione
-Un *modello* è una rappresentazione del mondo che può essere statica, ciò che si crede vero, ovvero dinamica, il suo _funzionamento_. È utile lavorare a vari lvielli di dettaglio, ossia di *astrazione*: si rappresenta la parte del mondo di interesse trascurando i dettagli inutili. Il *livello di astrazione* determina un _ordine parziale_. Sono spesso ammissibili _più modelli_ a diversi livelli di astrazione, anche in contraddizione tra loro: andranno giudicato in base alla loro utilità che per la loro correttezza. \
+Un *modello* è una rappresentazione del mondo che può essere statica, ciò che si crede vero, ovvero dinamica, il suo _funzionamento_. È utile lavorare a vari livelli di dettaglio, ossia di *astrazione*: si rappresenta la parte del mondo di interesse trascurando i dettagli inutili. Il *livello di astrazione* determina un _ordine parziale_. Sono spesso ammissibili _più modelli_ a diversi livelli di astrazione, anche in contraddizione tra loro: andranno giudicato in base alla loro utilità che per la loro correttezza. \
 Livelli d'astrazione comuni fra sistemi _biologici_ e _computazionali_ sono i seguenti:
 - *livello della conoscenza* sul mondo esterno: considera quello che il sistema assume di sapere e i suoi obiettivi, ma non come ragiona, ossia non come calcolare la soluzione;
 - *livello simbolico* interno: descrizione del modo di ragionare del sistema utile a implementare il livello precedente, manipolando simboli per produrre risposte.
@@ -258,8 +258,8 @@ Possibili _estensioni_ dei problemi di ricerca riguardano:
 Per risolvere il problema, si definisce lo spazio di ricerca e si applica un algoritmo di ricerca. Come detto precedentemente, molti compiti possono essere ricondotti alla _ricerca_ di percorsi in un grafo. Un modello _astratto_ della soluzione sarà _indipendente_ dal particolare dominio applicativo di interesse. Dato un _grafo orientato_ fatto di nodi connessi da archi, si dovrà trovare un _percorso_ da un nodo di partenza a uno boiettivo. Ci possono essere più modi per rappresentare uno stesso problema. \ \
 Un *grafo orientato* _esplicito_ consiste di:
 - un insieme di _nodi N_, anche non finito;
-- un insieme di _archi A_, ossia di coppie _ordinate_ di nodi, anche non infinito;
-	- l'arco $n_1, n_2$ si dirà *uscente* da $n_1$ ed *entrante* in $n_2$
+- un insieme di _archi A_, ossia di coppie _ordinate_ di nodi, anche non finito;
+	- l'arco $chevron.l n_1, n_2 chevron.r$ si dirà *uscente* da $n_1$ ed *entrante* in $n_2$
 	- si dirà che il nodo $n_2$ è un *vicino* del nodo $n_1$ se e solo se $exists chevron.l n_1, n_2 chevron.r in A$
 
 - un *percorso* dal nodo _s_ al nodo _g_, denotato da $chevron.l n_0, n_1, dots, n_k chevron.r$, è una _sequenza_ di nodi tale che se $s = n_0, g = n_l$ e $forall i = 1, dots, k : chevron.l n_(i-1), n_i chevron.r in A$; in alternativa, si può indicare una _sequenza di archi_ $chevron.l n_0, n_1 chevron.r, chevron.l n_1, n_2 chevron.r, dots, chevron.l n_(k-1), n_k chevron.r$ o anche _sequenza di etichette_ su tali archi: $chevron.l n_0, dots, n_i chevron.r$ _parte iniziale_ di $chevron.l n_0, n_1, dots, n_k chevron.r$, con $i <= k$.
@@ -267,13 +267,13 @@ Un *grafo orientato* _esplicito_ consiste di:
 Nel grafo esiste un insieme di _nodi-obiettivo_ che si possono identificare anche tramite il predicato _goal($dot$)_, funzione booleana definita sui nodi. Una *soluzione* è un percorso dal nodo di partenza a uno obiettivo.\
 In alcuni casi è associato un *costo* a ogni arco: dato $chevron.l n_i, n_j chevron.r$
 $
-c o s t(chevron.l n_i, n_j chevron.r) in [0, +infinity[
+"cost"(chevron.l n_i, n_j chevron.r) in [0, +infinity[
 $
 estendibile anche ai percosi: dato $p = chevron.l n_0, n_1, dots, n_k chevron.r$
 $
-c o s t(p) = sum_(i=1)^k c o s t (chevron.l n_(i-1), n_i chevron.r)
+"cost"(p) = sum_(i=1)^k "cost" (chevron.l n_(i-1), n_i chevron.r)
 $
-Una soluzione *ottimale* _p_ avrà costo minimo: $exists.not p'$ soluzione con $c o s t(p') < c o s t(p)$.
+Una soluzione *ottimale* _p_ avrà costo minimo: $exists.not p'$ soluzione con $"cost"(p') < "cost"(p)$.
 
 #esempio(title: "Robot consegne, continuo.")[
 	Ricerca di un percorso da $A$ a $G$ nel mondo rappresentato nella seguente figura.
@@ -413,7 +413,7 @@ Il _fallimento_ della ricerca in profondità limitata può essere:
     + *procedure* $"Ricerca_a_profondita_limitata"(chevron.l n_0, dots, n_k chevron.r, b)$
       + *Input*
         + $chevron.l n_0, dots, n_k chevron.r$: percorso
-        + $b$: integer $\{b >= 0\}$
+        + $b$: integer $brace.lb >= 0brace.r$
       + *Output*
         + percorso fino a nodo-obiettivo di lunghezza $k + b$
       + *if* $b > 0$ *then*
@@ -423,7 +423,7 @@ Il _fallimento_ della ricerca in profondità limitata può essere:
             + *return* $"risultato"$
       + *else if* $"goal"(n_k)$ *then*
         + *return* $chevron.l n_0, dots, n_k chevron.r$
-      + *else if* $n_k$ ha vicini *then* $\{ "fallimento innaturale" \}$
+      + *else if* $n_k$ ha vicini *then* $brace.l "fallimento innaturale" brace.r$
         + $"raggiunta_max_profondita" <- "true"$
       + *return* $bot$
     + $"limite_profondita" <- 0$
@@ -434,7 +434,7 @@ Il _fallimento_ della ricerca in profondità limitata può essere:
         + *return* $"risultato"$
       + $"limite_profondita" <- "limite_profondita" + 1$
     + *until not* $"raggiunta_max_profondita"$
-    + *return* $bot$ $\{ "fallimento naturale" \}$
+    + *return* $bot$ $brace.l "fallimento naturale" brace.r$
   ]
 ] <alg:id-search>
 La procedura $"Ricerca_a_profondita_limitata"$ implementa una DFS a profondità limitata: trova percorsi di lunghezza $k + b$, dove $k$ è la lunghezza del percorso e $b >= 0$; viene chiamato a profondità crescenti. I percorsi vengono trovati nello stesso ordine della BFS: si controlla di aver trovato un obiettivo solo se $b = 0$.\
@@ -459,7 +459,7 @@ L'algoritmo *LOWEST COST-FIRST SEARCH* (LcFS), detto anche _least-cost search_ o
   Dopo l'espansione di $chevron.l A, C, J chevron.r$, si selezionerà $chevron.l A, D, H, G chevron.r$, percorso di costo minimale da $A$ a $G$.
 ]
 Il fattore di ramificazione è _finito_ se i _costi_ sono _limitati_ inferiormente da una costante positiva: ciò garantisce la soluzione ottimale, quando esiste. Il primo percorso trovato termina in un nodo-obiettivo ed è ottimale perchè si procede in ordine di costo. \
-In mancanza di un limite inferiore allora sono possibili percorsi _infiniti_, ad esempio con nodi $n_0, n_1, n_2, dots$ con $forall i > 0 : chevron.l n_(i-1), n_i$ di costo $1/2^i$ esistono infiniti percorsi $chevron.l n_0, n_1, dots, n_k chevron.r$, con costo $ < 1$; se $exists chevron.l n_0, g chevron.r, g o a l(g)$ con costo $>=1$, l'arco non verrebbe mai selezionato. \
+In mancanza di un limite inferiore allora sono possibili percorsi _infiniti_, ad esempio con nodi $n_0, n_1, n_2, dots$ con $forall i > 0 : chevron.l n_(i-1), n_i$ di costo $1/2^i$ esistono infiniti percorsi $chevron.l n_0, n_1, dots, n_k chevron.r$, con costo $ < 1$; se $exists chevron.l n_0, g chevron.r, "goal"(g)$ con costo $>=1$, l'arco non verrebbe mai selezionato. \
 La complessità è esponenziale in spazio e tempo: genera tutti i percorsi con costo inferiore a quello della soluzione.
 == Ricerca Informata (Euristica)
 === Euristica
@@ -501,9 +501,9 @@ Si potrebbe considerare la _best-first search_ che sfrutta un'euristica $h$ da m
 L'algoritmo $A^*$ combina idee da LcFS e GbFS. Nella selezione del percorso da espandere si considerano: il costo effettivo del percorso parziale che dal nodo iniziale arriva al nodo corrente e l'euristica, ossia una stima del percorso dal nodo corrente fino a un obiettivo. \
 Per ogni percorso $p = chevron.l s, dots, n chevron.r$ della frontiera, si stima il costo di un percorso che passi per $p$ e progesua fino a un nodo-obiettivo $g$:
 $
-f(p) = c o s t(p) + h(p)
+f(p) = "cost"(p) + h(p)
  $
-dove $c o s t(p)$ rappresenta il costo effettivo di $p$ e $h(p)$ è una stima del costo del cammino da $n$ a $g$. \
+dove $"cost"(p)$ rappresenta il costo effettivo di $p$ e $h(p)$ è una stima del costo del cammino da $n$ a $g$. \
 Si segue lo schema dell'algoritmo di ricerca generico in @alg-ricerca e si rappresenta la _frontiera_ con una coda con priorità, ordinata da $f(p)$. Se $h$ è ammissibile allora $f(p)$ non sovrastima il cost d'un percorso completo che includa $p$. \
 $A^*$ può seguire molti perocrsi ma alla fine ne trova uno di costo minimo. Altri possono semprare (provvisoriamente) di costo inferiore. $A^*$ migliora le prestazioni degli algoritmi da cui origina.
 #esempio(title: [$A^*$ su grafo ed euristica])[
@@ -513,7 +513,7 @@ image("images/Astart.png", width: 70%),
 caption: [Problema con costi effettivi sugli archi e valori dell'euristica sui nodi]
 )
 Sequenza delle frontiere. Il pedice indica il valore di $f(p)$.
-- $[chevron.l A chevron.r_7]$ iniziale, essendo $h(A) = 7$ e $c o s t(chevron.l chevron.r) = 0$
+- $[chevron.l A chevron.r_7]$ iniziale, essendo $h(A) = 7$ e $"cost"(chevron.l chevron.r) = 0$
 - $[chevron.l A, B chevron.r_7, chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12)]$
 - $[chevron.l A, B, E chevron.r_7, chevron.l A, B, F chevron.r_(10), chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12)]$
 - $[chevron.l A, B, F chevron.r_(10), chevron.l A, D chevron.r_(10), chevron.l A, C chevron.r_(12)]$
@@ -533,16 +533,16 @@ $A^*$ garantisce che la prima soluzione sarà ottimale, anche in presenza di _ci
 ==== Importanza dell'euristica
 Il miglioramento dell'efficienza in $A^*$ è dato dall'uso di $h$. Sia $c$ il costo del percorso di costo minimo. Se $h$ è ammissibile, $A^*$ espande ogni percorso dal nodo di partenza nell'insieme
 $
-brace.l p | c o s t(p) + h(p) < c brace.r
+brace.l p | "cost"(p) + h(p) < c brace.r
 $
 più alcuni percorsi nell'insieme
 $
-brace.l p | c o s t(p) + h(p) = c brace.r
+brace.l p | "cost"(p) + h(p) = c brace.r
 $
 Per l'efficienza di $A^*$, $h$ è tanto migliore quanto più ridce la cardinalità del primo insieme.
 === Algoritmo Branch and Bound
 L'idea di questo algoritmo è combinare l'effic ienza in spazio delle strategie in profondità con informazione euristica. Risulta efficace quando esistono molti cammini verso un nodo-obiettivo. Questo algoritmo assume che $h(n)$ sia ammissibile. \
-Questo algoritmo memorizza il percorso di costo minimo verso un nodo-obiettivo trovato e il suo costo che diventa un _limite_: un percorso $p : c o s t(p) + h(p) >= l i m i t e$ aggiorando _limite_; si continua poi a cercare un'eventuale soluzione migliore.\
+Questo algoritmo memorizza il percorso di costo minimo verso un nodo-obiettivo trovato e il suo costo che diventa un _limite_: un percorso $p : "cost"(p) + h(p) >= "limite"$ aggiorando _limite_; si continua poi a cercare un'eventuale soluzione migliore.\
 Si genera così una sequenza di soluzioni via via migliori restituendo quella finale: l'algoritmo viene tipicamente implementato usando la DFS per la ricerca in profondità limitata dal valore di _limite_.
 #algoritmo(title: [Ricerca Depth-First Branch and Bound])[
   #pseudocode-list[
@@ -652,13 +652,13 @@ In LcFS, il primo percorso verso un dato nodo è quello di costo minimo. Pertant
 $A^*$ non garantisce che quando si seleziona un percorso verso un nodo per la prima volta, questo sia quello di costo minimo: il teorema sull'ammissibilità lo garantisce solo per i percorsi verso nodi-obiettivo; per quelli verso altri nodi dipende dalle proprietà dell'euristica. \
 Un'*euristica consistente* $h$ (non negativa) soddisfa il vincolo:
 $
-h(n) <= c o s t(n, n') + h(n')
+h(n) <= "cost"(n, n') + h(n')
 $
 per ogni coppia di nodi $n$ e $n'$. \
 Se $h(g) = 0$ per ogni nodo-obiettivo $g$, allora $h$ sarà consistente e non sovrastimerà mai il costo dei percorsi da un nodo verso un obiettivo. \
 La consistenza è garantita se $h$ soddisfa la *restrizione di monotonicità*:
 $
-h(n) <= c o s t(n, n') + h(n')
+h(n) <= "cost"(n, n') + h(n')
 $
 per ogni arco $chevron.l n, n' chevron.r$. Ciò è più facile da testare: dipende solo dagli archi, non dalle coppie di nodi considerate.
 #figure(
@@ -682,12 +682,12 @@ per ogni arco $chevron.l n, n' chevron.r$. Ciò è più facile da testare: dipen
     [DFS], [ultimo nodo aggiunto], [no], [$O(b d)$],
     [ID], [n/a], [con meno archi], [$O(b d)$],
     [$G_"BFS"$], [$h(p)$ minimale], [no], [$O(b^d)$],
-    [LcFS], [$c o s t(p)$ minimale], [costo minimo], [$O(b^d)$],
-    [$A^*$], [$c o s t(p) + h(p)$ minimale], [costo minimo], [$O(b^d)$],
+    [LcFS], [$"cost"(p)$ minimale], [costo minimo], [$O(b^d)$],
+    [$A^*$], [$"cost"(p) + h(p)$ minimale], [costo minimo], [$O(b^d)$],
     [DF B&B], [n/a], [costo minimo], [$O(b d)$],
     [$"IDA"^*$], [n/a], [costo minimo], [$O(b d)$],
   )
-)
+) <tab-consuntivo-ricerca>
 #proposizione[
 Data un'euristica consistente, MPP non impedisce ad $A^*$ di trovare una soluzione ottimale.
 ]
@@ -699,7 +699,7 @@ Nella pratica, $A^*$ include MPP per default.
 - MPP è preferibile con metodi in ampiezza: virtualmente tutti i nodi considerati vanno memorizzati;
 - CP è preferibile con le strategie in profondità, ad esempio DFS con Branch-and-Bound; con MPP+DFS c'è il rischio di crescita esponenziale per la lista chiusa.
 === Consuntiva sulle Strategie di Ricerca
-Un consuntivo schematico sulle diverse strategie di ricerca e la relativa complessità in spazio è disponibile nella (linkare la tabella inserita prima). \
+Un consuntivo schematico sulle diverse strategie di ricerca e la relativa complessità in spazio è disponibile in @tab-consuntivo-ricerca. \
 Un'*algoritmo* di ricerca *completo* garantisce il ritrovamento di una soluzione quando esiste. Le strategie che trovano percorsi con numero archi o costo minimale sono complete: nel caso pessimo serve un tempo esponenziale nel numero di archi dei percorsi esplorati. L'esistenza di algoritmi completi con minore complessità dipende dalla risposta alla domanda
 $
 P eq.not N P ?
@@ -709,7 +709,7 @@ Sono possibili alcune estensioni delle strategie di ricerca presentate:
 - dato che decidere la direzione della ricerca impatta sull'efficienza, si può pensare a una ricerca retrograda per soluzioni ottimali da qualunque nodo;
 - per determinare una buona euristica si può usare la _programmazione dinamica_: metodi basati sulla _decomposizione_ del problema in un numero di problemi equivalenti ma di minore complessità.
 === Direzione della ricerca
-Nella *ricerca in avanti*, _forward search_, si comincia da un nodo di partenza e si prosegue fino a raggiungere i nodi-obiettivo. Nella *ricerca retrograda*, _backward search_, si parte da un nodo-obiettivo e si usa il _grafo inverso_ alla ricerca del non di partenza; i vicini del nodo-obiettivo considerati per inizializzarela fronteira sono tutti gli altri nodi-obiettivo: $brace.l n : g o a l(n) brace.r$.\
+Nella *ricerca in avanti*, _forward search_, si comincia da un nodo di partenza e si prosegue fino a raggiungere i nodi-obiettivo. Nella *ricerca retrograda*, _backward search_, si parte da un nodo-obiettivo e si usa il _grafo inverso_ alla ricerca del non di partenza; i vicini del nodo-obiettivo considerati per inizializzarela fronteira sono tutti gli altri nodi-obiettivo: $brace.l n : "goal"(n) brace.r$.\
 La direzione di ricerca è indifferente quando:
 + il numero di nodi-obiettivi è finito;
 + per ogni nodo _n_ si possono generare i _vicini_ del *grafo inverso* $brace.l n' : chevron.l n', n chevron.r in A brace.r$.
@@ -733,12 +733,12 @@ Si può ricorrere alla PD per la costruzione offline di un'*euristica perfetta*,
 $
 "cost_to_goal"(n) = cases(
 	0 & "se goal"(n),
-	min_(chevron.l n, m chevron.r in A)[c o s t(chevron.l n, m chevron.r) + "cost_to_goal"(m)] & "altrimenti"
+	min_(chevron.l n, m chevron.r in A)["cost"(chevron.l n, m chevron.r) + "cost_to_goal"(m)] & "altrimenti"
 )
 $
 calcolato uasndo LcFS + MPP sul grafo inverso a partire dai nodi-obiettivo: si cerca il cammino di costo minimo da ogni nodo verso i nodi-obiettivo e si converva il valore di _coast_to_goal_ per ogni nodo. \
 Una *policy* è una politica da seguire nella specifica dell'arco da considerare per ogni nodo; essa è *ottimale* se i suoi costi non sono mai superiori ai costi calcolati usando altre policy.
-- _coast_to_goal_ viene calcolata offiline e usata nella costruzione di una policy: da $n$ si dovrebbe andare al vicino $m$ che minimizza $c o s t(chevron.l n, m chevron.r) + "cost_to_goal"(m)$. Questa policy porta sempre a un obiettivo con un cammino di costo minimo partendo da qualsiasi nodo;
+- _coast_to_goal_ viene calcolata offiline e usata nella costruzione di una policy: da $n$ si dovrebbe andare al vicino $m$ che minimizza $"cost"(chevron.l n, m chevron.r) + "cost_to_goal"(m)$. Questa policy porta sempre a un obiettivo con un cammino di costo minimo partendo da qualsiasi nodo;
 - sono presenti della alternative:
 	+ memorizzare il vicino per tutti i nodi offline, sfruttando le associazioni tra nodi nelle decisioni online sulle azioni, oppure
 	+ fornire _cost_to_goal_ pre-calcolata e calcolare i vicini online.
@@ -754,8 +754,8 @@ Vedremo come passare da problemi definiti su spazi di stati a problemi su spazi 
 Il _ragionamento_ si svolge generando assegnazioni che soddisfino i vincoli rigidi e ottimizzino i vincoli flessibili.
 === Variabili e Assegnazioni
 Si considereranno problemi descritti in termini di variabili _algebriche_ ossia simboli usati per denotare caratteristiche del mondo (reale o immaginario). \
-La notazione adotta nomi che iniziano per maiuscola: ogni variabile ha un  *dominio* associato, denotato con $d o m(X)$. Si considereranno _variabili discrete_ con dominio finito o almeno enumerabile. Un altro tipo è quello delle _variabili continue_, ad esempio variabili con dominio $RR$. \
-Un'*assegnazione* è una funzione da un insieme di variabili ai loro domini: dato ${X_1, X_2, dots, X_k}$ a $X_i$ si assegna $v_i in d o m(X_i)$ per ogni $i = 1, dots, k$:
+La notazione adotta nomi che iniziano per maiuscola: ogni variabile ha un  *dominio* associato, denotato con $"dom"(X)$. Si considereranno _variabili discrete_ con dominio finito o almeno enumerabile. Un altro tipo è quello delle _variabili continue_, ad esempio variabili con dominio $RR$. \
+Un'*assegnazione* è una funzione da un insieme di variabili ai loro domini: dato ${X_1, X_2, dots, X_k}$ a $X_i$ si assegna $v_i in "dom"(X_i)$ per ogni $i = 1, dots, k$:
 
 $
 X_1 = v_1, X_2 = v_2, dots, X_k = v_k
@@ -810,7 +810,7 @@ Un _CSP finito_ ha un numero finito di variabili di dominio finito. Oltre a meto
 #esempio(title: "Robot consegne")[
 Si può costruire un CSP definendo:
 - le attività da svolgere: $a, v, c, d, e$ e i _momenti_ possibili: $1, 2, 3, 4$;
-- le rispettive variabili $A, B, C, D, E$, tutte con lo stesso dominio, ossia con $d o m(A) = d o m(B) = d o m(C) = d o m(D) = d o m(E) = brace.l 1, 2, 3, 4 brace.r$;
+- le rispettive variabili $A, B, C, D, E$, tutte con lo stesso dominio, ossia con $"dom"(A) = "dom"(B) = "dom"(C) = "dom"(D) = "dom"(E) = brace.l 1, 2, 3, 4 brace.r$;
 - l'insieme dei _vincoli_: $
 	brace.l B eq.not 3; C eq.not 2; A eq.not B; B eq.not C; C < D; A = D; E < A; E < B; E < C; E < D; B eq.not D brace.r
 $
@@ -853,15 +853,15 @@ Rispetto a Generate-And-Test, i test anticipati consentono di potare sotto-alber
 L'albero di ricerca risultante ha dimensioni che dipendono dall'ordine di scelta delle variabili. Un ordine _statica_, ad esempio sempre prima $A$, poi $B$, poi $C$, risulterà meno efficiente di uno _dinamico_. Ma l'ordine ottimale potrebbe essere più difficile da trovare.
 == Algoritmi basati su Consistenza
 Si introduce una nozione di *consistenza* intesa come compatibilità, o coerenza logica, fra assegnazioni e vincoli. Una *rete di vincoli* (_constraint network_) indotta da un CSP è costituita da un _grafo bipartito_:
-- un nodo _(circolare)_ per ogni variabile, con un dizionario $d o m$ che, per ogni variabile $X$, contenga l'insieme $d o m[X]$ di valori possibili, inizialmente impostato con l'intero suo dominio;
+- un nodo _(circolare)_ per ogni variabile, con un dizionario $"dom"$ che, per ogni variabile $X$, contenga l'insieme $"dom"[X]$ di valori possibili, inizialmente impostato con l'intero suo dominio;
 - un nodo _(rettangolare)_ per ogni vincolo $c$;
 - un arco $chevron.l X, c chevron.r$ per ogni variabile $X$ nell'ambito del vincolo $c$.
-Un arco $chevron.l X, c chevron.r$ si dice *consistente* _rispetto ai domini (domain consistent)_ se e solo se $forall x in d o m[X]: brace.l X = x brace.r$ soddisfa $c$. \
-Dato il vincolo $c$ su $brace.l X, Y_1, dots, Y_k brace.r$, l'arco $chevron.l X, c chevron.r$ è *consistente* se e solo se $forall x in d o m[X], exists y_1, dots, y_k: y_i in d o m[Y_i]$ tale che $brace.l X = x, Y_1 = y_1, dots, Y_k = y_k$ soddisfi $c$. \
-Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $d o m[X]$ non ci sono valori di $Y_1, dots, Y_k$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $d o m[X]$ si può ripristinare la consistenza di $chevron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
+Un arco $chevron.l X, c chevron.r$ si dice *consistente* _rispetto ai domini (domain consistent)_ se e solo se $forall x in "dom"[X]: brace.l X = x brace.r$ soddisfa $c$. \
+Dato il vincolo $c$ su $brace.l X, Y_1, dots, Y_k brace.r$, l'arco $chevron.l X, c chevron.r$ è *consistente* se e solo se $forall x in "dom"[X], exists y_1, dots, y_k: y_i in "dom"[Y_i]$ tale che $brace.l X = x, Y_1 = y_1, dots, Y_k = y_k$ soddisfi $c$. \
+Una *rete consistente* contiene solo archi consistenti. Se $chevron.l X, c chevron.r$ non è consistente allora per qualche valore di $"dom"[X]$ non ci sono valori di $Y_1, dots, Y_k$ tali che l'assegnazione risultante soddisfi $c$, quindi _eliminando_ tali valori da $"dom"[X]$ si può ripristinare la consistenza di $chevron.l X, c chevron.r$. È bene notare, però, che l'eliminazione di valori da un dominio può rendere altri archi non consistenti. \
 L'idea di base è quella di rendere la rete consistente restringendo i domini. A tale scopo, si considera l'insieme _inconsistenti_ degli archi potenzialmente non consistenti:
 - si inizializza _inconsistenti_ con tutti gli archi del grafo;
-- si ripete fino a svuotare _inconsistenti_: estratto un arco $chevron.l X, c chevron.r$ da _inconsistenti_ se $chevron.l X, c chevron.r$ non è consistente, si deve restringere $d o m[X]$. Si devono, poi, aggiungere a _inconsistenti_ gli archi resi non consistenti dal passo precedente: $chevron.l Z, c' chevron.r, c' = c$, con ambito che comprende $X$ e una diversa $Z$.
+- si ripete fino a svuotare _inconsistenti_: estratto un arco $chevron.l X, c chevron.r$ da _inconsistenti_ se $chevron.l X, c chevron.r$ non è consistente, si deve restringere $"dom"[X]$. Si devono, poi, aggiungere a _inconsistenti_ gli archi resi non consistenti dal passo precedente: $chevron.l Z, c' chevron.r, c' = c$, con ambito che comprende $X$ e una diversa $Z$.
 #algoritmo(title: [Generalized Arc Consistency (GAC)])[
   #pseudocode-list[
     + *procedure* $"GAC"(V_s, "dom", C_s, "inconsistenti")$
@@ -1089,8 +1089,8 @@ Molte altre varianti sono possibili nella _scelta del successore_ e nelle scelte
 La *tabu search* è una forma di ricerca locale con memoria che evita la modifica di assegnazioni introdotte di recente. Si memorizzano le variabili modificate negli ultimi $t$ passi (*tenure*) che andranno considerate non selezionabili. In tal modo si evitano i cicli dopo poche assegnazioni. Va ottimizzato il parametro $t$. Nella sua implementazione, se è piccolo si può considerare una lista delle variabili modificate di recente, invece se è grande si memorizza per ogni variabile il passo in cui si è avuto l'ultima sua modifica.
 ==== Passo di Massimo Miglioramento
 In questo metodo di ricerca locale, si seleziona una coppia variabile-valore che porta al miglioramento di valutazione massimale. In caso di più coppie si opera una scelta casuale. \
-Nella sua implementazione "ingenua" data l'assegnazione totale corrente, per ogni variabile $X$ e ogni valore $v in d o m(X)$ diverso da quello corrente, si confronta l'assegnazione corrente con quella in cui si assegna $X = v$. Si seleziona quindi una delle coppie di _massimo miglioramento_. Si noti che la modifica potrebbe portare a _differenze negative_ nella valutazione, ossia a peggioramenti. Inoltre, le variabili non coinvolte in vincoli possono essere trascurate. \
-In un'implementazione alternativa si adotta una coda con priorità fatta di coppie variabile-valore pesate. Per ogni $X$ e ogni $v in d o m(X)$ non assegnato in $A$, in coda ci sarà una coppia $chevron.l X, v chevron.r$ con peso $w = h(A') - h(A)$. Si considera allora il miglioramento dell'assegnazione $A'$ ottenuta sostituendo $X = v$ rispetto ad $A$. Questo dipenderà dai valori assegnati a $X$ e dai suoi vicini nella rete dei vincoli, non da quelli assegnati alle altre variabili. A ogni iterata si seleziona una _coppia-successore_ di massimo miglioramento, ossia con _peso minimale_. Ogni nuova assegnazione comporta il ricalcolo dei pesi e il riordimento della coda, ma solo per coppie con variabili presenti in vincoli il cui soddisfacimento è mutato.
+Nella sua implementazione "ingenua" data l'assegnazione totale corrente, per ogni variabile $X$ e ogni valore $v in "dom"(X)$ diverso da quello corrente, si confronta l'assegnazione corrente con quella in cui si assegna $X = v$. Si seleziona quindi una delle coppie di _massimo miglioramento_. Si noti che la modifica potrebbe portare a _differenze negative_ nella valutazione, ossia a peggioramenti. Inoltre, le variabili non coinvolte in vincoli possono essere trascurate. \
+In un'implementazione alternativa si adotta una coda con priorità fatta di coppie variabile-valore pesate. Per ogni $X$ e ogni $v in "dom"(X)$ non assegnato in $A$, in coda ci sarà una coppia $chevron.l X, v chevron.r$ con peso $w = h(A') - h(A)$. Si considera allora il miglioramento dell'assegnazione $A'$ ottenuta sostituendo $X = v$ rispetto ad $A$. Questo dipenderà dai valori assegnati a $X$ e dai suoi vicini nella rete dei vincoli, non da quelli assegnati alle altre variabili. A ogni iterata si seleziona una _coppia-successore_ di massimo miglioramento, ossia con _peso minimale_. Ogni nuova assegnazione comporta il ricalcolo dei pesi e il riordimento della coda, ma solo per coppie con variabili presenti in vincoli il cui soddisfacimento è mutato.
 ==== Scelta a due fasi
 L'algoritmo di *scelta a due fasi* prevede la selezione della coppia articolata in:
 + selezione della variabile per la riassegnazione;
@@ -1194,7 +1194,7 @@ Un *problema di ottimizzazione vincolato* prevede anche _vincoli rigidi_ che spe
 Sul tema dell'ottimizzazione esiste una vasta letturatura scientifica, con molte tecniche proposte: ad esmepio nella programamzione lineare sono coinvolte variabili continue, funzioni-obiettivo lineari e diseguaglianze lineari come vincoli. Quando un problema da risolvere, prevedendo anche qualche trasformazione, rientra in categorie classiche, allora converrà preferire algoritmi specifici. \
 Rispetto ai CSP, l'ottimizzazione presenta un'ulteriore difficoltà: riconoscere le soluzioni solo per confronto fra assegnazioni. Si possono trattare i vincoli rigidi come quelli flessibili ma assegnando un costo infinito in caso di violazione: se il costo è finito non vi sarà stata nessuna violazione. In alternativa si può associare alla violazione di vincolo rigido un costo elevato maggiore della somma di tutti i costi di vincoli flessibili. L'algoritmo di ottimizzazione dovrà trovare una soluzione con il minor numero di vincoli rigidi violati e, tra questi,, quelli di costo minimo.
 === Metodi Sistematici per il Caso Discreto
-Si parla di *ottimizzazione discreta* in caso di problema che coinvolge solo variabili _discrete_. Possono essere adattati i metodi di ricerca di percorsi ottimali su grafo visti in precedenza. In questo caso il grafo avrà nodi contenenti assegnazioni a un insieme di variabili. I vicini di un nodo $n$ si trovano scegliendo una variabile $v a r$ non presente in $n$ e le relative assegnazioni di valori, consistenti con gli eventuali vincoli rigidi. Il costo di un arco è dato dalla somma dei costi dei vincoli valutati dopo l'assegnazione a _var_. \
+Si parla di *ottimizzazione discreta* in caso di problema che coinvolge solo variabili _discrete_. Possono essere adattati i metodi di ricerca di percorsi ottimali su grafo visti in precedenza. In questo caso il grafo avrà nodi contenenti assegnazioni a un insieme di variabili. I vicini di un nodo $n$ si trovano scegliendo una variabile $"var"$ non presente in $n$ e le relative assegnazioni di valori, consistenti con gli eventuali vincoli rigidi. Il costo di un arco è dato dalla somma dei costi dei vincoli valutati dopo l'assegnazione a _var_. \
 Il nodo di partenza conterrà l'assegnazione vuota metnre un nodo-goal conterrà un'assegnazione totale. I costi sono assengati solo quando un vincolo flessibile può essere valutato. Per usare gli algoritmi $A^*$, _Branch-and-Bound_ i costi-arco devono essere non-negativi.
 === Ricerca locale per l'ottimizzazione
 L'uso della ricerca locale nel caso di problemi di ottimizzazione mira a minimizzare la funzione-obiettivo. Gli algoritmi di ricerca lcoale aggiornano via via e infine restituiscono la _migliore assegnazione trovata_. La terminazione può essere garantita fissando un numero massimo di iterate. \
@@ -1202,7 +1202,7 @@ L'uso della ricerca locale nel caso di problemi di ottimizzazione mira a minimiz
 Per arrivare a una soluzione si può consentire la violazione di vincoli rigidi, ad esempio adottando costi di violazione alti ma finiti.
 === Domini Continui: Discesa di Gradiente
 In questo caso, la ricerca locale è più complicata: bisogna stabilire come definire il _successore_ di un'assegnazione. \
-L'idea dell'algoritmo di _Discesa del Gradiente (Gradient Descent)_ è quella di minimizzare la funzione di valutazione (purchè continua e differenziabile). Come in un percorso in discesa, si fanno passi nelle direzioni più ripide. Il successore di un'assegnazione viene calcolato facendo un passo in discesa di lunghezza proporzionale alla _pendenza_ della funzione, ossia alla sua derivata. \
+L'idea dell'algoritmo di _Discesa del Gradiente (Gradient Descent)_ è quella di minimizzare la funzione di valutazione (purché continua e differenziabile). Come in un percorso in discesa, si fanno passi nelle direzioni più ripide. Il successore di un'assegnazione viene calcolato facendo un passo in discesa di lunghezza proporzionale alla _pendenza_ della funzione, ossia alla sua derivata. \
 Esiste anche una ricerca di massimi di funzione obiettivo tramite _Risalita del Gradiente (Gradient Ascent)_ facendo passi di segno positivo.\
 Nel caso _monodimensionale_ se a $X$ è assegnato $v in RR$ il valore successivo sarà:
 $
@@ -1321,7 +1321,7 @@ Inoltre, si noti che il progettista può sbagliare e codificare nella _KB_ assio
 Si considereranno ora CSP con vincoli rappresentati come _formule logiche_ dalla struttura concisa e formale per consentire l'elaborazione automatica. \
 Un _problema_ di *soddisfacibilità proposizionale (SAT)* è definito da:
 - un insieme di _variabili booleane_;
-	si usa la sintassi $X = t r u e$ abbreviata in $x$, e $X = f a l s e$ oppure $not x$.
+	si usa la sintassi $X = "true"$ abbreviata in $x$, e $X = "false"$ oppure $not x$.
 - un insieme di _vincoli clausali_ o *clausole*, ossia espressioni logiche della forma:
 	$
 	l_1 or l_2 or dots.c or l_k
@@ -1332,7 +1332,7 @@ In Logica Proposizionale, una clausola è una forma logica in una forma ristrett
 Nei CSP, una clausola è un vincolo su un insieme di variabili booleane che è soddisfatto se almeno uno dei suoi letterali è vero: $l_1 or l_2 or dots.c or l_k$ equivale a $not(not l_1 and not l_2 and dots.c and not l_k)$, ciò esclude che le assegnazioni in cui tutti i letterali risultino falsi.
 === Forma Clausale per CSP
 Un CSP finito si può trasformare in un problema di soddisfabilità di una _KB_ proposizionale in cui:
-- per ogni variabile $Y$ del CSP, con $d o m(Y) = brace.l v_1, dots, v_k brace.r$ si considerano le *variabili indicatrici* booleane $brace.l Y_1, dots, Y_k brace.r$ tali che $forall i = 1, dots, k : Y_i$ vera se $Y = v_i$ e falsa altrimenti; quindi per rappresentare $Y$ in _KB_ si considereranno gli atomi $y_1, dots, y_k$;
+- per ogni variabile $Y$ del CSP, con $"dom"(Y) = brace.l v_1, dots, v_k brace.r$ si considerano le *variabili indicatrici* booleane $brace.l Y_1, dots, Y_k brace.r$ tali che $forall i = 1, dots, k : Y_i$ vera se $Y = v_i$ e falsa altrimenti; quindi per rappresentare $Y$ in _KB_ si considereranno gli atomi $y_1, dots, y_k$;
 - si aggiungeranno a _KB_ le seguenti clausole:
 	- $not y_i or not y_j (equiv not(y_i and not y_j))$ per ogni $i, j in brace.l 1, dots k brace.r$ con $i < j$, poichè $y_i$ e $y_j$ non possono essere entrambi veri;
 	- $y_1 or dots.c or y_k$, poichè uno degli $y_i$ dev'essere necessariamente vero, ossia $Y$ avrà un certo valore $i$ nell'assegnazione totale;
@@ -1634,7 +1634,7 @@ Il corpo della clausola $B$ e $G$ sono considerati come insiemi di atomi. In alt
   )
 
   e la query: _ask a._\
-  Si userà un insieme di goal $G$ in luogo del corpo della clausola di risposta $y e s arrow.l G$, inizialmente gli atomi (della query) da dimostrare: $G = {a}$; si seleziona sempre l'atomo _più a sinistra_ del corpo. I passi sono i seguenti:
+  Si userà un insieme di goal $G$ in luogo del corpo della clausola di risposta $"yes" arrow.l G$, inizialmente gli atomi (della query) da dimostrare: $G = {a}$; si seleziona sempre l'atomo _più a sinistra_ del corpo. I passi sono i seguenti:
 
   #align(center)[
     #table(
@@ -1642,21 +1642,21 @@ Il corpo della clausola $B$ e $G$ sono considerati come insiemi di atomi. In alt
       align: left,
       stroke: (x, y) => if y == 0 { (bottom: 0.5pt + rgb("#990000")) } else { none },
       [risolventi $gamma_i$], [clausole da $K B$],
-      [$y e s arrow.l underline(a)$], [$a arrow.l b and c$],
-      [$y e s arrow.l underline(b) and c$], [$b arrow.l d and e$],
-      [$y e s arrow.l underline(d) and e and c$], [$d$],
-      [$y e s arrow.l underline(e) and c$], [$e$],
-      [$y e s arrow.l underline(c)$], [$c arrow.l e$],
-      [$y e s arrow.l underline(e)$], [$e$],
-      [$y e s arrow.l$], []
+      [$"yes" arrow.l underline(a)$], [$a arrow.l b and c$],
+      [$"yes" arrow.l underline(b) and c$], [$b arrow.l d and e$],
+      [$"yes" arrow.l underline(d) and e and c$], [$d$],
+      [$"yes" arrow.l underline(e) and c$], [$e$],
+      [$"yes" arrow.l underline(c)$], [$c arrow.l e$],
+      [$"yes" arrow.l underline(e)$], [$e$],
+      [$"yes" arrow.l$], []
     )
   ]
 
   Una sequenza _alternativa_ di scelte in cui si sceglie la seconda clausola per $b$ è la seguente:
 
-  - $y e s arrow.l a$
-  - $y e s arrow.l b and c$
-  - $y e s arrow.l g and e and c$
+  - $"yes" arrow.l a$
+  - $"yes" arrow.l b and c$
+  - $"yes" arrow.l g and e and c$
 
   ma selezionando $g$ non ci sono regole da scegliere, per cui _questo tentativo fallisce_: occorre scegliere altre alternative, se ve ne sono.
 ]
@@ -2055,15 +2055,15 @@ Si ha una definzione ricorsiva del *fallimento*: $p$ fallisce se fallisce il cor
       + insieme di letterali che seguono dal completamento di $K B$
     + *Local*
       + $C$ insieme di letterali
-      + $C <- \{ \}$
+      + $C <- brace.l brace.r$
     + *repeat*
       + *either*
         + selezionare $(h <- b_1 and dots.c and b_m) in K B$ tale che: $h in.not C$ e $forall i: b_i in C$
-        + $C <- C union \{h\}$
+        + $C <- C union brace.lhbrace.r$
       + *or*
         + selezionare $h$ con $tilde h in.not C$ tale che:
           + $forall(h <- b_1 and dots.c and b_m) in K B: exists i: tilde b_i in C$ oppure $b_i = tilde g$ e $g in C$
-        + $C <- C union \{tilde h\}$
+        + $C <- C union brace.ltilde hbrace.r$
     + *until* non ci sono altre selezioni possibili
   ]
 ] <alg:naf-bottom-up>
@@ -2099,15 +2099,15 @@ Si ha una definzione ricorsiva del *fallimento*: $p$ fallisce se fallisce il cor
 La procedura TD è analoga a quella delle clausole definite, ma procede per NAF. È non-deterministca e, come tale, si può implementare come ricerca di scelte di successo: selezionato un atomo $tilde a$, parte una nuova dimostrazione per $a$; se questa fallisce allora $tilde a$ ha successo altrimenti l'algoritmo fallisce: deve tentare altre scelte se possibile.
 #algoritmo(title: [Algoritmo top-down di dimostrazione con NAF])[
   #pseudocode-list[
-    + *non-deterministic procedure* $"Prove_NAF_TD"(K B, Q u e r y)$
+    + *non-deterministic procedure* $"Prove_NAF_TD"(K B, "Query")$
     + *Input*
       + $K B$: insieme di clausole che includono la NAF
-      + $Q u e r y$: insieme di letterali da dimostrare
+      + $"Query"$: insieme di letterali da dimostrare
     + *Output*
-      + yes se $Q u e r y$ segue dal completamento di $K B$, 'fail' altrimenti
+      + yes se $"Query"$ segue dal completamento di $K B$, 'fail' altrimenti
     + *Local*
       + $G$: insieme di letterali
-    + $G <- Q u e r y$
+    + $G <- "Query"$
     + *repeat*
       + selezionare il letterale $l in G$
       + *if* $l = tilde a$ *then*
@@ -2414,12 +2414,12 @@ Un'_espressione_ è un termine, un atomo o una clausola. Un'*istanza* $e sigma$ 
 #esempio[
 Diverse applicazioni di sostituzioni ad atomi:
 
-- _confina\_con(peru, X)_ $\{X \/ italic("cile")\} =$ _confina\_con(peru, cile)_
-- _confina\_con(Y, cile)_ $\{Y \/ italic("peru")\} =$ _confina\_con(peru, cile)_
-- _confina\_con(peru, X)_ $\{Y \/ italic("peru"), Z \/ X\} =$ _confina\_con(peru, X)_
-- $p(X, X, Y, Y, Z)\{X \/ Z, Y \/ italic("brasile")\} = p(Z, Z, italic("brasile"), italic("brasile"), Z)$
+- _confina\_con(peru, X)_ $brace.lX \/ italic("cile")brace.r =$ _confina\_con(peru, cile)_
+- _confina\_con(Y, cile)_ $brace.lY \/ italic("peru")brace.r =$ _confina\_con(peru, cile)_
+- _confina\_con(peru, X)_ $brace.lY \/ italic("peru"), Z \/ Xbrace.r =$ _confina\_con(peru, X)_
+- $p(X, X, Y, Y, Z)brace.lX \/ Z, Y \/ italic("brasile")brace.r = p(Z, Z, italic("brasile"), italic("brasile"), Z)$
 
-Le sostituzioni si applicano anche alle clausole: data $sigma = \{X \/ Y, Z \/ italic("peru")\}$, \
+Le sostituzioni si applicano anche alle clausole: data $sigma = brace.lX \/ Y, Z \/ italic("peru")brace.r$, \
 $[p(X, Y) <- q(italic("peru"), Z, X, Y, Z)] sigma = p(Y, Y) <- q(italic("peru"), italic("peru"), Y, Y, italic("peru"))$
 ]
 Un *unificatore* delle espressioni $e_1$ e $e_2$ è una sostituzione $sigma$ tale che
@@ -2428,13 +2428,13 @@ e_1 sigma = e_2 sigma
 $
 Quando esiste un tale unificatore si dice che $e_1$ e $e_2$ sono _unificabili_ o che si _unificano_.
 #esempio(title:"Esempi di unificatori")[
-- $\{X \/ italic("cile"), Y \/ italic("peru")\}$ è un unificatore per _confina\_con(peru, X)_ e _confina\_con(Y, cile)_ \
+- $brace.lX \/ italic("cile"), Y \/ italic("peru")brace.r$ è un unificatore per _confina\_con(peru, X)_ e _confina\_con(Y, cile)_ \
   dalla cui applicazione si ottiene: _confina\_con(peru, cile)_
-- $\{X \/ a, Y \/ b\}$ unificatore di $t(a, Y, c)$ e $t(X, b, c)$ \
-  per cui: $t(a, Y, c)\{X \/ a, Y \/ b\} = t(X, b, c)\{X \/ a, Y \/ b\} = t(a, b, c)$
+- $brace.lX \/ a, Y \/ bbrace.r$ unificatore di $t(a, Y, c)$ e $t(X, b, c)$ \
+  per cui: $t(a, Y, c)brace.lX \/ a, Y \/ bbrace.r = t(X, b, c)brace.lX \/ a, Y \/ bbrace.r = t(a, b, c)$
 
 Diversi unificatori possibili di $p(X, Y)$ e $p(Z, Z)$ sono: \
-$\{X \/ b, Y \/ b, Z \/ b\}$, $\{X \/ c, Y \/ c, Z \/ c\}$, $\{X \/ Z, Y \/ Z\}$, $\{Y \/ X, Z \/ X\}$, ecc.
+$brace.lX \/ b, Y \/ b, Z \/ bbrace.r$, $brace.lX \/ c, Y \/ c, Z \/ cbrace.r$, $brace.lX \/ Z, Y \/ Zbrace.r$, $brace.lY \/ X, Z \/ Xbrace.r$, ecc.
 
 - i primi due specificano precisamente i valori sostituiti
 - gli altri due sono _più generali_.
@@ -2533,34 +2533,34 @@ resta $a = b$ ma le costanti $a$ e $b$ non sono uficabili, quindi si restituisce
 La proceudura top-down proposizionale può essere estesa per gestire le variabili ammettendo istanze di regole nella derivazione. \
 Una *clausola di risposta generalizzata* avrà la forma:
 $
-y e s(t_1, dots, t_k) <- a_1 and a_2 and dots and a_m
+"yes"(t_1, dots, t_k) <- a_1 and a_2 and dots and a_m
 $
 dove $t_1, dots, t_k$ sono termini e gli $a_1, dots, a_m$ sono atomi. \
 L'uso del predicato `yes` consente l'estrazione della risposta, ossia di determinare quali istanze ella query seguano logicamente da una base di clausole definite. \
 Data la query _q_, si considera in partenza la clausola di risposta iniziale:
 $
-y e s(V_1, dots, V_k) <- q
+"yes"(V_1, dots, V_k) <- q
 $
-dove $V_1, dots, V_k$ sono le variabili della query $q$. Intuitivamente, un'istanza di $y e s(V_1, dots, V_k)$ risulta vera se la corrispondente istanza di _q_ è vera. In ogni fase successiva, l'algoritmo
+dove $V_1, dots, V_k$ sono le variabili della query $q$. Intuitivamente, un'istanza di $"yes"(V_1, dots, V_k)$ risulta vera se la corrispondente istanza di _q_ è vera. In ogni fase successiva, l'algoritmo
 + seleziona un atomo nel corpo della clausola di risposta corrente;
 + sceglie una clausola di _KB_ la cui testa si unifichi con tale atomo.
-Nella *risoluzione SLD*, avendo selezionato $a_1$ della clausola di risposta generalizata corrente $y e s(t_1, dots, t_k) <- underline(a_1) and a_2 and dots and a_m$, se la clausola scleta dalla base di conoscenza è:
+Nella *risoluzione SLD*, avendo selezionato $a_1$ della clausola di risposta generalizata corrente $"yes"(t_1, dots, t_k) <- underline(a_1) and a_2 and dots and a_m$, se la clausola scleta dalla base di conoscenza è:
 $
 a <- b_1 and dots and b_p
 $
 con $a_1$ e $a$ unificabili da un MGU $sigma$, la risolvente sarà la nuova clausola di risposta:
 $
-[y e s(t_1, dots, t_k) <- b_1 and dots and b_p and a_2 and dots and a_m]sigma
+["yes"(t_1, dots, t_k) <- b_1 and dots and b_p and a_2 and dots and a_m]sigma
 $
 Ripetendo passi di risoluzione si ottiene una *derivazione SLD*, ossia una sequenza $gamma_0, gamma_1, dots, gamma_n$ di clausole di risposta in cui:
 - $gamma_0$ è una clausola di risposta corrispondente alla query originaria $q$;
-	date $V_1, dots, V_k$ variabili libere di $q: y e s(V_1, dots, V_k) <- q$
+	date $V_1, dots, V_k$ variabili libere di $q: "yes"(V_1, dots, V_k) <- q$
 - ogni $gamma_i$ si ottiene per risoluzione SLD:
 	- selezionando $a_1$ nel corpo di $gamma_(i-1)$;
 	- scegliendo dalla base di conoscenza una copia $a <- b_1 and dots and b_p$ la cui testa $a$ si unifichi con $a_i$ tramite un certo MGU $sigma$;
 	- sostituendo $a_1$ con il corpo $b_1 and dots and b_p$;
 	- applicando $sigma$ alla clausola di risposta risultante;
-- $gamma_n$ sarà la *risposta* della forma $y e s(t_1, dots, t_k) <-$ di una dimostrazione terminata con successo. In risposta alla query si restituirà: $V_1 = t_1, dots, V_k = t_k$ dove i $t_i$ sono i termini determinati dai binding delle variabili della query $V_i$.
+- $gamma_n$ sarà la *risposta* della forma $"yes"(t_1, dots, t_k) <-$ di una dimostrazione terminata con successo. In risposta alla query si restituirà: $V_1 = t_1, dots, V_k = t_k$ dove i $t_i$ sono i termini determinati dai binding delle variabili della query $V_i$.
 #algoritmo(title: [Algoritmo di dimostrazione top-down per il Datalog])[
   #pseudocode-list[
     + *non-deterministic procedure* $"Prove_datalog_TD"(K B, q)$
@@ -2580,7 +2580,7 @@ Ripetendo passi di risoluzione si ottiene una *derivazione SLD*, ossia una seque
       + Sia $sigma <- "Unify"(a_1, a)$
       + *if* $sigma = bot$ *then* fallire
       + Assegna a $G$ la clausola $("yes"(t_1, dots, t_k) <- b_1 and dots and b_p and a_2 and dots and a_m) sigma$
-    + *return* $\{V_1 = t_1, dots, V_k = t_k\}$ dove $G$ è $"yes"(t_1, dots, t_k) <-$
+    + *return* $brace.lV_1 = t_1, dots, V_k = t_kbrace.r$ dove $G$ è $"yes"(t_1, dots, t_k) <-$
   ]
 ] <alg:datalog-top-down>
 La procedura top down per KB Datalog è non deterministica: si possono trovare tutte le derivazioni tentando altre scelte che portino al successo. Essa fallisce se tutte le scelte portano al fallimento: non esiste alcuna derivazione. \
@@ -2599,22 +2599,22 @@ si può costruire la _derivazione_ seguente:
 
 - _yes(P)_ $<-$ _luogo\_nascita(P, colombia)._ \
   risolta con _luogo\_nascita_($P_1, L_1$) $<-$ _parte\_di_($d_1, L_1$) $and$ _luogo\_nascita_($P_1, d_1$). \
-  usando $\{P_1 \/ P, L_1 \/ italic("colombia")\}$;
+  usando $brace.lP_1 \/ P, L_1 \/ italic("colombia")brace.r$;
 
 - _yes(P)_ $<-$ _parte\_di_($d_1$, _colombia_) $and$ _luogo\_nascita_($P, d_1$). \
   risolta con _parte\_di(atlantico, colombia)._ \
-  usando $\{d_1 \/ italic("atlantico")\}$;
+  usando $brace.ld_1 \/ italic("atlantico")brace.r$;
 
 - _yes(P)_ $<-$ _luogo\_nascita(P, atlantico)._ \
   risolta con _luogo\_nascita_($P_2, L_2$) $<-$ _parte\_di_($d_2, L_2$) $and$ _luogo\_nascita_($P_2, d_2$). \
-  usando $\{P_2 \/ P, L_2 \/ italic("atlantico")\}$;
+  usando $brace.lP_2 \/ P, L_2 \/ italic("atlantico")brace.r$;
 
 - _yes(P)_ $<-$ _parte\_di_($d_2$, _atlantico_) $and$ _luogo\_nascita_($P, d_2$). \
-  risolta con _parte\_di(barranquilla, atlantico)._ usando $\{d_2 \/ italic("barranquilla")\}$;
+  risolta con _parte\_di(barranquilla, atlantico)._ usando $brace.ld_2 \/ italic("barranquilla")brace.r$;
 
 - _yes(P)_ $<-$ _luogo\_nascita(P, barranquilla)._ \
   risolta con _luogo\_nascita(shakira, barranquilla)._ \
-  usando $\{P \/ italic("shakira")\}$;
+  usando $brace.lP \/ italic("shakira")brace.r$;
 
 - _yes(shakira)_ $<- .$
 ]
@@ -2707,39 +2707,39 @@ Considerata una base di conoscenza con le clausole
 + _append(nil, Z, Z)_
 una derivazione per la query
 $
-"ask" italic("append")(F, c(L, n i l), c(l, c(i, c(s, c(t, n i l )))))
+"ask" italic("append")(F, c(L, "nil"), c(l, c(i, c(s, c(t, "nil" )))))
 $
 è la seguente:
 - _yes(F, L)_ $<-$ _append(F, c(L, nil), c(l, c(i, c(s, c(t, nil)))))_
 	risolvendo con _append(c($A_1, X_1$), $Y_1$, c($A_1, Z_1$))_ $<-$ _append($X_1, Y_1, Z_1$)_ copia della 1. con variabili ridenominate aggiungendo l'indice 1:
-		- sostituzione: $brace.l F slash c(l, X_1), Y_1 slash (L, n i l), A_1 slash l, Z_1 slash c(i, c(s, c(t, n i l)))$
+		- sostituzione: $brace.l F slash c(l, X_1), Y_1 slash (L, "nil"), A_1 slash l, Z_1 slash c(i, c(s, c(t, "nil")))$
 - _yes(c(l, $X_1$), L)_ $<-$ _append($X_1$, c(L, nil), c(i, c(s, c(t, nil))))_:
 	risolvendo con _append(c($A_2, X_2$), $Y_2$, c($A_2, Z_2$))_ $<-$ _append($X_2, Y_2, Z_2$)_;
-	- sostituzione: $brace.l X_1 slash c(i, X_2), Y_2 slash c(L, n i l), A_2 slash i, Z_2 slash c(s, c(t, n i l))$;
+	- sostituzione: $brace.l X_1 slash c(i, X_2), Y_2 slash c(L, "nil"), A_2 slash i, Z_2 slash c(s, c(t, "nil"))$;
 - _yes(c(l, c(i, $X_2$)), L)_ $<-$ _append($X_2$, c(L, nil), c(s, c(t, nil))):_
 	rilvendo con _append(c($A_3, X_3$), $Y_3$, c($A_3, Z_3$))_ $<-$ _append($X_3, Y_3, Z_3$)_
-	- sostituzione: $brace.l X_2 slash c(s, X_3), Y_3 slash c(L, n i l), A_3 slash s, Z_3 slash c(t, n i l) brace.r$
+	- sostituzione: $brace.l X_2 slash c(s, X_3), Y_3 slash c(L, "nil"), A_3 slash s, Z_3 slash c(t, "nil") brace.r$
 - _yes(c(l, c(i, c(s, $X_3$))), L)_ $<-$ _append($X_3$, c(L, nil), c(t, nil))_:
 	applicabili entrambe le clausole, scegliendo la 1.: si risolve con _append(c($A_4, X_4$), $Y_4$, c($A_4, Z_4$))_ $<-$ _append($X_4, Y_4, Z_4$)_
-	- sostituzione: $brace.l X_3 slash c(t, X_4), Y_4 slash c(L, n i l), A_4 slash t, Z_4 slash n i l$;
+	- sostituzione: $brace.l X_3 slash c(t, X_4), Y_4 slash c(L, "nil"), A_4 slash t, Z_4 slash "nil"$;
 - _yes(c(l, c(i, c(s, c(t, $X_4$)))), L)_ $<-$ _append($X_4$, c(L, nil), nil)_
 qui la dimostrazione fallisce:  le teste delle clausole non si unificano con l'atomo nel corpo. Si torna al punto di scelta precedente:
 - _yes(c(l, c(i, c(s, $X_3$))), L)_ $<-$ _append($X_3$, c(L, nil), c(t, nil))_:
 	scegliendo invece la 2., si risolve con: _append(nil, $Z_5, Z_5$)_;
-	- sostituzione $brace.l Z_5 slash c(t, n i l), X_3 slash n i l, L slash t$;
+	- sostituzione $brace.l Z_5 slash c(t, "nil"), X_3 slash "nil", L slash t$;
 - _yes(c(l, c(i, c(s, nil))), t)_ $<-$
-e la dimostrazione ha successo con risposta $F = c(l, c(i, c(s, n i l))), L = t$
+e la dimostrazione ha successo con risposta $F = c(l, c(i, c(s, "nil"))), L = t$
 ]
 ==== Liste: Notazione Prolog
 Abbreviazioni ammesse nella notazione del Prolog:
 - $[ ]$ o _nil_ denotano la lista vuota;
 - $[E bar R]$ è la lista con primo elemento $E$ e resto della lista $R$, scritta anche _cons(E, R)_;
-- semplificazione: $[X bar [Y]]$ si può scrivere $[X, Y]$, se $Y$ è una sequenza di valori: ad esempio $[a]$ per $[a bar []]$, $[b bar [ a bar n i l]]$ e $[a, b bar C]$ per $a bar [b bar C]]$
+- semplificazione: $[X bar [Y]]$ si può scrivere $[X, Y]$, se $Y$ è una sequenza di valori: ad esempio $[a]$ per $[a bar []]$, $[b bar [ a bar "nil"]]$ e $[a, b bar C]$ per $a bar [b bar C]]$
 #esempio[
 Definizione che usa la notazione:
 - _append([ A | X], Y, [A | Z])_ $<-$ _append(X, Y, Z)_
 - _append([ ], Z, Z)_
-Data la query $"ask" a p p e n d(F, [L], [l, i, s, t])$ \
+Data la query $"ask" "append"(F, [L], [l, i, s, t])$ \
 una risposta che si ottiene è $F = [l, i, s], L = t$. \
 La dimostrazione resta la stessa: vengono ridenominate una funzione e una costante.
 ]
@@ -2773,7 +2773,7 @@ Sia data la relazione _student_ definita in una base di conoscenza con le sole c
 - _student(carla)_
 Assumendo che la conoscenza sia completa, i tre individui sarebbero gli unici studenti;
 $
-s t u d e n t(X) <-> X = "gianni" or X = "mario" or X = "carla"
+"student"(X) <-> X = "gianni" or X = "mario" or X = "carla"
 $
 ossia si potrebbe dire che, se $X$ è _gianni, mario o carla_, allora è uno studente e se $X$ è studente allora dev'essere uno dei tre. \
 L'assunzione di conoscenza completa includa la UNA. Ad esempio, la dimostrazione dell'atomo $not italic("student(gino)")$ richiederebbe di dimostrare $"gino" != "gianni" or  "gino" != "mario" or "gino" != "carla"$, atomi immediatamente provati sotto UNA.
@@ -2814,11 +2814,11 @@ la forma normale sarà:
 - _student(V)_ $<- V = $_carla_
 Questa definizione è equivalente a
 $
-s t u d e n t(V) <- V = "gianni" or V = "mario" or V = "carla"
+"student"(V) <- V = "gianni" or V = "mario" or V = "carla"
 $
 quindi il completamento di _student_ è il seguente
 $
-forall V s t u d e n t(V) <-> V = "gianni" or V = "mario" or V = "carla"
+forall V "student"(V) <-> V = "gianni" or V = "mario" or V = "carla"
 $
 ]
 #esempio(title: "Esami superati")[
@@ -2891,14 +2891,14 @@ Le relazioni andranno definite seguendo alcune linee guida ingegneristiche.
 #esempio[
 _blu_ può essere una categoria di classificazione appropriata per gli individui rappresentata come _relazione unaria_:
 - _l'oggetto a è blu_ si traduce con _blu(a)_;
-- una query possibile sarebbe: "Cosa si conosce di colore blu?" traducibile in: $"ask" b l u(X)$
+- una query possibile sarebbe: "Cosa si conosce di colore blu?" traducibile in: $"ask" "blu"(X)$
 - i valori di $X$ restituiti rappresentano gli oggetti di colore blu.
 Con questa rappresentazione, però, è difficile chiedere "Di che colore è l'oggetto _a_?" Nel linguaggio delle clausole definite, non si può chiedere $"ask" X(a)$. I nomi dei predicati non possono essere variabili. Ciò diventa possibile in logiche di ordine superiore per qualsiasi proprietà di $a$.
 ]
 Si può pensare a una forma di *reificazione*, ossia alla riduzione a oggetto di un concetto astratto, ad esempio la relazione fra un individuo e il suo colore, quindi il colore stesso pùo essere modellato come individuo:
 - usando la costante _blu_ per denotare il colore blu che diventa un individuo referenziabile come gli altri;
 - definendo un predicato _colore(Ind, Val)_, dove _Val_ è il colore dell'individuo _Ind_, si ha una relazione binaria tra individui fisici e i loro colori.
-- si potrà allora chiedere: "Cose è di colore blu?" con la query $"ask" c o l o r e(X, b l u)$
+- si potrà allora chiedere: "Cose è di colore blu?" con la query $"ask" "colore"(X, "blu")$
 #esempio(title: "Estensioni")[
 _colore_ come predicato binario non consente domande come "Quale proprietà di questo oggetto ha valore blu?", con risposta _colore_. \
 Un'ulteriore trasformazione può quindi prevedere la modellazione della proprietà _colore_ come individuo e con la nuova relazione _prop_: ad esempio, per rappresentare l'enunciato "l'individuo _a_ ha per la proprietà _colore_ il valore _blu_" si può scrivere _prop(a, colore, blu)_. \
@@ -2906,7 +2906,7 @@ Sono anche possibili tutte le query viste prima, riscrivendo le relazioni in ter
 ]
 Il predicato ternario _prop_ avrà la forma:
 $
-p r o p(I n d, P r o p, V a l)
+"prop"("Ind", "Prop", "Val")
 $
 con l'individuo _Ind_ ha per la proprietà _Prop_ il valore _Val_. \
 In alternativa si può considerare la struttura di *tripla* $chevron.l s, p, o chevron.r$ con:
@@ -3010,15 +3010,15 @@ Per costruire un'ontologia:
 #esempio[
 Si consideri la classe:
 $
-italic("nazionale") = \"italic("squadra che rappresenta una nazione in uno sport")\"
+italic("nazionale") = "italic("squadra che rappresenta una nazione in uno sport")"
 $
-con genus \"_squadra_\" e differentia \"_rappresenta una nazione in uno sport_\"
+con genus "_squadra_" e differentia "_rappresenta una nazione in uno sport_"
 - una _squadra di calcio_ è una squadra sportiva che gioca a calcio;
 - una _squadra nazionale di calcio_ è una _squadra che rappresenta una nazionale nel calcio_, per cui è sottoclasse di entrambe;
 - una _squadra_ è un _gruppo con scopi comuni_.
 Nella gerarchia vista in precedenza, nell'*@es:sottoclasse*, la differentia che distingue le classi nella parte sinistra è che le istanze delle squadre devono essere femminili:
-- si possono concepire anche una classe \"_squadra di calcio femminile_\" e una classe \"_squadra femminile_\", pur non avendo identificatori specifici in Wikidata;
-- non esiste in Wikidata la classe \"_squadra di calcio maschile_\": le squadre possono tesserare donne, anche se poi nessuna gioca effettivamente nella squadra maschile.
+- si possono concepire anche una classe "_squadra di calcio femminile_" e una classe "_squadra femminile_", pur non avendo identificatori specifici in Wikidata;
+- non esiste in Wikidata la classe "_squadra di calcio maschile_": le squadre possono tesserare donne, anche se poi nessuna gioca effettivamente nella squadra maschile.
 ]
 La gerarchia dele classi costituisce un _grafo aciclico orientato, DAG_, con archi delle sottoclassi alle rispettive super-classi immediate. \
 Si tratta di un _reticolo_: sono inutili definizioni con cicli, dato che si creerebbero equivalenze. Si noti che la metodologia non porta necessariamente a gerarchie ad albero, alcuni oggetti possono appartenere a più classi distinte e ogni classe non ha una sola super-classe specifica.
@@ -3094,11 +3094,11 @@ italic("URI_1 URI_2 Valore") "oppure" italic("URI_1 URI_2 URI_3")
 $
 Un esempio conreto potrebbe essere il seguente:
 $
-"http://example.org/#spiderman http://xmlns.com/foaf/0.1/name \"Uomo ragno\"@it."
+"http://example.org/#spiderman http://xmlns.com/foaf/0.1/name "Uomo ragno"@it."
 $
 È amessa la reificazione di enunciati, formule logiche arbitrarie, quindi in generale, non è decidibile. Ciò non costituisce sempre un problema: significa solo non poter limitare il tempo necessario a un dato calcolo, analogamente a quanto accade con i programmi logici quando si ammettono le funzioni. \
 *SPARQL* è il nome del protocollo e del linguaggio per l'interrogazione di KB costituite da grafi di triple RDF. A tale scopo si utilizzano specifici _endpoint_, quali, ad esempio: DBpedia, Min. Istruzione, INPS, $dots$ \
-Le query sono definite da pattern costituiti da triple contenenti URI o variabili, id, preceduti da \"?\".
+Le query sono definite da pattern costituiti da triple contenenti URI o variabili, id, preceduti da "?".
 #esempio(title: "query SPARQL")[
 Testabile attraverso l'endpoint di DBpedia:
 ````
@@ -3181,17 +3181,17 @@ Le principali *classi predefinite* e i *costruttori di classe* di OWL sono elenc
   [`owl:ObjectOneOf`$(I_1, dots, I_k)$],
   [$I_1, dots, I_k$],
   [`owl:ObjectHasValue`$(p, v)$],
-  [$\{x mid(|) p(x, v)\}$],
+  [$brace.lx mid(|) p(x, v)brace.r$],
   [`owl:ObjectAllValuesFrom`$(p, C)$],
-  [$\{x mid(|) forall y colon p(x, y) -> y in C\}$],
+  [$brace.lx mid(|) forall y colon p(x, y) -> y in Cbrace.r$],
   [`owl:ObjectSomeValuesFrom`$(p, C)$],
-  [$\{x mid(|) exists y in C colon p(x, y)\}$],
+  [$brace.lx mid(|) exists y in C colon p(x, y)brace.r$],
   [`owl:ObjectMinCardinality`$(n, p, C)$],
-  [$\{x mid(|) abs(\{y mid(|) p(x, y) and y in C\}) >= n\}$],
+  [$brace.lx mid(|) abs(brace.ly mid(|) p(x, y) and y in Cbrace.r) >= nbrace.r$],
   [`owl:ObjectMaxCardinality`$(n, p, C)$],
-  [$\{x mid(|) abs(\{y mid(|) p(x, y) and y in C\}) <= n\}$],
+  [$brace.lx mid(|) abs(brace.ly mid(|) p(x, y) and y in Cbrace.r) <= nbrace.r$],
   [`owl:ObjectHasSelf`$(p)$],
-  [$\{x mid(|) p(x, x)\}$],
+  [$brace.lx mid(|) p(x, x)brace.r$],
   table.hline(),
 )
 I *predicati predefiniti* OWL hanno un'interpretazione prefissata. Nelle seguenti tabelle si userà la *notazione funzionale*, inoltre _x_ e _y_ s'intendono universalmente quantificate:
@@ -3291,7 +3291,7 @@ Un'*ontologia di dominio* riguarda un particolare dominio d'interesse: molte del
 - Nel progettare una nuova ontologia, conviene consultarsi con altri utenti potenziali, ciò la rende più utile e più facilmente adottabile;
 - Vanno seguite le convenzioni di denominazione, ad esempio chiamare una classe con il nome, al singolare, delle istanze:
 	- pensare all'uso delle classi/proprietà;
-	- di un individuo `r1` meglio dire che \"è un `Resort`\" rispetto a \"è un `Resorts`\" oppure \"è un `Concetto_di_resort`\"
+	- di un individuo `r1` meglio dire che "è un `Resort`" rispetto a "è un `Resorts`" oppure "è un `Concetto_di_resort`"
 - Specificare la corrispondenza tra ontologie: a volte serve un allineamento quando le ontologie sono sviluppate separatamente, evitando, se possibile, la ridondanza che le rende più complicate da usare.
 ==== Web of Data
 Il *Web of Data* è una prospettiva del Web Semantico tesa a sfruttare l'infrastruttura del Web per creare un grafo globale di sorgenti distribuite di dati collegati, come aad esempio la seguente figura:
@@ -3635,7 +3635,7 @@ Nel caso di una $Y$ _categorica_, con un dominio $brace.l v_1, dots, v_k brace.r
     table.hline(stroke: 0.8pt),
   )
 ]
-Quindi la predizione preferibile dipende dalla rappresentazion di $Y$ e dalla misura da ottimizzare. Per esempi non ancora osservati la frequenza empirica può risultare problematica se si massimizza la verosomiglianza o minimizza la logg. Ad esempio se $n_i = 0$ allora il valore $b_i$ sarà da considerarsi mai osservato. Un nuovo esempio di test con valore $v_i$ comporterebbe una likelihood nulla e una log-loss infinita, costituendo un caso di _sovradattamento_. \
+Quindi la predizione preferibile dipende dalla rappresentazion di $Y$ e dalla misura da ottimizzare. Per esempi non ancora osservati la frequenza empirica può risultare problematica se si massimizza la verosomiglianza o minimizza la log-loss. Ad esempio se $n_i = 0$ allora il valore $v_i$ sarà da considerarsi mai osservato. Un nuovo esempio di test con valore $v_i$ comporterebbe una likelihood nulla e una log-loss infinita, costituendo un caso di _sovradattamento_. \
 Come _riferimento_ di partenza si possono considerare predizioni naive, determinate riima di osservare i dati.
 === Tipi di Errore
 Gli errori non sono tutti uguali, alcuni tipi possono essere peggiori di altri in base alle loro conseguenze.
@@ -3778,9 +3778,9 @@ L'algoritmo _ricorsivo_ seguente costruisce, in modalità top-down, un albero pa
     + $"miglior_valore" <- "somma_loss"(E s) - gamma$
     + $"migliore_condizione" <- bot$
     + *for each* $c in C s$ *do*
-      + $v a l <- "somma_loss"({e in E s | c(e)}) + "somma_loss"({e in E s | not c(e)})$
-      + *if* $v a l < "miglior_valore"$ *then*
-        + $"miglior_valore" <- v a l$
+      + $"val" <- "somma_loss"({e in E s | c(e)}) + "somma_loss"({e in E s | not c(e)})$
+      + *if* $"val" < "miglior_valore"$ *then*
+        + $"miglior_valore" <- "val"$
         + $"migliore_condizione" <- c$
     + *return* $"migliore_condizione"$
   ]
@@ -3814,7 +3814,7 @@ Usando log-loss con base 2, la media delle loss `somma_loss(Es)/|Es|` corrispond
 #esempio[
 Ancora con il dataset con le preferenze sui video: operando una scelta (miope) del test, ai fini di minimizzare la log-loss dell'Eq. (7.5), ovvero massimizzare la likelihood, si ha che
 
-  - prima del test iniziale, la predizione ottimale basata sulla _frequenza empirica_ è $p[0] = |\{e in italic("Es") : mono("Da_vedere")(e) = mono("false")\}|/18 = 9/18 = 0.5$, $p[1] = |\{e in italic("Es") : mono("Da_vedere")(e) = mono("true")\}|/18 = 9/18 = 0.5$, per cui la log-loss risulta: $-(9 dot log_2 0.5 + 9 dot log_2 0.5)/18 = -(18 dot log_2 0.5)/18 = 1$
+  - prima del test iniziale, la predizione ottimale basata sulla _frequenza empirica_ è $p[0] = |brace.le in italic("Es") : mono("Da_vedere")(e) = mono("false")brace.r|/18 = 9/18 = 0.5$, $p[1] = |brace.le in italic("Es") : mono("Da_vedere")(e) = mono("true")brace.r|/18 = 9/18 = 0.5$, per cui la log-loss risulta: $-(9 dot log_2 0.5 + 9 dot log_2 0.5)/18 = -(18 dot log_2 0.5)/18 = 1$
 
   - test su `Virale`: $[e_1, e_4, e_5, e_6, e_9, e_10, e_12, e_13, e_14, e_15, e_16, e_17]$ sono gli esempi con `Virale = true`, mentre $[e_2, e_3, e_7, e_8, e_11, e_18]$ sono quelli con `Virale = false`; in ciascuna partizione si ha la stessa frequenza di esempi delle due classi (feature-obiettivo), per cui la predizione ottimale è $0.5$ per entrambe con log-loss $1$; non essendoci alcuna diminuzione si verifica che tale test non aiuti la predizione;
 
@@ -4011,7 +4011,7 @@ $
 "sigmoide"(x) = 1/(exp(-x) + 1) attach(=, t: (*)) (exp(x))/(exp(0) + exp(x)) = "softmax"(chevron.l 0, x chevron.r)_2
 $
 la coppia (0, $x$) corrisponde ai valori $("false, true")$; $"softmax"(chevron.l 0, x chevron.r)_2$ è la seconda componente della coppia risultante della softmax; si ha l'uguaglianza $(*)$ moltiplicando numeratore e denominatore per $exp(x)$ quindi equivale al caso in cui la prima componente sia fissata a 0. Si noti che la softmax, come la sigmoide, non può rappresentare probabilità nulle. \
-La *regressione softmax* è una generalizzazione della regressione logistica (detta anche _regressione logistica multinomiale_): si ha un'equazione lineare per ogni valore di $Y$, dove $d o m(Y) = brace.l v_1, dots, v_k$. Per la predizione per un esempio $e$ e $"softmax"(chevron.l u_1(e), dots, u_k(e)chevron.r)$ calcola una tupla di $k$ valori con $j$-esima componente corrispondente alla predizione per $Y = v_j$ e $u_j(e) = w_(0, j) + X_1(e) dot.c w_(1, j) + dots.c X_m(e) dot.c w_(m, j)$. \
+La *regressione softmax* è una generalizzazione della regressione logistica (detta anche _regressione logistica multinomiale_): si ha un'equazione lineare per ogni valore di $Y$, dove $"dom"(Y) = brace.l v_1, dots, v_k$. Per la predizione per un esempio $e$ e $"softmax"(chevron.l u_1(e), dots, u_k(e)chevron.r)$ calcola una tupla di $k$ valori con $j$-esima componente corrispondente alla predizione per $Y = v_j$ e $u_j(e) = w_(0, j) + X_1(e) dot.c w_(1, j) + dots.c X_m(e) dot.c w_(m, j)$. \
 Il modello viene tipicamente ottimizzato usando la log-loss categorica: sia $w_(i j)$ per $X_i$ e $v_j$, e sia $Y(e) = v_q$:
 $
 partial / (partial w_(i j))"logloss(softmax"(chevron.l u_1(e), dots, u_k(e) chevron.r), v_q) &= partial / (partial w_(i j))-log((exp(u_q(e)))/(sum_k exp(u_j(e)))) \
@@ -4240,7 +4240,7 @@ caption: [Rete neurale feed-forward]
 In genere le ANN hanno più feature di input ma anche più feature/target, tipicamente a valori reali; feature discrete possono essere trasformate in variabili-indicatrici o feature ordinali. \
 Ogni layer di unità opera in funzione dei precedenti: il layer di input ha un'unità per feature di input e viene avvalorato da ciascun esempio; un layer nascosto prevede la composizione di una funzione _lineare_ $f_i$ con una funzione $phi$ di attivazione non-lineare, da cui si calcola l'output dello strato _out[j]_ in funzione dei valori in input _in[k]_ verso lo strato
 $
-o u t[j] = phi(sum_k i n[k] dot.c w[k, j])
+"out"[j] = phi(sum_k i n[k] dot.c w[k, j])
 $
 si noti l'input aggiuntivo costante $i[0] = 1$ per il _bias_; occorrerà apprendere ciascun peso $w[k, j]$, uno per ogni coppia input-output del layer. \
 Si noti che layer lineari _consecutivi_ sarebbero inutili perchè trasformabilli in un unico layer lineare. \
@@ -4262,11 +4262,11 @@ caption: [Rete neurale per l'apprendimento della funzione `if-then-else`]
 )
 - _x, y, z_ costituiscono l'input;
 - la funzione è equivalente a $(x and y) or (not x and z)$, rappresentabile in termini di ReLU o sigmoidi;
-- daot un primo layer con due output: $h_1 = r e l u(x + y - 1)$ e $h_2 = r e l u(-x +z)$ si avrà che $h_1 = 1$ se $(x and y)$ vera e $h_2 = 1$ se $(not x and z)$ vera, altrimenti sono entrambe nulle;
+- daot un primo layer con due output: $h_1 = "relu"(x + y - 1)$ e $h_2 = "relu"(-x +z)$ si avrà che $h_1 = 1$ se $(x and y)$ vera e $h_2 = 1$ se $(not x and z)$ vera, altrimenti sono entrambe nulle;
 - per l'output, $"sigmoid"(-5 + 10 dot.c h_1 + 10 dot.c h_2)$ approssima $h_1 or h_2$ con un errore vicino al $0.7 percent$
 ]
 L'_ampiezza_ di un layer è pari alle dimensioni del vettore di output. L'ampiezza della rete è paria ll'ampiezza massima fra i suoi layer. La sua _profondità_ è pari al numero di layer. Le dimensioni dell'input dipendono dal problema. \
-Si può dimostrare che una rete con un solo layer nascosto, purchè sufficientemente ampio, può approssimare qualsiasi funzione continua su un intervallo di numeri reali o discreta con input / output discreti. I layer a lvielli bassi costruiscono feature utili a quelle dei livelli più alti, che li rende più semplici.
+Si può dimostrare che una rete con un solo layer nascosto, purché sufficientemente ampio, può approssimare qualsiasi funzione continua su un intervallo di numeri reali o discreta con input / output discreti. I layer a livelli bassi costruiscono feature utili a quelle dei livelli più alti, che li rende più semplici.
 === Apprendimento dei parametri
 L'algoritmo *back-propagation, BP,* implementa la DG Stocastica per determinare i pesi del modelli; per ogni esempio $e$ del batch, si aggiorna ogni peso $w$ in ragione di $-(partial)/(partial w)"errore"(e)$ usando le proprietà delle derivate, ossia le regole di decomposizione lineare e di concatenazione. \
 La predizione per $e$, con feature di input $x_e$, sarà
@@ -4302,8 +4302,8 @@ Ogni classe memorizza _in_ e _out_ se utili a `Backprop`.
       + $d[i, j] <- 0$
       + $w[i, j] <- "valore casuale"$
     + *method* $"output"(i n)$ \{#text(size: 8pt)[$i n$ array di lunghezza $n_i$]\}
-      + *for each* $j$ *do* $o u t[j] <- w[n_i, j] + sum_i i n[i] dot w[i, j]$
-      + *return* $o u t$
+      + *for each* $j$ *do* $"out"[j] <- w[n_i, j] + sum_i i n[i] dot w[i, j]$
+      + *return* $"out"$
     + *method* $"Backprop"("errore")$ \{#text(size: 8pt)[$"errore"$ array di lunghezza $n_o$]\}
       + *for each* $i, j$ *do* $d[i, j] <- d[i, j] + i n[i] dot "errore"[j]$
       + *for each* $i$ *do* $"i_errore"[i] <- sum_j w[i, j] dot "errore"[j]$
@@ -4332,13 +4332,13 @@ L'algoritmo mostra la procedura per l'apprendimento di una rete neurale, in cui:
       + $"batch" <- "campione casuale di "$ $b$ "esempi"
       + *for each* esempio $e in "batch"$ *do*
         + *for each* unità di input $i$ *do* $"valori"[i] <- X_i(e)$
-        + *for each* $f u n$ in "funzioni" in ordine ascendente *do*
-          + $"valori" <- f u n."output"("valori")$
+        + *for each* $"fun"$ in "funzioni" in ordine ascendente *do*
+          + $"valori" <- "fun"."output"("valori")$
           + *for each* unità di output $j$ *do* $"errore"[j] <- phi_o("valori"[j]) - Y s[j]$
-        + *for each* $f u n$ in "funzioni" in ordine discendente *do*
-          + $"errore" <- f u n."Backprop"("errore")$
-      + *for each* $f u n$ in "funzioni" che contiene pesi *do*
-        + $f u n."update"()$
+        + *for each* $"fun"$ in "funzioni" in ordine discendente *do*
+          + $"errore" <- "fun"."Backprop"("errore")$
+      + *for each* $"fun"$ in "funzioni" che contiene pesi *do*
+        + $"fun"."update"()$
     + *until* terminazione
   ]
 ] <alg:neural-network-learner>
@@ -4346,8 +4346,8 @@ L'algoritmo mostra la procedura per l'apprendimento di una rete neurale, in cui:
   #pseudocode-list[
     + *class* $"ReLU"()$
     + *method* $"output"(i n)$
-      + *for each* $i: 0 <= i < n_i$ *do* $o u t[i] <- "max"(0, i n[i])$
-      + *return* $o u t$
+      + *for each* $i: 0 <= i < n_i$ *do* $"out"[i] <- "max"(0, i n[i])$
+      + *return* $"out"$
     + *method* $"Backprop"("errore")$
       + *for each* $i: 0 <= i < n_i$ *do*
         + $"i_errore"[i] <- "errore"[i]$ *if* $(i n[i] > 0)$ *else* $0$
@@ -4355,10 +4355,10 @@ L'algoritmo mostra la procedura per l'apprendimento di una rete neurale, in cui:
     + #h(0pt)
     + *class* $"sigmoid"()$
     + *method* $"output"(i n)$
-      + *for each* $i: 0 <= i < n_i$ *do* $o u t[i] := 1 / (1 + "exp"(-i n[i]))$
-      + *return* $o u t$
+      + *for each* $i: 0 <= i < n_i$ *do* $"out"[i] := 1 / (1 + "exp"(-i n[i]))$
+      + *return* $"out"$
     + *method* $"Backprop"("errore")$
-      + *for each* $i: 0 <= i < n_i$ *do* $"i_errore"[i] := o u t[i] dot (1 - o u t[i]) dot "errore"[i]$
+      + *for each* $i: 0 <= i < n_i$ *do* $"i_errore"[i] := "out"[i] dot (1 - "out"[i]) dot "errore"[i]$
       + *return* $"i_errore"$
   ]
 ] <alg:relu-sigmoid>
@@ -4366,9 +4366,9 @@ L'algoritmo mostra la procedura per l'apprendimento di una rete neurale, in cui:
 La rete vista in precedenza per l'`if-then-else` con i dati visti nell'esempio precedente.
 - si invoca `Neural_network_learner` assegnando a _funzioni_ la lista `[Dense(3, 2), ReLU(), Dense(2, 1)]`
 - un run con 1000 epoche, learning rate = 0.01 e batch di 8 esempi produce i seguenti pesi:
-	- $h_1 = r e l u(2.47 dot.c x + 0.0000236 dot.c y - 2.74 dot.c z + 2.74)$
-	- $h_2 = r e l u(3.62 dot.c + 4.01 dot.c y + 0.228 dot.c - 3.84)$
-	- $o u t p u t = s i g m o i d(-4.42 dot.c h_1 + 6.64 dot.c h_2 + 4.95)$
+	- $h_1 = "relu"(2.47 dot.c x + 0.0000236 dot.c y - 2.74 dot.c z + 2.74)$
+	- $h_2 = "relu"(3.62 dot.c + 4.01 dot.c y + 0.228 dot.c - 3.84)$
+	- $"out" p u t = "sigmoid"(-4.42 dot.c h_1 + 6.64 dot.c h_2 + 4.95)$
 - la funzione risultante approssima con un errore nel caso pessimo dell'$1 percent$; predizione con la massima log loss 0.99 per l'esempio $not x and not y and z$, per il quale doveva essere 1;
 - al variare dei run si ottengono diversi pesi;
 - in tale caso semplice si ottiene un output intermedio interpretabile:
@@ -4430,15 +4430,15 @@ $
 dove $c$ è una costante di normalizzazione. \
 Ogni mondo in cui $e$ sia falsa ha probabilità condizionata nulla. Per gli altri mondi, si considerano probabilità normalizzate: perchè risulti una misura di probabilità, dato $e$:
 $
-1 &= mu_e (Omega) attach(=, t: "per casi") mu_e (\{omega mid(|) e "vera in" omega\}) + mu_e (\{omega mid(|) e "falsa in" omega\}) \
-&= c dot mu(\{omega mid(|) e "vera in" omega\}) + 0 = c dot P(e)
+1 &= mu_e (Omega) attach(=, t: "per casi") mu_e (brace.lomega mid(|) e "vera in" omegabrace.r) + mu_e (brace.lomega mid(|) e "falsa in" omegabrace.r) \
+&= c dot mu(brace.lomega mid(|) e "vera in" omegabrace.r) + 0 = c dot P(e)
 $
 per cui $c = 1 / P(e)$, quindi la misura può essere definita solo se $P(e) > 0$; difatti $P(e) = 0$ indica che $e$ è impossibile. \
 La *probabilità condizionata* della proposizione _h_ data _e_ può essere definita sommando le probabilità condizionate dei mondi in cui _h_ è vera:
 $
-  P(h mid(|) e) &= mu_e (\{omega mid(|) h "vera in" omega\}) \
-    &= mu_e (\{omega mid(|) h and e "vera in" omega\}) + mu_e (\{omega mid(|) h and not e "vera in" omega\}) \
-    &= 1/P(e) dot mu(\{omega mid(|) h and e "vera in" omega\}) + 0 = P(h and e)/P(e)
+  P(h mid(|) e) &= mu_e (brace.lomega mid(|) h "vera in" omegabrace.r) \
+    &= mu_e (brace.lomega mid(|) h and e "vera in" omegabrace.r) + mu_e (brace.lomega mid(|) h and not e "vera in" omegabrace.r) \
+    &= 1/P(e) dot mu(brace.lomega mid(|) h and e "vera in" omegabrace.r) + 0 = P(h and e)/P(e)
 $
 Per estensione si definisce la *distribuzione di probabilità condizionata* $P(X bar Y)$ in funzione di $X$ e $Y$ variaibli: dati $x in "dom"(X)$ e $y in "dom"(Y)$, si considera la probabilità condizionata delle proposizioni $P(X = x bar Y = y)$.  \
 Si considererà la _decomposizione_ di una congiunta per semplificare i calcoli.
@@ -4563,10 +4563,10 @@ caption: [BN sui voti]
 - _Impegno_ è indipendente da _Intelligenza_ e $"gen"(impe) = emptyset$;
 
 - _Risposte_ dipende da _Intelligenza_ e _Impegno_: \
-	$"gen"(risp) = \{intel, impe\}$;
+	$"gen"(risp) = brace.lintel, impebrace.r$;
 
 - _Voto_ è indipendente da _Intelligenza_ e _Impegno_ data _Risposte_: \
-	$"gen"(voto) = \{risp\}$.
+	$"gen"(voto) = brace.lrispbrace.r$.
 
 La fattorizzazione della distribuzione congiunta è:
 $
@@ -4709,7 +4709,7 @@ Una possibile rappresentazione per una tabella multidimensionale per la CPD $P(Y
 #let tazza = $italic("Tazza_piena")$
 #let bagnato = $italic("Bagnato")$
 
-Robot con azioni possibili indicate dalla variabile _Azione_, $"dom"(azione) = \{mono("uscita"), mono("porta_caffe")\}$. Si considera lo stato di _bagnato_ (indicato dalla variabile _Bagnato_) causato dalla pioggia (indicato da _Pioggia_ = `true`) nel contesto di un'uscita da un luogo al coperto (_Azione_ = `uscita`) o per colpa del trasporto _Azione_ = `porta_caffe` d'una tazza piena (_Tazza\_piena_) di caffè: _Bagnato_ sarà indipendente da _Pioggia_ quando _Azione_ = `porta_caffe`, ma dipendente da _Pioggia_ se _Azione_ = `uscita`; _Bagnato_ sarà indipendente da _Tazza\_piena_ dato che _Azione_ = `uscita`, ma dipendente da _Tazza\_piena_ dato _Azione_ = `porta_caffe`. Una CPT corrispondente può essere:
+Robot con azioni possibili indicate dalla variabile _Azione_, $"dom"(azione) = brace.lmono("uscita"), mono("porta_caffe")brace.r$. Si considera lo stato di _bagnato_ (indicato dalla variabile _Bagnato_) causato dalla pioggia (indicato da _Pioggia_ = `true`) nel contesto di un'uscita da un luogo al coperto (_Azione_ = `uscita`) o per colpa del trasporto _Azione_ = `porta_caffe` d'una tazza piena (_Tazza\_piena_) di caffè: _Bagnato_ sarà indipendente da _Pioggia_ quando _Azione_ = `porta_caffe`, ma dipendente da _Pioggia_ se _Azione_ = `uscita`; _Bagnato_ sarà indipendente da _Tazza\_piena_ dato che _Azione_ = `uscita`, ma dipendente da _Tazza\_piena_ dato _Azione_ = `porta_caffe`. Una CPT corrispondente può essere:
   #align(center)[
     #table(
       columns: 4,
@@ -4804,7 +4804,7 @@ P(Y = "true" bar X_1, dots, X_k) = "sigmoide"(sum_i omega_i dots.c X_i)
 $
 Asusmendo un input fittizio aggiuntivo $X_0 = 1$ con termine noto $omega_0$, esso corrisponde a una decomposizione della probabilità condizionata, con una _likelihood ratio_ pari a un prodotto di termini, uno per ogni $X_i$. Si noti che $P(Y bar X_1 = 0, dots, X_k = 0) = "sigmoide"(omega_0)$ quindi $omega_0$ corrisponde alla probabilità del caso in cui tutti i suoi genitori sono nulli mentre ogni $omega_i$ specifica un valore da aggiungere al cambiare di $X_i: P(Y bar X_1 = 0, dots, X_i = 1, dots, X_k = 0) = "sigmoide"(omega_0 + omega_i)$. Assumendo l'esclusiva influenza sul figlio di ciascun genitore, gli odds sono decomponibili in prodotti di termini dipendenti da una sola variabile.
 == Inferenza Probabilistica
-Lo scopo dell'inferenza è quello di rispondere a query su un dato modello probabilistico essenzaialemente trattato attraverso il calcolo di distribuzioni. Un tipico task è quello di calcolare la *distribuzione a posteriori* di una o più variabili di query data l'evidenza disponibile. Il problema risulta complesso. Si può dimostrare che sia _NP-hard_ e $hash$NP per il calcolo delle probabilita a posteriori o a priori di una variabile. Ciò nel caso pessimo, ma in genere si può sfruttare la struttura per rendere il compito più agevole. \
+Lo scopo dell'inferenza è quello di rispondere a query su un dato modello probabilistico essenzialmente trattato attraverso il calcolo di distribuzioni. Un tipico task è quello di calcolare la *distribuzione a posteriori* di una o più variabili di query data l'evidenza disponibile. Il problema risulta complesso. Si può dimostrare che sia _NP-hard_ e $hash$NP per il calcolo delle probabilita a posteriori o a priori di una variabile. Ciò nel caso pessimo, ma in genere si può sfruttare la struttura per rendere il compito più agevole. \
 Gli approcci principali all'inferenza probabilistica con le BN si caratterizzano in termini di inferenza esatta ed approssimata.
 === Inferenza Esatta
 Tale forma di inferenza richiede che le probabilità vengano calcolate precisamente. Fondamentalmente gli approcci relativi a tale forma si dividono in due modalità principali:
@@ -4905,7 +4905,7 @@ Per la BN vista in *@fig:bn_incendio*, ordinamento come in tabella. Si deve ripe
 + poi si campiona _Fumo_ usando $P(Fum mid(|) Inc = mono("true"))$;
 + ecc...
 
-Ciò va ripetuto fino a ottenere il numero desiderato di campioni/tuple $\{s_1, dots, s_n\}$.
+Ciò va ripetuto fino a ottenere il numero desiderato di campioni/tuple $brace.ls_1, dots, s_nbrace.r$.
 
 #let t = `true`
 #let f = `false`
@@ -4957,7 +4957,7 @@ L'algoritmo può essere formalizzato come segue.
     + *Output*
       + distribuzione a posteriori su $Q$
     + *Local*
-      + $"campione"[]$, array in cui $"campione"[v a r] in "dom"(v a r)$
+      + $"campione"[]$, array in cui $"campione"["var"] in "dom"("var")$
       + $"real" "freq"[k]$, array inizializzato a $0$ per ogni $k in "dom"(Q)$
     + Inizializzare $"campione"[X] <- e[X]$ se $X$ osservata
     + #text(fill: rgb("558B2F"), style: "italic")[{ altrimenti con un valore casuale da $"dom"(X)$ }]
@@ -5093,7 +5093,7 @@ P(phi bar E s) prop phi^(c_1 + n_1 - 1) dot.c (1-phi)^(c_0 + n_0 - 1)
 $
 ossia mantiene la stessa forma di quella a priori. La stima MAP per $phi$ è:
 $
-hat(phi)_(M A P) = (c_1 + n_1 - 1)/(c_0 + n_0 + c_1 + n_1 - 2)
+hat(phi)_("MAP") = (c_1 + n_1 - 1)/(c_0 + n_0 + c_1 + n_1 - 2)
 $
 e il valore atteso è:
 $
@@ -5149,7 +5149,7 @@ Casi di _probabilità nulle_ possono avere effetti indesiderati. Alcune feature 
 In conclusione un classificatore NB risulta spesso efficace. Funziona bene quando l'assunzione di indipendenza è appropriata nel caso in esame. \
 Il modello NB può essere ampliato ammettendo estensioni in cui alcune $X_i$ possano essere anche in nodi-genitori, mentre le altre rimangono figlie di $Y$: la probabilità della classificazione ati i genitori può essere rappresentata attraverso alberi di decisioni, funzioni lineari compresse oppure reti neurali. \
 In altre estensioni sono ammesse figlie di $Y$ non necessariamente indipendenti:
-- *Tree Augmented Naive-Bayes (TAN)* _network_: oltre alla classe possono avere un solo altro genitore (purchè il grafo resti aciclico), un modello semplice ed efficiente delle dipendenze tra $X_i$;
+- *Tree Augmented Naive-Bayes (TAN)* _network_: oltre alla classe possono avere un solo altro genitore (purché il grafo resti aciclico), un modello semplice ed efficiente delle dipendenze tra $X_i$;
 - *Latent Tree*: prevede uan struttura più complessa della $Y$, decomponibile in un numero di _variabili latenti_ connesse ad albero, tale che ogni variabile osservata figlia di una variabile latente; si avrà così un modello della dipendenza tra variabili osservate.
 === Apprendimento MAP di Alberi di Decisione
 Nell'apprendimento degli alberi di decisione serve un bias che tipicamente andrà a favorire alberi più piccoli e può essere imposto attraverso la scelta della distribuzione a priori. \
@@ -5200,7 +5200,7 @@ L'algoritmo converge quando nno si hanno cambiamenti nelle assegnazioni.
   #pseudocode-list[
     + *procedure* $"k-means"(X s, E s, k)$
     + *Input*
-      + $X s$ insieme di feature, $X s = \{X_1, dots, X_n\}$
+      + $X s$ insieme di feature, $X s = brace.lX_1, dots, X_nbrace.r$
       + $E s$ insieme di istanze di training
       + $k$ numero di cluster
     + *Output*
@@ -5212,7 +5212,7 @@ L'algoritmo converge quando nno si hanno cambiamenti nelle assegnazioni.
       + $"Boolean" "stabile"$
     + Inizializzare $f s$ e $c c$ in base ai dati o casualmente
     + *define* $"pred"[j, c] = f s[j, c] / c c[c]$ #text(fill: rgb("558B2F"), style: "italic")[{ stima di $"pred"(j, c)$ }]
-    + *define* $"cluster"[e] = "arg" min_(c in \{1, dots, k\}) sum_(j=1)^n ("pred"[j, c] - X_j(e))^2$
+    + *define* $"cluster"[e] = "arg" min_(c in brace.l1, dots, kbrace.r) sum_(j=1)^n ("pred"[j, c] - X_j(e))^2$
     + *repeat*
       + azzerare $f s'$ e $c c'$
       + *for each* $e in E s$ *do*
@@ -5289,7 +5289,7 @@ Per il calcolo delle probabilità tramite statistiche sufficienti
   #pseudocode-list[
     + *procedure* $"EM"(X s, E s, k)$
     + *Input*
-      + $X s$ insieme di feature, $X s = \{X_1, dots, X_n\}$
+      + $X s$ insieme di feature, $X s = brace.lX_1, dots, X_nbrace.r$
       + $E s$ insieme di esempi di training
       + $k$ numero di classi
     + *Output*
@@ -5510,7 +5510,7 @@ $
 dove in (\*) si assume che si possa fattorizzare $P(m) = product_i P(m(X_i))$ con $m(X_i)$ modello locale per $X_i$. \
 L'obiettivo finale diventa:
 
-in cui ogni variabile può essere ottimizzata separatamente purchè si mantenga la rete aciclica: va trovato un buon ordinamento ttoale sulle variabili tramite ricerca locale o branch-and-bound. Risultano diversi problemi supervisionati indipendenti da risolvere determinando per ogni variabile le distribuzioni $P_(m)^(e) (X_i bar "par"(X_i, m))$ e una possibile approssimazione di $log(P(m(X_i)))$, ad esempio usando il BIC.
+in cui ogni variabile può essere ottimizzata separatamente purché si mantenga la rete aciclica: va trovato un buon ordinamento totale sulle variabili tramite ricerca locale o branch-and-bound. Risultano diversi problemi supervisionati indipendenti da risolvere determinando per ogni variabile le distribuzioni $P_(m)^(e) (X_i bar "par"(X_i, m))$ e una possibile approssimazione di $log(P(m(X_i)))$, ad esempio usando il BIC.
 === Caso Generale
-Se la struttura non è data, alcune variabili sono latenti e vi sono anche dati mancanti ci sono diversi problemi da risolvere: oltre a quello dei dati macanti c'è la complessità computazionale data dalla ricerca in uno spazio circoscritto ma troppo esteso per pensare di testare tutte le combinazioni possibili di ordinamenti e variabili latenti, anche laddove si considerino solo variabili latenti che semplifichino il modello. Lo spazio sarà finito ma è troppo vasto. \
-Possibili soluzioni a tali problemi sono la selezione del miglior modello, ad esempio adottando il criterio MAP oppure effettuare predizioni mediando su tutti i modelli. Questa seconda soluzione fornisce in genere prestazioni migliori ma risultà più difficile da spiegare/giustificare.
+Se la struttura non è data, alcune variabili sono latenti e vi sono anche dati mancanti ci sono diversi problemi da risolvere: oltre a quello dei dati mancanti c'è la complessità computazionale data dalla ricerca in uno spazio circoscritto ma troppo esteso per pensare di testare tutte le combinazioni possibili di ordinamenti e variabili latenti, anche laddove si considerino solo variabili latenti che semplifichino il modello. Lo spazio sarà finito ma è troppo vasto. \
+Possibili soluzioni a tali problemi sono la selezione del miglior modello, ad esempio adottando il criterio MAP oppure effettuare predizioni mediando su tutti i modelli. Questa seconda soluzione fornisce in genere prestazioni migliori ma risulta più difficile da spiegare/giustificare.

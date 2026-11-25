@@ -1,6 +1,8 @@
 # Exclude libri/ directories and their contents everywhere
 libri/
 
+*.bak
+
 # LaTeX auxiliary files (explicitly ignored even if they match patterns above)
 *.aux
 *.log
