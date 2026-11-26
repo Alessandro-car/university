@@ -1756,4 +1756,708 @@ image("images/heatmap.jpg", width: 70%),
 caption: [Heat-map di tre pagine web]
 )
 Analisi di questo tipo possono fornire informazioni molto utili per migliorare l'usabilità dei siti web. Studiando i cammini percorsi dallo sguardo dei diversi utenti sulle pagine, e correlandoli agli obiettivi che essi hanno nel condurre questo esame, possiamo ricavare utili informazioni per migliorarne il layout. Queste sono analisi complesse, tutt'oggi utilizzate solo in casi molto particolari.
+= Valutare l'usabilità
+== Perché e quando si valuta
+La valutazione è un passo essenziale in una progettazione *human-centred*, e non è un'attività da fare una volta sola alla fine: il suo scopo cambia a seconda del momento del ciclo di sviluppo.
 
+- *All'inizio del progetto* l'obiettivo principale è raccogliere indicazioni per orientare le attività di progettazione successive.
+- *Nelle fasi più avanzate*, quando sono disponibili prototipi più completi, diventa possibile _quantificare_ il livello di raggiungimento degli obiettivi dell'utente e dell'organizzazione.
+- *Dopo il rilascio* del sistema si può monitorare la sua adeguatezza ai nuovi contesti di utilizzo.
+
+La valutazione ha molte dimensioni; qui ci si concentra sulla *valutazione dell'usabilità*, rimandando per gli altri aspetti all'ampia letteratura esistente sul testing in generale. Per valutare l'usabilità si possono impiegare diverse tecniche, che rientrano in due grandi famiglie: le *ispezioni* e i metodi *user-based*.
+
+== Le due famiglie di metodi
+
+#table(
+  columns: (7.5em, 1fr, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [], [*Ispezioni*], [*User-based*],
+  [*Chi valuta*], [Valutatori esperti di usabilità], [Valutatori che osservano utenti reali (o loro rappresentanti)],
+  [*Ruolo dell'utente*], [Nessun coinvolgimento], [Centrale: svolge compiti veri],
+  [*Cosa si fa*], [Si ispeziona l'interfaccia per trovare possibili problemi di usabilità, fornendo giudizi basati sulla conoscenza degli esperti], [Si valutano le proprietà dell'usabilità osservando come il sistema, o un suo prototipo, viene usato],
+  [*Pregi*], [Economiche e semplici da organizzare], [Molto affidabili (se fatte bene)],
+  [*Limiti*], [Soggettive, con forte dipendenza dall'esperienza del valutatore; difficili da standardizzare], [Dispendiose; difficile trovare un campione "veramente" rappresentativo; difficile far eseguire task complessi dopo un breve training],
+  [*Esempi*], [Valutazione euristica, cognitive walkthrough], [Osservazione, thinking aloud, interviste, questionari, focus group, esperimenti controllati],
+  table.hline(),
+)
+
+=== Le ispezioni
+Le ispezioni sono valutazioni effettuate *da esperti di usabilità, senza alcun coinvolgimento dell'utente*. Sono economiche e semplici da organizzare, ma proprio per questo hanno dei limiti: sono *soggettive* (dipendono molto dall'esperienza di chi valuta) e *difficili da standardizzare*. \
+A volte non si possono coinvolgere gli utenti in una valutazione: non sono disponibili, il tempo non basta o è difficile trovare le persone giuste. In queste circostanze altri esperti, cioè persone che conoscono l'interaction design e i bisogni e il comportamento tipico degli utenti, possono fornire un feedback. Fra i metodi di ispezione rientrano le *valutazioni euristiche* (le più note) e i *walk-through*: in entrambi i casi i ricercatori esaminano l'interfaccia di un prodotto interattivo, spesso assumendo il ruolo degli utenti tipici, e individuano i problemi che gli utenti con tutta probabilità incontrerebbero interagendo con il prodotto.
+
+=== I metodi user-based
+Nei metodi user-based le proprietà dell'usabilità vengono valutate osservando *utenti reali, o loro rappresentanti, che svolgono compiti veri* con il sistema o con un suo prototipo. Se ben condotti sono molto affidabili, ma:
+
+- è difficile selezionare un campione davvero rappresentativo degli utenti reali;
+- è difficile far eseguire agli utenti task complessi dopo un breve training;
+- sono metodi dispendiosi.
+
+Si dividono in tre gruppi:
+
+#table(
+  columns: (9em, 8em, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [*Gruppo*], [*Tecnica*], [*In cosa consiste*],
+  [*Metodi basati sull'osservazione*], [Osservazione diretta], [Uno o più valutatori osservano gli utenti mentre svolgono i loro compiti nel loro ambiente di lavoro],
+  [], [Thinking aloud], [Il valutatore chiede all'utente di pensare ad alta voce mentre usa il sistema],
+  [*Tecniche di survey*], [Interviste], [Gli sperimentatori raccolgono esperienze, opinioni e motivazioni sul comportamento dell'utente],
+  [], [Questionari], [Anche personale inesperto può distribuirli, per raccogliere informazioni sulla situazione attuale e ottenere risposte specifiche],
+  [], [Focus group], [Discussione moderata da un esperto di Human-Computer Interaction],
+  [*Metodi sperimentali*], [Esperimenti controllati], [Esperimenti di laboratorio rigorosi (vedi @sec:altre_tecniche)],
+  table.hline(),
+)
+
+== Stili di valutazione
+Una valutazione può svolgersi in due luoghi:
+
+- in *laboratori di usabilità*;
+- *nell'ambiente di lavoro* in cui gli utenti reali utilizzeranno il sistema;
+
+e può essere condotta *da esperti* oppure *in collaborazione con utenti reali*.
+
+=== Studi di laboratorio
+Gli studi di laboratorio, condotti con metodologie rigorose su campioni rappresentativi di utenti, sono oggi uno strumento importante per far avanzare le conoscenze sull'usabilità e sui principi dell'interazione human-centred in generale. I loro punti caratteristici sono:
+
+- *offrono attrezzatura sofisticata* che non può essere riprodotta nell'ambiente di lavoro (ad esempio computer molto potenti, specchi bilaterali, ecc.);
+- *manipolano il contesto* al fine di individuare problemi o procedure meno usate;
+- *non sempre simulano situazioni del mondo reale* (ad esempio nel caso delle tecnologie mobili).
+
+=== Studi sul campo
+Gli studi sul campo hanno il vantaggio opposto: *consentono di osservare interazioni tra sistema e utente che si sarebbero perse in un laboratorio di usabilità*. Il prezzo da pagare è che gli *alti livelli di rumore ambientale* rendono difficile l'osservazione.
+
+#table(
+  columns: (6.5em, 1fr, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [], [*Studi di laboratorio*], [*Studi sul campo*],
+  [*Vantaggi*], [Attrezzatura sofisticata; contesto manipolabile per far emergere problemi o procedure poco usate], [Si osservano interazioni che in laboratorio si perderebbero],
+  [*Svantaggi*], [Non sempre simulano il mondo reale (es. tecnologie mobili)], [Rumore ambientale elevato, osservazione difficile],
+  table.hline(),
+)
+
+== Come scegliere il metodo di valutazione
+Non esiste un metodo migliore in assoluto: la scelta dipende da quattro fattori.
+
++ *Fase del ciclo di sviluppo del sistema* --- progetto vs implementazione.
++ *Stile di valutazione* --- laboratorio di usabilità vs ambiente di lavoro.
++ *Tipo di misure* --- misure qualitative vs misure quantitative.
++ *Risorse richieste* --- tempo, persone, denaro e attrezzatura a disposizione.
+
+== La valutazione euristica
+=== Che cos'è
+Nell'ingegneria dell'usabilità il termine _euristico_ indica quelle valutazioni effettuate *da esperti*, che analizzano sistematicamente il comportamento di un sistema e ne verificano la *conformità a specifiche "regole d'oro"* (appunto le _euristiche_), derivanti da principi e linee guida generalmente accettati. \
+In pratica l'esperto considera *una euristica alla volta* ed esamina nel dettaglio le funzioni del sistema per verificarne la conformità, esaminando le singole schermate ed eseguendo alcuni *task rappresentativi*. L'ispezione riguarda sia le componenti *statiche* sia quelle *dinamiche* dell'interfaccia. \
+Le euristiche possono essere molto diverse, più o meno dettagliate. Si *preferiscono* euristiche costituite da _pochi principi molto generali_, piuttosto che linee guida dettagliate, di difficile utilizzo. Tra tutte, sono le più usate quelle di *Nielsen*, dieci regole che permettono al valutatore di inquadrare i problemi rilevati in categorie ben individuate. \
+La valutazione euristica è considerata un *"discount usability method"*: un metodo molto efficiente, con un alto rapporto benefici/costi (Nielsen, 1993). Il rovescio della medaglia è che fornisce risultati piuttosto *soggettivi*.
+
+=== Le 10 euristiche di Nielsen (1994)
+
+#table(
+  columns: (2.2em, 10em, 1fr),
+  align: (center + horizon, left + horizon, left + horizon),
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [*\#*], [*Euristica*], [*Cosa richiede*],
+  [1], [*Visibilità dello stato del sistema*], [Il sistema dovrebbe sempre informare gli utenti su ciò che sta accadendo, mediante feedback appropriati in un tempo ragionevole.],
+  [2], [*Corrispondenza fra il mondo reale e il sistema*], [Il sistema dovrebbe parlare il linguaggio dell'utente, con parole, frasi e concetti familiari, piuttosto che termini orientati al sistema. Seguire le convenzioni del mondo reale, facendo apparire le informazioni secondo un ordine logico e naturale.],
+  [3], [*Libertà e controllo da parte degli utenti*], [Gli utenti spesso selezionano funzioni per errore e hanno bisogno di una "uscita di emergenza" segnalata con chiarezza, per uscire da uno stato non desiderato senza dover passare attraverso un lungo dialogo. Fornire le funzioni di _undo_ e _redo_.],
+  [4], [*Consistenza e standard*], [Gli utenti non dovrebbero doversi chiedere se parole, situazioni o azioni differenti hanno lo stesso significato.],
+  [5], [*Prevenzione degli errori*], [Ancora meglio di buoni messaggi di errore è un'attenta progettazione che eviti in primo luogo l'insorgere del problema. Eliminare le situazioni che possono provocare errori e chiedere conferma prima di eseguire le azioni richieste.],
+  [6], [*Riconoscere piuttosto che ricordare*], [Minimizzare il ricorso alla memoria dell'utente, rendendo visibili oggetti, azioni e opzioni: non dovrebbe aver bisogno di ricordare informazioni nel passare da una fase del dialogo a un'altra. Le istruzioni d'uso dovrebbero essere visibili o facilmente recuperabili quando servono.],
+  [7], [*Flessibilità ed efficienza d'uso*], [Gli _acceleratori_ --- invisibili all'utente novizio --- possono rendere veloce l'interazione dell'utente esperto, così che il sistema soddisfi sia l'esperto sia l'inesperto. Permettere all'utente di personalizzare le azioni frequenti.],
+  [8], [*Design minimalista ed estetico*], [I dialoghi non dovrebbero contenere informazioni irrilevanti o necessarie solo di rado: ogni informazione aggiuntiva compete con quelle rilevanti e ne diminuisce la visibilità relativa.],
+  [9], [*Aiutare gli utenti a riconoscere gli errori, diagnosticarli e correggerli*], [I messaggi di errore dovrebbero essere espressi in linguaggio semplice (senza codici), indicare il problema con precisione e suggerire una soluzione in modo costruttivo.],
+  [10], [*Guida e documentazione*], [Anche se è preferibile che il sistema sia utilizzabile senza documentazione, può essere necessario fornire aiuto. Ogni informazione di questo tipo dovrebbe essere facilmente raggiungibile, focalizzata sul compito dell'utente, elencare i passi concreti da fare e non essere troppo ampia.],
+  table.hline(),
+)
+
+=== Confronto con i principi del dialogo (ISO 9241)
+Le euristiche di Nielsen si possono mettere in relazione con i *principi del dialogo* della norma ISO 9241:
+
+#table(
+  columns: (11em, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x == 1 { 0.5pt },
+  ),
+  [*Principi del dialogo (ISO 9241)*], [*Euristiche di Nielsen corrispondenti*],
+  [Adeguatezza al compito], [Riconoscere piuttosto che ricordare $dot.c$ Flessibilità ed efficienza d'uso],
+  [Autodescrizione], [Visibilità dello stato del sistema],
+  [Conformità alle aspettative], [Corrispondenza fra mondo reale e sistema $dot.c$ Consistenza e standard],
+  [Adeguatezza all'apprendimento], [Guida e documentazione],
+  [Controllabilità], [Libertà e controllo da parte degli utenti],
+  [Tolleranza verso gli errori], [Prevenzione degli errori $dot.c$ Aiutare gli utenti a riconoscere gli errori...],
+  [Adeguatezza alla individualizzazione], [_(nessuna euristica corrispondente)_],
+  [_(nessun principio corrispondente)_], [Design minimalista ed estetico],
+  table.hline(),
+)
+
+=== Altre euristiche: la versione di Giorgio Brajnik
+Esistono revisioni delle euristiche di Nielsen. Una è quella di *Giorgio Brajnik* (disponibile su web.archive.org con il titolo _"Euristiche di Nielsen"_): è una versione rivista e leggermente annotata rispetto all'originale, che include *domande specifiche* per favorire un'analisi più approfondita dei problemi. Il valutatore deve comunque integrare la propria valutazione con altre domande specifiche per il caso in esame.
+
+=== Quanti valutatori servono
+Una singola valutazione è *un'opinione* e va trattata come tale: *persone diverse trovano problemi diversi* (Nielsen e Landauer, 1993). La curva "proporzione di problemi trovati / numero di valutatori" cresce rapidamente con i primi valutatori (un singolo valutatore ne trova solo una frazione, intorno a un terzo) e poi si appiattisce. \
+Per questo si ottengono buoni risultati solo impiegando *più valutatori (3--5) sullo stesso progetto*, che analizzino il sistema *separatamente, senza comunicare tra loro*, e combinando poi i risultati.
+
+=== Procedura
+
+#figure(
+  block(
+    stroke: 0.5pt,
+    inset: 10pt,
+    width: 100%,
+    align(center)[
+      #set text(size: 9pt)
+      #grid(
+        columns: (1fr, auto, 1fr, auto, 1fr),
+        align: horizon + center,
+        column-gutter: 6pt,
+        box(stroke: 0.5pt, inset: 6pt, width: 100%)[*1. Fase di progettazione*\ team di valutazione e compiti],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 6pt, width: 100%)[*2. Fase di esecuzione*\ ispezione individuale],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 6pt, width: 100%)[*3. Fase di analisi dei problemi*\ riunione e tabella finale],
+      )
+    ]
+  ),
+  caption: [Fasi della valutazione euristica]
+)
+
+*1. Fase di progettazione*
+- Definizione del *team di valutazione*.
+- Definizione dei *compiti* che l'ispettore deve eseguire durante la valutazione euristica.
+
+*2. Fase di esecuzione*
+- Ciascun ispettore esegue i compiti *in modo individuale*, per identificare le criticità del sistema o prototipo ispezionato.
+- Ciascun ispettore compila la *tabella di valutazione*.
+
+*3. Fase di analisi dei problemi*
+- Il team si riunisce per *discutere i problemi* rilevati da ciascun ispettore.
+- Il team stila la *tabella di valutazione finale*, contenente i problemi di usabilità _unici_, ai quali è assegnato un *"grado di severità"*.
+
+=== Conduzione di una valutazione euristica
+L'esecuzione si articola in tre momenti.
+
+*a) Sessione di briefing.* I ricercatori vengono informati sull'obiettivo della valutazione. Se sono più di uno si può usare un copione prestabilito, in modo che tutti ricevano lo stesso briefing.
+
+*b) Periodo di valutazione.* I ricercatori dedicano normalmente *1 o 2 ore* a ispezionare il prodotto in modo indipendente, usando le euristiche come guida. Normalmente fanno *almeno due passate* di esplorazione dell'interfaccia:
+- la *prima* permette di farsi un'idea del flusso dell'interazione e della portata del prodotto;
+- la *seconda* consente di concentrarsi su elementi specifici dell'interfaccia e di identificare i potenziali problemi di usabilità.
+
+L'approccio va adattato alle circostanze:
+- se la valutazione riguarda un *prodotto funzionante*, i ricercatori hanno di solito in mente qualche attività specifica degli utenti e l'esplorazione è quindi focalizzata;
+- se la valutazione avviene *presto nella progettazione*, quando esistono solo mockup di schermate o una specifica, un secondo ricercatore può prendere nota dei problemi identificati mentre il primo pensa ad alta voce e può essere videoregistrato.
+
+*c) Sessione di debriefing.* I ricercatori si riuniscono con i designer per discutere ciò che hanno scoperto, assegnare una priorità ai problemi individuati e suggerire possibili soluzioni.
+
+#nota[
+  *Accessibilità.* Quando si progettano e si valutano pagine web, app e altri prodotti, è importante considerare anche la loro *accessibilità a un ampio spettro di utenti*: persone con difficoltà di vista, di udito e di mobilità.
+]
+
+=== Valutare la gravità dei problemi (problem rating)
+Il vantaggio di avere più valutatori arriva quando si *combinano le 3--5 valutazioni in un unico elenco più ampio, rimuovendo i duplicati*. Poi:
+
++ dopo l'unione, si chiede a ciascun valutatore di assegnare un *punteggio a ogni problema*, sia a quelli che ha trovato personalmente sia a quelli individuati dagli altri;
++ si usa di solito una *scala a 5 punti*: *0* = "Non penso che sia un problema"; *4* = "catastrofe di usabilità"; i problemi meno gravi ricevono valori intermedi;
++ si calcola il *punteggio medio* per ogni problema e si osserva quali emergono come i più gravi;
++ se tutti i valutatori concordano che qualcosa è una catastrofe, quel problema va *in cima alla lista delle correzioni*; gli altri vengono classificati più in basso e affrontati compatibilmente con tempo e risorse.
+
+In questo modo una valutazione euristica non si limita a *individuare* i problemi, ma aiuta anche a *stabilire le priorità* su cui concentrarsi in seguito.
+
+=== Esempio di report di ispezione
+Il risultato di un'ispezione è una tabella che elenca, per ogni problema, dove si trova, in cosa consiste, quale principio viola e come si può risolvere. Dopo la valutazione è auspicabile un incontro con i progettisti per discutere le soluzioni proposte.
+
+#table(
+  columns: (2.2em, 6.5em, 1fr, 8em, 1fr),
+  align: (center + horizon, left + horizon, left + horizon, left + horizon, left + horizon),
+  inset: (x: 6pt, y: 6pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x > 0 { 0.5pt },
+  ),
+  [*N.*], [*Locazione*], [*Problema*], [*Principio violato*], [*Possibile soluzione*],
+  [1], [Homepage], [Il nome della compagnia non è sempre presente perché animato.], [Minimizzare il carico di memoria dell'utente], [Il nome dovrebbe essere sempre presente insieme al logo e non animato.],
+  [2], [Homepage], [Il nome della compagnia, essendo quello della famiglia, non dà l'idea di cosa si occupa e di cosa offre il sito.], [Minimizzare il carico di memoria dell'utente], [Aggiungere una linea esplicativa che faccia capire di cosa si occupa senza costringere a navigare per conoscere il sito.],
+  [3], [Lato destro homepage], [La pubblicità sul lato destro distrae l'utente: è animata, per la sua posizione sembra un item importante e l'utente crede sia cliccabile, mentre non lo è.], [Prevedibilità], [Inserirla in un luogo meno attraente rispetto agli item di più alta priorità.],
+  table.hline(),
+)
+
+=== Limiti della valutazione euristica
+I principali inconvenienti sono tre.
+
+*L'esperienza del valutatore influisce sulla qualità* della valutazione (Nielsen, 1994):
+
+#table(
+  columns: (11em, 6.5em, 1fr),
+  align: (left + horizon, center + horizon, left + horizon),
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [*Tipo di valutatore*], [*Problemi trovati*], [*Rispetto al livello precedente*],
+  [Novizi], [$tilde 22\%$], [--- ("valutatori scarsi")],
+  [Esperti di usabilità], [$tilde 41\%$], [1,8 volte meglio dei novizi],
+  [_Double experts_ (usabilità + dominio)], [$tilde 60\%$], [1,5 volte meglio degli esperti di usabilità],
+  table.hline(),
+)
+
+*Le euristiche sono troppo generali e poco operative*: non riescono a guidare i valutatori durante l'ispezione (Doubleday et al., 1997). \
+*Il supporto all'uso di una terminologia precisa è limitato*: di conseguenza i report dei problemi risultano troppo vaghi.
+
+== Il cognitive walkthrough
+=== Idea e fondamenti teorici
+Il cognitive walkthrough è un metodo di *ispezione* focalizzato sulla valutazione di un progetto rispetto alla *facilità di apprendimento* (è particolarmente utile per il WWW). La sua origine è il _code walkthrough_ dell'ingegneria del software, in cui i revisori esaminano il codice per controllare certe caratteristiche. \
+Si basa sulla teoria dell'*exploratory learning* (Polson e Lewis, 1990): nella soluzione di problemi gli utenti non amano consultare i manuali, ma preferiscono *esplorare le funzionalità del sistema*. Il comportamento tipico segue quattro passi, che il valutatore deve simulare:
+
+#figure(
+  block(
+    stroke: 0.5pt,
+    inset: 10pt,
+    width: 100%,
+    align(center)[
+      #set text(size: 8.5pt)
+      #grid(
+        columns: (1fr, auto, 1fr, auto, 1fr, auto, 1fr),
+        align: horizon + center,
+        column-gutter: 4pt,
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Obiettivo*\ descrizione grossolana del compito],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Esplorazione*\ dell'interfaccia e scelta delle azioni],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Osservazione*\ della reazione dell'interfaccia],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Azioni successive*\ (ritorno all'esplorazione)],
+      )
+    ]
+  ),
+  caption: [Ciclo dell'exploratory learning nel cognitive walkthrough]
+)
+
++ l'utente parte da una *descrizione grossolana del compito* che vuole effettuare;
++ *esplora l'interfaccia* e sceglie le azioni che ritiene possano portare a termine il compito (o una parte di esso);
++ *osserva le reazioni dell'interfaccia* per capire se le sue azioni hanno avuto l'effetto desiderato;
++ *determina quali azioni effettuare successivamente*.
+
+=== Che cosa serve in ingresso
+Per effettuare un cognitive walkthrough bisogna sapere quattro cose:
+
+#table(
+  columns: (9.5em, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x == 1 { 0.5pt },
+  ),
+  [*Input*], [*Dettagli*],
+  [*Chi sono gli utenti*], [Esperienze, caratteristiche (anche fisiche) e conoscenze che il valutatore deve assumere che abbiano (cfr. _personas_)],
+  [*Cosa deve eseguire l'utente*], [Un compito significativo che le tipologie di utenti definite effettueranno; si scelgono i soli task _problematici_, individuati tramite studi di mercato, analisi dei bisogni, test di prototipi, analisi dei requisiti],
+  [*Lista scritta completa delle azioni* necessarie per completare il task], [Esempi: "effettua il login nel sistema"; "trova l'impiegato più vecchio che non è ancora andato in pensione"; "programmare un videoregistratore con il telecomando"],
+  [*Descrizione del prototipo*], [Non deve essere necessariamente completa, ma abbastanza dettagliata],
+  table.hline(),
+)
+
+=== Esecuzione e domande guida
+Il valutatore analizza la *sequenza di azioni* (obiettivo $arrow.r$ esplorazione $arrow.r$ osservazione $arrow.r$ azioni successive, secondo le strategie di problem solving di Polson e Lewis, 1990) e, per _ogni azione_, cerca di rispondere a quattro domande.
+
++ *L'utente, in base alle sue esperienze e conoscenze, è in grado di individuare con facilità l'azione corretta da eseguire?*
+  #esempio[
+    Se per stampare un documento bisogna prima selezionare la stampante, l'utente è in grado di capirlo?
+  ]
++ *L'utente è in grado di notare che l'azione corretta è disponibile?*
+  #esempio[
+    Se l'azione è esplicita in una voce di menù, nessun problema; se bisogna fare un triplo click sull'icona della stampante, forse non ci penserà mai.
+  ]
++ *L'utente può interpretare correttamente la risposta del sistema*, cioè capire di aver scelto l'azione giusta o quella sbagliata?
++ *L'utente può valutare i risultati in modo appropriato*, cioè determinare se soddisfano il suo obiettivo iniziale?
+
+=== Procedura
+Il metodo può essere applicato *solo dopo aver progettato in dettaglio l'interfaccia* (anche su carta). Si può svolgere in due modi:
+
+- *Individuale*: utile per valutare un progetto personale.
+- *In gruppo*: il designer propone l'interfaccia a un gruppo di pari (anche con altre competenze). I ruoli sono definiti: uno *prende appunti*, un altro fa da *moderatore*, gli altri partecipano alla valutazione. I feedback raccolti saranno usati per modificare la versione successiva dell'interfaccia.
+
+=== Risultati
+Il metodo mira a trovare:
+
+- *incongruenze tra la concettualizzazione del task del progettista e quella dell'utente*;
+- *problemi nel progetto dei widget* dell'interfaccia (menu, icone, bottoni...);
+- *problemi nel feedback delle azioni*.
+
+È utile preparare *moduli standard di valutazione* che riportino: le domande guida, data e ora del walkthrough, nome(i) di chi valuta. Inoltre, *per ogni azione* si compila una tabella a parte per rispondere a ciascuna domanda, e *per ogni risposta negativa* si compila un foglio a parte con il problema di usabilità, la sua severità e un'eventuale descrizione della soluzione.
+
+== Il test di usabilità
+=== Definizione
+Nel test di usabilità *utenti campione usano il sistema in un ambiente controllato*, sotto l'osservazione di *esperti di usabilità* che raccolgono i dati, li analizzano e traggono conclusioni. Ci sono quindi sempre due ruoli: l'*osservato* (l'utente al lavoro) e l'*osservatore* (l'esperto che lo guarda).
+
+=== Due tipi di test
+
+#table(
+  columns: (8.5em, 1fr, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [], [*Test di compito*], [*Test di scenario*],
+  [*Cosa si chiede all'utente*], [Di svolgere *compiti specifici*, scelti per esercitare le funzioni principali del sistema], [Di raggiungere un *obiettivo* attraverso una serie di compiti elementari, *senza indicarli esplicitamente*],
+  [*Strategia d'azione*], [Guidata dai compiti assegnati], [L'utente deve impostare una *propria strategia*],
+  table.hline(),
+)
+
+#esempio(title: "Test di compito (sito di e-commerce)")[
+  + Registrarsi
+  + Verificare se si può pagare con Visa e qual è l'importo minimo di un ordine
+  + Verificare quali sono i tempi di consegna
+  + Acquistare una scatola da 500 gr di tonno sott'olio
+  + Cercare una confezione di sciroppo di acero
+  + Verificare lo stato degli ordini effettuati
+  + Verificare se esistono offerte speciali di pasta
+]
+
+#esempio(title: "Test di scenario (sito di e-commerce)")[
+  _Scenario 1:_ Domani sera hai due amici a cena, ma non hai tempo di andare al supermercato. Decidi di fare la spesa on-line, pagando con la tua Visa. Collegati al sito e ordina gli ingredienti per una cena veloce e poco costosa, ma simpatica.
+]
+
+=== Logistica: due filosofie
+Dal punto di vista organizzativo ci sono due approcci opposti, che differiscono soprattutto per il costo.
+
+#table(
+  columns: (6.5em, 1fr, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [], [*Usability lab*], [*Organizzazione informale*],
+  [*Costi*], [Alti], [Bassi],
+  [*Setup*], [Sala di osservazione e sala delle prove separate da uno specchio bilaterale, con telecamera], [Utente, osservatore e facilitatore intorno al sistema in prova, con istruzioni e appunti],
+  table.hline(),
+)
+
+*Usability lab.* Il laboratorio è diviso in una _sala delle prove_, dove l'utente lavora al sistema ed è ripreso da una telecamera, e una _sala di osservazione_, da cui i valutatori seguono la sessione.
+
+#figure(
+  block(
+    stroke: 0.5pt,
+    inset: 10pt,
+    width: 100%,
+    align(center)[
+      #set text(size: 9pt)
+      #grid(
+        columns: (1fr, auto, 1fr),
+        align: horizon + center,
+        column-gutter: 8pt,
+        box(stroke: 0.5pt, inset: 8pt, width: 100%)[
+          *Sala di osservazione*\
+          Valutatori / osservatori\
+          Apparecchiature di registrazione
+        ],
+        [--- _specchio bilaterale_ ---],
+        box(stroke: 0.5pt, inset: 8pt, width: 100%)[
+          *Sala delle prove*\
+          Utente al sistema in prova\
+          Telecamera
+        ],
+      )
+    ]
+  ),
+  caption: [Configurazione di un usability lab]
+)
+
+*Organizzazione informale.* Bastano tre figure intorno al sistema in prova:
+- l'*utente*, che pensa ad alta voce (_think aloud_) mentre svolge i compiti seguendo le istruzioni;
+- l'*osservatore*, che prende appunti;
+- il *facilitatore*, che conduce la sessione (vedi @sec:esecuzione_test).
+
+Per documentare la sessione si usano strumenti economici: un *software di screen recording*, una *webcam* e un *microfono*. La registrazione risultante combina lo schermo dell'utente con l'immagine del suo volto; lo stesso approccio può essere applicato a siti web e ad applicazioni mobile (anche partendo da prototipi su carta), con il compito corrente mostrato in sovraimpressione.
+
+=== Il thinking aloud
+Nel _thinking aloud_ si chiede all'utente di *esprimere ad alta voce ciò a cui sta pensando*:
+- che cosa sta cercando di fare;
+- che cosa vede sullo schermo;
+- come pensa di dover proseguire;
+- quali dubbi e difficoltà sta provando.
+
+È una delle tecniche osservative più usate nei test, perché rende visibili i processi mentali che altrimenti l'osservatore dovrebbe solo intuire dal comportamento.
+
+=== Organizzare un test di usabilità
+Il processo si articola in quattro fasi, a partire da un *piano di test* definito a inizio progetto, e si conclude con un *rapporto di valutazione*.
+
+#figure(
+  block(
+    stroke: 0.5pt,
+    inset: 10pt,
+    width: 100%,
+    align(center)[
+      #set text(size: 8.5pt)
+      #grid(
+        columns: (1fr, auto, 1fr, auto, 1fr, auto, 1fr),
+        align: horizon + center,
+        column-gutter: 4pt,
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Pianificazione*\ (a inizio progetto)],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Preparazione*\ (Requisiti + Piano)],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Esecuzione*\ (Utenti)],
+        [$arrow.r$],
+        box(stroke: 0.5pt, inset: 5pt, width: 100%)[*Analisi e proposte*\ $arrow.r$ Rapporto],
+      )
+    ]
+  ),
+  caption: [Fasi di organizzazione di un test di usabilità]
+)
+
+#table(
+  columns: (7.5em, 8em, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [*Fase*], [*Ingressi*], [*Prodotti*],
+  [*Preparazione*], [Requisiti, piano di test], [Modulo per le informazioni anagrafiche $dot.c$ descrizione di compiti/scenari $dot.c$ modulo per la raccolta di annotazioni e misure $dot.c$ questionario per l'intervista finale $dot.c$ stazione di test],
+  [*Esecuzione*], [Utenti], [Appunti, misure e registrazioni $dot.c$ interviste finali],
+  [*Analisi e proposte*], [Dati raccolti], [Rapporto di valutazione],
+  table.hline(),
+)
+
+==== Preparazione del test
+La preparazione richiede cinque attività:
+
++ definire *obiettivi*, *tipo di test* e *misure* da raccogliere;
++ definire *numero e tipologia degli utenti* campione;
++ definire *compiti e/o scenari d'uso*;
++ *individuare* gli utenti campione;
++ preparare *materiali e ambiente di prova*.
+
+==== Quanti utenti?
+Dipende dagli obiettivi del test e dalla complessità del sistema. Per un sito web, tipicamente:
+
+#table(
+  columns: (8em, 1fr, 1fr),
+  align: (left + horizon, center + horizon, center + horizon),
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x in (1, 2) { 0.5pt },
+  ),
+  [], [*Check-up rapido, durante lo sviluppo*], [*Valutazione approfondita di un sito complesso*],
+  [Utenti], [5--7], [10--15],
+  [Compiti], [5--7 ciascuno], [---],
+  [Durata per utente], [20--40 minuti], [1--1,5 ore],
+  table.hline(),
+)
+
+*La regola di Nielsen.* La curva dei problemi trovati in funzione del numero di utenti campione sale molto in fretta e poi si appiattisce: *con 5 utenti si scopre circa l'85% dei problemi di usabilità*. Nelle parole di Jakob Nielsen:
+
+$ "Dopo il quinto utente, sprecherete il vostro tempo osservando più volte gli stessi risultati, senza imparare molto di nuovo. Dopo avere osservato 5 utenti, eliminate i problemi individuati, e provate di nuovo con 5 utenti." $
+
+#nota[
+  *Approfondimento (non presente nelle slide).* La curva deriva dal modello di Nielsen e Landauer: la quota di problemi trovati con $n$ utenti è $1 - (1 - lambda)^n$, dove $lambda$ è la probabilità media (circa $31\%$) che un singolo utente incontri un dato problema. Con $n = 5$ si ottiene circa l'$85\%$.
+]
+
+*L'effetto mascheramento.* Perché conviene ripetere piccoli test iterativi invece di un unico grande test? Perché i problemi più gravi incontrati _nascondono_ gli altri: se un utente resta bloccato in un punto, non riesce a vedere (e quindi a segnalare) i problemi che stanno più avanti. Ad ogni iterazione ($n, n+1, dots$) i problemi incontrati impediscono di vederne altri; eliminandoli e ripetendo il test, emergono quelli che prima erano mascherati.
+
+==== Quali misure raccogliere
+Tipicamente si misurano:
+- il *tempo* richiesto da un determinato compito;
+- la percentuale di compiti portati a termine con successo (*tasso di successo*);
+- la *soddisfazione* dell'utente.
+
+#esempio(title: "Calcolo del tasso di successo")[
+  Esito di 4 utenti su 6 compiti (*S* = successo, *F* = fallimento, *P* = successo parziale):
+
+  #table(
+    columns: (6.5em, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr),
+    align: (left + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
+    inset: (x: 5pt, y: 6pt),
+    stroke: (x, y) => (
+      top: 0.5pt,
+      left: if x > 0 { 0.5pt },
+    ),
+    [], [*Compito 1*], [*Compito 2*], [*Compito 3*], [*Compito 4*], [*Compito 5*], [*Compito 6*],
+    [Utente 1], [F], [F], [S], [F], [F], [S],
+    [Utente 2], [F], [F], [P], [F], [P], [F],
+    [Utente 3], [S], [F], [S], [S], [P], [S],
+    [Utente 4], [S], [F], [S], [F], [P], [S],
+    table.hline(),
+  )
+
+  Il successo parziale conta *metà* di un successo pieno:
+
+  $ "Tasso di successo" = ("successi" + "parziali" times 0,5) / "numero di prove" = (9 + 4 times 0,5) / 24 approx 46% $
+]
+
+==== Materiali e ambiente di prova
+Servono quattro materiali:
+- la *scheda utente* (esperienza, conoscenza del sistema, ...);
+- la *descrizione scritta dei compiti/scenari*, da dare agli utenti;
+- il *modulo di raccolta di misure e osservazioni* per l'osservatore (uno per ogni utente e compito/scenario);
+- le *domande per l'intervista finale* agli utenti.
+
+#esempio(title: "Scheda utente")[
+  + *Dati personali*: nome, età, titolo di studio, professione.
+  + *Livello di conoscenza di Internet*: esperienza d'uso del web (scarsa -- media -- buona -- ottima); ore settimanali di utilizzo (meno di 1 -- tra 1 e 5 -- più di 5 -- più di 10); partecipazione a forum o chat (sì/no).
+  + *Livello di conoscenza del sito*: ha già utilizzato il sito in esame? (no -- sì, meno di 3 volte -- sì, più di 3 volte -- sì, più di 10 volte); se sì, quali operazioni ha effettuato; ha mai utilizzato siti simili? (no -- sì, qualche volta -- sì, spesso); se sì, quali.
+]
+
+=== Esecuzione del test <sec:esecuzione_test>
+L'esecuzione prevede tre momenti: il *briefing agli utenti*, la *conduzione del test* e l'*intervista individuale o focus group finale*.
+
+*Briefing agli utenti.* Serve a:
+- mettere gli utenti *a proprio agio*, per ridurre al massimo lo stress da esame;
+- spiegare che lo scopo è *provare il sistema, non l'utente*;
+- spiegare *quali registrazioni* verranno fatte e la *politica sulla privacy*;
+- fornire agli utenti l'*elenco scritto dei compiti/scenari*.
+
+*Il ruolo del facilitatore.* Durante il thinking aloud il facilitatore deve incoraggiare l'utente a parlare senza influenzarne il comportamento:
+
+#table(
+  columns: (1fr, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x == 1 { 0.5pt },
+  ),
+  [*Sì*], [*No*],
+  ["A che cosa stai pensando?"], ["A che cosa serve quel bottone?"],
+  ["Continua a parlare"], ["Perché hai cliccato lì?"],
+  ["Non scoraggiarti, tenta ancora"], [],
+  table.hline(),
+)
+
+#nota[
+  *NB.* Le domande della colonna "No" provocano *interferenza cognitiva del think-aloud*: spingono l'utente a ragionare su ciò che sta facendo in modo diverso da come farebbe spontaneamente, alterando il comportamento osservato.
+]
+
+*Intervista o focus group finale.* Si discutono i *punti di forza e di debolezza* dell'applicazione, gli *aspetti da migliorare* e quelli *graditi e sgraditi*. È utile predisporre un questionario ad uso dell'intervistatore.
+
+=== Analisi dei risultati e proposte finali
+Dopo il test si procede con:
+
++ l'*analisi dettagliata* dei dati e della registrazione;
++ l'*elenco dei singoli problemi* e della loro gravità (ad esempio _bloccanti / bypassabili / lievi_);
++ l'*elenco degli interventi suggeriti* e delle loro priorità;
++ la *stesura del rapporto di valutazione*.
+
+==== Esempio: elenco dei problemi
+_Compito: registrazione utente in un sito di e-commerce._ La priorità è indicata con una lettera (legenda non riportata nelle slide: verosimilmente *A* = alta, *M* = media, *B* = bassa).
+
+#table(
+  columns: (2.2em, 1fr, 5em),
+  align: (center + horizon, left + horizon, center + horizon),
+  inset: (x: 8pt, y: 6pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x > 0 { 0.5pt },
+  ),
+  [*\#*], [*Problema identificato*], [*Priorità*],
+  [1], [Se si accede alla registrazione dalla Home Page, nella prima videata viene richiesta "la Verifica del CAP": l'utente non comprende il significato dell'acronimo CAP (ritiene si tratti di un codice personale post-registrazione). Dopo l'intervento del facilitatore per spiegarlo, dichiara di non comprendere l'utilità di tale verifica.], [A],
+  [2], [Difficoltà nel comprendere il significato dei campi \[Domanda\] e \[Risposta\]; non viene data alcuna informazione sul motivo di tale richiesta.], [A],
+  [3], [Non viene segnalato in alcun modo che il numero di caratteri inseribili in \[Domanda\] e \[Risposta\] è limitato: l'utente non può accorgersi che entrambe le stringhe saranno troncate.], [A],
+  [4], [Iniziale smarrimento nella conferma della registrazione: l'utente si aspettava un comando "Invia" e non "Salva i dati password" (etichetta ricavata dal nome dell'immagine `Salva_dati password.gif`).], [B],
+  [5], [Viene imposto l'obbligo di inserire due numeri telefonici, creando frustrazione (se non ha un secondo numero utile per gli scopi indicati, l'utente si mostra riluttante).], [A],
+  [6], [Nell'inserire i dati per la consegna a una terza persona, trovando reinseriti i propri dati, non si accorge del vero scopo della schermata e aggiunge i suoi dati, lamentandosi inoltre che gli viene richiesto il CAP per la terza volta.], [A],
+  [7], [Identifica il simbolo di Page Up `[^]` a piè pagina come indicatore per muoversi sequenzialmente tra le pagine (Forward, Back) anziché come funzione di scrolling nella pagina.], [M],
+  [8], [L'utente dimostra di non gradire l'opzione di default "Accetto di essere contattato da SPESACLIC per eventuali ricerche di mercato".], [M],
+  [9], [Gli acronimi non vengono sciolti.], [A],
+  table.hline(),
+)
+
+==== Esempio: elenco degli interventi suggeriti
+_Area: carrello -- cassa -- scontrino._ Qui la priorità è numerica (1 = più urgente, 2 = meno urgente).
+
+#table(
+  columns: (2.2em, 1fr, 5em),
+  align: (center + horizon, left + horizon, center + horizon),
+  inset: (x: 8pt, y: 6pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x > 0 { 0.5pt },
+  ),
+  [*\#*], [*Raccomandazione*], [*Priorità*],
+  [1], [Lasciare sempre in vista i contenuti del carrello.], [1],
+  [2], [Di fianco a ogni prodotto del carrello inserire il comando "elimina dal carrello" oppure "elimina"; il comando "svuota il carrello" può restare in alto a inizio lista.], [1],
+  [3], [I prodotti inseriti nel carrello saranno quelli conteggiati per la spesa: non occorrerà selezionarli.], [1],
+  [4], [Cambiare "Totale Spesa" in "Totale Carrello".], [2],
+  [5], [Sostituire il termine "conferma l'ordine" con il comando "Invia l'ordine", più chiaro e convenzionale in Internet.], [1],
+  [6], [Trovare una modalità più chiara per scegliere data e fascia oraria di consegna; ad esempio sottolineando con un link ogni possibilità di scelta.], [1],
+  [7], [Dare informazioni sulle possibili modalità di pagamento e offrire un link verso la pagina con le informazioni di dettaglio.], [1],
+  [8], [Indicare i dati riassuntivi della spesa appena effettuata e inviare un messaggio di conferma all'e-mail del cliente.], [1],
+  [9], [Rendere possibile la stampa dalla pagina contenente i dati riassuntivi.], [2],
+  [10], [Eliminare i termini "scontrino" e "cassa", termini arbitrari perché non corrispondono a funzioni reali e utili per fare la spesa on-line.], [2],
+  table.hline(),
+)
+
+== Altre tecniche basate sull'utente <sec:altre_tecniche>
+*Inchieste (_inquiry_).* Comprendono interviste individuali, questionari on-line e focus group. Sono utili, ma *non possono sostituire i test di usabilità*: raccolgono opinioni dichiarate, non il comportamento osservato durante l'uso. \
+*Esperimenti di laboratorio statisticamente significativi.* Servono a rispondere a domande mirate, ad esempio sulla *leggibilità dei testi sul video* (dimensione e tipo di font, colori ottimali...) o sull'*efficacia dei banner pubblicitari* nelle pagine web. Richiedono una *metodologia rigorosa*, che il corso non tratta: scelta del campione, definizione delle ipotesi, conduzione dell'esperimento e analisi dei risultati con i metodi della statistica. \
+*Controllo di risposte fisiologiche.* Speciali apparecchiature permettono di condurre test sulle risposte fisiologiche dell'utente durante l'interazione con il sistema. In particolare:
+- apparecchiature per il *tracciamento dei movimenti oculari* (eye tracking);
+- apparecchiature per il *rilevamento di reazioni emotive*: attività cardiaca, sudorazione, attività elettrica nel cervello, tono muscolare.
+
+== Classificare i problemi trovati
+Qualunque sia la tecnica di valutazione utilizzata (ispezione o test con utenti), i problemi individuati vanno *classificati in base alla loro importanza*, per decidere cosa correggere e quando. Un esempio di classificazione:
+
+#table(
+  columns: (11em, 1fr),
+  align: left + horizon,
+  inset: (x: 8pt, y: 8pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x == 1 { 0.5pt },
+  ),
+  [*Livello*], [*Cosa significa*],
+  [*Problema irrilevante*], [Può non essere risolto],
+  [*Problema secondario*], [Da risolvere con bassa priorità],
+  [*Problema rilevante*], [Da risolvere con alta priorità],
+  [*Problema bloccante*], [Deve necessariamente essere risolto *prima che il sistema venga rilasciato*],
+  table.hline(),
+)
+
+Questa logica è la stessa che ritroviamo nei diversi metodi del modulo: il _grado di severità_ (scala 0--4) della valutazione euristica, la _severità_ nel foglio del cognitive walkthrough, la _gravità e priorità_ (bloccanti / bypassabili / lievi; A--M--B) nel report del test di usabilità.
+
+== Riepilogo dei metodi
+
+#table(
+  columns: (8.5em, 6em, 8em, 1fr, 9.5em),
+  align: left + horizon,
+  inset: (x: 6pt, y: 6pt),
+  stroke: (x, y) => (
+    top: 0.5pt,
+    left: if x > 0 { 0.5pt },
+  ),
+  [*Metodo*], [*Famiglia*], [*Chi lo svolge*], [*Idea chiave*], [*Limite principale*],
+  [*Valutazione euristica*], [Ispezione], [3--5 esperti, in modo indipendente], [Verificare la conformità a poche regole generali (le 10 euristiche di Nielsen) e dare un grado di severità ai problemi], [Soggettività; dipende dall'esperienza del valutatore; report vaghi],
+  [*Cognitive walkthrough*], [Ispezione], [Singolo valutatore o gruppo con ruoli definiti], [Simulare l'_exploratory learning_ dell'utente azione per azione con quattro domande guida], [Richiede un'interfaccia già progettata in dettaglio (anche su carta)],
+  [*Test di usabilità* (compito / scenario)], [User-based], [Utenti campione osservati da esperti, con un facilitatore], [Osservare utenti reali al lavoro, con thinking aloud e misure (tempo, tasso di successo, soddisfazione)], [Costi; campione rappresentativo difficile da ottenere],
+  [*Inchieste* (interviste, questionari, focus group)], [User-based], [Sperimentatori / moderatore esperto di HCI], [Raccogliere esperienze, opinioni e motivazioni], [Non sostituiscono i test di usabilità],
+  [*Esperimenti di laboratorio*], [User-based], [Ricercatori, con rigore statistico], [Testare ipotesi mirate (es. leggibilità, banner)], [Metodologia rigorosa e onerosa],
+  [*Risposte fisiologiche*], [User-based], [Ricercatori con apparecchiature speciali], [Misurare movimenti oculari e reazioni emotive durante l'uso], [Servono apparecchiature specializzate],
+  table.hline(),
+)
