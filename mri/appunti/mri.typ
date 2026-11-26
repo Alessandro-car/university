@@ -1584,7 +1584,7 @@ Il voto espresso da ciascun link è direttamente proporzionale all'importanza de
 #esempio[
 Consideriamo il seguente schema:
 #figure(
-image("images/page_rank.png", width: 70%)
+image("images/page_rank.png", width: 50%)
 )
 Se la pagina $j$ riceve link da pagine come $i$ (che ha 3 link in uscita e importanza $r_i$) e $k$ (che ha 4 link in uscita e importanza $r_k$), la sua importanza si calcola come:
 $
