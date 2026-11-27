@@ -1902,506 +1902,92 @@ Gli algoritmi di instradamento sono stati estesi per effettuare il flooding di q
 I vantaggi di MPLS riguardano la capacità di gestione del traffico, oltre che del miglioramento della velocità di commutazione. Abbiamo detto che R4 ha due percorsi verso A. Se l'invio viene eseguito a livello IP sulla base degli indirizzi IP, il protocollo di instradamento IP vorrebbe specificare solo il percorso più breve verso A. Pertanto, MPLS consente l'invio di pacchetti lungo percorso che non potrebbero essere utilizzati con i protocolli di instradamento IP standard. Questa è una semplice forma di *ingegneria del traffico*, in cui l'operatore di rete può ignorare il normale instradamento IP e fare in mdoo che parte del traffico indirizzato verso una data destinazione sia smistato su percorsi differenti. \
 MPLS risulta utile anche per altri scopi. Ad esempio per implementare una rapida ricostruzione dei percorsi di invio MPLS, cioè per reindirizzare il traffico su un percorso alternativo pre-calcolato in risposta al malfunzionamento di un collegamento. Infine, MPLS può essere utilizzato per implementare le *reti private virutali* (VPN, _virtual private network_). Nell'implementare le VPN per un cliente, un ISP utilizza la propria rete MPLS per connettere tra loro le reti dei client. Viene usato per isolare le risorse e l'indirizzamento delle reti VPN dei client da quelle degli altri utenti che utilizzano la rete del provider.
 = Sicurezza di rete
+
 == Introduzione alla sicurezza di rete
-Le proprietà di una *comunicazione sicura* sono le seguenti.
-- _Confidenzialità_. Solo il trasmittente e il ricevitore devono essere in grado di capire i contenuti dei messaggi trasmessi. Dato che gli \"origliatori\" potrebbero intercettare il messaggio, questo richiede che il messaggio venga in qualche modo *criptato* in modo tale da renderlo illeggile all'intruso.
-- _Integrità del messaggio_. Il trasmittente e il ricevitore vogliono essere sicuro che il contenuto della loro comunicazione non sia stato alterato.
-- _Autenticazione end-to-end_. Sia il trasmettente sia il ricevitore devono essere in grado di confermare l'identità dell'altra parte coinvolta nella comunicazione, per confermare che l'altra parte è ciò che afferma di essere.
-- _Sicurezza operativa_. Quasi tutte le organizzazioni hanno reti che sono connesse ad Internet pubblico. Queste reti, quindi, potrebbero essere compromesse. Gli aggressori possono tentare di depositare worm negli host della rete, ottenere segreti aziendali, mappare le configurazioni della rete interna e lanciare attacchi DoS.
-Durante una comunicazione, un intruso potrebbe compiere i seguenti attacchi.
-- _intercettazione_: rilevamento e registrazione dei messaggi di controllo e dati sul canale;
-- _modifica, inserimento_ o _eliminazione_ di messaggi o dei contenuti di un messaggio.
-== Principi di crittografia
-Le tecniche di crittografia consentono al trasmittente di trasformare i dati in modo tale da renderli illeggibili all'intruso. Il ricevente, d'altra parte, deve essere in grado di recuperare i dati originali dai dati trasformati. \
-Un messaggio del tipo \"_Ciao Bob_\" è noto come *testo in chiaro*. Il trasmittente cripta il testo in chiaro usando un *algoritmo di crittografia*, così che il messaggio crittografato, noto come *testo cifrato* o *ciphertext*, è illeggibile all'intruso. Nella crittografia moderna, la tecnica crittografica utilizza per crittografare i messaggi è nota e standardizzata, e per questo ci deve essere qualche informazione segreta che vieta all'intruso di decifrare i messaggi. L'informazione segreta è costituita dalle chiavi. Consideriamo la seguente figura:
-#figure(
-image("images/crypto.png", width: 70%),
-caption: [Componenti crittografici]
-) <fig:crypto>
-Nella figura, Alice fornisce una *chiave*, $K_A$, una stringa composta da numeri o caratteri, come input dell'algoritmo crittografico. L'algoritmo prende la chiave e il testo in chiaro, _m_, come in input e produce un testo cifrato come output. La notazione $K_A(m)$ si riferisce al testo cifrato dal testo in chiaro _m_. In modo simile, Bob fornisce una chiave, $K_B$, all'*algoritmo di decrittazione* che prende il testo cifrato e la chiave di Bob come input e produce il testo in chiaro originale come output. Quindi, se Bob riceve un messaggio $K_A(m)$, lo decripa calcolando $K_B(K_A(m)) = m$. Nei *sistemi crittografici a chiave simettrica*, le chiavi di Alice e Bob sono identiche e segrete. Nei *sistemi crittografici a chiave pubblica*, viene usata una coppia di chiavi, una pubblica e una privata. La chiave pubblica è nota a chiunque, mentre la chiave privata è nota solo a Bob o Alice.
-=== Crittografia a chiave simettrica
-Un vecchio sistema crittografico a chiave simettrica è il *cifrario di Cesare*. Il cifrario di Cesare sostituisce ogni lettera nel testo in chiaro con $k$ lettere dopo nellá lfabeto. Ad esempio, se $k=3$, allora la lettera _a_ diventa la lettera _d_ nel testo cifrato; la _b_ diventa la _e_ e così via. Quindi, il valore di $k$ è la chiave. Questo algoritmo è molto debole, in quanto la chiave potrà assumere al massimo 25 valori differenti. \
-Un miglioramento del cifrario di Cesare è il *cifrario monoalfabetico*, che sostiuisce sempre una lettera dell'alfabeto con un'altra lettera dell'alfabeto. Ma, al posto di sostituirle secondo un prefissato valore, ogni lettera può essere sostituita con ogni altra lettera, affinchè quella lettera abbia un'unica lettera sostituta, e vice versa. Questo algoritmo è migliore del cifrario di Cesare in quanto ci sono $26!$ possibili coppie di lettere. Un approccio brute force per provare tutte le possibili $10^(26)$ coppie richiederebbe troppo lavoro. Per questo, si esegue un'analisi statistica del testo in chiaro, ad esempio, sapendo che le lettere _e_ e _t_ sono le più usate nel testo in inglese, e sapendo che in parola da 2/3 lettere appaiono spesso insieme è relativamente semplice decifrare questo codice. \
-I possibili attacchi che possono verificarsi sono i seguenti.
-- _Ciphertext-only attack_. In alcuni casi, l'aggressore può avere accesso al testo cifrato intercettato, senza alcuna informazione relativa ai contenuti del testo in chiaro. Abbiamo visto come l'analisi statistica può aiutare in un attacco di questo tipo.
-- _Known-plaintext attack_. Se l'aggressore sa che nel testo cifrato compaiono determinate parole del testo in chiaro, come _bob_ e _alice_, allora l'aggressore può determinare le coppie per le lettere _a, l, i, c, e, b_ e _o_. Quindi quando l'aggressore conosce alcuine coppie (testo in chiaro, testo cifrato), allora questo è un tipo di *known-plaintext attack*.
-- _Chosen-plaintext attack_. In un attacco di questo tipo, l'aggressore è in grado di scegliere il messagio del testo in chiaro e ottenere il corrispettivo testo cifrato. Ad esempio, se l'aggressore riesce a far trasmettere dal trasmittente un dato messaggio, allora l'aggressore può rompere completamente lo schema di cifratura.
-Una versione migliorata del cifrario monoalfabetico è il *cifrario polialfabetico*. L'idea di questo algoritmo è quello di usare molteplici cifrari monoalfabetici, con unio specifico cifrario monoalfabetico per cifrare una lettera in una specifica posizione del testo in chiaro. Però, la stessa lettera presente in differenti posizioni nel testo in chiaro, potrebbero essere cifrate diversamente.
-==== Cifrari a blocchi
-Analizziamo i moderni algoritmi a chiave simettrica. I cifrari a blocchi vengono usati in molti protocolli Internet sicuri, includendo PGP (per email sicure), TLS (per avere connessioni TCP sicure) e IPsec (per il trasporto sicuro a livello di rete). \
-In un cifrario a blocchi, il messaggio da cifrare è processato in blocchi di _k_ bit. Ad esempio, se $k = 64$, allora il messaggio viene diviso in blocchi da 64 bit, e ogni blocco viene cifrato indipendentemente. Per cifrare un blocco, il cifrario usa un mapping uno-ad-uno per mappare i blocchi di *k* bit del testo in chiaro in blocchi di $k$ bit del testo cifrato. \
-#esempio[
-Supponiamo $k=3$, in modo tale che il cifrario possa mappare 3 bit del testo in chiaro in 3 bit del testo cifrato. Una possibile mappatura è la seguente:
-#let rows = (
-  ("000", "110", "100", "011"),
-  ("001", "111", "101", "010"),
-  ("010", "101", "110", "000"),
-  ("011", "100", "111", "001"),
-)
+La sicurezza informatica mira a difendere sistemi, dati e servizi da utenti malintenzionati su più livelli architetturali:
+- _Sicurezza della rete_ (_Secure the Network_): protezione delle comunicazioni e dell'infrastruttura di rete;
+- _Sicurezza dell'host_ (_Secure the Host_): protezione del sistema operativo, dei servizi di piattaforma e dei componenti runtime;
+- _Sicurezza dell'applicazione_ (_Secure the Application_): protezione della logica di presentazione, della logica applicativa (_business logic_) e dell'accesso ai dati.
 
-#align(center)[
-  #table(
-    columns: 4,
-    align: center + horizon,
-    inset: (x: 2em, y: 5pt),
-    // horizontal line above every row, no vertical lines
-    stroke: (x, y) => (top: 0.5pt),
-    table.header([input], [output], [input], [output]),
-    ..rows.flatten().map(v => [#v]),
-    table.hline(),
-  )
-]
-Ad esempio il messaggio 010110001111 viene cifrato in 101000111001. \
-Notiamo che questa mappatura è solo una fra le tante possibili. Ci sono $2^3$ input possibili che possono essere permutati in $8! = 40.320$ modi differenti. Notiamo, quindi, che con blocchi da 64 bit le possibili permutazioni sono tante e non è possibile decifrarlo mediante un attacco brute force.
-]
-I cifrari a blocchi usano funzioni per simulare randomicamente tabelle di permutazione. Un esempio di funzione per $k=64$ è mostrata nella seguente figura.
-#figure(
-image("images/block,.png", width: 70%),
-caption: [Un esempio di cifrario a blocchi]
-)
-La funzione divide i blocchi da 64 in 8 blocchi da 8 bit, che sono di grandezza gestibile. Dopodichè gli 8 blocchi vengono poi riassemblati in un unico blocco da 64 bit. La posizione dei 64 bit vengono poi permutato per produrre un output da 64 bit. Quest'output viene poi dato in input e inizia un altro ciclo. Dopo $n$ cicli, la funzione fornisce un blocco da 64 bit di testo cifrato. \
-Ci sono diversi cifrari a blocchi, come DES (_Data Encryption Standard_), 3DES e AES (_Advanced Encryption Standard_). Ognuno di questi utilizza una funzione, e non tabelle predeterminate. Ognuno di questi algoritmi, inoltre, utilizza una stringa di bit per la chiave. Ad esempio, DES usa blocchi da 64 bit con una chiave di 56 bit. AES usa blocchi da 128 bit e può operare con chiavi che sono lunghe 128, 192 e 256 bit. \
-Per eseguire un attacco brute force su questi algoritmi, bisognerebbe ciclare tra tutte le chiavi, applicare l'algoritmo di decrittazione con ogni chiave. Con una chiave lunga $n$, ci sono $2^n$ chiavi possibili. Applicando un attacco simile ad una chiave di 128 bit dell'algoritmo AES ci vorrebbero 149 trilioni di anni.
-==== Catena di blocchi di cifratura
-In applicazioni di rete, c'è il bisogno di cifrare lunghi messaggi o lunghi stream di dati. Se usassimo un cifrario a blocchi si potrebbe incorrere in un problema. Per analizzarlo, osserviamo che due o più blocchi di testo in chiaro possono essere identici. Per blocchi identici, un cifrario a blochi, produrrebbe lo stesso testo cifrato. Un aggressore potrebbe indovinare il testo in chiaro quando vede dei blocchi di testo cifrato identici e potrebbe anche essere in grado di decifrare l'intero messaggio. \
-Per affrontare questo problema, mischiamo la casualità nel testo cifrato in modo che blocchi identici del testo in chiaro producano blocchi di testo cifrato differenti. Sia $m(i)$ l'$i$-esimo blocco di testo in chiaro, $c(i)$ l'$i$-esimo blocco di testo cifrato, e $a xor b$ denota lo XOR tra le stringhe _a_ e _b_. \
-Inoltre, denotiamo l'algoritmo di cifratura a blocchi con chiave $S$ come $K_S$. L'idea è la seguente. Il trasmittente crea un numero randomico di $k$ bit $r(i)$ per l'$i$-esimo blocco e calcola $c(i) = K_S(m(i) xor r(i))$. Il ricevente riceve $c(i)$ ed $r(i)$, e può recupare ogni blocco del testo in chiaro calcolando $m(i) = K_S(c(i) xor r(i))$. È bene notare che, nonostante $r(i)$ venga trasmesso in chiaro, l'aggressore non può ottenere il testo in chiaro, in quanto non conosce la chiave $K_S$. \
-Introducendo la casualità abbiamo risolto un problema, ma ne è stato creato un altro. Supponiamo che il trasmittente deve inviare il doppio dei bit che ha inviato nella comunicazione preceden te. Per ogni bit del testo cifrato, il trasmittente deve inviare anche uin bit randomico, raddoppiano l'ampiezza di banda richiesta. Per risolvere questo problema i cifrari a blocchi utilizzano uta tenica chiamata *catena di blocchi di cifratura (CBC)*. L'idea è quella di inviare un valore randoming insieme al primo messagio, e dopodichè il trasmittente e il ricevente usano i blocchi calcolati al posto dei numeri randomici. L'algoritmo CBC performa i seguenti passi:
-+ Prima di cifrare il messaggio, il trasmittente genera una stringa di $k$ bit randomica, chiamata *Inizilization Vector (IV)*, che viene denotato con $c(0)$. L'inizialization vector viene inviato al ricevente in chiaro.
-+ Per il primo blocco, il trasmittente calcola $m(1) xor c(0)$. Dopo utilizza l'algoritmo di cifratura a blocchi sul blocco calcolato  per ottenere il corrispettivo blocco di cifratura, ovvero: $c(1) = K_S(m(1) xor c(0))$. Il trasmittente invia questo blocco al ricevente.
-+ Per l'$i$-esimo blocco, il trasmittente genera l'$i$-esimo blocco di cifratura come $c(i) = K_S(m(i) xor c(i - 1))$.
-Il ricevente può calcolare il testo in chiaro come segue $m(i) = s(i) xor c(i - 1)$, ove $s(i) = m(i) xor c(i - 1)$. Se due blocchi di testo in chiaro sono identici, i corrispettivi blocchi di cifratura sono quasi sempre diversi. Inoltre, anche se IV viene trasmesso in chiaro, l'aggressore non sarà in grado di decriptare il messaggio, in quanto non è a conoscenza della chiave segreta $S$.
-=== Crittografia a chiave pubblica
-Un problema degli algortimi di crittografia a chiave simmetrica è che le due parti della comunicazione devono in qualche modo accordarsi sulla chiave segreta condivisa. Per questo è stato inventato un algoritmo che permette alle due parti della comunicazione di comunicare cifrando i messaggi senza avere una chiave segreta condivisa nota in partenza. Questo algoritmo è noto come *Diffie-Hellman Key Exchange*. \
-L'uso della crittografia a chiave pubblica è abbastanza semplice. Supponiamo che Alice vuole comunicare con Bob. Come mostrato nella seguente figura, Bob ha due chiave, una *pubblica* accessibile da chiunque e una *privata* nota solo a Bob. Le due chiavi verranno indicate con $K_B^+$ e $K_B^-$ per denotare la chiave pubblica e privata, rispettivamente.
-#figure(
-	image("images/public_key.png", width: 70%),
-	caption: [Crittografia a chiave pubblica]
-)
-Per comunicare con Bob, Alice recupera la chiave pubblica di Bob, cifra il messaggio utilizzando la chiave pubblica di Bob e un algoritmo di cifratura noto. Quindi Alice calcola $K_B^+ (m)$. Bob riceve il messaggio cifrato di Alice e utilizza la sua chiave primata e un algoritmo di decrittazione noto per decriptare il messaggio di Alice. Bob, quindi, calcola $K_B^- (K_B^+ (m)))$. \
-Considerando che la chiave pubblica di Bob è pubblica, chiunque può inviare un messaggio cifrato a Bob, inclusa Alice o qualcuno che pretende di essere Alice. In questo schema di cifratura il ricevente non è a conoscenza di chi gli ha inviato il messaggio.
-==== RSA
-L'*algoritmo RSA* è diventato quasi un sinonimo della crittografia a chiave pubblica. RSA fa un uso estensivo di aritmetica modulare, quindi, analizziamola brevemente. Ricordiamo che $x mod n$ denota il resto di $x$ quando diviso per $n$. Nell'aritmetica modulare, si eseguono le usuali operazioni di addizioni, multiplicazioni ed esponenziali. Però, il risultato di ogni operazione viene sostituito dal reto intero che è rimasto quando il risultato viene diviso per $n$. Addizionare e moltiplicare con l'aritmetica modulare è facilitato con i seguenti fatti utili:
-$
-[(a mod n) + (b mod n)] mod n &= (a + b) mod n \
-[(a mod n) - (b mod n)] mod n &= (a - b) mod n \
-[(a mod n) dot.c (b mod n)] &= (a dot.c b) mod n
-$
-Dal terzo fatto segue che $(a mod n)^d mod n = a^d mod n$, che è un'identità che si rivelerà molto utile. \
-Ci sono due componenti connesse ad RSA:
-+ La scelta della chiave pubblica e privata;
-+ L'algoritmo di crittografia e decrittografia.
-Per generare la chiavi RSA pubbliche e private, Bob deve seguire i seguenti passi.
-+ Scegliere due numeri primi, $p$ e $q$, molto grandi. Più grandi sono i valori, più difficile sarà per l'agressore decifrare il messaggio, ma ci vorrà più tempo per eseguire le operazioni di codifica e decodifica. È raccomandato usare una dimensione di $p$ e $q$ pari a 1024 bit.
-+ Calcolare $n = p q$ e $z = (p - 1)(q - 1)$
-+ SCegliere un numero, $e$, più piccolo di $n$, che non ha alcun fattore comune (a parte 1) con $z$. La lettera $e$ viene usata in quanto questo valore verrà usato nel processo di codifica.
-+ Trovare un numero, $d$, tale che $e d - 1$ è esattamente divisibile per $z$. La lettera $d$ è usata perchè questo valore viene usata nel processo di decodifica. Possiamo scegliere $d$ tale che $ e d mod z = 1 $
-+ La chiave pubblic che Bob rende disponibile è la coppia dei numeri $(n, e)$; e la chiave privata è formata dalla coppia $(n, d)$
-La codifica, che viene calcolata da Alice, viene eseguita seguendo i seguenti passi.
-- Supponiamo che Alice vuole inviare a Bob un pattern di bit rappresentato dal numero intero $m$ (ove $m < n$). Per codificarlo, Alice calcola l'esponenziale $m^e$, e dopo calcola il resato intero di $m^e$ diviso per $n$. Quindi Alice calcola il seguente valore $ c = m^e mod n $
-- Per decodificare il messaggio codificato ricevuto, Bob calco9la $ m = c^d mod n $ utilizzando la sua chiave privata $(n, d)$.
-==== Chiavi di sessione
-I calcoli esponenziali richiesti da RSA sono dei calcoli che consumano tempo. Pertanto, RSA viene usato in combinazione con la crittografia a chiave simettrica. Ad esempio, se Alice vuole inviare a Bob una grande quantità di dati crittografati, potrebbe farlo nel seguente modo. Innanzitutto, Alice sceglie una chiave che verrà usata per codificare i dati. Questa chiave viene detta *chiave di sessione*, e viene denotata con $K_S$. Alice deve informare Bob della chiave di sessione, in quanto è la chiave simmetrica condivisa che verrà usata dall'algoritmo di crittografia a chiave simmetrica. Alice codifica il messaggio utilizzando la chiave pubblica di Bob, quindi, calcola $c = (K_S)^e mod n$. Bob riceve la chiave di sessione crittografata, e la decodifica per ottenere la chiave di sessione, $K_S$. Bob adesso è a conoscenza della chiave di sessione che Alice userà per crittografare i dati che deve inviare.
-== VEDERE SE SI FA Successo dell'algoritmo RSA
-La sicurezza dell'algoritmo RSA si basa sul fatto che non esistono algoritmi noti per fattorizzare velocemente un numero, in questo caso $n$, nei due numeri primi $p$ e $q$. Se qualcuno è a conoscenza dei valori $p$ e $q$, allora dato il valore pubblico $e$, il valore segreto $d$ è facilmente calcolabile. D'altro canto, non è noto se esistono o meno algoritmi veloci per fattorizzare un numero, per questo la sicurezza dell'algoritmo RSA non è garantita.
-== Integrità dei messaggi e firme digitali
-Definiremo il problema dell'integrità dei messaggi utilizzando, nuovamente, Alice e Bob. Supponiamo che Bob riceve un messaggio e crede che sia stato invato da Alice. Per autenticare questo messaggio, Bob deve verificare:
-+ Il messaggio è stato originato da Alice.
-+ Il messaggio non è stato manomesso mentre arrivava a Bob.
-=== Funzioni hash crittografiche
-Una funzione hash prende un input, $m$, e calcola una sringa di dimensione fissa, $H(m)$, nota come *hash*. Una *funzione hash crittografica* deve avere la seguente proprietà:
-- è computazionalmente infattibile trovare due messaggi diversi $x$ e $y$ tali che $H(x) = H(y)$
-Informalmente, questa proprietà stabilisce che è computazionalmente infattibile per l'aggressore sostituire un messaggio con un altro messaggio che è protetto dalla funzione di hash. Quindi, se $(m, H(m))$ sono il messaggio e l'hash del messaggio creato dal trasmittente, allora l'aggrossere non può falsificare i contenuti di un altro messaggio, $y$, che ha lo stesso valore hash del messaggio originale. \
-Un esempio di applicazione hash è mostrato nella seguente figura.
-#figure(
-image("images/hash.png", width: 70%),
-caption: [Funzione hash]
-)
-Un semplice checksum, come il checksum di Internet, potrebbe creare unas semplice funzione hash crittografica. Piuttosto che calcolare il complemento a uno, calcoliamo il checksum trattando ogni carattere come un byte e aggiungiamo i byte insieme usando blocchi di 4 byte alla volta. Un esempio è mostrato nella seguente figura:
-#align(center)[
-  #grid(
-    columns: (auto, auto, auto),
-    column-gutter: 3em,
-    row-gutter: 0.5em,
-    align: (left + horizon, center + horizon, left + horizon),
-    [], [ASCII \ Representation], [],
-    // message and hex values, one row of three lines each
-    [
-      #set text(font: "DejaVu Sans Mono", size: 9pt)
-      Message \
-      I O U 1 \
-      0 0 . 9 \
-      9 B O B
-    ],
-    [
-      #set text(font: "DejaVu Sans Mono", size: 9pt)
-      49#h(1em)4F#h(1em)55#h(1em)31 \
-      30#h(1em)30#h(1em)2E#h(1em)39 \
-      39#h(1em)42#h(1em)4F#h(1em)42
-    ],
-    [],
-    // checksum row, with a line above the hex values
-    [],
-    [
-      #set text(font: "DejaVu Sans Mono", size: 9pt)
-      #line(length: 100%, stroke: 0.5pt)
-      B2#h(1em)C1#h(1em)D2#h(1em)AC
-    ],
-    [Checksum],
-  )
-]
-Cambiando leggermente il messaggio otteniamo il seguente risultato:
-#align(center)[
-  #grid(
-    columns: (auto, auto, auto),
-    column-gutter: 3em,
-    row-gutter: 0.5em,
-    align: (left + horizon, center + horizon, left + horizon),
-    [], [ASCII \ Representation], [],
-    // message and hex values, one row of three lines each
-    [
-      #set text(font: "DejaVu Sans Mono", size: 9pt)
-      Message \
-      I O U 9 \
-      0 0 . 1 \
-      9 B O B
-    ],
-    [
-      #set text(font: "DejaVu Sans Mono", size: 9pt)
-      49#h(1em)4F#h(1em)55#h(1em)39 \
-      30#h(1em)30#h(1em)2E#h(1em)31 \
-      39#h(1em)42#h(1em)4F#h(1em)42
-    ],
-    [],
-    // checksum row, with a line above the hex values
-    [],
-    [
-      #set text(font: "DejaVu Sans Mono", size: 9pt)
-      #line(length: 100%, stroke: 0.5pt)
-      B2#h(1em)C1#h(1em)D2#h(1em)AC
-    ],
-    [Checksum],
-  )
-]
-Notiamo, quindi che due messaggi differenti hanno stesso checksum. Quindi, questo semplice algoritmo viola la proprietà richiesta da una funzione di hash crittografica. \
-L'algoritmo di hash più usato è l'algoritmo MD5. Questo algoritmo calcola un'hash da 128 bit in un processo formato da 4 passi che consiste in:
-+ uno step di padding: aggiungere un \"uno\" seguito da un numero sufficiente di zeri affinchè la lunghezza del messaggio soddisfi determinate condizioni;
-+ uno step di append: l'aggiunta in coda una rappresentazione di 64 bit del messaggio prima di effettuare il padding;
-+ l'inizializzazione di un accumulatore;
-+ una fase ciclica finale in cui blocchi da 16 parole del messaggio vengono mescolato in quattro passaggi, detti _round_.
-Il secondo algoritmo di hash maggiormente usato è il *Secure Hash Algorithm (SHA-1)*. Questo algoritmo sui basa su principi simili a quelli usati nell'algoritmo MD4, predecessore di MD5. SHA-1 è richiesto ogni qualvolta una funzione di hash crittografica è richiesta per applicazioni federali, in quanto SHA-1 è uno standard federale US. SHA-1 produce un messaggio digest di 160 bit. Più grande è l'output, maggiore sarà la sicurezza di questo algoritmo.
-=== Codice di autenticazione dei messaggi
-Dopo aver spiegato le funzioni hash, vediamo come possiamo ottenere l'integrità dei messaggi:
-+ Alice crea un messaggio $m$ e calcola il rispettivo hash $H(m)$.
-+ Alice aggiunge in coda $H(m)$ al messaggio $m$, creando un messaggio esteso $(m, H(m))$, e invia questo messaggio a Bob.
-+ Bob riceve un messaggio esteso $(m, h)$ e calcola $H(m)$. Se $H(m) = h$, allora Bob può concludere che la comunicazione è andata a buon fine.
-Questo approccio è imperfetto. Un aggressore può creare un messaggio falso $m'$ dove dice che è Alice, calcola $H(m')$, e invia a Bob $(m', H(m'))$. Quando Bob riceve il messaggio, tutto corrisponde al passo 3, quindi Bob non sospetta che qualcosa sia andato storto. \
-Per raggiungere l'integrità del messaggio, in aggiunta all'utilizzo di funzioni hash crittografiche, Alice e Bob hanno bisogno di un segreto condiviso $s$. Questo segreto condiviso è chiamato *chiave di autenticazione*. Utilizzando questo segreto, l'integrità del messaggio può essere ottenuta nei seguenti passaggi.
-+ Alice crea un messaggio $m$, concatena $s$ con $m$ creando $m + s$, e calcola $H(m + s)$. $H(m + s)$ è chiamato *codice di autenticazione dei messaggi* (*MAC*, _message authentication code_).
-+ Alice concatena il MAC al messaggio $m$, creando un messaggio esteso $(m, H(m + s))$, e invia questo messaggio a Bob.
-+ Bob riceve il messaggio esteso $(m, h)$ e conoscendo $s$, calcola il MAC. Se $H(m + s) = h$, allora Bob può concludere che la comunicazione è andata a buon fine.
-Una caratteristica del codice MAC è che non richiede un algoritmo crittografico. Utilizzando questo codice, le entità possono autenticare i messaggi che si inviano tra loro senza integrare complessi algoritmi crittografici. \
-Sono stati proposti diversi standard per i codici MAC. Il più famoso è *HMAC*, che può essere usato sia con MD5 o con SHA-1. HMAC gestisce effettivamente i dati e la chiave di autenticazione attraverso la funzione hash due volte. \
-Rimane ancora un problema importante, ovvero come distribuire la chiave di autenticazione segreta alle entità coinvolte nella comunicazione. Un amministratore di rete potrebbe risolvere questo problema visitando fisicamente ogni router, oppure, se ogni router ha la propria chiave pubblica, l'amministratore di rete può distribuire la chiave di autenticazione ad ogni router crittografandola con la chiave pubblic del router e inviando la chiave crittografata sulla rete.
-=== Firme digitali
-La firma su un documento attesta che colui che ha firmato ha preso atto ed è d'accordo con il contenuto del documento. In un mondo digitale, si desidera spesso indicare il proprietario o il creatore di un documento, oppure esprimere il proprio consenso al contenuto di un documento. Una *firma digitale* è una tecnica crittografica per raggiungere questi obiettivi in un mondo digitale. La firma digitale dovrebbe essere eseguita in modo da risultare verificabile e non falsificabile. Ciò significa che deve essere possibile dimostrare che un documento firmato da tale individuo sia stato effettivamente firmato da tale individuo e che solo quell'individuo possa aver firmato il documento. \
-Vediamo ora come si può progettare una firma digitale. Quando Bob firma un messaggio, deve apporre sul messaggio qualcosa che sia univoco per lui. Bob potrebbe pensare di allegare un MAC per la firma, in cui il MAC viene creato accodando la sua chiave al messaggio e calcolandone poi l'hash. Tuttavia, affinchè Alice possa verificare la firma, deve possedere anch'essa una copia della chiave, e quindi la chiave non sarebbe più univoca. \
-La crittografia a chiave pubblica è un'ottima candidata per fornire firme digitali. Supponiamo che Bob voglia firmare digitalmente un documento, $m$. Possiamo pensare al documento come ad un file o un messaggio che Bob sta per inviare e firmare. \
-Per firmare questo documento, Bob utilizza semplicemente la sua chiave privata, $K_B^-$, per calcolare $K_B^- (m)$. Supponiamo, ora, che Alice possieda $m$ e $K_B^- (m)$. Alice prende la chiave pubblica di Bob, $K_B^+ (m)$, e la applica alla firma digitale, $K_B^- (m)$, associata al documento, $m$. Ovvero, calcola $K_B^+ (K_B^- (m))$ e ottiene $m$, che corrisponde esattamente al documento originale. Alice sostiene quindi che solo Bob possa aver firmato il documento per i seguenti motivi:
-- chiunque abbia firmato il messaggio deve aver utilizzato la chiave privata per calcolare la firma, in modo tale che $K_B^+ (K_B^- (m)) = m$.
-- L'unica persone che poteva conoscere la chiave privata è Bob. Si noti che ciò presuppone, tuttavia, che Bob non abbia ceduto $K_B^-$ a nessuno, né che qualcuno abbia rubato $K_B^-$ a Bob.
-Se il messaggio viene modificato in un messaggio $m'$, la firma che Bob crea per $m$ non sarà valida per $m'$, in qaunto $K_B^+ (K_B^- (m)) != m'$. Inoltre, notiamo che le firme digitali forniscono anche l'integrità del messaggio, in quanto consentono al ricente di verificare che il messaggio non è stato alterato. \
-Una preoccupazione nel firmare i dati tramite crittografia sono i costi computazionali. Un approccio più efficiente è quello di introdurre le funzioni hash nelle firme digitali. Utilizzando una funzione hash, Bob firma l'hash del messaggio e non il messaggio in sè, quindi Bob calcola $K_B^- (H(m))$. Dato che $H(m)$ è più piccolo del messaggio originale, il costo computazionale è ridotto. Il processo di firma di un documento è mostrato nella seguente figura:
-#figure(
-image("images/firma_digitale.png", width: 70%),
-caption: [Inviare un messaggio firmato digitalmente]
-)
-Il processo di verifica invece è il seguente:
-#figure(
-image("images/verifica_firma.png", width: 70%),
-caption: [Verificare un messaggio firmato]
-)
-==== Certificazione della chiave pubblica
-Un'importante applicazione delle firme digitali è la *certificazione della chiave pubblica*, che certifica che una data chiave appartiene ad una specifica entità. La certificazione della chiave pubblica viene usata in molti protocolli di rete sicuri, come IPsec e TLS. \
-Associare una chiave pubblica ad una particolare entità è un compito che viene svolto da un'*autorità di certificazione* (*CA*, _Certification Authority_), il cui compito è quello di validare l'identità e assegnare i certificati. Una CA ha i seguenti ruoli.
-+ Verifica che un'entità è chi dice di essere. Non ci sono procedure obbligatorie su come la certificazione debba essere fatta. Quando si ha a che fare con una CA bisogna fidarsi del fatto che questa abbia eseguito una verifica dell'identità sufficientemente rigorosa. D'altro canto, si potrebbe essere più disposti a fidarsi di una CA che fa parte di un programma federale o statale. Ci si può anche fidare dell'identità associata a una chiave pubblica solo nella misura in cui si può fidare di una CA e delle sue tecniche di verifica dell'identità.
-+ Una volta che la CA verifica l'identità dell'entità, crea un *certificato* che associa la chive pubblica dell'entità all'identità. Il certificato contiene la chiave publica and un'informazione univoca identificante riguardo il proprietario della chiave pubblica. Questo certificato è firmato digitalmente dalla CA.
-La ITU (_International Telecommunication Union_) e la IETF hanno sviluppato degli standard per le CA.
-== Autenticazione end-to-end
-L'*autenticazione degli endpoint* è il processo mediante il quale un'entità dimostra la propria identità a un'altra entità su una rete di calcolatori, ad esempio un utente che dimostra la propria identità a un server di posta elettronica. \
-Nell'autenticazione via rete, le entità coinvolte nella comunicazione non possono confidare su informazioni biometriche. L'autenticazione via rete deve essere ottenuta eclusivamente sulla base dei messaggi e dei dati scambiati come parte di un *protocollo di autenticazione*. Tipicamente, un protocollo di autenticazione viene eseguto prima che le entità coinvolte nella comunicazione eseguano qualche altro protocollo. Il protocollo di autenticazione stabilisce innanzitutto le identità delle parti in modo reciprocamente soddisfacente; sopo dopo l'autenticazione le parti passano all'attività vera e propria. \
-Ci sono diverse versioni del protocollo di autenticazione, denominato con *ap* (_authentication protocol_). \
-Supponiamo che Alice si deve identificare a Bob. \
-Il più semplice protocollo di autenticazione che si può immaginare è quello dove Alice semplicemnte invia a Bob un messaggio nel quale dice che è Alice. La falla in questo protocollo è ovviamente che Bob non può sapere effettivamente se la persona che sta inviando il messaggio è veramente Alice.
-==== Protocollo di autenticazione ap2.0
-Se Alice dispone di un indirizzo di rete noto dal quale comunica sempre, Bob potrebbe tentare di autenticare Alice verificando che l'indirizzo sorgente sul datagramma IP che trasporta il messaggio di autenticazione corrisponda all'indirizzo noto di Alice. \
-Sappiamo, però, che non è difficile creare un datagramma IP, inserire al suo interno qualsiasi indirizzo IP sorgente desiderato e inviare il datagramma tramite il protocollo di livello di collegamento al router di primo salto. Da quel momento in poi, il datagramma con indirizzo IP falsificato verrebbe inoltrato a Bob. Questo approccio è una forma di _IP spoofing_. L'IP spoofing può essere evitato se il router di primo salto dell'aggressore è configurato per inoltrare esclusivamente datagrammi contenenti l'indirizzo IP sorgente dell'aggressore. Tuttavia, questa funzionalità non è implementata né applicata universalmente.
-==== Protocollo di autenticazione ap3.0
-Un approccio classico all'autenticazione consiste nell'utilizzare una password segreta. La password è un segreto condiviso tra l'autenticatore e la persona che viene autenticata. Dato che le password sono ampiamente utilizzate, potremmo sospettare che il protocollo ap3.0 sia piuttosto sicuro. Tuttavia, c'è una falla di sicurezza evidente. Se l'aggressore intercetta la comunicazione di Alice, può venire a conoscenza della password di Alice. Questo non è improbabile, in quanto in una comunicazione tramite Telnet, la password viene inviata in chiaro al server Telnet. Quindi, qualcuno connesso alla LAN del client o del server Telnet può intercettare (_sniff_, leggere e memorizzare) tutti i pacchetti trasmessi sulla LAN e rubare la password di accesso.
-==== Protocollo di autenticazione ap3.1
-L'idea per correggere ap3.0 è quella di cifrare la password. Cifrando la password, possiamo impedire all'aggressore di venire a conoscenza della password di Alice. Se supponiamo che ALice e Bob condividono una chiave segreta simmetrica, allora Alice può cifrare la password e inviare a Bob il suo messaggio di autenticazione, insieme alla sua password cifrata. Bob decifra la password, e supponendo che sia corretta, autentica Alice. \
-L'uso della crittografia in questo caso non risolve il problema dell'autenticazione. Bob è soggetto a un *attacco di riproduzione* (_playback attack_): l'aggressore deve semplicemente intercettare la comunicazione di alice, registrare la versione cifrata della password e ritrasmetterla a Bob per fingere di essere Alice. Quindi l'uso di una password cifrata non rende la situazione diversa da quella del protocollo ap3.0.
-==== Protocollo di autenticazione ap4.0
-Nel protocollo ap3.1 Bob non poteva sapere se Alice fosse effettivamente attiva in quel momento oppure se i messaggi che stava ricevendo fossero una riproduzione registrata di una precedente autenticazione di Alice. Il protocollo _threee-way handshake_ di TCP doveva affrontare lo stesso problema: il lato server di una connessione TCP non voleva accettare una connessione se il segmento SYN ricevuto era una vecchia copia di un segmento SYN proveniente da una connessione precedente. Il lato server TCP, quindi, ha scelto un numero di sequenza iniziale che non veniva utilizzato da tanto tempo, ha inviato tale numero al client e poi ha atteso che il client rispondesse con un segmento ACK contenente quel numero. Possiamo adottare la stessa idea. \
-Un *nonce* è un numero che un protocollo utilizzerà una sola volta nell'arco della sua esistenza. Ciò signifca che, una volta che un protocollo utilizza un nonce, non utilizzerà mai più quel numero. Il protocollo ap4.0 utilizza un nonce nel seguente modo:
-+ Alice invia il messaggio di autenticazione a Bob.
-+ Bob sceglie un nonce, $R$, e lo invia ad Alice.
-+ Alice cifra il nonce utilizzando la chiave segreta simmetrica condivisa tra Alice e Bob, $K_(A - B)$, e invia il nonce cifrato, $K_(A - B)(R)$, a Bob. Il nonce viene generato per garantire che Alice sia attiva.
-+ Bob decifra il messaggio ricevuto. Se il nonce decifrato è uguale al nonce che aveva inviato ad Alice, allora Alice è autenticata.
-L'uso di un nonce e della crittografia a chiave simmetrica costituisce la base di ap4.0.
-== Sicurezza delle e-mail
-È possibile fornire servizi di sicurezza nei primi 4 livelli (a partire dall'alto) della stack di protocolli di Internet. Quando un servizio di sicurezza viene fornito per uno specifico protocollo a livello di applicazione, l'applicazione che usa tale protocollo godrà di uno o più servizi, come confidenzialità, autenticazione o integrità. Quando la sicurezza viene fornita per protocollo a livello di trasporto, le applicazioni che usano tale protocollo godranno dei servizi di sciurezza di quel protocollo di trasporto. Quando i servizi vengono forniti ai protocolli a livello di rete, tutti i segmenti a livello di trasporto godranno dei servizi di sicurezza del livello di rete. Quando la sicurezza viene fornita a livello di collegamento, i dati nei frame che viaggiano sul collegamento riceveranno i servizi di sicurezza offerti dal collegamento.
-=== E-Mail sicure
-Un sistema di mail sicuro deve avere diverse funzionalità:
-- _confindenzialità_: gli utenti di un sistema e-mail non vogliono che i loro messaggi e data vengano letti da persone esterne al sistema;
-- _autenticazione del trasmittente_: quando il ricevente riceve un messaggio, vuole essere sicuro che il trasmittente sia veramente chi dice di essere;
-- _integrità del messaggio_: le parti coinvolte nella comunicazione non vogliono che i loro messaggi vengano alterati durante la comunicazione;
-- _autenticazione del ricevente_: il trasmittente della e-mail vuole essere sicuro che sta mandando il messaggio alla giusta persona e non a qualcuno che pretende di essere tale persona.
-Il modo più immediato per garantire _confidenzialità_ è quello, per il trasmittente, di codificare il messaggio tramite un algoritmo a chiave simettrica e, per il ricevente, decodificarlo non appena ricevuto. Tuttavia, anche se questo approccio è diretto, c'è l'inconveniente di distribuire la chiave simmetrica alle parti coinvolte nella comunicazione. Pertanto, si ricorre ad un algortimo di crittografia a chiave pubblica. Un problema di questo approccio, però, è che un algoritmo di crittografia a chiave pubblica può risultare inefficiente, soprattutto per lunghi messaggi. \
-Per risolvere il problema di inefficienza, usiamo un chiave di sessione. In particolare, supponiamo che Alice debba mandare un messaggio a Bob.
-+ Alice sceglie casualmente una chiave simmetrica di sessione, $K_S$
-+ codifica il messaggio, $m$, con la chiave simmetrica;
-+ codifica la chiave simmetrica con la chiave pubblica di Bob, $K_B^+$;
-+ concatena il messaggio codificato e la chiave simmetrica codificata per formare un pacchetto;
-+ invia il pacchetto all'indirizzo e-mail di Bob.
-Quando Bob riceve il messaggio, esegue i seguenti passi.
-+ Usa la sua chiave privata, $K_B^-$, per ottenere la chiave simmetrica, $K_S$;
-+ usa la chiave simmetrica $K_S$ per decodificare il messaggio $m$.
-Adesso progettiamo un sistema e-mail che fornisce autenticazione del trasmittente e integrità del messaggio, supponendo, al momento, che Alice e Bob non siano più preoccupati per la confidenzialità. Per fare ciò usiamo le firme digitali e i digest dei messaggi. Nello specifico
-+ Alice applica una funzione hash, $H$, al suo messaggio, $m$, per ottenere il digest del messaggio;
-+ Firma il risultato della funzione hash con la sua chiave privata, $K_A^-$, per creare una firma digitale;
-+ concatena il messaggio originale con la firma per creare un pacchetto;
-+ invia il pacchetto all'indirizzo e-mail di Bob.
-Quando Bob riceve il pacchetto esegue i seguenti passi.
-+ Utilizza la chiave pubblica di Alice, $K_A^+$, al digest del messaggio firmato;
-+ confronta il risultato di questa operazione con la sua funzione hash, $H$, del messaggio. Se i due risultati sono uguali, allora Bob può essere sicuro che il messaggio proviene da Alice e non è stato alterato.
-Ora progettiamo un sistema che fornisce confidenzialità, oltre che autenticazione del trasmittente e integrità del messaggio. I passi compiuti da Alice sono raffigurati nella seguente figura.
-#figure(
-image("images/trasmittente_email.png", width: 70%),
-caption: [Alice usa la crittografia a chiave simmetrica, la crittografia a chiave pubblica, la funzione hash e la firma digitale per fornire segretezza, autenticazione del trasmittente e integrità del messaggio.]
-) <fig:secure_email>
-Quando Bob riceve questo messaggio, utilizza la sua chiave privata, $K_B^-$, per ottenere la chiave simmetrica, $K_S$, e utilizza tale chiave per decodificare l'hash del messaggio firmato digitalmente da Alice e per ottenere il messaggio, ottenendo $K_A^- (H(m))$ ed $m$. Dopodichè utilizza la chiave pubblica di Alice, $K_A^+$, per ottenere $H(m)$ e utilizza la sua funzione hash, $H$, per il messaggio $m$ e confronta se i due risultati sono uguali. In tal caso, Bob può essere sicuro che il messaggio ricevuto non è stato alterato ed è stato inviato da Alice. \
-Con questo sistema email, c'è ancora un problema importante che deve essere risolto. Per progettare tale sistema Alice deve ottenere la chiave pubblica di Bob e Bob deve ottenere la chiave pubblica di Alice. L'aggressore potrebbe mascherarsi da Bob e dare ad Alice la sua stessa chiave pubblica dicendo che è la chiave pubblica di Bob, ricevendo il messaggio destinato a Bob. Per questo, bisogna affidarsi ad una CA per certicare le chiavi pubbliche.
-=== PGP
-*Pretty Good Privacy (PGP)* è un buon esempio di uno schema di crittografia dell'email. Il design di PGP è, essenzialmente, lo stesso mostrato nella *@fig:secure_email*. PGP utilizza MD5 o SHA, in base alla versione del software, per calcolare il digest del messaggio; CAST, triple-DES o IDEA per la crittografia a chiave simmetrica; RSA per la crittografia a chiave pubblica. \
-Quando PGP viene installato, il software crea una coppia di chiave pubblica per l'utente. La chiave pubblica può essere postata sulla pagina Web dell'utente o piazzata in un server di chiavi pubbliche. La chiave privata è protetta dall'uso di una password. PGP da all'utente l'opzione di firmare digitalmente il messaggio, codificare il messaggio, o fare entrambi. Un messaggio PGP è mostrato di seguito.
-#align(center)[
-  #block(breakable: false)[
-    #set align(left)
-    ```
-    -----BEGIN PGP SIGNED MESSAGE-----
-    Hash: SHA1
-    Bob:
-    Can I see you tonight?
-    Passionately yours, Alice
-    -----BEGIN PGP SIGNATURE-----
-    Version: PGP for Personal Privacy 5.0
-    Charset: noconv
-    yhHJRHhGJGhgg/12EpJ+lo8gE4vB3mqJhFEvZP9t6n7G6m5Gw2
-    -----END PGP SIGNATURE-----
-    ```
-  ]
-]
-Un messaggio PGP segreto, invece, è mostrato qui di seguito. Entrambi i messaggi appaiono dopo l'haeder MIME.
-#align(center)[
-  #block(breakable: false)[
-    #set align(left)
-    ```
-    -----BEGIN PGP MESSAGE-----
-    Version: PGP for Personal Privacy 5.0
-    u2R4d+/jKmn8Bc5+hgDsqAewsDfrGdszX681iKm5F6Gc4sDfcXyt
-    RfdS10juHgbcfDssWe7/K=lKhnMikLo0+1/BvcX4t==Ujk9PbcD4
-    Thdf2awQfgHbnmKlok8iy6gTh1p
-    -----END PGP MESSAGE-----
-    ```
-  ]
-]
-PGP fornisce anche un meccanismo per certificare la chiave pubblica, ma questo meccanismo è diverso dal convenzionale CA. Alice stessa può certificare qualsiasi coppia chiave/username quando ritiene che tale coppia appartenga effettivamente allo stesso soggetto. Inoltre, PGP consente ad Alice di dichiarare che si fida di un altro utente affinché garantisca l'autenticità di ulteriori chiavi. Alcuni utenti PGP firmano reciprocamente le proprie chiavi organizzando dei _key-signing party_. Gli utenti si riuniscono fisicamente, si scambiano le chiavi pubbliche e certificano le chiavi gli uni degli altri firmandole con le proprie chiavi private.
-== Connessioni TCP sicure: TLS
-La versione potenziata di TCP, che fornisce servizi di sicurezza come confidenzialità, integrità dei dati e autenticazione end-point, è nota come *Transport Layer Security (TLS)*, che è stata standardizzata dall'IETF. Una versione precedente di questo protocollo è SSL versione 3. \
-TLS è supportato da tutti i browser Web e da tutti i server web ed è usato da Gmail e da tutti i siti commerciali, come Amazon, eBay, ecc. \
-TLS viene usato spesso per fornire sicurezza alle transazioni che avvengono tramite HTTP, anche se, può essere usato da qualsiasi applicazione che usa TCP, in quanto TLS è una versione sicura di TCP. TLS fornisce una semplice API con utilizzo delle socket, che è simule all'API fornita da TCP. Quando un'applicazione vuole utilizzare TLS, l'applicazione include le classi e libreria di SSL. Anche se tecnicamente TLS è un protocollo a livello di applicazione, dal punto di vista dello sviluppatore è un protocollo a livello di trasporto che fornisce i servizi offerti da TCP con l'aggiunta di servizi di sicurezza. Questa situazione è mostrata nella seguente figura.
-#figure(
-image("images/tls.png", width: 70%),
-)
-=== Descrizione di una versione semplificata TLS
-Descriviamo una versione semplificata di TLS per capire in maniera generale come funziona TLS per poi descriverlo nella sua interezza. La versione semplificata di TLS ha tre fasi: _handshake, derivazione delle chiavi_ e _trasferimento dei dati_. \
-Descriveremo queste tre fasi per una sessione di comunicazione tra un client, Bob, e un server, Alice, con Alice che ha la coppia di chiavi privata e pubblica e un certificato che associa la sua identità alla sua chiave pubblica.
-==== Handshake
-In questa fase, Bob deve
-+ stabilire una connessione TCP con Alice;
-+ verificare che Alice è veramente Alice;
-+ inviare ad Alice la chiave segreta, che verrà usata da entrambi per generare le chiavi simmetrice necessarie per la sessione TLS.
-Questi passi sono mostrati nella seguente figura.
-#figure(
-image("images/handshake_tls.png", width: 70%),
-caption: [Handshake della versione semplificata di TLS]
-)
-==== Derivazione delle chiavi
-Il segreto, MS, condiviso da Bob e Alice, potrebbe esser usato come la chiave simmetrica di sessione per tutte le successive codifiche e controlli di integrità dei dati. Tuttavia, è considerato più sicuro usare, sia per Alice che per BOb, chiavi crittografiche differenti, e usare differenti chiavi per codificare i dati e per i controlli di integrità. Alice e Bob, utilizzano MS per generare quattro chiavi:
-- $E_B$: chiave di cifratura di sessione per i dati inviati da Bob ad Alice;
-- $M_B$: chiave HMAC di sessione per i dati inviati da Bob ad Alice, dove HMAC è un codice di autenticazione dei messaggi basato su hash (MAC) standardizzato;
-- $E_A$: chiave di cifratura di sessione per i dati inviati da Alice e Bob;
-- $M_A$: chiave HMAC di sessione per i dati inviati da Alice a Bob.
-Le chiavi di cifratura, $E_B$ e $E_A$, verranno usate per codificare i dati, le chiavi HMAC verranno usate per verificare l'integrità dei dati.
-==== Trasferimento dei dati
-Adesso che Alice e Bob condividono le quattro chiavi di sessione, possono inziare ad inviare dati sicuri l'uno per l'altro attraverso connessioni sicure TCP. TLS divide i dati in stream di record, aggiunge un HMAC ad ogni record per il controllo di integrità e codifica il record concatenato con l'HMAC. Per creare l'HMAC, Bob invia i dati con la chiave $M_B$ ad una funzione hash. Per codificare il pacchetto formato dal record concatenato con l'HMAC, Bob utilizza la sua chiave di cifrature di sessione $E_B$. Questo pacchetto codificato viene invato a TCP per il trasporto via Internet. \
-Questo approccio, però, non è ancora totalmente sicuro. Se l'aggressore è un man-in-the-middle è la capacità di inserire, elimare e rimpiazzare segmenti nello stream dei segmenti TCP inviati tra Alice e Bob, l'aggressore potrebbe catturare due segmenti, invertirne l'ordine, modificare i numeri di sequenza TCP, ed inviare i due segmenti invertiti ad Alice. Quando arrivano ad Alice, i seguenti passi vengono compiuti:
-+ TCP pensa che tutto sia andato a buon fine e passa i record al layer sottostante TLS.
-+ TLS decodifica i due record.
-+ TLS utilizza l'HMAC in ogni record per verificare l'integrità dei dati dei record.
-+ TLS invierebbe gli stream di byte decodificati al layer di applicazione; ma lo stream di dati ricevuto non sarebbe nell'ordine corretto.
-La soluzione a questo problema è dato dall'utilizzo dei numeri di sequenza. Bob memorizza un contatore dei numeri di sequenza, che è inizializzato a zero e viene incrementato per ogni record TLS inviato. Quando Bob calcola l'HMAC, include il numero di sequenza nel calcolo dell'HMAC. In questo modo, Alice può verificare l'integrità dei dati di un record includendo il numero di sequenza appropriato nel calcolo dell'HMAC.
-==== Record TLS
-Il formato dei record TLS è mostrato di seguito.
-#align(center)[
-  #grid(
-    columns: (auto, auto, auto, 12em, auto),
-    column-gutter: 3pt,
-    row-gutter: 4pt,
-    align: center + horizon,
-    // field row
-    ..([Type], [Version], [Length], [Data], [HMAC]).map(c => grid.cell(
-      stroke: 0.5pt,
-      inset: (x: 10pt, y: 9pt),
-      c,
-    )),
-    // bracket under Data and HMAC
-    grid.cell(colspan: 3, []),
-    grid.cell(
-      colspan: 2,
-      stroke: (left: 0.5pt, right: 0.5pt, bottom: 0.5pt),
-      box(height: 0.6em),
-    ),
-    // label
-    grid.cell(colspan: 3, []),
-    grid.cell(colspan: 2)[Encrypted with $E_B$],
-  )
-]
-I primi tre campi non vengono cifrati. Il campo `Type` indica se il record è un messaggio di handshake o se è un messaggio che contiene dati. Viene anche usato per chiudere le connessioni TLS. Il campo `Length` viene usato per estrarre i record TLS dalo stream di byte in arrivo.
-=== Descrizione del protocollo TLS
-Adesso descriviamo il protocollo TLS nella sua interezza.
-==== Handshake TLS
-Il protocollo TLS permette ad Alice e Bob di concordare sull'algoritmo di cifratura all'inizio della sessione TLS, durante la fase di handshake. Inoltre, durante la fase di handshake, Alice e Bob si inviano a vicenda dei nonce, che vengono usati per la creazione delle quattro chiavi di sessione $(E_B, M_B, E_A, M_A)$. I passi della fase di handshake TLS sono i seguenti.
-+ Il client invia una lista di algoritmi di cifratura che supporta, insieme al nonce.
-+ Il server sceglie un algoritmo a chiave simmetrica e un algoritmo a chiave pubblica, l'algoritmo HMAC insieme alle chiavi HMAC. Al client invia le scelte che ha fatto, il certificato e il nonce.
-+ Il client verifica il certificato, estrae la chiave pubblica del server, genera la Pre-Master Secret (PMS), codifica la PMS con la chiave pubblica del server, e la invia.
-+ Il server calcola la Master Secret (MS) usando la PMS e il nonce. La MS viene divisa per generare le due chiavi di cifratura e le due chiavi HMAC.
-+ Il client invia l'HMAC per tutti i messaggi handshake.
-+ Il server invia l'HMAC per tutti i messaggi handshake.
-Gli ultimi due passi proteggono questa fase dalla falsicazione. Questo perchè, nello step 1, gli algoritmi mostrati dal client possono essere forti o deboli, e la lista di algoritmi viene mandata in chiaro. L'aggressore, come man-in-the-middle, potrebbe eliminare gli algoritmi più forti dalla lista. Per prevenire questo attacco, nello step 5, il client invia l'HMAC della concatenazione di tutti i messaggi handshake che ha inviato e ricevuto. Il server può confrontare l'HMAC ricevuto con l'HMAC calcolato e se trova qualche inconsistenza allora il server termina la connessione. \
-I nonce vengon utilizzati per impedire i cosideetti *connection replay attack* (attacco di riproduzione dell'intera connessione). Supponiamo che l'aggressore intercetti tutti i messaggi scambiati tra Bob e Alice. L'aggressore fa passare del tempo, si finge Bob ed invia ad Alice esattametne la stessa sequenza di messaggi che Bob aveva invato ad Alice. Se Alice non utilizzasse i nonce, risponderebbe con la stessa sequenza di messaggi inviata a Bob e non sospetterebbe nulla. Includendo un nonce, Alice invierà nonce diversi per ogni sessione TCP, facendo sì che le chiavi di cifratura siano diverse nei due giorni. Pertanto, quando Alice riceverà i messaggi riprodottiu dall'aggressore, i record non supereranno i controlli di integrità. I nonce vengono usati per difendersiu dal connection replay attack mentre i numeri di sequenza vengono usati per difendersi dalla riproduzione di singoli pacchetti durante una sessione in corso.
-==== Chiusura della connessione
-Per chiudere una connessione, un approccio sarebbe lasciare che Bob termini la sessione chiudendo la connessione TCP, facendo inviare un segmento TCP FIN ad Alice. Però questo approccio potrebbe essere soggetto ad *attacchi di troncamento*, dove l'aggressore si inserisce nel mezzo di una sessione TLS in corso e la termina prematuramente con un TCP FIN. La soluzione a questo problema sarebbe indicare nel campo `Type` se il record serve a terminare la sessione TLS.
-== Sicurezza a livello di rete: IPsec e VPN
-Il protocollo di sicurezza IP, noto come *IPsec*, fornisce sicurezza a livello di rete. IPsec rendere sicuri i datagrammi IP tra due entità a livello di rete, includendo host e router. Molte istituzioni usano IPsec per creare le *reti private viruatli* (*VPN*, _virtual private network_). Un protocollo di sicurezza a livello di rete fornisce confidenzialità, autenticazione della sorgente così che il ricevente possa verificare la fonte dei datagrammi, integrità dei dati, e prevenzione da replay-attack.
-=== IPsec e VPNs
-Un'istituzione che si estende su molteplici regioni geografiche spesso ha bisogna di una propria rete IP, in modo tale che host e server possono inviarsi data a vincena in modo sicuro e confidenziale. Una rete digiunta, dedicata ad una particolare istutuzione, è nota come *rete privata*. Una rete privata può essere molto costosa, in quanto l'istituzione deve comprare, installare e mantenere la sua infrastruttura fisica di rete. \
-In alternativa, è possibile crare delle VPN sulla rete pubblica di Internet già esistente. Con una VPN, il traffico interno all'istituzione è inviato sulla rete Internet. Per fornire confidenzialità il traffico interno all'istituzione viene cifrato prima di entrare nella rete pubblica di Internet. Quando due host comunicano all'interno della stessa rete locale, senza usare su Internet, utilizzano normali datagrammi *IPv4 standard* in chiaro, privi di protezione IPsec. Quando la comunicazione deve attraversare la rete pubblica, il traffico viene protetto prima di essere immesso su Internet: il router gateway, o l'host mittente, trasforma il datagramma IPv4 ordinario in un *datagramma IPsec*. Il datagramma IPsec conserva un normale *haeder IPv4 esterno*: in questo modo i router intermedi della rete Internet pubblica possono instradarlo normalmente senza dover supportare o comprendere IPsec. All'interno del _payload_ del datagramma IPsec vengono inseriti un *header IPsec* e i *dati cifrati*. Una volta raggiunta la destinazione, il sistmea operativo, o il gateway ricevente, elabora l'haeder IPsec, verifica l'integrità dei dati, *decifra il payload* e consegna il contenuto in chiaro ai protocolli di livello superiore.
-=== Protocolli AH ed ESP
-Nella suite di protocolli IPsec, ci sono due principali protocolli: l'*authentication header (AH)* e l'*Encapsulation Security Payload (ESP)*. Il protocollo AH fornisce autenticazione della sorgente e integrità dei dati ma non fornisce confidenzialità. Il protocollo ESP fornisce autenticazione della fonte, integrità dei dati e confidenzialità. Dato che la confidenzialità è critica per le VPN e per altre applicazioni IPsec, il protocollo ESP è più usato rispetto al protocollo AH.
-=== Associazioni di sicurezza
-Prima di inviare datagrammi IPsec dall'entità sorgente all'entità destinazione, la sorgente e la destinazione devono creare una connessione logica a livello di rete, che prende il nome di *associazione di sicurezza* (*SA*, _security association_). Una SA è una semplice connessione logica, è unidirezionale dalla sorgente alla destinazione. Se entrambe le entità vogliono inviarsi dattagrammi a vicenda, devono essere stabilire due SA, una per ogni direzione. \
-Consideriamo il seguente schema.
-#figure(
-image("images/sa.png", width: 70%),
-caption: [SA da R1 ad R2]
-) <fig:sa>
-Il router R1 manterrà un'informazione di stato riguardante la SA stabilita, che include:
-- Un identificatore da 32 bit per l'SA, chiamato *Security Parameter Index (SPI)*.
-- L'interfaccia origine dell'SA e l'interfaccia di destinazione.
-- Il tipo di crittografia usata.
-- La chiave di cifratura.
-- Il tipo di controllo di integrità.
-- La chiave di autenticazione.
-Un'entità IPsec memorizza tutte le informazioni di stato per tutte le SA stabilite in un *Security Association Database (SAD)*.
-=== Datagramma IPsec
-IPsec ha due differenti forme di pacchetti, una per la *modalità tunnel* e una per la *modalità di trasporto*. La modalità tunnel, più appropriata per le VPN, è più utilizzata rispetto alla modalità di trasporto. \
-Il formato di un datagramma IPsec è mostrato di seguito.
-#let field(x, body) = grid.cell(
-  x: x,
-  y: 4,
-  stroke: 0.5pt,
-  inset: (x: 4pt, y: 8pt),
-  align: center + horizon,
-  body,
-)
+Lo scenario tipico della sicurezza di rete coinvolge un trasmittente (Alice) e un ricevitore (Bob) che comunicano attraverso un canale, mentre un intruso (Trudy) può intercettare, modificare o inserire messaggi sul canale stesso (_man in the middle_).
 
-// bracket line over a range of columns: top line with short legs
-#let bracket(x, y, n) = grid.cell(
-  x: x,
-  y: y,
-  colspan: n,
-  stroke: (top: 0.5pt, left: 0.5pt, right: 0.5pt),
-  box(height: 0.7em),
-)
+Le proprietà fondamentali di una *comunicazione sicura* (note come _CIA triad_, integrate da autenticità e non ripudio) sono le seguenti:
+- _Confidenzialità (riservatezza)_. Solo il trasmittente e il ricevitore devono essere in grado di comprendere i contenuti dei messaggi trasmessi, impedendo l'utilizzo illegittimo di informazioni riservate. Dato che gli "origliatori" potrebbero intercettare il messaggio sul canale, ciò richiede che il messaggio venga *cifrato* in modo tale da renderlo illeggibile all'intruso.
+- _Integrità del messaggio_. Il trasmittente e il ricevitore devono essere sicuri che il contenuto della loro comunicazione non sia stato alterato durante la trasmissione, garantendo che il messaggio ricevuto sia esattamente quello spedito.
+- _Disponibilità_. Un servizio o una risorsa di rete deve rimanere accessibile e fruibile da parte di chi è legittimamente autorizzato.
+- _Autenticazione (autenticità) end-to-end_. Possibilità di identificare in modo certo e univoco il trasmittente e il ricevitore coinvolti nella comunicazione. Può essere semplice (solo del mittente) o mutua (sia del mittente sia del destinatario), per confermare che ciascuna parte sia ciò che afferma di essere.
+- _Non ripudio_. Prova formale che dimostra che una certa persona ha sottoscritto (firmato) un documento o un messaggio, impedendole di negarlo in seguito. Integrità e autenticità sono condizioni necessarie per garantire il non ripudio.
+- _Sicurezza operativa_. Quasi tutte le organizzazioni hanno reti che sono connesse a Internet pubblico; queste reti, quindi, potrebbero essere compromesse. Gli aggressori possono tentare di depositare worm negli host della rete, ottenere segreti aziendali, mappare le configurazioni della rete interna e lanciare attacchi DoS.
 
-#let sub(..cells) = grid(
-  columns: cells.pos().len() * (1fr,),
-  column-gutter: 2pt,
-  ..cells.pos().map(c => block(
-    width: 100%,
-    stroke: 0.5pt,
-    inset: (x: 3pt, y: 7pt),
-    align(center + horizon, c),
-  )),
-)
+Nel panorama reale degli incidenti informatici gravi noti in Italia (secondo il Rapporto Clusit 2026), i casi sono passati da 48 nel 2020 a 507 nel 2025 (+42% in un anno). Nel 2025 la tecnica più diffusa è il DDoS (38,5%), seguita dal malware (22,7%), mentre in più di un caso su cinque (21,9%) la tecnica non è nota, seguite da phishing e ingegneria sociale (12,4%), vulnerabilità (2,8%) e tecniche multiple (1,8%).
 
-#grid(
-  columns: (5em, 5em, 5em, 11em, 5em, 5em),
-  column-gutter: 2pt,
-  row-gutter: 3pt,
-  align: center + bottom,
+=== Minacce, vulnerabilità e superfici di attacco
+Secondo la terminologia standard (RFC 4949), si distinguono tre concetti fondamentali:
+- _Minaccia (threat)_: circostanza o evento che può danneggiare un sistema informativo tramite accesso non autorizzato, divulgazione, modifica o distruzione di informazioni, oppure negazione di un servizio; indica la possibilità di una violazione.
+- _Attacco (attack)_: attività dannosa che tenta di raccogliere, interrompere, negare, degradare o distruggere le risorse del sistema o le informazioni che contiene; indica un tentativo, riuscito o no, di violare la sicurezza.
+- _Vulnerabilità (vulnerability)_: difetto o debolezza nel progetto, nell'implementazione o nella gestione di un sistema, sfruttabile per violarne la sicurezza. Una vulnerabilità non corretta trasforma una minaccia in un possibile attacco.
 
-  // row 0-1: "Enchilada" authenticated (ESP header .. ESP trailer)
-  grid.cell(x: 1, y: 0, colspan: 4)[“Enchilada” authenticated],
-  bracket(1, 1, 4),
+L'insieme delle vulnerabilità raggiungibili e sfruttabili in un sistema costituisce la *superficie di attacco* (ad esempio porte aperte, servizi in ascolto, web form, codice che elabora dati in ingresso, persone). Essa si articola in:
+- _Superficie di rete_: vulnerabilità dei protocolli e dei servizi di rete (es. DDoS, intrusioni);
+- _Superficie software_: vulnerabilità del codice applicativo e del sistema operativo (es. web server);
+- _Superficie umana_: ingegneria sociale, errori e configurazioni sbagliate del personale.
 
-  // row 2-3: Encrypted (Original IP header .. ESP trailer)
-  grid.cell(x: 2, y: 2, colspan: 3)[Encrypted],
-  bracket(2, 3, 3),
+Ridurre la superficie di attacco — chiudendo porte e disattivando servizi inutili — riduce le opportunità per l'attaccante.
 
-  // row 4: main fields
-  field(0)[New IP \ header],
-  field(1)[ESP \ header],
-  field(2)[Original \ IP header],
-  field(3)[Original IP \ datagram payload],
-  field(4)[ESP \ trailer],
-  field(5)[ESP \ MAC],
+=== Classificazione degli attacchi
+Le minacce alla sicurezza di rete si possono leggere in base alla proprietà che compromettono: l'_interruzione_ (_interruption_) compromette la disponibilità, l'_intercettazione_ (_interception_) la riservatezza, la _modifica_ (_modification_) l'integrità e la _fabbricazione_ (_fabrication_) l'autenticità.
 
-  // row 5: expanded fields under ESP header and ESP trailer
-  grid.cell(x: 0, y: 5, colspan: 2, align: right, inset: (top: 0.8em))[
-    #box(width: 9em, sub[SPI][Seq \#])
-  ],
-  grid.cell(x: 4, y: 5, colspan: 2, align: left, inset: (top: 0.8em))[
-    #box(width: 10em, sub[Padding][Pad \ length][Next \ header])
-  ],
-)
-Per convertire un datagramma IPv4 in un datagramma IPsec i passi che un router deve seguire sono i seguenti.
-- Concatenare al datagramma IPv4 un campo `ESP trailer`.
-- Cifrare i risultati usando l'algoritmo e la chiave specificata dall'SA.
-- Aggiungere all'inizia della quantità cifrata un campo chiamato `ESP header`: il package finale viene chimato _enchilada_.
-- Crare un codice di autenticazione MAC su tutto il package, utilizzando l'algoritmo e la chiave specificata dall'SA.
-- Concantenare il MAC alla fine del package, formando il _payload_.
-- Creare un nuovo header IP con i classici header IPv4 che vengono aggiunti prima del payload.
-Quando un router invia un datagramma IPsec sulla rete Internet, ogni router che analizzerà tale datagramma è consapevole del fatto che il datagramma sta trasportando dati cifrati IPsec. \
-Il `ESP trailer` consiste di tre campi: padding, lunghezza del padding e header successivo. Il padding viene utilizzato affinchè, una volta aggiunto al datagramma originale, il messaggio risultante sia composto da un numero intero di blocchi. Il campo _pad length_ indica all'entità ricevente quanto padding è stato inserito. Il campo _next header_ identifica il tipo dei dato contenuti nel campo _payload-data_. I dati del payload e il trailer ESP vengono concatenati e poi cifrati. \
-A quest'unità viene anteposto l'`ESP header`, che viene inviato in chiaro ed è composto da due campi: lo *SPI* (_Security Parametrs Index_) e il campo *sequence number*. Lo SPI indica all'entità ricevente la SA a cui appartiene il datagramma e il _sequence number_ viene utilizzato per difendersi dagli attacchi di riproduzione. \
-Insieme ad una SAD, l'entità IPsec mantiene anche un'altra struttura dati chiamata *Security Policy Database (SPD)* che indica quali tipi di datagrammi debbano essere elaborati tramite IPsec; e, per quelli che devono essere elaborati tramite IPsec, quale SA debba essere utilizzata.
-=== IKE: gestione delle chiavi in IPsec
-Quando una VPN presenta un numero ridotto di endpoint, l'amministratore di rete può inserire manualmente le informazioni della SA nelle SAD degli endpoint. Per una VPN di grandi dimensioni richiedono un meccanismo automatizzato per la creazione delle SA. IPsec realizza ciò mediante il protocollo *Internet Key Exchange (IKE)*. \
-Il protocollo IKE fa sì che le entità si scambino i certificati, negozino gli algoritmi di autenticazione e cifratura e scambino in modo sicuro il materiale crittografico per creare le chiavi di sessione nelle SA IPsec. IKE svolge questi compiti in due fasi. Consideriamo la situazione tra i router nella *@fig:sa*.
-- Durante il primo scambio di messaggi, le due parti utilizzano Diffie-Hellman per creare una *IKE SA biderezionale* tra i router. Durante questo primo scambio di coppie di messaggi, vengono stabilite le chiavi per la cifrature e l'autenticazione della IKE SA. Viene anche stabilito un master secret che verrà utilizzato per calcolare le chiavi della SA IPsec.
-- Durante il secondo scambio di messaggi, entrambe le parti rilevano reciprocamente la propria identità firmando i propri messaggi. Le identità non vengono rilevate a un eventuale intercettatore passivo, poichè i messaggi vengono inviati sul canale sicuro della IKE SA. In questa fase le due parti negoziano gli algoritmi IPsec di cifrature e autenticazione da impiegare per le SA IPsec.
-Nelle fase 2, le due parti creano una SA in ciascuna direzione. Al termine di questa fase, le chiavi di sessione per la cifratura e l'autenticazione sono stabilite su entrambi i lati per le due SA.
+Durante una comunicazione o nei confronti di un sistema in rete, un intruso può compiere attacchi classificabili in due macro-categorie:
+- *Attacchi passivi*: raccolgono informazioni senza alterare dati né risorse. L'intercettazione è l'effetto tipico di questi attacchi. Comprendono:
+  - _Network mapping_: ricostruzione di quali sono gli indirizzi IP attivi di una stessa rete (ad esempio tramite l'uso di utility basate su ICMP per l'esplorazione di una rete);
+  - _Port scanning_: contatto sequenziale dei numeri di porta (TCP o UDP) di uno stesso host per vedere cosa succede e quali servizi sono offerti;
+  - _Sniffing_ (anche detto _packet sniffing_, _eavesdropping_ o _wire tapping_): lettura dei pacchetti destinati ad un altro nodo della rete tramite appositi programmi detti _sniffer_ (es. Wireshark). Quando i dati viaggiano su una rete a mezzo condiviso (es. hub, canale radio wireless), una scheda di rete impostata in _modalità promiscua_ accetta tutti i frame e non solo quelli indirizzati a essa. In una LAN commutata (switch) la modalità promiscua non basta: lo switch inoltra a ogni porta solo i frame destinati a quell'host, i broadcast/multicast e quelli in flooding, per cui intercettare il resto richiede attacchi specifici allo switch (es. ARP spoofing, MAC flooding).
+- *Attacchi attivi*: alterano, falsificano o interrompono dati e servizi. Comprendono:
+  - _Interruzione_ (_interruption_): compromette la disponibilità;
+  - _Modifica_ (_modification_) e _fabbricazione/inserimento_ (_fabrication_): compromettono rispettivamente l'integrità e l'autenticità, alterando messaggi o inserendo messaggi falsi sul canale;
+  - _Spoofing_: l'attaccante fa finta di essere qualcosa o qualcuno che non è per carpire informazioni riservate:
+    - _User account spoofing_: l'identità elettronica dell'utente è abusata utilizzando le sue credenziali di autenticazione (ottenute attraverso confidenze incaute, promemoria esposti, tentativi di indovinarle, sniffing); i problemi più gravi si hanno quando l'abuso avviene in un contesto commerciale e dà origine a obblighi per la persona che lo subisce, oppure coinvolge l'identità dell'amministratore del sistema;
+    - _Phishing_: messaggio (email, SMS, chat) che finge di provenire da una fonte fidata per indurre la vittima a rivelare credenziali o ad aprire un allegato malevolo. Le varianti includono _deceptive phishing_ (messaggi di massa con link a un sito contraffatto, es. finta banca o finto corriere), _spear phishing_ (messaggio costruito su misura per una vittima specifica) e _BEC (Business Email Compromise)_ (impersona un dirigente per ottenere bonifici). Le tecniche tipiche includono domini simili a quelli legittimi (es. `un1ba.it` invece di `uniba.it`), testo del link diverso dall'indirizzo reale e nome del mittente falsificato (_display name spoofing_);
+    - _DNS spoofing_: falsificazione della corrispondenza nome–indirizzo IP restituita dal DNS (es. _DNS cache poisoning_, con record falsi inseriti nella cache del server DNS a cui la vittima si rivolge), così che la richiesta di una pagina web o di un altro servizio venga fatta a un fornitore sbagliato;
+    - _IP spoofing_: agisce a livello di rete (layer 3) tramite falsificazione dell'indirizzo IP sorgente. L'attaccante C si spaccia per l'host B mandando pacchetti ad A; le risposte di A vanno a B (non a C), rendendo l'IP spoofing utile soprattutto per attacchi unidirezionali dove la risposta non è critica (es. DoS) o per mascherare l'origine dell'attacco;
+    - _MAC spoofing_: falsificazione del MAC address (layer 2) per assumere l'identità di un altro dispositivo sulla stessa LAN, spesso usato per raggirare controlli di accesso basati su whitelist MAC. L'attaccante C può ricevere risposte destinate a B solo nel dominio di broadcast locale dove è valido un indirizzo MAC (non attraversa router); l'efficacia è quindi variabile;
+  - _Intercettare il traffico su una LAN commutata_: su una LAN commutata l'attaccante non riceve i frame unicast destinati ad altri host se non li fa arrivare sulla propria porta dello switch tramite _ARP spoofing (ARP poisoning)_ (risposte ARP false che associano il MAC dell'attaccante all'IP della vittima, es. il router, così il traffico passa dall'attaccante che lo inoltra come man-in-the-middle) oppure _MAC flooding_ (migliaia di frame con MAC sorgente falsi riempiono la tabella MAC dello switch, facendo inoltrare le destinazioni non più in tabella in flooding su tutte le porte in broadcast). Esiste inoltre il _port mirroring_, funzione di amministrazione che copia su una porta il traffico di altre porte per analizzatori e IDS e richiede l'accesso alla configurazione dello switch;
+  - _Replay_ (attacco di replica o _playback_): intercettazione passiva di dati e successiva ritrasmissione per generare un effetto non autorizzato;
+  - _Connection (session) hijacking_: l'attaccante intercetta una sessione già stabilita e autenticata tra due host, la interrompe e assume il controllo della connessione, dirottando il traffico e fingendo di essere il punto finale legittimo. Richiede accesso a sniffing (per ricostruire i numeri di sequenza TCP), stessa rete locale o accesso a router compromesso e timing critico per l'iniezione di pacchetti;
+  - _Man-in-the-Middle (MITM)_: intercetta le comunicazioni dal loro inizio (non a sessione già instaurata) e modifica i dati trasmessi senza che le parti coinvolte nella comunicazione se ne accorgano.
+
+=== Exploit e malware
+Un *exploit* è una sequenza di comandi o azioni che sfrutta una vulnerabilità specifica di un software per ottenere un accesso non autorizzato, eseguire codice arbitrario, ottenere _privilege escalation_ o causare un DoS. Le vulnerabilità possono derivare da difetti (bug) del software, noti o non ancora noti (_zero-day_), oppure da errori di configurazione o installazione, e non causano danni finché qualcuno non realizza un exploit che le sfrutta. Le vulnerabilità note sono catalogate nel database pubblico *CVE (Common Vulnerabilities and Exposures)* con identificatori univoci nella forma `CVE-anno-numero` (es. `CVE-2021-44228`, Log4Shell nella libreria di logging Java Log4j) assegnati dalle *CVE Numbering Authority (CNA)* (ad esempio gli stessi produttori del software); ciascuna voce descrive la vulnerabilità, indica prodotti e versioni colpiti e associa un punteggio di gravità da 0 a 10 tramite il *CVSS (Common Vulnerability Scoring System)*. Avvisi e aggiornamenti di sicurezza citano lo stesso identificatore, così che tutti parlino della stessa vulnerabilità.
+
+Il *malware* (_malicious software_) è un software che produce effetti dannosi o non desiderati e quindi potenzialmente lesivo della sicurezza di un sistema (ad esempio registrando quanto digitato, i siti visitati o informazioni di upload). Gli host infettati possono essere arruolati in botnet per spamming e DDoS. Il malware è spesso auto-replicante e può raggiungere gli host tramite virus, worm o cavalli di Troia:
+- _Virus_: l'infezione proviene da un oggetto ricevuto e mandato in esecuzione. È auto-replicante (una volta eseguito crea copie di sé, es. inviandole ai contatti), ma per infettare un nuovo host serve un'azione dell'utente e realizza tipicamente *diffusione* e *attivazione*. Il ciclo di vita include le fasi *dormiente* (inattivo in attesa di un evento, non sempre presente), *propagazione* (inserisce copie di sé in altri programmi o aree del disco, anche diverse dall'originale per sfuggire al rilevamento), *attivazione* (un evento come una data, un numero di copie o un'azione dell'utente avvia il payload, tramite meccanismo di infezione, trigger e payload) ed *esecuzione* del payload, che svolge la sua funzione, innocua o distruttiva. Si classifica per bersaglio (*boot sector*, che infetta il settore di avvio e si attiva all'avvio del sistema; *file*, che infetta gli eseguibili; *macro*, in documenti con macro o script come Word, Excel, PDF; *multipartito*, che infetta in più modi) e per tecnica di occultamento (*cifrato*, che cifra il proprio corpo con una chiave diversa a ogni copia; *stealth*, progettato per nascondersi all'antivirus; *polimorfico*, che cambia aspetto a ogni infezione; *metamorfico*, che si riscrive completamente cambiando anche il comportamento);
+- _Worm_: l'infezione proviene da un oggetto passivamente ricevuto attraverso i servizi di rete, che si auto-replica e auto-esegue. A differenza dei virus, i worm sono autosufficienti, non necessitano di un file host e si replicano autonomamente sfruttando vulnerabilità di rete (es. buffer overflow) per auto-eseguirsi, trasferendosi tramite email, condivisione di file, esecuzione o login remoto (e i più recenti usano exploit zero-day e codice polimorfico). Nella fase di propagazione cercano bersagli in modo *casuale* (sondando IP a caso, con molto traffico), tramite *hit list* (elenco di host vulnerabili compilato in anticipo e diviso tra le copie), *topologica* (usando informazioni sull'host infetto come rubriche o tabelle degli host) o nella *sottorete locale* (dietro un firewall, nella propria rete), seguendo un andamento con *slow start phase*, *fast spread phase* e *slow finish phase*;
+- _Cavalli di Troia_: parte nascosta di un software installato perché considerato utile (anche su pagine web con componenti eseguibili sul client). Una volta eseguiti, svolgono operazioni diverse da quelle attese e tipicamente dannose, spesso per mascherare altri attacchi (es. DDoS), procurarsi informazioni aggiuntive o creare una *backdoor* da sfruttare successivamente;
+- _Ransomware_: cifra i dati della vittima e chiede un riscatto per la chiave di decifratura; nella *doppia estorsione* sottrae anche i dati e minaccia di pubblicarli. La difesa principale consiste in backup regolari conservati offline;
+- _Botnet_: rete di host infetti (*bot* o *zombie*) controllati da remoto dall'attaccante (il proprietario dell'host infetto in genere non si accorge di nulla), usata per spam, DDoS, furto di credenziali e diffusione di altro malware. A differenza del worm, il bot è comandato da remoto tramite server di *comando e controllo (C&C)* (inizialmente canali IRC, oggi canali nascosti su protocolli comuni come HTTP o controllo distribuito peer-to-peer per evitare un singolo punto di guasto), che possono ordinare ai bot di scaricare ed eseguire nuovo codice (anche per sniffing, keylogging o frodi sui click pubblicitari);
+- _Backdoor e Rootkit_: una *backdoor* è un punto di accesso segreto (spesso un servizio di rete in ascolto su una porta non standard) che permette di entrare nel sistema aggirando le normali procedure di autenticazione. Un *rootkit* è un insieme di programmi che mantiene un accesso nascosto con privilegi di amministratore alterando le funzioni del sistema per nascondere file, processi e connessioni; può essere *persistente* o *in memoria* (non sopravvive al riavvio), *user mode* o *kernel mode* (intercetta le chiamate di sistema), oppure *esterno* (es. nel firmware o nel BIOS).
+
+=== Denial of Service (DoS e DDoS)
+Il *Denial of Service (DoS)* è l'interruzione di un servizio che risulta indisponibile agli utenti legittimi, ottenuta mandando in crash il sistema (che necessita dell'intervento dell'amministratore per riprendere il funzionamento) oppure rendendo le risorse troppo impegnate da provocare risposte negative a richieste legittime. Esempi includono *SYN flooding*, *ICMP flooding* e *mail bombing*.
+
+Nel *Distributed Denial of Service (DDoS)*, l'attaccante ottiene l'accesso su numerosi host in rete, installa un programma *slave* su ciascun host compromesso e tramite un programma *master* dà il via a un attacco DoS concentrato su uno stesso host target. Si distinguono:
+- *Attacco diretto*: l'attaccante comanda zombie master, che comandano zombie slave, i quali inviano il traffico direttamente alla vittima;
+- *Attacco a riflessione (reflection)*: gli slave inviano richieste a server non compromessi (*riflettori*) con l'indirizzo della vittima come IP sorgente; i riflettori rispondono alla vittima, che riceve traffico da molte sorgenti lecite, rendendo più difficili sia il filtraggio sia il tracciamento dell'attaccante. Se il riflettore risponde con un messaggio molto più grande della richiesta si ha un *attacco ad amplificazione* (es. nel DNS, una query di circa 60 byte che chiede tutti i record di un dominio, tipo `ANY`, può ottenere una risposta di alcune migliaia di byte).
+
+Le contromisure ai DDoS comprendono:
+- *Prevenzione* (prima dell'attacco): politiche di consumo delle risorse, capacità di riserva, filtraggio degli indirizzi sorgente falsificati;
+- *Rilevamento e risposta* (durante l'attacco): riconoscere picchi anomali (es. di segmenti SYN o messaggi ICMP) e filtrare il traffico dell'attacco; per gli attacchi volumetrici serve mitigazione a monte (ISP, CDN, scrubbing center);
+- *Tracciamento della sorgente* (durante e dopo l'attacco): utile per prevenire attacchi futuri, ma raramente dà risultati in tempi utili.
+
 == Firewall e sistemi di rilevamento intrusioni
-In una rete di calcolatori, quando il traffico in entrata e in uscita da una rete viene sottoposto a controlli di sicurezza, registrato, scartato o inoltrato, ciò viene eseguito da dispositivi operativi noti come *firewall, sistemi di rilevamento delle intrusioni (IDS)* e *sistemi di prevenzione delle intrusioni (IPS)*.
+In una rete di calcolatori, quando il traffico in entrata e in uscita da una rete viene sottoposto a controlli di sicurezza, registrato, scartato o inoltrato, ciò viene eseguito da dispositivi operativi noti come *firewall*, *sistemi di rilevamento delle intrusioni (IDS)* e *sistemi di prevenzione delle intrusioni (IPS)*.
+
 === Firewall
-Un *firewall* è una combinazione di hardware e software che isola la rete interna di un'organizzazione dal resto di Internet, consentendo ad alcuni pacchetti di passare e bloccandone altri. Un firewall permette ad un amministratore di rete di controllare l'accesso tra il mondo esterno e le risorse all'interno della rete amministrata gestendo il flusso dit raffico da e verso tali risorse. Un firewall ha tre obiettivi:
-- _Tutto il traffico dall'esterno verso l'interno, e viceversa, passa attraverso il firewall_. Sebbene le grandi organizzazioni possano utilizzare più livelli di firewall o firewall distribuiti, collocare un firewall in un unico punto di accesso alla rete, rende più semplice gestire e far rispettare una politica di accesso di sicurezza.
-- _Solo il traffico autorizzato, come definito dalla politica di sicurezza locale, sarà autorizzato a passare_. Con tutto il traffico in entrata e in uscita dalla rete istituzionale che attraversa il firewall, qeust'ultimo può limitare l'accesso solo al traffico autorizzato.
+Un *firewall* è una combinazione di hardware e software che isola la rete interna di un'organizzazione dal resto di Internet, consentendo ad alcuni pacchetti di passare e bloccandone altri. Un firewall permette ad un amministratore di rete di controllare l'accesso tra il mondo esterno e le risorse all'interno della rete amministrata gestendo il flusso di traffico da e verso tali risorse. Un firewall ha tre obiettivi:
+- _Tutto il traffico dall'esterno verso l'interno, e viceversa, passa attraverso il firewall_. Sebbene le grandi organizzazioni possano utilizzare più livelli di firewall o firewall distribuiti, collocare un firewall in un unico punto di accesso alla rete rende più semplice gestire e far rispettare una politica di accesso di sicurezza.
+- _Solo il traffico autorizzato, come definito dalla politica di sicurezza locale, sarà autorizzato a passare_. Con tutto il traffico in entrata e in uscita dalla rete istituzionale che attraversa il firewall, quest'ultimo può limitare l'accesso solo al traffico autorizzato.
 - _Il firewall stesso è immune alle penetrazioni_. Il firewall è un dispositivo connesso alla rete. Se non progettato o installato correttamente, può essere compromesso, nel qual caso fornisce solo un falso senso di sicurezza.
-I firewall possono essere classificati in tre categorie: *filtri di pacchetti tradizionali*, *filtri con stato* e *gateway applicativi*.
+
 ==== Filtri di pacchetti tradizionali
 Consideriamo la seguente figura.
 #figure(
@@ -2414,9 +2000,10 @@ Un'organizzazione tipicamente dispone di un router gateway che collega la propri
 - Porta sorgente e destinazione TCP o UDP.
 - Bit di flag TCP.
 - Tipo di messaggio ICMP.
-- Regole diverse per i datagrammio in uscita e in entrata dalla rete.
+- Regole diverse per i datagrammi in uscita e in entrata dalla rete.
 - Regole diverse per le diverse interfacce del router.
-Un amministratore di rete configura il firewall in base alla policy dell'organizzazione. La seguente tabella elenca una serie di possibili politiche che un'organizzazione può adottare e il modo in cui verrbero gestite tramite un filtro di pacchetti.
+
+Un amministratore di rete configura il firewall in base alla policy dell'organizzazione. La seguente tabella elenca una serie di possibili politiche che un'organizzazione può adottare e il modo in cui verrebbero gestite tramite un filtro di pacchetti.
 #let rows = (
   ([No outside Web access.], [Drop all outgoing packets to any IP address, port 80.]),
   (
@@ -2432,7 +2019,7 @@ Un amministratore di rete configura il firewall in base alla policy dell'organiz
     [Drop all ICMP ping packets going to a "broadcast" address (eg 130.207.255.255).],
   ),
   (
-    [Prevent your network from being traceroute#sym.zws\d.],
+    [Prevent your network from being tracerouted.],
     [Drop all outgoing ICMP TTL expired traffic.],
   ),
 )
@@ -2448,119 +2035,39 @@ table(
   ..rows.flatten(),
   table.hline(),
 )
-)<table:trad_firewall>
-Una policy di filtraggio può basarsi su una combinazione di indirizzi e numeri di porta. Ad esempio un router di filtraggio potrebbe inoltrare tutti i datagrammi Telnet eccetto quelli diretti a e proveniente da un elenco di specifici indirizzi IP. Basare la politica sugli indirizzi esterni non fornisce alcuna protezione contro i datagrammi il cui indirizzo sorgente sia stato falsificato (_spoofed_). \
-Il filtraggio può anche basarsi sul fatto che il bit TCP ACK sia stato impostato o meno. Questo è utile se un'organizzazione desidera consentire ai propri client interni di connettersi a server esterni, ma vuole impedire a client esterni di connettersi a server interni. \
-Le regole del firewall sono implementate nei router tramite *liste di controllo degli accessi* (*ACL*, _access control lists_), in cui ciascuna interfaccia del router dispone delal propria lista. Un esempio di questa lista è mostrata nella seguente tabella.
-#let rows = (
-  ([allow], [222.22/16], [outside of \ 222.22/16], [TCP], [\> 1023], [80], [any]),
-  ([allow], [outside of \ 222.22/16], [222.22/16], [TCP], [80], [\> 1023], [ACK]),
-  ([allow], [222.22/16], [outside of \ 222.22/16], [UDP], [\> 1023], [53], [---]),
-  ([allow], [outside of \ 222.22/16], [222.22/16], [UDP], [53], [\> 1023], [---]),
-  ([deny], [all], [all], [all], [all], [all], [all]),
-)
+) <table:trad_firewall>
 
-#table(
-  columns: 7,
-  align: left + horizon,
-  inset: (x: 8pt, y: 6pt),
-  // horizontal line above every row, no vertical lines
-  stroke: (x, y) => (top: 0.5pt),
-  table.header(
-    [action], [source address], [dest address], [protocol],
-    [source port], [dest port], [flag bit],
-  ),
-  ..rows.flatten(),
-  table.hline(),
-)
-Questa lista di controllo degli accessi blocca tutto il traffico Web avviato dall'interno dell'organizzazione e il traffico DNS. La prima regola consente a qualsiasi pacchetto TCP con porta di destinazione 80 di uscire dalla rete interna; la seconda consente a qualsiasi pacchetto TCP conm porta sorgente 80 e bit ACK di entranre nella rete interna. Lo stesso vale per i pacchetti DNJS della terza e quarta regola.
-==== Filtri di pacchetti con stato
-I *filtri con stato* (_stateful filters_) tengono invece effettivamente traccia delle connessioni TCP e utilizzano queste informazi9oni per prendere decisioni di filtraggio. \
-La @table:trad_firewall consente a qualsiasi pacchetto proveniente dall'esterno con ACK = 1 e porta sorgente 80 di attraversare il filtro. Tali pacchetti potrebbero essere utilizzati dagli attaccanti nel tentativo di mandare in crash i sistemi interni con pacchetti malformati, condurre attacchi di negazione del servizio (_denaial-of-service_) o mappare la rete interna. La soluzione ingenua consisterebbe nel bloccare anche i pacchetti TCP ACK, ma un tale approccio impedirebbe agli utenti interni dell'organizzazione di navigare sul Web. \
-I filtri con stato risolvono questo problema tenendo traccia di tutte le connessioni TCP in corso in una *tabella delle connessioni*. Ciò è possibile perchè il firewall è in grado di osservare l'inizio di una nuova connessione rilevando un _three-way handshake (SYN, SYNACK, ACK)_ e può osservarne la fine quando rileva un pacchetto FIN relativo alla connessione. Il firewall può inoltre presumere che la connessione sia terminata quando non rileva alcuna attività su di essa per, ad esempio, 60 secondi. Un esempio di tabella delle connessioni per un firewall è mostrato nella seguente tabella.
-#let rows = (
-  ("222.22.1.7", "37.96.87.123", "12699", "80"),
-  ("222.22.93.2", "199.1.205.23", "37654", "80"),
-  ("222.22.65.143", "203.77.240.43", "48712", "80"),
-)
-
-#figure(
-table(
-  columns: 4,
-  align: left + horizon,
-  inset: (x: 8pt, y: 6pt),
-  // horizontal line above every row, no vertical lines
-  stroke: (x, y) => (top: 0.5pt),
-  table.header([source address], [dest address], [source port], [dest port]),
-  ..rows.flatten().map(v => [#v]),
-  table.hline(),
-),
-caption: [Tabella delle connessioni per filtri con stato]
-) <table:firewall_stateful>
-Questa tabella delle connessioni indica che sono attualmente attive tre connessioni TCP, tutte avviate all'interno dell'organizzazione, inoltre, il filtro con stato include una nuova colonna, _check connection_, nella propria lista di controllo degli accessi, come mostrato nella seguente tabella. Si noti che questa tabella è identica alla @table:trad_firewall, tranne per il fatto che ora indica che la connessione deve essere verificata per due delle regole.\
-#let rows = (
-  ([allow], [222.22/16], [outside of \ 222.22/16], [TCP], [\> 1023], [80], [any], []),
-  ([allow], [outside of \ 222.22/16], [222.22/16], [TCP], [80], [\> 1023], [ACK], [X]),
-  ([allow], [222.22/16], [outside of \ 222.22/16], [UDP], [\> 1023], [53], [---], []),
-  ([allow], [outside of \ 222.22/16], [222.22/16], [UDP], [53], [\> 1023], [---], [X]),
-  ([deny], [all], [all], [all], [all], [all], [all], []),
-)
-
-#figure(
-table(
-  columns: 8,
-  align: left + horizon,
-  inset: (x: 7pt, y: 6pt),
-  // horizontal line above every row, no vertical lines
-  stroke: (x, y) => (top: 0.5pt),
-  table.header(
-    [action], [source \ address], [dest \ address], [protocol],
-    [source port], [dest port], [flag bit], [check \ conxion],
-  ),
-  ..rows.flatten(),
-  table.hline(),
-)
-)
-Esaminiamo alcuni esempi per vedere come la tabella delle connessioni e la lista di controllo deglia ccessi estesa lavorino in sinergia. Supponiamo che un attaccante tenti di inviare un pacchetto malformato nella rete dell'organizzazione trasmettendo un datagramma con porta sorgente TCP 80 e con il flag ACK impostato. Supponiamo che questo pacchetto abbia numero di porta sorgete 12543 e indirizzo IP sorgente 120.23.23.155. Quando questo pacchetto raggiunge il firewall, questo controlla la lista di controllo degli accessi della tabella @table:firewall_stateful, la quale indica che occorre verificare anche la tabella delle connessioni prima di consentire al pacchetto di entrare nella rete dell'organizzazione. Il firewall controlla la tabella delle connessioni, rileva che questo pacchetto non fa parte di una connessione TCP in corso e respinge il pacchetto. Adesso, supponiamo che un utente interno desideri navigare su un sito Web esterno. Poichè questo ultimo invia per primo un segmento TCP SYN, la connessione TCP dell'utente viene registrata nella tabella delle connessioni. Quando il server Web invia pacchetti di risposta, il firewall controlla la tabella e rileva che è in corso una connessione corrispondente. Il firewall lascerà quindi passare questi pacchetti, senza interferire con l'attività di navigazione Web dell'utente interno.
-==== Gateway applicativi
-Il filtraggio a livello di pacchetto consente a un'organizzazione di eseguire un filtraggio a grana grossa basato sul contenuto delle intestazioni IP e TCP/UDP, inclusi indirizzi IP, numeri di porta e bit di riscontro. Però, se un'organizzazione vuole fornire un servizio Telnet a un insieme ristretto di utenti e vuole che tali utenti si autentichino prima di essere autorizzati a creare sessioni Telnet verso il mondo esterno allora i filtri tradizionali e con stato non possono fornire tale servizio. \
-Per ottenere una sicurezza a un livello più fine, i firewall devono combinare filtri di pacchetti con i *gateway applicativi*. I gateway applicativi prendono decisioni sulle politiche di sicurezza basandosi sui dati applicativi. Un gateway applicativo è un server specifico per una data applicazione attraverso il quale devono passare tutti i dati applicativi. Sullo stesso host possono essere eseguiti più gateway applicativi, ma ciascun gateway è un server separato con i propri processi. \
-Progettiamo un firewall che consenta solo a un insieme ristretto di utenti interni di utilizazre Telnet verso l'esterno e impedisca a tutti i client esterni di connettersi tramite Telnet all'interno. Tale politica può essere realizzata implementando una combinazione di un filtro di pacchetti e di un gateway applicativo Telnet, come mostrato nella seguente figura.
-#figure(
-image("images/gateway_applicativo.png", width: 70%)
-)
-Il filtro del router è configurato per bloccare tutte le connessioni Telnet ad eccezione di quelle che hanno origine dall'indirizzo IP del gateway applicativo. Consideriamo un utente interno che desideri connettersi tramite Telnet al mondo esterno. L'utente deve instaurare una sessione Telnet con il gateway applicativo. Un'applicazione in esecuzione sul gateway, che rimane in ascolto per le sessioni Telnet in entrata, richiede all'utente un ID utente e una password. Quando l'utente fornisce queste informazioni, il gateway applicativo controlla se l'utente dispone ell'autorizzazione per effettuare connessioni Telnet verso l'esterno. Se l'utente dispone dell'autorizzazione, allora il gateway
-+ chiede all'utente il nome dell'host esterno a cui desidera connettersi;
-+ instaura una sessioen Telnet tra il gateway e l'host esterno;
-+ inoltra all'host esterno tutti i dati provenienti dall'utente, e inoltra all'utente tutti i dati provenienti dall'host esterno.
-Quindi il gateway applicativo non solo esegue l'autorizzazione dell'utente, ma agisce sia da server Telnet che da client Telnet. \
-Le reti interne dispongono spesso di più gateway applicativo, uno per Telnet, uno per HTTP, uno FTP e posta elettronica. Di fatto, il server di posta elettronica di un'organizzazione e la cache Web sono gateway applicativi. \
-Tuttavia, i gateway applicativi presentano degli svantaggi. In primo luogo, è necessario un gateway applicativo diverso per ciascuna applicazione. In secondo luogo, occorre pagare una penalizzazione in termini di prestazioni, poichè tutti i dati vengono inoltrati tramite il gateway. Questo diventa critico quando più utenti o applicazioni utilizzano la stessa macchina gateway. Infine, il software client deve sapere come contattare il gateway quando l'utente effettua una richiesta e deve sapere come indicare al gateway applicativo a quale server esterno connettersi.
 === Sistemi di rilevamento intrusioni
-Un filtro di pacchetti ispeziona i campi delle intestazioni IP, TCP, UDP e ICMP al momento di decidere quali pacchetti lasciar passare attraverso il firewall. Tuttavia, per rilevare molti tipi di attacchi, è necessario eseguire una *deep packet inspection*, ossia guardare oltre i campi delle intestazioni ed esaminare i dati applicativi effettivi trasportati dai pacchetti. Abbiamo visto che i gateway spesso effettuano questo compito. Però, un gateway applicativo fa ciò solo per una specifica applicazione. \
-Un *sistema di rilevamento delle intrusioni* (*IDS*, _intrusion detection system_) è un dispositivo che genera avvisi quando osserva traffico potenzialmente malevolo, esaminando le intestazioni dei pacchetti che lo attraversano ed effettuando la deep packet inspection. \
-Un dispositivo che filtra ed elimina il traffico sospetto è chiamato *sistema di prevenzione delle intrusioni* (*IPS*, _intrusion prevention system_). \
-Un IDS può essere utilizzato per rilevare un'ampia gamma di attacchi, tra cui la mappatura della rete, scansioni delle porte, scansioni dello stack TCP, attacchi Dos di saturazione della larghezza di banda (_bandwidth-flooding_), worm e virus, attacchi alle vulnerabilità dei sistemi operativi e attacchi alle vulnerabilità delle applicazioni. \
-Un'organizzazione può implementare uno o più sensoir IDS nella propria rete aziendale. La seguente figura mostra un'organizzazione che dispone di tre sensori IDS.
+Un filtro di pacchetti ispeziona i campi delle intestazioni IP, TCP, UDP e ICMP al momento di decidere quali pacchetti lasciar passare attraverso il firewall. Tuttavia, per rilevare molti tipi di attacchi, è necessario eseguire una *deep packet inspection*, ossia guardare oltre i campi delle intestazioni ed esaminare i dati applicativi effettivi trasportati dai pacchetti.
+
+Un *sistema di rilevamento delle intrusioni* (*IDS*, _intrusion detection system_) è un dispositivo che genera avvisi quando osserva traffico potenzialmente malevolo, esaminando le intestazioni dei pacchetti che lo attraversano ed effettuando la deep packet inspection. Un dispositivo che filtra ed elimina il traffico sospetto è chiamato *sistema di prevenzione delle intrusioni* (*IPS*, _intrusion prevention system_).
+
+Un IDS può essere utilizzato per rilevare un'ampia gamma di attacchi, tra cui la mappatura della rete, scansioni delle porte, scansioni dello stack TCP, attacchi DoS di saturazione della larghezza di banda (_bandwidth-flooding_), worm e virus, attacchi alle vulnerabilità dei sistemi operativi e attacchi alle vulnerabilità delle applicazioni.
+
+Un'organizzazione può implementare uno o più sensori IDS nella propria rete aziendale. La seguente figura mostra un'organizzazione che dispone di tre sensori IDS.
 #figure(
-image("images/ids.png", width: 70%)
+image("images/ids.png", width: 70%),
+caption: [Architettura di sensori IDS su rete interna e DMZ.]
 ) <fig:ids>
-Quando vengono implementati più sensori, essi lavorano tipicamente di concerto, inviando informazioni sulle attività di traffico sospette a un processore IDS centrale, che raccoglie e integra le informazioni e invia allarmi agli amministratori di rete quando lo ritiene opportuno. Nella @fig:ids l'organizzazione ha suddiviso la propria rete in due regioni: una regione ad alta sicurezza, protetta da un filtro di pacchetti e da un gateway applicativo e monitorata da sensori IDS; e una regione a sicurezza inferiore, detta *zona demilitarizzata* (*DMZ*, _demilitarized zone_), che è protetta solo dal filtro di pacchetti, ma anch'essa monitorata da sensori IDS. La DMZ include i server dell'organizzazione che devono comunicare con il mondo esterno. \
-I sistemi IDS sono classificati come *sistemi basati su firme* o *sistemi basati su anomalie*. Un IDS basato su firme mantiene un ampio database di firme di attacchi. Ciascuna firma è un insieme di regole relative a un'attività di intrusione. Una firma può essere un elenco di caratteristiche riguardanti un singolo pacchetto, oppure può riguardare una serie di pacchetti. Le firme vengono create da ingegneri esperti di sicurezza delle reti che studiano gli attacchi noti. L'amministratore può modificarle o aggiungerne di proprie. \
-Un IDS basato su firme intercetta ogni pacchetto che gli passa accanto, confrontando ciascun pacchetto intercettato con le firme presenti nel suo database. Se un pacchetto corrisponde ad una firma, l'IDS genera un avviso. L'avviso può essere inviato al sistema di gestione della rete oppure può essere registrato per un'ispezione futura. \
-I sistemi IDS basati su firme presentano una serie di limitazioni. Richiedono una conoscenza pregressa dell'attacco per poter generare una firma accurata. Un IDS è cieco di fronte a nuovi attacchi non ancora registrati. Un altro svantaggio è che, anche quando viene generata una corrispondenza con una firma, potrebhbe non trattarsi di un attacco, generando un falso allarme. Infine, poichè ogni pacchetto viene confrontato, l'IDS può risultare sovraccaricato dall'elaborazione e non riuscire a rilevare molti pacchetti malevoli. \
-Un IDS basato su anomalie crea un profilo del traffico osservando il traffico durante il normale funzionamento. Cerca flussi di pacchetti che siano statisticamente insoliti, ad esempio muna percentuale spropositata di pacchetti ICMP. Il grande vantaggio di questi sistemi IDS è che non dipendono dalla conoscenza pregressa degli attacchi esistenti, possono rilevare attacchi nuovi e non documentati. D'altra parte, distinguere tra traffico normale e traffico statisticamente insolito è un problema complesso.
-==== Snort
-Snort è un IDS open source di pubblico dominio con centinaia di migliaia di installazioni esistenti. È in grado di gestire agevolmente 100 Mbps di traffico; per installazioni con velocità di traffico nell'ordine dei gigabit al secondo, potrebbero essere necessari più sensori Snort.
-Un esempiuo di firma è la seguente:
-#align(center)[
-  #block(breakable: false)[
-    #set align(left)
-    ```
-    alert icmp $EXTERNAL_NET any -> $HOME_NET any
-    (msg:"ICMP PING NMAP"; dsize: 0; itype: 8;)
-    ```
-  ]
-]
-Questa firma corrisponde a qualsiasi pacchetto ICMP che entri nella rete dell'organizzazione dall'esterno, sia di tipo 8 e abbia un payload vuoto. `nmap` genera pacchetti ping con queste caratteristiche, quindi questa firma rileva i _ping sweep_ effettuati con `nmap`. Quando un pacchetto corrisponde a questa firma, Snort genera un alter che include il messaggio \"ICMP PING NMAP\". \
-Una caratteristica importante di Snort è la comunità di utenti esperti che mantiene aggiornato il suo database di firme. Inoltre, utilizzando la sintassi delle firme di Snort, gli amministratori di rete possono adattare le firme alle esigenze della propria organizzazione modificando le firme esistenti oppure creandone di completamente nuove.
+Quando vengono implementati più sensori, essi lavorano tipicamente di concerto, inviando informazioni sulle attività di traffico sospette a un processore IDS centrale, che raccoglie e integra le informazioni e invia allarmi agli amministratori di rete quando lo ritiene opportuno. Nella @fig:ids l'organizzazione ha suddiviso la propria rete in due regioni: una regione ad alta sicurezza, protetta da un filtro di pacchetti e da un gateway applicativo e monitorata da sensori IDS; e una regione a sicurezza inferiore, detta *zona demilitarizzata* (*DMZ*, _demilitarized zone_), che è protetta solo dal filtro di pacchetti, ma anch'essa monitorata da sensori IDS. La DMZ include i server dell'organizzazione che devono comunicare con il mondo esterno.
+
+I sistemi IDS sono classificati come *sistemi basati su firme* o *sistemi basati su anomalie*:
+- Un *IDS basato su firme* mantiene un ampio database di firme di attacchi. Ciascuna firma è un insieme di regole relative a un'attività di intrusione (su un singolo pacchetto o su una serie di pacchetti), create da esperti di sicurezza delle reti e modificabili o integrabili dall'amministratore. L'IDS intercetta ogni pacchetto confrontandolo con le firme presenti nel database e genera un avviso (inviato al sistema di gestione della rete o registrato per ispezione futura) in caso di corrispondenza. Richiede conoscenza pregressa dell'attacco (è cieco di fronte a nuovi attacchi non ancora registrati), può generare falsi allarmi e può risultare sovraccaricato dall'elaborazione su ogni pacchetto.
+- Un *IDS basato su anomalie* crea un profilo del traffico osservando il traffico durante il normale funzionamento e cerca flussi statisticamente insoliti (ad esempio una percentuale spropositata di pacchetti ICMP). Non dipende dalla conoscenza pregressa degli attacchi esistenti e può rilevare attacchi nuovi e non documentati, ma distinguere tra traffico normale e traffico statisticamente insolito è un problema complesso.
+
+=== Contromisure e principi di progettazione sicura
+Tra le contromisure e linee guida per la prevenzione dei problemi rientrano aggiornamenti frequenti del software, monitoraggio tramite log, chiusura dei processi in ascolto che non servono, politica di accessi autorizzati alle risorse, politica di gestione delle password, non operare quando non serve con diritti di root, oltre all'uso di antivirus, strumenti crittografici, firewall e IDS.
+
+Poiché non esiste un metodo che escluda tutti i rischi, la progettazione sicura si basa su principi condivisi:
+- _Economia dei meccanismi_: progetti semplici, più facili da verificare;
+- _Fail-safe defaults_: per default l'accesso è negato;
+- _Mediazione completa_: ogni accesso è controllato;
+- _Progetto aperto_: la sicurezza non deve dipendere dalla segretezza del progetto;
+- _Separazione dei privilegi_: più condizioni indipendenti per accedere alle risorse critiche;
+- _Privilegio minimo_: ogni utente o processo ha solo i privilegi necessari;
+- _Accettabilità psicologica_: i meccanismi non devono ostacolare il lavoro degli utenti;
+- _Minima sorpresa_: il comportamento dei meccanismi deve essere chiaro all'utente;
+- _Isolamento_: le risorse critiche sono separate dal resto del sistema;
+- _Incapsulamento_: le parti interne sono accessibili solo tramite interfacce stabilite;
+- _Modularità_: i meccanismi si possono sostituire (es. una libreria crittografica);
+- _Difesa a strati (layering)_: più linee di difesa, se una cade restano le altre.
