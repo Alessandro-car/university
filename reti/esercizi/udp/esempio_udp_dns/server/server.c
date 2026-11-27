@@ -9,6 +9,7 @@
  */
 
 
+#include <ctype.h>
 #if defined _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -18,13 +19,15 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <netdb.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define ECHOMAX 255
-#define PORT    48000
+#define ECHOMAX 		 255
+#define HOSTNAME_LEN 1025
+#define PORT 				 48000
 
 void errorHandler(char* errorMsg) {
 	printf("%s", errorMsg);
@@ -34,6 +37,17 @@ void clearWinSock() {
 	#if defined _WIN32
 	WSACleanup();
 	#endif
+}
+
+void remove_vowels(const char str[ECHOMAX], char result[ECHOMAX]) {
+	int idx = 0;
+	for (int i = 0; i < (int) strlen(str); i++) {
+		char c = tolower(str[i]);
+		if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') continue;
+		result[idx] = str[i];
+		idx++;
+	}
+	result[idx] = '\0';
 }
 
 int main() {
@@ -47,6 +61,7 @@ int main() {
 	#endif
 
 	int sock;
+	char clientHost[HOSTNAME_LEN];
 	struct sockaddr_in echoServAddr;
 	struct sockaddr_in echoClntAddr;
 	socklen_t cliAddrLen;
@@ -81,12 +96,23 @@ int main() {
 			continue;
 		}
 		echoBuffer[recvMsgSize] = '\0';
-		printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
-		printf("Received: %s\n", echoBuffer);
-		fflush(stdout);
+		int gniErr = getnameinfo((struct sockaddr*) &echoClntAddr, cliAddrLen, clientHost, sizeof(clientHost), NULL, 0, NI_NAMEREQD);
+		if (gniErr == 0) {
+			printf("Ricevuti dati dal client nome: %s, indirizzo: %s\n", clientHost, inet_ntoa(echoClntAddr.sin_addr));
+		}
+		memset(echoBuffer, 0, sizeof(echoBuffer));
+		recvMsgSize = recvfrom(sock, echoBuffer, ECHOMAX, 0, (struct sockaddr*) &echoClntAddr, &cliAddrLen);
+		if (recvMsgSize < 0) {
+			errorHandler("recvfrom() failed\n");
+			continue;
+		}
 
+		char data[ECHOMAX];
+		remove_vowels(echoBuffer, data);
+		printf("Ricevuto '%s' inviato '%s'", echoBuffer, data);
+		fflush(stdout);
 		// RINVIA LA STRINGA ECHO AL CLIENT
-		if (sendto(sock, echoBuffer, recvMsgSize, 0, (struct sockaddr*) &echoClntAddr, sizeof(echoClntAddr)) != recvMsgSize)
+		if (sendto(sock, data, strlen(data), 0, (struct sockaddr*) &echoClntAddr, sizeof(echoClntAddr)) != (int) strlen(data))
 			errorHandler("sendto() sent different number of bytes than expected\n");
 
 	}
